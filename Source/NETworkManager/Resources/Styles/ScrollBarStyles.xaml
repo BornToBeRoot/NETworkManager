@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Control="clr-namespace:NETworkManager.Views.Controls">
+    <Style x:Key="ScrollViewerScrollBar" TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource MetroScrollBar}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type ScrollViewer}}, Path=IsMouseOver}" Value="False">
+                <Setter Property="Opacity" Value="0.5" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="DataGridScrollBar" TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource MetroScrollBar}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Control:MultiSelectDataGrid}}, Path=IsMouseOver}" Value="False">
+                <Setter Property="Opacity" Value="0.5" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

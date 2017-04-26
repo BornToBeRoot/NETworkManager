@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
+    <!-- Override the buttons in MahApps.Metro Dialogs -->
+    <Style BasedOn="{StaticResource MetroFlatButton}" TargetType="{x:Type Button}" />
+
+    <Style x:Key="AccentedDialogSquareButton"
+           BasedOn="{StaticResource MetroFlatButton}"
+           TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="{DynamicResource WhiteColorBrush}" />
+        <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
+    </Style>
+
+    <Style x:Key="AccentedDialogHighlightedSquareButton"
+           BasedOn="{StaticResource MetroFlatButton}"
+           TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="{DynamicResource WhiteColorBrush}" />
+        <Setter Property="Background" Value="{DynamicResource HighlightBrush}" />
+    </Style>
+</ResourceDictionary>

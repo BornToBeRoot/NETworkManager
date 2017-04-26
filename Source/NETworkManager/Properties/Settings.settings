@@ -1,0 +1,111 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="NETworkManager.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Appearance_Accent" Provider="SettingsProviderPortable" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Appearance_AppTheme" Provider="SettingsProviderPortable" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Localization_CultureCode" Provider="SettingsProviderPortable" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Settings_Location" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Window_MinimizeToTrayInsteadOfTaskbar" Provider="SettingsProviderPortable" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Window_MinimizeInsteadOfTerminating" Provider="SettingsProviderPortable" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Autostart_StartMinimizedInTray" Provider="SettingsProviderPortable" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="TrayIcon_AlwaysShowIcon" Provider="SettingsProviderPortable" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Application_DefaultApplicationViewName" Provider="SettingsProviderPortable" Roaming="true" Type="System.String" Scope="User">
+      <Value Profile="(Default)">NetworkInterface</Value>
+    </Setting>
+    <Setting Name="Window_StartMaximized" Provider="SettingsProviderPortable" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Ping_ResolveHostnamePreferIPv4" Provider="SettingsProviderPortable" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Ping_Buffer" Provider="SettingsProviderPortable" Roaming="true" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">32</Value>
+    </Setting>
+    <Setting Name="Ping_WaitTime" Provider="SettingsProviderPortable" Roaming="true" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="Ping_Timeout" Provider="SettingsProviderPortable" Roaming="true" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4000</Value>
+    </Setting>
+    <Setting Name="NetworkInterface_SelectedInterfaceID" Provider="SettingsProviderPortable" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Window_PinApplicationList" Provider="SettingsProviderPortable" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="IPScanner_ConcurrentThreads" Provider="SettingsProviderPortable" Roaming="true" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">64</Value>
+    </Setting>
+    <Setting Name="IPScanner_Timeout" Provider="SettingsProviderPortable" Roaming="true" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4000</Value>
+    </Setting>
+    <Setting Name="IPScanner_Buffer" Provider="SettingsProviderPortable" Roaming="true" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">32</Value>
+    </Setting>
+    <Setting Name="IPScanner_Attempts" Provider="SettingsProviderPortable" Roaming="true" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="IPScanner_ResolveHostname" Provider="SettingsProviderPortable" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="IPScanner_ResolveMACAddress" Provider="SettingsProviderPortable" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DeveloperMode" Provider="SettingsProviderPortable" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Traceroute_Buffer" Provider="SettingsProviderPortable" Roaming="true" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">32</Value>
+    </Setting>
+    <Setting Name="Traceroute_Timeout" Provider="SettingsProviderPortable" Roaming="true" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4000</Value>
+    </Setting>
+    <Setting Name="Traceroute_MaximumHops" Provider="SettingsProviderPortable" Roaming="true" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">30</Value>
+    </Setting>
+    <Setting Name="Traceroute_ResolveHostnamePreferIPv4" Provider="SettingsProviderPortable" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Ping_Attempts" Provider="SettingsProviderPortable" Roaming="true" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Window_ConfirmClose" Provider="SettingsProviderPortable" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Ping_HostnameOrIPAddressHistory" Provider="SettingsProviderPortable" Roaming="true" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="IPScanner_IPRangeHistory" Provider="SettingsProviderPortable" Roaming="true" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Traceroute_HostnameOrIPAddressHistory" Provider="SettingsProviderPortable" Roaming="true" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="HotKey_ShowWindowKey" Provider="SettingsProviderPortable" Roaming="true" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">79</Value>
+    </Setting>
+    <Setting Name="HotKey_ShowWindowModifier" Provider="SettingsProviderPortable" Roaming="true" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="HotKey_ShowWindowEnabled" Provider="SettingsProviderPortable" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

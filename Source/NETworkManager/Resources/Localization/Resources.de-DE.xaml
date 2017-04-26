@@ -1,0 +1,281 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Header -->
+    <system:String x:Key="String_Header_Destination">Ziel</system:String>
+    <system:String x:Key="String_Header_Settings">Einstellungen</system:String>
+    <system:String x:Key="String_Header_Status">Status</system:String>
+    <system:String x:Key="String_Header_WakeUp">Aufwecken</system:String>
+    <system:String x:Key="String_Header_Templates">Templates</system:String>
+    <system:String x:Key="String_Header_MACAddress">MAC-Adresse</system:String>
+    <system:String x:Key="String_Header_Details">Details</system:String>
+    <system:String x:Key="String_Header_IPv4Calculator">IPv4-Rechner</system:String>
+    <system:String x:Key="String_Header_Input">Eingabe</system:String>
+    <system:String x:Key="String_Header_Interface">Interface</system:String>
+    <system:String x:Key="String_Header_Information">Informationen</system:String>
+    <system:String x:Key="String_Header_Configure">Konfigurieren</system:String>
+    <system:String x:Key="String_Header_Statistics">Statistik</system:String>
+    <system:String x:Key="String_Header_About">Über</system:String>
+    <system:String x:Key="String_Header_Window">Fenster</system:String>
+    <system:String x:Key="String_Header_General">Allgemein</system:String>
+    <system:String x:Key="String_Header_Appearance">Aussehen</system:String>
+    <system:String x:Key="String_Header_Language">Sprache</system:String>
+    <system:String x:Key="String_Header_Autostart">Autostart</system:String>
+    <system:String x:Key="String_Header_Theme">Thema</system:String>
+    <system:String x:Key="String_Header_Accent">Akzent</system:String>
+    <system:String x:Key="String_Header_Tray">Tray</system:String>
+    <system:String x:Key="String_Header_Location">Speicherort</system:String>
+    <system:String x:Key="String_Header_Portable">Portable</system:String>
+    <system:String x:Key="String_Header_DefaultApplication">Standardanwendung</system:String>
+    <system:String x:Key="String_Header_IPScanner">IP-Scanner</system:String>
+    <system:String x:Key="String_Header_IPRange">IP-Bereich</system:String>
+    <system:String x:Key="String_Header_Result">Ergebnis</system:String>
+    <system:String x:Key="String_Header_Ping">Ping</system:String>
+    <system:String x:Key="String_Header_DNS">DNS</system:String>
+    <system:String x:Key="String_Header_ARP">ARP</system:String>
+    <system:String x:Key="String_Header_Preparing">Vorbereiten...</system:String>
+    <system:String x:Key="String_Header_Scanning">Scannen...</system:String>
+    <system:String x:Key="String_Header_Canceling">Abbrechen...</system:String>
+    <system:String x:Key="String_Header_Traceroute">Traceroute</system:String>
+    <system:String x:Key="String_Header_Developer">Experimental</system:String>
+    <system:String x:Key="String_Header_DeveloperMode">Entwicklermodus</system:String>
+    <system:String x:Key="String_Header_Tracing">Verfolge...</system:String>
+    <system:String x:Key="String_Header_PingError">Ping-Fehler</system:String>
+    <system:String x:Key="String_Header_DnsError">DNS-Fehler</system:String>
+    <system:String x:Key="String_Header_Multithreading">Multithreading</system:String>
+    <system:String x:Key="String_Header_Confirm">Bestätigen</system:String>
+    <system:String x:Key="String_Header_HotKeys">HotKeys</system:String>
+    <system:String x:Key="String_Header_DNSLookup">DNS Lookup</system:String>
+    <system:String x:Key="String_Header_Route">Route</system:String>
+    <system:String x:Key="String_Header_MaximumHopsReached">Maximale Hops erreicht</system:String>
+    <system:String x:Key="String_Header_CanceledByUser">Vom Benutzer abgebrochen</system:String>
+
+    <!-- Normal strings -->
+    <system:String x:Key="String_ProductName">NETworkManager</system:String>
+    <system:String x:Key="String_ShowWindow">Fenster anzeigen</system:String>
+    <system:String x:Key="String_Settings">Einstellungen</system:String>
+    <system:String x:Key="String_RestartRequired">Neustart Erforderlich</system:String>
+    <system:String x:Key="String_RestartRequiredAfterSettingsChanged">Einige Einstellungen werden erst nach einem Neustart der Anwendung angewendet!</system:String>
+    <system:String x:Key="String_Template">Template</system:String>
+    <system:String x:Key="String_Templates">Templates</system:String>
+    <system:String x:Key="String_NewTemplate">Neues Template</system:String>
+    <system:String x:Key="String_WakeUp">Aufwecken</system:String>
+    <system:String x:Key="String_Header_Error">Fehler</system:String>
+    <system:String x:Key="String_Import">Importieren</system:String>
+    <system:String x:Key="String_Export">Exportieren</system:String>
+    <system:String x:Key="String_MACAddress">MAC-Adresse</system:String>
+    <system:String x:Key="String_Hostname">Hostname</system:String>
+    <system:String x:Key="String_Description">Beschreibung</system:String>
+    <system:String x:Key="String_Broadcast">Broadcast</system:String>
+    <system:String x:Key="String_Port">Port</system:String>
+    <system:String x:Key="String_IPAddress">IP-Adresse</system:String>
+    <system:String x:Key="String_Output">Ausgabe</system:String>
+    <system:String x:Key="String_Calculate">Berechnen</system:String>
+    <system:String x:Key="String_StartWithWindows">Mit Windows starten (aktueller Benutzer)</system:String>
+    <system:String x:Key="String_StartMinimizedInTray">Minimiert im Tray starten</system:String>
+    <system:String x:Key="String_AlwaysShowIconInTray">Icon immer im Tray anzeigen</system:String>
+    <system:String x:Key="String_MinimizeInsteadOfTerminating">Hauptfenster minimieren anstatt die Anwendung zu schließen</system:String>
+    <system:String x:Key="String_MinimizeToTrayInsteadOfTaskbar">Ins Tray minimieren anstatt in die Taskbar</system:String>
+    <system:String x:Key="String_Show">Anzeigen</system:String>
+    <system:String x:Key="String_Close">Schließen</system:String>
+    <system:String x:Key="String_SaveSettingsInApplicationFolder">Einstellungen im Anwendungsordner speichern</system:String>
+    <system:String x:Key="String_Delete">Löschen</system:String>
+    <system:String x:Key="String_Name">Name</system:String>
+    <system:String x:Key="String_Type">Typ</system:String>
+    <system:String x:Key="String_Status">Status</system:String>
+    <system:String x:Key="String_PhysicalAddress">Physische Adresse</system:String>
+    <system:String x:Key="String_Speed">Speed</system:String>
+    <system:String x:Key="String_IPv4Address">IPv4-Adresse</system:String>
+    <system:String x:Key="String_Subnetmask">Subnetzmaske</system:String>
+    <system:String x:Key="String_CIDR">CIDR</system:String>
+    <system:String x:Key="String_Gateway">Gateway</system:String>
+    <system:String x:Key="String_IPv4DefaultGateway">IPv4-Standardgateway</system:String>
+    <system:String x:Key="String_DHCPnabled">DHCP aktiviert</system:String>
+    <system:String x:Key="String_DHCPServer">DHCP-Server</system:String>
+    <system:String x:Key="String_DHCPLeaseObtained">DHCP Lease erhalten</system:String>
+    <system:String x:Key="String_DHCPLeaseExpires">DHCP Lease läuft ab</system:String>
+    <system:String x:Key="String_IPv6Address">IPv6-Adresse</system:String>
+    <system:String x:Key="String_IPv6AddressLinkLocal">Verbindungslokale IPv6-Adresse</system:String>
+    <system:String x:Key="String_IPv6DefaultGateway">IPv6-Standardgateway</system:String>
+    <system:String x:Key="String_ObtainAnIPAddressAutomatically">IP-Adresse automatisch beziehen</system:String>
+    <system:String x:Key="String_UseTheFollowingIPAddress">Folgende IP-Adresse verwenden:</system:String>
+    <system:String x:Key="String_ObtainDNSServerAddressAutomatically">DNS-Serveradresse automatisch beziehen</system:String>
+    <system:String x:Key="String_UseTheFollowingDNSServerAddresses">Folgende DNS-Serveradressen verwenden:</system:String>
+    <system:String x:Key="String_PrimaryDNSServer">Primärer DNS-Server</system:String>
+    <system:String x:Key="String_SecondaryDNSServer">Sekundärer DNS-Server</system:String>
+    <system:String x:Key="String_Yes">Ja</system:String>
+    <system:String x:Key="String_No">Nein</system:String>
+    <system:String x:Key="String_Save">Speichern</system:String>
+    <system:String x:Key="String_DNSSuffix">DNS Suffix</system:String>
+    <system:String x:Key="String_DNSServers">DNS Servers</system:String>
+    <system:String x:Key="String_DynamicIPv4Address">Dynamische IPv4-Adresse</system:String>
+    <system:String x:Key="String_StaticIPv4Address">Statische IPv4-Address</system:String>
+    <system:String x:Key="String_StaticIPv4DNSServer">Statischer IPv4-DNS-Server</system:String>
+    <system:String x:Key="String_DynamicIPv4DNSServer">Dynamischer IPv4-DNS-Server</system:String>
+    <system:String x:Key="String_DefaultGateway">Standardgateway</system:String>
+    <system:String x:Key="String_AddTemplate">Template hinzufügen</system:String>
+    <system:String x:Key="String_EnterNameForTemplate">Geben Sie einen Namen ein, unter dem das Template gespeichert werden soll</system:String>
+    <system:String x:Key="String_EnterHostnameForTemplate">Geben Sie den Hostnamen ein, um das Template später zu identifizieren</system:String>
+    <system:String x:Key="String_ReleaseDate">Release date</system:String>
+    <system:String x:Key="String_Build">Build</system:String>
+    <system:String x:Key="String_AllRightReserved">Alle Rechte vorbehalten.</system:String>
+    <system:String x:Key="String_Libraries">Bibliotheken</system:String>
+    <system:String x:Key="String_Administrator">Administrator</system:String>
+    <system:String x:Key="String_RestartAsAdministrator">Neustart als Administrator</system:String>
+    <system:String x:Key="String_RestartAsAdministratorMessage">Zum ändern dieser Konfiguration werden administrative Rechte benötigt.</system:String>
+    <system:String x:Key="String_StartMaximized">Fenster maximiert starten</system:String>
+    <system:String x:Key="String_NetworkAddress">Netzwerkadresse</system:String>
+    <system:String x:Key="String_CouldNotResolveHostnameMessage">Hostname konnte nicht aufgelöst werden.</system:String>
+    <system:String x:Key="String_AreYouSure">Sind Sie sicher?</system:String>
+    <system:String x:Key="String_DeleteTemplatesMessage">Die ausgewählten Templates werden unwiderruflich gelöscht.</system:String>
+    <system:String x:Key="String_Timeout">Timeout</system:String>
+    <system:String x:Key="String_Buffer">Buffer</system:String>
+    <system:String x:Key="String_Bytes">Bytes</system:String>
+    <system:String x:Key="String_TTL">TTL</system:String>
+    <system:String x:Key="String_IPv4">IPv4</system:String>
+    <system:String x:Key="String_IPv6">IPv6</system:String>
+    <system:String x:Key="String_TimeToWaitBetweenEachPing">Zeit wie lange gewartet wird zwischen jedem Ping</system:String>
+    <system:String x:Key="String_ShowTheFollowingApplicationOnStartup">Zeige die folgende Anwendung beim starten:</system:String>
+    <system:String x:Key="String_TotalIPAddresses">Anzahl IP-Adressen</system:String>
+    <system:String x:Key="String_HostAddressRange">Host-Adressbereich</system:String>
+    <system:String x:Key="String_AvailableIPAddresses">Verfügbare IP-Adressen</system:String>
+    <system:String x:Key="String_PacketsTransmitted">Pakete übermittelt</system:String>
+    <system:String x:Key="String_ReceivedLost">Empfangen / Verloren</system:String>
+    <system:String x:Key="String_PacketLoss">Paketverlust</system:String>
+    <system:String x:Key="String_Minimum">Minimum</system:String>
+    <system:String x:Key="String_Maximum">Maximum</system:String>  
+    <system:String x:Key="String_AverageTime">Durchschnittliche Zeit</system:String>
+    <system:String x:Key="String_Threads">Threads</system:String>
+    <system:String x:Key="String_Attempts">Versuche</system:String>
+    <system:String x:Key="String_ResolveHostname">Hostnamen auflösen</system:String>
+    <system:String x:Key="String_ReadTheMACAddressFromTheArpCache">MAC-Adresse aus dem ARP-Cache auslesen</system:String>
+    <system:String x:Key="String_Time">Zeit</system:String>
+    <system:String x:Key="String_PreferredProtocolWhenResolvingHostname">Bevorzugtes Protokoll beim Auflösen des Hostnamens:</system:String>
+    <system:String x:Key="String_EnableDeveloperMode">Entwicklermodus aktivieren</system:String>
+    <system:String x:Key="String_Hop">Hop</system:String>
+    <system:String x:Key="String_MaximumHopsRouter">Maximale Hops/Router</system:String>
+    <system:String x:Key="String_ConfirmClose">Schließen bestätigen</system:String>
+    <system:String x:Key="String_ConfirmCloseQuesiton">Sind Sie sicher, dass Sie die Anwendung beenden möchten?</system:String>
+    <system:String x:Key="String_UntrayBringWindowToFront">Untray / Fenster in den Vordergrund bringen</system:String>
+    <system:String x:Key="String_MaximumHopsReachedMessage">Traceroute wurde nach {0} Hops abgebrochen.</system:String>
+    <system:String x:Key="String_CanceledByUserMessage">Der Vorgang wurde vom Benutzer abgebrochen!</system:String>
+    
+    <!-- Buttons -->
+    <system:String x:Key="String_Button_Change">Wechseln</system:String>
+    <system:String x:Key="String_Button_Default">Standard</system:String>
+    <system:String x:Key="String_Button_WakeUp">Aufwecken</system:String>
+    <system:String x:Key="String_Button_Apply">Anwenden</system:String>
+    <system:String x:Key="String_Button_Refresh">Aktualisieren</system:String>
+    <system:String x:Key="String_Button_Later">Später</system:String>
+    <system:String x:Key="String_Button_RestartNow">Jetzt neu starten</system:String>
+    <system:String x:Key="String_Button_AddTemplate">Template hinzufügen</system:String>
+    <system:String x:Key="String_Button_Add">Hinzufügen</system:String>
+    <system:String x:Key="String_Button_Cancel">Abbrechen</system:String>
+    <system:String x:Key="String_Button_OK">OK</system:String>
+    <system:String x:Key="String_Button_RestartAsAdministrator">Neustart als Administrator</system:String>
+    <system:String x:Key="String_Button_Delete">Löschen</system:String>
+    <system:String x:Key="String_Button_Calculate">Berechnen</system:String>
+    <system:String x:Key="String_Button_Ping">Ping</system:String>
+    <system:String x:Key="String_Button_Scan">Scannen</system:String>
+    <system:String x:Key="String_Button_Trace">Verfolgen</system:String>
+    <system:String x:Key="String_Button_Close">Schließen</system:String>
+    <system:String x:Key="String_Button_Lookup">Lookup</system:String>
+
+    <!-- ContextMenuItem.Header -->
+    <system:String x:Key="String_ContextMenu_Cut">Ausschneiden</system:String>
+    <system:String x:Key="String_ContextMenu_Copy">Kopieren</system:String>
+    <system:String x:Key="String_ContextMenu_Paste">Einfügen</system:String>
+
+    <!-- ToggleSwitch -->
+    <system:String x:Key="String_ToggleSwitch_On">Ein</system:String>
+    <system:String x:Key="String_ToggleSwitch_Off">Aus</system:String>
+
+    <!-- Watermark -->
+    <system:String x:Key="String_Watermark_Search">Suche...</system:String>
+    <system:String x:Key="String_Watermark_EnterLocation">Speicherort eingeben...</system:String>
+    <system:String x:Key="String_Watermark_ExampleMACAddress">00:F1:21:AB:0B:35</system:String>
+    <system:String x:Key="String_Watermark_ExampleHostname">SERVER-01</system:String>
+    <system:String x:Key="String_Watermark_ExampleBroadcast">192.168.178.255</system:String>
+    <system:String x:Key="String_Watermark_ExamplePort">7</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPv4Address">192.168.178.1</system:String>
+    <system:String x:Key="String_Watermark_ExampleSubnetmask">255.255.255.0</system:String>
+    <system:String x:Key="String_Watermark_HostnameOrIPAddress">Hostname oder IP-Adresse...</system:String>
+    <system:String x:Key="String_Watermark_EampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.178.150</system:String>
+
+    <!-- ShowProgress -->
+    <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Konfiguriere Netzwerkinterface</system:String>
+    <system:String x:Key="String_Progress_SetStaticIPAddress">Setze statische IP-Adresse und Gateway...</system:String>
+    <system:String x:Key="String_Progress_SetDynamicIPAddress">Setze dynamische IP-Adresse...</system:String>
+    <system:String x:Key="String_Progress_SetStaticDNSServer">Setze statische DNS-Server...</system:String>
+    <system:String x:Key="String_Progesss_SetDynamicDNSServer">Setze dynamischen DNS-Server...</system:String>
+    <system:String x:Key="String_Progress_RenewDHCPLease">Erneuere DHCP Lease...</system:String>
+    <system:String x:Key="String_Progress_FixGatewayAfterDHCPEnabled">Fixe Gateway nachdem DHCP aktiviert wurde...</system:String>
+
+    <!-- ToolTip -->
+    <system:String x:Key="String_ToolTip_Settings">Einstellungen öffnen</system:String>
+    <system:String x:Key="String_ToolTip_GitHub">Projekt auf Github anzeigen</system:String>
+    <system:String x:Key="String_ToolTip_AddTemplate">Template hinzufügen</system:String>
+
+    <!-- Validate (User Input in GUI) -->
+    <system:String x:Key="String_ValidateError_FieldEmpty">Feld darf nicht leer sein</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidMACAddress">Geben Sie eine gültige MAC-Addresse (z.B. 00:F1:23:AB:F2:35) ein</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidPort">Geben Sie einen gültigen Port ein (1 - 65535)</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidIPv4Address">Geben Sie eine gültige IPv4-Adresse ein</system:String>
+    <system:String x:Key="String_ValidateError_MACAddressEmpty">MAC-Adresse darf nicht leer sein</system:String>
+    <system:String x:Key="String_ValidateError_HostnameEmpty">Hostname darf nicht leer sein</system:String>
+    <system:String x:Key="String_ValidateError_FolderDoesNotExist">Ordner existiert nicht</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidSubnetmask">Geben Sie eine gültige Subnetzmaske ein (z.B. 255.255.255.0)</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidSubnetmaskOrCIDR">Geben Sie eine gültige Subnetzmaske oder CIDR ein (z.B. 255.255.255.0 oder 24)</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidIPScanRange">Geben Sie einen gültigen IP-Bereich ein</system:String>
+
+    <!-- ApplicationInfo.Name && ApplicationInfo.Description-->
+    <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>
+    <system:String x:Key="String_ApplicationName_NetworkInterface">Netzwerkinterface</system:String>
+    <system:String x:Key="String_ApplicationName_PortScanner">Port-Scanner</system:String>
+    <system:String x:Key="String_ApplicationName_SubnetCalculator">Subnetz-Rechner</system:String>
+    <system:String x:Key="String_ApplicationName_WakeOnLAN">Wake on LAN</system:String>
+    <system:String x:Key="String_ApplicationName_Ping">Ping</system:String>
+    <system:String x:Key="String_ApplicationName_Traceroute">Traceroute</system:String>
+    <system:String x:Key="String_ApplicationName_DNSLookup">DNS Lookup</system:String>
+
+    <!-- AppTheme.Name -->
+    <system:String x:Key="String_AppTheme_BaseLight">Hell</system:String>
+    <system:String x:Key="String_AppTheme_BaseDark">Dunkel</system:String>
+
+    <!-- Accent.Name -->
+    <system:String x:Key="String_Accent_Red">Rot</system:String>
+    <system:String x:Key="String_Accent_Green">Grün</system:String>
+    <system:String x:Key="String_Accent_Blue">Blau</system:String>
+    <system:String x:Key="String_Accent_Purple">Lila</system:String>
+    <system:String x:Key="String_Accent_Orange">Orange</system:String>
+    <system:String x:Key="String_Accent_Lime">Kalk</system:String>
+    <system:String x:Key="String_Accent_Emerald">Smaragd</system:String>
+    <system:String x:Key="String_Accent_Teal">Teal</system:String>
+    <system:String x:Key="String_Accent_Cyan">Türkis</system:String>
+    <system:String x:Key="String_Accent_Cobalt">Kobalt</system:String>
+    <system:String x:Key="String_Accent_Indigo">Indigo</system:String>
+    <system:String x:Key="String_Accent_Violet">Violett</system:String>
+    <system:String x:Key="String_Accent_Pink">Rosa</system:String>
+    <system:String x:Key="String_Accent_Magenta">Magenta</system:String>
+    <system:String x:Key="String_Accent_Crimson">Purpur</system:String>
+    <system:String x:Key="String_Accent_Amber">Bernstein</system:String>
+    <system:String x:Key="String_Accent_Yellow">Gelb</system:String>
+    <system:String x:Key="String_Accent_Brown">Braun</system:String>
+    <system:String x:Key="String_Accent_Olive">Oliv</system:String>
+    <system:String x:Key="String_Accent_Steel">Stahl</system:String>
+    <system:String x:Key="String_Accent_Mauve">Mauve</system:String>
+    <system:String x:Key="String_Accent_Taupe">Taupe</system:String>
+    <system:String x:Key="String_Accent_Sienna">Siena</system:String>
+
+    <!-- IPStatus -->
+    <system:String x:Key="String_IPStatus_Success">Erfolgreich</system:String>
+    <system:String x:Key="String_IPStatus_DestinationHostUnreachable">Zielhost nicht erreichbar</system:String>
+    <system:String x:Key="String_IPStatus_TimedOut">Zeitüberschreitung der Anforderung</system:String>
+
+    <!-- Libaries -->
+    <system:String x:Key="String_Libary_MahAppsMetroName">MahApps.Metro</system:String>
+    <system:String x:Key="String_Libary_MahAppsMetroDescription">Ein Toolkit für die Erstellung von WPF-Anwendungen im Metro - / Modern UI Stil.</system:String>
+    <system:String x:Key="String_Libary_MahAppsMetroIconPacksName">MahApps.Metro.IconPacks</system:String>
+    <system:String x:Key="String_Libary_MahAppsMetroIconPacksDescription">Eine Sammlung von Icons für WPF und UWP...</system:String>
+</ResourceDictionary>

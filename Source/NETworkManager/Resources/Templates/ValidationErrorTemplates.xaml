@@ -1,0 +1,60 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Converter="clr-namespace:NETworkManager.Views.Converters"
+                    xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
+    <Converter:BooleanOrConverter x:Key="BooleanOrConverter" />
+
+    <ControlTemplate x:Key="DefaultErrorTemplate">
+        <StackPanel Orientation="Horizontal">
+            <Grid>
+                <Polygon  x:Name="toolTipCorner"  Grid.ZIndex="2" Margin="0" Points="10,10 10,0 0,0" Fill="Red" HorizontalAlignment="Right" VerticalAlignment="Top" IsHitTestVisible="True" />
+                <AdornedElementPlaceholder x:Name="adorner"/>
+                <Popup PlacementTarget="{Binding ElementName=adorner}" PopupAnimation="Fade">
+                    <Popup.Style>
+                        <Style TargetType="{x:Type Popup}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=adorner, Path=AdornedElement.IsKeyboardFocusWithin}" Value="True" >
+                                    <Setter Property="PlacementTarget" Value="{Binding ElementName=adorner}" />
+                                    <Setter Property="Placement" Value="Bottom" />                                    
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=toolTipCorner,Path=IsMouseOver}" Value="True" >
+                                    <Setter Property="PlacementTarget" Value="{Binding ElementName=toolTipCorner}" />
+                                    <Setter Property="Placement" Value="Mouse" />
+                                </DataTrigger>
+                                <DataTrigger Value="True">
+                                    <DataTrigger.Binding>
+                                        <MultiBinding Converter="{StaticResource BooleanOrConverter}">
+                                            <Binding ElementName="adorner" Path="AdornedElement.IsKeyboardFocusWithin" />
+                                            <Binding ElementName="toolTipCorner" Path="IsMouseOver"/>
+                                        </MultiBinding>
+                                    </DataTrigger.Binding>
+                                    <Setter Property="IsOpen" Value="True" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Popup.Style>
+                    <StackPanel>
+                        <Border MaxWidth="250" Background="{DynamicResource WhiteColorBrush}" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" Padding="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Grid.Column="0" Width="20" Height="20" Fill="{DynamicResource AccentColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform">
+                                        <VisualBrush.Visual>
+                                            <IconPacks:PackIconMaterial Kind="InformationVariant" />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{Binding Path=/ErrorContent}" Foreground="{DynamicResource AccentColorBrush}" FontSize="14" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        </Grid>
+                    </Border>
+                    </StackPanel>
+                </Popup>
+            </Grid>
+        </StackPanel>
+    </ControlTemplate>
+</ResourceDictionary>
