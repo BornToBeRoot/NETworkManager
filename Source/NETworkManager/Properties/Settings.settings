@@ -107,5 +107,11 @@
     <Setting Name="HotKey_ShowWindowEnabled" Provider="SettingsProviderPortable" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="Ping_DontFragment" Provider="SettingsProviderPortable" Roaming="true" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Ping_TTL" Provider="SettingsProviderPortable" Roaming="true" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">64</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

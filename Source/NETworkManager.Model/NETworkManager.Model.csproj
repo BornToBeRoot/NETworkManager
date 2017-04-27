@@ -45,10 +45,10 @@
     <Compile Include="Network\NetworkInterface.cs" />
     <Compile Include="Network\NetworkInterfaceConfig.cs" />
     <Compile Include="Network\NetworkInterfaceInfo.cs" />
-    <Compile Include="Temp\Ping.cs" />
-    <Compile Include="Temp\PingArgs.cs" />
-    <Compile Include="Temp\PingOptions.cs" />
-    <Compile Include="Temp\PingInfo.cs" />
+    <Compile Include="Network\Ping.cs" />
+    <Compile Include="Network\PingArgs.cs" />
+    <Compile Include="Network\PingOptions.cs" />
+    <Compile Include="Network\PingInfo.cs" />
     <Compile Include="Network\Subnet.cs" />
     <Compile Include="Network\SubnetInfo.cs" />
     <Compile Include="Network\Subnetmask.cs" />

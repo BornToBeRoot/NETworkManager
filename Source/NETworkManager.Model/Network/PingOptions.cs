@@ -7,21 +7,21 @@
         public int Timeout { get; set; }
         public byte[] Buffer { get; set; }
         public int TTL { get; set; }
-        public bool DontFragement { get; set; }
+        public bool DontFragment { get; set; }
 
         public PingOptions()
         {
 
         }
 
-        public PingOptions(int attempts, int waitTime, int timeout, byte[] buffer, int ttl, bool dontFragement)
+        public PingOptions(int attempts, int waitTime, int timeout, byte[] buffer, int ttl, bool dontFragment)
         {
             Attempts = attempts;
             WaitTime = waitTime;
             Timeout = timeout;
             Buffer = buffer;
             TTL = ttl;
-            DontFragement = dontFragement;
+            DontFragment = dontFragment;
         }
     }
 }

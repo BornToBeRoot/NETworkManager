@@ -506,5 +506,33 @@ namespace NETworkManager.Properties {
                 this["HotKey_ShowWindowEnabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(SettingsProviderPortable))]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
+        public bool Ping_DontFragment {
+            get {
+                return ((bool)(this["Ping_DontFragment"]));
+            }
+            set {
+                this["Ping_DontFragment"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.SettingsProviderAttribute(typeof(SettingsProviderPortable))]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("64")]
+        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
+        public int Ping_TTL {
+            get {
+                return ((int)(this["Ping_TTL"]));
+            }
+            set {
+                this["Ping_TTL"] = value;
+            }
+        }
     }
 }

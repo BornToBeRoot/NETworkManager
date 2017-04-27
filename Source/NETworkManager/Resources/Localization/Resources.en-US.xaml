@@ -51,6 +51,7 @@
     <system:String x:Key="String_Header_Route">Route</system:String>
     <system:String x:Key="String_Header_MaximumHopsReached">Maximum hops reached</system:String>
     <system:String x:Key="String_Header_CanceledByUser">Canceled by user</system:String>
+    <system:String x:Key="String_Header_DontFragment">Don't fragment</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -281,6 +282,7 @@
     <system:String x:Key="String_IPStatus_Success">Success</system:String>
     <system:String x:Key="String_IPStatus_DestinationHostUnreachable">Destination host unreachable.</system:String>
     <system:String x:Key="String_IPStatus_TimedOut">Request timed out.</system:String>
+    <system:String x:Key="String_IPStatus_TtlExpired">TTL expired in transit.</system:String>
 
     <!-- Libaries -->
     <system:String x:Key="String_Libary_MahAppsMetroName">MahApps.Metro</system:String>

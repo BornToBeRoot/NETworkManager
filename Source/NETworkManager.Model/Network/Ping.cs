@@ -40,7 +40,7 @@ namespace NETworkManager.Model.Network
                 System.Net.NetworkInformation.PingOptions options = new System.Net.NetworkInformation.PingOptions
                 {
                     Ttl = pingOptions.TTL,
-                    DontFragment = pingOptions.DontFragement
+                    DontFragment = pingOptions.DontFragment
                 };
 
                 using (System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping())

@@ -63,6 +63,27 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
+        private int _attempts;
+        public int Attempts
+        {
+            get { return _attempts; }
+            set
+            {
+                if (value == _attempts)
+                    return;
+
+                if (!_isLoading)
+                {
+                    Properties.Settings.Default.Ping_Attempts = value;
+
+                    SettingsManager.SettingsChanged = true;
+                }
+
+                _attempts = value;
+                OnPropertyChanged();
+            }
+        }
+
         private int _timeout;
         public int Timeout
         {
@@ -105,23 +126,44 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private int _attempts;
-        public int Attempts
+        private int _ttl;
+        public int TTL
         {
-            get { return _attempts; }
+            get { return _ttl; }
             set
             {
-                if (value == _attempts)
+                if (value == _ttl)
                     return;
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Ping_Attempts = value;
+                    Properties.Settings.Default.Ping_TTL = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
 
-                _attempts = value;
+                _ttl = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _dontFragment;
+        public bool DontFragment
+        {
+            get { return _dontFragment; }
+            set
+            {
+                if (value == _dontFragment)
+                    return;
+
+                if (!_isLoading)
+                {
+                    Properties.Settings.Default.Ping_DontFragment = value;
+
+                    SettingsManager.SettingsChanged = true;
+                }
+
+                _dontFragment = value;
                 OnPropertyChanged();
             }
         }
@@ -330,9 +372,11 @@ namespace NETworkManager.ViewModels.Applications
             if (Properties.Settings.Default.Ping_HostnameOrIPAddressHistory != null)
                 HostnameOrIPAddressHistory = new List<string>(Properties.Settings.Default.Ping_HostnameOrIPAddressHistory.Cast<string>().ToList());
 
+            Attempts = Properties.Settings.Default.Ping_Attempts;
             Timeout = Properties.Settings.Default.Ping_Timeout;
             Buffer = Properties.Settings.Default.Ping_Buffer;
-            Attempts = Properties.Settings.Default.Ping_Attempts;
+            TTL = Properties.Settings.Default.Ping_TTL;
+            DontFragment = Properties.Settings.Default.Ping_DontFragment;
             WaitTime = Properties.Settings.Default.Ping_WaitTime;
 
             if (Properties.Settings.Default.Ping_ResolveHostnamePreferIPv4)
@@ -342,12 +386,14 @@ namespace NETworkManager.ViewModels.Applications
         }
         #endregion
 
-        #region Commands
+        #region ICommands
         public ICommand PingCommand
         {
             get { return new RelayCommand(p => PingAction()); }
         }
+        #endregion
 
+        #region Methods
         private void PingAction()
         {
             if (IsPingRunning)
@@ -416,11 +462,11 @@ namespace NETworkManager.ViewModels.Applications
             PingOptions pingOptions = new PingOptions()
             {
                 Attempts = Attempts,
-                WaitTime = WaitTime,
-                Buffer = new byte[Buffer],
                 Timeout = Timeout,
-                TTL = 64,
-                DontFragement = true
+                Buffer = new byte[Buffer],
+                TTL = TTL,
+                DontFragment = DontFragment,
+                WaitTime = WaitTime
             };
 
             Ping ping = new Ping();
@@ -432,6 +478,20 @@ namespace NETworkManager.ViewModels.Applications
             ping.SendAsync(ipAddress, pingOptions, cancellationTokenSource.Token);
         }
 
+        private void StopPing()
+        {
+            CancelPing = true;
+            cancellationTokenSource.Cancel();
+        }
+
+        public void OnShutdown()
+        {
+            if (IsPingRunning)
+                PingAction();
+        }
+        #endregion
+
+        #region Events
         private void Ping_UserHasCanceled(object sender, EventArgs e)
         {
             CancelPing = false;
@@ -452,18 +512,6 @@ namespace NETworkManager.ViewModels.Applications
                 PingResult.Add(pingInfo);
             }));
         }
-
-        private void StopPing()
-        {
-            CancelPing = true;
-            cancellationTokenSource.Cancel();
-        }
         #endregion
-
-        public void OnShutdown()
-        {
-            if (IsPingRunning)
-                PingAction();
-        }
     }
 }
