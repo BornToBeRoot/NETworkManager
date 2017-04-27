@@ -111,11 +111,11 @@
                     </Button>
                 </Grid>
                 <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Status}" Style="{StaticResource DefaultTextBlockStyle}" />
-                <Control:ScrollingDataGrid Grid.Row="3" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding PingResult}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,20">
+                <Control:ScrollingDataGrid Grid.Row="3" CanUserSortColumns="False" CanUserReorderColumns="False" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding PingResult}" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,20">
                     <Control:ScrollingDataGrid.Columns>
-                        <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress}" Width="150" />
-                        <DataGridTextColumn Header="{DynamicResource String_Bytes}" Binding="{Binding Bytes, Converter={StaticResource IntToStringConverter}}" Width="80" />
-                        <DataGridTextColumn Header="{DynamicResource String_Time}" Width="100">
+                        <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress}" MinWidth="150" />
+                        <DataGridTextColumn Header="{DynamicResource String_Bytes}" Binding="{Binding Bytes, Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
+                        <DataGridTextColumn Header="{DynamicResource String_Time}" MinWidth="100">
                             <DataGridTextColumn.Binding>
                                 <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
                                     <Binding Path="Status" />
@@ -123,7 +123,7 @@
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="{DynamicResource String_TTL}" Binding="{Binding TTL, Converter={StaticResource IntToStringConverter}}" Width="80"/>
+                        <DataGridTextColumn Header="{DynamicResource String_TTL}" Binding="{Binding TTL, Converter={StaticResource IntToStringConverter}}" MinWidth="80"/>
                         <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding Status, Converter={StaticResource IPStatusToStringConverter}}" Width="*"/>
                     </Control:ScrollingDataGrid.Columns>
                 </Control:ScrollingDataGrid>

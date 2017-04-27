@@ -1,10 +1,10 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Model.Common;
 using NETworkManager.Model.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities.Common;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
@@ -252,16 +252,16 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private ObservableCollection<PingInfo> _PingResult = new ObservableCollection<PingInfo>();
-        public ObservableCollection<PingInfo> PingResult
+        private AsyncObservableCollection<PingInfo> _pingResult = new AsyncObservableCollection<PingInfo>();
+        public AsyncObservableCollection<PingInfo> PingResult
         {
-            get { return _PingResult; }
+            get { return _pingResult; }
             set
             {
-                if (value == _PingResult)
+                if (value == _pingResult)
                     return;
 
-                _PingResult = value;
+                _pingResult = value;
             }
         }
 
@@ -410,6 +410,9 @@ namespace NETworkManager.ViewModels.Applications
             PingsTransmitted = 0;
             PingsReceived = 0;
             PingsLost = 0;
+            AverageTime = 0;
+            MinimumTime = 0;
+            MaximumTime = 0;
 
             // Try to parse the string into an IP-Address
             IPAddress ipAddress;
@@ -507,10 +510,37 @@ namespace NETworkManager.ViewModels.Applications
         {
             PingInfo pingInfo = PingInfo.Parse(e);
 
-            Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
+            // Add the result to the collection
+            PingResult.Add(pingInfo);
+            
+            // Calculate statistics
+            PingsTransmitted++;
+
+            if (pingInfo.Status == System.Net.NetworkInformation.IPStatus.Success)
             {
-                PingResult.Add(pingInfo);
-            }));
+                PingsReceived++;
+
+                if (PingsReceived == 1)
+                {
+                    MinimumTime = pingInfo.Time;
+                    MaximumTime = pingInfo.Time;
+                }
+                else
+                {
+                    if (MinimumTime > pingInfo.Time)
+                        MinimumTime = pingInfo.Time;
+
+                    if (MaximumTime < pingInfo.Time)
+                        MaximumTime = pingInfo.Time;
+                }
+
+                // I don't know if this can slow my application if the collection is to large
+                AverageTime = (int)PingResult.Average(s => s.Time);
+            }
+            else
+            {
+                PingsLost++;
+            }
         }
         #endregion
     }

@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\AsyncObservableCollection.cs" />
     <Compile Include="Network\NetworkInterface.cs" />
     <Compile Include="Network\NetworkInterfaceConfig.cs" />
     <Compile Include="Network\NetworkInterfaceInfo.cs" />
