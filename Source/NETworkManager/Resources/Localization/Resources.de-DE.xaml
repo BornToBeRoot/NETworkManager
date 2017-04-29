@@ -50,6 +50,7 @@
     <system:String x:Key="String_Header_Route">Route</system:String>
     <system:String x:Key="String_Header_MaximumHopsReached">Maximale Hops erreicht</system:String>
     <system:String x:Key="String_Header_CanceledByUser">Vom Benutzer abgebrochen</system:String>
+    <system:String x:Key="String_Header_DontFragment">Nicht fragmentieren</system:String>
 
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -270,8 +271,9 @@
 
     <!-- IPStatus -->
     <system:String x:Key="String_IPStatus_Success">Erfolgreich</system:String>
-    <system:String x:Key="String_IPStatus_DestinationHostUnreachable">Zielhost nicht erreichbar</system:String>
-    <system:String x:Key="String_IPStatus_TimedOut">Zeitüberschreitung der Anforderung</system:String>
+    <system:String x:Key="String_IPStatus_DestinationHostUnreachable">Zielhost nicht erreichbar.</system:String>
+    <system:String x:Key="String_IPStatus_TimedOut">Zeitüberschreitung der Anforderung.</system:String>
+    <system:String x:Key="String_IPStatus_TtlExpired">Die Gültigkeitsdauer wurde bei der Übertragung überschritten.</system:String>
 
     <!-- Libaries -->
     <system:String x:Key="String_Libary_MahAppsMetroName">MahApps.Metro</system:String>

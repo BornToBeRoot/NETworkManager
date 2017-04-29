@@ -1,10 +1,10 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Model.Common;
 using NETworkManager.Model.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities.Common;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
@@ -63,6 +63,27 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
+        private int _attempts;
+        public int Attempts
+        {
+            get { return _attempts; }
+            set
+            {
+                if (value == _attempts)
+                    return;
+
+                if (!_isLoading)
+                {
+                    Properties.Settings.Default.Ping_Attempts = value;
+
+                    SettingsManager.SettingsChanged = true;
+                }
+
+                _attempts = value;
+                OnPropertyChanged();
+            }
+        }
+
         private int _timeout;
         public int Timeout
         {
@@ -105,23 +126,44 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private int _attempts;
-        public int Attempts
+        private int _ttl;
+        public int TTL
         {
-            get { return _attempts; }
+            get { return _ttl; }
             set
             {
-                if (value == _attempts)
+                if (value == _ttl)
                     return;
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Ping_Attempts = value;
+                    Properties.Settings.Default.Ping_TTL = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
 
-                _attempts = value;
+                _ttl = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _dontFragment;
+        public bool DontFragment
+        {
+            get { return _dontFragment; }
+            set
+            {
+                if (value == _dontFragment)
+                    return;
+
+                if (!_isLoading)
+                {
+                    Properties.Settings.Default.Ping_DontFragment = value;
+
+                    SettingsManager.SettingsChanged = true;
+                }
+
+                _dontFragment = value;
                 OnPropertyChanged();
             }
         }
@@ -210,16 +252,16 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private ObservableCollection<PingInfo> _PingResult = new ObservableCollection<PingInfo>();
-        public ObservableCollection<PingInfo> PingResult
+        private AsyncObservableCollection<PingInfo> _pingResult = new AsyncObservableCollection<PingInfo>();
+        public AsyncObservableCollection<PingInfo> PingResult
         {
-            get { return _PingResult; }
+            get { return _pingResult; }
             set
             {
-                if (value == _PingResult)
+                if (value == _pingResult)
                     return;
 
-                _PingResult = value;
+                _pingResult = value;
             }
         }
 
@@ -330,9 +372,11 @@ namespace NETworkManager.ViewModels.Applications
             if (Properties.Settings.Default.Ping_HostnameOrIPAddressHistory != null)
                 HostnameOrIPAddressHistory = new List<string>(Properties.Settings.Default.Ping_HostnameOrIPAddressHistory.Cast<string>().ToList());
 
+            Attempts = Properties.Settings.Default.Ping_Attempts;
             Timeout = Properties.Settings.Default.Ping_Timeout;
             Buffer = Properties.Settings.Default.Ping_Buffer;
-            Attempts = Properties.Settings.Default.Ping_Attempts;
+            TTL = Properties.Settings.Default.Ping_TTL;
+            DontFragment = Properties.Settings.Default.Ping_DontFragment;
             WaitTime = Properties.Settings.Default.Ping_WaitTime;
 
             if (Properties.Settings.Default.Ping_ResolveHostnamePreferIPv4)
@@ -342,12 +386,14 @@ namespace NETworkManager.ViewModels.Applications
         }
         #endregion
 
-        #region Commands
+        #region ICommands
         public ICommand PingCommand
         {
             get { return new RelayCommand(p => PingAction()); }
         }
+        #endregion
 
+        #region Methods
         private void PingAction()
         {
             if (IsPingRunning)
@@ -364,6 +410,9 @@ namespace NETworkManager.ViewModels.Applications
             PingsTransmitted = 0;
             PingsReceived = 0;
             PingsLost = 0;
+            AverageTime = 0;
+            MinimumTime = 0;
+            MaximumTime = 0;
 
             // Try to parse the string into an IP-Address
             IPAddress ipAddress;
@@ -416,11 +465,11 @@ namespace NETworkManager.ViewModels.Applications
             PingOptions pingOptions = new PingOptions()
             {
                 Attempts = Attempts,
-                WaitTime = WaitTime,
-                Buffer = new byte[Buffer],
                 Timeout = Timeout,
-                TTL = 64,
-                DontFragement = true
+                Buffer = new byte[Buffer],
+                TTL = TTL,
+                DontFragment = DontFragment,
+                WaitTime = WaitTime
             };
 
             Ping ping = new Ping();
@@ -432,6 +481,20 @@ namespace NETworkManager.ViewModels.Applications
             ping.SendAsync(ipAddress, pingOptions, cancellationTokenSource.Token);
         }
 
+        private void StopPing()
+        {
+            CancelPing = true;
+            cancellationTokenSource.Cancel();
+        }
+
+        public void OnShutdown()
+        {
+            if (IsPingRunning)
+                PingAction();
+        }
+        #endregion
+
+        #region Events
         private void Ping_UserHasCanceled(object sender, EventArgs e)
         {
             CancelPing = false;
@@ -447,23 +510,38 @@ namespace NETworkManager.ViewModels.Applications
         {
             PingInfo pingInfo = PingInfo.Parse(e);
 
-            Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
-            {
-                PingResult.Add(pingInfo);
-            }));
-        }
+            // Add the result to the collection
+            PingResult.Add(pingInfo);
+            
+            // Calculate statistics
+            PingsTransmitted++;
 
-        private void StopPing()
-        {
-            CancelPing = true;
-            cancellationTokenSource.Cancel();
+            if (pingInfo.Status == System.Net.NetworkInformation.IPStatus.Success)
+            {
+                PingsReceived++;
+
+                if (PingsReceived == 1)
+                {
+                    MinimumTime = pingInfo.Time;
+                    MaximumTime = pingInfo.Time;
+                }
+                else
+                {
+                    if (MinimumTime > pingInfo.Time)
+                        MinimumTime = pingInfo.Time;
+
+                    if (MaximumTime < pingInfo.Time)
+                        MaximumTime = pingInfo.Time;
+                }
+
+                // I don't know if this can slow my application if the collection is to large
+                AverageTime = (int)PingResult.Average(s => s.Time);
+            }
+            else
+            {
+                PingsLost++;
+            }
         }
         #endregion
-
-        public void OnShutdown()
-        {
-            if (IsPingRunning)
-                PingAction();
-        }
     }
 }

@@ -111,11 +111,11 @@
                     </Button>
                 </Grid>
                 <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Status}" Style="{StaticResource DefaultTextBlockStyle}" />
-                <Control:ScrollingDataGrid Grid.Row="3" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding PingResult}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,20">
+                <Control:ScrollingDataGrid Grid.Row="3" CanUserSortColumns="False" CanUserReorderColumns="False" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding PingResult}" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,20">
                     <Control:ScrollingDataGrid.Columns>
-                        <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress}" Width="150" />
-                        <DataGridTextColumn Header="{DynamicResource String_Bytes}" Binding="{Binding Bytes, Converter={StaticResource IntToStringConverter}}" Width="80" />
-                        <DataGridTextColumn Header="{DynamicResource String_Time}" Width="100">
+                        <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress}" MinWidth="150" />
+                        <DataGridTextColumn Header="{DynamicResource String_Bytes}" Binding="{Binding Bytes, Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
+                        <DataGridTextColumn Header="{DynamicResource String_Time}" MinWidth="100">
                             <DataGridTextColumn.Binding>
                                 <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
                                     <Binding Path="Status" />
@@ -123,7 +123,7 @@
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="{DynamicResource String_TTL}" Binding="{Binding TTL, Converter={StaticResource IntToStringConverter}}" Width="80"/>
+                        <DataGridTextColumn Header="{DynamicResource String_TTL}" Binding="{Binding TTL, Converter={StaticResource IntToStringConverter}}" MinWidth="80"/>
                         <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding Status, Converter={StaticResource IPStatusToStringConverter}}" Width="*"/>
                     </Control:ScrollingDataGrid.Columns>
                 </Control:ScrollingDataGrid>
@@ -188,12 +188,15 @@
                 </ScrollViewer.Resources>
                 <StackPanel >
                     <TextBlock Text="{DynamicResource String_Header_Ping}" Style="{StaticResource DefaultTextBlockStyle}" />
+                    <TextBlock  Text="{DynamicResource String_Attempts}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+                    <mah:NumericUpDown Value="{Binding Attempts}" Maximum="10000" Minimum="0" Interval="1" Margin="0,0,0,10" />
                     <TextBlock Text="{DynamicResource String_Timeout}" Style="{StaticResource TextBlockInput}" Margin="0,0,0,10" />
                     <mah:NumericUpDown Value="{Binding Timeout}" Maximum="10000" Minimum="100" Interval="100" Margin="0,0,0,10" />
                     <TextBlock Text="{DynamicResource String_Buffer}" Style="{StaticResource TextBlockInput}" Margin="0,0,0,10" />
                     <mah:NumericUpDown Value="{Binding Buffer}" Minimum="1" Maximum="65535" Interval="1" Margin="0,0,0,10" />
-                    <TextBlock  Text="{DynamicResource String_Attempts}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
-                    <mah:NumericUpDown Value="{Binding Attempts}" Maximum="10000" Minimum="0" Interval="1" Margin="0,0,0,10" />
+                    <TextBlock Text="{DynamicResource String_TTL}" Style="{StaticResource TextBlockInput}" Margin="0,0,0,10" />
+                    <mah:NumericUpDown Value="{Binding TTL}" Minimum="1" Maximum="255" Interval="1" Margin="0,0,0,10" />
+                    <mah:ToggleSwitch IsChecked="{Binding DontFragment}" Header="{DynamicResource String_Header_DontFragment}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" Margin="0,0,0,10"/>
                     <TextBlock Text="{DynamicResource String_TimeToWaitBetweenEachPing}" Style="{StaticResource TextBlockInput}" Margin="0,0,0,10" />
                     <mah:NumericUpDown Value="{Binding WaitTime}" Maximum="10000" Minimum="100" Interval="100" Margin="0,0,0,20"/>
                     <TextBlock Text="{DynamicResource String_Header_DNS}" Style="{StaticResource DefaultTextBlockStyle}" />
