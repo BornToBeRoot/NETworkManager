@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Converter="clr-namespace:NETworkManager.Views.Converters"
+                    xmlns:Converter="clr-namespace:NETworkManager.Converters"
                     xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
     <Converter:BooleanOrConverter x:Key="BooleanOrConverter" />
 

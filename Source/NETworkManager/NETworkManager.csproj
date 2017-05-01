@@ -171,6 +171,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controls\MultiSelectDataGrid.cs" />
+    <Compile Include="Controls\ScrollingDataGrid.cs" />
     <Compile Include="ViewModels\Applications\TracerouteViewModel.cs" />
     <Compile Include="ViewModels\Applications\PingViewModel.cs" />
     <Compile Include="ViewModels\Applications\IPScannerViewModel.cs" />
@@ -187,28 +189,26 @@
     <Compile Include="Views\Common\RestartAsAdministratorUserControl.xaml.cs">
       <DependentUpon>RestartAsAdministratorUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\ScrollingDataGrid.cs" />
-    <Compile Include="Views\Converters\BooleanReverseToVisibilityConverter.cs" />
-    <Compile Include="Views\Converters\BooleanToVisibilityConverter.cs" />
-    <Compile Include="Views\Converters\PercentConverter.cs" />
-    <Compile Include="Views\Converters\PingTimeToStringConverter.cs" />
-    <Compile Include="Views\Converters\IPStatusToStringConverter.cs" />
-    <Compile Include="Views\Converters\BooleanOrConverter.cs" />
-    <Compile Include="Views\Converters\IPAddressToStringConverter.cs" />
-    <Compile Include="Views\Converters\SelectedItemsToBoolConverter.cs" />
-    <Compile Include="Views\Converters\IntToStringConverter.cs" />
-    <Compile Include="Views\Helper\BindingProxy.cs" />
-    <Compile Include="Views\Controls\MultiSelectDataGrid.cs" />
-    <Compile Include="Views\Converters\BooleanReverseConverter.cs" />
-    <Compile Include="Views\Converters\NullToFalseConverter.cs" />
-    <Compile Include="Views\Converters\ValidateNetworkInterfaceConfigConverter.cs" />
-    <Compile Include="Views\Converters\PhysicalAddressToStringConverter.cs" />
-    <Compile Include="Views\Converters\IPAddressArrayToStringConverter.cs" />
-    <Compile Include="Views\Converters\BitsToHumanReadableSizeConverter.cs" />
-    <Compile Include="Views\Converters\IsSettingsLocationToBoolConverter.cs" />
-    <Compile Include="Views\Converters\IsDefaultLocationToBoolConverter.cs" />
-    <Compile Include="Views\Converters\AccentToBrushConverter.cs" />
-    <Compile Include="Views\Converters\AppThemeToBrushConverter.cs" />
+    <Compile Include="Converters\BooleanReverseToVisibilityConverter.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\PercentConverter.cs" />
+    <Compile Include="Converters\PingTimeToStringConverter.cs" />
+    <Compile Include="Converters\IPStatusToStringConverter.cs" />
+    <Compile Include="Converters\BooleanOrConverter.cs" />
+    <Compile Include="Converters\IPAddressToStringConverter.cs" />
+    <Compile Include="Converters\SelectedItemsToBoolConverter.cs" />
+    <Compile Include="Converters\IntToStringConverter.cs" />
+    <Compile Include="Helper\BindingProxy.cs" />
+    <Compile Include="Converters\BooleanReverseConverter.cs" />
+    <Compile Include="Converters\NullToFalseConverter.cs" />
+    <Compile Include="Converters\ValidateNetworkInterfaceConfigConverter.cs" />
+    <Compile Include="Converters\PhysicalAddressToStringConverter.cs" />
+    <Compile Include="Converters\IPAddressArrayToStringConverter.cs" />
+    <Compile Include="Converters\BitsToHumanReadableSizeConverter.cs" />
+    <Compile Include="Converters\IsSettingsLocationToBoolConverter.cs" />
+    <Compile Include="Converters\IsDefaultLocationToBoolConverter.cs" />
+    <Compile Include="Converters\AccentToBrushConverter.cs" />
+    <Compile Include="Converters\AppThemeToBrushConverter.cs" />
     <Compile Include="Views\Applications\ApplicationViewInfo.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="Views\Applications\PortScannerUserControl.xaml.cs">
@@ -217,26 +217,26 @@
     <Compile Include="Views\Applications\NetworkInterfaceUserControl.xaml.cs">
       <DependentUpon>NetworkInterfaceUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Converters\TrueFalseToStringConverter.cs" />
-    <Compile Include="Views\Converters\AccentToStringConverter.cs" />
-    <Compile Include="Views\Converters\AppThemeToStringConverter.cs" />
+    <Compile Include="Converters\TrueFalseToStringConverter.cs" />
+    <Compile Include="Converters\AccentToStringConverter.cs" />
+    <Compile Include="Converters\AppThemeToStringConverter.cs" />
     <Compile Include="Views\Applications\ApplicationView.cs" />
     <Compile Include="Views\Applications\IPScannerUserControl.xaml.cs">
       <DependentUpon>IPScannerUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Validators\IPScanRangeValidator.cs" />
+    <Compile Include="Validators\IPScanRangeValidator.cs" />
     <Compile Include="Views\Settings\SettingsView.cs" />
     <Compile Include="Views\Settings\SettingsViewInfo.cs" />
     <Compile Include="Views\Settings\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Validators\FolderExistsValidator.cs" />
-    <Compile Include="Views\Validators\SubnetmaskValidator.cs" />
-    <Compile Include="Views\Validators\SubnetmaskOrCIDRValidator.cs" />
-    <Compile Include="Views\Validators\IPv4AddressValidator.cs" />
-    <Compile Include="Views\Validators\EmptyFieldValidator.cs" />
-    <Compile Include="Views\Validators\PortValidator.cs" />
-    <Compile Include="Views\Validators\MACAddressValidator.cs" />
+    <Compile Include="Validators\FolderExistsValidator.cs" />
+    <Compile Include="Validators\SubnetmaskValidator.cs" />
+    <Compile Include="Validators\SubnetmaskOrCIDRValidator.cs" />
+    <Compile Include="Validators\IPv4AddressValidator.cs" />
+    <Compile Include="Validators\EmptyFieldValidator.cs" />
+    <Compile Include="Validators\PortValidator.cs" />
+    <Compile Include="Validators\MACAddressValidator.cs" />
     <Compile Include="ViewModels\Applications\NetworkInterfaceViewModel.cs" />
     <Compile Include="ViewModels\Applications\SubnetCalculatorViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsViewModel.cs" />

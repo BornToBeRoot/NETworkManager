@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Network="clr-namespace:NETworkManager.Model.Network;assembly=NETworkManager.Model"
-        xmlns:Validator="clr-namespace:NETworkManager.Views.Validators"
-        xmlns:Converter="clr-namespace:NETworkManager.Views.Converters"
+        xmlns:Validator="clr-namespace:NETworkManager.Validators"
+        xmlns:Converter="clr-namespace:NETworkManager.Converters"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d" >
     <UserControl.Resources>

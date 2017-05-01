@@ -8,7 +8,7 @@ using MahApps.Metro.Controls.Dialogs;
 using System.IO;
 using NETworkManager.Views.Applications;
 using MahApps.Metro.Controls;
-using NETworkManager.Utilities.HotKeys;
+using NETworkManager.Utilities.Common;
 using System;
 
 namespace NETworkManager.ViewModels.Settings

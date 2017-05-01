@@ -638,7 +638,6 @@ namespace NETworkManager.ViewModels.Applications
         private async void LoadNetworkInterfaces()
         {
             IsNetworkInterfaceLoading = true;
-            await Task.Delay(1000); // Make the user happy, let him see a reload animation
 
             NetworkInterfaces = await Model.Network.NetworkInterface.GetNetworkInterfacesAsync();
 

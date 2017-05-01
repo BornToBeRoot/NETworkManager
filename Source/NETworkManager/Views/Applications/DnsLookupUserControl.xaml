@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Validator="clr-namespace:NETworkManager.Views.Validators"
-        xmlns:Converter="clr-namespace:NETworkManager.Views.Converters"
+        xmlns:Validator="clr-namespace:NETworkManager.Validators"
+        xmlns:Converter="clr-namespace:NETworkManager.Converters"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
-        xmlns:Control="clr-namespace:NETworkManager.Views.Controls"
+        xmlns:Control="clr-namespace:NETworkManager.Controls"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d">
     <UserControl.Resources>
@@ -120,18 +120,6 @@
                             </Style.Triggers>
                         </Style>
                     </StackPanel.Style>
-                    <TextBlock>
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlockStyle}">
-                                <Setter Property="Text" Value="{DynamicResource String_Header_Tracing}" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding CancelTrace}" Value="True">
-                                        <Setter Property="Text" Value="{DynamicResource String_Header_Canceling}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
                     <Controls:MetroProgressBar Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True"/>
                 </StackPanel>
                 <TextBlock Grid.Row="3" Text="{DynamicResource String_Header_Result}" Style="{StaticResource DefaultTextBlockStyle}" />

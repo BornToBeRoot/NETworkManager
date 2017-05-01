@@ -48,7 +48,7 @@
     <Compile Include="Network\SubnetHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\HistoryListHelper.cs" />
-    <Compile Include="HotKeys\HotKeysHelper.cs" />
+    <Compile Include="Common\HotKeysHelper.cs" />
     <Compile Include="Network\IPNetTableHelper.cs" />
     <Compile Include="Network\IPScanRangeHelper.cs" />
     <Compile Include="Network\IPv4AddressHelper.cs" />
