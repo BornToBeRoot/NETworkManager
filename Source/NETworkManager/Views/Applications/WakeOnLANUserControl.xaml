@@ -27,7 +27,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_WakeUp}" />
-                <Grid Grid.Row="1" Margin="0,0,0,20">
+                <Grid Grid.Row="1" HorizontalAlignment="Left" Width="450" Margin="0,0,0,20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="1*" />

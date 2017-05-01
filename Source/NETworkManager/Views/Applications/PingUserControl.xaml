@@ -7,6 +7,7 @@
         xmlns:Validator="clr-namespace:NETworkManager.Views.Validators"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:Converter="clr-namespace:NETworkManager.Views.Converters"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
@@ -21,6 +22,7 @@
         <TabItem Header="{DynamicResource String_Header_Ping}">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -110,8 +112,19 @@
                         </Button.Content>
                     </Button>
                 </Grid>
-                <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Status}" Style="{StaticResource DefaultTextBlockStyle}" />
-                <Control:ScrollingDataGrid Grid.Row="3" CanUserSortColumns="False" CanUserReorderColumns="False" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding PingResult}" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,20">
+                <Controls:MetroProgressBar Grid.Row="2" Margin="0,0,0,20" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
+                    <Controls:MetroProgressBar.Style>
+                        <Style TargetType="{x:Type  Controls:MetroProgressBar}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsPingRunning}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Controls:MetroProgressBar.Style>
+                </Controls:MetroProgressBar>
+                <TextBlock Grid.Row="3" Text="{DynamicResource String_Header_Status}" Style="{StaticResource DefaultTextBlockStyle}" />
+                <Control:ScrollingDataGrid Grid.Row="4" CanUserSortColumns="False" CanUserReorderColumns="False" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding PingResult}" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,20">
                     <Control:ScrollingDataGrid.Columns>
                         <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress}" MinWidth="150" />
                         <DataGridTextColumn Header="{DynamicResource String_Bytes}" Binding="{Binding Bytes, Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
@@ -127,7 +140,7 @@
                         <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding Status, Converter={StaticResource IPStatusToStringConverter}}" Width="*"/>
                     </Control:ScrollingDataGrid.Columns>
                 </Control:ScrollingDataGrid>
-                <StackPanel Grid.Row="4">
+                <StackPanel Grid.Row="5">
                     <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource DefaultTextBlockStyle}" />
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -143,10 +156,11 @@
                         </Grid.RowDefinitions>
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" >
-                                <Setter Property="VerticalAlignment" Value="Top" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
                                 <Setter Property="Margin" Value="0,0,10,5" />
                             </Style>
                             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
+                                <Setter Property="VerticalAlignment" Value="Center" />
                                 <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
                                 <Setter Property="Margin" Value="0,0,10,5" />
                             </Style>

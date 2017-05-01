@@ -12,7 +12,9 @@ namespace NETworkManager.Model.Network
 {
     public class IPScanner
     {
+        #region Variables
         int progressValue;
+        #endregion
 
         #region Events
         public event EventHandler<HostFoundArgs> HostFound;
@@ -67,58 +69,64 @@ namespace NETworkManager.Model.Network
 
                     Parallel.ForEach(ipAddresses, parallelOptions, ipAddress =>
                     {
-                        // PING
-                        PingInfo pingInfo = new PingInfo();
-
+                    using (System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping())
+                    {
                         for (int i = 0; i < ipScannerOptions.Attempts; i++)
                         {
-                            try
-                            {
-                                throw new Exception();
-                               // pingInfo = Network.Ping.Send(ipAddress, ipScannerOptions.Timeout, ipScannerOptions.Buffer);
-
-                                if (IPStatus.Success == pingInfo.Status)
-                                    break;
-                            }
-                            catch { }
-                        }
-
-                        if (pingInfo.Status == IPStatus.Success)
-                        {
-                            // DNS
-                            string hostname = string.Empty;
-
-                            if (ipScannerOptions.ResolveHostname)
-                            {
-                                if (pingInfo.Status == IPStatus.Success)
-                                {
-                                    try
-                                    {
-                                        hostname = Dns.GetHostEntry(ipAddress).HostName;
-                                    }
-                                    catch (SocketException) { } // Couldn't resolve hostname for that address
-                                }
-                            }
-
-                            // ARP
-                            PhysicalAddress macAddress = null;
-
-                            if (ipScannerOptions.ResolveMACAddress)
-                            {
                                 try
                                 {
-                                    if (Dns.GetHostName() == hostname.Substring(0, hostname.IndexOf('.')))
-                                        macAddress = NetworkInterface.GetNetworkInterfaces().Where(p => p.IPv4Address.Contains(ipAddress)).FirstOrDefault().PhysicalAddress;
-                                    else
-                                        macAddress = IPNetTableHelper.GetAllDevicesOnLAN().Where(p => p.Key.ToString() == ipAddress.ToString()).ToDictionary(p => p.Key, p => p.Value).First().Value;
+                                    // PING
+                                    PingReply pingReply = ping.Send(ipAddress, ipScannerOptions.Timeout, ipScannerOptions.Buffer);
+
+                                    if (IPStatus.Success == pingReply.Status)
+                                    {
+                                        PingInfo pingInfo = new PingInfo(pingReply.Address, pingReply.Buffer.Count(), pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status);
+
+                                        // DNS
+                                        string hostname = string.Empty;
+
+                                        if (ipScannerOptions.ResolveHostname)
+                                        {
+                                            if (pingInfo.Status == IPStatus.Success)
+                                            {
+                                                try
+                                                {
+                                                    hostname = Dns.GetHostEntry(ipAddress).HostName;
+                                                }
+                                                catch (SocketException) { } // Couldn't resolve hostname
+                                            }
+                                        }
+
+                                        // ARP
+                                        PhysicalAddress macAddress = null;
+
+                                        if (ipScannerOptions.ResolveMACAddress)
+                                        {
+                                            try
+                                            {
+                                                if (Dns.GetHostName() == hostname.Substring(0, hostname.IndexOf('.')))
+                                                    macAddress = NetworkInterface.GetNetworkInterfaces().Where(p => p.IPv4Address.Contains(ipAddress)).FirstOrDefault().PhysicalAddress;
+                                                else
+                                                    macAddress = IPNetTableHelper.GetAllDevicesOnLAN().Where(p => p.Key.ToString() == ipAddress.ToString()).ToDictionary(p => p.Key, p => p.Value).First().Value;
+                                            }
+                                            catch { }
+                                        }
+
+                                        OnHostFound(new HostFoundArgs(pingInfo, hostname, macAddress));
+
+                                        return;
+                                    }
                                 }
                                 catch { }
+
+                                // Don't scan again, if the user has canceled (when more than 1 attempt)
+                                if (cancellationToken.IsCancellationRequested)
+                                    break;
                             }
 
-                            OnHostFound(new HostFoundArgs(pingInfo, hostname, macAddress));
                         }
 
-                        // Increase the progress
+                        // Increase the progress                        
                         Interlocked.Increment(ref progressValue);
                         OnProgressChanged();
                     });

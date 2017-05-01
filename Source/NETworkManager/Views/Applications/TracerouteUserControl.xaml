@@ -12,8 +12,8 @@
         Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Converter:IntToStringConverter x:Key="IntToStringConverter" />
         <Converter:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
         <Converter:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
@@ -26,7 +26,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />                    
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_Destination}" />
@@ -112,30 +112,7 @@
                         </Button.Content>
                     </Button>
                 </Grid>
-                <StackPanel Grid.Row="2" Margin="0,0,0,20">
-                    <StackPanel.Style>
-                        <Style TargetType="{x:Type  StackPanel}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsTraceRunning}" Value="False">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </StackPanel.Style>
-                    <TextBlock>
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlockStyle}">
-                                <Setter Property="Text" Value="{DynamicResource String_Header_Tracing}" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding CancelTrace}" Value="True">
-                                        <Setter Property="Text" Value="{DynamicResource String_Header_Canceling}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                    <Controls:MetroProgressBar Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True"/>
-                </StackPanel>
+                <Controls:MetroProgressBar Grid.Row="2" Margin="0,0,0,20" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding IsTraceRunning, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True" />
                 <TextBlock Grid.Row="3" Text="{DynamicResource String_Header_Route}" Style="{StaticResource DefaultTextBlockStyle}" />
                 <Control:ScrollingDataGrid Grid.Row="4" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding TraceResult}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False">
                     <Control:ScrollingDataGrid.Columns>

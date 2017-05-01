@@ -123,22 +123,7 @@
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </StackPanel.Style>
-                    <TextBlock>
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlockStyle}">
-                                <Setter Property="Text" Value="{DynamicResource String_Header_Scanning}" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding PreparingScan}" Value="True">
-                                        <Setter Property="Text" Value="{DynamicResource String_Header_Preparing}" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding CancelScan}" Value="True">
-                                        <Setter Property="Text" Value="{DynamicResource String_Header_Canceling}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
+                    </StackPanel.Style>                    
                     <Controls:MetroProgressBar Maximum="{Binding ProgressBarMaximum}" Foreground="{DynamicResource AccentColorBrush}"  Value="{Binding ProgressBarValue}">
                         <Controls:MetroProgressBar.Style>
                             <Style TargetType="{x:Type Controls:MetroProgressBar}" >

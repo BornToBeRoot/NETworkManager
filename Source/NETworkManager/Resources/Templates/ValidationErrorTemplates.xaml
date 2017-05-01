@@ -15,7 +15,7 @@
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ElementName=adorner, Path=AdornedElement.IsKeyboardFocusWithin}" Value="True" >
                                     <Setter Property="PlacementTarget" Value="{Binding ElementName=adorner}" />
-                                    <Setter Property="Placement" Value="Bottom" />                                    
+                                    <Setter Property="Placement" Value="Right" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding ElementName=toolTipCorner,Path=IsMouseOver}" Value="True" >
                                     <Setter Property="PlacementTarget" Value="{Binding ElementName=toolTipCorner}" />
@@ -35,23 +35,23 @@
                     </Popup.Style>
                     <StackPanel>
                         <Border MaxWidth="250" Background="{DynamicResource WhiteColorBrush}" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" Padding="5">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Grid.Column="0" Width="20" Height="20" Fill="{DynamicResource AccentColorBrush}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform">
-                                        <VisualBrush.Visual>
-                                            <IconPacks:PackIconMaterial Kind="InformationVariant" />
-                                        </VisualBrush.Visual>
-                                    </VisualBrush>
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{Binding Path=/ErrorContent}" Foreground="{DynamicResource AccentColorBrush}" FontSize="14" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                        </Grid>
-                    </Border>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Grid.Column="0" Width="20" Height="20" Fill="{DynamicResource AccentColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform">
+                                            <VisualBrush.Visual>
+                                                <IconPacks:PackIconMaterial Kind="InformationVariant" />
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1" Text="{Binding Path=/ErrorContent}" Foreground="{DynamicResource AccentColorBrush}" FontSize="14" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                            </Grid>
+                        </Border>
                     </StackPanel>
                 </Popup>
             </Grid>

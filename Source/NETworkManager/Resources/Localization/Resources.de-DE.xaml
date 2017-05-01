@@ -33,14 +33,10 @@
     <system:String x:Key="String_Header_Result">Ergebnis</system:String>
     <system:String x:Key="String_Header_Ping">Ping</system:String>
     <system:String x:Key="String_Header_DNS">DNS</system:String>
-    <system:String x:Key="String_Header_ARP">ARP</system:String>
-    <system:String x:Key="String_Header_Preparing">Vorbereiten...</system:String>
-    <system:String x:Key="String_Header_Scanning">Scannen...</system:String>
-    <system:String x:Key="String_Header_Canceling">Abbrechen...</system:String>
+    <system:String x:Key="String_Header_ARP">ARP</system:String>    
     <system:String x:Key="String_Header_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_Header_Developer">Experimental</system:String>
     <system:String x:Key="String_Header_DeveloperMode">Entwicklermodus</system:String>
-    <system:String x:Key="String_Header_Tracing">Verfolge...</system:String>
     <system:String x:Key="String_Header_PingError">Ping-Fehler</system:String>
     <system:String x:Key="String_Header_DnsError">DNS-Fehler</system:String>
     <system:String x:Key="String_Header_Multithreading">Multithreading</system:String>

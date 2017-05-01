@@ -451,8 +451,10 @@ namespace NETworkManager.ViewModels.Applications
                 }
             }
             catch (SocketException) // This will catch DNS resolve errors
-            {
+            {               
                 await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_DnsError"] as string, Application.Current.Resources["String_CouldNotResolveHostnameMessage"] as string, MessageDialogStyle.Affirmative, dialogSettings);
+
+                IsPingRunning = false;
 
                 return;
             }

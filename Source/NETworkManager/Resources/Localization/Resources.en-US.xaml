@@ -34,13 +34,9 @@
     <system:String x:Key="String_Header_Ping">Ping</system:String>
     <system:String x:Key="String_Header_DNS">DNS</system:String>
     <system:String x:Key="String_Header_ARP">ARP</system:String>
-    <system:String x:Key="String_Header_Preparing">Preparing...</system:String>
-    <system:String x:Key="String_Header_Scanning">Scanning...</system:String>
-    <system:String x:Key="String_Header_Canceling">Canceling...</system:String>
     <system:String x:Key="String_Header_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_Header_Experimental">Experimental</system:String>
     <system:String x:Key="String_Header_DeveloperMode">Developer mode</system:String>
-    <system:String x:Key="String_Header_Tracing">Tracing...</system:String>
     <system:String x:Key="String_Header_PingError">Ping error</system:String>
     <system:String x:Key="String_Header_DnsError">DNS error</system:String>
     <system:String x:Key="String_Header_Multithreading">Multithreading</system:String>

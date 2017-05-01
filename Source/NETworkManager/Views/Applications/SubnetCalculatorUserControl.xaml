@@ -15,7 +15,7 @@
         <TabItem Header="{DynamicResource String_Header_IPv4Calculator}">
             <StackPanel>
                 <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_Input}" />
-                <StackPanel Margin="0,0,0,20">
+                <StackPanel Width="450" HorizontalAlignment="Left" Margin="0,0,0,20">
                     <Grid Margin="0,0,0,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*" />
@@ -167,8 +167,8 @@
                             <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding DetailsCIDR, StringFormat='/{0}'}" />
                             <TextBlock Grid.Column="0" Grid.Row="5" Text="{DynamicResource String_HostAddressRange}" />
                             <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding DetailsHostIPRange}" />
-                            <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_AvailableIPAddresses}" />
-                            <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding DetailsHostIPs}" />
+                            <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_AvailableIPAddresses}" Margin="0,0,10,0" />
+                            <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding DetailsHostIPs}" Margin="0,0,10,0" />
                         </Grid>
                     </ScrollViewer>
                 </StackPanel>

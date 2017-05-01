@@ -8,6 +8,7 @@
         xmlns:Converter="clr-namespace:NETworkManager.Views.Converters"
         xmlns:Validator="clr-namespace:NETworkManager.Views.Validators"
         xmlns:Control="clr-namespace:NETworkManager.Views.Controls"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:Common="clr-namespace:NETworkManager.Views.Common"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         Dialog:DialogParticipation.Register="{Binding}"
@@ -16,6 +17,7 @@
         <Converter:BitsToHumanReadableSizeConverter x:Key="BitsToHumanReadableSizeConverter" />
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
+        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Converter:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />
         <Converter:NullToFalseConverter x:Key="NullToFalseConverter" />
         <Converter:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
@@ -29,11 +31,12 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Margin="0,0,0,20">
                     <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_Interface}" />
-                    <Grid Margin="0,0,0,10">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
@@ -48,7 +51,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Grid.Column="1" Background="Transparent" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Command="{Binding RefreshNetworkInterfacesCommand}" Style="{StaticResource ImageButton}" HorizontalAlignment="Right" Margin="10,0,0,0">
+                        <Button Grid.Column="1" Background="Transparent" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource ImageButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" HorizontalAlignment="Right" Margin="10,0,0,0">
                             <Button.Content>
                                 <Rectangle Width="20" Height="20">
                                     <Rectangle.OpacityMask>
@@ -62,19 +65,20 @@
                                         <Style TargetType="{x:Type Rectangle}">
                                             <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
                                             <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
                                                     <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
-                                                </Trigger>
+                                                </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
                             </Button.Content>
-                        </Button>
+                        </Button>                        
                     </Grid>
                 </StackPanel>
-                <TextBlock Grid.Row="1" Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_Details}" />
-                <ScrollViewer Grid.Row="2" Style="{StaticResource DefaultScrollViewer}" PanningMode="Both">
+                <Controls:MetroProgressBar Grid.Row="1" Margin="0,0,0,20" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True" />
+                <TextBlock Grid.Row="2" Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_Details}" />
+                <ScrollViewer Grid.Row="3" Style="{StaticResource DefaultScrollViewer}" PanningMode="Both">
                     <Grid>
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" >

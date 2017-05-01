@@ -12,6 +12,7 @@ using System.Collections;
 using NETworkManager.Settings;
 using NETworkManager.Settings.Templates;
 using NETworkManager.Model.Network;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -27,6 +28,20 @@ namespace NETworkManager.ViewModels.Applications
         public bool IsAdmin
         {
             get { return Configuration.Current.IsAdmin; }
+        }
+
+        private bool _isNetworkInteraceLoading;
+        public bool IsNetworkInterfaceLoading
+        {
+            get { return _isNetworkInteraceLoading; }
+            set
+            {
+                if (value == _isNetworkInteraceLoading)
+                    return;
+
+                _isNetworkInteraceLoading = value;
+                OnPropertyChanged();
+            }
         }
 
         #region NetworkInterfaces, SelectedNetworkInterface
@@ -594,9 +609,9 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region ICommands
-        public ICommand RefreshNetworkInterfacesCommand
+        public ICommand ReloadNetworkInterfacesCommand
         {
-            get { return new RelayCommand(p => RefreshNetworkInterfacesAction()); }
+            get { return new RelayCommand(p => ReloadNetworkInterfacesAction()); }
         }
 
         public ICommand ApplyNetworkInterfaceConfigCommand
@@ -622,6 +637,9 @@ namespace NETworkManager.ViewModels.Applications
         #region Methods
         private async void LoadNetworkInterfaces()
         {
+            IsNetworkInterfaceLoading = true;
+            await Task.Delay(1000); // Make the user happy, let him see a reload animation
+
             NetworkInterfaces = await Model.Network.NetworkInterface.GetNetworkInterfacesAsync();
 
             // Get the last selected interface, if it is still available on this machine...
@@ -634,10 +652,15 @@ namespace NETworkManager.ViewModels.Applications
                 else
                     SelectedNetworkInterface = NetworkInterfaces[0];
             }
+
+            IsNetworkInterfaceLoading = false;
         }
 
-        private async void RefreshNetworkInterfacesAction()
+        private async void ReloadNetworkInterfacesAction()
         {
+            IsNetworkInterfaceLoading = true;
+            await Task.Delay(2500); // Make the user happy, let him see a reload animation
+
             string id = string.Empty;
 
             if (SelectedNetworkInterface != null)
@@ -646,6 +669,8 @@ namespace NETworkManager.ViewModels.Applications
             NetworkInterfaces = await Model.Network.NetworkInterface.GetNetworkInterfacesAsync();
 
             SelectedNetworkInterface = NetworkInterfaces.Where(x => x.Id == id).FirstOrDefault();
+
+            IsNetworkInterfaceLoading = false;
         }
 
         ProgressDialogController progressDialogController;
@@ -685,7 +710,7 @@ namespace NETworkManager.ViewModels.Applications
                 await progressDialogController.CloseAsync();
             }
 
-            RefreshNetworkInterfacesAction();
+            ReloadNetworkInterfacesAction();
         }
 
         private void NetworkInterface_ConfigureProgressChanged(object sender, Model.Common.ProgressChangedArgs e)
