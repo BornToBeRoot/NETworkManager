@@ -72,7 +72,7 @@ namespace NETworkManager.ViewModels.Applications
                 {
                     if (!_isLoading)
                     {
-                        Properties.Settings.Default.NetworkInterface_SelectedInterfaceID = value.Id;
+                        NETworkManager.Settings.Properties.Settings.Default.NetworkInterface_SelectedInterfaceID = value.Id;
 
                         SettingsManager.SettingsChanged = true;
                     }
@@ -645,7 +645,7 @@ namespace NETworkManager.ViewModels.Applications
             // Get the last selected interface, if it is still available on this machine...
             if (NetworkInterfaces.Count > 0)
             {
-                NetworkInterfaceInfo info = NetworkInterfaces.Where(s => s.Id == Properties.Settings.Default.NetworkInterface_SelectedInterfaceID).FirstOrDefault();
+                NetworkInterfaceInfo info = NetworkInterfaces.Where(s => s.Id == NETworkManager.Settings.Properties.Settings.Default.NetworkInterface_SelectedInterfaceID).FirstOrDefault();
 
                 if (info != null)
                     SelectedNetworkInterface = info;

@@ -53,7 +53,7 @@ namespace NETworkManager.ViewModels.Applications
                     StringCollection collection = new StringCollection();
                     collection.AddRange(value.ToArray());
 
-                    Properties.Settings.Default.Ping_HostnameOrIPAddressHistory = collection;
+                    NETworkManager.Settings.Properties.Settings.Default.Ping_HostnameOrIPAddressHistory = collection;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -74,7 +74,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Ping_Attempts = value;
+                    NETworkManager.Settings.Properties.Settings.Default.Ping_Attempts = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -95,7 +95,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Ping_Timeout = value;
+                    NETworkManager.Settings.Properties.Settings.Default.Ping_Timeout = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -116,7 +116,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Ping_Buffer = value;
+                    NETworkManager.Settings.Properties.Settings.Default.Ping_Buffer = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -137,7 +137,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Ping_TTL = value;
+                    NETworkManager.Settings.Properties.Settings.Default.Ping_TTL = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -158,7 +158,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Ping_DontFragment = value;
+                    NETworkManager.Settings.Properties.Settings.Default.Ping_DontFragment = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -179,7 +179,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Ping_WaitTime = value;
+                    NETworkManager.Settings.Properties.Settings.Default.Ping_WaitTime = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -200,7 +200,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Ping_ResolveHostnamePreferIPv4 = value;
+                    NETworkManager.Settings.Properties.Settings.Default.Ping_ResolveHostnamePreferIPv4 = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -369,17 +369,17 @@ namespace NETworkManager.ViewModels.Applications
         #region Load settings
         private void LoadSettings()
         {
-            if (Properties.Settings.Default.Ping_HostnameOrIPAddressHistory != null)
-                HostnameOrIPAddressHistory = new List<string>(Properties.Settings.Default.Ping_HostnameOrIPAddressHistory.Cast<string>().ToList());
+            if (NETworkManager.Settings.Properties.Settings.Default.Ping_HostnameOrIPAddressHistory != null)
+                HostnameOrIPAddressHistory = new List<string>(NETworkManager.Settings.Properties.Settings.Default.Ping_HostnameOrIPAddressHistory.Cast<string>().ToList());
 
-            Attempts = Properties.Settings.Default.Ping_Attempts;
-            Timeout = Properties.Settings.Default.Ping_Timeout;
-            Buffer = Properties.Settings.Default.Ping_Buffer;
-            TTL = Properties.Settings.Default.Ping_TTL;
-            DontFragment = Properties.Settings.Default.Ping_DontFragment;
-            WaitTime = Properties.Settings.Default.Ping_WaitTime;
+            Attempts = NETworkManager.Settings.Properties.Settings.Default.Ping_Attempts;
+            Timeout = NETworkManager.Settings.Properties.Settings.Default.Ping_Timeout;
+            Buffer = NETworkManager.Settings.Properties.Settings.Default.Ping_Buffer;
+            TTL = NETworkManager.Settings.Properties.Settings.Default.Ping_TTL;
+            DontFragment = NETworkManager.Settings.Properties.Settings.Default.Ping_DontFragment;
+            WaitTime = NETworkManager.Settings.Properties.Settings.Default.Ping_WaitTime;
 
-            if (Properties.Settings.Default.Ping_ResolveHostnamePreferIPv4)
+            if (NETworkManager.Settings.Properties.Settings.Default.Ping_ResolveHostnamePreferIPv4)
                 ResolveHostnamePreferIPv4 = true;
             else
                 ResolveHostnamePreferIPv6 = true;

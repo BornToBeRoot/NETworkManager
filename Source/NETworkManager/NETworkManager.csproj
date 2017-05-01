@@ -171,16 +171,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Settings\Appearance.cs" />
-    <Compile Include="Settings\AssemblyInfo.cs" />
-    <Compile Include="Settings\AssemblyManager.cs" />
-    <Compile Include="Settings\CommandLineInfo.cs" />
-    <Compile Include="Settings\Configuration.cs" />
-    <Compile Include="Settings\ConfigurationInfo.cs" />
-    <Compile Include="Settings\Templates\NetworkInterfaceTemplate.cs" />
-    <Compile Include="Settings\Autostart.cs" />
-    <Compile Include="Settings\CommandLine.cs" />
-    <Compile Include="Settings\SettingsProviderPortable.cs" />
     <Compile Include="ViewModels\Applications\TracerouteViewModel.cs" />
     <Compile Include="ViewModels\Applications\PingViewModel.cs" />
     <Compile Include="ViewModels\Applications\IPScannerViewModel.cs" />
@@ -219,10 +209,7 @@
     <Compile Include="Views\Converters\IsDefaultLocationToBoolConverter.cs" />
     <Compile Include="Views\Converters\AccentToBrushConverter.cs" />
     <Compile Include="Views\Converters\AppThemeToBrushConverter.cs" />
-    <Compile Include="Settings\Templates\WakeOnLanTemplate.cs" />
     <Compile Include="Views\Applications\ApplicationViewInfo.cs" />
-    <Compile Include="Settings\Localization.cs" />
-    <Compile Include="Settings\LocalizationInfo.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="Views\Applications\PortScannerUserControl.xaml.cs">
       <DependentUpon>PortScannerUserControl.xaml</DependentUpon>
@@ -233,7 +220,6 @@
     <Compile Include="Views\Converters\TrueFalseToStringConverter.cs" />
     <Compile Include="Views\Converters\AccentToStringConverter.cs" />
     <Compile Include="Views\Converters\AppThemeToStringConverter.cs" />
-    <Compile Include="Settings\SettingsManager.cs" />
     <Compile Include="Views\Applications\ApplicationView.cs" />
     <Compile Include="Views\Applications\IPScannerUserControl.xaml.cs">
       <DependentUpon>IPScannerUserControl.xaml</DependentUpon>
@@ -311,26 +297,8 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <AppDesigner Include="Properties\" />
     <Resource Include="Resources\Entypo.ttf" />
   </ItemGroup>
@@ -359,6 +327,10 @@
     <ProjectReference Include="..\NETworkManager.Model\NETworkManager.Model.csproj">
       <Project>{e6451217-8416-4e5e-88dd-82e930bc84e7}</Project>
       <Name>NETworkManager.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj">
+      <Project>{2d35d607-2c48-4e71-b269-41ea6918742c}</Project>
+      <Name>NETworkManager.Settings</Name>
     </ProjectReference>
     <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj">
       <Project>{47cb8ef6-685e-4bb2-8dc7-518770b4c560}</Project>

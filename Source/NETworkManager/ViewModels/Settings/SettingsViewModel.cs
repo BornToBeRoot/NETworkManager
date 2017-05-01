@@ -26,18 +26,18 @@ namespace NETworkManager.ViewModels.Settings
             dialogCoordinator = instance;
 
             // General
-            if (Properties.Settings.Default.DeveloperMode)
+            if (NETworkManager.Settings.Properties.Settings.Default.DeveloperMode)
                 ApplicationViewCollection = new ObservableCollection<ApplicationViewInfo>(ApplicationView.List.OrderBy(a => a.Name));
             else
                 ApplicationViewCollection = new ObservableCollection<ApplicationViewInfo>(ApplicationView.List.Where(a => a.IsDev == false).OrderBy(a => a.Name));
 
-            DefaultApplicationViewSelectedItem = ApplicationViewCollection.FirstOrDefault(x => x.Name == (ApplicationView.Name)Enum.Parse(typeof(ApplicationView.Name), Properties.Settings.Default.Application_DefaultApplicationViewName));
+            DefaultApplicationViewSelectedItem = ApplicationViewCollection.FirstOrDefault(x => x.Name == (ApplicationView.Name)Enum.Parse(typeof(ApplicationView.Name), NETworkManager.Settings.Properties.Settings.Default.Application_DefaultApplicationViewName));
 
-            StartMaximized = Properties.Settings.Default.Window_StartMaximized;
-            AlwaysShowIconInTray = Properties.Settings.Default.TrayIcon_AlwaysShowIcon;
-            MinimizeInsteadOfTerminating = Properties.Settings.Default.Window_MinimizeInsteadOfTerminating;
-            ConfirmClose = Properties.Settings.Default.Window_ConfirmClose;
-            MinimizeToTrayInsteadOfTaskbar = Properties.Settings.Default.Window_MinimizeToTrayInsteadOfTaskbar;
+            StartMaximized = NETworkManager.Settings.Properties.Settings.Default.Window_StartMaximized;
+            AlwaysShowIconInTray = NETworkManager.Settings.Properties.Settings.Default.TrayIcon_AlwaysShowIcon;
+            MinimizeInsteadOfTerminating = NETworkManager.Settings.Properties.Settings.Default.Window_MinimizeInsteadOfTerminating;
+            ConfirmClose = NETworkManager.Settings.Properties.Settings.Default.Window_ConfirmClose;
+            MinimizeToTrayInsteadOfTaskbar = NETworkManager.Settings.Properties.Settings.Default.Window_MinimizeToTrayInsteadOfTaskbar;
 
             // Appearance
             AppThemeSelectedItem = ThemeManager.DetectAppStyle().Item1;
@@ -48,19 +48,19 @@ namespace NETworkManager.ViewModels.Settings
             LocalizationSelectedItem = LanguageCollection.FirstOrDefault(x => x.Code == Localization.Current.Code);
 
             // HotKeys
-            HotKeyShowWindowEnabled = Properties.Settings.Default.HotKey_ShowWindowEnabled;
-            HotKeyShowWindow = new HotKey(HotKeysHelper.FormsKeysToWpfKey(Properties.Settings.Default.HotKey_ShowWindowKey), HotKeysHelper.GetModifierKeysFromInt(Properties.Settings.Default.HotKey_ShowWindowModifier));
+            HotKeyShowWindowEnabled = NETworkManager.Settings.Properties.Settings.Default.HotKey_ShowWindowEnabled;
+            HotKeyShowWindow = new HotKey(HotKeysHelper.FormsKeysToWpfKey(NETworkManager.Settings.Properties.Settings.Default.HotKey_ShowWindowKey), HotKeysHelper.GetModifierKeysFromInt(NETworkManager.Settings.Properties.Settings.Default.HotKey_ShowWindowModifier));
 
             // Autostart
             StartWithWindows = Autostart.IsEnabled;
-            StartMinimizedInTray = Properties.Settings.Default.Autostart_StartMinimizedInTray;
+            StartMinimizedInTray = NETworkManager.Settings.Properties.Settings.Default.Autostart_StartMinimizedInTray;
 
             // Settings
             SettingsLocationSelectedPath = SettingsManager.SettingsLocationNotPortable;
             SettingsPortable = SettingsManager.IsPortable;
 
             // Developer
-            DeveloperMode = Properties.Settings.Default.DeveloperMode;
+            DeveloperMode = NETworkManager.Settings.Properties.Settings.Default.DeveloperMode;
 
             // About
             if (AssemblyManager.Current == null)
@@ -93,7 +93,7 @@ namespace NETworkManager.ViewModels.Settings
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Application_DefaultApplicationViewName = value.Name.ToString();
+                    NETworkManager.Settings.Properties.Settings.Default.Application_DefaultApplicationViewName = value.Name.ToString();
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -114,7 +114,7 @@ namespace NETworkManager.ViewModels.Settings
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Window_StartMaximized = value;
+                    NETworkManager.Settings.Properties.Settings.Default.Window_StartMaximized = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -135,7 +135,7 @@ namespace NETworkManager.ViewModels.Settings
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Window_MinimizeInsteadOfTerminating = value;
+                    NETworkManager.Settings.Properties.Settings.Default.Window_MinimizeInsteadOfTerminating = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -156,7 +156,7 @@ namespace NETworkManager.ViewModels.Settings
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Window_MinimizeToTrayInsteadOfTaskbar = value;
+                    NETworkManager.Settings.Properties.Settings.Default.Window_MinimizeToTrayInsteadOfTaskbar = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -177,7 +177,7 @@ namespace NETworkManager.ViewModels.Settings
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Window_ConfirmClose = value;
+                    NETworkManager.Settings.Properties.Settings.Default.Window_ConfirmClose = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -198,7 +198,7 @@ namespace NETworkManager.ViewModels.Settings
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.TrayIcon_AlwaysShowIcon = value;
+                    NETworkManager.Settings.Properties.Settings.Default.TrayIcon_AlwaysShowIcon = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -223,7 +223,7 @@ namespace NETworkManager.ViewModels.Settings
                 {
                     Appearance.ChangeAppTheme(value.Name);
 
-                    Properties.Settings.Default.Appearance_AppTheme = value.Name;
+                    NETworkManager.Settings.Properties.Settings.Default.Appearance_AppTheme = value.Name;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -246,7 +246,7 @@ namespace NETworkManager.ViewModels.Settings
                 {
                     Appearance.ChangeAccent(value.Name);
 
-                    Properties.Settings.Default.Appearance_Accent = value.Name;
+                    NETworkManager.Settings.Properties.Settings.Default.Appearance_Accent = value.Name;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -273,7 +273,7 @@ namespace NETworkManager.ViewModels.Settings
                 {
                     Localization.Change(value);
 
-                    Properties.Settings.Default.Localization_CultureCode = value.Code;
+                    NETworkManager.Settings.Properties.Settings.Default.Localization_CultureCode = value.Code;
 
                     SettingsManager.RestartRequired = true;
                     SettingsManager.SettingsChanged = true;
@@ -297,7 +297,7 @@ namespace NETworkManager.ViewModels.Settings
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.HotKey_ShowWindowEnabled = value;
+                    NETworkManager.Settings.Properties.Settings.Default.HotKey_ShowWindowEnabled = value;
 
                     HotKeysChanged = true;
                     SettingsManager.SettingsChanged = true;
@@ -319,8 +319,8 @@ namespace NETworkManager.ViewModels.Settings
 
                 if (!_isLoading && value != null)
                 {
-                    Properties.Settings.Default.HotKey_ShowWindowKey = (int)HotKeysHelper.WpfKeyToFormsKeys(value.Key);
-                    Properties.Settings.Default.HotKey_ShowWindowModifier = HotKeysHelper.GetModifierKeysSum(value.ModifierKeys);
+                    NETworkManager.Settings.Properties.Settings.Default.HotKey_ShowWindowKey = (int)HotKeysHelper.WpfKeyToFormsKeys(value.Key);
+                    NETworkManager.Settings.Properties.Settings.Default.HotKey_ShowWindowModifier = HotKeysHelper.GetModifierKeysSum(value.ModifierKeys);
 
                     HotKeysChanged = true;
                     SettingsManager.SettingsChanged = true;
@@ -366,7 +366,7 @@ namespace NETworkManager.ViewModels.Settings
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Autostart_StartMinimizedInTray = value;
+                    NETworkManager.Settings.Properties.Settings.Default.Autostart_StartMinimizedInTray = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -416,7 +416,7 @@ namespace NETworkManager.ViewModels.Settings
                     {
                         SettingsLocationSelectedPath = SettingsManager.SettingsLocationNotPortable;
 
-                        Properties.Settings.Default.Settings_Location = SettingsLocationSelectedPath;
+                        NETworkManager.Settings.Properties.Settings.Default.Settings_Location = SettingsLocationSelectedPath;
 
                         SettingsManager.SettingsChanged = true;
                     }
@@ -454,7 +454,7 @@ namespace NETworkManager.ViewModels.Settings
         {
             SettingsManager.ChangeSettingsLocation(SettingsLocationSelectedPath, true);
 
-            Properties.Settings.Default.Settings_Location = SettingsLocationSelectedPath;
+            NETworkManager.Settings.Properties.Settings.Default.Settings_Location = SettingsLocationSelectedPath;
             SettingsManager.SettingsChanged = true;
         }
 
@@ -481,7 +481,7 @@ namespace NETworkManager.ViewModels.Settings
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.DeveloperMode = value;
+                    NETworkManager.Settings.Properties.Settings.Default.DeveloperMode = value;
 
                     SettingsManager.RestartRequired = true;
                     SettingsManager.SettingsChanged = true;
@@ -543,7 +543,7 @@ namespace NETworkManager.ViewModels.Settings
 
         private void OpenWebsiteLibaryMahAppsMetroAction()
         {
-            Process.Start(Properties.Resources.Libary_MahAppsMetro_Url);
+            Process.Start(NETworkManager.Settings.Properties.Resources.Libary_MahAppsMetro_Url);
         }
 
         public ICommand OpenWebsiteLibaryMahAppsMetroIconPacksCommand
@@ -553,7 +553,7 @@ namespace NETworkManager.ViewModels.Settings
 
         private void OpenWebsiteLibaryMahAppsMetroIconPacksAction()
         {
-            Process.Start(Properties.Resources.Libary_MahAppsMetroIconPacks_Url);
+            Process.Start(NETworkManager.Settings.Properties.Resources.Libary_MahAppsMetroIconPacks_Url);
         }
         #endregion
     }

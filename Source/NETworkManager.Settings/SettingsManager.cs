@@ -36,7 +36,7 @@ namespace NETworkManager.Settings
         /// </summary>
         private static string CustomSettingsLocation
         {
-            get { return Properties.Settings.Default.Settings_Location; }
+            get { return NETworkManager.Settings.Properties.Settings.Default.Settings_Location; }
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace NETworkManager.Settings
 
         public static void SaveSettings()
         {
-            Properties.Settings.Default.Save();
+            NETworkManager.Settings.Properties.Settings.Default.Save();
         }
 
         private static void MoveSettings(string sourceLocation, string targedLocation, bool overwriteExistingFiles)

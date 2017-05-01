@@ -54,7 +54,7 @@ namespace NETworkManager.ViewModels.Applications
                     StringCollection collection = new StringCollection();
                     collection.AddRange(value.ToArray());
 
-                    Properties.Settings.Default.IPScanner_IPRangeHistory = collection;
+                    NETworkManager.Settings.Properties.Settings.Default.IPScanner_IPRangeHistory = collection;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -75,7 +75,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.IPScanner_ConcurrentThreads = value;
+                    NETworkManager.Settings.Properties.Settings.Default.IPScanner_ConcurrentThreads = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -96,7 +96,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.IPScanner_Timeout = value;
+                    NETworkManager.Settings.Properties.Settings.Default.IPScanner_Timeout = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -117,7 +117,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.IPScanner_Buffer = value;
+                    NETworkManager.Settings.Properties.Settings.Default.IPScanner_Buffer = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -138,7 +138,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.IPScanner_Attempts = value;
+                    NETworkManager.Settings.Properties.Settings.Default.IPScanner_Attempts = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -159,7 +159,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.IPScanner_ResolveHostname = value;
+                    NETworkManager.Settings.Properties.Settings.Default.IPScanner_ResolveHostname = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -180,7 +180,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.IPScanner_ResolveMACAddress = value;
+                    NETworkManager.Settings.Properties.Settings.Default.IPScanner_ResolveMACAddress = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -293,15 +293,15 @@ namespace NETworkManager.ViewModels.Applications
         #region Settings
         private void LoadSettings()
         {
-            if (Properties.Settings.Default.IPScanner_IPRangeHistory != null)
-                IPRangeHistory = new List<string>(Properties.Settings.Default.IPScanner_IPRangeHistory.Cast<string>().ToList());
+            if (NETworkManager.Settings.Properties.Settings.Default.IPScanner_IPRangeHistory != null)
+                IPRangeHistory = new List<string>(NETworkManager.Settings.Properties.Settings.Default.IPScanner_IPRangeHistory.Cast<string>().ToList());
 
-            Timeout = Properties.Settings.Default.IPScanner_Timeout;
-            Buffer = Properties.Settings.Default.IPScanner_Buffer;
-            Attempts = Properties.Settings.Default.IPScanner_Attempts;
-            Threads = Properties.Settings.Default.IPScanner_ConcurrentThreads;
-            ResolveHostname = Properties.Settings.Default.IPScanner_ResolveHostname;
-            ResolveMACAddress = Properties.Settings.Default.IPScanner_ResolveMACAddress;
+            Timeout = NETworkManager.Settings.Properties.Settings.Default.IPScanner_Timeout;
+            Buffer = NETworkManager.Settings.Properties.Settings.Default.IPScanner_Buffer;
+            Attempts = NETworkManager.Settings.Properties.Settings.Default.IPScanner_Attempts;
+            Threads = NETworkManager.Settings.Properties.Settings.Default.IPScanner_ConcurrentThreads;
+            ResolveHostname = NETworkManager.Settings.Properties.Settings.Default.IPScanner_ResolveHostname;
+            ResolveMACAddress = NETworkManager.Settings.Properties.Settings.Default.IPScanner_ResolveMACAddress;
         }
         #endregion
 

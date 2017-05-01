@@ -53,7 +53,7 @@ namespace NETworkManager.ViewModels.Applications
                     StringCollection collection = new StringCollection();
                     collection.AddRange(value.ToArray());
 
-                    Properties.Settings.Default.Traceroute_HostnameOrIPAddressHistory = collection;
+                    NETworkManager.Settings.Properties.Settings.Default.Traceroute_HostnameOrIPAddressHistory = collection;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -74,7 +74,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Traceroute_MaximumHops = value;
+                    NETworkManager.Settings.Properties.Settings.Default.Traceroute_MaximumHops = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -95,7 +95,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Traceroute_Timeout = value;
+                    NETworkManager.Settings.Properties.Settings.Default.Traceroute_Timeout = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -116,7 +116,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Traceroute_Buffer = value;
+                    NETworkManager.Settings.Properties.Settings.Default.Traceroute_Buffer = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -137,7 +137,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Traceroute_ResolveHostnamePreferIPv4 = value;
+                    NETworkManager.Settings.Properties.Settings.Default.Traceroute_ResolveHostnamePreferIPv4 = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -222,14 +222,14 @@ namespace NETworkManager.ViewModels.Applications
         #region Settings
         private void LoadSettings()
         {
-            if (Properties.Settings.Default.Traceroute_HostnameOrIPAddressHistory != null)
-                HostnameOrIPAddressHistory = new List<string>(Properties.Settings.Default.Traceroute_HostnameOrIPAddressHistory.Cast<string>().ToList());
+            if (NETworkManager.Settings.Properties.Settings.Default.Traceroute_HostnameOrIPAddressHistory != null)
+                HostnameOrIPAddressHistory = new List<string>(NETworkManager.Settings.Properties.Settings.Default.Traceroute_HostnameOrIPAddressHistory.Cast<string>().ToList());
 
-            MaximumHops = Properties.Settings.Default.Traceroute_MaximumHops;
-            Timeout = Properties.Settings.Default.Traceroute_Timeout;
-            Buffer = Properties.Settings.Default.Traceroute_Buffer;
+            MaximumHops = NETworkManager.Settings.Properties.Settings.Default.Traceroute_MaximumHops;
+            Timeout = NETworkManager.Settings.Properties.Settings.Default.Traceroute_Timeout;
+            Buffer = NETworkManager.Settings.Properties.Settings.Default.Traceroute_Buffer;
 
-            if (Properties.Settings.Default.Traceroute_ResolveHostnamePreferIPv4)
+            if (NETworkManager.Settings.Properties.Settings.Default.Traceroute_ResolveHostnamePreferIPv4)
                 ResolveHostnamePreferIPv4 = true;
             else
                 ResolveHostnamePreferIPv6 = true;

@@ -136,7 +136,7 @@ namespace NETworkManager.ViewModels.Applications
 
             WakeOnLanTemplates.CollectionChanged += WakeOnLanTemplates_CollectionChanged;
 
-            Port = Properties.Resources.WakeOnLan_DefaultPort;
+            Port = NETworkManager.Settings.Properties.Resources.WakeOnLan_DefaultPort;
         }
 
         private void LoadTemplates()

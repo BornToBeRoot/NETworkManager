@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26228.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager", "NETworkManager\NETworkManager.csproj", "{E825EC30-AFA2-476A-AC2C-7537630A645B}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Model", "NETworkManager.Model\NETworkManager.Model.csproj", "{E6451217-8416-4E5E-88DD-82E930BC84E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Utilities", "NETworkManager.Utilities\NETworkManager.Utilities.csproj", "{47CB8EF6-685E-4BB2-8DC7-518770B4C560}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Settings", "NETworkManager.Settings\NETworkManager.Settings.csproj", "{2D35D607-2C48-4E71-B269-41EA6918742C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{47CB8EF6-685E-4BB2-8DC7-518770B4C560}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47CB8EF6-685E-4BB2-8DC7-518770B4C560}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47CB8EF6-685E-4BB2-8DC7-518770B4C560}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D35D607-2C48-4E71-B269-41EA6918742C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D35D607-2C48-4E71-B269-41EA6918742C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D35D607-2C48-4E71-B269-41EA6918742C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D35D607-2C48-4E71-B269-41EA6918742C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

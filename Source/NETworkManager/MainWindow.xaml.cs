@@ -53,7 +53,7 @@ namespace NETworkManager
 
                 if (!_isLoading)
                 {
-                    Properties.Settings.Default.Window_PinApplicationList = value;
+                    NETworkManager.Settings.Properties.Settings.Default.Window_PinApplicationList = value;
 
                     SettingsManager.SettingsChanged = true;
                 }
@@ -158,12 +158,12 @@ namespace NETworkManager
             DataContext = this;
 
             // Autostart & Window start
-            if (CommandLine.Current.Autostart && Properties.Settings.Default.Autostart_StartMinimizedInTray || Properties.Settings.Default.TrayIcon_AlwaysShowIcon)
+            if (CommandLine.Current.Autostart && NETworkManager.Settings.Properties.Settings.Default.Autostart_StartMinimizedInTray || NETworkManager.Settings.Properties.Settings.Default.TrayIcon_AlwaysShowIcon)
                 InitNotifyIcon();
 
-            if (CommandLine.Current.Autostart && Properties.Settings.Default.Autostart_StartMinimizedInTray)
+            if (CommandLine.Current.Autostart && NETworkManager.Settings.Properties.Settings.Default.Autostart_StartMinimizedInTray)
                 HideWindowToTray();
-            else if (Properties.Settings.Default.Window_StartMaximized)
+            else if (NETworkManager.Settings.Properties.Settings.Default.Window_StartMaximized)
                 WindowState = WindowState.Maximized;
 
             // Set windows title if admin
@@ -174,7 +174,7 @@ namespace NETworkManager
             LoadApplicationList();
 
             // Load settings
-            PinApplicationList = Properties.Settings.Default.Window_PinApplicationList;
+            PinApplicationList = NETworkManager.Settings.Properties.Settings.Default.Window_PinApplicationList;
 
             _isLoading = false;
         }
@@ -184,7 +184,7 @@ namespace NETworkManager
             _applicationViewCollectionSource = new CollectionViewSource();
 
             // Developer features
-            if (Properties.Settings.Default.DeveloperMode)
+            if (NETworkManager.Settings.Properties.Settings.Default.DeveloperMode)
                 _applicationViewCollectionSource.Source = ApplicationView.List;
             else
                 _applicationViewCollectionSource.Source = ApplicationView.List.Where(x => x.IsDev == false);
@@ -195,13 +195,13 @@ namespace NETworkManager
 
         private void MetroWindowMain_Loaded(object sender, RoutedEventArgs e)
         {
-            SelectedApplicationViewInfo = ApplicationViewCollection.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == (ApplicationView.Name)Enum.Parse(typeof(ApplicationView.Name), Properties.Settings.Default.Application_DefaultApplicationViewName));
+            SelectedApplicationViewInfo = ApplicationViewCollection.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == (ApplicationView.Name)Enum.Parse(typeof(ApplicationView.Name), NETworkManager.Settings.Properties.Settings.Default.Application_DefaultApplicationViewName));
         }
 
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
         {
             // Hide the application to tray
-            if (!_closeApplication && Properties.Settings.Default.Window_MinimizeInsteadOfTerminating)
+            if (!_closeApplication && NETworkManager.Settings.Properties.Settings.Default.Window_MinimizeInsteadOfTerminating)
             {
                 e.Cancel = true;
 
@@ -211,7 +211,7 @@ namespace NETworkManager
             }
 
             // Confirm close
-            if (!_closeApplication && Properties.Settings.Default.Window_ConfirmClose)
+            if (!_closeApplication && NETworkManager.Settings.Properties.Settings.Default.Window_ConfirmClose)
             {
                 e.Cancel = true;
 
@@ -376,9 +376,9 @@ namespace NETworkManager
 
         private void RegisterHotKeys()
         {
-            if (Properties.Settings.Default.HotKey_ShowWindowEnabled)
+            if (NETworkManager.Settings.Properties.Settings.Default.HotKey_ShowWindowEnabled)
             {
-                RegisterHotKey(new WindowInteropHelper(this).Handle, 1, Properties.Settings.Default.HotKey_ShowWindowModifier, Properties.Settings.Default.HotKey_ShowWindowKey);
+                RegisterHotKey(new WindowInteropHelper(this).Handle, 1, NETworkManager.Settings.Properties.Settings.Default.HotKey_ShowWindowModifier, NETworkManager.Settings.Properties.Settings.Default.HotKey_ShowWindowKey);
                 RegisteredHotKeys.Add(1);
             }
         }
@@ -424,7 +424,7 @@ namespace NETworkManager
             notifyIcon.Text = Title;
             notifyIcon.DoubleClick += new EventHandler(NotifyIcon_DoubleClick);
             notifyIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(NotifyIcon_MouseDown);
-            notifyIcon.Visible = Properties.Settings.Default.TrayIcon_AlwaysShowIcon;
+            notifyIcon.Visible = NETworkManager.Settings.Properties.Settings.Default.TrayIcon_AlwaysShowIcon;
         }
 
         private void NotifyIcon_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -445,7 +445,7 @@ namespace NETworkManager
         {
             if (WindowState == WindowState.Minimized)
             {
-                if (Properties.Settings.Default.Window_MinimizeToTrayInsteadOfTaskbar)
+                if (NETworkManager.Settings.Properties.Settings.Default.Window_MinimizeToTrayInsteadOfTaskbar)
                     HideWindowToTray();
             }
         }
@@ -478,7 +478,7 @@ namespace NETworkManager
             if (WindowState == WindowState.Minimized)
                 WindowState = WindowState.Normal;
 
-            notifyIcon.Visible = Properties.Settings.Default.TrayIcon_AlwaysShowIcon;
+            notifyIcon.Visible = NETworkManager.Settings.Properties.Settings.Default.TrayIcon_AlwaysShowIcon;
         }
 
         private void BringWindowToFront()
@@ -498,7 +498,7 @@ namespace NETworkManager
 
         private void OpenGithubProjectAction()
         {
-            Process.Start(Properties.Resources.Project_GitHub_Url);
+            Process.Start(Settings.Properties.Resources.Project_GitHub_Url);
         }
 
         public ICommand OpenSettingsCommand
@@ -524,11 +524,11 @@ namespace NETworkManager
 
             if (!_isInTray)
             {
-                if (Properties.Settings.Default.TrayIcon_AlwaysShowIcon && notifyIcon == null)
+                if (NETworkManager.Settings.Properties.Settings.Default.TrayIcon_AlwaysShowIcon && notifyIcon == null)
                     InitNotifyIcon();
 
                 if (notifyIcon != null)
-                    notifyIcon.Visible = Properties.Settings.Default.TrayIcon_AlwaysShowIcon;
+                    notifyIcon.Visible = NETworkManager.Settings.Properties.Settings.Default.TrayIcon_AlwaysShowIcon;
             }
 
             if (SettingsManager.RestartRequired)
