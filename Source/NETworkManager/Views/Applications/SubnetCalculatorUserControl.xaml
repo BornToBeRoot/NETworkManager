@@ -37,13 +37,13 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Subnetmask}" Style="{DynamicResource TextBlockInput}" />
-                        <ComboBox x:Name="comboBoxSubnetmask" Grid.Column="1" Grid.Row="2" ItemsSource="{x:Static Network:Subnetmask.List}" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnetmask}">
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_SubnetmaskOrCIDR}" Style="{DynamicResource TextBlockInput}" />
+                        <ComboBox x:Name="comboBoxSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" ItemsSource="{x:Static Network:Subnetmask.List}" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnetmask}">
                             <ComboBox.Text>
-                                <Binding Path="Subnetmask" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="SubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
-                                        <Validator:SubnetmaskValidator ValidatesOnTargetUpdated="True"/>
+                                        <Validator:SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True"/>
                                     </Binding.ValidationRules>
                                 </Binding>
                             </ComboBox.Text>
@@ -108,7 +108,7 @@
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
                                             <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtIPv4Address}" Value="False"/>
-                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=comboBoxSubnetmask}" Value="False"/>
+                                            <Condition Binding="{Binding Path=(Validation.HasError), ElementName=comboBoxSubnetmaskOrCidr}" Value="False"/>
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="IsEnabled" Value="True" />
                                     </MultiDataTrigger>

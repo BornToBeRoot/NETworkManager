@@ -87,6 +87,7 @@
     <system:String x:Key="String_IPv4Address">IPv4-Address</system:String>
     <system:String x:Key="String_Subnetmask">Subnetmask</system:String>
     <system:String x:Key="String_CIDR">CIDR</system:String>
+    <system:String x:Key="String_SubnetmaskOrCIDR">Subnetmask oder CIDR</system:String>
     <system:String x:Key="String_Gateway">Gateway</system:String>
     <system:String x:Key="String_IPv4DefaultGateway">IPv4-Default-Gateway</system:String>
     <system:String x:Key="String_DHCPEnabled">DHCP Enabled</system:String>

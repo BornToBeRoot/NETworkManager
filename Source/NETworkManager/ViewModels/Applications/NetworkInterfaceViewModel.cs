@@ -403,16 +403,16 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private string _configSubnetmask;
-        public string ConfigSubnetmask
+        private string _configSubnetmaskOrCidr;
+        public string ConfigSubnetmaskOrCidr
         {
-            get { return _configSubnetmask; }
+            get { return _configSubnetmaskOrCidr; }
             set
             {
-                if (value == _configSubnetmask)
+                if (value == _configSubnetmaskOrCidr)
                     return;
 
-                _configSubnetmask = value;
+                _configSubnetmaskOrCidr = value;
                 OnPropertyChanged();
             }
         }
@@ -533,7 +533,7 @@ namespace NETworkManager.ViewModels.Applications
                         ConfigUseStaticIPv4Address = true;
                         ConfigIPv4Address = value.IPv4Address;
                         ConfigIPv4Gateway = value.IPv4Gateway;
-                        ConfigSubnetmask = value.Subnetmask;
+                        ConfigSubnetmaskOrCidr = value.Subnetmask;
                     }
                     else
                     {
@@ -679,6 +679,11 @@ namespace NETworkManager.ViewModels.Applications
             progressDialogController = await dialogCoordinator.ShowProgressAsync(this, Application.Current.Resources["String_ProgessHeader_ConfigureNetworkInterface"] as string, string.Empty);
             progressDialogController.SetIndeterminate();
 
+            string configSubnetmask = ConfigSubnetmaskOrCidr;
+
+            if (ConfigSubnetmaskOrCidr.StartsWith("/"))
+                configSubnetmask = Subnetmask.GetFromCidr(int.Parse(ConfigSubnetmaskOrCidr.TrimStart('/'))).Subnetmask;
+
             try
             {
                 NetworkInterfaceConfig config = new NetworkInterfaceConfig
@@ -686,7 +691,7 @@ namespace NETworkManager.ViewModels.Applications
                     Id = SelectedNetworkInterface.Id,
                     EnableStaticIPAddress = ConfigUseStaticIPv4Address,
                     IPAddress = ConfigIPv4Address,
-                    Subnetmask = ConfigSubnetmask,
+                    Subnetmask = configSubnetmask,
                     Gateway = ConfigIPv4Gateway,
                     EnableStaticDns = ConfigUseStaticIPv4DNSServer,
                     PrimaryDnsServer = ConfigIPv4PrimaryDNSServer,
@@ -754,13 +759,18 @@ namespace NETworkManager.ViewModels.Applications
             if (string.IsNullOrEmpty(name))
                 return;
 
+            string configSubnetmask = ConfigSubnetmaskOrCidr;
+
+            if (ConfigSubnetmaskOrCidr.StartsWith("/"))
+                configSubnetmask = Subnetmask.GetFromCidr(int.Parse(ConfigSubnetmaskOrCidr.TrimStart('/'))).Subnetmask;
+
             NetworkInterfaceTemplate template = new NetworkInterfaceTemplate
             {
                 Name = name,
                 UseStaticIPv4Address = ConfigUseStaticIPv4Address,
                 IPv4Address = ConfigIPv4Address,
                 IPv4Gateway = ConfigIPv4Gateway,
-                Subnetmask = ConfigSubnetmask,
+                Subnetmask = configSubnetmask,
                 UseStaticIPv4DNSServer = ConfigUseStaticIPv4DNSServer,
                 IPv4PrimaryDNSServer = ConfigIPv4PrimaryDNSServer,
                 IPv4SecondaryDNSServer = ConfigIPv4SecondaryDNSServer

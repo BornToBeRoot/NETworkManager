@@ -6,6 +6,7 @@ namespace NETworkManager.ViewModels.Applications
 {
     class SubnetCalculatorViewModel : ViewModelBase
     {
+        #region Variables
         private bool _isDetailsVisible;
         public bool IsDetailsVisible
         {
@@ -14,13 +15,14 @@ namespace NETworkManager.ViewModels.Applications
             {
                 if (value == _isDetailsVisible)
                     return;
-                
+
                 _isDetailsVisible = value;
                 OnPropertyChanged();
             }
         }
 
         private string _ipv4Address;
+
         public string IPv4Address
         {
             get { return _ipv4Address; }
@@ -34,16 +36,16 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private string _subnetmask;
-        public string Subnetmask
+        private string _subnetmaskOrCidr;
+        public string SubnetmaskOrCidr
         {
-            get { return _subnetmask; }
+            get { return _subnetmaskOrCidr; }
             set
             {
-                if (value == _subnetmask)
+                if (value == _subnetmaskOrCidr)
                     return;
 
-                _subnetmask = value;
+                _subnetmaskOrCidr = value;
                 OnPropertyChanged();
             }
         }
@@ -145,25 +147,35 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
+        #endregion
 
+        #region ICommands
         public ICommand CalculateIPv4SubnetCommand
         {
             get { return new RelayCommand(p => CalculateIPv4SubnetAction()); }
         }
+        #endregion
 
+        #region Methods
         private void CalculateIPv4SubnetAction()
         {
-            SubnetInfo info = Subnet.CalculateIPv4Subnet(IPAddress.Parse(IPv4Address), IPAddress.Parse(Subnetmask));
-                        
-            DetailsNetworkAddress = info.NetworkAddress;
-            DetailsBroadcast = info.Broadcast;
-            DetailsSubnetmask = info.Subnetmask;
-            DetailsCIDR = info.CIDR;
-            DetailsTotalIPs = info.TotalIPs;
-            DetailsHostIPRange = string.Format("{0} - {1}", info.HostFirstIP, info.HostLastIP);
-            DetailsHostIPs = info.HostIPs;
+            string subnetmask = SubnetmaskOrCidr;
+
+            if (SubnetmaskOrCidr.StartsWith("/"))
+                subnetmask = Subnetmask.GetFromCidr(int.Parse(SubnetmaskOrCidr.TrimStart('/'))).Subnetmask;
+
+            SubnetInfo subnetInfo = Subnet.CalculateIPv4Subnet(IPAddress.Parse(IPv4Address), IPAddress.Parse(subnetmask));
+
+            DetailsNetworkAddress = subnetInfo.NetworkAddress;
+            DetailsBroadcast = subnetInfo.Broadcast;
+            DetailsSubnetmask = subnetInfo.Subnetmask;
+            DetailsCIDR = subnetInfo.CIDR;
+            DetailsTotalIPs = subnetInfo.TotalIPs;
+            DetailsHostIPRange = string.Format("{0} - {1}", subnetInfo.HostFirstIP, subnetInfo.HostLastIP);
+            DetailsHostIPs = subnetInfo.HostIPs;
 
             IsDetailsVisible = true;
         }
+        #endregion
     }
 }

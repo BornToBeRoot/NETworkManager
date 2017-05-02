@@ -232,13 +232,13 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource TextBlockInput}"  Text="{DynamicResource String_Subnetmask}"  />
-                                <ComboBox x:Name="comboBoxConfigSubnetmask" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" ItemsSource="{x:Static Network:Subnetmask.List}">
+                                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource TextBlockInput}"  Text="{DynamicResource String_SubnetmaskOrCIDR}"  />
+                                <ComboBox x:Name="comboBoxConfigSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" ItemsSource="{x:Static Network:Subnetmask.List}">
                                     <ComboBox.Text>
-                                        <Binding Path="ConfigSubnetmask" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding Path="ConfigSubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
-                                                <Validator:SubnetmaskValidator ValidatesOnTargetUpdated="True"/>
+                                                <Validator:SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True"/>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </ComboBox.Text>
@@ -369,7 +369,7 @@
                                                 <Binding Path="ConfigUseDynamicIPv4Address" />
                                                 <Binding Path="ConfigUseStaticIPv4Address" />
                                                 <Binding ElementName="txtConfigIPv4Address" Path="(Validation.HasError)" />
-                                                <Binding ElementName="comboBoxConfigSubnetmask" Path="(Validation.HasError)" />
+                                                <Binding ElementName="comboBoxConfigSubnetmaskOrCidr" Path="(Validation.HasError)" />
                                                 <Binding ElementName="txtConfigIPv4Gateway" Path="(Validation.HasError)" />
                                                 <Binding Path="ConfigUseDynamicIPv4DNSServer" />
                                                 <Binding Path="ConfigUseStaticIPv4DNSServer" />

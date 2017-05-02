@@ -10,15 +10,20 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (Regex.IsMatch(value as string, RegexHelper.SubnetmaskRegex))
+            string subnetmaskOrCidr = value as string;
+
+            if (Regex.IsMatch(subnetmaskOrCidr, RegexHelper.SubnetmaskRegex))
                 return ValidationResult.ValidResult;
 
-            int cidr;
-
-            if (int.TryParse(value as string, out cidr))
+            if (subnetmaskOrCidr.StartsWith("/"))
             {
-                if (cidr >= 0 && cidr < 33)
-                    return ValidationResult.ValidResult;
+                int cidr;
+
+                if (int.TryParse(subnetmaskOrCidr.TrimStart('/'), out cidr))
+                {
+                    if (cidr >= 0 && cidr < 33)
+                        return ValidationResult.ValidResult;
+                }
             }
 
             return new ValidationResult(false, Application.Current.Resources["String_ValidateError_EnterValidSubnetmaskOrCIDR"] as string);
