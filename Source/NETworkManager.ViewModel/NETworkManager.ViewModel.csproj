@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2D35D607-2C48-4E71-B269-41EA6918742C}</ProjectGuid>
+    <ProjectGuid>{9E454E35-B044-417F-986B-B0C13B81B282}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NETworkManager.Settings</RootNamespace>
-    <AssemblyName>NETworkManager.Settings</AssemblyName>
+    <RootNamespace>NETworkManager.ViewModel</RootNamespace>
+    <AssemblyName>NETworkManager.ViewModel</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -33,14 +33,19 @@
   <ItemGroup>
     <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MahApps.Metro.IconPacks, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.1.9.0\lib\net45\MahApps.Metro.IconPacks.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -51,44 +56,45 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Appearance.cs" />
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="AssemblyManager.cs" />
-    <Compile Include="Autostart.cs" />
-    <Compile Include="CommandLine.cs" />
-    <Compile Include="CommandLineInfo.cs" />
-    <Compile Include="Configuration.cs" />
-    <Compile Include="ConfigurationInfo.cs" />
-    <Compile Include="Localization.cs" />
-    <Compile Include="LocalizationInfo.cs" />
+    <Compile Include="Applications\ApplicationView.cs" />
+    <Compile Include="Applications\ApplicationViewInfo.cs" />
+    <Compile Include="Applications\IPScannerViewModel.cs" />
+    <Compile Include="Applications\NetworkInterfaceViewModel.cs" />
+    <Compile Include="Applications\PingViewModel.cs" />
+    <Compile Include="Applications\SubnetCalculatorViewModel.cs" />
+    <Compile Include="Applications\TracerouteViewModel.cs" />
+    <Compile Include="Applications\WakeOnLanViewModel.cs" />
+    <Compile Include="Common\RestartAsAdministratorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <DependentUpon>Settings.settings</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="SettingsManager.cs" />
-    <Compile Include="SettingsProviderPortable.cs" />
-    <Compile Include="Templates\NetworkInterfaceTemplate.cs" />
-    <Compile Include="Templates\WakeOnLanTemplate.cs" />
+    <Compile Include="RelayCommand.cs" />
+    <Compile Include="Settings\SettingsView.cs" />
+    <Compile Include="Settings\SettingsViewInfo.cs" />
+    <Compile Include="Settings\SettingsViewModel.cs" />
+    <Compile Include="ViewModelBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NETworkManager.Model\NETworkManager.Model.csproj">
+      <Project>{e6451217-8416-4e5e-88dd-82e930bc84e7}</Project>
+      <Name>NETworkManager.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj">
+      <Project>{2d35d607-2c48-4e71-b269-41ea6918742c}</Project>
+      <Name>NETworkManager.Settings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj">
+      <Project>{47cb8ef6-685e-4bb2-8dc7-518770b4c560}</Project>
+      <Name>NETworkManager.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

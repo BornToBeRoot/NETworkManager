@@ -10,16 +10,17 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Linq;
-using NETworkManager.ViewModels;
+using NETworkManager.ViewModel;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Markup;
-using NETworkManager.Views.Applications;
-using NETworkManager.Views.Settings;
+using NETworkManager.View.Applications;
+using NETworkManager.View.Settings;
 using NETworkManager.Settings;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Collections.Generic;
+using NETworkManager.ViewModel.Applications;
 
 namespace NETworkManager
 {

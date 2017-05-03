@@ -12,13 +12,13 @@ namespace NETworkManager.Settings
         public static void Load()
         {
             // Change the AppTheme if it is not empty and different from the currently loaded
-            string appThemeName = NETworkManager.Settings.Properties.Settings.Default.Appearance_AppTheme;
+            string appThemeName = Properties.Settings.Default.Appearance_AppTheme;
 
             if (!string.IsNullOrEmpty(appThemeName) && appThemeName != ThemeManager.DetectAppStyle().Item1.Name)
                 ChangeAppTheme(appThemeName);
 
             // Change the Accent if it is not empty and different from the currently loaded
-            string accentName = NETworkManager.Settings.Properties.Settings.Default.Appearance_Accent;
+            string accentName = Properties.Settings.Default.Appearance_Accent;
 
             if (!string.IsNullOrEmpty(accentName) && accentName != ThemeManager.DetectAppStyle().Item2.Name)
                 ChangeAccent(accentName);

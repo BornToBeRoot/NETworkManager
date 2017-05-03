@@ -123,43 +123,43 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\TracerouteUserControl.xaml">
+    <Page Include="View\Applications\TracerouteUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\PingUserControl.xaml">
+    <Page Include="View\Applications\PingUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\DNSLookupUserControl.xaml">
+    <Page Include="View\Applications\DNSLookupUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\PortScannerUserControl.xaml">
+    <Page Include="View\Applications\PortScannerUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\IPScannerUserControl.xaml">
+    <Page Include="View\Applications\IPScannerUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Common\RestartAsAdministratorUserControl.xaml">
+    <Page Include="View\Common\RestartAsAdministratorUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsWindow.xaml">
+    <Page Include="View\Settings\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Applications\NetworkInterfaceUserControl.xaml">
+    <Page Include="View\Applications\NetworkInterfaceUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\WakeOnLANUserControl.xaml">
+    <Page Include="View\Applications\WakeOnLANUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Applications\SubnetCalculatorUserControl.xaml">
+    <Page Include="View\Applications\SubnetCalculatorUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -173,20 +173,16 @@
     </Compile>
     <Compile Include="Controls\MultiSelectDataGrid.cs" />
     <Compile Include="Controls\ScrollingDataGrid.cs" />
-    <Compile Include="ViewModels\Applications\TracerouteViewModel.cs" />
-    <Compile Include="ViewModels\Applications\PingViewModel.cs" />
-    <Compile Include="ViewModels\Applications\IPScannerViewModel.cs" />
-    <Compile Include="ViewModels\Common\RestartAsAdministratorViewModel.cs" />
-    <Compile Include="Views\Applications\TracerouteUserControl.xaml.cs">
+    <Compile Include="View\Applications\TracerouteUserControl.xaml.cs">
       <DependentUpon>TracerouteUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\PingUserControl.xaml.cs">
+    <Compile Include="View\Applications\PingUserControl.xaml.cs">
       <DependentUpon>PingUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\DNSLookupUserControl.xaml.cs">
+    <Compile Include="View\Applications\DNSLookupUserControl.xaml.cs">
       <DependentUpon>DNSLookupUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Common\RestartAsAdministratorUserControl.xaml.cs">
+    <Compile Include="View\Common\RestartAsAdministratorUserControl.xaml.cs">
       <DependentUpon>RestartAsAdministratorUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BooleanReverseToVisibilityConverter.cs" />
@@ -209,25 +205,20 @@
     <Compile Include="Converters\IsDefaultLocationToBoolConverter.cs" />
     <Compile Include="Converters\AccentToBrushConverter.cs" />
     <Compile Include="Converters\AppThemeToBrushConverter.cs" />
-    <Compile Include="Views\Applications\ApplicationViewInfo.cs" />
-    <Compile Include="ViewModels\RelayCommand.cs" />
-    <Compile Include="Views\Applications\PortScannerUserControl.xaml.cs">
+    <Compile Include="View\Applications\PortScannerUserControl.xaml.cs">
       <DependentUpon>PortScannerUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\NetworkInterfaceUserControl.xaml.cs">
+    <Compile Include="View\Applications\NetworkInterfaceUserControl.xaml.cs">
       <DependentUpon>NetworkInterfaceUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\TrueFalseToStringConverter.cs" />
     <Compile Include="Converters\AccentToStringConverter.cs" />
     <Compile Include="Converters\AppThemeToStringConverter.cs" />
-    <Compile Include="Views\Applications\ApplicationView.cs" />
-    <Compile Include="Views\Applications\IPScannerUserControl.xaml.cs">
+    <Compile Include="View\Applications\IPScannerUserControl.xaml.cs">
       <DependentUpon>IPScannerUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Validators\IPScanRangeValidator.cs" />
-    <Compile Include="Views\Settings\SettingsView.cs" />
-    <Compile Include="Views\Settings\SettingsViewInfo.cs" />
-    <Compile Include="Views\Settings\SettingsWindow.xaml.cs">
+    <Compile Include="View\Settings\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Validators\FolderExistsValidator.cs" />
@@ -237,15 +228,10 @@
     <Compile Include="Validators\EmptyFieldValidator.cs" />
     <Compile Include="Validators\PortValidator.cs" />
     <Compile Include="Validators\MACAddressValidator.cs" />
-    <Compile Include="ViewModels\Applications\NetworkInterfaceViewModel.cs" />
-    <Compile Include="ViewModels\Applications\SubnetCalculatorViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="ViewModels\Applications\WakeOnLanViewModel.cs" />
-    <Compile Include="Views\Applications\WakeOnLANUserControl.xaml.cs">
+    <Compile Include="View\Applications\WakeOnLANUserControl.xaml.cs">
       <DependentUpon>WakeOnLANUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\SubnetCalculatorUserControl.xaml.cs">
+    <Compile Include="View\Applications\SubnetCalculatorUserControl.xaml.cs">
       <DependentUpon>SubnetCalculatorUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
@@ -312,9 +298,6 @@
     <Resource Include="Resources\Localization\Flags\en-US.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ToDo.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\WindowsIcons-license.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -336,6 +319,10 @@
       <Project>{47cb8ef6-685e-4bb2-8dc7-518770b4c560}</Project>
       <Name>NETworkManager.Utilities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.ViewModel\NETworkManager.ViewModel.csproj">
+      <Project>{9e454e35-b044-417f-986b-b0c13b81b282}</Project>
+      <Name>NETworkManager.ViewModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\NETworkManager_128x128.png" />
@@ -352,7 +339,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

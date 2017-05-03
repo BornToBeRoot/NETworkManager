@@ -41,7 +41,7 @@ namespace NETworkManager.Settings
         /// </summary>
         public static void Load()
         {
-            string cultureCode = NETworkManager.Settings.Properties.Settings.Default.Localization_CultureCode;
+            string cultureCode = Settings.Properties.Settings.Default.Localization_CultureCode;
 
             if (string.IsNullOrEmpty(cultureCode))
                 cultureCode = CultureInfo.CurrentCulture.Name;
