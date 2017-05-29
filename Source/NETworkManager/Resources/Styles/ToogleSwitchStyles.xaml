@@ -4,4 +4,7 @@
     <Style TargetType="{x:Type mah:ToggleSwitch}" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}" >
         <Setter Property="FontSize" Value="14" />
     </Style>
+    <Style x:Key="DefaultToggleSwitch" TargetType="{x:Type mah:ToggleSwitch}" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}" >
+        <Setter Property="FontSize" Value="14" />
+    </Style>
 </ResourceDictionary>

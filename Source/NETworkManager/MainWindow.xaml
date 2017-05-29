@@ -94,7 +94,7 @@
                     <Grid.Style>
                         <Style TargetType="{x:Type Grid}">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding PinApplicationList}" Value="True">
+                                <DataTrigger Binding="{Binding ApplicationView_Expand}" Value="True">
                                     <Setter Property="MinWidth" Value="250"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding IsTextBoxSearchFocused}" Value="True">
@@ -130,7 +130,7 @@
                                             </Setter.Value>
                                         </Setter>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding PinApplicationList}" Value="False">
+                                            <DataTrigger Binding="{Binding ApplicationView_Expand}" Value="False">
                                                 <Setter Property="Visibility" Value="Visible" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding IsTextBoxSearchFocused}" Value="False">
@@ -174,7 +174,7 @@
                                         <Setter Property="Visibility" Value="Hidden" />
                                         <Setter Property="Width" Value="0" />
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding PinApplicationList}" Value="True">
+                                            <DataTrigger Binding="{Binding ApplicationView_Expand}" Value="True">
                                                 <Setter Property="Visibility" Value="Visible" />
                                                 <Setter Property="Width" Value="Auto" />
                                                 <Setter Property="Margin" Value="10,0" />
@@ -214,7 +214,7 @@
                                     </Interactivity:EventTrigger>
                                 </Interactivity:Interaction.Triggers>
                             </TextBox>
-                            <ToggleButton Grid.Column="1" Width="32" Height="32" IsChecked="{Binding PinApplicationList}" Focusable="False">
+                            <ToggleButton Grid.Column="1" Width="32" Height="32" IsChecked="{Binding ApplicationView_Expand}" Focusable="False">
                                 <ToggleButton.Style>
                                     <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MetroCircleButtonStyle}">
                                         <Setter Property="Visibility" Value="Collapsed" />
@@ -226,7 +226,7 @@
                                             </Setter.Value>
                                         </Setter>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding PinApplicationList}" Value="True">
+                                            <DataTrigger Binding="{Binding ApplicationView_Expand}" Value="True">
                                                 <Setter Property="Visibility" Value="Visible" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding IsTextBoxSearchFocused}" Value="True">
@@ -256,7 +256,7 @@
                                                 <Trigger Property="IsMouseOver" Value="True">
                                                     <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
                                                 </Trigger>
-                                                <DataTrigger Binding="{Binding PinApplicationList}" Value="True">
+                                                <DataTrigger Binding="{Binding ApplicationView_Expand}" Value="True">
                                                     <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
                                                     <Setter Property="OpacityMask" Value="{StaticResource VisualPin}" />
                                                     <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
@@ -269,7 +269,7 @@
                                                 <MultiDataTrigger>
                                                     <MultiDataTrigger.Conditions>
                                                         <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
-                                                        <Condition Binding="{Binding PinApplicationList}" Value="True" />
+                                                        <Condition Binding="{Binding ApplicationView_Expand}" Value="True" />
                                                     </MultiDataTrigger.Conditions>
                                                     <MultiDataTrigger.Setters>
                                                         <Setter Property="Fill" Value="{DynamicResource AccentColorBrush2}" />
@@ -324,7 +324,7 @@
                                                         <DataTrigger Binding="{Binding Path=IsSelected,RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True" >
                                                             <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
                                                         </DataTrigger>
-                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.PinApplicationList}" Value="True">
+                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationView_Expand}" Value="True">
                                                             <Setter Property="Visibility" Value="Visible" />
                                                             <Setter Property="Margin" Value="0,0,10,0" />
                                                         </DataTrigger>
@@ -392,7 +392,7 @@
                     </Interactivity:Interaction.Triggers>
                 </Grid>
             </Border>
-            <ContentControl x:Name="mainContentControl" Grid.Column="1" Focusable="False" />
+            <ContentControl x:Name="contentControlApplication" Grid.Column="1" Focusable="False" />
         </Grid>
         <StatusBar Grid.Row="1">
             <StatusBarItem Content="Version 1.0.0.0" />

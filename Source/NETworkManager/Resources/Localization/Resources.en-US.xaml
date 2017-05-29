@@ -48,6 +48,13 @@
     <system:String x:Key="String_Header_MaximumHopsReached">Maximum hops reached</system:String>
     <system:String x:Key="String_Header_CanceledByUser">Canceled by user</system:String>
     <system:String x:Key="String_Header_DontFragment">Don't fragment</system:String>
+    <system:String x:Key="String_Header_Import">Import</system:String>
+    <system:String x:Key="String_Header_Export">Export</system:String>
+    <system:String x:Key="String_Header_Reset">Reset</system:String>
+    <system:String x:Key="String_Header_Error">Error</system:String>
+    <system:String x:Key="String_Header_AreYouSure">Are you sure?</system:String>
+    <system:String x:Key="String_Header_ValidationFailed">Validation failed!</system:String>
+    <system:String x:Key="String_Header_Success">Success!</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -59,7 +66,6 @@
     <system:String x:Key="String_Templates">Templates</system:String>
     <system:String x:Key="String_NewTemplate">New template</system:String>
     <system:String x:Key="String_WakeUp">Wake Up</system:String>
-    <system:String x:Key="String_Header_Error">Error</system:String>
     <system:String x:Key="String_Import">Import</system:String>
     <system:String x:Key="String_Export">Export</system:String>
     <system:String x:Key="String_MACAddress">MAC-Address</system:String>
@@ -126,7 +132,6 @@
     <system:String x:Key="String_StartMaximized">Start window maximized</system:String>
     <system:String x:Key="String_NetworkAddress">Network address</system:String>
     <system:String x:Key="String_CouldNotResolveHostnameMessage">Could not resolve hostname.</system:String>
-    <system:String x:Key="String_AreYouSure">Are you sure?</system:String>
     <system:String x:Key="String_DeleteTemplatesMessage">The selected templates will be deleted permanently.</system:String>
     <system:String x:Key="String_Timeout">Timeout</system:String>
     <system:String x:Key="String_Buffer">Buffer</system:String>
@@ -159,6 +164,19 @@
     <system:String x:Key="String_UntrayBringWindowToFront">Untray / Bring window to front</system:String>
     <system:String x:Key="String_MaximumHopsReachedMessage">Traceroute was canceled after {0} hops.</system:String>
     <system:String x:Key="String_CanceledByUserMessage">The operation has been canceled by the user!</system:String>
+    <system:String x:Key="String_ApplicationSettings">Application settings</system:String>
+    <system:String x:Key="String_NetworkInterfaceConfigTemplates">Network Interface config templates</system:String>
+    <system:String x:Key="String_WakeOnLanTemplates">Wake on LAN templates</system:String>
+    <system:String x:Key="String_SelectedSettingsAreReset">The selected settings are reset (The settings location is not affected.)</system:String>
+    <system:String x:Key="String_ApplicationIsRestartedAfterwards">* Application is restarted afterwards</system:String>
+    <system:String x:Key="String_SelectTheSettingsYouWantToImport">Select the settings you want to import:</system:String>
+    <system:String x:Key="String_SelectTheSettingsYouWantToExport">Select the settings you want to export:</system:String>
+    <system:String x:Key="String_SelectTheSettingsYouWantToReset">Select the settings you want to reset:</system:String>
+    <system:String x:Key="String_NoValidFileFoundToImport">No valid file found to import.</system:String>
+    <system:String x:Key="String_SettingsSuccessfullyExported">Settings successfully exported!</system:String>
+    <system:String x:Key="String_Path">Path</system:String>
+    <system:String x:Key="String_SettingsSuccessfullyReset">Settings successfully reset!</system:String>
+    <system:String x:Key="String_SelectedSettingsAreOverwritten">The selected settings are overwritten and the application is restarted.</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
@@ -179,6 +197,11 @@
     <system:String x:Key="String_Button_Scan">Scan</system:String>
     <system:String x:Key="String_Button_Trace">Trace</system:String>
     <system:String x:Key="String_Button_Close">Close</system:String>
+    <system:String x:Key="String_Button_Import">Importieren</system:String>
+    <system:String x:Key="String_Button_Export">Exportieren</system:String>
+    <system:String x:Key="String_Button_Reset">Reset</system:String>
+    <system:String x:Key="String_Button_Continue">Continue</system:String>
+    <system:String x:Key="String_Button_Validate">Validate</system:String>
 
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Cut</system:String>
@@ -189,6 +212,10 @@
     <system:String x:Key="String_ToggleSwitch_On">On</system:String>
     <system:String x:Key="String_ToggleSwitch_Off">Off</system:String>
 
+    <!-- RadioButton -->
+    <system:String x:Key="String_RadioButton_Everything">Everything</system:String>
+    <system:String x:Key="String_RadioButton_Custom">Custom:</system:String>
+    
     <!-- Watermark -->
     <system:String x:Key="String_Watermark_Search">Search...</system:String>
     <system:String x:Key="String_Watermark_EnterLocation">Enter location...</system:String>
@@ -200,7 +227,8 @@
     <system:String x:Key="String_Watermark_ExampleSubnetmask">255.255.255.0</system:String>
     <system:String x:Key="String_Watermark_HostnameOrIPAddress">Hostname or IP-Address...</system:String>
     <system:String x:Key="String_Watermark_EampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.178.150</system:String>
-
+    <system:String x:Key="String_Watermark_LocationOfTheImport">Location of the import file...</system:String>
+    
     <!-- ShowProgress -->
     <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Configure Network Interface</system:String>
     <system:String x:Key="String_Progress_SetStaticIPAddress">Set static IP-Address and gateway...</system:String>
@@ -216,17 +244,18 @@
     <system:String x:Key="String_ToolTip_AddTemplate">Add template</system:String>
     
     <!-- Validate (User Input in GUI) -->
-    <system:String x:Key="String_ValidateError_FieldEmpty">Field cannot be empty</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidMACAddress">Enter a valid MAC-Address like 00:F1:23:AB:F2:35</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidPort">Enter a valid port (1 - 65535)</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidIPv4Address">Enter a valid IPv4-Address</system:String>
-    <system:String x:Key="String_ValidateError_MACAddressEmpty">MAC-Address cannot be empty</system:String>
-    <system:String x:Key="String_ValidateError_HostnameEmpty">Hostname cannot be empty</system:String>
-    <system:String x:Key="String_ValidateError_FolderDoesNotExist">Folder does not exists</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidSubnetmask">Enter a valid subnetmask (like 255.255.255.0)</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidSubnetmaskOrCIDR">Enter a valid subnetmask or CIDR (like 255.255.255.0 or 24)</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidIPScanRange">Enter a valid ip range</system:String>
-            
+    <system:String x:Key="String_ValidateError_FieldEmpty">Field cannot be empty!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidMACAddress">Enter a valid MAC-Address like 00:F1:23:AB:F2:35!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidPort">Enter a valid port (1 - 65535)!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidIPv4Address">Enter a valid IPv4-Address!</system:String>
+    <system:String x:Key="String_ValidateError_MACAddressEmpty">MAC-Address cannot be empty!</system:String>
+    <system:String x:Key="String_ValidateError_HostnameEmpty">Hostname cannot be empty!</system:String>
+    <system:String x:Key="String_ValidateError_FolderDoesNotExist">Folder does not exists!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidSubnetmask">Enter a valid subnetmask (like 255.255.255.0)!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidSubnetmaskOrCIDR">Enter a valid subnetmask or CIDR (like 255.255.255.0 or 24)!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidIPScanRange">Enter a valid ip range!</system:String>
+    <system:String x:Key="String_ValidateError_FileDoesNotExist">File does not exists!</system:String>        
+    
     <!-- ApplicationView.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>
     <system:String x:Key="String_ApplicationName_NetworkInterface">Network Interface</system:String>
@@ -244,7 +273,8 @@
     <system:String x:Key="String_SettingsName_HotKeys">HotKeys</system:String>
     <system:String x:Key="String_SettingsName_Autostart">Autostart</system:String>
     <system:String x:Key="String_SettingsName_Settings">Settings</system:String>
-    <system:String x:Key="String_SettingsName_Experimental">Experimental</system:String>
+    <system:String x:Key="String_SettingsName_ImportExport">Import / Export</system:String>
+    <system:String x:Key="String_SettingsName_Developer">Developer</system:String>
 
     <!-- AppTheme.Name -->
     <system:String x:Key="String_AppTheme_BaseLight">Light</system:String>

@@ -47,7 +47,14 @@
     <system:String x:Key="String_Header_MaximumHopsReached">Maximale Hops erreicht</system:String>
     <system:String x:Key="String_Header_CanceledByUser">Vom Benutzer abgebrochen</system:String>
     <system:String x:Key="String_Header_DontFragment">Nicht fragmentieren</system:String>
-
+    <system:String x:Key="String_Header_Import">Importieren</system:String>
+    <system:String x:Key="String_Header_Export">Exportieren</system:String>
+    <system:String x:Key="String_Header_Reset">Zurücksetzen</system:String>
+    <system:String x:Key="String_Header_Error">Fehler</system:String>
+    <system:String x:Key="String_Header_AreYouSure">Sind Sie sicher?</system:String>
+    <system:String x:Key="String_Header_ValidationFailed">Validierung fehlgeschlagen!</system:String>
+    <system:String x:Key="String_Header_Success">Erfolgreich!</system:String>    
+    
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_ShowWindow">Fenster anzeigen</system:String>
@@ -58,7 +65,6 @@
     <system:String x:Key="String_Templates">Templates</system:String>
     <system:String x:Key="String_NewTemplate">Neues Template</system:String>
     <system:String x:Key="String_WakeUp">Aufwecken</system:String>
-    <system:String x:Key="String_Header_Error">Fehler</system:String>
     <system:String x:Key="String_Import">Importieren</system:String>
     <system:String x:Key="String_Export">Exportieren</system:String>
     <system:String x:Key="String_MACAddress">MAC-Adresse</system:String>
@@ -125,7 +131,6 @@
     <system:String x:Key="String_StartMaximized">Fenster maximiert starten</system:String>
     <system:String x:Key="String_NetworkAddress">Netzwerkadresse</system:String>
     <system:String x:Key="String_CouldNotResolveHostnameMessage">Hostname konnte nicht aufgelöst werden.</system:String>
-    <system:String x:Key="String_AreYouSure">Sind Sie sicher?</system:String>
     <system:String x:Key="String_DeleteTemplatesMessage">Die ausgewählten Templates werden unwiderruflich gelöscht.</system:String>
     <system:String x:Key="String_Timeout">Timeout</system:String>
     <system:String x:Key="String_Buffer">Buffer</system:String>
@@ -158,6 +163,18 @@
     <system:String x:Key="String_UntrayBringWindowToFront">Untray / Fenster in den Vordergrund bringen</system:String>
     <system:String x:Key="String_MaximumHopsReachedMessage">Traceroute wurde nach {0} Hops abgebrochen.</system:String>
     <system:String x:Key="String_CanceledByUserMessage">Der Vorgang wurde vom Benutzer abgebrochen!</system:String>
+    <system:String x:Key="String_NetworkInterfaceConfigTemplates">Netzwerkinterface Konfigurations Templates</system:String>
+    <system:String x:Key="String_WakeOnLanTemplates">Wake on LAN Templates</system:String>
+    <system:String x:Key="String_SelectedSettingsAreReset">Die ausgewählten Einstellungen werden zurückgesetzt. (Der Speicherpfad ist hiervon nicht betroffen.)</system:String>
+    <system:String x:Key="String_ApplicationIsRestartedAfterwards">* Die Anwendung wird danach neu gestartet</system:String>
+    <system:String x:Key="String_SelectTheSettingsYouWantToImport">Wählen Sie die Einstellungen aus, die Sie importieren möchten:</system:String>
+    <system:String x:Key="String_SelectTheSettingsYouWantToExport">Wählen Sie die Einstellungen aus, die Sie exportieren möchten:</system:String>
+    <system:String x:Key="String_SelectTheSettingsYouWantToReset">Wählen Sie die Einstellungen aus, die Sie zurücksetzen möchten:</system:String>
+    <system:String x:Key="String_NoValidFileFoundToImport">Kein gültige Datei zum importieren gefunden.</system:String>
+    <system:String x:Key="String_SettingsSuccessfullyExported">Einstellungen erfolgreich exportiert!</system:String>
+    <system:String x:Key="String_Path">Pfad</system:String>
+    <system:String x:Key="String_SettingsSuccessfullyReset">Einstellungen erfolgreich zurückgesetzt!</system:String>
+    <system:String x:Key="String_SelectedSettingsAreOverwritten">Die ausgewählten Einstellungen werden überschrieben und die Anwendung wird neu gestartet.</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
@@ -179,7 +196,12 @@
     <system:String x:Key="String_Button_Trace">Verfolgen</system:String>
     <system:String x:Key="String_Button_Close">Schließen</system:String>
     <system:String x:Key="String_Button_Lookup">Lookup</system:String>
-
+    <system:String x:Key="String_Button_Import">Importieren</system:String>
+    <system:String x:Key="String_Button_Export">Exportieren</system:String>
+    <system:String x:Key="String_Button_Reset">Zurücksetzen</system:String>
+    <system:String x:Key="String_Button_Continue">Weiter</system:String>
+    <system:String x:Key="String_Button_Validate">Validieren</system:String>
+    
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Ausschneiden</system:String>
     <system:String x:Key="String_ContextMenu_Copy">Kopieren</system:String>
@@ -189,6 +211,10 @@
     <system:String x:Key="String_ToggleSwitch_On">Ein</system:String>
     <system:String x:Key="String_ToggleSwitch_Off">Aus</system:String>
 
+    <!-- RadioButton -->
+    <system:String x:Key="String_RadioButton_Everything">Alles</system:String>
+    <system:String x:Key="String_RadioButton_Custom">Benutzerdefiniert:</system:String>
+    
     <!-- Watermark -->
     <system:String x:Key="String_Watermark_Search">Suche...</system:String>
     <system:String x:Key="String_Watermark_EnterLocation">Speicherort eingeben...</system:String>
@@ -200,7 +226,8 @@
     <system:String x:Key="String_Watermark_ExampleSubnetmask">255.255.255.0</system:String>
     <system:String x:Key="String_Watermark_HostnameOrIPAddress">Hostname oder IP-Adresse...</system:String>
     <system:String x:Key="String_Watermark_EampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.178.150</system:String>
-
+    <system:String x:Key="String_Watermark_LocationOfTheImport">Speicherort der Importdatei...</system:String>
+    
     <!-- ShowProgress -->
     <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Konfiguriere Netzwerkinterface</system:String>
     <system:String x:Key="String_Progress_SetStaticIPAddress">Setze statische IP-Adresse und Gateway...</system:String>
@@ -216,16 +243,17 @@
     <system:String x:Key="String_ToolTip_AddTemplate">Template hinzufügen</system:String>
 
     <!-- Validate (User Input in GUI) -->
-    <system:String x:Key="String_ValidateError_FieldEmpty">Feld darf nicht leer sein</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidMACAddress">Geben Sie eine gültige MAC-Addresse (z.B. 00:F1:23:AB:F2:35) ein</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidPort">Geben Sie einen gültigen Port ein (1 - 65535)</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidIPv4Address">Geben Sie eine gültige IPv4-Adresse ein</system:String>
-    <system:String x:Key="String_ValidateError_MACAddressEmpty">MAC-Adresse darf nicht leer sein</system:String>
-    <system:String x:Key="String_ValidateError_HostnameEmpty">Hostname darf nicht leer sein</system:String>
-    <system:String x:Key="String_ValidateError_FolderDoesNotExist">Ordner existiert nicht</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidSubnetmask">Geben Sie eine gültige Subnetzmaske ein (z.B. 255.255.255.0)</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidSubnetmaskOrCIDR">Geben Sie eine gültige Subnetzmaske oder CIDR ein (z.B. 255.255.255.0 oder 24)</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidIPScanRange">Geben Sie einen gültigen IP-Bereich ein</system:String>
+    <system:String x:Key="String_ValidateError_FieldEmpty">Feld darf nicht leer sein!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidMACAddress">Geben Sie eine gültige MAC-Addresse (z.B. 00:F1:23:AB:F2:35) ein!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidPort">Geben Sie einen gültigen Port ein (1 - 65535)!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidIPv4Address">Geben Sie eine gültige IPv4-Adresse ein!</system:String>
+    <system:String x:Key="String_ValidateError_MACAddressEmpty">MAC-Adresse darf nicht leer sein!</system:String>
+    <system:String x:Key="String_ValidateError_HostnameEmpty">Hostname darf nicht leer sein!</system:String>
+    <system:String x:Key="String_ValidateError_FolderDoesNotExist">Ordner existiert nicht!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidSubnetmask">Geben Sie eine gültige Subnetzmaske ein (z.B. 255.255.255.0)!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidSubnetmaskOrCIDR">Geben Sie eine gültige Subnetzmaske oder CIDR ein (z.B. 255.255.255.0 oder /24)!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidIPScanRange">Geben Sie einen gültigen IP-Bereich ein!</system:String>
+    <system:String x:Key="String_ValidateError_FileDoesNotExist">Datei existiert nicht!</system:String>
 
     <!-- ApplicationInfo.Name && ApplicationInfo.Description-->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>
@@ -236,7 +264,17 @@
     <system:String x:Key="String_ApplicationName_Ping">Ping</system:String>
     <system:String x:Key="String_ApplicationName_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_ApplicationName_DNSLookup">DNS Lookup</system:String>
-
+    
+    <!-- SettingsView.Name -->
+    <system:String x:Key="String_SettingsName_General">Allgemein</system:String>
+    <system:String x:Key="String_SettingsName_Appearance">Aussehen</system:String>
+    <system:String x:Key="String_SettingsName_Language">Sprache</system:String>
+    <system:String x:Key="String_SettingsName_HotKeys">Hotkeys</system:String>
+    <system:String x:Key="String_SettingsName_Autostart">Autostart</system:String>
+    <system:String x:Key="String_SettingsName_Settings">Einstellungen</system:String>
+    <system:String x:Key="String_SettingsName_ImportExport">Import / Export</system:String>
+    <system:String x:Key="String_SettingsName_Developer">Entwickler</system:String>
+    
     <!-- AppTheme.Name -->
     <system:String x:Key="String_AppTheme_BaseLight">Hell</system:String>
     <system:String x:Key="String_AppTheme_BaseDark">Dunkel</system:String>

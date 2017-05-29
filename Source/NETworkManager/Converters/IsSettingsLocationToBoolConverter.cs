@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Settings;
+using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Converters
 {
@@ -9,7 +9,7 @@ namespace NETworkManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value as string == SettingsManager.SettingsLocationNotPortable)
+            if (value as string == SettingsManager.SettingsLocation)
                 return true;
 
             return false;

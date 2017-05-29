@@ -1,4 +1,4 @@
-﻿using NETworkManager.Settings;
+﻿using NETworkManager.Models.Settings;
 using System.Windows;
 
 namespace NETworkManager
@@ -11,12 +11,12 @@ namespace NETworkManager
         public App()
         {
             ShutdownMode = ShutdownMode.OnLastWindowClose;
-            
+
             // Parse the command line arguments and store them in the current configuration
-            CommandLine.Parse();
+            CommandLineManager.Parse();
 
             // Detect the current configuration
-            Configuration.Detect();                                
+            ConfigurationManager.Detect();
         }
     }
 }

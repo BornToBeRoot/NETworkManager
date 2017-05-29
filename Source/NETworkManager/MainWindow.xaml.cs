@@ -10,17 +10,17 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Linq;
-using NETworkManager.ViewModel;
+using NETworkManager.ViewModels;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Markup;
-using NETworkManager.View.Applications;
-using NETworkManager.View.Settings;
-using NETworkManager.Settings;
+using NETworkManager.Views.Applications;
+using NETworkManager.Views.Settings;
+using NETworkManager.Models.Settings;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Collections.Generic;
-using NETworkManager.ViewModel.Applications;
+using NETworkManager.Views;
 
 namespace NETworkManager
 {
@@ -43,24 +43,20 @@ namespace NETworkManager
         private bool _isInTray;
         private bool _closeApplication;
 
-        private bool _pinApplicationList;
-        public bool PinApplicationList
+        private bool _applicationView_Expand;
+        public bool ApplicationView_Expand
         {
-            get { return _pinApplicationList; }
+            get { return _applicationView_Expand; }
             set
             {
-                if (value == _pinApplicationList)
+                if (value == _applicationView_Expand)
                     return;
 
                 if (!_isLoading)
-                {
-                    NETworkManager.Settings.Properties.Settings.Default.Window_PinApplicationList = value;
+                    SettingsManager.Current.ApplicationView_Expand = value;
 
-                    SettingsManager.SettingsChanged = true;
-                }
-
-                _pinApplicationList = value;
-                OnPropertyChanged("PinApplicationList");
+                _applicationView_Expand = value;
+                OnPropertyChanged("ApplicationView_Expand");
             }
         }
 
@@ -148,34 +144,41 @@ namespace NETworkManager
         #region Constructor, window load and close events
         public MainWindow()
         {
-            // Load localization
-            Settings.Localization.Load();
-            LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(Settings.Localization.Culture.IetfLanguageTag)));
-
-            // Load appearance
-            Settings.Appearance.Load();
-
             InitializeComponent();
             DataContext = this;
 
+            // Load settings
+            SettingsManager.Load();
+
+            // Load localization
+            LocalizationManager.Load();
+            LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
+
+            // Load appearance
+            AppearanceManager.Load();
+
             // Autostart & Window start
-            if (CommandLine.Current.Autostart && NETworkManager.Settings.Properties.Settings.Default.Autostart_StartMinimizedInTray || NETworkManager.Settings.Properties.Settings.Default.TrayIcon_AlwaysShowIcon)
+            if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray || SettingsManager.Current.TrayIcon_AlwaysShowIcon)
                 InitNotifyIcon();
 
-            if (CommandLine.Current.Autostart && NETworkManager.Settings.Properties.Settings.Default.Autostart_StartMinimizedInTray)
+            if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
                 HideWindowToTray();
-            else if (NETworkManager.Settings.Properties.Settings.Default.Window_StartMaximized)
+            else if (SettingsManager.Current.Window_StartMaximized)
                 WindowState = WindowState.Maximized;
 
             // Set windows title if admin
-            if (Configuration.Current.IsAdmin)
+            if (ConfigurationManager.Current.IsAdmin)
                 Title = string.Format("[{0}] {1}", System.Windows.Application.Current.Resources["String_Administrator"] as string, Title);
 
             // Load application list, filter, sort
             LoadApplicationList();
 
             // Load settings
-            PinApplicationList = NETworkManager.Settings.Properties.Settings.Default.Window_PinApplicationList;
+            ApplicationView_Expand = SettingsManager.Current.ApplicationView_Expand;
+
+            // Load templates
+            TemplateManager.LoadNetworkInterfaceConfigTemplates();
+            TemplateManager.LoadWakeOnLanTemplates();
 
             _isLoading = false;
         }
@@ -185,7 +188,7 @@ namespace NETworkManager
             _applicationViewCollectionSource = new CollectionViewSource();
 
             // Developer features
-            if (NETworkManager.Settings.Properties.Settings.Default.DeveloperMode)
+            if (SettingsManager.Current.DeveloperMode)
                 _applicationViewCollectionSource.Source = ApplicationView.List;
             else
                 _applicationViewCollectionSource.Source = ApplicationView.List.Where(x => x.IsDev == false);
@@ -196,13 +199,13 @@ namespace NETworkManager
 
         private void MetroWindowMain_Loaded(object sender, RoutedEventArgs e)
         {
-            SelectedApplicationViewInfo = ApplicationViewCollection.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == (ApplicationView.Name)Enum.Parse(typeof(ApplicationView.Name), NETworkManager.Settings.Properties.Settings.Default.Application_DefaultApplicationViewName));
+            SelectedApplicationViewInfo = ApplicationViewCollection.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Application_DefaultApplicationViewName);
         }
 
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
         {
             // Hide the application to tray
-            if (!_closeApplication && NETworkManager.Settings.Properties.Settings.Default.Window_MinimizeInsteadOfTerminating)
+            if (!_closeApplication && SettingsManager.Current.Window_MinimizeInsteadOfTerminating)
             {
                 e.Cancel = true;
 
@@ -212,21 +215,22 @@ namespace NETworkManager
             }
 
             // Confirm close
-            if (!_closeApplication && NETworkManager.Settings.Properties.Settings.Default.Window_ConfirmClose)
+            if (!_closeApplication && SettingsManager.Current.Window_ConfirmClose)
             {
                 e.Cancel = true;
 
-                MetroDialogSettings dialogSettings = new MetroDialogSettings();
-
-                dialogSettings.CustomResourceDictionary = new ResourceDictionary
+                MetroDialogSettings dialogSettings = new MetroDialogSettings()
                 {
-                    Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
+                    CustomResourceDictionary = new ResourceDictionary
+                    {
+                        Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
+                    },
+
+                    AffirmativeButtonText = System.Windows.Application.Current.Resources["String_Button_Close"] as string,
+                    NegativeButtonText = System.Windows.Application.Current.Resources["String_Button_Cancel"] as string,
+
+                    DefaultButtonFocus = MessageDialogResult.Affirmative
                 };
-
-                dialogSettings.AffirmativeButtonText = System.Windows.Application.Current.Resources["String_Button_Close"] as string;
-                dialogSettings.NegativeButtonText = System.Windows.Application.Current.Resources["String_Button_Cancel"] as string;
-
-                dialogSettings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 if (await this.ShowMessageAsync(System.Windows.Application.Current.Resources["String_Header_Confirm"] as string, System.Windows.Application.Current.Resources["String_ConfirmCloseQuesiton"] as string, MessageDialogStyle.AffirmativeAndNegative, dialogSettings) == MessageDialogResult.Affirmative)
                 {
@@ -237,9 +241,16 @@ namespace NETworkManager
                 return;
             }
 
+            // Save templates
+            if (TemplateManager.NetworkInterfaceConfigTemplatesChanged && !ImportExportManager.ForceRestart)
+                TemplateManager.SaveNetworkInterfaceConfigTemplates();
+            
+            if (TemplateManager.WakeOnLanTemplatesChanged && !ImportExportManager.ForceRestart)
+                TemplateManager.SaveWakeOnLanTemplates();
+
             // Save settings
-            if (SettingsManager.SettingsChanged)
-                SettingsManager.SaveSettings();
+            if (SettingsManager.Current.SettingsChanged && !ImportExportManager.ForceRestart)
+                SettingsManager.Save();
 
             // Unregister HotKeys
             if (RegisteredHotKeys.Count > 0)
@@ -252,14 +263,14 @@ namespace NETworkManager
         #endregion
 
         #region Application Views
-        NetworkInterfaceUserControl networkInterfaceUserControl;
-        IPScannerUserControl ipScannerUserControl;
-        PortScannerUserControl portScannerUserControl;
-        SubnetCalculatorUserControl subnetCalculatorUserControl;
-        WakeOnLANUserControl wakeOnLANUserControl;
-        PingUserControl pingUserControl;
-        TracerouteUserControl tracerouteUserControl;
-        DNSLookupUserControl dnsLookupUserControl;
+        NetworkInterfaceView networkInterfaceView;
+        IPScannerView ipScannerView;
+        PortScannerView portScannerView;
+        SubnetCalculatorView subnetCalculatorView;
+        WakeOnLANView wakeOnLANView;
+        PingView pingView;
+        TracerouteView tracerouteView;
+        DNSLookupView dnsLookupView;
 
         private ApplicationView.Name? currentApplicationViewName = null;
 
@@ -271,52 +282,52 @@ namespace NETworkManager
             switch (name)
             {
                 case ApplicationView.Name.NetworkInterface:
-                    if (networkInterfaceUserControl == null)
-                        networkInterfaceUserControl = new NetworkInterfaceUserControl();
+                    if (networkInterfaceView == null)
+                        networkInterfaceView = new NetworkInterfaceView();
 
-                    mainContentControl.Content = networkInterfaceUserControl;
+                    contentControlApplication.Content = networkInterfaceView;
                     break;
                 case ApplicationView.Name.IPScanner:
-                    if (ipScannerUserControl == null)
-                        ipScannerUserControl = new IPScannerUserControl();
+                    if (ipScannerView == null)
+                        ipScannerView = new IPScannerView();
 
-                    mainContentControl.Content = ipScannerUserControl;
+                    contentControlApplication.Content = ipScannerView;
                     break;
                 case ApplicationView.Name.PortScanner:
-                    if (portScannerUserControl == null)
-                        portScannerUserControl = new PortScannerUserControl();
+                    if (portScannerView == null)
+                        portScannerView = new PortScannerView();
 
-                    mainContentControl.Content = portScannerUserControl;
+                    contentControlApplication.Content = portScannerView;
                     break;
                 case ApplicationView.Name.SubnetCalculator:
-                    if (subnetCalculatorUserControl == null)
-                        subnetCalculatorUserControl = new SubnetCalculatorUserControl();
+                    if (subnetCalculatorView == null)
+                        subnetCalculatorView = new SubnetCalculatorView();
 
-                    mainContentControl.Content = subnetCalculatorUserControl;
+                    contentControlApplication.Content = subnetCalculatorView;
                     break;
                 case ApplicationView.Name.WakeOnLAN:
-                    if (wakeOnLANUserControl == null)
-                        wakeOnLANUserControl = new WakeOnLANUserControl();
+                    if (wakeOnLANView == null)
+                        wakeOnLANView = new WakeOnLANView();
 
-                    mainContentControl.Content = wakeOnLANUserControl;
+                    contentControlApplication.Content = wakeOnLANView;
                     break;
                 case ApplicationView.Name.Ping:
-                    if (pingUserControl == null)
-                        pingUserControl = new PingUserControl();
+                    if (pingView == null)
+                        pingView = new PingView();
 
-                    mainContentControl.Content = pingUserControl;
+                    contentControlApplication.Content = pingView;
                     break;
                 case ApplicationView.Name.Traceroute:
-                    if (tracerouteUserControl == null)
-                        tracerouteUserControl = new TracerouteUserControl();
+                    if (tracerouteView == null)
+                        tracerouteView = new TracerouteView();
 
-                    mainContentControl.Content = tracerouteUserControl;
+                    contentControlApplication.Content = tracerouteView;
                     break;
                 case ApplicationView.Name.DNSLookup:
-                    if (dnsLookupUserControl == null)
-                        dnsLookupUserControl = new DNSLookupUserControl();
+                    if (dnsLookupView == null)
+                        dnsLookupView = new DNSLookupView();
 
-                    mainContentControl.Content = dnsLookupUserControl;
+                    contentControlApplication.Content = dnsLookupView;
                     break;
             }
 
@@ -325,7 +336,7 @@ namespace NETworkManager
 
         #endregion
 
-        #region ListView Serach
+        #region ListView Search
         private void ApplicationView_Search(object sender, FilterEventArgs e)
         {
             if (string.IsNullOrEmpty(SearchText))
@@ -357,7 +368,7 @@ namespace NETworkManager
 
         private HwndSource hwndSoure;
 
-        protected override void OnSourceInitialized(EventArgs e)
+        protected override void OnSourceInitialized(System.EventArgs e)
         {
             base.OnSourceInitialized(e);
 
@@ -377,9 +388,9 @@ namespace NETworkManager
 
         private void RegisterHotKeys()
         {
-            if (NETworkManager.Settings.Properties.Settings.Default.HotKey_ShowWindowEnabled)
+            if (SettingsManager.Current.HotKey_ShowWindowEnabled)
             {
-                RegisterHotKey(new WindowInteropHelper(this).Handle, 1, NETworkManager.Settings.Properties.Settings.Default.HotKey_ShowWindowModifier, NETworkManager.Settings.Properties.Settings.Default.HotKey_ShowWindowKey);
+                RegisterHotKey(new WindowInteropHelper(this).Handle, 1, SettingsManager.Current.HotKey_ShowWindowModifier, SettingsManager.Current.HotKey_ShowWindowKey);
                 RegisteredHotKeys.Add(1);
             }
         }
@@ -425,7 +436,7 @@ namespace NETworkManager
             notifyIcon.Text = Title;
             notifyIcon.DoubleClick += new EventHandler(NotifyIcon_DoubleClick);
             notifyIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(NotifyIcon_MouseDown);
-            notifyIcon.Visible = NETworkManager.Settings.Properties.Settings.Default.TrayIcon_AlwaysShowIcon;
+            notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
         }
 
         private void NotifyIcon_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -437,16 +448,16 @@ namespace NETworkManager
             }
         }
 
-        private void NotifyIcon_DoubleClick(object sender, EventArgs e)
+        private void NotifyIcon_DoubleClick(object sender, System.EventArgs e)
         {
             ShowWindowAction();
         }
 
-        private void MetroWindowMain_StateChanged(object sender, EventArgs e)
+        private void MetroWindowMain_StateChanged(object sender, System.EventArgs e)
         {
             if (WindowState == WindowState.Minimized)
             {
-                if (NETworkManager.Settings.Properties.Settings.Default.Window_MinimizeToTrayInsteadOfTaskbar)
+                if (SettingsManager.Current.Window_MinimizeToTrayInsteadOfTaskbar)
                     HideWindowToTray();
             }
         }
@@ -479,7 +490,7 @@ namespace NETworkManager
             if (WindowState == WindowState.Minimized)
                 WindowState = WindowState.Normal;
 
-            notifyIcon.Visible = NETworkManager.Settings.Properties.Settings.Default.TrayIcon_AlwaysShowIcon;
+            notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
         }
 
         private void BringWindowToFront()
@@ -491,7 +502,7 @@ namespace NETworkManager
         }
         #endregion
 
-        #region Commands & Actions
+        #region ICommands & Actions
         public ICommand OpenGithubProjectCommand
         {
             get { return new RelayCommand(p => OpenGithubProjectAction()); }
@@ -499,7 +510,7 @@ namespace NETworkManager
 
         private void OpenGithubProjectAction()
         {
-            Process.Start(Settings.Properties.Resources.Project_GitHub_Url);
+            Process.Start(Properties.Resources.Project_GitHub_Url);
         }
 
         public ICommand OpenSettingsCommand
@@ -509,6 +520,8 @@ namespace NETworkManager
 
         private async void OpenSettingsAction()
         {
+            MetroWindowMain.ShowOverlay();
+
             SettingsWindow settingsWindow = new SettingsWindow();
 
             if (_isInTray)
@@ -523,30 +536,41 @@ namespace NETworkManager
 
             settingsWindow.ShowDialog();
 
+            MetroWindowMain.HideOverlay();
+
             if (!_isInTray)
             {
-                if (NETworkManager.Settings.Properties.Settings.Default.TrayIcon_AlwaysShowIcon && notifyIcon == null)
+                if (SettingsManager.Current.TrayIcon_AlwaysShowIcon && notifyIcon == null)
                     InitNotifyIcon();
 
                 if (notifyIcon != null)
-                    notifyIcon.Visible = NETworkManager.Settings.Properties.Settings.Default.TrayIcon_AlwaysShowIcon;
+                    notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
             }
 
+            // Force restart (if user has reset the settings or import them)
+            if (SettingsManager.ForceRestart || ImportExportManager.ForceRestart)
+            {
+                RestartApplication();
+                return;
+            }
+
+            // Ask the user to restart (if he has changed the language or enables the developer mode)
             if (SettingsManager.RestartRequired)
             {
                 ShowWindowAction();
 
-                MetroDialogSettings dialogSettings = new MetroDialogSettings();
-
-                dialogSettings.CustomResourceDictionary = new ResourceDictionary
+                MetroDialogSettings dialogSettings = new MetroDialogSettings()
                 {
-                    Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
+                    CustomResourceDictionary = new ResourceDictionary
+                    {
+                        Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
+                    },
+
+                    AffirmativeButtonText = System.Windows.Application.Current.Resources["String_Button_RestartNow"] as string,
+                    NegativeButtonText = System.Windows.Application.Current.Resources["String_Button_OK"] as string,
+
+                    DefaultButtonFocus = MessageDialogResult.Affirmative
                 };
-
-                dialogSettings.AffirmativeButtonText = System.Windows.Application.Current.Resources["String_Button_RestartNow"] as string;
-                dialogSettings.NegativeButtonText = System.Windows.Application.Current.Resources["String_Button_OK"] as string;
-
-                dialogSettings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 if (await this.ShowMessageAsync(System.Windows.Application.Current.Resources["String_RestartRequired"] as string, System.Windows.Application.Current.Resources["String_RestartRequiredAfterSettingsChanged"] as string, MessageDialogStyle.AffirmativeAndNegative, dialogSettings) == MessageDialogResult.Affirmative)
                 {
@@ -555,10 +579,12 @@ namespace NETworkManager
                 }
             }
 
-            if (settingsWindow.HotKeysChanged)
+            if (SettingsManager.HotKeysChanged)
             {
                 UnregisterHotKeys();
                 RegisterHotKeys();
+
+                SettingsManager.HotKeysChanged = false;
             }
         }
 

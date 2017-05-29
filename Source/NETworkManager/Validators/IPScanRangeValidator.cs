@@ -2,9 +2,8 @@
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using NETworkManager.Utilities.Network;
+using NETworkManager.Helpers;
 using System.Net;
-using NETworkManager.Utilities.Common;
 
 namespace NETworkManager.Validators
 {
