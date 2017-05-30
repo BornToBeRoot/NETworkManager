@@ -9,6 +9,7 @@ namespace NETworkManager.Models.Settings
         [XmlIgnore]
         public bool SettingsChanged { get; set; }
 
+        #region General
         // Window
         private bool _window_ConfirmClose;
         public bool Window_ConfirmClose
@@ -242,7 +243,9 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        // IPScanner
+        #endregion
+
+        #region IPScanner        
         private int _ipScanner_Attempts = 2;
         public int IPScanner_Attempts
         {
@@ -347,8 +350,9 @@ namespace NETworkManager.Models.Settings
                 _ipScanner_Timeout = value;
             }
         }
+        #endregion
 
-        // NetworkInterface
+        #region NetworkInterface        
         private string _networkInterface_SelectedInterfaceId;
         public string NetworkInterface_SelectedInterfaceId
         {
@@ -363,8 +367,9 @@ namespace NETworkManager.Models.Settings
                 _networkInterface_SelectedInterfaceId = value;
             }
         }
+        #endregion
 
-        // Ping
+        #region Ping
         private int _ping_Attempts;
         public int Ping_Attempts
         {
@@ -484,8 +489,9 @@ namespace NETworkManager.Models.Settings
                 _ping_WaitTime = value;
             }
         }
+        #endregion
 
-        // Traceroute
+        #region Traceroute
         private int _traceroute_Buffer = 32;
         public int Traceroute_Buffer
         {
@@ -560,6 +566,24 @@ namespace NETworkManager.Models.Settings
                 _traceroute_Timeout = value;
             }
         }
+        #endregion
+
+        #region 
+        private List<string> _ouiLookup_MACAddressHistory = new List<string>();
+        public List<string> OUILookup_MACAddressHistory
+        {
+            get { return _ouiLookup_MACAddressHistory; }
+            set
+            {
+                if (value == _ouiLookup_MACAddressHistory)
+                    return;
+
+                SettingsChanged = true;
+
+                _ouiLookup_MACAddressHistory = value;
+            }
+        }
+        #endregion
 
         public SettingsInfo()
         {

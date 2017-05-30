@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NETworkManager.Views.Applications.DNSLookupView"
+﻿<UserControl x:Class="NETworkManager.Views.Applications.OUILookupView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,15 +9,12 @@
         xmlns:Control="clr-namespace:NETworkManager.Controls"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d">
-    <UserControl.Resources>
+    <UserControl.Resources>        
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:IntToStringConverter x:Key="IntToStringConverter" />
-        <Converter:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
-        <Converter:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
-        <Converter:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
+        <Converter:NullOrEmptyToStringConverter x:Key="NullOrEmptyToStringConverter" />
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
-        <TabItem Header="{DynamicResource String_Header_DNSLookup}">
+        <TabItem Header="{DynamicResource String_Header_OUILookup}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -26,30 +23,36 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Destination}" />
+                <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_MACAddress}" />
                 <Grid Grid.Row="1" Margin="0,0,0,20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <ComboBox Grid.Column="0" x:Name="txtHostnameOrIPAddress" ItemsSource="{Binding HostnameOrIPAddressHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_HostnameOrIPAddress}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                    <ComboBox Grid.Column="0" x:Name="txtMACAddressOrFirst3Bytes" ItemsSource="{Binding MACAddressHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_MACAddressOrPart}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                         <ComboBox.Text>
-                            <Binding Path="HostnameOrIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="MACAddressOrFirst3Bytes" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                                    <Validator:MACAddressAndMACAddressFirst3BytesRangeValidator ValidatesOnTargetUpdated="True" />
                                 </Binding.ValidationRules>
                             </Binding>
                         </ComboBox.Text>
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ComboBoxItem}">
+                                <Setter Property="Width" Value="{Binding ActualWidth,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBox}}}"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
                     </ComboBox>
-                    <Button Grid.Column="1" Command="{Binding TraceCommand}" IsDefault="{Binding IsLookupRunning,Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsLookupRunning}" HorizontalAlignment="Right" Margin="10,0,0,0">
+                    <Button Grid.Column="1" Command="{Binding LookupCommand}" IsDefault="{Binding IsLookupRunning,Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsLookupRunning}" HorizontalAlignment="Right" Margin="10,0,0,0">
                         <Button.Resources>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                                 <Setter Property="IsEnabled" Value="True" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=txtHostnameOrIPAddress}" Value="True" >
+                                    <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=txtMACAddressOrFirst3Bytes}" Value="True" >
                                         <Setter Property="IsEnabled" Value="False" />
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding CancelTrace}" Value="True">
+                                    <DataTrigger Binding="{Binding CancelLookup}" Value="True">
                                         <Setter Property="IsEnabled" Value="False" />
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -74,12 +77,12 @@
                                     </Border.Style>
                                     <Rectangle Width="20" Height="20" Margin="10,5">
                                         <Rectangle.Resources>
-                                            <VisualBrush x:Key="VisualControlPlay" Visual="{StaticResource appbar_control_play}" />
+                                            <VisualBrush x:Key="VisualMagnify" Visual="{StaticResource appbar_magnify}" />
                                             <VisualBrush x:Key="VisualClose" Visual="{StaticResource appbar_close}" />
                                         </Rectangle.Resources>
                                         <Rectangle.Style>
                                             <Style TargetType="{x:Type Rectangle}">
-                                                <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
+                                                <Setter Property="OpacityMask" Value="{StaticResource VisualMagnify}" />
                                                 <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}},Path=IsEnabled}" Value="False" >
@@ -122,32 +125,13 @@
                     <Controls:MetroProgressBar Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True"/>
                 </StackPanel>
                 <TextBlock Grid.Row="3" Text="{DynamicResource String_Header_Result}" Style="{StaticResource HeaderTextBlock}" />
-                <Control:ScrollingDataGrid Grid.Row="4" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding TraceResult}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False">
+                <Control:ScrollingDataGrid Grid.Row="4" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding LookupResult}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False">
                     <Control:ScrollingDataGrid.Columns>
-                        <DataGridTextColumn Header="{DynamicResource String_Hop}" Binding="{Binding Hop}" Width="100" />
-                        <DataGridTextColumn Header="{DynamicResource String_Time}" Width="100">
-                            <DataGridTextColumn.Binding>
-                                <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
-                                    <Binding Path="Status" />
-                                    <Binding Path="Time" />
-                                </MultiBinding>
-                            </DataGridTextColumn.Binding>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress, Converter={StaticResource IPAddressToStringConverter}}" Width="150" />
-                        <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" Width="*"/>
+                        <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress}" Width="150" />
+                        <DataGridTextColumn Header="{DynamicResource String_Vendor}" Binding="{Binding Vendor, Converter={StaticResource NullOrEmptyToStringConverter}}" Width="*" />
                     </Control:ScrollingDataGrid.Columns>
                 </Control:ScrollingDataGrid>
             </Grid>
-        </TabItem>
-        <TabItem Header="{DynamicResource String_Header_Settings}">
-            <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
-                <ScrollViewer.Resources>
-                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollViewerScrollBar}" />
-                </ScrollViewer.Resources>
-                <StackPanel >
-            
-                </StackPanel>
-            </ScrollViewer>
         </TabItem>
     </TabControl>
 </UserControl>

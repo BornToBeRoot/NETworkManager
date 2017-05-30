@@ -53,7 +53,8 @@
     <system:String x:Key="String_Header_Error">Fehler</system:String>
     <system:String x:Key="String_Header_AreYouSure">Sind Sie sicher?</system:String>
     <system:String x:Key="String_Header_ValidationFailed">Validierung fehlgeschlagen!</system:String>
-    <system:String x:Key="String_Header_Success">Erfolgreich!</system:String>    
+    <system:String x:Key="String_Header_Success">Erfolgreich!</system:String>
+    <system:String x:Key="String_Header_OUILookup">OUI Lookup</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -164,7 +165,7 @@
     <system:String x:Key="String_MaximumHopsReachedMessage">Traceroute wurde nach {0} Hops abgebrochen.</system:String>
     <system:String x:Key="String_CanceledByUserMessage">Der Vorgang wurde vom Benutzer abgebrochen!</system:String>
     <system:String x:Key="String_NetworkInterfaceConfigTemplates">Netzwerkinterface Konfigurations Templates</system:String>
-    <system:String x:Key="String_WakeOnLanTemplates">Wake on LAN Templates</system:String>
+    <system:String x:Key="String_WakeOnLANTemplates">Wake on LAN Templates</system:String>
     <system:String x:Key="String_SelectedSettingsAreReset">Die ausgewählten Einstellungen werden zurückgesetzt. (Der Speicherpfad ist hiervon nicht betroffen.)</system:String>
     <system:String x:Key="String_ApplicationIsRestartedAfterwards">* Die Anwendung wird danach neu gestartet</system:String>
     <system:String x:Key="String_SelectTheSettingsYouWantToImport">Wählen Sie die Einstellungen aus, die Sie importieren möchten:</system:String>
@@ -175,6 +176,7 @@
     <system:String x:Key="String_Path">Pfad</system:String>
     <system:String x:Key="String_SettingsSuccessfullyReset">Einstellungen erfolgreich zurückgesetzt!</system:String>
     <system:String x:Key="String_SelectedSettingsAreOverwritten">Die ausgewählten Einstellungen werden überschrieben und die Anwendung wird neu gestartet.</system:String>
+    <system:String x:Key="String_Vendor">Hersteller</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
@@ -227,6 +229,7 @@
     <system:String x:Key="String_Watermark_HostnameOrIPAddress">Hostname oder IP-Adresse...</system:String>
     <system:String x:Key="String_Watermark_EampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.178.150</system:String>
     <system:String x:Key="String_Watermark_LocationOfTheImport">Speicherort der Importdatei...</system:String>
+    <system:String x:Key="String_Watermark_MACAddressOrPart">MAC-Adress 00:11:22:33:44:55 oder die ersten 3 Bytes 00-11-22...</system:String>
     
     <!-- ShowProgress -->
     <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Konfiguriere Netzwerkinterface</system:String>
@@ -254,7 +257,8 @@
     <system:String x:Key="String_ValidateError_EnterValidSubnetmaskOrCIDR">Geben Sie eine gültige Subnetzmaske oder CIDR ein (z.B. 255.255.255.0 oder /24)!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidIPScanRange">Geben Sie einen gültigen IP-Bereich ein!</system:String>
     <system:String x:Key="String_ValidateError_FileDoesNotExist">Datei existiert nicht!</system:String>
-
+    <system:String x:Key="String_ValidateError_EnterValidMACAddressOrFirst3Bytes">Geben Sie eine gültige MAC-Adresse oder die ersten 6-Zeichen einer MAC-Adresse ein!</system:String>
+    
     <!-- ApplicationInfo.Name && ApplicationInfo.Description-->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>
     <system:String x:Key="String_ApplicationName_NetworkInterface">Netzwerkinterface</system:String>
@@ -264,6 +268,7 @@
     <system:String x:Key="String_ApplicationName_Ping">Ping</system:String>
     <system:String x:Key="String_ApplicationName_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_ApplicationName_DNSLookup">DNS Lookup</system:String>
+    <system:String x:Key="String_ApplicationName_OUILookup">OUI Lookup</system:String>
     
     <!-- SettingsView.Name -->
     <system:String x:Key="String_SettingsName_General">Allgemein</system:String>

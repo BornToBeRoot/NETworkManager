@@ -6,7 +6,7 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d">
     <StackPanel>
-        <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_HotKeys}" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_HotKeys}" />
         <Controls:ToggleSwitch Header="{DynamicResource String_UntrayBringWindowToFront}" IsChecked="{Binding HotKeyShowWindowEnabled}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" Margin="0,0,0,10"/>
         <Controls:HotKeyBox AreModifierKeysRequired="True" HotKey="{Binding HotKeyShowWindow}" Width="250" HorizontalAlignment="Left" />
     </StackPanel>

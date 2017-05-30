@@ -133,6 +133,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Applications\OUILookupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Applications\TracerouteView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -219,6 +223,7 @@
     </Compile>
     <Compile Include="Controls\MultiSelectDataGrid.cs" />
     <Compile Include="Controls\ScrollingDataGrid.cs" />
+    <Compile Include="Converters\NullOrEmptyToStringConverter.cs" />
     <Compile Include="Converters\ValidateSettingsImportConverter.cs" />
     <Compile Include="Converters\ValidateSettingsResetConverter.cs" />
     <Compile Include="Converters\ValidateSettingsExportConverter.cs" />
@@ -233,10 +238,17 @@
     <Compile Include="Helpers\SubnetHelper.cs" />
     <Compile Include="Helpers\SubnetmaskHelper.cs" />
     <Compile Include="Helpers\TimestampHelper.cs" />
+    <Compile Include="Models\Network\OUIInfo.cs" />
+    <Compile Include="Models\Network\OUILookup.cs" />
     <Compile Include="Models\Settings\ImportExportManager.cs" />
     <Compile Include="Models\Settings\ImportFileNotValidException.cs" />
     <Compile Include="Models\Settings\SettingsFileInfo.cs" />
     <Compile Include="Validators\FileExistsValidator.cs" />
+    <Compile Include="Validators\MACAddressAndMACAddressFirst3BytesRangeValidator.cs" />
+    <Compile Include="ViewModels\Applications\OUILookupViewModel.cs" />
+    <Compile Include="Views\Applications\OUILookupView.xaml.cs">
+      <DependentUpon>OUILookupView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ApplicationViewManager.cs" />
     <Compile Include="Views\ApplicationViewInfo.cs" />
     <Compile Include="Collections\AsyncObservableCollection.cs" />
@@ -295,7 +307,7 @@
     <Compile Include="ViewModels\Applications\PingViewModel.cs" />
     <Compile Include="ViewModels\Applications\SubnetCalculatorViewModel.cs" />
     <Compile Include="ViewModels\Applications\TracerouteViewModel.cs" />
-    <Compile Include="ViewModels\Applications\WakeOnLanViewModel.cs" />
+    <Compile Include="ViewModels\Applications\WakeOnLANViewModel.cs" />
     <Compile Include="ViewModels\Notes\RestartAsAdministratorViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\Settings\AboutViewModel.cs" />
@@ -486,7 +498,11 @@
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\oui.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

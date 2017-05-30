@@ -311,7 +311,7 @@
                                         </Rectangle>
                                         <TextBlock Grid.Column="1" Text="{Binding TranslatedName}">
                                             <TextBlock.Style>
-                                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlockStyle}">
+                                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                                     <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
                                                     <Setter Property="Margin" Value="0" />
                                                     <Setter Property="VerticalAlignment" Value="Center" />

@@ -2,18 +2,18 @@
 
 namespace NETworkManager.Models.Network
 {
-    public class WakeOnLanInfo
+    public class WakeOnLANInfo
     {
         public byte[] MagicPacket;
         public IPAddress Broadcast;
         public int Port;
 
-        public WakeOnLanInfo()
+        public WakeOnLANInfo()
         {
 
         }
 
-        public WakeOnLanInfo(byte[] magicPacket, IPAddress broadcast, int port)
+        public WakeOnLANInfo(byte[] magicPacket, IPAddress broadcast, int port)
         {
             MagicPacket = magicPacket;
             Broadcast = broadcast;

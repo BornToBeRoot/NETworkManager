@@ -13,7 +13,7 @@
         Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <Converter:IntToStringConverter x:Key="IntToStringConverter" />
         <Converter:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
@@ -30,7 +30,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_IPRange}" />
+                    <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_IPRange}" />
                 <Grid Grid.Row="1" Margin="0,0,0,20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -161,15 +161,16 @@
                         </TextBlock.Text>
                     </TextBlock>
                 </StackPanel>
-                <TextBlock Grid.Row="3" Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_Result}" />
+                <TextBlock Grid.Row="3" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
                 <Control:ScrollingDataGrid Grid.Row="4" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding IPScanResult}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True" >
                     <Control:ScrollingDataGrid.Resources>
                         <WpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                     </Control:ScrollingDataGrid.Resources>
                     <Control:ScrollingDataGrid.Columns>
                         <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding PingInfo.IPAddress}" Width="150" />
-                        <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy},Converter={StaticResource BooleanToVisibilityConverter}}" Width="200" />
+                        <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy},Converter={StaticResource BooleanToVisibilityConverter}}" Width="150" />
                         <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy},Converter={StaticResource BooleanToVisibilityConverter}}" Width="150" />
+                        <DataGridTextColumn Header="{DynamicResource String_Vendor}" Binding="{Binding Vendor}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy},Converter={StaticResource BooleanToVisibilityConverter}}" Width="200" />
                         <DataGridTextColumn Header="{DynamicResource String_Bytes}" Binding="{Binding PingInfo.Bytes, Converter={StaticResource IntToStringConverter}}" Width="80" />
                         <DataGridTextColumn Header="{DynamicResource String_Time}" Width="100">
                             <DataGridTextColumn.Binding>
@@ -191,19 +192,19 @@
                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollViewerScrollBar}" />
                 </ScrollViewer.Resources>
                 <StackPanel>               
-                    <TextBlock Text="{DynamicResource String_Header_Multithreading}" Style="{StaticResource DefaultTextBlockStyle}" />
+                    <TextBlock Text="{DynamicResource String_Header_Multithreading}" Style="{StaticResource HeaderTextBlock}" />
                     <TextBlock  Text="{DynamicResource String_Threads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
                     <mah:NumericUpDown Value="{Binding Threads}" Maximum="10000" Minimum="1" Interval="1" Margin="0,0,0,20" />
-                    <TextBlock Text="{DynamicResource String_Header_Ping}" Style="{StaticResource DefaultTextBlockStyle}" />
+                    <TextBlock Text="{DynamicResource String_Header_Ping}" Style="{StaticResource HeaderTextBlock}" />
                     <TextBlock  Text="{DynamicResource String_Timeout}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
                     <mah:NumericUpDown  Value="{Binding Timeout}" Maximum="10000" Minimum="100" Interval="100" Margin="0,0,0,10" />
                     <TextBlock Text="{DynamicResource String_Buffer}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
                     <mah:NumericUpDown  Value="{Binding Buffer}" Minimum="1" Maximum="65535" Interval="1" Margin="0,0,0,10" />
                     <TextBlock  Text="{DynamicResource String_Attempts}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
                     <mah:NumericUpDown Value="{Binding Attempts}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,20" />
-                    <TextBlock Text="{DynamicResource String_Header_DNS}" Style="{StaticResource DefaultTextBlockStyle}" />
+                    <TextBlock Text="{DynamicResource String_Header_DNS}" Style="{StaticResource HeaderTextBlock}" />
                     <mah:ToggleSwitch Header="{DynamicResource String_ResolveHostname}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ResolveHostname}" Margin="0,0,0,20"/>
-                    <TextBlock Text="{DynamicResource String_Header_ARP}" Style="{StaticResource DefaultTextBlockStyle}" />
+                    <TextBlock Text="{DynamicResource String_Header_ARP}" Style="{StaticResource HeaderTextBlock}" />
                     <mah:ToggleSwitch Header="{DynamicResource String_ReadTheMACAddressFromTheArpCache}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ResolveMACAddress}" />                    
                 </StackPanel>
             </ScrollViewer>

@@ -15,12 +15,13 @@ namespace NETworkManager.Views
                 {
                     new ApplicationViewInfo(Name.NetworkInterface, new PackIconModern() { Kind = PackIconModernKind.Network }),
                     new ApplicationViewInfo(Name.IPScanner, new PackIconModern() { Kind = PackIconModernKind.Diagram }),
-                    new ApplicationViewInfo(Name.PortScanner, new PackIconMaterial() { Kind = PackIconMaterialKind.Magnify}, true),
+                    new ApplicationViewInfo(Name.PortScanner, new PackIconModern() { Kind = PackIconModernKind.NetworkPort}, true),
                     new ApplicationViewInfo(Name.SubnetCalculator, new PackIconModern() { Kind = PackIconModernKind.Calculator }),
                     new ApplicationViewInfo(Name.WakeOnLAN, new PackIconMaterial() { Kind = PackIconMaterialKind.Power }),
                     new ApplicationViewInfo(Name.Ping, new PackIconModern() { Kind = PackIconModernKind.Console }),
                     new ApplicationViewInfo(Name.Traceroute,  new PackIconMaterial() { Kind = PackIconMaterialKind.Routes }),
-                    new ApplicationViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.Dna }, true)
+                    new ApplicationViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.Dna }, true),
+                    new ApplicationViewInfo(Name.OUILookup, new PackIconMaterial() {Kind = PackIconMaterialKind.Magnify })
                 };
             }
         }
@@ -39,7 +40,8 @@ namespace NETworkManager.Views
             SubnetCalculator,
             Ping,
             DNSLookup,
-            PortScanner
+            PortScanner,
+            OUILookup
         }
     }
 }

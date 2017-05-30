@@ -149,7 +149,7 @@ namespace NETworkManager.ViewModels.Settings
         }
 
         private bool _wakeOnLanTemplatesExists;
-        public bool WakeOnLanTemplatesExists
+        public bool WakeOnLANTemplatesExists
         {
             get { return _wakeOnLanTemplatesExists; }
             set
@@ -162,16 +162,16 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-        private bool _resetWakeOnLanTemplates;
-        public bool ResetWakeOnLanTemplates
+        private bool _resetWakeOnLANTemplates;
+        public bool ResetWakeOnLANTemplates
         {
-            get { return _resetWakeOnLanTemplates; }
+            get { return _resetWakeOnLANTemplates; }
             set
             {
-                if (value == _resetWakeOnLanTemplates)
+                if (value == _resetWakeOnLANTemplates)
                     return;
 
-                _resetWakeOnLanTemplates = value;
+                _resetWakeOnLANTemplates = value;
                 OnPropertyChanged();
             }
         }
@@ -199,7 +199,7 @@ namespace NETworkManager.ViewModels.Settings
 
             ApplicationSettingsExists = File.Exists(SettingsManager.SettingsFilePath);
             NetworkInterfaceConfigTemplatesExists = File.Exists(TemplateManager.NetworkInterfaceConfigTemplatesFilePath);
-            WakeOnLanTemplatesExists = File.Exists(TemplateManager.WakeOnLanTemplatesFilePath);
+            WakeOnLANTemplatesExists = File.Exists(TemplateManager.WakeOnLANTemplatesFilePath);
         }
         #endregion
 
@@ -295,8 +295,8 @@ namespace NETworkManager.ViewModels.Settings
             if (NetworkInterfaceConfigTemplatesExists && (ResetEverything || ResetNetworkInterfaceConfigTemplates))
                 TemplateManager.ResetNetworkInterfaceConfigTemplates();
 
-            if (WakeOnLanTemplatesExists && (ResetEverything || ResetWakeOnLanTemplates))
-                TemplateManager.ResetWakeOnLanTemplates();
+            if (WakeOnLANTemplatesExists && (ResetEverything || ResetWakeOnLANTemplates))
+                TemplateManager.ResetWakeOnLANTemplates();
 
             if (forceRestart)
                 CloseAction();

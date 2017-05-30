@@ -80,7 +80,7 @@ namespace NETworkManager.Models.Settings
             None,
             ApplicationSettings,
             NetworkInterfaceConfigTemplates,
-            WakeOnLanTemplates
+            WakeOnLANTemplates
         }
 
         public static ImportExportOptions GetImportExportOption(string fileName)
@@ -91,8 +91,8 @@ namespace NETworkManager.Models.Settings
             if (fileName == TemplateManager.NetworkInterfaceConfigTemplatesFileName)
                 return ImportExportOptions.NetworkInterfaceConfigTemplates;
 
-            if (fileName == TemplateManager.WakeOnLanTemplatesFileName)
-                return ImportExportOptions.WakeOnLanTemplates;
+            if (fileName == TemplateManager.WakeOnLANTemplatesFileName)
+                return ImportExportOptions.WakeOnLANTemplates;
 
             return ImportExportOptions.None;
         }
@@ -105,8 +105,8 @@ namespace NETworkManager.Models.Settings
                     return SettingsManager.SettingsFileName;
                 case ImportExportOptions.NetworkInterfaceConfigTemplates:
                     return TemplateManager.NetworkInterfaceConfigTemplatesFileName;
-                case ImportExportOptions.WakeOnLanTemplates:
-                    return TemplateManager.WakeOnLanTemplatesFileName;
+                case ImportExportOptions.WakeOnLANTemplates:
+                    return TemplateManager.WakeOnLANTemplatesFileName;
             }
 
             return string.Empty;
@@ -120,8 +120,8 @@ namespace NETworkManager.Models.Settings
                     return SettingsManager.SettingsFilePath;
                 case ImportExportOptions.NetworkInterfaceConfigTemplates:
                     return TemplateManager.NetworkInterfaceConfigTemplatesFilePath;
-                case ImportExportOptions.WakeOnLanTemplates:
-                    return TemplateManager.WakeOnLanTemplatesFilePath;
+                case ImportExportOptions.WakeOnLANTemplates:
+                    return TemplateManager.WakeOnLANTemplatesFilePath;
             }
 
             return string.Empty;

@@ -19,7 +19,7 @@
         <Converter:ValidateSettingsResetConverter x:Key="ValidateSettingsResetConverter" />
     </UserControl.Resources>
     <StackPanel >
-        <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_Location}" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Location}" />
         <TextBox x:Name="txtLocation" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EnterLocation}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFolderCommand}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="LocationSelectedPath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -83,7 +83,7 @@
             </StackPanel>
             <Controls:MetroProgressBar IsIndeterminate="True" Margin="0,10,0,0" Visibility="{Binding MovingFiles, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </StackPanel>
-        <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_Portable}" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Portable}" />
         <StackPanel Margin="0,0,0,20">
             <Controls:ToggleSwitch x:Name="toggleSwitchIsPortable" Header="{DynamicResource String_SaveSettingsInApplicationFolder}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding IsPortable}" IsEnabled="{Binding MovingFiles, Converter={StaticResource BooleanReverseConverter}}">
                 <Controls:ToggleSwitch.Style>
@@ -103,7 +103,7 @@
             </Controls:ToggleSwitch>
             <Controls:MetroProgressBar IsIndeterminate="True" Margin="0,10,0,0" Visibility="{Binding MakingPortable, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </StackPanel>
-        <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_Reset}" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Reset}" />
         <TextBlock Style="{StaticResource DefaultTextBlock}" Text="{StaticResource String_SelectTheSettingsYouWantToReset}" Margin="0,0,0,10" />
         <RadioButton x:Name="radioButtonResetEverything" Content="{DynamicResource String_RadioButton_Everything}" IsChecked="{Binding ResetEverything}" Margin="0,0,0,10"/>
         <RadioButton x:Name="radioButtonResetCustom" Content="{DynamicResource String_RadioButton_Custom}" Margin="0,0,0,10"/>
@@ -121,7 +121,7 @@
             <StackPanel>
                 <CheckBox Content="{DynamicResource String_ApplicationSettings}" IsEnabled="{Binding ApplicationSettingsExists}" IsChecked="{Binding ResetApplicationSettings}" Margin="0,0,0,10"/>
                 <CheckBox Content="{DynamicResource String_NetworkInterfaceConfigTemplates}" IsEnabled="{Binding NetworkInterfaceConfigTemplatesExists}" IsChecked="{Binding ResetNetworkInterfaceConfigTemplates}" Margin="0,0,0,10"/>
-                <CheckBox Content="{DynamicResource String_WakeOnLanTemplates}" IsEnabled="{Binding WakeOnLanTemplatesExists}" IsChecked="{Binding ResetWakeOnLanTemplates}" />
+                <CheckBox Content="{DynamicResource String_WakeOnLANTemplates}" IsEnabled="{Binding WakeOnLANTemplatesExists}" IsChecked="{Binding ResetWakeOnLANTemplates}" />
             </StackPanel>
         </GroupBox>
         <Button Content="{DynamicResource String_Button_Reset}" Command="{Binding ResetSettingsCommand}" HorizontalAlignment="Left">
@@ -138,7 +138,7 @@
                                     <Binding Path="ResetEverything" />
                                     <Binding Path="ResetApplicationSettings" />
                                     <Binding Path="ResetNetworkInterfaceConfigTemplates" />
-                                    <Binding Path="ResetWakeOnLanTemplates" />
+                                    <Binding Path="ResetWakeOnLANTemplates" />
                                 </MultiBinding>
                             </DataTrigger.Binding>
                             <Setter  Property="IsEnabled" Value="True" />

@@ -55,6 +55,7 @@
     <system:String x:Key="String_Header_AreYouSure">Are you sure?</system:String>
     <system:String x:Key="String_Header_ValidationFailed">Validation failed!</system:String>
     <system:String x:Key="String_Header_Success">Success!</system:String>
+    <system:String x:Key="String_Header_OUILookup">OUI Lookup</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -166,7 +167,7 @@
     <system:String x:Key="String_CanceledByUserMessage">The operation has been canceled by the user!</system:String>
     <system:String x:Key="String_ApplicationSettings">Application settings</system:String>
     <system:String x:Key="String_NetworkInterfaceConfigTemplates">Network Interface config templates</system:String>
-    <system:String x:Key="String_WakeOnLanTemplates">Wake on LAN templates</system:String>
+    <system:String x:Key="String_WakeOnLANTemplates">Wake on LAN templates</system:String>
     <system:String x:Key="String_SelectedSettingsAreReset">The selected settings are reset (The settings location is not affected.)</system:String>
     <system:String x:Key="String_ApplicationIsRestartedAfterwards">* Application is restarted afterwards</system:String>
     <system:String x:Key="String_SelectTheSettingsYouWantToImport">Select the settings you want to import:</system:String>
@@ -177,6 +178,7 @@
     <system:String x:Key="String_Path">Path</system:String>
     <system:String x:Key="String_SettingsSuccessfullyReset">Settings successfully reset!</system:String>
     <system:String x:Key="String_SelectedSettingsAreOverwritten">The selected settings are overwritten and the application is restarted.</system:String>
+    <system:String x:Key="String_Vendor">Vendor</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
@@ -228,7 +230,8 @@
     <system:String x:Key="String_Watermark_HostnameOrIPAddress">Hostname or IP-Address...</system:String>
     <system:String x:Key="String_Watermark_EampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.178.150</system:String>
     <system:String x:Key="String_Watermark_LocationOfTheImport">Location of the import file...</system:String>
-    
+    <system:String x:Key="String_Watermark_MACAddressOrPart">MAC-Address like 01:23:45:67:89:AB or or first 3 bytes 01-23-45...</system:String>
+
     <!-- ShowProgress -->
     <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Configure Network Interface</system:String>
     <system:String x:Key="String_Progress_SetStaticIPAddress">Set static IP-Address and gateway...</system:String>
@@ -254,8 +257,9 @@
     <system:String x:Key="String_ValidateError_EnterValidSubnetmask">Enter a valid subnetmask (like 255.255.255.0)!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidSubnetmaskOrCIDR">Enter a valid subnetmask or CIDR (like 255.255.255.0 or 24)!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidIPScanRange">Enter a valid ip range!</system:String>
-    <system:String x:Key="String_ValidateError_FileDoesNotExist">File does not exists!</system:String>        
-    
+    <system:String x:Key="String_ValidateError_FileDoesNotExist">File does not exists!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidMACAddressOrFirst3Bytes">Enter a valid MAC address or the first 6 characters of a MAC address!</system:String>
+
     <!-- ApplicationView.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>
     <system:String x:Key="String_ApplicationName_NetworkInterface">Network Interface</system:String>
@@ -265,6 +269,7 @@
     <system:String x:Key="String_ApplicationName_Ping">Ping</system:String>
     <system:String x:Key="String_ApplicationName_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_ApplicationName_DNSLookup">DNS Lookup</system:String>
+    <system:String x:Key="String_ApplicationName_OUILookup">OUI Lookup</system:String>
     
     <!-- SettingsView.Name -->
     <system:String x:Key="String_SettingsName_General">General</system:String>

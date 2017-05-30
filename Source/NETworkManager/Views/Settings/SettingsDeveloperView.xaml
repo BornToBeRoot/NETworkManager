@@ -6,7 +6,7 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d">
     <StackPanel>
-        <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_DeveloperMode}" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_DeveloperMode}" />
         <Controls:ToggleSwitch Header="{DynamicResource String_EnableDeveloperMode}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding DeveloperMode}" Margin="0,0,0,10" />
     </StackPanel>
 </UserControl>

@@ -14,7 +14,7 @@
         <Converter:AccentToStringConverter x:Key="AccentToStringConverter" />
    </UserControl.Resources>
     <StackPanel>
-        <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_Theme}"  />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Theme}"  />
         <ListView  ItemsSource="{x:Static metro:ThemeManager.AppThemes}" VerticalAlignment="Top" BorderThickness="0" Margin="0,0,0,20" SelectionMode="Single" >
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -30,7 +30,7 @@
                 <Binding Path="AppThemeSelectedItem" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
             </ListView.SelectedItem>
         </ListView>
-        <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_Accent}" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Accent}" />
         <ListView ItemsSource="{x:Static metro:ThemeManager.Accents}" BorderThickness="0" SelectionMode="Single">
             <ListView.ItemTemplate>
                 <DataTemplate >

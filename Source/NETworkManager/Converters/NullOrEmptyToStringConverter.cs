@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Globalization;
+using System.Net;
 using System.Windows.Data;
 
 namespace NETworkManager.Converters
 {
-    public sealed class NullOrEmptyToStringConverter : IValueConverter
+    public sealed class IPAddressToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string str = value as string;
-
-            if (string.IsNullOrEmpty(str))
+            if (value == null)
                 return "-/-";
-
-            return str;
+                        
+            return ((IPAddress)value).ToString();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

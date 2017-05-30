@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -22,14 +21,14 @@ namespace NETworkManager.Models.Network
 
         protected virtual void OnPingCompleted()
         {
-            PingCompleted?.Invoke(this, System.EventArgs.Empty);
+            PingCompleted?.Invoke(this, EventArgs.Empty);
         }
 
         public event EventHandler UserHasCanceled;
 
         protected virtual void OnUserHasCanceled()
         {
-            UserHasCanceled?.Invoke(this, System.EventArgs.Empty);
+            UserHasCanceled?.Invoke(this, EventArgs.Empty);
         }
 
         public void SendAsync(IPAddress ipAddress, PingOptions pingOptions, CancellationToken cancellationToken)
