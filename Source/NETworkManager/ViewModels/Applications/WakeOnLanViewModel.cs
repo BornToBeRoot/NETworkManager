@@ -13,7 +13,7 @@ using System.Windows.Data;
 
 namespace NETworkManager.ViewModels.Applications
 {
-    public class WakeOnLanViewModel : ViewModelBase
+    public class WakeOnLANViewModel : ViewModelBase
     {
         private IDialogCoordinator dialogCoordinator;
 
@@ -63,18 +63,18 @@ namespace NETworkManager.ViewModels.Applications
         }
 
         ICollectionView _wakeOnLanTemplates;
-        public ICollectionView WakeOnLanTemplates
+        public ICollectionView WakeOnLANTemplates
         {
             get { return _wakeOnLanTemplates; }
         }
 
-        private TemplateWakeOnLanInfo _selectedWakeOnLanTemplate = new TemplateWakeOnLanInfo();
-        public TemplateWakeOnLanInfo SelectedWakeOnLanTemplate
+        private TemplateWakeOnLANInfo _selectedWakeOnLANTemplate = new TemplateWakeOnLANInfo();
+        public TemplateWakeOnLANInfo SelectedWakeOnLANTemplate
         {
-            get { return _selectedWakeOnLanTemplate; }
+            get { return _selectedWakeOnLANTemplate; }
             set
             {
-                if (value == _selectedWakeOnLanTemplate)
+                if (value == _selectedWakeOnLANTemplate)
                     return;
 
                 if (value != null)
@@ -83,25 +83,25 @@ namespace NETworkManager.ViewModels.Applications
                     Port = value.Port.ToString();
                 }
 
-                _selectedWakeOnLanTemplate = value;
+                _selectedWakeOnLANTemplate = value;
                 OnPropertyChanged();
             }
         }
 
-        private IList _selectedWakeOnLanInfos = new ArrayList();
-        public IList SelectedWakeOnLanInfos
+        private IList _selectedWakeOnLANInfos = new ArrayList();
+        public IList SelectedWakeOnLANInfos
         {
-            get { return _selectedWakeOnLanInfos; }
+            get { return _selectedWakeOnLANInfos; }
             set
             {
-                _selectedWakeOnLanInfos = value;
+                _selectedWakeOnLANInfos = value;
                 OnPropertyChanged();
             }
         }
         #endregion
 
         #region Constructor, Load templates
-        public WakeOnLanViewModel(IDialogCoordinator instance)
+        public WakeOnLANViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
 
@@ -110,9 +110,9 @@ namespace NETworkManager.ViewModels.Applications
                 Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
             };
 
-            _wakeOnLanTemplates = CollectionViewSource.GetDefaultView(TemplateManager.WakeOnLanTemplates);
+            _wakeOnLanTemplates = CollectionViewSource.GetDefaultView(TemplateManager.WakeOnLANTemplates);
 
-            Port = Properties.Resources.WakeOnLan_DefaultPort;
+            Port = Properties.Resources.WakeOnLAN_DefaultPort;
         }
         #endregion
 
@@ -127,9 +127,9 @@ namespace NETworkManager.ViewModels.Applications
             get { return new RelayCommand(p => AddTemplateAction()); }
         }
 
-        public ICommand DeleteSelectedWakeOnLanInfosCommand
+        public ICommand DeleteSelectedWakeOnLANInfosCommand
         {
-            get { return new RelayCommand(p => DeleteSelectedWakeOnLanInfosAction()); }
+            get { return new RelayCommand(p => DeleteSelectedWakeOnLANInfosAction()); }
         }
         #endregion
 
@@ -138,10 +138,10 @@ namespace NETworkManager.ViewModels.Applications
         {
             try
             {
-                WakeOnLan wakeOnLan = new WakeOnLan();
-                wakeOnLan.Completed += WakeOnLan_Completed;
+                WakeOnLAN wakeOnLan = new WakeOnLAN();
+                wakeOnLan.Completed += WakeOnLAN_Completed;
 
-                WakeOnLanInfo info = new WakeOnLanInfo
+                WakeOnLANInfo info = new WakeOnLANInfo
                 {
                     MagicPacket = MagicPacketHelper.Create(MACAddress),
                     Broadcast = IPAddress.Parse(Broadcast),
@@ -168,7 +168,7 @@ namespace NETworkManager.ViewModels.Applications
             if (string.IsNullOrEmpty(hostname))
                 return;
 
-            TemplateWakeOnLanInfo template = new TemplateWakeOnLanInfo
+            TemplateWakeOnLANInfo template = new TemplateWakeOnLANInfo
             {
                 Hostname = hostname.ToUpper(),
                 MACAddress = MACAddressHelper.GetDefaultFormat(MACAddress),
@@ -176,10 +176,10 @@ namespace NETworkManager.ViewModels.Applications
                 Port = int.Parse(Port)
             };
 
-            TemplateManager.WakeOnLanTemplates.Add(template);
+            TemplateManager.WakeOnLANTemplates.Add(template);
         }
 
-        private async void DeleteSelectedWakeOnLanInfosAction()
+        private async void DeleteSelectedWakeOnLANInfosAction()
         {
             dialogSettings.AffirmativeButtonText = Application.Current.Resources["String_Button_Delete"] as string;
             dialogSettings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
@@ -191,18 +191,18 @@ namespace NETworkManager.ViewModels.Applications
             if (result == MessageDialogResult.Negative)
                 return;
 
-            List<TemplateWakeOnLanInfo> list = new List<TemplateWakeOnLanInfo>();
+            List<TemplateWakeOnLANInfo> list = new List<TemplateWakeOnLANInfo>();
 
-            foreach (TemplateWakeOnLanInfo template in SelectedWakeOnLanInfos)
+            foreach (TemplateWakeOnLANInfo template in SelectedWakeOnLANInfos)
                 list.Add(template);
 
-            foreach (TemplateWakeOnLanInfo info in list)
-                TemplateManager.WakeOnLanTemplates.Remove(info);
+            foreach (TemplateWakeOnLANInfo info in list)
+                TemplateManager.WakeOnLANTemplates.Remove(info);
         }
         #endregion
 
         #region Events      
-        private void WakeOnLan_Completed(object sender, System.EventArgs e)
+        private void WakeOnLAN_Completed(object sender, System.EventArgs e)
         {
             MessageBox.Show("Sended");
         }

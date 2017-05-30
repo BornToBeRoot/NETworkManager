@@ -130,7 +130,7 @@
   <data name="StartParameter_Autostart" xml:space="preserve">
     <value>Autostart</value>
   </data>
-  <data name="WakeOnLan_DefaultPort" xml:space="preserve">
+  <data name="WakeOnLAN_DefaultPort" xml:space="preserve">
     <value>7</value>
   </data>
 </root>

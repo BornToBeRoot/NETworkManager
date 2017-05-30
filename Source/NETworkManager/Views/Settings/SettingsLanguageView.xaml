@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d">
     <StackPanel>
-        <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_Language}" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Language}" />
         <ListView ItemsSource="{Binding LanguageCollection}" SelectedItem="{Binding LocalizationSelectedItem}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
             <ListView.ItemTemplate>
                 <DataTemplate>

@@ -178,7 +178,7 @@ namespace NETworkManager
 
             // Load templates
             TemplateManager.LoadNetworkInterfaceConfigTemplates();
-            TemplateManager.LoadWakeOnLanTemplates();
+            TemplateManager.LoadWakeOnLANTemplates();
 
             _isLoading = false;
         }
@@ -244,9 +244,9 @@ namespace NETworkManager
             // Save templates
             if (TemplateManager.NetworkInterfaceConfigTemplatesChanged && !ImportExportManager.ForceRestart)
                 TemplateManager.SaveNetworkInterfaceConfigTemplates();
-            
-            if (TemplateManager.WakeOnLanTemplatesChanged && !ImportExportManager.ForceRestart)
-                TemplateManager.SaveWakeOnLanTemplates();
+
+            if (TemplateManager.WakeOnLANTemplatesChanged && !ImportExportManager.ForceRestart)
+                TemplateManager.SaveWakeOnLANTemplates();
 
             // Save settings
             if (SettingsManager.Current.SettingsChanged && !ImportExportManager.ForceRestart)
@@ -271,6 +271,7 @@ namespace NETworkManager
         PingView pingView;
         TracerouteView tracerouteView;
         DNSLookupView dnsLookupView;
+        OUILookupView ouiLookupView;
 
         private ApplicationView.Name? currentApplicationViewName = null;
 
@@ -328,6 +329,12 @@ namespace NETworkManager
                         dnsLookupView = new DNSLookupView();
 
                     contentControlApplication.Content = dnsLookupView;
+                    break;
+                case ApplicationView.Name.OUILookup:
+                    if (ouiLookupView == null)
+                        ouiLookupView = new OUILookupView();
+
+                    contentControlApplication.Content = ouiLookupView;
                     break;
             }
 
@@ -614,7 +621,7 @@ namespace NETworkManager
 
         private void RestartApplication()
         {
-            Process.Start(Assembly.GetExecutingAssembly().Location);
+            Process.Start(ConfigurationManager.Current.ApplicationPath);
 
             _closeApplication = true;
             Close();

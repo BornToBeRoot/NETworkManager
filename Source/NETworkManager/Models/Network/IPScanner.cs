@@ -97,20 +97,25 @@ namespace NETworkManager.Models.Network
 
                                         // ARP
                                         PhysicalAddress macAddress = null;
+                                        string vendor = string.Empty;
 
                                         if (ipScannerOptions.ResolveMACAddress)
                                         {
                                             try
                                             {
+                                                // Get mac
                                                 if (Dns.GetHostName() == hostname.Substring(0, hostname.IndexOf('.')))
-                                                    macAddress = NetworkInterface.GetNetworkInterfaces().Where(p => p.IPv4Address.Contains(ipAddress)).FirstOrDefault().PhysicalAddress;
+                                                    macAddress = NetworkInterface.GetNetworkInterfaces().Where(p => p.IPv4Address.Contains(ipAddress)).First().PhysicalAddress;
                                                 else
                                                     macAddress = IPNetTableHelper.GetAllDevicesOnLAN().Where(p => p.Key.ToString() == ipAddress.ToString()).ToDictionary(p => p.Key, p => p.Value).First().Value;
+
+                                                // Vendor lookup
+                                                vendor = OUILookup.Lookup(macAddress).Vendor;
                                             }
                                             catch { }
                                         }
 
-                                        OnHostFound(new IPScannerHostFoundArgs(pingInfo, hostname, macAddress));
+                                        OnHostFound(new IPScannerHostFoundArgs(pingInfo, hostname, macAddress, vendor));
 
                                         break;
                                     }

@@ -7,7 +7,7 @@ namespace NETworkManager.Views.Applications
 {
     public partial class WakeOnLANView : UserControl
     {
-        private WakeOnLanViewModel viewModel = new WakeOnLanViewModel(DialogCoordinator.Instance);
+        private WakeOnLANViewModel viewModel = new WakeOnLANViewModel(DialogCoordinator.Instance);
 
         public WakeOnLANView()
         {

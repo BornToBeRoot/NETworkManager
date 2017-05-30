@@ -12,17 +12,17 @@
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
     </Style>
 
-    <Style x:Key="DefaultTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+    <Style x:Key="HeaderTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource HeaderFontFamily}" />
         <Setter Property="FontSize" Value="22" />
         <Setter Property="Margin" Value="0,0,0,10" />
     </Style>
 
-    <Style x:Key="InputTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+    <Style x:Key="WrapTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
     
-    <Style x:Key="TextBlockInput" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" >
+    <Style x:Key="IndentedTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" >
         <Setter Property="Margin" Value="10,0" />
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>

@@ -35,7 +35,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Margin="0,0,0,20">
-                    <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_Interface}" />
+                    <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Interface}" />
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -77,7 +77,7 @@
                     </Grid>
                 </StackPanel>
                 <Controls:MetroProgressBar Grid.Row="1" Margin="0,0,0,20" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True" />
-                <TextBlock Grid.Row="2" Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_Details}" />
+                <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Details}" />
                 <ScrollViewer Grid.Row="3" Style="{StaticResource DefaultScrollViewer}" PanningMode="Both">
                     <Grid>
                         <Grid.Resources>
@@ -170,7 +170,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Margin="0,0,0,20">
-                    <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_Interface}" />
+                    <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Interface}" />
                     <ComboBox FontSize="14" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
@@ -187,19 +187,19 @@
                         <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollViewerScrollBar}" />
                     </ScrollViewer.Resources>
                     <StackPanel>
-                        <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Template}" />
+                        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Template}" />
                         <ComboBox FontSize="14" IsReadOnly="True" ItemsSource="{Binding NetworkInterfaceConfigTemplates}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedConfigTemplate}" Margin="0,0,0,20">
                             <ComboBox.InputBindings>
                                 <KeyBinding Command="{Binding UnselectTemplateCommand}" Key="Delete" />
                             </ComboBox.InputBindings>
                         </ComboBox>
-                        <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_Configure}" />
+                        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Configure}" />
                         <RadioButton x:Name="radioButtonConfigEnableDynamicIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding ConfigEnableDynamicIPAddress}" Content="{DynamicResource String_ObtainAnIPAddressAutomatically}" FontSize="14" Margin="0,0,0,10"/>
                         <RadioButton x:Name="radioButtonConfigEnableStaticIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding ConfigEnableStaticIPAddress}" Content="{DynamicResource String_UseTheFollowingIPAddress}" FontSize="14" Margin="0,0,0,10"/>
                         <GroupBox Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigUseStaticIPv4Address}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="20,0,0,10">
                             <Grid>
                                 <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockInput}">
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource IndentedTextBlock}">
                                         <Setter Property="Margin" Value="0,0,10,0" />
                                     </Style>
                                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
@@ -221,7 +221,7 @@
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource TextBlockInput}" Text="{DynamicResource String_IPv4Address}" />
+                                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource IndentedTextBlock}" Text="{DynamicResource String_IPv4Address}" />
                                 <TextBox x:Name="txtConfigIPAddress" Grid.Column="1" Grid.Row="0" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                     <TextBox.Text>
                                         <Binding Path="ConfigIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -232,7 +232,7 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource TextBlockInput}"  Text="{DynamicResource String_SubnetmaskOrCIDR}"  />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource IndentedTextBlock}"  Text="{DynamicResource String_SubnetmaskOrCIDR}"  />
                                 <ComboBox x:Name="comboBoxConfigSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" ItemsSource="{x:Static Network:Subnetmask.List}">
                                     <ComboBox.Text>
                                         <Binding Path="ConfigSubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -258,7 +258,7 @@
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource TextBlockInput}"  Text="{DynamicResource String_DefaultGateway}"  />
+                                <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource IndentedTextBlock}"  Text="{DynamicResource String_DefaultGateway}"  />
                                 <TextBox x:Name="txtConfigGateway" Grid.Column="1" Grid.Row="4" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                     <TextBox.Text>
                                         <Binding Path="ConfigGateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -276,7 +276,7 @@
                         <GroupBox Grid.Row="10" Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigUseStaticIPv4DNSServer}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="20,0,0,0">
                             <Grid>
                                 <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockInput}">
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource IndentedTextBlock}">
                                         <Setter Property="Margin" Value="0,0,10,0" />
                                     </Style>
                                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" >
@@ -296,7 +296,7 @@
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource TextBlockInput}"  Text="{DynamicResource String_PrimaryDNSServer}"  />
+                                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource IndentedTextBlock}"  Text="{DynamicResource String_PrimaryDNSServer}"  />
                                 <TextBox x:Name="txtConfigPrimaryDnsServer" Grid.Column="1" Grid.Row="0" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                     <TextBox.Text>
                                         <Binding Path="ConfigPrimaryDnsServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -307,7 +307,7 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource TextBlockInput}"  Text="{DynamicResource String_SecondaryDNSServer}"  />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource IndentedTextBlock}"  Text="{DynamicResource String_SecondaryDNSServer}"  />
                                 <TextBox x:Name="txtConfigSecondaryDnsServer" Grid.Column="1" Grid.Row="2" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                     <TextBox.Text>
                                         <Binding Path="ConfigSecondaryDnsServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -448,7 +448,7 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Style="{StaticResource DefaultTextBlockStyle}" Text="{DynamicResource String_Header_Templates}" />
+                <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Templates}" />
                 <Control:MultiSelectDataGrid Style="{StaticResource MetroDataGrid}" Grid.Row="1" FontSize="14" ItemsSource="{Binding NetworkInterfaceConfigTemplates}" AutoGenerateColumns="False" GridLinesVisibility="Vertical" IsReadOnly="True" SelectionMode="Extended" SelectionUnit="FullRow" SelectedItemsList="{Binding SelectedConfigTemplates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{DynamicResource GrayBrush3}" CanUserReorderColumns="False" Margin="0,0,0,10">
                     <Control:MultiSelectDataGrid.Columns>
                         <DataGridTextColumn Header="{DynamicResource String_Name}" Binding="{Binding Name}" MinWidth="200" />

@@ -121,30 +121,30 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-        private bool _importWakeOnLanTemplatesExists;
-        public bool ImportWakeOnLanTemplatesExists
+        private bool _importWakeOnLANTemplatesExists;
+        public bool ImportWakeOnLANTemplatesExists
         {
-            get { return _importWakeOnLanTemplatesExists; }
+            get { return _importWakeOnLANTemplatesExists; }
             set
             {
-                if (value == _importWakeOnLanTemplatesExists)
+                if (value == _importWakeOnLANTemplatesExists)
                     return;
 
-                _importWakeOnLanTemplatesExists = value;
+                _importWakeOnLANTemplatesExists = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _importWakeOnLanTemplates;
-        public bool ImportWakeOnLanTemplates
+        private bool _importWakeOnLANTemplates;
+        public bool ImportWakeOnLANTemplates
         {
-            get { return _importWakeOnLanTemplates; }
+            get { return _importWakeOnLANTemplates; }
             set
             {
-                if (value == _importWakeOnLanTemplates)
+                if (value == _importWakeOnLANTemplates)
                     return;
 
-                _importWakeOnLanTemplates = value;
+                _importWakeOnLANTemplates = value;
                 OnPropertyChanged();
             }
         }
@@ -221,7 +221,7 @@ namespace NETworkManager.ViewModels.Settings
         }
 
         private bool _wakeOnLanTemplatesExists;
-        public bool WakeOnLanTemplatesExists
+        public bool WakeOnLANTemplatesExists
         {
             get { return _wakeOnLanTemplatesExists; }
             set
@@ -234,16 +234,16 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-        private bool _exportWakeOnLanTemplates;
-        public bool ExportWakeOnLanTemplates
+        private bool _exportWakeOnLANTemplates;
+        public bool ExportWakeOnLANTemplates
         {
-            get { return _exportWakeOnLanTemplates; }
+            get { return _exportWakeOnLANTemplates; }
             set
             {
-                if (value == _exportWakeOnLanTemplates)
+                if (value == _exportWakeOnLANTemplates)
                     return;
 
-                _exportWakeOnLanTemplates = value;
+                _exportWakeOnLANTemplates = value;
                 OnPropertyChanged();
             }
         }
@@ -267,7 +267,7 @@ namespace NETworkManager.ViewModels.Settings
         {
             ApplicationSettingsExists = File.Exists(SettingsManager.SettingsFilePath);
             NetworkInterfaceConfigTemplatesExists = File.Exists(TemplateManager.NetworkInterfaceConfigTemplatesFilePath);
-            WakeOnLanTemplatesExists = File.Exists(TemplateManager.WakeOnLanTemplatesFilePath);
+            WakeOnLANTemplatesExists = File.Exists(TemplateManager.WakeOnLANTemplatesFilePath);
         }
         #endregion
 
@@ -302,7 +302,7 @@ namespace NETworkManager.ViewModels.Settings
                 ImportFileIsValid = true;
                 ImportApplicationSettingsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.ApplicationSettings);
                 ImportNetworkInterfaceConfigTemplatesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceConfigTemplates);
-                ImportWakeOnLanTemplatesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLanTemplates);
+                ImportWakeOnLANTemplatesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANTemplates);
             }
             catch (ImportFileNotValidException)
             {
@@ -334,8 +334,8 @@ namespace NETworkManager.ViewModels.Settings
                 if (ImportNetworkInterfaceConfigTemplatesExists && (ImportEverything || ImportNetworkInterfaceConfigTemplates))
                     importOptions.Add(ImportExportManager.ImportExportOptions.NetworkInterfaceConfigTemplates);
 
-                if (ImportWakeOnLanTemplatesExists && (ImportEverything || ImportWakeOnLanTemplates))
-                    importOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLanTemplates);
+                if (ImportWakeOnLANTemplatesExists && (ImportEverything || ImportWakeOnLANTemplates))
+                    importOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANTemplates);
 
                 ImportExportManager.Import(ImportLocationSelectedPath, importOptions);
 
@@ -358,8 +358,8 @@ namespace NETworkManager.ViewModels.Settings
             if (NetworkInterfaceConfigTemplatesExists && (ExportEverything || ExportNetworkInterfaceConfigTemplates))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.NetworkInterfaceConfigTemplates);
 
-            if (WakeOnLanTemplatesExists && (ExportEverything || ExportWakeOnLanTemplates))
-                exportOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLanTemplates);
+            if (WakeOnLANTemplatesExists && (ExportEverything || ExportWakeOnLANTemplates))
+                exportOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANTemplates);
 
             // Save the settings before exporting them
             if (SettingsManager.Current.SettingsChanged)

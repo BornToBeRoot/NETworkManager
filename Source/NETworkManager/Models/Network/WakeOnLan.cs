@@ -3,7 +3,7 @@ using System.Net.Sockets;
 
 namespace NETworkManager.Models.Network
 {
-    public class WakeOnLan
+    public class WakeOnLAN
     {
         #region Events
         public event EventHandler Completed;
@@ -15,7 +15,7 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Methods
-        public void Send(WakeOnLanInfo info)
+        public void Send(WakeOnLANInfo info)
         {
             using (UdpClient udpClient = new UdpClient())
             {

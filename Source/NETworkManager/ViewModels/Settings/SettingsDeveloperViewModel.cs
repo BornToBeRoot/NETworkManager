@@ -34,7 +34,7 @@ namespace NETworkManager.ViewModels.Settings
         {
             LoadSettings();
 
-            _isLoading = true;
+            _isLoading = false;
         }
 
         private void LoadSettings()

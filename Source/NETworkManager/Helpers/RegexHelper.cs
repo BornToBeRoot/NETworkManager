@@ -10,6 +10,7 @@
 
         // Match a MAC-Address 00-00-00-00-00-00-00
         public const string MACAddressRegex = @"^[A-Fa-f0-9]{12}$|^[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}$";
+        public const string MACAddressFirst3BytesRegex = @"^[A-Fa-f0-9]{6}$|^[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}$";
 
         // Match a Subnetmask like 255.255.255.0
         private const string SubnetmaskValues = @"(255|254|252|248|240|224|192|128|0)";
