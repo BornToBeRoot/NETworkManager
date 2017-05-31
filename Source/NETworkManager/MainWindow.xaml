@@ -23,15 +23,23 @@
         <Controls:WindowCommands>
             <Button Command="{Binding OpenGithubProjectCommand}" ToolTip="{DynamicResource String_ToolTip_GitHub}">
                 <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                    <Rectangle.OpacityMask >
-                        <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_github}" />
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform">
+                            <VisualBrush.Visual>
+                                <IconPacks:PackIconModern Kind="SocialGithubOctocat" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
             <Button Command="{Binding OpenSettingsCommand}" ToolTip="{DynamicResource String_ToolTip_Settings}">
                 <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_settings}" />
+                        <VisualBrush Stretch="Uniform">
+                            <VisualBrush.Visual>
+                                <IconPacks:PackIconOcticons Kind="Settings" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
@@ -43,8 +51,12 @@
             <MenuItem.Icon>
                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_app}" />
-                    </Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform">
+                                <VisualBrush.Visual>
+                                    <IconPacks:PackIconMaterial Kind="OpenInNew" />
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
         </MenuItem>
@@ -52,8 +64,12 @@
             <MenuItem.Icon>
                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_settings}" />
-                    </Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform">
+                                <VisualBrush.Visual>
+                                    <IconPacks:PackIconOcticons Kind="Settings" />
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
         </MenuItem>
@@ -62,8 +78,12 @@
             <MenuItem.Icon>
                 <Rectangle Width="16" Height="16" Fill="{DynamicResource CleanWindowCloseButtonBackgroundBrush}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_close}" />
-                    </Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform">
+                                <VisualBrush.Visual>
+                                    <IconPacks:PackIconMaterial Kind="WindowClose" />
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
         </MenuItem>
@@ -152,7 +172,7 @@
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform">
                                             <VisualBrush.Visual>
-                                                <IconPacks:PackIconMaterial Kind="ViewList" />
+                                                <IconPacks:PackIconEntypo Kind="List" />
                                             </VisualBrush.Visual>
                                         </VisualBrush>
                                     </Rectangle.OpacityMask>

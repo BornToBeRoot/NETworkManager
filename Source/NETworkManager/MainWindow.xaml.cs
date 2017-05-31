@@ -7,7 +7,6 @@ using System.Windows.Input;
 using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Linq;
 using NETworkManager.ViewModels;

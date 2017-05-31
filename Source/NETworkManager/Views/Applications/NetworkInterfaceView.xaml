@@ -23,7 +23,8 @@
         <Converter:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
         <Converter:ValidateNetworkInterfaceConfigConverter x:Key="ValidateNetworkInterfaceConfigConverter" />
         <Converter:TrueFalseToStringConverter x:Key="TrueFalseToStringConverter" />
-        <Converter:SelectedItemsToBoolConverter x:Key="SelectedItemsToBoolConverter" />        
+        <Converter:SelectedItemsToBoolConverter x:Key="SelectedItemsToBoolConverter" />
+        
     </UserControl.Resources>
     <TabControl Style="{StaticResource  DefaultTabControl}">
         <TabItem Header="{DynamicResource String_Header_Information}">
@@ -51,11 +52,11 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Grid.Column="1" Background="Transparent" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource ImageButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" HorizontalAlignment="Right" Margin="10,0,0,0">
+                        <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource ImageButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" HorizontalAlignment="Right" Margin="10,0,0,0">
                             <Button.Content>
                                 <Rectangle Width="20" Height="20">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform">
+                                        <VisualBrush x:Name="VisualRefresh" Stretch="Uniform">
                                             <VisualBrush.Visual>
                                                 <IconPacks:PackIconMaterial Kind="Refresh" />
                                             </VisualBrush.Visual>
@@ -64,16 +65,11 @@
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
                                             <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
                             </Button.Content>
-                        </Button>                        
+                        </Button>
                     </Grid>
                 </StackPanel>
                 <Controls:MetroProgressBar Grid.Row="1" Margin="0,0,0,20" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True" />
@@ -330,33 +326,15 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Border BorderThickness="0,0,1,0" >
-                                    <Border.Style>
-                                        <Style TargetType="{x:Type Border}">
-                                            <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush2}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}},Path=IsEnabled}" Value="False" >
-                                                    <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush3}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Border.Style>
-                                    <Rectangle Width="20" Height="20" Margin="10,5">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_add}" />
-                                        </Rectangle.OpacityMask>
-                                        <Rectangle.Style>
-                                            <Style TargetType="{x:Type Rectangle}">
-                                                <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}},Path=IsEnabled}" Value="False" >
-                                                        <Setter Property="Fill" Value="{DynamicResource AccentColorBrush3}" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Rectangle.Style>
-                                    </Rectangle>
-                                </Border>
+                                <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform">
+                                            <VisualBrush.Visual>
+                                                <IconPacks:PackIconMaterial Kind="Plus" />
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
                                 <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddTemplate}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
                             </Grid>
                         </Button.Content>
@@ -390,33 +368,15 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Border BorderThickness="0,0,1,0" >
-                                    <Border.Style>
-                                        <Style TargetType="{x:Type Border}">
-                                            <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush2}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}},Path=IsEnabled}" Value="False" >
-                                                    <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush3}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Border.Style>
-                                    <Rectangle Width="20" Height="20" Margin="10,5">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_save}" />
-                                        </Rectangle.OpacityMask>
-                                        <Rectangle.Style>
-                                            <Style TargetType="{x:Type Rectangle}">
-                                                <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}},Path=IsEnabled}" Value="False" >
-                                                        <Setter Property="Fill" Value="{DynamicResource AccentColorBrush3}" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Rectangle.Style>
-                                    </Rectangle>
-                                </Border>
+                                <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform">
+                                            <VisualBrush.Visual>
+                                                <IconPacks:PackIconMaterial Kind="ContentSave" />
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
                                 <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Apply}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
                             </Grid>
                         </Button.Content>
@@ -492,33 +452,11 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Border BorderThickness="0,0,1,0" >
-                                <Border.Style>
-                                    <Style TargetType="{x:Type Border}">
-                                        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush2}" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}},Path=IsEnabled}" Value="False" >
-                                                <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush3}" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Border.Style>
-                                <Rectangle Width="20" Height="20" Margin="10,5">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterialLight Kind=Delete}" />
-                                    </Rectangle.OpacityMask>
-                                    <Rectangle.Style>
-                                        <Style TargetType="{x:Type Rectangle}">
-                                            <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}},Path=IsEnabled}" Value="False" >
-                                                    <Setter Property="Fill" Value="{DynamicResource AccentColorBrush3}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Rectangle.Style>
-                                </Rectangle>
-                            </Border>
+                            <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterialLight Kind=Delete}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
                             <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Delete}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
                         </Grid>
                     </Button.Content>
