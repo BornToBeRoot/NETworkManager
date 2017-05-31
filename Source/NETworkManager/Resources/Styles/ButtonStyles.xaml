@@ -2,17 +2,47 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style x:Key="DefaultButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MetroFlatButton}">
         <Setter Property="MinWidth" Value="150" />
+        <Setter Property="MinHeight" Value="35" />
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="Height" Value="35" />
+        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource GrayBrush8}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource GrayBrush10}" />
+            </Trigger>
+            <Trigger Property="Button.IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource GrayBrush9}" />
+                <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
-    
+
+    <Style x:Key="HighlightedButton" TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
+        <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource AccentColorBrush2}" />
+            </Trigger>
+            <Trigger Property="Button.IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}" />
+            </Trigger>
+        </Style.Triggers>        
+    </Style>
+
     <Style x:Key="ImageWithTextButton" TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
         <Setter Property="Padding" Value="0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     </Style>
 
-    <Style x:Key="ImageButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MetroFlatButton}">
+    <Style x:Key="ImageButton" TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
+        <Setter Property="MinWidth" Value="35" />
+        <Setter Property="MinHeight" Value="35" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />    
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     </Style>
 </ResourceDictionary>

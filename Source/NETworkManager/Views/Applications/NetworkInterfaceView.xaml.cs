@@ -19,6 +19,6 @@ namespace NETworkManager.Views.Applications
         {
             ContextMenu menu = sender as ContextMenu;
             menu.DataContext = viewModel;
-        }
+        }             
     }
 }
