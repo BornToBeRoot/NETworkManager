@@ -88,13 +88,13 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private IList _selectedWakeOnLANInfos = new ArrayList();
-        public IList SelectedWakeOnLANInfos
+        private IList _selectedWakeOnLANTemplates = new ArrayList();
+        public IList SelectedWakeOnLANTemplates
         {
-            get { return _selectedWakeOnLANInfos; }
+            get { return _selectedWakeOnLANTemplates; }
             set
             {
-                _selectedWakeOnLANInfos = value;
+                _selectedWakeOnLANTemplates = value;
                 OnPropertyChanged();
             }
         }
@@ -116,31 +116,16 @@ namespace NETworkManager.ViewModels.Applications
         }
         #endregion
 
-        #region ICommands
+        #region ICommands & Actions
         public ICommand WakeUpCommand
         {
             get { return new RelayCommand(p => WakeUpAction()); }
         }
 
-        public ICommand AddTemplateCommand
-        {
-            get { return new RelayCommand(p => AddTemplateAction()); }
-        }
-
-        public ICommand DeleteSelectedWakeOnLANInfosCommand
-        {
-            get { return new RelayCommand(p => DeleteSelectedWakeOnLANInfosAction()); }
-        }
-        #endregion
-
-        #region Methods
         private async void WakeUpAction()
         {
             try
             {
-                WakeOnLAN wakeOnLan = new WakeOnLAN();
-                wakeOnLan.Completed += WakeOnLAN_Completed;
-
                 WakeOnLANInfo info = new WakeOnLANInfo
                 {
                     MagicPacket = MagicPacketHelper.Create(MACAddress),
@@ -148,7 +133,9 @@ namespace NETworkManager.ViewModels.Applications
                     Port = int.Parse(Port)
                 };
 
-                wakeOnLan.Send(info);
+                WakeOnLAN.Send(info);
+
+                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Successfull"] as string, "TRANSLATE - gesendet", MessageDialogStyle.Affirmative, dialogSettings);
             }
             catch (Exception ex)
             {
@@ -158,12 +145,19 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
+        public ICommand AddTemplateCommand
+        {
+            get { return new RelayCommand(p => AddTemplateAction()); }
+        }
+
         private async void AddTemplateAction()
         {
-            dialogSettings.AffirmativeButtonText = Application.Current.Resources["String_Button_Add"] as string;
-            dialogSettings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
+            MetroDialogSettings settings = dialogSettings;
 
-            string hostname = await dialogCoordinator.ShowInputAsync(this, Application.Current.Resources["String_AddTemplate"] as string, Application.Current.Resources["String_EnterHostnameForTemplate"] as string, dialogSettings);
+            settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Add"] as string;
+            settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
+
+            string hostname = await dialogCoordinator.ShowInputAsync(this, Application.Current.Resources["String_AddTemplate"] as string, Application.Current.Resources["String_EnterHostnameForTemplate"] as string, settings);
 
             if (string.IsNullOrEmpty(hostname))
                 return;
@@ -179,7 +173,48 @@ namespace NETworkManager.ViewModels.Applications
             TemplateManager.WakeOnLANTemplates.Add(template);
         }
 
-        private async void DeleteSelectedWakeOnLANInfosAction()
+        public ICommand WakeUpSelectedWakeOnLANTemplatesCommand
+        {
+            get { return new RelayCommand(p => WakeUpSelectedWakeOnLANTemplatesAction()); }
+        }
+
+        public async void WakeUpSelectedWakeOnLANTemplatesAction()
+        {
+            int errorCount = 0;
+
+            foreach (TemplateWakeOnLANInfo template in SelectedWakeOnLANTemplates)
+            {
+                try
+                {
+                    WakeOnLANInfo info = new WakeOnLANInfo
+                    {
+                        MagicPacket = MagicPacketHelper.Create(template.MACAddress),
+                        Broadcast = IPAddress.Parse(template.Broadcast),
+                        Port = template.Port
+                    };
+
+                    WakeOnLAN.Send(info);
+
+                    if (SelectedWakeOnLANTemplates.Count == 1)
+                        await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, Application.Current.Resources["String_MagicPacketSent"] as string, MessageDialogStyle.Affirmative, dialogSettings);
+                }
+                catch (Exception ex)
+                {
+                    errorCount++;
+                    await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, dialogSettings);
+                }                
+            }
+
+            if (SelectedWakeOnLANTemplates.Count > 1 && SelectedWakeOnLANTemplates.Count != errorCount)
+                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, Application.Current.Resources["String_AllMagicPacketSent"] as string, MessageDialogStyle.Affirmative, dialogSettings);
+        }
+
+        public ICommand DeleteSelectedWakeOnLANTemplatesCommand
+        {
+            get { return new RelayCommand(p => DeleteSelectedWakeOnLANTemplatesAction()); }
+        }
+
+        private async void DeleteSelectedWakeOnLANTemplatesAction()
         {
             dialogSettings.AffirmativeButtonText = Application.Current.Resources["String_Button_Delete"] as string;
             dialogSettings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
@@ -193,18 +228,11 @@ namespace NETworkManager.ViewModels.Applications
 
             List<TemplateWakeOnLANInfo> list = new List<TemplateWakeOnLANInfo>();
 
-            foreach (TemplateWakeOnLANInfo template in SelectedWakeOnLANInfos)
+            foreach (TemplateWakeOnLANInfo template in SelectedWakeOnLANTemplates)
                 list.Add(template);
 
             foreach (TemplateWakeOnLANInfo info in list)
                 TemplateManager.WakeOnLANTemplates.Remove(info);
-        }
-        #endregion
-
-        #region Events      
-        private void WakeOnLAN_Completed(object sender, System.EventArgs e)
-        {
-            MessageBox.Show("Sended");
         }
         #endregion
     }

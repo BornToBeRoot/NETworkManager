@@ -31,12 +31,12 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_IPRange}" />
+                <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_IPRange}" />
                 <Grid Grid.Row="1" Margin="0,0,0,20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>         
+                    </Grid.ColumnDefinitions>
                     <ComboBox Grid.Column="0" x:Name="txtIPRange" ItemsSource="{Binding IPRangeHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EampleIPScanRange}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                         <ComboBox.Text>
                             <Binding Path="IPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -67,31 +67,23 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                    <Rectangle Width="20" Height="20" Margin="10,5,0,5">
-                                        <Rectangle.Resources>
-                                        <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform">
-                                            <VisualBrush.Visual>
-                                                <IconPacks:PackIconMaterial Kind="Play" />
-                                            </VisualBrush.Visual>
-                                        </VisualBrush>
-                                        <VisualBrush x:Key="VisualClose" Stretch="Uniform">
-                                            <VisualBrush.Visual>
-                                                <IconPacks:PackIconMaterial Kind="Close" />
-                                            </VisualBrush.Visual>
-                                        </VisualBrush>
-                                        </Rectangle.Resources>
-                                        <Rectangle.Style>
-                                            <Style TargetType="{x:Type Rectangle}">
-                                                <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
-                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsScanRunning}" Value="True">
-                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualClose}" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Rectangle.Style>
-                                    </Rectangle>
+                                <Rectangle Width="20" Height="20" Margin="10,5,0,5">
+                                    <Rectangle.Resources>
+                                        <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Play}"/>
+                                        <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
+                                    </Rectangle.Resources>
+                                    <Rectangle.Style>
+                                        <Style TargetType="{x:Type Rectangle}">
+                                            <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
+                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsScanRunning}" Value="True">
+                                                    <Setter Property="OpacityMask" Value="{StaticResource VisualClose}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
                                 <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
@@ -117,7 +109,7 @@
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </StackPanel.Style>                    
+                    </StackPanel.Style>
                     <Controls:MetroProgressBar Maximum="{Binding ProgressBarMaximum}" Foreground="{DynamicResource AccentColorBrush}"  Value="{Binding ProgressBarValue}">
                         <Controls:MetroProgressBar.Style>
                             <Style TargetType="{x:Type Controls:MetroProgressBar}" >
@@ -185,7 +177,7 @@
                 <ScrollViewer.Resources>
                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollViewerScrollBar}" />
                 </ScrollViewer.Resources>
-                <StackPanel>               
+                <StackPanel>
                     <TextBlock Text="{DynamicResource String_Header_Multithreading}" Style="{StaticResource HeaderTextBlock}" />
                     <TextBlock  Text="{DynamicResource String_Threads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
                     <mah:NumericUpDown Value="{Binding Threads}" Maximum="10000" Minimum="1" Interval="1" Margin="0,0,0,20" />
@@ -199,7 +191,7 @@
                     <TextBlock Text="{DynamicResource String_Header_DNS}" Style="{StaticResource HeaderTextBlock}" />
                     <mah:ToggleSwitch Header="{DynamicResource String_ResolveHostname}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ResolveHostname}" Margin="0,0,0,20"/>
                     <TextBlock Text="{DynamicResource String_Header_ARP}" Style="{StaticResource HeaderTextBlock}" />
-                    <mah:ToggleSwitch Header="{DynamicResource String_ReadTheMACAddressFromTheArpCache}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ResolveMACAddress}" />                    
+                    <mah:ToggleSwitch Header="{DynamicResource String_ReadTheMACAddressFromTheArpCache}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ResolveMACAddress}" />
                 </StackPanel>
             </ScrollViewer>
         </TabItem>

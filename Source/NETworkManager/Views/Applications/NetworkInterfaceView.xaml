@@ -56,11 +56,7 @@
                             <Button.Content>
                                 <Rectangle Width="20" Height="20">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush x:Name="VisualRefresh" Stretch="Uniform">
-                                            <VisualBrush.Visual>
-                                                <IconPacks:PackIconMaterial Kind="Refresh" />
-                                            </VisualBrush.Visual>
-                                        </VisualBrush>
+                                        <VisualBrush x:Name="VisualRefresh" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Refresh}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -328,11 +324,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform">
-                                            <VisualBrush.Visual>
-                                                <IconPacks:PackIconMaterial Kind="Plus" />
-                                            </VisualBrush.Visual>
-                                        </VisualBrush>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Plus}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                                 <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddTemplate}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
@@ -370,11 +362,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform">
-                                            <VisualBrush.Visual>
-                                                <IconPacks:PackIconMaterial Kind="ContentSave" />
-                                            </VisualBrush.Visual>
-                                        </VisualBrush>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentSave}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                                 <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Apply}" FontSize="14" Margin="10,5" TextAlignment="Center"/>

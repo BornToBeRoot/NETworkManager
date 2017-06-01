@@ -40,6 +40,9 @@
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource IndentedTextBlock}" Text="{DynamicResource String_MACAddress}" />
                         <ComboBox Grid.Column="1" Grid.Row="0" x:Name="cbMACAddress" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddress}" ItemsSource="{Binding WakeOnLANTemplates}" SelectedValuePath="MACAddress" FontSize="14" SelectedItem="{Binding SelectedWakeOnLANTemplate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource EditableComboBox}">
+                            <ComboBox.InputBindings>
+                                <KeyBinding Command="{Binding WakeUpCommand}" Key="Return" />
+                            </ComboBox.InputBindings>
                             <ComboBox.Text>
                                 <Binding Path="MACAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -66,6 +69,9 @@
                         </ComboBox>
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Broadcast}" Style="{StaticResource IndentedTextBlock}" />
                         <TextBox x:Name="txtBroadcast" Grid.Column="1" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleBroadcast}" Style="{StaticResource DefaultTextBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                            <TextBox.InputBindings>
+                                <KeyBinding Command="{Binding WakeUpCommand}" Key="Return" />
+                            </TextBox.InputBindings>
                             <TextBox.Text>
                                 <Binding Path="Broadcast" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -77,6 +83,9 @@
                         </TextBox>
                         <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Port}" Style="{StaticResource IndentedTextBlock}" />
                         <TextBox x:Name="txtPort" Grid.Column="1" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort}" Style="{StaticResource DefaultTextBox}" HorizontalAlignment="Left" Width="65" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                            <TextBox.InputBindings>
+                                <KeyBinding Command="{Binding WakeUpCommand}" Key="Return" />
+                            </TextBox.InputBindings>
                             <TextBox.Text>
                                 <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
@@ -97,11 +106,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" >
-                                                <VisualBrush.Visual>
-                                                    <IconPacks:PackIconMaterial Kind="Plus" />
-                                                </VisualBrush.Visual>
-                                            </VisualBrush>
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Plus}"/>
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                     <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddTemplate}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
@@ -123,7 +128,7 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <Button Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right"  Command="{Binding WakeUpCommand}" IsDefault="True">
+                        <Button HorizontalAlignment="Right"  Command="{Binding WakeUpCommand}">
                             <Button.Content>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -132,11 +137,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform">
-                                                <VisualBrush.Visual>
-                                                    <IconPacks:PackIconMaterial Kind="Power" />
-                                                </VisualBrush.Visual>
-                                            </VisualBrush>
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Power}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                     <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_WakeUp}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
@@ -161,7 +162,7 @@
                     </StackPanel>
                 </StackPanel>
                 <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Templates}" />
-                <Control:MultiSelectDataGrid Grid.Row="2" Style="{StaticResource MetroDataGrid}" FontSize="14" ItemsSource="{Binding WakeOnLANTemplates}" AutoGenerateColumns="False" GridLinesVisibility="Vertical" IsReadOnly="True" SelectionMode="Extended" SelectionUnit="FullRow" SelectedItemsList="{Binding SelectedWakeOnLANInfos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{DynamicResource GrayBrush3}" Margin="0,0,0,10">
+                <Control:MultiSelectDataGrid Grid.Row="2" Style="{StaticResource MetroDataGrid}" FontSize="14" ItemsSource="{Binding WakeOnLANTemplates}" AutoGenerateColumns="False" GridLinesVisibility="Vertical" IsReadOnly="True" SelectionMode="Extended" SelectionUnit="FullRow" SelectedItemsList="{Binding SelectedWakeOnLANTemplates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{DynamicResource GrayBrush3}" Margin="0,0,0,10">
                     <Control:MultiSelectDataGrid.Columns>
                         <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress}" Width="150" />
                         <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" Width="150" />
@@ -171,7 +172,16 @@
                     <Control:MultiSelectDataGrid.Resources>
                         <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                         <ContextMenu x:Key="ContextMenuDataGridRow" Opened="ContextMenu_Opened" MinWidth="150">
-                            <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteSelectedWakeOnLANInfosCommand}">
+                            <MenuItem Header="{DynamicResource String_WakeUp}" Command="{Binding WakeUpSelectedWakeOnLANTemplatesCommand}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Power}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteSelectedWakeOnLANTemplatesCommand}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>
@@ -188,35 +198,63 @@
                         </Style>
                     </Control:MultiSelectDataGrid.RowStyle>
                     <Control:MultiSelectDataGrid.InputBindings>
-                        <KeyBinding Command="{Binding DeleteSelectedWakeOnLANInfosCommand}" Key="Delete" />
+                        <KeyBinding Command="{Binding DeleteSelectedWakeOnLANTemplatesCommand}" Key="Delete" />
                     </Control:MultiSelectDataGrid.InputBindings>
                 </Control:MultiSelectDataGrid>
-                <Button Grid.Row="3" Command="{Binding DeleteSelectedWakeOnLANInfosCommand}" HorizontalAlignment="Right" >
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterialLight Kind=Delete}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Delete}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
-                        </Grid>
-                    </Button.Content>
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                            <Setter Property="IsEnabled" Value="False" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding SelectedWakeOnLANInfos, Converter={StaticResource SelectedItemsToBoolConverter}}" Value="True" >
-                                    <Setter Property="IsEnabled"  Value="True" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
+                <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Command="{Binding DeleteSelectedWakeOnLANTemplatesCommand}"  Margin="0,0,10,0">
+                        <Button.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterialLight Kind=Delete}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Delete}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                            </Grid>
+                        </Button.Content>
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                <Setter Property="IsEnabled" Value="False" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedWakeOnLANTemplates, Converter={StaticResource SelectedItemsToBoolConverter}}" Value="True" >
+                                        <Setter Property="IsEnabled"  Value="True" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Command="{Binding WakeUpSelectedWakeOnLANTemplatesCommand}" HorizontalAlignment="Right" >
+                        <Button.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Power}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_WakeUp}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                            </Grid>
+                        </Button.Content>
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                <Setter Property="IsEnabled" Value="False" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedWakeOnLANTemplates, Converter={StaticResource SelectedItemsToBoolConverter}}" Value="True" >
+                                        <Setter Property="IsEnabled"  Value="True" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
             </Grid>
         </TabItem>
     </TabControl>
