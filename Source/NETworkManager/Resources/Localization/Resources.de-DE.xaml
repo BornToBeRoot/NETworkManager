@@ -177,6 +177,8 @@
     <system:String x:Key="String_SettingsSuccessfullyReset">Einstellungen erfolgreich zurückgesetzt!</system:String>
     <system:String x:Key="String_SelectedSettingsAreOverwritten">Die ausgewählten Einstellungen werden überschrieben und die Anwendung wird neu gestartet.</system:String>
     <system:String x:Key="String_Vendor">Hersteller</system:String>
+    <system:String x:Key="String_MagicPacketSent">Magic Packet gesendet.</system:String>
+    <system:String x:Key="String_AllMagicPacketSent">Alle Magic Packets gesendet.</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>

@@ -67,16 +67,8 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Width="20" Height="20" Margin="10,5,0,5">
                                     <Rectangle.Resources>
-                                        <VisualBrush x:Key="VisualMagnify" Stretch="Uniform">
-                                            <VisualBrush.Visual>
-                                                <IconPacks:PackIconMaterial Kind="Magnify" />
-                                            </VisualBrush.Visual>
-                                        </VisualBrush>
-                                        <VisualBrush x:Key="VisualClose" Stretch="Uniform">
-                                            <VisualBrush.Visual>
-                                                <IconPacks:PackIconMaterial Kind="Close" />
-                                            </VisualBrush.Visual>
-                                        </VisualBrush>
+                                        <VisualBrush x:Key="VisualMagnify" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Magnify}" />
+                                        <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
                                     </Rectangle.Resources>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">

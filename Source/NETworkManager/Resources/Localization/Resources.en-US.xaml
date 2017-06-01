@@ -179,6 +179,8 @@
     <system:String x:Key="String_SettingsSuccessfullyReset">Settings successfully reset!</system:String>
     <system:String x:Key="String_SelectedSettingsAreOverwritten">The selected settings are overwritten and the application is restarted.</system:String>
     <system:String x:Key="String_Vendor">Vendor</system:String>
+    <system:String x:Key="String_MagicPacketSent">Magic Packet sent.</system:String>
+    <system:String x:Key="String_AllMagicPacketSent">All Magic Packet sent.</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
