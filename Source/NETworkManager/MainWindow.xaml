@@ -172,7 +172,7 @@
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform">
                                             <VisualBrush.Visual>
-                                                <IconPacks:PackIconEntypo Kind="List" />
+                                                <IconPacks:PackIconFontAwesome Kind="Bars" />
                                             </VisualBrush.Visual>
                                         </VisualBrush>
                                     </Rectangle.OpacityMask>
