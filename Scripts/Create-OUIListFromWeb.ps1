@@ -1,9 +1,9 @@
 #$LatestOUI = Get-Content -Path "$PSScriptRoot\oui_from_web.txt"
-$LatestOUI = (Invoke-WebRequest -Uri "http://linuxnet.ca/ieee/oui.txt").Content
+$LatestOUIs = (Invoke-WebRequest -Uri "http://linuxnet.ca/ieee/oui.txt").Content
 
 $Output = ""
 
-foreach($Line in $LatestOUI -split '[\r\n]')
+foreach($Line in $LatestOUIs -split '[\r\n]')
 {
     if($Line -match "^[A-F0-9]{6}")
     {        
