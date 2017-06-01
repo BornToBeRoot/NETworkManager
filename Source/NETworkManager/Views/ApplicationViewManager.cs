@@ -14,12 +14,12 @@ namespace NETworkManager.Views
                 return new List<ApplicationViewInfo>
                 {
                     new ApplicationViewInfo(Name.NetworkInterface, new PackIconModern() { Kind = PackIconModernKind.Network }),
-                    new ApplicationViewInfo(Name.IPScanner, new PackIconModern() { Kind = PackIconModernKind.Diagram }),
+                    new ApplicationViewInfo(Name.IPScanner, new PackIconMaterial() { Kind = PackIconMaterialKind.Sitemap }),
                     new ApplicationViewInfo(Name.PortScanner, new PackIconModern() { Kind = PackIconModernKind.NetworkPort}, true),
-                    new ApplicationViewInfo(Name.SubnetCalculator, new PackIconModern() { Kind = PackIconModernKind.Calculator }),
+                    new ApplicationViewInfo(Name.SubnetCalculator, new PackIconMaterial() { Kind = PackIconMaterialKind.Calculator }),
                     new ApplicationViewInfo(Name.WakeOnLAN, new PackIconMaterial() { Kind = PackIconMaterialKind.Power }),
-                    new ApplicationViewInfo(Name.Ping, new PackIconModern() { Kind = PackIconModernKind.Console }),
-                    new ApplicationViewInfo(Name.Traceroute,  new PackIconMaterial() { Kind = PackIconMaterialKind.Routes }),
+                    new ApplicationViewInfo(Name.Ping, new PackIconMaterial() { Kind = PackIconMaterialKind.LanConnect }),
+                    new ApplicationViewInfo(Name.Traceroute,  new PackIconModern() { Kind = PackIconModernKind.TransitConnection }),
                     new ApplicationViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.Dna }, true),
                     new ApplicationViewInfo(Name.OUILookup, new PackIconMaterial() {Kind = PackIconMaterialKind.Magnify })
                 };

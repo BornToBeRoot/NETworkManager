@@ -29,33 +29,11 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Border BorderThickness="0,0,1,0" >
-                            <Border.Style>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush2}" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}},Path=IsEnabled}" Value="False" >
-                                            <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush3}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-                            <Rectangle Width="20" Height="20" Margin="10,5">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Security}" />
-                                </Rectangle.OpacityMask>
-                                <Rectangle.Style>
-                                    <Style TargetType="{x:Type Rectangle}">
-                                        <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}},Path=IsEnabled}" Value="False" >
-                                                <Setter Property="Fill" Value="{DynamicResource AccentColorBrush3}" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Rectangle.Style>
-                            </Rectangle>
-                        </Border>
+                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Security}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
                         <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_RestartAsAdministrator}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
                     </Grid>
                 </Button.Content>

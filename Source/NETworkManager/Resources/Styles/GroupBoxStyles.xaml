@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <Style x:Key="DefaultGroupBox" TargetType="{x:Type GroupBox}">
-        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush3}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -26,7 +26,7 @@
 
     <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
     <Style x:Key="WithoutHeaderGroupBox" TargetType="{x:Type GroupBox}">
-        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush3}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Template">
             <Setter.Value>

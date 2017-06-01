@@ -34,7 +34,7 @@
                         </Style>
                     </Popup.Style>
                     <StackPanel>
-                        <Border MaxWidth="250" Background="{DynamicResource WhiteColorBrush}" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" Padding="5">
+                        <Border MaxWidth="300" Background="{DynamicResource WhiteColorBrush}" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" Padding="5">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />

@@ -229,7 +229,7 @@
     <system:String x:Key="String_Watermark_HostnameOrIPAddress">Hostname oder IP-Adresse...</system:String>
     <system:String x:Key="String_Watermark_EampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.178.150</system:String>
     <system:String x:Key="String_Watermark_LocationOfTheImport">Speicherort der Importdatei...</system:String>
-    <system:String x:Key="String_Watermark_MACAddressOrPart">MAC-Adress 00:11:22:33:44:55 oder die ersten 3 Bytes 00-11-22...</system:String>
+    <system:String x:Key="String_Watermark_MACAddressOrPart">MAC-Adress 00:11:22:33:44:55 oder die ersten 3 Bytes 00-11-22... Trennen Sie mehrere Einträge mit ";"</system:String>
     
     <!-- ShowProgress -->
     <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Konfiguriere Netzwerkinterface</system:String>

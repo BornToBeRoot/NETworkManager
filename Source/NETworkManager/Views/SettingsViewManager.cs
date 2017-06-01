@@ -16,9 +16,9 @@ namespace NETworkManager.Views
                     new SettingsViewInfo(Name.General, new PackIconModern() { Kind = PackIconModernKind.Box }),
                     new SettingsViewInfo(Name.Appearance, new PackIconMaterial() { Kind = PackIconMaterialKind.AutoFix }),
                     new SettingsViewInfo(Name.Language, new PackIconMaterial() { Kind = PackIconMaterialKind.Flag}),
-                    new SettingsViewInfo(Name.HotKeys, new PackIconMaterial() { Kind = PackIconMaterialKind.KeyboardVariant }),
-                    new SettingsViewInfo(Name.Autostart, new PackIconMaterial() { Kind = PackIconMaterialKind.TrendingUp }),
-                    new SettingsViewInfo(Name.Settings, new PackIconEntypo() { Kind = PackIconEntypoKind.Save }),
+                    new SettingsViewInfo(Name.HotKeys, new PackIconOcticons() { Kind = PackIconOcticonsKind.Keyboard }),
+                    new SettingsViewInfo(Name.Autostart, new PackIconMaterial() { Kind = PackIconMaterialKind.Power }),
+                    new SettingsViewInfo(Name.Settings, new PackIconOcticons() { Kind = PackIconOcticonsKind.Settings }),
                     new SettingsViewInfo(Name.ImportExport, new PackIconMaterial() { Kind = PackIconMaterialKind.Import}),
                     new SettingsViewInfo(Name.Developer,  new PackIconOcticons() { Kind = PackIconOcticonsKind.Beaker })
                 };
