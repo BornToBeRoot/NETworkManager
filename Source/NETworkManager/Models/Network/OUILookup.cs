@@ -4,55 +4,54 @@ using System.Threading.Tasks;
 using System.IO;
 using NETworkManager.Models.Settings;
 using System.Text.RegularExpressions;
-using System.Net.NetworkInformation;
 
 namespace NETworkManager.Models.Network
 {
     public static class OUILookup
     {
         #region Variables
-        private static string OUIPath = Path.Combine(ConfigurationManager.Current.StartupPath, "Resources", "oui.txt");
+        private static string OUIFilePath = Path.Combine(ConfigurationManager.Current.StartupPath, "Resources", "oui.txt");
 
-        public static Dictionary<string, string> OUIDict = new Dictionary<string, string>();
+        public static Lookup<string, OUIInfo> OUIs;
 
         #endregion
 
         #region Methods
         static OUILookup()
         {
+            List<OUIInfo> ouiList = new List<OUIInfo>();
+
             // Load list from resource folder (.txt-file)
-            foreach (string line in File.ReadAllLines(OUIPath))
-            {                
+            foreach (string line in File.ReadAllLines(OUIFilePath))
+            {
+                if (string.IsNullOrEmpty(line))
+                    continue;
+
                 string[] ouiData = line.Split('|');
 
-                if (!string.IsNullOrEmpty(ouiData[0]) && !OUIDict.Keys.Contains(ouiData[0]))
-                    OUIDict.Add(ouiData[0], ouiData[1]);
+                ouiList.Add(new OUIInfo(ouiData[0], ouiData[1]));
             }
+
+            OUIs = (Lookup<string, OUIInfo>)ouiList.ToLookup(x => x.MACAddress);
         }
 
-        public static Task<OUIInfo> LookupAsync(string macAddressOrFirst3Bytes)
+        public static Task<List<OUIInfo>> LookupAsync(string macAddressOrFirst3Bytes)
         {
             return Task.Run(() => Lookup(macAddressOrFirst3Bytes));
         }
 
-        public static OUIInfo Lookup(string macAddressOrFirst3Bytes)
+        public static List<OUIInfo> Lookup(string macAddressOrFirst3Bytes)
         {
-            string ouiKey = Regex.Replace(macAddressOrFirst3Bytes, "-|:", "").Substring(0,6);
+            List<OUIInfo> list = new List<OUIInfo>();
 
-            string vendor = string.Empty;
-            OUIDict.TryGetValue(ouiKey, out vendor);
+            string ouiKey = Regex.Replace(macAddressOrFirst3Bytes, "-|:", "").Substring(0, 6);
 
-            return new OUIInfo(ouiKey, vendor);
-        }
+            foreach (OUIInfo info in OUIs[ouiKey])
+            {
+                list.Add(info);
+            }
 
-        public static Task<OUIInfo> LookupAsync(PhysicalAddress macAddress)
-        {
-            return Task.Run(() => Lookup(macAddress));
-        }
-
-        public static OUIInfo Lookup(PhysicalAddress macAddress)
-        {
-            return Lookup(macAddress.ToString());
+            return list;
         }
         #endregion
     }

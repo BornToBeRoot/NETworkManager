@@ -55,7 +55,11 @@
     <system:String x:Key="String_Header_AreYouSure">Are you sure?</system:String>
     <system:String x:Key="String_Header_ValidationFailed">Validation failed!</system:String>
     <system:String x:Key="String_Header_Success">Success!</system:String>
-    <system:String x:Key="String_Header_OUILookup">OUI Lookup</system:String>
+    <system:String x:Key="String_Header_OUILookup">OUI-Lookup</system:String>
+    <system:String x:Key="String_Header_PortScanner">Port Scanner</system:String>
+    <system:String x:Key="String_Header_PortRange">Port-Range</system:String>
+    <system:String x:Key="String_Header_PortLookup">Port-Lookup</system:String>
+    <system:String x:Key="String_Header_Port">Port</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -181,6 +185,8 @@
     <system:String x:Key="String_Vendor">Vendor</system:String>
     <system:String x:Key="String_MagicPacketSent">Magic Packet sent.</system:String>
     <system:String x:Key="String_AllMagicPacketSent">All Magic Packet sent.</system:String>
+    <system:String x:Key="String_Protocol">Protocol</system:String>
+    <system:String x:Key="String_Service">Service</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
@@ -232,8 +238,9 @@
     <system:String x:Key="String_Watermark_HostnameOrIPAddress">Hostname or IP-Address...</system:String>
     <system:String x:Key="String_Watermark_EampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.178.150</system:String>
     <system:String x:Key="String_Watermark_LocationOfTheImport">Location of the import file...</system:String>
-    <system:String x:Key="String_Watermark_MACAddressOrPart">MAC-Address like 01:23:45:67:89:AB or first 3 bytes 01-23-45... Separate multiple entries with ";"</system:String>
-
+    <system:String x:Key="String_Watermark_ExampleMACAddressesOrParts">01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5</system:String>
+    <system:String x:Key="String_Watermark_EamplePortScanRange">22; 80; 443; 500 - 999; 8080</system:String>
+    
     <!-- ShowProgress -->
     <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Configure Network Interface</system:String>
     <system:String x:Key="String_Progress_SetStaticIPAddress">Set static IP-Address and gateway...</system:String>
@@ -261,7 +268,8 @@
     <system:String x:Key="String_ValidateError_EnterValidIPScanRange">Enter a valid ip range!</system:String>
     <system:String x:Key="String_ValidateError_FileDoesNotExist">File does not exists!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidMACAddressOrFirst3Bytes">Enter a valid MAC address or the first 6 characters of a MAC address!</system:String>
-
+    <system:String x:Key="String_ValidationError_EnterValidPortOrPortRange">Enter a valid port and/or port range!</system:String>
+    
     <!-- ApplicationView.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>
     <system:String x:Key="String_ApplicationName_NetworkInterface">Network Interface</system:String>
@@ -271,7 +279,7 @@
     <system:String x:Key="String_ApplicationName_Ping">Ping</system:String>
     <system:String x:Key="String_ApplicationName_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_ApplicationName_DNSLookup">DNS Lookup</system:String>
-    <system:String x:Key="String_ApplicationName_OUILookup">OUI Lookup</system:String>
+    <system:String x:Key="String_ApplicationName_Lookup">Lookup</system:String>
     
     <!-- SettingsView.Name -->
     <system:String x:Key="String_SettingsName_General">General</system:String>

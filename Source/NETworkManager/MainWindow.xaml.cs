@@ -20,6 +20,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Collections.Generic;
 using NETworkManager.Views;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager
 {
@@ -270,7 +271,7 @@ namespace NETworkManager
         PingView pingView;
         TracerouteView tracerouteView;
         DNSLookupView dnsLookupView;
-        OUILookupView ouiLookupView;
+        LookupView lookupView;
 
         private ApplicationView.Name? currentApplicationViewName = null;
 
@@ -329,11 +330,11 @@ namespace NETworkManager
 
                     contentControlApplication.Content = dnsLookupView;
                     break;
-                case ApplicationView.Name.OUILookup:
-                    if (ouiLookupView == null)
-                        ouiLookupView = new OUILookupView();
+                case ApplicationView.Name.Lookup:
+                    if (lookupView == null)
+                        lookupView = new LookupView();
 
-                    contentControlApplication.Content = ouiLookupView;
+                    contentControlApplication.Content = lookupView;
                     break;
             }
 

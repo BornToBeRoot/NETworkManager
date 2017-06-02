@@ -67,5 +67,24 @@ namespace NETworkManager.Views
             Icon = canvas;
             IsDev = isDev;
         }
+
+        public ApplicationViewInfo(ApplicationView.Name name, PackIconFontAwesome packIconFontAwesome)
+        {
+            Name = name;
+            TranslatedName = ApplicationView.TranslateName(name);
+            Canvas canvas = new Canvas();
+            canvas.Children.Add(packIconFontAwesome);
+            Icon = canvas;
+        }
+
+        public ApplicationViewInfo(ApplicationView.Name name, PackIconFontAwesome packIconFontAwesome, bool isDev)
+        {
+            Name = name;
+            TranslatedName = ApplicationView.TranslateName(name);
+            Canvas canvas = new Canvas();
+            canvas.Children.Add(packIconFontAwesome);
+            Icon = canvas;
+            IsDev = isDev;
+        }
     }
 }

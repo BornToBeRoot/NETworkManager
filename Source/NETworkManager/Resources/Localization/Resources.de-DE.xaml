@@ -33,7 +33,7 @@
     <system:String x:Key="String_Header_Result">Ergebnis</system:String>
     <system:String x:Key="String_Header_Ping">Ping</system:String>
     <system:String x:Key="String_Header_DNS">DNS</system:String>
-    <system:String x:Key="String_Header_ARP">ARP</system:String>    
+    <system:String x:Key="String_Header_ARP">ARP</system:String>
     <system:String x:Key="String_Header_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_Header_Developer">Experimental</system:String>
     <system:String x:Key="String_Header_DeveloperMode">Entwicklermodus</system:String>
@@ -54,8 +54,12 @@
     <system:String x:Key="String_Header_AreYouSure">Sind Sie sicher?</system:String>
     <system:String x:Key="String_Header_ValidationFailed">Validierung fehlgeschlagen!</system:String>
     <system:String x:Key="String_Header_Success">Erfolgreich!</system:String>
-    <system:String x:Key="String_Header_OUILookup">OUI Lookup</system:String>
-    
+    <system:String x:Key="String_Header_OUILookup">OUI-Lookup</system:String>
+    <system:String x:Key="String_Header_PortScanner">Port Scanner</system:String>
+    <system:String x:Key="String_Header_PortRange">Port-Bereich</system:String>
+    <system:String x:Key="String_Header_PortLookup">Port-Lookup</system:String>
+    <system:String x:Key="String_Header_Port">Port</system:String>
+
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_ShowWindow">Fenster anzeigen</system:String>
@@ -148,7 +152,7 @@
     <system:String x:Key="String_ReceivedLost">Empfangen / Verloren</system:String>
     <system:String x:Key="String_PacketLoss">Paketverlust</system:String>
     <system:String x:Key="String_Minimum">Minimum</system:String>
-    <system:String x:Key="String_Maximum">Maximum</system:String>  
+    <system:String x:Key="String_Maximum">Maximum</system:String>
     <system:String x:Key="String_AverageTime">Durchschnittliche Zeit</system:String>
     <system:String x:Key="String_Threads">Threads</system:String>
     <system:String x:Key="String_Attempts">Versuche</system:String>
@@ -179,7 +183,9 @@
     <system:String x:Key="String_Vendor">Hersteller</system:String>
     <system:String x:Key="String_MagicPacketSent">Magic Packet gesendet.</system:String>
     <system:String x:Key="String_AllMagicPacketSent">Alle Magic Packets gesendet.</system:String>
-    
+    <system:String x:Key="String_Protocol">Protokoll</system:String>
+    <system:String x:Key="String_Service">Dienst</system:String>
+
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
     <system:String x:Key="String_Button_Default">Standard</system:String>
@@ -205,7 +211,7 @@
     <system:String x:Key="String_Button_Reset">Zurücksetzen</system:String>
     <system:String x:Key="String_Button_Continue">Weiter</system:String>
     <system:String x:Key="String_Button_Validate">Validieren</system:String>
-    
+
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Ausschneiden</system:String>
     <system:String x:Key="String_ContextMenu_Copy">Kopieren</system:String>
@@ -218,7 +224,7 @@
     <!-- RadioButton -->
     <system:String x:Key="String_RadioButton_Everything">Alles</system:String>
     <system:String x:Key="String_RadioButton_Custom">Benutzerdefiniert:</system:String>
-    
+
     <!-- Watermark -->
     <system:String x:Key="String_Watermark_Search">Suche...</system:String>
     <system:String x:Key="String_Watermark_EnterLocation">Speicherort eingeben...</system:String>
@@ -231,8 +237,9 @@
     <system:String x:Key="String_Watermark_HostnameOrIPAddress">Hostname oder IP-Adresse...</system:String>
     <system:String x:Key="String_Watermark_EampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.178.150</system:String>
     <system:String x:Key="String_Watermark_LocationOfTheImport">Speicherort der Importdatei...</system:String>
-    <system:String x:Key="String_Watermark_MACAddressOrPart">MAC-Adress 00:11:22:33:44:55 oder die ersten 3 Bytes 00-11-22... Trennen Sie mehrere Einträge mit ";"</system:String>
-    
+    <system:String x:Key="String_Watermark_ExampleMACAddressesOrParts">01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5</system:String>
+    <system:String x:Key="String_Watermark_EamplePortScanRange">22; 80; 443; 500 - 999; 8080</system:String>
+
     <!-- ShowProgress -->
     <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Konfiguriere Netzwerkinterface</system:String>
     <system:String x:Key="String_Progress_SetStaticIPAddress">Setze statische IP-Adresse und Gateway...</system:String>
@@ -260,7 +267,8 @@
     <system:String x:Key="String_ValidateError_EnterValidIPScanRange">Geben Sie einen gültigen IP-Bereich ein!</system:String>
     <system:String x:Key="String_ValidateError_FileDoesNotExist">Datei existiert nicht!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidMACAddressOrFirst3Bytes">Geben Sie eine gültige MAC-Adresse oder die ersten 6-Zeichen einer MAC-Adresse ein!</system:String>
-    
+    <system:String x:Key="String_ValidationError_EnterValidPortOrPortRange">Geben Sie einen gültigen Port und/oder Port-Bereich ein!</system:String>
+
     <!-- ApplicationInfo.Name && ApplicationInfo.Description-->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>
     <system:String x:Key="String_ApplicationName_NetworkInterface">Netzwerkinterface</system:String>
@@ -270,8 +278,8 @@
     <system:String x:Key="String_ApplicationName_Ping">Ping</system:String>
     <system:String x:Key="String_ApplicationName_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_ApplicationName_DNSLookup">DNS Lookup</system:String>
-    <system:String x:Key="String_ApplicationName_OUILookup">OUI Lookup</system:String>
-    
+    <system:String x:Key="String_ApplicationName_Lookup">Nachschlagen</system:String>
+
     <!-- SettingsView.Name -->
     <system:String x:Key="String_SettingsName_General">Allgemein</system:String>
     <system:String x:Key="String_SettingsName_Appearance">Aussehen</system:String>
@@ -281,7 +289,7 @@
     <system:String x:Key="String_SettingsName_Settings">Einstellungen</system:String>
     <system:String x:Key="String_SettingsName_ImportExport">Import / Export</system:String>
     <system:String x:Key="String_SettingsName_Developer">Entwickler</system:String>
-    
+
     <!-- AppTheme.Name -->
     <system:String x:Key="String_AppTheme_BaseLight">Hell</system:String>
     <system:String x:Key="String_AppTheme_BaseDark">Dunkel</system:String>
