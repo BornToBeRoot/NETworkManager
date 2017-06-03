@@ -133,7 +133,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\OUILookupView.xaml">
+    <Page Include="Views\Applications\LookupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -230,6 +230,7 @@
     <Compile Include="Helpers\HistoryListHelper.cs" />
     <Compile Include="Helpers\HotKeysHelper.cs" />
     <Compile Include="Helpers\IPNetTableHelper.cs" />
+    <Compile Include="Helpers\PortRangeHelper.cs" />
     <Compile Include="Helpers\IPScanRangeHelper.cs" />
     <Compile Include="Helpers\IPv4AddressHelper.cs" />
     <Compile Include="Helpers\MACAddressHelper.cs" />
@@ -238,16 +239,19 @@
     <Compile Include="Helpers\SubnetHelper.cs" />
     <Compile Include="Helpers\SubnetmaskHelper.cs" />
     <Compile Include="Helpers\TimestampHelper.cs" />
+    <Compile Include="Models\Network\PortInfo.cs" />
     <Compile Include="Models\Network\OUIInfo.cs" />
+    <Compile Include="Models\Network\PortLookup.cs" />
     <Compile Include="Models\Network\OUILookup.cs" />
     <Compile Include="Models\Settings\ImportExportManager.cs" />
     <Compile Include="Models\Settings\ImportFileNotValidException.cs" />
     <Compile Include="Models\Settings\SettingsFileInfo.cs" />
     <Compile Include="Validators\FileExistsValidator.cs" />
+    <Compile Include="Validators\PortRangeValidator.cs" />
     <Compile Include="Validators\MACAddressAndMACAddressFirst3BytesRangeValidator.cs" />
-    <Compile Include="ViewModels\Applications\OUILookupViewModel.cs" />
-    <Compile Include="Views\Applications\OUILookupView.xaml.cs">
-      <DependentUpon>OUILookupView.xaml</DependentUpon>
+    <Compile Include="ViewModels\Applications\LookupViewModel.cs" />
+    <Compile Include="Views\Applications\LookupView.xaml.cs">
+      <DependentUpon>LookupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ApplicationViewManager.cs" />
     <Compile Include="Views\ApplicationViewInfo.cs" />
@@ -500,6 +504,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\oui.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ports.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

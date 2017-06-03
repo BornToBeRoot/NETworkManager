@@ -34,13 +34,13 @@
                         </Style>
                     </Popup.Style>
                     <StackPanel>
-                        <Border MaxWidth="300" Background="{DynamicResource WhiteColorBrush}" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" Padding="5">
+                        <Border MaxWidth="300" Background="{DynamicResource WhiteColorBrush}" BorderBrush="Red" BorderThickness="1" Padding="5">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Rectangle Grid.Column="0" Width="20" Height="20" Fill="{DynamicResource AccentColorBrush}">
+                                <Rectangle Grid.Column="0" Width="20" Height="20" Fill="Red">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform">
                                             <VisualBrush.Visual>
@@ -49,7 +49,7 @@
                                         </VisualBrush>
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{Binding Path=/ErrorContent}" Foreground="{DynamicResource AccentColorBrush}" FontSize="14" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Path=/ErrorContent}" Foreground="Red" FontSize="14" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,0,0,0"/>
                             </Grid>
                         </Border>
                     </StackPanel>

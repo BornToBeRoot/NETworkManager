@@ -4,11 +4,11 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views.Applications
 {
-    public partial class OUILookupView : UserControl
+    public partial class LookupView : UserControl
     {
-        OUILookupViewModel viewModel = new OUILookupViewModel(DialogCoordinator.Instance);
+        LookupViewModel viewModel = new LookupViewModel(DialogCoordinator.Instance);
 
-        public OUILookupView()
+        public LookupView()
         {
             InitializeComponent();
             DataContext = viewModel;
