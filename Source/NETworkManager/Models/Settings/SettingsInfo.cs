@@ -568,19 +568,34 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
-        #region 
-        private List<string> _ouiLookup_MACAddressHistory = new List<string>();
-        public List<string> OUILookup_MACAddressHistory
+        #region Lookup
+        private List<string> _lookup_MACAddressHistory = new List<string>();
+        public List<string> Lookup_MACAddressHistory
         {
-            get { return _ouiLookup_MACAddressHistory; }
+            get { return _lookup_MACAddressHistory; }
             set
             {
-                if (value == _ouiLookup_MACAddressHistory)
+                if (value == _lookup_MACAddressHistory)
                     return;
 
                 SettingsChanged = true;
 
-                _ouiLookup_MACAddressHistory = value;
+                _lookup_MACAddressHistory = value;
+            }
+        }
+
+        private List<string> _lookup_PortsHistory = new List<string>();
+        public List<string> Lookup_PortsHistory
+        {
+            get { return _lookup_PortsHistory; }
+            set
+            {
+                if (value == _lookup_PortsHistory)
+                    return;
+
+                SettingsChanged = true;
+
+                _lookup_PortsHistory = value;
             }
         }
         #endregion

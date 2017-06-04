@@ -43,7 +43,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (!_isLoading)
                 {
-                    SettingsManager.Current.OUILookup_MACAddressHistory = value;
+                    SettingsManager.Current.Lookup_MACAddressHistory = value;
                 }
 
                 _macAddressHistory = value;
@@ -92,6 +92,25 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
+        private List<string> _portsHistory = new List<string>();
+        public List<string> PortsHistory
+        {
+            get { return _portsHistory; }
+            set
+            {
+                if (value == _portsHistory)
+                    return;
+
+                if (!_isLoading)
+                {
+                    SettingsManager.Current.Lookup_PortsHistory = value;
+                }
+
+                _portsHistory = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _isPortLookupRunning;
         public bool IsPortLookupRunning
         {
@@ -105,7 +124,6 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
-
 
         private ObservableCollection<PortInfo> _portLookupResult = new ObservableCollection<PortInfo>();
         public ObservableCollection<PortInfo> PortLookupResult
@@ -138,8 +156,11 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LoadSettings()
         {
-            if (SettingsManager.Current.Traceroute_HostnameOrIPAddressHistory != null)
-                MACAddressHistory = new List<string>(SettingsManager.Current.OUILookup_MACAddressHistory);
+            if (SettingsManager.Current.Lookup_MACAddressHistory != null)
+                MACAddressHistory = new List<string>(SettingsManager.Current.Lookup_MACAddressHistory);
+
+            if (SettingsManager.Current.Lookup_PortsHistory != null)
+                PortsHistory = new List<string>(SettingsManager.Current.Lookup_PortsHistory);
         }
         #endregion
 
@@ -189,7 +210,9 @@ namespace NETworkManager.ViewModels.Applications
             {
                 PortLookupResult.Add(info);
             }
-            
+
+            PortsHistory = new List<string>(HistoryListHelper.Modify(PortsHistory, Ports, 5));
+
             IsPortLookupRunning = false;
         }
         #endregion
