@@ -134,7 +134,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <ComboBox Grid.Column="0" x:Name="txtPorts" ItemsSource="{Binding MACAddressHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EamplePortScanRange}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsPortLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                    <ComboBox Grid.Column="0" x:Name="txtPorts" ItemsSource="{Binding PortsHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EamplePortScanRange}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsPortLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                         <ComboBox.InputBindings>
                             <KeyBinding Command="{Binding PortLookupCommand}" Key="Return" />
                         </ComboBox.InputBindings>
