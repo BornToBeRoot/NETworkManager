@@ -600,6 +600,53 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
+        #region PortScanner
+        private List<string> _portScanner_PortsHistory = new List<string>();
+        public List<string> PortScanner_PortsHistory
+        {
+            get { return _portScanner_PortsHistory; }
+            set
+            {
+                if (value == _portScanner_PortsHistory)
+                    return;
+
+                SettingsChanged = true;
+
+                _portScanner_PortsHistory = value;
+            }
+        }
+
+        private int _portScanner_ConcurrentThreads = 50;
+        public int PortScanner_ConcurrentThreads
+        {
+            get { return _portScanner_ConcurrentThreads; }
+            set
+            {
+                if (value == _portScanner_ConcurrentThreads)
+                    return;
+
+                SettingsChanged = true;
+
+                _portScanner_ConcurrentThreads = value;
+            }
+        }
+
+        private int _portScanner_Timeout = 4000;
+        public int PortScanner_Timeout
+        {
+            get { return _portScanner_Timeout; }
+            set
+            {
+                if (value == _portScanner_Timeout)
+                    return;
+
+                SettingsChanged = true;
+
+                _portScanner_Timeout = value;
+            }
+        }
+        #endregion
+
         public SettingsInfo()
         {
 
