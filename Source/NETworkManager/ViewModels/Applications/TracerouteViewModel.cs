@@ -185,8 +185,8 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private ObservableCollection<TracerouteHopInfo> _traceResult = new ObservableCollection<TracerouteHopInfo>();
-        public ObservableCollection<TracerouteHopInfo> TraceResult
+        private ObservableCollection<HopInfo> _traceResult = new ObservableCollection<HopInfo>();
+        public ObservableCollection<HopInfo> TraceResult
         {
             get { return _traceResult; }
             set
@@ -331,9 +331,9 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Events
-        private void Traceroute_HopReceived(object sender, TracerouteHopReceivedArgs e)
+        private void Traceroute_HopReceived(object sender, HopReceivedArgs e)
         {
-            TracerouteHopInfo tracerouteInfo = TracerouteHopInfo.Parse(e);
+            HopInfo tracerouteInfo = HopInfo.Parse(e);
 
             Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
             {
@@ -341,7 +341,7 @@ namespace NETworkManager.ViewModels.Applications
             }));
         }
 
-        private async void Traceroute_MaximumHopsReached(object sender, TracerouteMaximumHopsReachedArgs e)
+        private async void Traceroute_MaximumHopsReached(object sender, MaximumHopsReachedArgs e)
         {
             IsTraceRunning = false;
           

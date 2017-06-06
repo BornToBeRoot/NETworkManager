@@ -739,7 +739,7 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Events
-        private void NetworkInterface_ConfigureProgressChanged(object sender, IPScannerProgressChangedArgs e)
+        private void NetworkInterface_ConfigureProgressChanged(object sender, ProgressChangedArgs e)
         {
             switch (e.Value)
             {

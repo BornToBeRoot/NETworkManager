@@ -2,19 +2,19 @@
 
 namespace NETworkManager.Models.Network
 {
-    public class IPScannerHostFoundArgs : System.EventArgs
+    public class PortScannedArgs : System.EventArgs
     {
         public PingInfo PingInfo { get; set; }
         public string Hostname { get; set; }
         public PhysicalAddress MACAddress { get; set; }
         public string Vendor { get; set; }
 
-        public IPScannerHostFoundArgs()
+        public PortScannedArgs()
         {
 
         }
 
-        public IPScannerHostFoundArgs(PingInfo pingInfo, string hostname, PhysicalAddress macAddress, string vendor)
+        public PortScannedArgs(PingInfo pingInfo, string hostname, PhysicalAddress macAddress, string vendor)
         {
             PingInfo = pingInfo;
             Hostname = hostname;

@@ -183,8 +183,8 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private ObservableCollection<IPScannerHostInfo> _ipScanResult = new ObservableCollection<IPScannerHostInfo>();
-        public ObservableCollection<IPScannerHostInfo> IPScanResult
+        private ObservableCollection<HostInfo> _ipScanResult = new ObservableCollection<HostInfo>();
+        public ObservableCollection<HostInfo> IPScanResult
         {
             get { return _ipScanResult; }
             set
@@ -275,9 +275,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             get { return new RelayCommand(p => ScanAction()); }
         }
-        #endregion
 
-        #region Methods
         private void ScanAction()
         {
             if (IsScanRunning)
@@ -285,7 +283,9 @@ namespace NETworkManager.ViewModels.Applications
             else
                 StartScan();
         }
+        #endregion
 
+        #region Methods
         private async void StartScan()
         {
             IsScanRunning = true;
@@ -344,9 +344,9 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Events
-        private void IpScanner_HostFound(object sender, IPScannerHostFoundArgs e)
+        private void IpScanner_HostFound(object sender, HostFoundArgs e)
         {
-            IPScannerHostInfo ipScannerInfo = IPScannerHostInfo.Parse(e);
+            HostInfo ipScannerInfo = HostInfo.Parse(e);
 
             Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
             {
@@ -359,7 +359,7 @@ namespace NETworkManager.ViewModels.Applications
             IsScanRunning = false;
         }
 
-        private void IpScanner_ProgressChanged(object sender, IPScannerProgressChangedArgs e)
+        private void IpScanner_ProgressChanged(object sender, ProgressChangedArgs e)
         {
             ProgressBarValue = e.Value;
         }

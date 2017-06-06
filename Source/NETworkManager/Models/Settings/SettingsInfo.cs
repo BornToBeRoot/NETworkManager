@@ -601,6 +601,21 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region PortScanner
+        private List<string> _portScanner_HostOrIPRangeHistory = new List<string>();
+        public List<string> PortScanner_HostOrIPRangeHistory
+        {
+            get { return _portScanner_HostOrIPRangeHistory; }
+            set
+            {
+                if (value == _portScanner_HostOrIPRangeHistory)
+                    return;
+
+                SettingsChanged = true;
+
+                _portScanner_HostOrIPRangeHistory = value;
+            }
+        }
+
         private List<string> _portScanner_PortsHistory = new List<string>();
         public List<string> PortScanner_PortsHistory
         {

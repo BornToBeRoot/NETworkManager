@@ -7,6 +7,7 @@ using NETworkManager.Models.Settings;
 using System.Collections.Generic;
 using NETworkManager.Models.Network;
 using NETworkManager.Helpers;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -17,6 +18,34 @@ namespace NETworkManager.ViewModels.Applications
         MetroDialogSettings dialogSettings = new MetroDialogSettings();
 
         private bool _isLoading = true;
+
+        private string _hostsOrIPRange;
+        public string HostsOrIPRange
+        {
+            get { return _hostsOrIPRange; }
+            set
+            {
+                if (value == _hostsOrIPRange)
+                    return;
+
+                _hostsOrIPRange = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private List<string> _hostsOrIPRangeHistory = new List<string>();
+        public List<string> HostsOrIPRangeHistory
+        {
+            get { return _hostsOrIPRangeHistory; }
+            set
+            {
+                if (value == _hostsOrIPRangeHistory)
+                    return;
+
+                _hostsOrIPRangeHistory = value;
+                OnPropertyChanged();
+            }
+        }
 
         private string _ports;
         public string Ports
@@ -186,6 +215,9 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LoadSettings()
         {
+            if (SettingsManager.Current.PortScanner_HostOrIPRangeHistory != null)
+                HostsOrIPRangeHistory = new List<string>(SettingsManager.Current.PortScanner_HostOrIPRangeHistory);
+
             if (SettingsManager.Current.PortScanner_PortsHistory != null)
                 PortsHistory = new List<string>(SettingsManager.Current.PortScanner_PortsHistory);
 
@@ -199,18 +231,38 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region ICommands & Actions
-        public ICommand PortScanCommand
+        public ICommand ScanCommand
         {
-            get { return new RelayCommand(p => PortLookupAction()); }
+            get { return new RelayCommand(p => ScanAction()); }
         }
 
-        private async void PortLookupAction()
+        private void ScanAction()
+        {
+            if (IsScanRunning)
+                StopScan();
+            else
+                StartScan();
+        }
+        #endregion
+
+        #region Methods
+        private async void StartScan()
         {
             IsScanRunning = true;
+            PreparingScan = true;
+            await Task.Delay(2500);
 
-            PortScanResult.Clear();
+            PreparingScan = false;
 
-            int[] ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Ports);
+
+            ProgressBarMaximum = 50;
+            ProgressBarValue = 25;
+
+            await Task.Delay(2500);
+
+            // PortScanResult.Clear();
+
+            // int[] ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Ports);
 
             // Add some logic here...
             /*            foreach (PortInfo info in await PortLookup.LookupAsync(ports))
@@ -218,9 +270,16 @@ namespace NETworkManager.ViewModels.Applications
                             PortScanResult.Add(info);
                         }
             */
+
+            HostsOrIPRangeHistory = new List<string>(HistoryListHelper.Modify(HostsOrIPRangeHistory, HostsOrIPRange,5));
             PortsHistory = new List<string>(HistoryListHelper.Modify(PortsHistory, Ports, 5));
 
             IsScanRunning = false;
+        }
+
+        private async void StopScan()
+        {
+
         }
         #endregion
     }

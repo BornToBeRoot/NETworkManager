@@ -3,7 +3,7 @@ using System.Net.NetworkInformation;
 
 namespace NETworkManager.Models.Network
 {
-    public class TracerouteHopReceivedArgs : System.EventArgs
+    public class HopReceivedArgs : System.EventArgs
     {
         public int Hop { get; set; }
         public double Time { get; set; }
@@ -11,12 +11,12 @@ namespace NETworkManager.Models.Network
         public string Hostname { get; set; }
         public IPStatus Status { get; set; }
 
-        public TracerouteHopReceivedArgs()
+        public HopReceivedArgs()
         {
 
         }
 
-        public TracerouteHopReceivedArgs(int hop, double time, IPAddress ipAddress, string hostname, IPStatus status)
+        public HopReceivedArgs(int hop, double time, IPAddress ipAddress, string hostname, IPStatus status)
         {
             Hop = hop;
             Time = time;

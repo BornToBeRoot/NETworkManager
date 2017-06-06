@@ -239,7 +239,8 @@
     <system:String x:Key="String_Watermark_LocationOfTheImport">Speicherort der Importdatei...</system:String>
     <system:String x:Key="String_Watermark_ExampleMACAddressesOrParts">01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5</system:String>
     <system:String x:Key="String_Watermark_EamplePortScanRange">22; 80; 443; 500 - 999; 8080</system:String>
-
+    <system:String x:Key="String_Watermark_ExampleHostsOrIPRange">192.168.178.1-192.168.178.10; example.com; fritz.box</system:String>
+    
     <!-- ShowProgress -->
     <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Konfiguriere Netzwerkinterface</system:String>
     <system:String x:Key="String_Progress_SetStaticIPAddress">Setze statische IP-Adresse und Gateway...</system:String>

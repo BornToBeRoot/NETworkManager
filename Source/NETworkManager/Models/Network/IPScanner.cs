@@ -15,9 +15,9 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Events
-        public event EventHandler<IPScannerHostFoundArgs> HostFound;
+        public event EventHandler<HostFoundArgs> HostFound;
 
-        protected virtual void OnHostFound(IPScannerHostFoundArgs e)
+        protected virtual void OnHostFound(HostFoundArgs e)
         {
             HostFound?.Invoke(this, e);
         }
@@ -26,21 +26,21 @@ namespace NETworkManager.Models.Network
 
         protected virtual void OnScanComplete()
         {
-            ScanComplete?.Invoke(this, System.EventArgs.Empty);
+            ScanComplete?.Invoke(this, EventArgs.Empty);
         }
 
-        public event EventHandler<IPScannerProgressChangedArgs> ProgressChanged;
+        public event EventHandler<ProgressChangedArgs> ProgressChanged;
 
         protected virtual void OnProgressChanged()
         {
-            ProgressChanged?.Invoke(this, new IPScannerProgressChangedArgs(progressValue));
+            ProgressChanged?.Invoke(this, new ProgressChangedArgs(progressValue));
         }
 
         public event EventHandler UserHasCanceled;
 
         protected virtual void OnUserHasCanceled()
         {
-            UserHasCanceled?.Invoke(this, System.EventArgs.Empty);
+            UserHasCanceled?.Invoke(this, EventArgs.Empty);
         }
         #endregion
 
@@ -115,7 +115,7 @@ namespace NETworkManager.Models.Network
                                             catch { }
                                         }
 
-                                        OnHostFound(new IPScannerHostFoundArgs(pingInfo, hostname, macAddress, vendor));
+                                        OnHostFound(new HostFoundArgs(pingInfo, hostname, macAddress, vendor));
 
                                         break;
                                     }

@@ -12,8 +12,8 @@ namespace NETworkManager.Models.Network
     public class Traceroute
     {
         #region Events
-        public event EventHandler<TracerouteHopReceivedArgs> HopReceived;
-        protected virtual void OnHopReceived(TracerouteHopReceivedArgs e)
+        public event EventHandler<HopReceivedArgs> HopReceived;
+        protected virtual void OnHopReceived(HopReceivedArgs e)
         {
             HopReceived?.Invoke(this, e);
         }
@@ -24,8 +24,8 @@ namespace NETworkManager.Models.Network
             TraceComplete?.Invoke(this, System.EventArgs.Empty);
         }
 
-        public event EventHandler<TracerouteMaximumHopsReachedArgs> MaximumHopsReached;
-        protected virtual void OnMaximumHopsReached(TracerouteMaximumHopsReachedArgs e)
+        public event EventHandler<MaximumHopsReachedArgs> MaximumHopsReached;
+        protected virtual void OnMaximumHopsReached(MaximumHopsReachedArgs e)
         {
             MaximumHopsReached?.Invoke(this, e);
         }
@@ -68,7 +68,7 @@ namespace NETworkManager.Models.Network
                         }
                         catch (SocketException) { } // Couldn't resolve hostname
 
-                        OnHopReceived(new TracerouteHopReceivedArgs(hop, stopwatch.ElapsedMilliseconds, pingReply.Address, hostname, pingReply.Status));
+                        OnHopReceived(new HopReceivedArgs(hop, stopwatch.ElapsedMilliseconds, pingReply.Address, hostname, pingReply.Status));
 
                         if (pingReply.Address != null)
                         {
@@ -87,7 +87,7 @@ namespace NETworkManager.Models.Network
                     if (cancellationToken.IsCancellationRequested)
                         OnUserHasCanceled();
                     else if (hop == maximumHops)
-                        OnMaximumHopsReached(new TracerouteMaximumHopsReachedArgs(traceOptions.MaximumHops));
+                        OnMaximumHopsReached(new MaximumHopsReachedArgs(traceOptions.MaximumHops));
                 }
             }, cancellationToken);
         }

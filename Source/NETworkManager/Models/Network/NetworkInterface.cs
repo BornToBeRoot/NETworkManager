@@ -11,9 +11,9 @@ namespace NETworkManager.Models.Network
     public class NetworkInterface
     {
         #region Events
-        public event EventHandler<IPScannerProgressChangedArgs> ConfigureProgressChanged;
+        public event EventHandler<ProgressChangedArgs> ConfigureProgressChanged;
 
-        protected virtual void OnConfigureProgressChanged(IPScannerProgressChangedArgs e)
+        protected virtual void OnConfigureProgressChanged(ProgressChangedArgs e)
         {
             ConfigureProgressChanged?.Invoke(this, e);
         }
@@ -123,43 +123,43 @@ namespace NETworkManager.Models.Network
         {
             if (config.EnableStaticIPAddress)
             {
-                OnConfigureProgressChanged(new IPScannerProgressChangedArgs() { Value = 1 });
+                OnConfigureProgressChanged(new ProgressChangedArgs() { Value = 1 });
                 SetStaticIPAddress(config.Id, config.IPAddress, config.Subnetmask, config.Gateway);
 
                 if (config.EnableStaticDns)
                 {
-                    OnConfigureProgressChanged(new IPScannerProgressChangedArgs() { Value = 3 });
+                    OnConfigureProgressChanged(new ProgressChangedArgs() { Value = 3 });
                     SetStaticDNSServer(config.Id, config.PrimaryDnsServer, config.SecondaryDnsServer);
                 }
                 else
                 {
-                    OnConfigureProgressChanged(new IPScannerProgressChangedArgs() { Value = 4 });
+                    OnConfigureProgressChanged(new ProgressChangedArgs() { Value = 4 });
                     SetDynamicDNSServer(config.Id);
                 }
             }
             else
             {
-                OnConfigureProgressChanged(new IPScannerProgressChangedArgs() { Value = 2 });
+                OnConfigureProgressChanged(new ProgressChangedArgs() { Value = 2 });
                 SetDynamicIPAddress(config.Id);
 
                 if (config.EnableStaticDns)
                 {
-                    OnConfigureProgressChanged(new IPScannerProgressChangedArgs() { Value = 3 });
+                    OnConfigureProgressChanged(new ProgressChangedArgs() { Value = 3 });
                     SetStaticDNSServer(config.Id, config.PrimaryDnsServer, config.SecondaryDnsServer);
                 }
 
                 else
                 {
-                    OnConfigureProgressChanged(new IPScannerProgressChangedArgs() { Value = 4 });
+                    OnConfigureProgressChanged(new ProgressChangedArgs() { Value = 4 });
                     SetDynamicDNSServer(config.Id);
                 }
 
                 // Renew dhcp release
-                OnConfigureProgressChanged(new IPScannerProgressChangedArgs() { Value = 5 });
+                OnConfigureProgressChanged(new ProgressChangedArgs() { Value = 5 });
                 RenewDhcpLease(config.Id);
 
                 // Fix gateway
-                OnConfigureProgressChanged(new IPScannerProgressChangedArgs() { Value = 6 });
+                OnConfigureProgressChanged(new ProgressChangedArgs() { Value = 6 });
                 FixGatewayAfterDHCPEnabled(config.Id);
             }
         }
