@@ -188,7 +188,7 @@
                         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Configure}" />
                         <RadioButton x:Name="radioButtonConfigEnableDynamicIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding ConfigEnableDynamicIPAddress}" Content="{DynamicResource String_ObtainAnIPAddressAutomatically}" FontSize="14" Margin="0,0,0,10"/>
                         <RadioButton x:Name="radioButtonConfigEnableStaticIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding ConfigEnableStaticIPAddress}" Content="{DynamicResource String_UseTheFollowingIPAddress}" FontSize="14" Margin="0,0,0,10"/>
-                        <GroupBox Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigUseStaticIPv4Address}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="20,0,0,10">
+                        <GroupBox Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigEnableStaticIPAddress}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="20,0,0,10">
                             <Grid>
                                 <Grid.Resources>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource IndentedTextBlock}">
@@ -196,7 +196,7 @@
                                     </Style>
                                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ConfigUseStaticIPv4Address}" Value="False">
+                                            <DataTrigger Binding="{Binding ConfigEnableStaticIPAddress}" Value="False">
                                                 <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -263,9 +263,9 @@
                                 </TextBox>
                             </Grid>
                         </GroupBox>
-                        <RadioButton x:Name="radioButtonConfigEnableDynamicDns" GroupName="DNSServerConfig" Content="{DynamicResource String_ObtainDNSServerAddressAutomatically}" IsChecked="{Binding ConfigEnableDynamicDns}" FontSize="14"  Margin="0,0,0,10" IsEnabled="{Binding ConfigUseDynamicIPv4Address}" />
+                        <RadioButton x:Name="radioButtonConfigEnableDynamicDns" GroupName="DNSServerConfig" Content="{DynamicResource String_ObtainDNSServerAddressAutomatically}" IsChecked="{Binding ConfigEnableDynamicDns}" FontSize="14"  Margin="0,0,0,10" IsEnabled="{Binding ConfigEnableDynamicIPAddress}" />
                         <RadioButton x:Name="radioButtonConfigEnableStaticDns" GroupName="DNSServerConfig" Content="{DynamicResource String_UseTheFollowingDNSServerAddresses}" IsChecked="{Binding ConfigEnableStaticDns}" FontSize="14" Margin="0,0,0,10"/>
-                        <GroupBox Grid.Row="10" Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigUseStaticIPv4DNSServer}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="20,0,0,0">
+                        <GroupBox Grid.Row="10" Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigEnableStaticDns}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="20,0,0,0">
                             <Grid>
                                 <Grid.Resources>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource IndentedTextBlock}">
@@ -273,7 +273,7 @@
                                     </Style>
                                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" >
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ConfigUseStaticIPv4DNSServer}" Value="False">
+                                            <DataTrigger Binding="{Binding ConfigEnableStaticDns}" Value="False">
                                                 <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
                                             </DataTrigger>
                                         </Style.Triggers>
