@@ -132,29 +132,28 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.Resources>
-                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" >
-                                <Setter Property="VerticalAlignment" Value="Center" />
-                                <Setter Property="Margin" Value="0,0,10,5" />
-                            </Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
                                 <Setter Property="VerticalAlignment" Value="Center" />
                                 <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
-                                <Setter Property="Margin" Value="0,0,10,5" />
                             </Style>
                         </Grid.Resources>
                         <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_PacketsTransmitted}" />
                         <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding PingsTransmitted}" />
-                        <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource String_ReceivedLost}" Margin="0,0,10,7" VerticalAlignment="Bottom" />
-                        <TextBox Grid.Column="1" Grid.Row="1">
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_ReceivedLost}" VerticalAlignment="Bottom" />
+                        <TextBox Grid.Column="1" Grid.Row="2">
                             <TextBox.Text>
                                 <MultiBinding StringFormat="{}{0} / {1}">
                                     <Binding Path="PingsReceived" />
@@ -162,8 +161,8 @@
                                 </MultiBinding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_PacketLoss}" />
-                        <TextBox Grid.Column="1" Grid.Row="2">
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_PacketLoss}" />
+                        <TextBox Grid.Column="1" Grid.Row="4">
                             <TextBox.Text>
                                 <MultiBinding Converter="{StaticResource PercentConverter}" StringFormat="{}{0} %">
                                     <Binding Path="PingsTransmitted" />
@@ -171,12 +170,12 @@
                                 </MultiBinding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBlock Grid.Column="2" Grid.Row="0" Text="{DynamicResource String_AverageTime}" />
-                        <TextBox Grid.Column="3" Grid.Row="0" Text="{Binding AverageTime, StringFormat={}{0} ms}" />
-                        <TextBlock Grid.Column="2" Grid.Row="1" Text="{DynamicResource String_Minimum}" />
-                        <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding MinimumTime, StringFormat={}{0} ms}" />
-                        <TextBlock Grid.Column="2" Grid.Row="2" Text="{DynamicResource String_Maximum}" />
-                        <TextBox Grid.Column="3" Grid.Row="2" Text="{Binding MaximumTime, StringFormat={}{0} ms}" />
+                        <TextBlock Grid.Column="3" Grid.Row="0" Text="{DynamicResource String_AverageTime}" />
+                        <TextBox Grid.Column="4" Grid.Row="0" Text="{Binding AverageTime, StringFormat={}{0} ms}" />
+                        <TextBlock Grid.Column="3" Grid.Row="2" Text="{DynamicResource String_Minimum}" />
+                        <TextBox Grid.Column="4" Grid.Row="2" Text="{Binding MinimumTime, StringFormat={}{0} ms}" />
+                        <TextBlock Grid.Column="3" Grid.Row="4" Text="{DynamicResource String_Maximum}" />
+                        <TextBox Grid.Column="4" Grid.Row="4" Text="{Binding MaximumTime, StringFormat={}{0} ms}" />
                     </Grid>
                 </StackPanel>
             </Grid>
@@ -190,17 +189,17 @@
                     <TextBlock Text="{DynamicResource String_Header_Ping}" Style="{StaticResource HeaderTextBlock}" />
                     <TextBlock  Text="{DynamicResource String_Attempts}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
                     <mah:NumericUpDown Value="{Binding Attempts}" Maximum="10000" Minimum="0" Interval="1" Margin="0,0,0,10" />
-                    <TextBlock Text="{DynamicResource String_Timeout}" Style="{StaticResource IndentedTextBlock}" Margin="0,0,0,10" />
+                    <TextBlock Text="{DynamicResource String_Timeout}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
                     <mah:NumericUpDown Value="{Binding Timeout}" Maximum="10000" Minimum="100" Interval="100" Margin="0,0,0,10" />
-                    <TextBlock Text="{DynamicResource String_Buffer}" Style="{StaticResource IndentedTextBlock}" Margin="0,0,0,10" />
+                    <TextBlock Text="{DynamicResource String_Buffer}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
                     <mah:NumericUpDown Value="{Binding Buffer}" Minimum="1" Maximum="65535" Interval="1" Margin="0,0,0,10" />
-                    <TextBlock Text="{DynamicResource String_TTL}" Style="{StaticResource IndentedTextBlock}" Margin="0,0,0,10" />
+                    <TextBlock Text="{DynamicResource String_TTL}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
                     <mah:NumericUpDown Value="{Binding TTL}" Minimum="1" Maximum="255" Interval="1" Margin="0,0,0,10" />
                     <mah:ToggleSwitch IsChecked="{Binding DontFragment}" Header="{DynamicResource String_Header_DontFragment}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" Margin="0,0,0,10"/>
-                    <TextBlock Text="{DynamicResource String_TimeToWaitBetweenEachPing}" Style="{StaticResource IndentedTextBlock}" Margin="0,0,0,10" />
+                    <TextBlock Text="{DynamicResource String_TimeToWaitBetweenEachPing}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
                     <mah:NumericUpDown Value="{Binding WaitTime}" Maximum="10000" Minimum="100" Interval="100" Margin="0,0,0,20"/>
                     <TextBlock Text="{DynamicResource String_Header_DNS}" Style="{StaticResource HeaderTextBlock}" />
-                    <TextBlock Style="{StaticResource IndentedTextBlock}" Text="{DynamicResource String_PreferredProtocolWhenResolvingHostname}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,0,10" />
+                    <TextBlock Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_PreferredProtocolWhenResolvingHostname}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,0,10" />
                     <RadioButton Content="{DynamicResource String_IPv4}" FontSize="14" IsChecked="{Binding ResolveHostnamePreferIPv4}" Margin="0,0,0,10" />
                     <RadioButton Content="{DynamicResource String_IPv6}" FontSize="14" IsChecked="{Binding ResolveHostnamePreferIPv6}" />
                 </StackPanel>

@@ -1,29 +1,36 @@
-﻿namespace NETworkManager.Models.Network
+﻿using System.Net;
+
+namespace NETworkManager.Models.Network
 {
     public class PortInfo
     {
-        public int Number { get; set; }
-        public PortLookup.Protocol Protocol { get; set; }
-        public string Service { get; set; }
-        public string Description { get; set; }
+        public IPAddress IPAddress { get; set; }
+        public int Port { get; set; }
+        public PortLookupInfo LookupInfo { get; set; }
+        public PortStatus Status { get; set; }
 
         public PortInfo()
         {
 
         }
 
-        public PortInfo(int number, PortLookup.Protocol protocol)
+        public PortInfo(IPAddress ipAddress, int port, PortLookupInfo lookupInfo, PortStatus status)
         {
-            Number = number;
-            Protocol = protocol;
+            ipAddress = IPAddress;
+            Port = port;
+            LookupInfo = lookupInfo;
+            Status = status;
         }
 
-        public PortInfo(int number, PortLookup.Protocol protocol, string service, string description)
+        public static PortInfo Parse(PortScannedArgs e)
         {
-            Number = number;
-            Protocol = protocol;
-            Service = service;
-            Description = description;
-        }      
+            return new PortInfo(e.IPAddress, e.Port, e.LookupInfo, e.Status);
+        }
+
+        public enum PortStatus
+        {
+            Open,
+            Closed
+        }
     }
 }

@@ -63,7 +63,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.IPScanner_ConcurrentThreads = value;
+                    SettingsManager.Current.IPScanner_Threads = value;
 
                 _threads = value;
                 OnPropertyChanged();
@@ -264,7 +264,7 @@ namespace NETworkManager.ViewModels.Applications
             Timeout = SettingsManager.Current.IPScanner_Timeout;
             Buffer = SettingsManager.Current.IPScanner_Buffer;
             Attempts = SettingsManager.Current.IPScanner_Attempts;
-            Threads = SettingsManager.Current.IPScanner_ConcurrentThreads;
+            Threads = SettingsManager.Current.IPScanner_Threads;
             ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname;
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
         }
@@ -300,11 +300,11 @@ namespace NETworkManager.ViewModels.Applications
             try
             {
                 // Create a list of all ip addresses
-                ipAddresses = await IPScanRangeHelper.ConvertIPRangeToIPAddressArrayAsync(IPRange, cancellationTokenSource.Token); //IPScanRangeHelper.ConvertIPRangeToIPAddressArrayAsync(IPRange, cancellationTokenSource.Token);
+                ipAddresses = await IPScanRangeHelper.ConvertIPRangeToIPAddressArrayAsync(IPRange, cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
             {
-                UserHasCanceled(this, System.EventArgs.Empty);
+                UserHasCanceled(this, EventArgs.Empty);
                 return;
             }
 

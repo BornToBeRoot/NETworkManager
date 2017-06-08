@@ -12,6 +12,13 @@ namespace NETworkManager.Views.Applications
         {
             InitializeComponent();
             DataContext = viewModel;
+
+            Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+        }
+
+        private void Dispatcher_ShutdownStarted(object sender, System.EventArgs e)
+        {
+            viewModel.OnShutdown();
         }
     }
 }

@@ -124,15 +124,15 @@
                 </ScrollViewer.Resources>
                 <StackPanel >
                     <TextBlock Text="{DynamicResource String_Header_Traceroute}" Style="{StaticResource HeaderTextBlock}" />
-                    <TextBlock Text="{DynamicResource String_MaximumHopsRouter}" Style="{StaticResource IndentedTextBlock}"  Margin="0,0,0,10" />
+                    <TextBlock Text="{DynamicResource String_MaximumHopsRouter}" Style="{StaticResource CenterTextBlock}"  Margin="0,0,0,10" />
                     <mah:NumericUpDown Value="{Binding MaximumHops}" Maximum="100" Minimum="1" Interval="1" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Margin="0,0,0,20" />
                     <TextBlock Text="{DynamicResource String_Header_Ping}" Style="{StaticResource HeaderTextBlock}" />
-                    <TextBlock Text="{DynamicResource String_Timeout}" Style="{StaticResource IndentedTextBlock}" Margin="0,0,0,10" />
+                    <TextBlock Text="{DynamicResource String_Timeout}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
                     <mah:NumericUpDown Value="{Binding Timeout}" Maximum="10000" Minimum="100" Interval="100" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Margin="0,0,0,10" />
-                    <TextBlock Text="{DynamicResource String_Buffer}" Style="{StaticResource IndentedTextBlock}" Margin="0,0,0,10" />
+                    <TextBlock Text="{DynamicResource String_Buffer}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
                     <mah:NumericUpDown Value="{Binding Buffer}" Minimum="1" Maximum="65535" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Margin="0,0,0,20" />
                     <TextBlock Text="{DynamicResource String_Header_DNS}" Style="{StaticResource HeaderTextBlock}" />
-                    <TextBlock Style="{StaticResource IndentedTextBlock}" Text="{DynamicResource String_PreferredProtocolWhenResolvingHostname}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,0,10" />
+                    <TextBlock Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_PreferredProtocolWhenResolvingHostname}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,0,10" />
                     <RadioButton Content="{DynamicResource String_IPv4}" FontSize="14" IsChecked="{Binding ResolveHostnamePreferIPv4}" Margin="0,0,0,10" />
                     <RadioButton Content="{DynamicResource String_IPv6}" FontSize="14" IsChecked="{Binding ResolveHostnamePreferIPv6}" />
                 </StackPanel>

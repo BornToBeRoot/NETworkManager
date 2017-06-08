@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.IO;
 using NETworkManager.Models.Settings;
 using System;
-using System.Windows;
 
 namespace NETworkManager.Models.Network
 {
@@ -13,13 +12,13 @@ namespace NETworkManager.Models.Network
         #region Variables
         private static string PortsFilePath = Path.Combine(ConfigurationManager.Current.StartupPath, "Resources", "ports.txt");
 
-        public static Lookup<int, PortInfo> Ports;
+        public static Lookup<int, PortLookupInfo> Ports;
         #endregion
 
         #region Methods
         static PortLookup()
         {
-            List<PortInfo> portList = new List<PortInfo>();
+            List<PortLookupInfo> portList = new List<PortLookupInfo>();
 
             // Load list from resource folder (.txt-file)
             foreach (string line in File.ReadAllLines(PortsFilePath))
@@ -34,22 +33,22 @@ namespace NETworkManager.Models.Network
 
                 // string key = GetKey(port, protocol);
 
-                portList.Add(new PortInfo(port, protocol, portData[2], portData[3]));
+                portList.Add(new PortLookupInfo(port, protocol, portData[2], portData[3]));
             }
 
-            Ports = (Lookup<int, PortInfo>)portList.ToLookup(x => x.Number);
+            Ports = (Lookup<int, PortLookupInfo>)portList.ToLookup(x => x.Number);
         }
 
-        public static Task<List<PortInfo>> LookupAsync(int port)
+        public static Task<List<PortLookupInfo>> LookupAsync(int port)
         {
             return Task.Run(() => Lookup(port));
         }
 
-        public static List<PortInfo> Lookup(int port)
+        public static List<PortLookupInfo> Lookup(int port)
         {
-            List<PortInfo> list = new List<PortInfo>();
+            List<PortLookupInfo> list = new List<PortLookupInfo>();
 
-            foreach (PortInfo info in Ports[port])
+            foreach (PortLookupInfo info in Ports[port])
             {
                 list.Add(info);
             }
@@ -57,18 +56,18 @@ namespace NETworkManager.Models.Network
             return list;
         }
 
-        public static Task<List<PortInfo>> LookupAsync(int[] ports)
+        public static Task<List<PortLookupInfo>> LookupAsync(int[] ports)
         {
             return Task.Run(() => Lookup(ports));
         }
 
-        public static List<PortInfo> Lookup(int[] ports)
+        public static List<PortLookupInfo> Lookup(int[] ports)
         {
-            List<PortInfo> list = new List<PortInfo>();
+            List<PortLookupInfo> list = new List<PortLookupInfo>();
 
             foreach (int port in ports)
             {
-                foreach (PortInfo info in Ports[port])
+                foreach (PortLookupInfo info in Ports[port])
                 {
                     list.Add(info);
                 }

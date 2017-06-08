@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
+using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -45,35 +44,62 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Methods
-        public void ScanAsync(IPAddress[] ipAddresses, int[] ports, PortScannerOptions portScannerOptions, CancellationToken cancellationToken)
+        public void ScanAsync(IPAddress ipAddress, int[] ports, PortScannerOptions portScannerOptions, CancellationToken cancellationToken)
         {
             progressValue = 0;
 
             // Modify the ThreadPool for better performance
-            int workerThreads;
-            int completionPortThreads;
 
-            ThreadPool.GetMinThreads(out workerThreads, out completionPortThreads);
+            ThreadPool.GetMinThreads(out int workerThreads, out int completionPortThreads);
             ThreadPool.SetMinThreads(workerThreads + portScannerOptions.Threads, completionPortThreads + portScannerOptions.Threads);
 
             Task.Run(() =>
             {
                 try
                 {
-                    ParallelOptions parallelOptions = new ParallelOptions();
-                    parallelOptions.CancellationToken = cancellationToken;
-                    parallelOptions.MaxDegreeOfParallelism = portScannerOptions.Threads;
+                    ParallelOptions parallelOptions = new ParallelOptions()
+                    {
+                        CancellationToken = cancellationToken,
+                        MaxDegreeOfParallelism = portScannerOptions.Threads
+                    };
 
                     // foreach ip, Parallel.ForEach port...
-                    foreach(IPAddress ipAddress in ipAddresses)
+                    Parallel.ForEach(ports, parallelOptions, port =>
                     {
-                        Parallel.ForEach(ports, parallelOptions, port =>
+                        // Test if port is open
+                        using (TcpClient tcpClient = ipAddress.AddressFamily == AddressFamily.InterNetworkV6 ? new TcpClient(AddressFamily.InterNetworkV6) : new TcpClient(AddressFamily.InterNetwork))
                         {
-                            // Do some shit...
-                        });
-                    }
+                            IAsyncResult tcpClientConnection = tcpClient.BeginConnect(ipAddress, port, null, null);
+
+                            if (tcpClientConnection.AsyncWaitHandle.WaitOne(portScannerOptions.Timeout, false))
+                            {
+                                try
+                                {
+                                    tcpClient.EndConnect(tcpClientConnection);
+
+                                    OnPortScanned(new PortScannedArgs(ipAddress, port, PortLookup.Lookup(port).FirstOrDefault(x => x.Protocol == PortLookup.Protocol.tcp), PortInfo.PortStatus.Open));
+                                }
+                                catch
+                                {
+                                    if (portScannerOptions.ShowClosed)
+                                        OnPortScanned(new PortScannedArgs(ipAddress, port, PortLookup.Lookup(port).FirstOrDefault(x => x.Protocol == PortLookup.Protocol.tcp), PortInfo.PortStatus.Closed));
+                                }
+                            }
+                            else
+                            {
+                                if (portScannerOptions.ShowClosed)
+                                    OnPortScanned(new PortScannedArgs(ipAddress, port, PortLookup.Lookup(port).FirstOrDefault(x => x.Protocol == PortLookup.Protocol.tcp), PortInfo.PortStatus.Closed));
+                            }
+                        }
+
+                        // Increase the progress                        
+                        Interlocked.Increment(ref progressValue);
+                        OnProgressChanged();
+                    });
+
+                    OnScanComplete();
                 }
-                catch(OperationCanceledException) // If user has canceled
+                catch (OperationCanceledException) // If user has canceled
                 {
                     OnUserHasCanceled();
                 }

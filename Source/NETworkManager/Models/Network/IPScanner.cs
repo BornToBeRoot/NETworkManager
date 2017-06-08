@@ -110,7 +110,7 @@ namespace NETworkManager.Models.Network
                                                     macAddress = IPNetTableHelper.GetAllDevicesOnLAN().Where(p => p.Key.ToString() == ipAddress.ToString()).ToDictionary(p => p.Key, p => p.Value).First().Value;
 
                                                 // Vendor lookup
-                                                vendor = OUILookup.Lookup(macAddress.ToString()).First().Vendor;
+                                                vendor = OUILookup.Lookup(macAddress.ToString()).FirstOrDefault().Vendor;
                                             }
                                             catch { }
                                         }

@@ -1,25 +1,25 @@
-﻿using System.Net.NetworkInformation;
+﻿using System.Net;
 
 namespace NETworkManager.Models.Network
 {
     public class PortScannedArgs : System.EventArgs
     {
-        public PingInfo PingInfo { get; set; }
-        public string Hostname { get; set; }
-        public PhysicalAddress MACAddress { get; set; }
-        public string Vendor { get; set; }
+        public IPAddress IPAddress { get; set; }
+        public int Port { get; set; }
+        public PortLookupInfo LookupInfo { get; set; }
+        public PortInfo.PortStatus Status { get; set; }
 
         public PortScannedArgs()
         {
 
         }
 
-        public PortScannedArgs(PingInfo pingInfo, string hostname, PhysicalAddress macAddress, string vendor)
+        public PortScannedArgs(IPAddress ipAddress, int port, PortLookupInfo lookupInfo, PortInfo.PortStatus status)
         {
-            PingInfo = pingInfo;
-            Hostname = hostname;
-            MACAddress = macAddress;
-            Vendor = vendor;
+            IPAddress = ipAddress;
+            Port = port;
+            LookupInfo = lookupInfo;
+            Status = status;
         }
     }
 }

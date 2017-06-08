@@ -48,11 +48,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                {
                     SettingsManager.Current.Traceroute_HostnameOrIPAddressHistory = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
 
                 _hostnameOrIPAddressHistory = value;
                 OnPropertyChanged();
@@ -69,11 +65,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                {
                     SettingsManager.Current.Traceroute_MaximumHops = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
 
                 _maximumHops = value;
                 OnPropertyChanged();
@@ -90,11 +82,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                {
                     SettingsManager.Current.Traceroute_Timeout = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
 
                 _timeout = value;
                 OnPropertyChanged();
@@ -111,11 +99,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                {
                     SettingsManager.Current.Traceroute_Buffer = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
 
                 _buffer = value;
                 OnPropertyChanged();
@@ -132,11 +116,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                {
                     SettingsManager.Current.Traceroute_ResolveHostnamePreferIPv4 = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
 
                 _resolveHostnamePreferIPv4 = value;
                 OnPropertyChanged();
@@ -237,9 +217,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             get { return new RelayCommand(p => TraceAction()); }
         }
-        #endregion
 
-        #region Methods
         private void TraceAction()
         {
             if (IsTraceRunning)
@@ -247,7 +225,9 @@ namespace NETworkManager.ViewModels.Applications
             else
                 StartTrace();
         }
+        #endregion
 
+        #region Methods
         private void StopTrace()
         {
             CancelTrace = true;
@@ -344,7 +324,7 @@ namespace NETworkManager.ViewModels.Applications
         private async void Traceroute_MaximumHopsReached(object sender, MaximumHopsReachedArgs e)
         {
             IsTraceRunning = false;
-          
+
             await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_MaximumHopsReached"] as string, string.Format(Application.Current.Resources["String_MaximumHopsReachedMessage"] as string, e.Hops), MessageDialogStyle.Affirmative, dialogSettings);
         }
 
