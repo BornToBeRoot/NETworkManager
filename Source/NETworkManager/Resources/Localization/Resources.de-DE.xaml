@@ -55,11 +55,11 @@
     <system:String x:Key="String_Header_ValidationFailed">Validierung fehlgeschlagen!</system:String>
     <system:String x:Key="String_Header_Success">Erfolgreich!</system:String>
     <system:String x:Key="String_Header_OUILookup">OUI-Lookup</system:String>
-    <system:String x:Key="String_Header_PortScanner">Port Scanner</system:String>
-    <system:String x:Key="String_Header_PortRange">Port-Bereich</system:String>
+    <system:String x:Key="String_Header_PortScanner">Port-Scanner</system:String>
     <system:String x:Key="String_Header_PortLookup">Port-Lookup</system:String>
     <system:String x:Key="String_Header_Port">Port</system:String>
-
+    <system:String x:Key="String_Header_Socket">Socket</system:String>
+    
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_ShowWindow">Fenster anzeigen</system:String>
@@ -185,7 +185,10 @@
     <system:String x:Key="String_AllMagicPacketSent">Alle Magic Packets gesendet.</system:String>
     <system:String x:Key="String_Protocol">Protokoll</system:String>
     <system:String x:Key="String_Service">Dienst</system:String>
-
+    <system:String x:Key="String_ShowClosedPorts">Geschlossene Ports anzeigen</system:String>
+    <system:String x:Key="String_HostnameOrIPAddress">Hostname oder IP-Adresse</system:String>
+    <system:String x:Key="String_Ports">Ports</system:String>
+    
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
     <system:String x:Key="String_Button_Default">Standard</system:String>
@@ -239,7 +242,8 @@
     <system:String x:Key="String_Watermark_LocationOfTheImport">Speicherort der Importdatei...</system:String>
     <system:String x:Key="String_Watermark_ExampleMACAddressesOrParts">01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5</system:String>
     <system:String x:Key="String_Watermark_EamplePortScanRange">22; 80; 443; 500 - 999; 8080</system:String>
-
+    <system:String x:Key="String_Watermark_ExampleHostOrIPAddress">192.168.178.1 oder fritz.box</system:String>
+    
     <!-- ShowProgress -->
     <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Konfiguriere Netzwerkinterface</system:String>
     <system:String x:Key="String_Progress_SetStaticIPAddress">Setze statische IP-Adresse und Gateway...</system:String>
@@ -325,6 +329,10 @@
     <system:String x:Key="String_IPStatus_TimedOut">Zeitüberschreitung der Anforderung.</system:String>
     <system:String x:Key="String_IPStatus_TtlExpired">Die Gültigkeitsdauer wurde bei der Übertragung überschritten.</system:String>
 
+    <!-- PortStatus -->
+    <system:String x:Key="String_PortStatus_Closed">Geschlossen</system:String>
+    <system:String x:Key="String_PortStatus_Open">Offen</system:String>
+    
     <!-- Libaries -->
     <system:String x:Key="String_Libary_MahAppsMetroName">MahApps.Metro</system:String>
     <system:String x:Key="String_Libary_MahAppsMetroDescription">Ein Toolkit für die Erstellung von WPF-Anwendungen im Metro - / Modern UI Stil.</system:String>

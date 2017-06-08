@@ -276,18 +276,18 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _ipScanner_ConcurrentThreads = 256;
-        public int IPScanner_ConcurrentThreads
+        private int _ipScanner_Threads = 256;
+        public int IPScanner_Threads
         {
-            get { return _ipScanner_ConcurrentThreads; }
+            get { return _ipScanner_Threads; }
             set
             {
-                if (value == _ipScanner_ConcurrentThreads)
+                if (value == _ipScanner_Threads)
                     return;
 
                 SettingsChanged = true;
 
-                _ipScanner_ConcurrentThreads = value;
+                _ipScanner_Threads = value;
             }
         }
 
@@ -596,6 +596,98 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
 
                 _lookup_PortsHistory = value;
+            }
+        }
+        #endregion
+
+        #region PortScanner
+        private List<string> _portScanner_HostnameOrIPAddressHistory = new List<string>();
+        public List<string> PortScanner_HostnameOrIPAddressHistory
+        {
+            get { return _portScanner_HostnameOrIPAddressHistory; }
+            set
+            {
+                if (value == _portScanner_HostnameOrIPAddressHistory)
+                    return;
+
+                SettingsChanged = true;
+
+                _portScanner_HostnameOrIPAddressHistory = value;
+            }
+        }
+
+        private List<string> _portScanner_PortsHistory = new List<string>();
+        public List<string> PortScanner_PortsHistory
+        {
+            get { return _portScanner_PortsHistory; }
+            set
+            {
+                if (value == _portScanner_PortsHistory)
+                    return;
+
+                SettingsChanged = true;
+
+                _portScanner_PortsHistory = value;
+            }
+        }
+
+        private int _portScanner_Threads = 50;
+        public int PortScanner_Threads
+        {
+            get { return _portScanner_Threads; }
+            set
+            {
+                if (value == _portScanner_Threads)
+                    return;
+
+                SettingsChanged = true;
+
+                _portScanner_Threads = value;
+            }
+        }
+
+        private bool _portScanner_ShowClosed;
+        public bool PortScanner_ShowClosed
+        {
+            get { return _portScanner_ShowClosed; }
+            set
+            {
+                if (value == _portScanner_ShowClosed)
+                    return;
+
+                SettingsChanged = true;
+
+                _portScanner_ShowClosed = value;
+            }
+        }
+
+        private int _portScanner_Timeout = 4000;
+        public int PortScanner_Timeout
+        {
+            get { return _portScanner_Timeout; }
+            set
+            {
+                if (value == _portScanner_Timeout)
+                    return;
+
+                SettingsChanged = true;
+
+                _portScanner_Timeout = value;
+            }
+        }
+
+        private bool _portScanner_ResolveHostnamePreferIPv4 = true;
+        public bool PortScanner_ResolveHostnamePreferIPv4
+        {
+            get { return _portScanner_ResolveHostnamePreferIPv4; }
+            set
+            {
+                if (value == _portScanner_ResolveHostnamePreferIPv4)
+                    return;
+
+                SettingsChanged = true;
+
+                _portScanner_ResolveHostnamePreferIPv4 = value;
             }
         }
         #endregion

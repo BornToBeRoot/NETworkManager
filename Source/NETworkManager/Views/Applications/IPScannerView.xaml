@@ -148,11 +148,11 @@
                     </TextBlock>
                 </StackPanel>
                 <TextBlock Grid.Row="3" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
-                <Control:ScrollingDataGrid Grid.Row="4" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding IPScanResult}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True" >
-                    <Control:ScrollingDataGrid.Resources>
+                <DataGrid Grid.Row="4" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding IPScanResult}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True" >
+                    <DataGrid.Resources>
                         <WpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
-                    </Control:ScrollingDataGrid.Resources>
-                    <Control:ScrollingDataGrid.Columns>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
                         <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding PingInfo.IPAddress}" Width="150" />
                         <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy},Converter={StaticResource BooleanToVisibilityConverter}}" Width="150" />
                         <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy},Converter={StaticResource BooleanToVisibilityConverter}}" Width="150" />
@@ -168,8 +168,8 @@
                         </DataGridTextColumn>
                         <DataGridTextColumn Header="{DynamicResource String_TTL}" Binding="{Binding PingInfo.TTL, Converter={StaticResource IntToStringConverter}}" Width="80"/>
                         <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding PingInfo.Status, Converter={StaticResource IPStatusToStringConverter}}" Width="*" />
-                    </Control:ScrollingDataGrid.Columns>
-                </Control:ScrollingDataGrid>
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
         </TabItem>
         <TabItem Header="{DynamicResource String_Header_Settings}">

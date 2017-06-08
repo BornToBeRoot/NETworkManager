@@ -9,7 +9,7 @@
             <Grid>
                 <Polygon  x:Name="toolTipCorner"  Grid.ZIndex="2" Margin="0" Points="10,10 10,0 0,0" Fill="Red" HorizontalAlignment="Right" VerticalAlignment="Top" IsHitTestVisible="True" />
                 <AdornedElementPlaceholder x:Name="adorner"/>
-                <Popup PlacementTarget="{Binding ElementName=adorner}" PopupAnimation="Fade">
+                <Popup PlacementTarget="{Binding ElementName=adorner}" PopupAnimation="Fade" HorizontalOffset="5">
                     <Popup.Style>
                         <Style TargetType="{x:Type Popup}">
                             <Style.Triggers>
@@ -17,7 +17,7 @@
                                     <Setter Property="PlacementTarget" Value="{Binding ElementName=adorner}" />
                                     <Setter Property="Placement" Value="Right" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=toolTipCorner,Path=IsMouseOver}" Value="True" >
+                                <DataTrigger Binding="{Binding ElementName=toolTipCorner, Path=IsMouseOver}" Value="True" >
                                     <Setter Property="PlacementTarget" Value="{Binding ElementName=toolTipCorner}" />
                                     <Setter Property="Placement" Value="Mouse" />
                                 </DataTrigger>

@@ -6,19 +6,15 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Validator="clr-namespace:NETworkManager.Validators"
-        xmlns:Control="clr-namespace:NETworkManager.Controls"
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
         xmlns:WpfHelper="clr-namespace:NETworkManager.WpfHelper"
-        xmlns:local="clr-namespace:NETworkManager.Views.Applications"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
     <UserControl.Resources>
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:IntToStringConverter x:Key="IntToStringConverter" />
-        <Converter:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
-        <Converter:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
-        <Converter:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
+        <Converter:PortStatusToStringConverter x:Key="PortStatusToStringConverter" />
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{DynamicResource String_Header_PortScanner}">
@@ -30,28 +26,49 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_PortRange}" />
-                <Grid Grid.Row="1" Margin="0,0,0,20">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <ComboBox Grid.Column="0" x:Name="txtIPRange" ItemsSource="{Binding IPRangeHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EamplePortScanRange}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
-                        <ComboBox.Text>
-                            <Binding Path="IPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
-                                    <Validator:IPScanRangeValidator ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.Text>
-                    </ComboBox>
-                    <Button Grid.Column="1" Command="{Binding ScanCommand}" IsDefault="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsScanRunning}" HorizontalAlignment="Right" Margin="10,0,0,0">
+                <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Destination}" />
+                <StackPanel Grid.Row="1" Margin="0,0,0,20">
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_HostnameOrIPAddress}" />
+                        <ComboBox Grid.Column="1" Grid.Row="0" x:Name="cbHostnameOrIPAddress" ItemsSource="{Binding HostnameOrIPAddressHistory}" Height="{Binding ElementName=txtPorts,Path=ActualHeight}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostOrIPAddress}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}"  Style="{StaticResource HistoryComboBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                            <ComboBox.Text>
+                                <Binding Path="HostnameOrIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.Text>
+                        </ComboBox>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_Ports}" />
+                        <ComboBox Grid.Column="1" Grid.Row="2" x:Name="cbPorts" ItemsSource="{Binding PortsHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EamplePortScanRange}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                            <ComboBox.Text>
+                                <Binding Path="Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                                        <Validator:PortRangeValidator ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.Text>
+                        </ComboBox>
+                    </Grid>
+                    <Button Grid.Column="1" Grid.Row="1"  Command="{Binding ScanCommand}" IsDefault="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsScanRunning}" HorizontalAlignment="Right">
                         <Button.Resources>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                                 <Setter Property="IsEnabled" Value="True" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=txtIPRange}" Value="True" >
+                                    <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=cbHostnameOrIPAddress}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=cbPorts}" Value="True" >
                                         <Setter Property="IsEnabled" Value="False" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding CancelScan}" Value="True">
@@ -98,7 +115,7 @@
                             </Grid>
                         </Button.Content>
                     </Button>
-                </Grid>
+                </StackPanel>
                 <StackPanel Grid.Row="2" Margin="0,0,0,20">
                     <StackPanel.Style>
                         <Style TargetType="{x:Type StackPanel}">
@@ -147,28 +164,18 @@
                     </TextBlock>
                 </StackPanel>
                 <TextBlock Grid.Row="3" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
-                <Control:ScrollingDataGrid Grid.Row="4" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding IPScanResult}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True" >
-                    <Control:ScrollingDataGrid.Resources>
+                <DataGrid Grid.Row="4" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding PortScanResult}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True" >
+                    <DataGrid.Resources>
                         <WpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
-                    </Control:ScrollingDataGrid.Resources>
-                    <Control:ScrollingDataGrid.Columns>
-                        <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding PingInfo.IPAddress}" Width="150" />
-                        <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy},Converter={StaticResource BooleanToVisibilityConverter}}" Width="150" />
-                        <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy},Converter={StaticResource BooleanToVisibilityConverter}}" Width="150" />
-                        <DataGridTextColumn Header="{DynamicResource String_Vendor}" Binding="{Binding Vendor}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy},Converter={StaticResource BooleanToVisibilityConverter}}" Width="200" />
-                        <DataGridTextColumn Header="{DynamicResource String_Bytes}" Binding="{Binding PingInfo.Bytes, Converter={StaticResource IntToStringConverter}}" Width="80" />
-                        <DataGridTextColumn Header="{DynamicResource String_Time}" Width="100">
-                            <DataGridTextColumn.Binding>
-                                <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
-                                    <Binding Path="PingInfo.Status" />
-                                    <Binding Path="PingInfo.Time" />
-                                </MultiBinding>
-                            </DataGridTextColumn.Binding>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="{DynamicResource String_TTL}" Binding="{Binding PingInfo.TTL, Converter={StaticResource IntToStringConverter}}" Width="80"/>
-                        <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding PingInfo.Status, Converter={StaticResource IPStatusToStringConverter}}" Width="*" />
-                    </Control:ScrollingDataGrid.Columns>
-                </Control:ScrollingDataGrid>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="{DynamicResource String_Port}" Binding="{Binding Port}" Width="150" />
+                        <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding Status, Converter={StaticResource PortStatusToStringConverter}}" Width="150" />
+                        <DataGridTextColumn Header="{DynamicResource String_Protocol}" Binding="{Binding LookupInfo.Protocol}" Width="150" />
+                        <DataGridTextColumn Header="{DynamicResource String_Service}" Binding="{Binding LookupInfo.Service}" Width="150" />
+                        <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding LookupInfo.Description}" Width="*" />
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
         </TabItem>
         <TabItem Header="{DynamicResource String_Header_Settings}">
@@ -180,17 +187,15 @@
                     <TextBlock Text="{DynamicResource String_Header_Multithreading}" Style="{StaticResource HeaderTextBlock}" />
                     <TextBlock  Text="{DynamicResource String_Threads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
                     <mah:NumericUpDown Value="{Binding Threads}" Maximum="10000" Minimum="1" Interval="1" Margin="0,0,0,20" />
-                    <TextBlock Text="{DynamicResource String_Header_Ping}" Style="{StaticResource HeaderTextBlock}" />
+                    <TextBlock Text="{DynamicResource String_Header_PortScanner}" Style="{StaticResource HeaderTextBlock}" />
+                    <mah:ToggleSwitch Header="{DynamicResource String_ShowClosedPorts}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ShowClosed}" Margin="0,0,0,20"/>
+                    <TextBlock Text="{DynamicResource String_Header_Socket}" Style="{StaticResource HeaderTextBlock}" />
                     <TextBlock  Text="{DynamicResource String_Timeout}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
-                    <mah:NumericUpDown  Value="{Binding Timeout}" Maximum="10000" Minimum="100" Interval="100" Margin="0,0,0,10" />
-                    <TextBlock Text="{DynamicResource String_Buffer}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
-                    <mah:NumericUpDown  Value="{Binding Buffer}" Minimum="1" Maximum="65535" Interval="1" Margin="0,0,0,10" />
-                    <TextBlock  Text="{DynamicResource String_Attempts}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
-                    <mah:NumericUpDown Value="{Binding Attempts}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,20" />
+                    <mah:NumericUpDown  Value="{Binding Timeout}" Maximum="10000" Minimum="100" Interval="100" Margin="0,0,0,20" />
                     <TextBlock Text="{DynamicResource String_Header_DNS}" Style="{StaticResource HeaderTextBlock}" />
-                    <mah:ToggleSwitch Header="{DynamicResource String_ResolveHostname}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ResolveHostname}" Margin="0,0,0,20"/>
-                    <TextBlock Text="{DynamicResource String_Header_ARP}" Style="{StaticResource HeaderTextBlock}" />
-                    <mah:ToggleSwitch Header="{DynamicResource String_ReadTheMACAddressFromTheArpCache}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ResolveMACAddress}" />
+                    <TextBlock Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_PreferredProtocolWhenResolvingHostname}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,0,10" />
+                    <RadioButton Content="{DynamicResource String_IPv4}" FontSize="14" IsChecked="{Binding ResolveHostnamePreferIPv4}" Margin="0,0,0,10" />
+                    <RadioButton Content="{DynamicResource String_IPv6}" FontSize="14" IsChecked="{Binding ResolveHostnamePreferIPv6}" />
                 </StackPanel>
             </ScrollViewer>
         </TabItem>

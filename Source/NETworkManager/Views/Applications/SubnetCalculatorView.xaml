@@ -27,7 +27,7 @@
                             <RowDefinition Height="10" />
                             <RowDefinition Height="1*" />
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_IPv4Address}" Style="{StaticResource IndentedTextBlock}" />
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_IPv4Address}" Style="{StaticResource CenterTextBlock}" />
                         <TextBox x:Name="txtIPv4Address" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}" Style="{StaticResource DefaultTextBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                             <TextBox.Text>
                                 <Binding Path="IPv4Address" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -38,7 +38,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_SubnetmaskOrCIDR}" Style="{DynamicResource IndentedTextBlock}" />
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_SubnetmaskOrCIDR}" Style="{DynamicResource CenterTextBlock}" />
                         <ComboBox x:Name="comboBoxSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" ItemsSource="{x:Static Network:Subnetmask.List}" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnetmask}">
                             <ComboBox.Text>
                                 <Binding Path="SubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">

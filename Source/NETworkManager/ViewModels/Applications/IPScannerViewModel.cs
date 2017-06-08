@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using NETworkManager.Models.Network;
 using NETworkManager.Helpers;
 
-
 namespace NETworkManager.ViewModels.Applications
 {
     public class IPScannerViewModel : ViewModelBase
@@ -47,11 +46,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                {
                     SettingsManager.Current.IPScanner_IPRangeHistory = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
 
                 _ipRangeHistory = value;
                 OnPropertyChanged();
@@ -68,11 +63,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                {
-                    SettingsManager.Current.IPScanner_ConcurrentThreads = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
+                    SettingsManager.Current.IPScanner_Threads = value;
 
                 _threads = value;
                 OnPropertyChanged();
@@ -89,11 +80,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                {
                     SettingsManager.Current.IPScanner_Timeout = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
 
                 _timeout = value;
                 OnPropertyChanged();
@@ -110,11 +97,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                {
                     SettingsManager.Current.IPScanner_Buffer = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
 
                 _buffer = value;
                 OnPropertyChanged();
@@ -131,11 +114,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                {
                     SettingsManager.Current.IPScanner_Attempts = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
 
                 _Attempts = value;
                 OnPropertyChanged();
@@ -152,11 +131,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                {
                     SettingsManager.Current.IPScanner_ResolveHostname = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
 
                 _resolveHostname = value;
                 OnPropertyChanged();
@@ -173,11 +148,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                {
                     SettingsManager.Current.IPScanner_ResolveMACAddress = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
 
                 _resolveMACAddress = value;
                 OnPropertyChanged();
@@ -212,8 +183,8 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private ObservableCollection<IPScannerHostInfo> _ipScanResult = new ObservableCollection<IPScannerHostInfo>();
-        public ObservableCollection<IPScannerHostInfo> IPScanResult
+        private ObservableCollection<HostInfo> _ipScanResult = new ObservableCollection<HostInfo>();
+        public ObservableCollection<HostInfo> IPScanResult
         {
             get { return _ipScanResult; }
             set
@@ -293,7 +264,7 @@ namespace NETworkManager.ViewModels.Applications
             Timeout = SettingsManager.Current.IPScanner_Timeout;
             Buffer = SettingsManager.Current.IPScanner_Buffer;
             Attempts = SettingsManager.Current.IPScanner_Attempts;
-            Threads = SettingsManager.Current.IPScanner_ConcurrentThreads;
+            Threads = SettingsManager.Current.IPScanner_Threads;
             ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname;
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
         }
@@ -304,9 +275,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             get { return new RelayCommand(p => ScanAction()); }
         }
-        #endregion
 
-        #region Methods
         private void ScanAction()
         {
             if (IsScanRunning)
@@ -314,7 +283,9 @@ namespace NETworkManager.ViewModels.Applications
             else
                 StartScan();
         }
+        #endregion
 
+        #region Methods
         private async void StartScan()
         {
             IsScanRunning = true;
@@ -329,11 +300,11 @@ namespace NETworkManager.ViewModels.Applications
             try
             {
                 // Create a list of all ip addresses
-                ipAddresses = await IPScanRangeHelper.ConvertIPRangeToIPAddressArrayAsync(IPRange, cancellationTokenSource.Token); //IPScanRangeHelper.ConvertIPRangeToIPAddressArrayAsync(IPRange, cancellationTokenSource.Token);
+                ipAddresses = await IPScanRangeHelper.ConvertIPRangeToIPAddressArrayAsync(IPRange, cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
             {
-                UserHasCanceled(this, System.EventArgs.Empty);
+                UserHasCanceled(this, EventArgs.Empty);
                 return;
             }
 
@@ -362,7 +333,7 @@ namespace NETworkManager.ViewModels.Applications
             ipScanner.ProgressChanged += IpScanner_ProgressChanged;
             ipScanner.UserHasCanceled += UserHasCanceled;
 
-            ipScanner.ScanAsync(ipAddresses, ipScannerOptions, cancellationTokenSource.Token);            
+            ipScanner.ScanAsync(ipAddresses, ipScannerOptions, cancellationTokenSource.Token);
         }
 
         private void StopScan()
@@ -373,9 +344,9 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Events
-        private void IpScanner_HostFound(object sender, IPScannerHostFoundArgs e)
+        private void IpScanner_HostFound(object sender, HostFoundArgs e)
         {
-            IPScannerHostInfo ipScannerInfo = IPScannerHostInfo.Parse(e);
+            HostInfo ipScannerInfo = HostInfo.Parse(e);
 
             Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
             {
@@ -388,7 +359,7 @@ namespace NETworkManager.ViewModels.Applications
             IsScanRunning = false;
         }
 
-        private void IpScanner_ProgressChanged(object sender, IPScannerProgressChangedArgs e)
+        private void IpScanner_ProgressChanged(object sender, ProgressChangedArgs e)
         {
             ProgressBarValue = e.Value;
         }

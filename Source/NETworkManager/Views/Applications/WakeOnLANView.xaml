@@ -24,12 +24,12 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Width="450" HorizontalAlignment="Left" Margin="0,0,0,20">
-                    <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_WakeUp}" />
+                <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                    <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Destination}" />
                     <Grid Margin="0,0,0,10">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -38,7 +38,7 @@
                             <RowDefinition Height="10" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource IndentedTextBlock}" Text="{DynamicResource String_MACAddress}" />
+                        <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_MACAddress}" />
                         <ComboBox Grid.Column="1" Grid.Row="0" x:Name="cbMACAddress" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddress}" ItemsSource="{Binding WakeOnLANTemplates}" SelectedValuePath="MACAddress" FontSize="14" SelectedItem="{Binding SelectedWakeOnLANTemplate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource EditableComboBox}">
                             <ComboBox.InputBindings>
                                 <KeyBinding Command="{Binding WakeUpCommand}" Key="Return" />
@@ -67,7 +67,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Broadcast}" Style="{StaticResource IndentedTextBlock}" />
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Broadcast}" Style="{StaticResource CenterTextBlock}" />
                         <TextBox x:Name="txtBroadcast" Grid.Column="1" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleBroadcast}" Style="{StaticResource DefaultTextBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                             <TextBox.InputBindings>
                                 <KeyBinding Command="{Binding WakeUpCommand}" Key="Return" />
@@ -81,7 +81,7 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Port}" Style="{StaticResource IndentedTextBlock}" />
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Port}" Style="{StaticResource CenterTextBlock}" />
                         <TextBox x:Name="txtPort" Grid.Column="1" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort}" Style="{StaticResource DefaultTextBox}" HorizontalAlignment="Left" Width="65" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                             <TextBox.InputBindings>
                                 <KeyBinding Command="{Binding WakeUpCommand}" Key="Return" />

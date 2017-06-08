@@ -1,15 +1,15 @@
 ﻿namespace NETworkManager.Models.Network
 {
-    public class IPScannerProgressChangedArgs : System.EventArgs
+    public class ProgressChangedArgs : System.EventArgs
     {
         public int Value { get; set; }
 
-        public IPScannerProgressChangedArgs()
+        public ProgressChangedArgs()
         {
 
         }
 
-        public IPScannerProgressChangedArgs(int value)
+        public ProgressChangedArgs(int value)
         {            
             Value = value;
         }       

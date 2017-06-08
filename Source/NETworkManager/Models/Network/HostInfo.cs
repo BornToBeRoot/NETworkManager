@@ -2,19 +2,19 @@
 
 namespace NETworkManager.Models.Network
 {
-    public class IPScannerHostInfo
+    public class HostInfo
     {
         public PingInfo PingInfo { get; set; }
         public string Hostname { get; set; }
         public PhysicalAddress MACAddress { get; set; }
         public string Vendor { get; set; }
 
-        public IPScannerHostInfo()
+        public HostInfo()
         {
 
         }
 
-        public IPScannerHostInfo(PingInfo pingInfo, string hostname, PhysicalAddress macAddress, string vendor)
+        public HostInfo(PingInfo pingInfo, string hostname, PhysicalAddress macAddress, string vendor)
         {
             PingInfo = pingInfo;
             Hostname = hostname;
@@ -22,9 +22,9 @@ namespace NETworkManager.Models.Network
             Vendor = vendor;
         }
 
-        public static IPScannerHostInfo Parse(IPScannerHostFoundArgs e)
+        public static HostInfo Parse(HostFoundArgs e)
         {
-            return new IPScannerHostInfo(e.PingInfo, e.Hostname, e.MACAddress, e.Vendor);
+            return new HostInfo(e.PingInfo, e.Hostname, e.MACAddress, e.Vendor);
         }
     }
 }

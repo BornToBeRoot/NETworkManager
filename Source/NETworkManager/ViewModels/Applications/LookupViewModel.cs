@@ -125,8 +125,8 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private ObservableCollection<PortInfo> _portLookupResult = new ObservableCollection<PortInfo>();
-        public ObservableCollection<PortInfo> PortLookupResult
+        private ObservableCollection<PortLookupInfo> _portLookupResult = new ObservableCollection<PortLookupInfo>();
+        public ObservableCollection<PortLookupInfo> PortLookupResult
         {
             get { return _portLookupResult; }
             set
@@ -206,7 +206,7 @@ namespace NETworkManager.ViewModels.Applications
 
             int[] ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Ports);
 
-            foreach (PortInfo info in await PortLookup.LookupAsync(ports))
+            foreach (PortLookupInfo info in await PortLookup.LookupAsync(ports))
             {
                 PortLookupResult.Add(info);
             }
