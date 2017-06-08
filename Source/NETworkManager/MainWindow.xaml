@@ -47,47 +47,47 @@
     </Controls:MetroWindow.RightWindowCommands>
     <Controls:MetroWindow.Resources>
         <ContextMenu x:Key="ContextMenuNotifyIcon" MinWidth="200" Opened="ContextMenu_Opened" x:Shared="False">
-        <MenuItem Header="{DynamicResource String_Show}" Command="{Binding ShowWindowCommand}">
-            <MenuItem.Icon>
-                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                    <Rectangle.OpacityMask>
+            <MenuItem Header="{DynamicResource String_Show}" Command="{Binding ShowWindowCommand}">
+                <MenuItem.Icon>
+                    <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                        <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform">
                                 <VisualBrush.Visual>
                                     <IconPacks:PackIconMaterial Kind="OpenInNew" />
                                 </VisualBrush.Visual>
                             </VisualBrush>
                         </Rectangle.OpacityMask>
-                </Rectangle>
-            </MenuItem.Icon>
-        </MenuItem>
-        <MenuItem Header="{DynamicResource String_Settings}" Command="{Binding OpenSettingsCommand}">
-            <MenuItem.Icon>
-                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                    <Rectangle.OpacityMask>
+                    </Rectangle>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="{DynamicResource String_Settings}" Command="{Binding OpenSettingsCommand}">
+                <MenuItem.Icon>
+                    <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                        <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform">
                                 <VisualBrush.Visual>
                                     <IconPacks:PackIconOcticons Kind="Settings" />
                                 </VisualBrush.Visual>
                             </VisualBrush>
                         </Rectangle.OpacityMask>
-                </Rectangle>
-            </MenuItem.Icon>
-        </MenuItem>
-        <Separator />
-        <MenuItem Header="{DynamicResource String_Close}" Command="{Binding CloseApplicationCommand}">
-            <MenuItem.Icon>
-                <Rectangle Width="16" Height="16" Fill="{DynamicResource CleanWindowCloseButtonBackgroundBrush}">
-                    <Rectangle.OpacityMask>
+                    </Rectangle>
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator />
+            <MenuItem Header="{DynamicResource String_Close}" Command="{Binding CloseApplicationCommand}">
+                <MenuItem.Icon>
+                    <Rectangle Width="16" Height="16" Fill="{DynamicResource CleanWindowCloseButtonBackgroundBrush}">
+                        <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform">
                                 <VisualBrush.Visual>
                                     <IconPacks:PackIconMaterial Kind="WindowClose" />
                                 </VisualBrush.Visual>
                             </VisualBrush>
                         </Rectangle.OpacityMask>
-                </Rectangle>
-            </MenuItem.Icon>
-        </MenuItem>
-    </ContextMenu>
+                    </Rectangle>
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
         <Style x:Key="MetroTabItemHeader" BasedOn="{StaticResource MetroTabItem}" TargetType="{x:Type TabItem}">
             <Setter Property="mah:ControlsHelper.HeaderFontSize" Value="20" />
         </Style>
@@ -325,6 +325,15 @@
                                                         <DataTrigger Binding="{Binding Path=IsSelected,RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True" >
                                                             <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
                                                         </DataTrigger>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.OpenApplicationList}" Value="False" />
+                                                                <Condition Binding="{Binding Path=IsMouseOver,RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True" />
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter Property="ToolTip" Value="{Binding TranslatedName}" />
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
                                             </Rectangle.Style>
