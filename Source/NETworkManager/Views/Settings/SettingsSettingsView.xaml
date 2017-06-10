@@ -85,7 +85,7 @@
         </StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Portable}" />
         <StackPanel Margin="0,0,0,20">
-            <Controls:ToggleSwitch x:Name="toggleSwitchIsPortable" Header="{DynamicResource String_SaveSettingsInApplicationFolder}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding IsPortable}" IsEnabled="{Binding MovingFiles, Converter={StaticResource BooleanReverseConverter}}">
+            <Controls:ToggleSwitch x:Name="toggleSwitchIsPortable" Header="{DynamicResource String_SaveSettingsInApplicationFolder}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding IsPortable}" IsEnabled="{Binding MakingPortable, Converter={StaticResource BooleanReverseConverter}}">
                 <Controls:ToggleSwitch.Style>
                     <Style TargetType="{x:Type Controls:ToggleSwitch}" BasedOn="{StaticResource DefaultToggleSwitch}">
                         <Setter Property="IsEnabled" Value="False" />
