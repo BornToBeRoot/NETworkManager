@@ -88,15 +88,6 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Autostart.
-        /// </summary>
-        public static string StartParameter_Autostart {
-            get {
-                return ResourceManager.GetString("StartParameter_Autostart", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 7.
         /// </summary>
         public static string WakeOnLAN_DefaultPort {

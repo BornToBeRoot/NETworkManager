@@ -4,6 +4,9 @@ namespace NETworkManager.Models.Settings
 {
     public static class CommandLineManager
     {
+        public const string ParameterIdentifier = "--";
+        public const string ParameterAutostart = "Autostart";
+
         public static CommandLineInfo Current { get; set; }
 
         /// <summary>
@@ -15,20 +18,25 @@ namespace NETworkManager.Models.Settings
             Current = new CommandLineInfo();
 
             // Get the command line args
-            string[] args = Environment.GetCommandLineArgs();
+            string[] parameters = Environment.GetCommandLineArgs();
+
+            char[] trimChars = ParameterIdentifier.ToCharArray();
 
             // Detect start parameters
-            foreach (string arg in args)
+            foreach (string parameter in parameters)
             {
-                if (arg.StartsWith("--"))
+                if (parameter.StartsWith(ParameterIdentifier))
                 {
-                    string argument = arg.ToLower().TrimStart('-');
-
                     // Autostart
-                    if (string.Equals(argument, Properties.Resources.StartParameter_Autostart, StringComparison.OrdinalIgnoreCase))
+                    if (parameter.TrimStart(trimChars).Equals(ParameterAutostart, StringComparison.InvariantCultureIgnoreCase))
                         Current.Autostart = true;
                 }
             }
+        }
+
+        public static string GetCommandLineParameter(string parameter)
+        {
+            return string.Format("{0}{1}", ParameterIdentifier, parameter);
         }
     }
 }

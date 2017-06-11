@@ -10,7 +10,7 @@ namespace NETworkManager.Models.Network
     public static class PortLookup
     {
         #region Variables
-        private static string PortsFilePath = Path.Combine(ConfigurationManager.Current.StartupPath, "Resources", "ports.txt");
+        private static string PortsFilePath = Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "ports.txt");
 
         public static Lookup<int, PortLookupInfo> Ports;
         #endregion

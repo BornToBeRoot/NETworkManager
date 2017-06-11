@@ -20,7 +20,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Collections.Generic;
 using NETworkManager.Views;
-using NETworkManager.Models.Network;
 
 namespace NETworkManager
 {
@@ -621,7 +620,7 @@ namespace NETworkManager
 
         private void RestartApplication()
         {
-            Process.Start(ConfigurationManager.Current.ApplicationPath);
+            Process.Start(ConfigurationManager.Current.ApplicationFullName);
 
             _closeApplication = true;
             Close();

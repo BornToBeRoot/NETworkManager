@@ -10,10 +10,9 @@ namespace NETworkManager.Models.Network
     public static class OUILookup
     {
         #region Variables
-        private static string OUIFilePath = Path.Combine(ConfigurationManager.Current.StartupPath, "Resources", "oui.txt");
+        private static string OUIFilePath = Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "oui.txt");
 
         public static Lookup<string, OUIInfo> OUIs;
-
         #endregion
 
         #region Methods
