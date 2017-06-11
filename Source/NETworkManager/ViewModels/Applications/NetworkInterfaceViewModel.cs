@@ -71,11 +71,7 @@ namespace NETworkManager.ViewModels.Applications
                 if (value != null)
                 {
                     if (!_isLoading)
-                    {
                         SettingsManager.Current.NetworkInterface_SelectedInterfaceId = value.Id;
-
-                        //SettingsManager.Current.SettingsChanged = true;
-                    }
 
                     DetailsName = value.Name;
                     DetailsDescription = value.Description;
@@ -160,8 +156,8 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private string _detailsStatus;
-        public string DetailsStatus
+        private OperationalStatus _detailsStatus;
+        public OperationalStatus DetailsStatus
         {
             get { return _detailsStatus; }
             set

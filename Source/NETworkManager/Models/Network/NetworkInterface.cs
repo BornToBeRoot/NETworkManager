@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 
-
 namespace NETworkManager.Models.Network
 {
     public class NetworkInterface
@@ -19,7 +18,7 @@ namespace NETworkManager.Models.Network
         }
         #endregion
 
-        #region Public methods
+        #region Methods
         public static Task<List<NetworkInterfaceInfo>> GetNetworkInterfacesAsync()
         {
             return Task.Run(() => GetNetworkInterfaces());
@@ -94,7 +93,8 @@ namespace NETworkManager.Models.Network
                     Description = networkInterface.Description,
                     Type = networkInterface.NetworkInterfaceType.ToString(),
                     PhysicalAddress = networkInterface.GetPhysicalAddress(),
-                    Status = networkInterface.OperationalStatus.ToString(),
+                    Status = networkInterface.OperationalStatus,
+                    IsOperational = networkInterface.OperationalStatus == OperationalStatus.Up ? true : false,
                     Speed = networkInterface.Speed,
                     IPv4Address = listIPv4Address.ToArray(),
                     Subnetmask = listSubnetmask.ToArray(),
@@ -163,9 +163,6 @@ namespace NETworkManager.Models.Network
                 FixGatewayAfterDHCPEnabled(config.Id);
             }
         }
-        #endregion
-
-        #region Private methods
         private void SetStaticIPAddress(string id, string ipAddress, string subnetmask, string gateway)
         {
             foreach (ManagementObject adapter in new ManagementClass("Win32_NetworkAdapterConfiguration").GetInstances())

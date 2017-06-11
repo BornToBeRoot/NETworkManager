@@ -11,7 +11,8 @@ namespace NETworkManager.Models.Network
         public string Description { get; set; }
         public string Type { get; set; }
         public PhysicalAddress PhysicalAddress { get; set; }
-        public string Status { get; set; }
+        public OperationalStatus Status { get; set; }
+        public bool IsOperational { get; set; }
         public long Speed { get; set; }
         public IPAddress[] IPv4Address { get; set; }
         public IPAddress[] Subnetmask { get; set; }
@@ -31,7 +32,7 @@ namespace NETworkManager.Models.Network
                 
         }
 
-        public NetworkInterfaceInfo(string id, string name, string description, string type, PhysicalAddress physicalAddress, string status, long speed, IPAddress[] ipv4Address, IPAddress[] subnetmask, IPAddress[] ipv4Gateway, bool isDhcpEnabled, IPAddress[] dhcpServer, DateTime dhcpLeaseObtained, DateTime dhcpLeaseExpires, IPAddress[] ipv6AddressLinkLocal, IPAddress[] ipv6Address, IPAddress[] ipv6Gateway, string dnsSuffix, IPAddress[] dnsServer)
+        public NetworkInterfaceInfo(string id, string name, string description, string type, PhysicalAddress physicalAddress, OperationalStatus status, bool isOperational, long speed, IPAddress[] ipv4Address, IPAddress[] subnetmask, IPAddress[] ipv4Gateway, bool isDhcpEnabled, IPAddress[] dhcpServer, DateTime dhcpLeaseObtained, DateTime dhcpLeaseExpires, IPAddress[] ipv6AddressLinkLocal, IPAddress[] ipv6Address, IPAddress[] ipv6Gateway, string dnsSuffix, IPAddress[] dnsServer)
         {
             Id = id;
             Name = name;
@@ -39,6 +40,7 @@ namespace NETworkManager.Models.Network
             Type = type;
             PhysicalAddress = physicalAddress;
             Status = status;
+            IsOperational = isOperational;
             Speed = Speed;
             IPv4Address = ipv4Address;
             Subnetmask = subnetmask;

@@ -81,7 +81,7 @@
                     </Button.Style>
                 </Button>
             </StackPanel>
-            <Controls:MetroProgressBar IsIndeterminate="True" Margin="0,10,0,0" Visibility="{Binding MovingFiles, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <Controls:MetroProgressBar IsIndeterminate="True" Foreground="{DynamicResource AccentColorBrush}"  Visibility="{Binding MovingFiles, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,10,0,0"/>
         </StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Portable}" />
         <StackPanel Margin="0,0,0,20">
@@ -101,7 +101,7 @@
                     </Style>
                 </Controls:ToggleSwitch.Style>
             </Controls:ToggleSwitch>
-            <Controls:MetroProgressBar IsIndeterminate="True" Margin="0,10,0,0" Visibility="{Binding MakingPortable, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <Controls:MetroProgressBar IsIndeterminate="True" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding MakingPortable, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,10,0,0"/>
         </StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Reset}" />
         <TextBlock Style="{StaticResource DefaultTextBlock}" Text="{StaticResource String_SelectTheSettingsYouWantToReset}" Margin="0,0,0,10" />

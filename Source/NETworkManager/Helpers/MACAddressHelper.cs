@@ -37,7 +37,7 @@ namespace NETworkManager.Helpers
                 return macAddress.Replace("-", ":");
 
             if (!macAddress.Contains(":"))
-                return string.Join(":", Enumerable.Range(0, 6).Select(i => macAddress.Substring(i * 2, 2)));
+                return string.Join(":", Enumerable.Range(0, 6).Select(i =>macAddress.Substring(i * 2, 2)));
 
             return macAddress;
         }
