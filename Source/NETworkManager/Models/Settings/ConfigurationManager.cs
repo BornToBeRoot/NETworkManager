@@ -15,8 +15,9 @@ namespace NETworkManager.Models.Settings
             Current = new ConfigurationInfo()
             {
                 IsAdmin = (new WindowsPrincipal(WindowsIdentity.GetCurrent())).IsInRole(WindowsBuiltInRole.Administrator),
-                StartupPath = Path.GetDirectoryName(applicationLocation),
-                ApplicationPath = Path.GetFileName(applicationLocation)
+                ExecutionPath = Path.GetDirectoryName(applicationLocation),
+                ApplicationFullName = applicationLocation,
+                ApplicationName = Path.GetFileNameWithoutExtension(Path.GetFileName(applicationLocation))
             };
         }
     }
