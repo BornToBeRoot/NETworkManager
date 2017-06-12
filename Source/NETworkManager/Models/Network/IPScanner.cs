@@ -15,9 +15,9 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Events
-        public event EventHandler<HostFoundArgs> HostFound;
+        public event EventHandler<IPScannerHostFoundArgs> HostFound;
 
-        protected virtual void OnHostFound(HostFoundArgs e)
+        protected virtual void OnHostFound(IPScannerHostFoundArgs e)
         {
             HostFound?.Invoke(this, e);
         }
@@ -115,7 +115,7 @@ namespace NETworkManager.Models.Network
                                             catch { }
                                         }
 
-                                        OnHostFound(new HostFoundArgs(pingInfo, hostname, macAddress, vendor));
+                                        OnHostFound(new IPScannerHostFoundArgs(pingInfo, hostname, macAddress, vendor));
 
                                         break;
                                     }

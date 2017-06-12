@@ -103,11 +103,27 @@
                 <Control:ScrollingDataGrid Grid.Row="4" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding TraceResult}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False">
                     <Control:ScrollingDataGrid.Columns>
                         <DataGridTextColumn Header="{DynamicResource String_Hop}" Binding="{Binding Hop}" Width="100" />
-                        <DataGridTextColumn Header="{DynamicResource String_Time}" Width="100">
+                        <DataGridTextColumn Header="{DynamicResource String_Time1}" Width="100">
                             <DataGridTextColumn.Binding>
                                 <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
-                                    <Binding Path="Status" />
-                                    <Binding Path="Time" />
+                                    <Binding Path="Status1" />
+                                    <Binding Path="Time1" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="{DynamicResource String_Time2}" Width="100">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
+                                    <Binding Path="Status2" />
+                                    <Binding Path="Time2" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="{DynamicResource String_Time3}" Width="100">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
+                                    <Binding Path="Status3" />
+                                    <Binding Path="Time3" />
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>

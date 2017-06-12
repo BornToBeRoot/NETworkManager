@@ -183,8 +183,8 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private ObservableCollection<HostInfo> _ipScanResult = new ObservableCollection<HostInfo>();
-        public ObservableCollection<HostInfo> IPScanResult
+        private ObservableCollection<IPScannerHostInfo> _ipScanResult = new ObservableCollection<IPScannerHostInfo>();
+        public ObservableCollection<IPScannerHostInfo> IPScanResult
         {
             get { return _ipScanResult; }
             set
@@ -344,9 +344,9 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Events
-        private void IpScanner_HostFound(object sender, HostFoundArgs e)
+        private void IpScanner_HostFound(object sender, IPScannerHostFoundArgs e)
         {
-            HostInfo ipScannerInfo = HostInfo.Parse(e);
+            IPScannerHostInfo ipScannerInfo = IPScannerHostInfo.Parse(e);
 
             Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
             {

@@ -263,10 +263,10 @@
     <Compile Include="Views\ApplicationViewInfo.cs" />
     <Compile Include="Collections\AsyncObservableCollection.cs" />
     <Compile Include="Models\Network\ProgressChangedArgs.cs" />
-    <Compile Include="Models\Network\HopInfo.cs" />
-    <Compile Include="Models\Network\HopReceivedArgs.cs" />
-    <Compile Include="Models\Network\HostFoundArgs.cs" />
-    <Compile Include="Models\Network\HostInfo.cs" />
+    <Compile Include="Models\Network\TracerouteHopInfo.cs" />
+    <Compile Include="Models\Network\TracerouteHopReceivedArgs.cs" />
+    <Compile Include="Models\Network\IPScannerHostFoundArgs.cs" />
+    <Compile Include="Models\Network\IPScannerHostInfo.cs" />
     <Compile Include="Models\Network\IPScanner.cs" />
     <Compile Include="Models\Network\IPScannerOptions.cs" />
     <Compile Include="Models\Network\MaximumHopsReachedArgs.cs" />

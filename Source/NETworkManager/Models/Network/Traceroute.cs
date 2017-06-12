@@ -1,6 +1,7 @@
-﻿
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -12,8 +13,8 @@ namespace NETworkManager.Models.Network
     public class Traceroute
     {
         #region Events
-        public event EventHandler<HopReceivedArgs> HopReceived;
-        protected virtual void OnHopReceived(HopReceivedArgs e)
+        public event EventHandler<TracerouteHopReceivedArgs> HopReceived;
+        protected virtual void OnHopReceived(TracerouteHopReceivedArgs e)
         {
             HopReceived?.Invoke(this, e);
         }
@@ -45,50 +46,65 @@ namespace NETworkManager.Models.Network
                 byte[] buffer = new byte[traceOptions.Buffer];
                 int maximumHops = traceOptions.MaximumHops + 1;
 
-                Stopwatch stopwatch = new Stopwatch();
+                int hop = 1;
 
-                using (System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping())
+                do
                 {
-                    int hop = 1;
+                    List<Task<Tuple<PingReply, long>>> tasks = new List<Task<Tuple<PingReply, long>>>();
 
-                    do
+                    for (int i = 0; i < 3; i++)
                     {
-                        stopwatch.Start();
+                        tasks.Add(Task.Run(() =>
+                       {
+                           Stopwatch stopwatch = new Stopwatch();
 
-                        PingReply pingReply = ping.Send(ipAddress, traceOptions.Timeout, buffer, new System.Net.NetworkInformation.PingOptions() { Ttl = hop, DontFragment = traceOptions.DontFragement });
+                           PingReply pingReply;
 
-                        stopwatch.Stop();
+                           using (System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping())
+                           {
+                               stopwatch.Start();
 
-                        string hostname = string.Empty;
+                               pingReply = ping.Send(ipAddress, traceOptions.Timeout, buffer, new System.Net.NetworkInformation.PingOptions() { Ttl = hop, DontFragment = traceOptions.DontFragement });
 
-                        try
+                               stopwatch.Stop();
+                           }
+
+                           return Tuple.Create(pingReply, stopwatch.ElapsedMilliseconds);
+                       }));
+                    }
+
+                    Task.WaitAll(tasks.ToArray());
+
+                    IPAddress ipAddressHop = tasks.FirstOrDefault(x => x.Result.Item1 != null).Result.Item1.Address;
+
+                    string hostname = string.Empty;
+
+                    try
+                    {
+                        if (ipAddressHop != null)
+                            hostname = Dns.GetHostEntry(ipAddressHop).HostName;
+                    }
+                    catch (SocketException) { } // Couldn't resolve hostname
+
+                    OnHopReceived(new TracerouteHopReceivedArgs(hop, tasks[0].Result.Item2, tasks[1].Result.Item2, tasks[2].Result.Item2, ipAddressHop, hostname, tasks[0].Result.Item1.Status, tasks[1].Result.Item1.Status, tasks[2].Result.Item1.Status));
+
+                    if (ipAddressHop != null)
+                    {
+                        if (ipAddressHop.ToString() == ipAddress.ToString())
                         {
-                            if (pingReply.Address != null)
-                                hostname = Dns.GetHostEntry(pingReply.Address).HostName;
+                            OnTraceComplete();
+                            return;
                         }
-                        catch (SocketException) { } // Couldn't resolve hostname
+                    }
 
-                        OnHopReceived(new HopReceivedArgs(hop, stopwatch.ElapsedMilliseconds, pingReply.Address, hostname, pingReply.Status));
+                    hop++;
+                } while (hop < maximumHops && !cancellationToken.IsCancellationRequested);
 
-                        if (pingReply.Address != null)
-                        {
-                            if (pingReply.Address.ToString() == ipAddress.ToString())
-                            {
-                                OnTraceComplete();
-                                return;
-                            }
+                if (cancellationToken.IsCancellationRequested)
+                    OnUserHasCanceled();
+                else if (hop == maximumHops)
+                    OnMaximumHopsReached(new MaximumHopsReachedArgs(traceOptions.MaximumHops));
 
-                            stopwatch.Reset();
-                        }
-
-                        hop++;
-                    } while (hop < maximumHops && !cancellationToken.IsCancellationRequested);
-
-                    if (cancellationToken.IsCancellationRequested)
-                        OnUserHasCanceled();
-                    else if (hop == maximumHops)
-                        OnMaximumHopsReached(new MaximumHopsReachedArgs(traceOptions.MaximumHops));
-                }
             }, cancellationToken);
         }
         #endregion

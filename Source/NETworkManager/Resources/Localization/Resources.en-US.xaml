@@ -160,6 +160,9 @@
     <system:String x:Key="String_ResolveHostname">Resolve hostname</system:String>
     <system:String x:Key="String_ReadTheMACAddressFromTheArpCache">Read the MAC address on the ARP cache</system:String>
     <system:String x:Key="String_Time">Time</system:String>
+    <system:String x:Key="String_Time1">Time 1</system:String>
+    <system:String x:Key="String_Time2">Time 2</system:String>
+    <system:String x:Key="String_Time3">Time 3</system:String>
     <system:String x:Key="String_PreferredProtocolWhenResolvingHostname">Preferred protocol when resolving hostname:</system:String>
     <system:String x:Key="String_EnableDeveloperMode">Enable developer mode</system:String>
     <system:String x:Key="String_Hop">Hop</system:String>

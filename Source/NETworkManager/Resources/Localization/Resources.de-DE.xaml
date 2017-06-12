@@ -159,6 +159,9 @@
     <system:String x:Key="String_ResolveHostname">Hostnamen auflösen</system:String>
     <system:String x:Key="String_ReadTheMACAddressFromTheArpCache">MAC-Adresse aus dem ARP-Cache auslesen</system:String>
     <system:String x:Key="String_Time">Zeit</system:String>
+    <system:String x:Key="String_Time1">Zeit 1</system:String>
+    <system:String x:Key="String_Time2">Zeit 2</system:String>
+    <system:String x:Key="String_Time3">Zeit 3</system:String>
     <system:String x:Key="String_PreferredProtocolWhenResolvingHostname">Bevorzugtes Protokoll beim Auflösen des Hostnamens:</system:String>
     <system:String x:Key="String_EnableDeveloperMode">Entwicklermodus aktivieren</system:String>
     <system:String x:Key="String_Hop">Hop</system:String>

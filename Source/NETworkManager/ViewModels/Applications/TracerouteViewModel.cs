@@ -165,8 +165,8 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private ObservableCollection<HopInfo> _traceResult = new ObservableCollection<HopInfo>();
-        public ObservableCollection<HopInfo> TraceResult
+        private ObservableCollection<TracerouteHopInfo> _traceResult = new ObservableCollection<TracerouteHopInfo>();
+        public ObservableCollection<TracerouteHopInfo> TraceResult
         {
             get { return _traceResult; }
             set
@@ -240,8 +240,7 @@ namespace NETworkManager.ViewModels.Applications
             TraceResult.Clear();
 
             // Try to parse the string into an IP-Address
-            IPAddress ipAddress;
-            IPAddress.TryParse(HostnameOrIPAddress, out ipAddress);
+            IPAddress.TryParse(HostnameOrIPAddress, out IPAddress ipAddress);
 
             try
             {
@@ -311,9 +310,9 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Events
-        private void Traceroute_HopReceived(object sender, HopReceivedArgs e)
+        private void Traceroute_HopReceived(object sender, TracerouteHopReceivedArgs e)
         {
-            HopInfo tracerouteInfo = HopInfo.Parse(e);
+            TracerouteHopInfo tracerouteInfo = TracerouteHopInfo.Parse(e);
 
             Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
             {
