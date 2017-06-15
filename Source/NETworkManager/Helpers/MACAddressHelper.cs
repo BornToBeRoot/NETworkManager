@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 
 namespace NETworkManager.Helpers
@@ -37,9 +38,14 @@ namespace NETworkManager.Helpers
                 return macAddress.Replace("-", ":");
 
             if (!macAddress.Contains(":"))
-                return string.Join(":", Enumerable.Range(0, 6).Select(i =>macAddress.Substring(i * 2, 2)));
+                return string.Join(":", Enumerable.Range(0, 6).Select(i => macAddress.Substring(i * 2, 2)));
 
             return macAddress;
+        }
+
+        public static string GetDefaultFormat(PhysicalAddress macAddress)
+        {
+            return GetDefaultFormat(macAddress.ToString());
         }
     }
 }

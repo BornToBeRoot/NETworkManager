@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 using NETworkManager.Helpers;
+using System.Net.NetworkInformation;
 
 namespace NETworkManager.Converters
 {
@@ -9,12 +10,10 @@ namespace NETworkManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string macAddress = value as string;
-
-            if(string.IsNullOrEmpty(macAddress))
+            if (value == null)
                 return string.Empty;
 
-            return MACAddressHelper.GetDefaultFormat(macAddress);
+            return MACAddressHelper.GetDefaultFormat((PhysicalAddress)value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
