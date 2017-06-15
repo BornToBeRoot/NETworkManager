@@ -6,7 +6,7 @@
         xmlns:SettingsViews ="clr-namespace:NETworkManager.Views.Settings"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="{DynamicResource String_Settings}" TitleAlignment="Center" TitleCaps="False" Height="550" Width="800" ResizeMode="NoResize"  BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}" WindowStartupLocation="CenterOwner" IsMinButtonEnabled="False" IsMaxRestoreButtonEnabled="False" PreviewKeyDown="MetroWindowSettings_PreviewKeyDown" ShowInTaskbar="False" >
+        Title="{DynamicResource String_Settings}" TitleAlignment="Center" TitleCaps="False" Height="500" Width="700" ResizeMode="NoResize"  BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}" WindowStartupLocation="CenterOwner" IsMinButtonEnabled="False" IsMaxRestoreButtonEnabled="False" PreviewKeyDown="MetroWindowSettings_PreviewKeyDown" ShowInTaskbar="False" >
     <Controls:MetroWindow.WindowButtonCommands>
         <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </Controls:MetroWindow.WindowButtonCommands>
@@ -91,6 +91,9 @@
                         <ContentControl Content="{Binding SettingsContent}" />
                     </ScrollViewer>
                 </Grid>
+            </TabItem>
+            <TabItem Header="Update">
+
             </TabItem>
             <!-- About -->
             <TabItem Header="{DynamicResource String_Header_About}">

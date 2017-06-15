@@ -519,6 +519,16 @@ namespace NETworkManager
             Process.Start(Properties.Resources.Project_GitHub_Url);
         }
 
+        public ICommand OpenApplicationListCommand
+        {
+            get { return new RelayCommand(p => OpenApplicationListAction()); }
+        }
+
+        private void OpenApplicationListAction()
+        {
+            OpenApplicationList = true;
+        }
+
         public ICommand OpenSettingsCommand
         {
             get { return new RelayCommand(p => OpenSettingsAction()); }

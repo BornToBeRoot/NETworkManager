@@ -21,27 +21,19 @@
     </Controls:MetroWindow.IconTemplate>
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
-            <Button Command="{Binding OpenGithubProjectCommand}" ToolTip="{DynamicResource String_ToolTip_GitHub}">
-                <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform">
-                            <VisualBrush.Visual>
-                                <IconPacks:PackIconModern Kind="SocialGithubOctocat" />
-                            </VisualBrush.Visual>
-                        </VisualBrush>
-                    </Rectangle.OpacityMask>
-                </Rectangle>
-            </Button>
-            <Button Command="{Binding OpenSettingsCommand}" ToolTip="{DynamicResource String_ToolTip_Settings}">
-                <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform">
-                            <VisualBrush.Visual>
-                                <IconPacks:PackIconOcticons Kind="Settings" />
-                            </VisualBrush.Visual>
-                        </VisualBrush>
-                    </Rectangle.OpacityMask>
-                </Rectangle>
+            <Button Command="{Binding OpenGithubProjectCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform">
+                                <VisualBrush.Visual>
+                                    <IconPacks:PackIconModern Kind="SocialGithubOctocat" />
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Text="Fork me on GitHub!" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
             </Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
@@ -110,6 +102,7 @@
                         <!-- 1 = Search, 2 = ApplicationList-->
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.Style>
                         <Style TargetType="{x:Type Grid}">
@@ -138,17 +131,9 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <ToggleButton Grid.Column="0" Width="32" Height="32" Margin="8" IsChecked="{Binding OpenApplicationList}" Focusable="False">
-                                <ToggleButton.Style>
-                                    <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MetroCircleButtonStyle}">
-                                        <Setter Property="Visibility" Value="Visible" />
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" DataContext="{Binding}"/>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
+                            <Button Grid.Column="0" Padding="8" Width="48" Height="48" Command="{Binding OpenApplicationListCommand}" Focusable="False">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ApplicationView_Expand}" Value="False">
                                                 <Setter Property="Visibility" Value="Visible" />
@@ -167,27 +152,23 @@
                                             </MultiDataTrigger>
                                         </Style.Triggers>
                                     </Style>
-                                </ToggleButton.Style>
+                                </Button.Style>
                                 <Rectangle Width="24" Height="24">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform">
-                                            <VisualBrush.Visual>
-                                                <IconPacks:PackIconFontAwesome Kind="Bars" />
-                                            </VisualBrush.Visual>
-                                        </VisualBrush>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconFontAwesome Kind=Bars}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
                                             <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToggleButton}}, Path=IsMouseOver}" Value="True">
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
                                                     <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
-                            </ToggleButton>
+                            </Button>
                             <TextBox x:Name="txtSearch" Grid.Column="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" FontSize="14" VerticalAlignment="Center" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_Search}" mah:TextBoxHelper.ButtonCommand="{Binding TextBoxSearchCommand}" Controls:TextBoxHelper.ClearTextButton="True">
                                 <TextBox.Style>
                                     <Style BasedOn="{StaticResource SearchMetroTextBox}" TargetType="{x:Type TextBox}">
@@ -411,6 +392,68 @@
                             <!-- /BUGFIX-->
                         </ListView>
                     </ScrollViewer>
+                    <Border Grid.Row="2" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,1,0,0" Background="Transparent">
+                        <Grid Height="48">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Padding="8" Width="48" Height="48" Command="{Binding OpenSettingsCommand}" Focusable="False" Style="{StaticResource CleanButton}">
+                                <Rectangle Width="24" Height="24">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconModern Kind=Settings}" />
+                                    </Rectangle.OpacityMask>
+                                    <Rectangle.Style>
+                                        <Style TargetType="{x:Type Rectangle}">
+                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                            </Button>
+                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Settings}">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                        <Setter Property="Margin" Value="0" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="18" />
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=IsMouseOver,RelativeSource={RelativeSource AncestorType={x:Type Border}}}" Value="True" >
+                                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=IsSelected,RelativeSource={RelativeSource AncestorType={x:Type Border}}}" Value="True" >
+                                                <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationView_Expand}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                                <Setter Property="Margin" Value="0,0,10,0" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsTextBoxSearchFocused}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                                <Setter Property="Margin" Value="0,0,10,0" />
+                                            </DataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.OpenApplicationList}" Value="True" />
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsMouseOverApplicationList}" Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <MultiDataTrigger.Setters>
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                    <Setter Property="Margin" Value="0,0,10,0" />
+                                                </MultiDataTrigger.Setters>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
                     <Interactivity:Interaction.Triggers>
                         <Interactivity:EventTrigger  EventName="MouseEnter" >
                             <Interactivity:InvokeCommandAction Command="{Binding ApplicationListMouseEnterCommand}" />
