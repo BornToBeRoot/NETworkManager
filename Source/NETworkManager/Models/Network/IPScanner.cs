@@ -65,6 +65,8 @@ namespace NETworkManager.Models.Network
                     parallelOptions.CancellationToken = cancellationToken;
                     parallelOptions.MaxDegreeOfParallelism = ipScannerOptions.Threads;
 
+                    string localHostname = ipScannerOptions.ResolveHostname ? Dns.GetHostName() : string.Empty;
+
                     Parallel.ForEach(ipAddresses, parallelOptions, ipAddress =>
                     {
                         using (System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping())
@@ -101,18 +103,13 @@ namespace NETworkManager.Models.Network
 
                                         if (ipScannerOptions.ResolveMACAddress)
                                         {
-                                            try
-                                            {
-                                                // Get mac
-                                                if (Dns.GetHostName() == hostname.Substring(0, hostname.IndexOf('.')))
-                                                    macAddress = NetworkInterface.GetNetworkInterfaces().Where(p => p.IPv4Address.Contains(ipAddress)).First().PhysicalAddress;
-                                                else
-                                                    macAddress = IPNetTableHelper.GetAllDevicesOnLAN().Where(p => p.Key.ToString() == ipAddress.ToString()).ToDictionary(p => p.Key, p => p.Value).First().Value;
+                                            macAddress = IPNetTableHelper.GetIPNetTableDictionary().Where(p => p.Key.ToString() == ipAddress.ToString()).ToDictionary(p => p.Key, p => p.Value).FirstOrDefault().Value;
 
-                                                // Vendor lookup
-                                                vendor = OUILookup.Lookup(macAddress.ToString()).FirstOrDefault().Vendor;
-                                            }
-                                            catch { }
+                                            if (macAddress == null)
+                                                macAddress = NetworkInterface.GetNetworkInterfaces().Where(p => p.IPv4Address.Contains(ipAddress)).FirstOrDefault().PhysicalAddress;
+                                            
+                                            // Vendor lookup
+                                            vendor = OUILookup.Lookup(macAddress.ToString()).FirstOrDefault().Vendor;
                                         }
 
                                         OnHostFound(new IPScannerHostFoundArgs(pingInfo, hostname, macAddress, vendor));
@@ -126,7 +123,6 @@ namespace NETworkManager.Models.Network
                                 if (cancellationToken.IsCancellationRequested)
                                     break;
                             }
-
                         }
 
                         // Increase the progress                        

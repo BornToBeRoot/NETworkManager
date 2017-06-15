@@ -69,7 +69,7 @@ namespace NETworkManager.Helpers
         ///    and can be discarded by IP address range.
         /// </remarks>
         /// <returns></returns>
-        public static Dictionary<IPAddress, PhysicalAddress> GetAllDevicesOnLAN()
+        public static Dictionary<IPAddress, PhysicalAddress> GetIPNetTableDictionary()
         {
             Dictionary<IPAddress, PhysicalAddress> all = new Dictionary<IPAddress, PhysicalAddress>();
 
