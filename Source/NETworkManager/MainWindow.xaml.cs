@@ -526,23 +526,19 @@ namespace NETworkManager
 
         private async void OpenSettingsAction()
         {
-            MetroWindowMain.ShowOverlay();
-
             SettingsWindow settingsWindow = new SettingsWindow();
 
             if (_isInTray)
             {
                 settingsWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                settingsWindow.Topmost = true;
             }
             else
             {
                 settingsWindow.Owner = this;
+                MetroWindowMain.ShowOverlay();
             }
 
             settingsWindow.ShowDialog();
-
-            MetroWindowMain.HideOverlay();
 
             if (!_isInTray)
             {
@@ -551,6 +547,8 @@ namespace NETworkManager
 
                 if (notifyIcon != null)
                     notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
+
+                MetroWindowMain.HideOverlay();
             }
 
             // Force restart (if user has reset the settings or import them)
