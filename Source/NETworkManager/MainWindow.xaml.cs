@@ -101,21 +101,6 @@ namespace NETworkManager
             }
         }
 
-        private string _searchText;
-        public string SearchText
-        {
-            get { return _searchText; }
-            set
-            {
-                if (value == _searchText)
-                    return;
-
-                _searchText = value;
-                _applicationViewCollectionSource.View.Refresh();
-                OnPropertyChanged("SearchText");
-            }
-        }
-
         private CollectionViewSource _applicationViewCollectionSource;
         public ICollectionView ApplicationViewCollection
         {
@@ -136,6 +121,45 @@ namespace NETworkManager
 
                 _selectedApplicationViewInfo = value;
                 OnPropertyChanged("SelectedApplicationViewInfo");
+            }
+        }
+
+        ApplicationView.Name filterLastViewName;
+        int? filterLastCount;
+
+        private string _searchText;
+        public string SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                if (value == _searchText)
+                    return;
+
+                _searchText = value;
+
+                if (SelectedApplicationViewInfo != null)
+                    filterLastViewName = SelectedApplicationViewInfo.Name;
+
+                ApplicationViewCollection.Refresh();
+
+                IEnumerable<ApplicationViewInfo> sourceCollection = ApplicationViewCollection.SourceCollection.Cast<ApplicationViewInfo>();
+                IEnumerable<ApplicationViewInfo> filteredCollection = ApplicationViewCollection.Cast<ApplicationViewInfo>();
+
+                int sourceCollectionCount = sourceCollection.Count();
+                int filteredCollectionCount = filteredCollection.Count();
+
+                if (filterLastCount == null)
+                    filterLastCount = sourceCollectionCount;
+
+                if (filterLastCount > filteredCollectionCount)
+                    SelectedApplicationViewInfo = filteredCollection.FirstOrDefault();
+                else
+                    SelectedApplicationViewInfo = sourceCollection.FirstOrDefault(x => x.Name == filterLastViewName);
+
+                filterLastCount = filteredCollectionCount;
+
+                OnPropertyChanged("SearchText");
             }
         }
         #endregion
@@ -342,7 +366,7 @@ namespace NETworkManager
 
         #endregion
 
-        #region ListView Search
+        #region ListView Search/Filter       
         private void ApplicationView_Search(object sender, FilterEventArgs e)
         {
             if (string.IsNullOrEmpty(SearchText))
