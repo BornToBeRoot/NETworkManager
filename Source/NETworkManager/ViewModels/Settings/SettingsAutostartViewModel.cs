@@ -101,7 +101,7 @@ namespace NETworkManager.ViewModels.Settings
                     await AutostartManager.DisableAsync();
 
                 // Show the user some awesome animation to indicate we are working on it :)
-                await Task.Delay(2500);
+                await Task.Delay(2000);
             }
             catch (Exception ex)
             {

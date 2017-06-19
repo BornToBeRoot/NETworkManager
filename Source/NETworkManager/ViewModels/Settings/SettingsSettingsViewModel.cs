@@ -239,7 +239,7 @@ namespace NETworkManager.ViewModels.Settings
                 Properties.Settings.Default.Settings_CustomSettingsLocation = LocationSelectedPath;
 
                 // Show the user some awesome animation to indicate we are working on it :)
-                await Task.Delay(2500);
+                await Task.Delay(2000);
             }
             catch (Exception ex)
             {
@@ -323,7 +323,7 @@ namespace NETworkManager.ViewModels.Settings
                 LocationSelectedPath = SettingsManager.SettingsLocationNotPortable;
 
                 // Show the user some awesome animation to indicate we are working on it :)
-                await Task.Delay(2500);
+                await Task.Delay(2000);
             }
             catch (Exception ex)
             {

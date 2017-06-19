@@ -580,7 +580,7 @@ namespace NETworkManager.ViewModels.Applications
         private async void ReloadNetworkInterfacesAction()
         {
             IsNetworkInterfaceLoading = true;
-            await Task.Delay(2500); // Make the user happy, let him see a reload animation
+            await Task.Delay(2000); // Make the user happy, let him see a reload animation
 
             string id = string.Empty;
 

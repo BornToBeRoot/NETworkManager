@@ -24,7 +24,25 @@
         <Converter:ValidateNetworkInterfaceConfigConverter x:Key="ValidateNetworkInterfaceConfigConverter" />
         <Converter:TrueFalseToStringConverter x:Key="TrueFalseToStringConverter" />
         <Converter:SelectedItemsToBoolConverter x:Key="SelectedItemsToBoolConverter" />
-
+        <Style x:Key="ReloadAnimation" TargetType="Rectangle">
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Image.RenderTransform">
+                <Setter.Value>
+                    <RotateTransform CenterX="12" CenterY="12" />
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="720" Duration="0:0:2" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <TabControl Style="{StaticResource  DefaultTabControl}">
         <TabItem Header="{DynamicResource String_Header_Information}">
@@ -42,7 +60,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <ComboBox Grid.Column="0" x:Name="comboBoxNetworkInterfaces" Grid.Row="1" FontSize="14" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
+                        <ComboBox Grid.Column="0" x:Name="cbNetworkInterfaces" Grid.Row="1" FontSize="14" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
@@ -71,23 +89,26 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource ImageButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" HorizontalAlignment="Right" Margin="10,0,0,0">
-                            <Button.Content>
-                                <Rectangle Width="20" Height="20">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush x:Name="VisualRefresh" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Refresh}" />
-                                    </Rectangle.OpacityMask>
-                                    <Rectangle.Style>
-                                        <Style TargetType="{x:Type Rectangle}">
-                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                        </Style>
-                                    </Rectangle.Style>
-                                </Rectangle>
-                            </Button.Content>
+                        <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=cbNetworkInterfaces, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
+                            <Rectangle Width="24" Height="24">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Refresh}" />
+                                </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ReloadAnimation}">
+                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
                         </Button>
                     </Grid>
                 </StackPanel>
-                <Controls:MetroProgressBar Grid.Row="1" Margin="0,0,0,20" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True" />
+                <!-- <Controls:MetroProgressBar Grid.Row="1" Margin="0,0,0,20" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True" /> -->
                 <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Details}" />
                 <ScrollViewer Grid.Row="3" Style="{StaticResource DefaultScrollViewer}" PanningMode="Both">
                     <Grid>
@@ -182,35 +203,58 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Margin="0,0,0,20">
                     <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Interface}" />
-                    <ComboBox FontSize="14" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Path=Name}" />
-                                        <Rectangle Width="16" Height="16" Margin="10,0,0,0">
-                                            <Rectangle.Resources>
-                                                <VisualBrush x:Key="VisualUp" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ChevronUp}"/>
-                                                <VisualBrush x:Key="VisualDown" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ChevronDown}" />
-                                            </Rectangle.Resources>
-                                            <Rectangle.Style>
-                                                <Style TargetType="{x:Type Rectangle}">
-                                                    <Setter Property="OpacityMask" Value="{StaticResource VisualDown}" />
-                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding IsOperational}" Value="True">
-                                                            <Setter Property="OpacityMask" Value="{StaticResource VisualUp}" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Rectangle.Style>
-                                        </Rectangle>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Grid.Column="0" FontSize="14" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Path=Name}" />
+                                            <Rectangle Width="16" Height="16" Margin="10,0,0,0">
+                                                <Rectangle.Resources>
+                                                    <VisualBrush x:Key="VisualUp" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ChevronUp}"/>
+                                                    <VisualBrush x:Key="VisualDown" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ChevronDown}" />
+                                                </Rectangle.Resources>
+                                                <Rectangle.Style>
+                                                    <Style TargetType="{x:Type Rectangle}">
+                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualDown}" />
+                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsOperational}" Value="True">
+                                                                <Setter Property="OpacityMask" Value="{StaticResource VisualUp}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Rectangle.Style>
+                                            </Rectangle>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding Path=Description}" Foreground="{DynamicResource GrayBrush2}"/>
                                     </StackPanel>
-                                    <TextBlock Text="{Binding Path=Description}" Foreground="{DynamicResource GrayBrush2}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=cbNetworkInterfaces, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
+                            <Rectangle Width="24" Height="24">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Refresh}" />
+                                </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ReloadAnimation}">
+                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Button>
+                    </Grid>
                 </StackPanel>
                 <ScrollViewer Grid.Row="1" Style="{StaticResource DefaultScrollViewer}" Margin="0,0,0,10">
                     <ScrollViewer.Resources>
@@ -263,7 +307,7 @@
                                     </TextBox.Text>
                                 </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_SubnetmaskOrCIDR}"  />
-                                <ComboBox x:Name="comboBoxConfigSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" ItemsSource="{x:Static Network:Subnetmask.List}">
+                                <ComboBox x:Name="cbConfigSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" ItemsSource="{x:Static Network:Subnetmask.List}">
                                     <ComboBox.Text>
                                         <Binding Path="ConfigSubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -377,7 +421,7 @@
                                                 <Binding Path="ConfigEnableDynamicIPAddress" />
                                                 <Binding Path="ConfigEnableStaticIPAddress" />
                                                 <Binding ElementName="txtConfigIPAddress" Path="(Validation.HasError)" />
-                                                <Binding ElementName="comboBoxConfigSubnetmaskOrCidr" Path="(Validation.HasError)" />
+                                                <Binding ElementName="cbConfigSubnetmaskOrCidr" Path="(Validation.HasError)" />
                                                 <Binding ElementName="txtConfigGateway" Path="(Validation.HasError)" />
                                                 <Binding Path="ConfigEnableDynamicDns" />
                                                 <Binding Path="ConfigEnableStaticDns" />

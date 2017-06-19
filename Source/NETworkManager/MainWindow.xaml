@@ -18,7 +18,7 @@
                 <Image Source="/Resources/Images/NETworkManager.ico"  Height="20" Width="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Grid>
         </DataTemplate>
-    </Controls:MetroWindow.IconTemplate>
+    </Controls:MetroWindow.IconTemplate>    
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button Command="{Binding OpenGithubProjectCommand}">
