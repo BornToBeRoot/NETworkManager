@@ -161,7 +161,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsApplicationView.xaml">
+    <Page Include="Views\Settings\SettingsGeneralView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -193,7 +193,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsGeneralView.xaml">
+    <Page Include="Views\Settings\SettingsWindowView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -260,7 +260,7 @@
     <Compile Include="Validators\MACAddressAndMACAddressFirst3BytesRangeValidator.cs" />
     <Compile Include="ViewModels\Applications\PortScannerViewModel.cs" />
     <Compile Include="ViewModels\Applications\LookupViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsGeneralViewModel.cs" />
     <Compile Include="Views\Applications\LookupView.xaml.cs">
       <DependentUpon>LookupView.xaml</DependentUpon>
     </Compile>
@@ -326,7 +326,7 @@
     <Compile Include="ViewModels\Notes\RestartAsAdministratorViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\Settings\AboutViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsGeneralViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsWindowViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsAppearanceViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsLanguageViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsHotKeysViewModel.cs" />
@@ -357,8 +357,8 @@
     <Compile Include="Converters\IPAddressToStringConverter.cs" />
     <Compile Include="Converters\SelectedItemsToBoolConverter.cs" />
     <Compile Include="Converters\IntToStringConverter.cs" />
-    <Compile Include="Views\Settings\SettingsApplicationView.xaml.cs">
-      <DependentUpon>SettingsApplicationView.xaml</DependentUpon>
+    <Compile Include="Views\Settings\SettingsGeneralView.xaml.cs">
+      <DependentUpon>SettingsGeneralView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\SettingsDeveloperView.xaml.cs">
       <DependentUpon>SettingsDeveloperView.xaml</DependentUpon>
@@ -381,8 +381,8 @@
     <Compile Include="Views\Settings\SettingsAppearanceView.xaml.cs">
       <DependentUpon>SettingsAppearanceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsGeneralView.xaml.cs">
-      <DependentUpon>SettingsGeneralView.xaml</DependentUpon>
+    <Compile Include="Views\Settings\SettingsWindowView.xaml.cs">
+      <DependentUpon>SettingsWindowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>

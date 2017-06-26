@@ -14,7 +14,7 @@ namespace NETworkManager.Views
                 return new List<SettingsViewInfo>
                 {
                     new SettingsViewInfo(Name.General, new PackIconModern() { Kind = PackIconModernKind.Box }),
-                    new SettingsViewInfo(Name.Applications, new PackIconMaterial() {Kind = PackIconMaterialKind.Application }),
+                    new SettingsViewInfo(Name.Window, new PackIconMaterial() {Kind = PackIconMaterialKind.Application }),
                     new SettingsViewInfo(Name.Appearance, new PackIconMaterial() { Kind = PackIconMaterialKind.AutoFix }),
                     new SettingsViewInfo(Name.Language, new PackIconMaterial() { Kind = PackIconMaterialKind.Flag}),
                     new SettingsViewInfo(Name.HotKeys, new PackIconOcticons() { Kind = PackIconOcticonsKind.Keyboard }),
@@ -33,8 +33,8 @@ namespace NETworkManager.Views
 
         public enum Name
         {
-            General,
-            Applications, 
+            Window,
+            General, 
             Appearance,
             Language,
             HotKeys,

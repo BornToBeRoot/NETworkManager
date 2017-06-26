@@ -291,6 +291,7 @@
 
     <!-- SettingsView.Name -->
     <system:String x:Key="String_SettingsName_General">Allgemein</system:String>
+    <system:String x:Key="String_SettingsName_Window">Fenster</system:String>
     <system:String x:Key="String_SettingsName_Appearance">Aussehen</system:String>
     <system:String x:Key="String_SettingsName_Language">Sprache</system:String>
     <system:String x:Key="String_SettingsName_HotKeys">Hotkeys</system:String>

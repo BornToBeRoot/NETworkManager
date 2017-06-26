@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="NETworkManager.Views.Settings.SettingsWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d">
+    <StackPanel>
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Window}" />
+        <Controls:ToggleSwitch Header="{DynamicResource String_StartMaximized}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding StartMaximized}" Margin="0,0,0,10" />
+        <Controls:ToggleSwitch Header="{DynamicResource String_MinimizeInsteadOfTerminating}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding MinimizeInsteadOfTerminating}" Margin="0,0,0,10" />
+        <Controls:ToggleSwitch Header="{DynamicResource String_MinimizeToTrayInsteadOfTaskbar}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding MinimizeToTrayInsteadOfTaskbar}" Margin="0,0,0,10" />
+        <Controls:ToggleSwitch Header="{DynamicResource String_ConfirmClose}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ConfirmClose}" Margin="0,0,0,20"/>
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Tray}" />
+        <Controls:ToggleSwitch Header="{DynamicResource String_AlwaysShowIconInTray}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding AlwaysShowIconInTray}" />
+    </StackPanel>
+</UserControl>

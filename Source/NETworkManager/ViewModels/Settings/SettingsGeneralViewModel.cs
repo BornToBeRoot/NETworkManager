@@ -1,97 +1,51 @@
 ﻿using NETworkManager.Models.Settings;
+using NETworkManager.Views;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace NETworkManager.ViewModels.Settings
 {
     public class SettingsGeneralViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;        
+        private bool _isLoading = true;
 
-        private bool _startMaximized;
-        public bool StartMaximized
+        public ObservableCollection<ApplicationViewInfo> ApplicationViewCollection { get; set; }
+
+        private ApplicationViewInfo _defaultApplicationViewSelectedItem;
+        public ApplicationViewInfo DefaultApplicationViewSelectedItem
         {
-            get { return _startMaximized; }
+            get { return _defaultApplicationViewSelectedItem; }
             set
             {
-                if (value == _startMaximized)
+                if (value == _defaultApplicationViewSelectedItem)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Window_StartMaximized = value;
+                    SettingsManager.Current.Application_DefaultApplicationViewName = value.Name;
 
-                _startMaximized = value;
+                _defaultApplicationViewSelectedItem = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _minimizeInsteadOfTerminating;
-        public bool MinimizeInsteadOfTerminating
+        private int _historyListEntries;
+        public int HistoryListEntries
         {
-            get { return _minimizeInsteadOfTerminating; }
+            get { return _historyListEntries; }
             set
             {
-                if (value == _minimizeInsteadOfTerminating)
+                if (value == _historyListEntries)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Window_MinimizeInsteadOfTerminating = value;
+                    SettingsManager.Current.Application_HistoryListEntries = value;
 
-                _minimizeInsteadOfTerminating = value;
+                _historyListEntries = value;
                 OnPropertyChanged();
             }
         }
-
-        private bool _minimizeToTrayInsteadOfTaskbar;
-        public bool MinimizeToTrayInsteadOfTaskbar
-        {
-            get { return _minimizeToTrayInsteadOfTaskbar; }
-            set
-            {
-                if (value == _minimizeToTrayInsteadOfTaskbar)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Window_MinimizeToTrayInsteadOfTaskbar = value;
-
-                _minimizeToTrayInsteadOfTaskbar = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _confirmClose;
-        public bool ConfirmClose
-        {
-            get { return _confirmClose; }
-            set
-            {
-                if (value == _confirmClose)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Window_ConfirmClose = value;
-
-                OnPropertyChanged();
-                _confirmClose = value;
-            }
-        }
-
-        private bool _alwaysShowIconInTray;
-        public bool AlwaysShowIconInTray
-        {
-            get { return _alwaysShowIconInTray; }
-            set
-            {
-                if (value == _alwaysShowIconInTray)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.TrayIcon_AlwaysShowIcon = value;
-
-                _alwaysShowIconInTray = value;
-                OnPropertyChanged();
-            }
-        }
-        #endregion
+        #endregion        
 
         #region Constructor, LoadSettings
         public SettingsGeneralViewModel()
@@ -102,12 +56,14 @@ namespace NETworkManager.ViewModels.Settings
         }
 
         private void LoadSettings()
-        {           
-            StartMaximized = SettingsManager.Current.Window_StartMaximized;
-            AlwaysShowIconInTray = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
-            MinimizeInsteadOfTerminating = SettingsManager.Current.Window_MinimizeInsteadOfTerminating;
-            ConfirmClose = SettingsManager.Current.Window_ConfirmClose;
-            MinimizeToTrayInsteadOfTaskbar = SettingsManager.Current.Window_MinimizeToTrayInsteadOfTaskbar;
+        {
+            if (SettingsManager.Current.DeveloperMode)
+                ApplicationViewCollection = new ObservableCollection<ApplicationViewInfo>(ApplicationView.List.OrderBy(x => x.Name));
+            else
+                ApplicationViewCollection = new ObservableCollection<ApplicationViewInfo>(ApplicationView.List.Where(x => x.IsDev == false).OrderBy(x => x.Name));
+
+            DefaultApplicationViewSelectedItem = ApplicationViewCollection.FirstOrDefault(x => x.Name == SettingsManager.Current.Application_DefaultApplicationViewName);
+            HistoryListEntries = SettingsManager.Current.Application_HistoryListEntries;
         }
         #endregion
     }

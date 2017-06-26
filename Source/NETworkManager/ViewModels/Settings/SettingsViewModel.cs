@@ -12,7 +12,7 @@ namespace NETworkManager.ViewModels.Settings
         {
             // Select the default view
             SettingsViews = SettingsViewManager.List;
-            SelectedSettingsView = SettingsViews.Where(p => p.Name == SettingsViewManager.Name.General).FirstOrDefault();
+            SelectedSettingsView = SettingsViews.Where(p => p.Name == SettingsViewManager.Name.Window).FirstOrDefault();
         }
 
         private List<SettingsViewInfo> _settingsViews = new List<SettingsViewInfo>();
@@ -61,7 +61,7 @@ namespace NETworkManager.ViewModels.Settings
         }
 
         SettingsGeneralView settingsGerneralView;
-        SettingsApplicationView settingsApplicationView;
+        SettingsWindowView settingsWindowView;
         SettingsAppearanceView settingsApperanceView;
         SettingsLanguageView settingsLanguageView;
         SettingsHotKeysView settingsHotKeysView;
@@ -80,11 +80,11 @@ namespace NETworkManager.ViewModels.Settings
 
                     SettingsContent = settingsGerneralView;
                     break;
-                case SettingsViewManager.Name.Applications:
-                    if (settingsApplicationView == null)
-                        settingsApplicationView = new SettingsApplicationView();
+                case SettingsViewManager.Name.Window:
+                    if (settingsWindowView == null)
+                        settingsWindowView = new SettingsWindowView();
 
-                    SettingsContent = settingsApplicationView;
+                    SettingsContent = settingsWindowView;
                     break;
                 case SettingsViewManager.Name.Appearance:
                     if (settingsApperanceView == null)
