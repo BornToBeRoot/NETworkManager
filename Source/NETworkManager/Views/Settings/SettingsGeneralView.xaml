@@ -6,9 +6,6 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d">
     <StackPanel>
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_DefaultApplication}"/>
-        <TextBlock Text="{DynamicResource String_ShowTheFollowingApplicationOnStartup}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <ComboBox FontSize="14" ItemsSource="{Binding ApplicationViewCollection}" DisplayMemberPath="TranslatedName" SelectedItem="{Binding DefaultApplicationViewSelectedItem}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,20"/>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Window}" />
         <Controls:ToggleSwitch Header="{DynamicResource String_StartMaximized}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding StartMaximized}" Margin="0,0,0,10" />
         <Controls:ToggleSwitch Header="{DynamicResource String_MinimizeInsteadOfTerminating}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding MinimizeInsteadOfTerminating}" Margin="0,0,0,10" />

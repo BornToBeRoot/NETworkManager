@@ -59,6 +59,7 @@
     <system:String x:Key="String_Header_PortLookup">Port-Lookup</system:String>
     <system:String x:Key="String_Header_Port">Port</system:String>
     <system:String x:Key="String_Header_Socket">Socket</system:String>
+    <system:String x:Key="String_Header_History">History</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -191,7 +192,8 @@
     <system:String x:Key="String_ShowClosedPorts">Geschlossene Ports anzeigen</system:String>
     <system:String x:Key="String_HostnameOrIPAddress">Hostname oder IP-Adresse</system:String>
     <system:String x:Key="String_Ports">Ports</system:String>
-    
+    <system:String x:Key="String_NumberOfStoredEntries">Anzahl gespeicherter Einträge:</system:String>
+
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
     <system:String x:Key="String_Button_Default">Standard</system:String>

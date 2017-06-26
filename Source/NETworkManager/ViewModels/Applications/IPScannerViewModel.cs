@@ -314,7 +314,7 @@ namespace NETworkManager.ViewModels.Applications
             PreparingScan = false;
 
             // Add the range to the history
-            IPRangeHistory = new List<string>(HistoryListHelper.Modify(IPRangeHistory, IPRange, 5));
+            IPRangeHistory = new List<string>(HistoryListHelper.Modify(IPRangeHistory, IPRange, SettingsManager.Current.Application_HistoryListEntries));
 
             IPScannerOptions ipScannerOptions = new IPScannerOptions
             {

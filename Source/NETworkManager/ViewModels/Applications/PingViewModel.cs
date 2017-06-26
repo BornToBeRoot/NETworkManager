@@ -457,7 +457,7 @@ namespace NETworkManager.ViewModels.Applications
             }
 
             // Add the hostname or ip address to the history
-            HostnameOrIPAddressHistory = new List<string>(HistoryListHelper.Modify(HostnameOrIPAddressHistory, HostnameOrIPAddress, 5));
+            HostnameOrIPAddressHistory = new List<string>(HistoryListHelper.Modify(HostnameOrIPAddressHistory, HostnameOrIPAddress, SettingsManager.Current.Application_HistoryListEntries));
 
             cancellationTokenSource = new CancellationTokenSource();
 

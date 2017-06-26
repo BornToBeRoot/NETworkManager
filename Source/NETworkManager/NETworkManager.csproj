@@ -161,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Settings\SettingsApplicationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Settings\SettingsDeveloperView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -256,6 +260,7 @@
     <Compile Include="Validators\MACAddressAndMACAddressFirst3BytesRangeValidator.cs" />
     <Compile Include="ViewModels\Applications\PortScannerViewModel.cs" />
     <Compile Include="ViewModels\Applications\LookupViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsApplicationViewModel.cs" />
     <Compile Include="Views\Applications\LookupView.xaml.cs">
       <DependentUpon>LookupView.xaml</DependentUpon>
     </Compile>
@@ -352,6 +357,9 @@
     <Compile Include="Converters\IPAddressToStringConverter.cs" />
     <Compile Include="Converters\SelectedItemsToBoolConverter.cs" />
     <Compile Include="Converters\IntToStringConverter.cs" />
+    <Compile Include="Views\Settings\SettingsApplicationView.xaml.cs">
+      <DependentUpon>SettingsApplicationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Settings\SettingsDeveloperView.xaml.cs">
       <DependentUpon>SettingsDeveloperView.xaml</DependentUpon>
     </Compile>

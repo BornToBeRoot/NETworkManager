@@ -61,6 +61,7 @@ namespace NETworkManager.ViewModels.Settings
         }
 
         SettingsGeneralView settingsGerneralView;
+        SettingsApplicationView settingsApplicationView;
         SettingsAppearanceView settingsApperanceView;
         SettingsLanguageView settingsLanguageView;
         SettingsHotKeysView settingsHotKeysView;
@@ -78,6 +79,12 @@ namespace NETworkManager.ViewModels.Settings
                         settingsGerneralView = new SettingsGeneralView();
 
                     SettingsContent = settingsGerneralView;
+                    break;
+                case SettingsViewManager.Name.Applications:
+                    if (settingsApplicationView == null)
+                        settingsApplicationView = new SettingsApplicationView();
+
+                    SettingsContent = settingsApplicationView;
                     break;
                 case SettingsViewManager.Name.Appearance:
                     if (settingsApperanceView == null)

@@ -355,8 +355,8 @@ namespace NETworkManager.ViewModels.Applications
 
                 PreparingScan = false;
 
-                HostnameOrIPAddressHistory = new List<string>(HistoryListHelper.Modify(HostnameOrIPAddressHistory, HostnameOrIPAddress, 5));
-                PortsHistory = new List<string>(HistoryListHelper.Modify(PortsHistory, Ports, 5));
+                HostnameOrIPAddressHistory = new List<string>(HistoryListHelper.Modify(HostnameOrIPAddressHistory, HostnameOrIPAddress, SettingsManager.Current.Application_HistoryListEntries));
+                PortsHistory = new List<string>(HistoryListHelper.Modify(PortsHistory, Ports, SettingsManager.Current.Application_HistoryListEntries));
 
                 PortScannerOptions portScannerOptions = new PortScannerOptions
                 {

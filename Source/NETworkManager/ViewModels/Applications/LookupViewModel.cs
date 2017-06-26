@@ -188,7 +188,7 @@ namespace NETworkManager.ViewModels.Applications
                 }
             }
 
-            MACAddressHistory = new List<string>(HistoryListHelper.Modify(MACAddressHistory, MACAddress, 5));
+            MACAddressHistory = new List<string>(HistoryListHelper.Modify(MACAddressHistory, MACAddress, SettingsManager.Current.Application_HistoryListEntries));
 
             IsOUILookupRunning = false;
         }
@@ -211,7 +211,7 @@ namespace NETworkManager.ViewModels.Applications
                 PortLookupResult.Add(info);
             }
 
-            PortsHistory = new List<string>(HistoryListHelper.Modify(PortsHistory, Ports, 5));
+            PortsHistory = new List<string>(HistoryListHelper.Modify(PortsHistory, Ports, SettingsManager.Current.Application_HistoryListEntries));
 
             IsPortLookupRunning = false;
         }

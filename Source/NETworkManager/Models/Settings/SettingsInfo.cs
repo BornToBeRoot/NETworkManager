@@ -9,7 +9,7 @@ namespace NETworkManager.Models.Settings
         [XmlIgnore]
         public bool SettingsChanged { get; set; }
 
-        #region General
+        #region General 
         // Window
         private bool _window_ConfirmClose;
         public bool Window_ConfirmClose
@@ -68,6 +68,36 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
 
                 _window_StartMaximized = value;
+            }
+        }
+
+        // Applications        
+        private ApplicationView.Name _application_DefaultApplicationViewName = ApplicationView.Name.NetworkInterface;
+        public ApplicationView.Name Application_DefaultApplicationViewName
+        {
+            get { return _application_DefaultApplicationViewName; }
+            set
+            {
+                if (value == _application_DefaultApplicationViewName)
+                    return;
+
+                SettingsChanged = true;
+
+                _application_DefaultApplicationViewName = value;
+            }
+        }
+
+        private int _application_HistoryListEntries = 5;
+        public int Application_HistoryListEntries
+        {
+            get { return _application_HistoryListEntries; }
+            set
+            {
+                if (value == _application_HistoryListEntries)
+                    return;
+
+                SettingsChanged = true;
+                _application_HistoryListEntries = value;
             }
         }
 
@@ -212,22 +242,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        // Application view
-        private ApplicationView.Name _application_DefaultApplicationViewName = ApplicationView.Name.NetworkInterface;
-        public ApplicationView.Name Application_DefaultApplicationViewName
-        {
-            get { return _application_DefaultApplicationViewName; }
-            set
-            {
-                if (value == _application_DefaultApplicationViewName)
-                    return;
-
-                SettingsChanged = true;
-
-                _application_DefaultApplicationViewName = value;
-            }
-        }
-
+        // Application view       
         private bool _applicationView_Expand;
         public bool ApplicationView_Expand
         {

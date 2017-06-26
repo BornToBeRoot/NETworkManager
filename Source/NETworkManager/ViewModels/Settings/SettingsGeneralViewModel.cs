@@ -1,33 +1,11 @@
-﻿using System.Linq;
-using NETworkManager.Views;
-using NETworkManager.Models.Settings;
-using System.Collections.ObjectModel;
+﻿using NETworkManager.Models.Settings;
 
 namespace NETworkManager.ViewModels.Settings
 {
     public class SettingsGeneralViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
-
-        public ObservableCollection<ApplicationViewInfo> ApplicationViewCollection { get; set; }
-
-        private ApplicationViewInfo _defaultApplicationViewSelectedItem;
-        public ApplicationViewInfo DefaultApplicationViewSelectedItem
-        {
-            get { return _defaultApplicationViewSelectedItem; }
-            set
-            {
-                if (value == _defaultApplicationViewSelectedItem)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Application_DefaultApplicationViewName = value.Name;
-
-                _defaultApplicationViewSelectedItem = value;
-                OnPropertyChanged();
-            }
-        }
+        private bool _isLoading = true;        
 
         private bool _startMaximized;
         public bool StartMaximized
@@ -124,14 +102,7 @@ namespace NETworkManager.ViewModels.Settings
         }
 
         private void LoadSettings()
-        {
-            if (SettingsManager.Current.DeveloperMode)
-                ApplicationViewCollection = new ObservableCollection<ApplicationViewInfo>(ApplicationView.List.OrderBy(x => x.Name));
-            else
-                ApplicationViewCollection = new ObservableCollection<ApplicationViewInfo>(ApplicationView.List.Where(x => x.IsDev == false).OrderBy(x => x.Name));
-
-            DefaultApplicationViewSelectedItem = ApplicationViewCollection.FirstOrDefault(x => x.Name == SettingsManager.Current.Application_DefaultApplicationViewName);
-
+        {           
             StartMaximized = SettingsManager.Current.Window_StartMaximized;
             AlwaysShowIconInTray = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
             MinimizeInsteadOfTerminating = SettingsManager.Current.Window_MinimizeInsteadOfTerminating;

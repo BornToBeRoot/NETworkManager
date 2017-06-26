@@ -47,7 +47,7 @@
                             </Binding>
                         </ComboBox.Text>
                     </ComboBox>
-                    <Button Grid.Column="1" Command="{Binding ScanCommand}" IsDefault="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsScanRunning}" HorizontalAlignment="Right" Margin="10,0,0,0">
+                    <Button Grid.Column="1" Command="{Binding ScanCommand}" IsDefault="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsScanRunning}" Margin="10,0,0,0">
                         <Button.Resources>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                                 <Setter Property="IsEnabled" Value="True" />
