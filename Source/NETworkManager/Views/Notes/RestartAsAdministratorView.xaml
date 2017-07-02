@@ -23,7 +23,7 @@
                     </VisualBrush>
                 </Rectangle.OpacityMask>
             </Rectangle>
-            <TextBlock Grid.Column="1" Text="{DynamicResource String_RestartAsAdministratorMessage}" Foreground="{DynamicResource AccentColorBrush}" Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Center" Margin="10,0" />
+            <TextBlock Grid.Column="1" Text="{DynamicResource String_RestartAsAdministratorMessage}" Foreground="{DynamicResource AccentColorBrush}" Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Center" TextWrapping="Wrap" Margin="10,0" />
             <Button Grid.Column="2" Command="{Binding RestartAsAdminCommand}" Style="{StaticResource ImageWithTextButton}">
                 <Button.Content>
                     <Grid>

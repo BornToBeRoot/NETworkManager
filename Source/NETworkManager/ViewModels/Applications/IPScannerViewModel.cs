@@ -94,6 +94,16 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
+        public bool ResolveHostname
+        {
+            get { return SettingsManager.Current.IPScanner_ResolveHostname; }
+        }
+
+        public bool ResolveMACAddress
+        {
+            get { return SettingsManager.Current.IPScanner_ResolveMACAddress; }
+        }
+
         private int _progressBarMaximum;
         public int ProgressBarMaximum
         {
@@ -149,13 +159,27 @@ namespace NETworkManager.ViewModels.Applications
 
             LoadSettings();
 
+            // Detect if settings have changed...
+            SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
+
             _isLoading = false;
         }
+
+        
 
         private void LoadSettings()
         {
             if (SettingsManager.Current.IPScanner_IPRangeHistory != null)
                 IPRangeHistory = new List<string>(SettingsManager.Current.IPScanner_IPRangeHistory);
+        }
+
+        private void SettingsManager_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "IPScanner_ResolveHostname")
+                OnPropertyChanged("ResolveHostname");
+
+            if (e.PropertyName == "IPScanner_ResolveMACAddress")
+                OnPropertyChanged("ResolveMACAddress");
         }
         #endregion
 

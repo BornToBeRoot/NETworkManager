@@ -1,12 +1,22 @@
 ﻿using NETworkManager.Views;
 using System.Collections.Generic;
-using System.Windows;
+using System.ComponentModel;
 using System.Xml.Serialization;
 
 namespace NETworkManager.Models.Settings
 {
-    public class SettingsInfo
+    public class SettingsInfo : INotifyPropertyChanged
     {
+        #region Events
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            PropertyChanged?.Invoke(this, e);
+        }
+        #endregion
+
+        #region Variables
         [XmlIgnore]
         public bool SettingsChanged { get; set; }
 
@@ -257,7 +267,6 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 SettingsChanged = true;
-
                 _ipScanner_Attempts = value;
             }
         }
@@ -319,6 +328,7 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
 
                 _ipScanner_ResolveHostname = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("IPScanner_ResolveHostname"));
             }
         }
 
@@ -334,6 +344,7 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
 
                 _ipScanner_ResolveMACAddress = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("IPScanner_ResolveMACAddress"));
             }
         }
 
@@ -678,6 +689,7 @@ namespace NETworkManager.Models.Settings
         }
 
         private bool _portScanner_ResolveHostnamePreferIPv4 = true;
+
         public bool PortScanner_ResolveHostnamePreferIPv4
         {
             get { return _portScanner_ResolveHostnamePreferIPv4; }
@@ -692,10 +704,13 @@ namespace NETworkManager.Models.Settings
             }
         }
         #endregion
+        #endregion
 
+        #region Constructor
         public SettingsInfo()
         {
 
         }
+        #endregion
     }
 }
