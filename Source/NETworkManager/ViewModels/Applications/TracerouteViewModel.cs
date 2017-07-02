@@ -55,88 +55,6 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private int _maximumHops;
-        public int MaximumHops
-        {
-            get { return _maximumHops; }
-            set
-            {
-                if (value == _maximumHops)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Traceroute_MaximumHops = value;
-
-                _maximumHops = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _timeout;
-        public int Timeout
-        {
-            get { return _timeout; }
-            set
-            {
-                if (value == _timeout)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Traceroute_Timeout = value;
-
-                _timeout = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _buffer;
-        public int Buffer
-        {
-            get { return _buffer; }
-            set
-            {
-                if (value == _buffer)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Traceroute_Buffer = value;
-
-                _buffer = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resolveHostnamePreferIPv4;
-        public bool ResolveHostnamePreferIPv4
-        {
-            get { return _resolveHostnamePreferIPv4; }
-            set
-            {
-                if (value == _resolveHostnamePreferIPv4)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Traceroute_ResolveHostnamePreferIPv4 = value;
-
-                _resolveHostnamePreferIPv4 = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resolveHostnamePreferIPv6;
-        public bool ResolveHostnamePreferIPv6
-        {
-            get { return _resolveHostnamePreferIPv6; }
-            set
-            {
-                if (value == _resolveHostnamePreferIPv6)
-                    return;
-
-                _resolveHostnamePreferIPv6 = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _isTraceRunning;
         public bool IsTraceRunning
         {
@@ -179,7 +97,7 @@ namespace NETworkManager.ViewModels.Applications
         }
         #endregion
 
-        #region Constructor
+        #region Constructor, load settings
         public TracerouteViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
@@ -193,26 +111,15 @@ namespace NETworkManager.ViewModels.Applications
 
             _isLoading = false;
         }
-        #endregion
 
-        #region Settings
         private void LoadSettings()
         {
             if (SettingsManager.Current.Traceroute_HostnameOrIPAddressHistory != null)
                 HostnameOrIPAddressHistory = new List<string>(SettingsManager.Current.Traceroute_HostnameOrIPAddressHistory);
-
-            MaximumHops = SettingsManager.Current.Traceroute_MaximumHops;
-            Timeout = SettingsManager.Current.Traceroute_Timeout;
-            Buffer = SettingsManager.Current.Traceroute_Buffer;
-
-            if (SettingsManager.Current.Traceroute_ResolveHostnamePreferIPv4)
-                ResolveHostnamePreferIPv4 = true;
-            else
-                ResolveHostnamePreferIPv6 = true;
         }
         #endregion
-
-        #region ICommands
+       
+        #region ICommands & Actions
         public ICommand TraceCommand
         {
             get { return new RelayCommand(p => TraceAction()); }
@@ -251,12 +158,12 @@ namespace NETworkManager.ViewModels.Applications
 
                     foreach (IPAddress ip in ipHostEntrys.AddressList)
                     {
-                        if (ip.AddressFamily == AddressFamily.InterNetwork && ResolveHostnamePreferIPv4)
+                        if (ip.AddressFamily == AddressFamily.InterNetwork && SettingsManager.Current.Traceroute_ResolveHostnamePreferIPv4)
                         {
                             ipAddress = ip;
                             continue;
                         }
-                        else if (ip.AddressFamily == AddressFamily.InterNetworkV6 && !ResolveHostnamePreferIPv4)
+                        else if (ip.AddressFamily == AddressFamily.InterNetworkV6 && !SettingsManager.Current.Traceroute_ResolveHostnamePreferIPv4)
                         {
                             ipAddress = ip;
                             continue;
@@ -278,9 +185,9 @@ namespace NETworkManager.ViewModels.Applications
 
                 TracerouteOptions tracerouteOptions = new TracerouteOptions
                 {
-                    Timeout = Timeout,
-                    Buffer = Buffer,
-                    MaximumHops = MaximumHops,
+                    Timeout = SettingsManager.Current.Traceroute_Timeout,
+                    Buffer = SettingsManager.Current.Traceroute_Buffer,
+                    MaximumHops = SettingsManager.Current.Traceroute_MaximumHops,
                     DontFragement = true
                 };
 

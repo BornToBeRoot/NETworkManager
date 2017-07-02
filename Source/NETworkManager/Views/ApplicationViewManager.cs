@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace NETworkManager.Views
 {
-    public static class ApplicationView
+    public static class ApplicationViewManager
     {
         // List of all applications
         public static List<ApplicationViewInfo> List
@@ -13,15 +13,15 @@ namespace NETworkManager.Views
             {
                 return new List<ApplicationViewInfo>
                 {
-                    new ApplicationViewInfo(Name.NetworkInterface, new PackIconModern() { Kind = PackIconModernKind.Network }),
-                    new ApplicationViewInfo(Name.IPScanner, new PackIconMaterial() { Kind = PackIconMaterialKind.Sitemap }),
-                    new ApplicationViewInfo(Name.PortScanner, new PackIconModern() { Kind = PackIconModernKind.NetworkPort}),
-                    new ApplicationViewInfo(Name.SubnetCalculator, new PackIconMaterial() { Kind = PackIconMaterialKind.Calculator }),
-                    new ApplicationViewInfo(Name.WakeOnLAN, new PackIconMaterial() { Kind = PackIconMaterialKind.Power }),
-                    new ApplicationViewInfo(Name.Ping, new PackIconMaterial() { Kind = PackIconMaterialKind.LanConnect }),
-                    new ApplicationViewInfo(Name.Traceroute,  new PackIconModern() { Kind = PackIconModernKind.TransitConnection }),
-                    new ApplicationViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.Dna }, true),
-                    new ApplicationViewInfo(Name.Lookup, new PackIconFontAwesome() {Kind = PackIconFontAwesomeKind.Book })
+                    new ApplicationViewInfo(Name.NetworkInterface, new PackIconModern() { Kind = PackIconModernKind.Network }, false),
+                    new ApplicationViewInfo(Name.IPScanner, new PackIconMaterial() { Kind = PackIconMaterialKind.Sitemap }, true),
+                    new ApplicationViewInfo(Name.PortScanner, new PackIconModern() { Kind = PackIconModernKind.NetworkPort}, true),
+                    new ApplicationViewInfo(Name.SubnetCalculator, new PackIconMaterial() { Kind = PackIconMaterialKind.Calculator }, false),
+                    new ApplicationViewInfo(Name.WakeOnLAN, new PackIconMaterial() { Kind = PackIconMaterialKind.Power }, false),
+                    new ApplicationViewInfo(Name.Ping, new PackIconMaterial() { Kind = PackIconMaterialKind.LanConnect }, true),
+                    new ApplicationViewInfo(Name.Traceroute,  new PackIconModern() { Kind = PackIconModernKind.TransitConnection }, true),
+                    new ApplicationViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.Dna }, true, true),
+                    new ApplicationViewInfo(Name.Lookup, new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.Book }, false)
                 };
             }
         }
@@ -33,6 +33,7 @@ namespace NETworkManager.Views
 
         public enum Name
         {
+            None,
             NetworkInterface,
             IPScanner,
             WakeOnLAN,

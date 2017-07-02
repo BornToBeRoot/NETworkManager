@@ -60,6 +60,8 @@
     <system:String x:Key="String_Header_Port">Port</system:String>
     <system:String x:Key="String_Header_Socket">Socket</system:String>
     <system:String x:Key="String_Header_History">History</system:String>
+    <system:String x:Key="String_Header_Applications">Anwendungen</system:String>
+    <system:String x:Key="String_Header_Update">Update</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>

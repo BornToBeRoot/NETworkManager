@@ -1,5 +1,6 @@
 ﻿using NETworkManager.Views;
 using System.Collections.Generic;
+using System.Windows;
 using System.Xml.Serialization;
 
 namespace NETworkManager.Models.Settings
@@ -56,24 +57,9 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _window_StartMaximized;
-        public bool Window_StartMaximized
-        {
-            get { return _window_StartMaximized; }
-            set
-            {
-                if (value == _window_StartMaximized)
-                    return;
-
-                SettingsChanged = true;
-
-                _window_StartMaximized = value;
-            }
-        }
-
         // Applications        
-        private ApplicationView.Name _application_DefaultApplicationViewName = ApplicationView.Name.NetworkInterface;
-        public ApplicationView.Name Application_DefaultApplicationViewName
+        private ApplicationViewManager.Name _application_DefaultApplicationViewName = ApplicationViewManager.Name.NetworkInterface;
+        public ApplicationViewManager.Name Application_DefaultApplicationViewName
         {
             get { return _application_DefaultApplicationViewName; }
             set

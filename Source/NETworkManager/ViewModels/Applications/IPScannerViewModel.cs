@@ -53,108 +53,6 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private int _threads;
-        public int Threads
-        {
-            get { return _threads; }
-            set
-            {
-                if (value == _threads)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.IPScanner_Threads = value;
-
-                _threads = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _timeout;
-        public int Timeout
-        {
-            get { return _timeout; }
-            set
-            {
-                if (value == _timeout)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.IPScanner_Timeout = value;
-
-                _timeout = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _buffer;
-        public int Buffer
-        {
-            get { return _buffer; }
-            set
-            {
-                if (value == _buffer)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.IPScanner_Buffer = value;
-
-                _buffer = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _Attempts;
-        public int Attempts
-        {
-            get { return _Attempts; }
-            set
-            {
-                if (value == _Attempts)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.IPScanner_Attempts = value;
-
-                _Attempts = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resolveHostname;
-        public bool ResolveHostname
-        {
-            get { return _resolveHostname; }
-            set
-            {
-                if (value == _resolveHostname)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.IPScanner_ResolveHostname = value;
-
-                _resolveHostname = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resolveMACAddress;
-        public bool ResolveMACAddress
-        {
-            get { return _resolveMACAddress; }
-            set
-            {
-                if (value == _resolveMACAddress)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.IPScanner_ResolveMACAddress = value;
-
-                _resolveMACAddress = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _isScanRunning;
         public bool IsScanRunning
         {
@@ -239,7 +137,7 @@ namespace NETworkManager.ViewModels.Applications
         }
         #endregion
 
-        #region Constructor
+        #region Constructor, load settings
         public IPScannerViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
@@ -253,24 +151,15 @@ namespace NETworkManager.ViewModels.Applications
 
             _isLoading = false;
         }
-        #endregion
 
-        #region Settings
         private void LoadSettings()
         {
             if (SettingsManager.Current.IPScanner_IPRangeHistory != null)
                 IPRangeHistory = new List<string>(SettingsManager.Current.IPScanner_IPRangeHistory);
-
-            Timeout = SettingsManager.Current.IPScanner_Timeout;
-            Buffer = SettingsManager.Current.IPScanner_Buffer;
-            Attempts = SettingsManager.Current.IPScanner_Attempts;
-            Threads = SettingsManager.Current.IPScanner_Threads;
-            ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname;
-            ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
         }
         #endregion
 
-        #region ICommands
+        #region ICommands & Actions
         public ICommand ScanCommand
         {
             get { return new RelayCommand(p => ScanAction()); }
@@ -318,12 +207,12 @@ namespace NETworkManager.ViewModels.Applications
 
             IPScannerOptions ipScannerOptions = new IPScannerOptions
             {
-                Threads = Threads,
-                Timeout = Timeout,
-                Buffer = new byte[Buffer],
-                Attempts = Attempts,
-                ResolveHostname = ResolveHostname,
-                ResolveMACAddress = ResolveMACAddress
+                Threads = SettingsManager.Current.IPScanner_Threads,
+                Timeout = SettingsManager.Current.IPScanner_Timeout,
+                Buffer = new byte[SettingsManager.Current.IPScanner_Buffer],
+                Attempts = SettingsManager.Current.IPScanner_Attempts,
+                ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname,
+                ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress
             };
 
             IPScanner ipScanner = new IPScanner();

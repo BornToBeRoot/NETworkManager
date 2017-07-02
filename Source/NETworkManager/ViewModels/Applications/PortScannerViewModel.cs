@@ -85,88 +85,6 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private int _threads;
-        public int Threads
-        {
-            get { return _threads; }
-            set
-            {
-                if (value == _threads)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.PortScanner_Threads = value;
-
-                _threads = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _showClosed;
-        public bool ShowClosed
-        {
-            get { return _showClosed; }
-            set
-            {
-                if (value == _showClosed)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.PortScanner_ShowClosed = value;
-
-                _showClosed = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _timeout;
-        public int Timeout
-        {
-            get { return _timeout; }
-            set
-            {
-                if (value == _timeout)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.PortScanner_Timeout = value;
-
-                _timeout = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resolveHostnamePreferIPv4;
-        public bool ResolveHostnamePreferIPv4
-        {
-            get { return _resolveHostnamePreferIPv4; }
-            set
-            {
-                if (value == _resolveHostnamePreferIPv4)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.PortScanner_ResolveHostnamePreferIPv4 = value;
-
-                _resolveHostnamePreferIPv4 = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resolveHostnamePreferIPv6;
-        public bool ResolveHostnamePreferIPv6
-        {
-            get { return _resolveHostnamePreferIPv6; }
-            set
-            {
-                if (value == _resolveHostnamePreferIPv6)
-                    return;
-
-                _resolveHostnamePreferIPv6 = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _isScanRunning;
         public bool IsScanRunning
         {
@@ -275,15 +193,6 @@ namespace NETworkManager.ViewModels.Applications
 
             if (SettingsManager.Current.PortScanner_PortsHistory != null)
                 PortsHistory = new List<string>(SettingsManager.Current.PortScanner_PortsHistory);
-
-            Threads = SettingsManager.Current.PortScanner_Threads;
-            ShowClosed = SettingsManager.Current.PortScanner_ShowClosed;
-            Timeout = SettingsManager.Current.PortScanner_Timeout;
-
-            if (SettingsManager.Current.PortScanner_ResolveHostnamePreferIPv4)
-                ResolveHostnamePreferIPv4 = true;
-            else
-                ResolveHostnamePreferIPv6 = true;
         }
         #endregion
 
@@ -325,12 +234,12 @@ namespace NETworkManager.ViewModels.Applications
 
                     foreach (IPAddress ip in ipHostEntrys.AddressList)
                     {
-                        if (ip.AddressFamily == AddressFamily.InterNetwork && ResolveHostnamePreferIPv4)
+                        if (ip.AddressFamily == AddressFamily.InterNetwork && SettingsManager.Current.PortScanner_ResolveHostnamePreferIPv4)
                         {
                             ipAddress = ip;
                             continue;
                         }
-                        else if (ip.AddressFamily == AddressFamily.InterNetworkV6 && !ResolveHostnamePreferIPv4)
+                        else if (ip.AddressFamily == AddressFamily.InterNetworkV6 && !SettingsManager.Current.PortScanner_ResolveHostnamePreferIPv4)
                         {
                             ipAddress = ip;
                             continue;
@@ -360,9 +269,9 @@ namespace NETworkManager.ViewModels.Applications
 
                 PortScannerOptions portScannerOptions = new PortScannerOptions
                 {
-                    Threads = Threads,
-                    ShowClosed = ShowClosed,
-                    Timeout = Timeout
+                    Threads = SettingsManager.Current.PortScanner_Threads,
+                    ShowClosed = SettingsManager.Current.PortScanner_ShowClosed,
+                    Timeout = SettingsManager.Current.PortScanner_Timeout
                 };
 
                 PortScanner portScanner = new PortScanner();

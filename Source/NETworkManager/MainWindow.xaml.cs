@@ -124,7 +124,7 @@ namespace NETworkManager
             }
         }
 
-        ApplicationView.Name filterLastViewName;
+        ApplicationViewManager.Name filterLastViewName;
         int? filterLastCount;
 
         private string _searchText;
@@ -186,8 +186,6 @@ namespace NETworkManager
 
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
                 HideWindowToTray();
-            else if (SettingsManager.Current.Window_StartMaximized)
-                WindowState = WindowState.Maximized;
 
             // Set windows title if admin
             if (ConfigurationManager.Current.IsAdmin)
@@ -212,9 +210,9 @@ namespace NETworkManager
 
             // Developer features
             if (SettingsManager.Current.DeveloperMode)
-                _applicationViewCollectionSource.Source = ApplicationView.List;
+                _applicationViewCollectionSource.Source = ApplicationViewManager.List;
             else
-                _applicationViewCollectionSource.Source = ApplicationView.List.Where(x => x.IsDev == false);
+                _applicationViewCollectionSource.Source = ApplicationViewManager.List.Where(x => x.IsDev == false);
 
             _applicationViewCollectionSource.Filter += ApplicationView_Search;
             _applicationViewCollectionSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
@@ -296,64 +294,64 @@ namespace NETworkManager
         DNSLookupView dnsLookupView;
         LookupView lookupView;
 
-        private ApplicationView.Name? currentApplicationViewName = null;
+        private ApplicationViewManager.Name? currentApplicationViewName = null;
 
-        private void ChangeApplicationView(ApplicationView.Name name)
+        private void ChangeApplicationView(ApplicationViewManager.Name name)
         {
             if (currentApplicationViewName == name)
                 return;
 
             switch (name)
             {
-                case ApplicationView.Name.NetworkInterface:
+                case ApplicationViewManager.Name.NetworkInterface:
                     if (networkInterfaceView == null)
                         networkInterfaceView = new NetworkInterfaceView();
 
                     contentControlApplication.Content = networkInterfaceView;
                     break;
-                case ApplicationView.Name.IPScanner:
+                case ApplicationViewManager.Name.IPScanner:
                     if (ipScannerView == null)
                         ipScannerView = new IPScannerView();
 
                     contentControlApplication.Content = ipScannerView;
                     break;
-                case ApplicationView.Name.PortScanner:
+                case ApplicationViewManager.Name.PortScanner:
                     if (portScannerView == null)
                         portScannerView = new PortScannerView();
 
                     contentControlApplication.Content = portScannerView;
                     break;
-                case ApplicationView.Name.SubnetCalculator:
+                case ApplicationViewManager.Name.SubnetCalculator:
                     if (subnetCalculatorView == null)
                         subnetCalculatorView = new SubnetCalculatorView();
 
                     contentControlApplication.Content = subnetCalculatorView;
                     break;
-                case ApplicationView.Name.WakeOnLAN:
+                case ApplicationViewManager.Name.WakeOnLAN:
                     if (wakeOnLANView == null)
                         wakeOnLANView = new WakeOnLANView();
 
                     contentControlApplication.Content = wakeOnLANView;
                     break;
-                case ApplicationView.Name.Ping:
+                case ApplicationViewManager.Name.Ping:
                     if (pingView == null)
                         pingView = new PingView();
 
                     contentControlApplication.Content = pingView;
                     break;
-                case ApplicationView.Name.Traceroute:
+                case ApplicationViewManager.Name.Traceroute:
                     if (tracerouteView == null)
                         tracerouteView = new TracerouteView();
 
                     contentControlApplication.Content = tracerouteView;
                     break;
-                case ApplicationView.Name.DNSLookup:
+                case ApplicationViewManager.Name.DNSLookup:
                     if (dnsLookupView == null)
                         dnsLookupView = new DNSLookupView();
 
                     contentControlApplication.Content = dnsLookupView;
                     break;
-                case ApplicationView.Name.Lookup:
+                case ApplicationViewManager.Name.Lookup:
                     if (lookupView == null)
                         lookupView = new LookupView();
 
@@ -560,7 +558,7 @@ namespace NETworkManager
 
         private async void OpenSettingsAction()
         {
-            SettingsWindow settingsWindow = new SettingsWindow();
+            SettingsWindow settingsWindow = _isInTray ? new SettingsWindow() : new SettingsWindow(SelectedApplicationViewInfo.Name);
 
             if (_isInTray)
             {

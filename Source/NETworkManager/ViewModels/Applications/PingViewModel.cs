@@ -49,174 +49,9 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                {
                     SettingsManager.Current.Ping_HostnameOrIPAddressHistory = value;
 
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
-
                 _hostnameOrIPAddressHistory = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _attempts;
-        public int Attempts
-        {
-            get { return _attempts; }
-            set
-            {
-                if (value == _attempts)
-                    return;
-
-                if (!_isLoading)
-                {
-                    SettingsManager.Current.Ping_Attempts = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
-
-                _attempts = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _timeout;
-        public int Timeout
-        {
-            get { return _timeout; }
-            set
-            {
-                if (value == _timeout)
-                    return;
-
-                if (!_isLoading)
-                {
-                    SettingsManager.Current.Ping_Timeout = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
-
-                _timeout = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _buffer;
-        public int Buffer
-        {
-            get { return _buffer; }
-            set
-            {
-                if (value == _buffer)
-                    return;
-
-                if (!_isLoading)
-                {
-                    SettingsManager.Current.Ping_Buffer = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
-
-                _buffer = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _ttl;
-        public int TTL
-        {
-            get { return _ttl; }
-            set
-            {
-                if (value == _ttl)
-                    return;
-
-                if (!_isLoading)
-                {
-                    SettingsManager.Current.Ping_TTL = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
-
-                _ttl = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _dontFragment;
-        public bool DontFragment
-        {
-            get { return _dontFragment; }
-            set
-            {
-                if (value == _dontFragment)
-                    return;
-
-                if (!_isLoading)
-                {
-                    SettingsManager.Current.Ping_DontFragment = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
-
-                _dontFragment = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _waitTime;
-        public int WaitTime
-        {
-            get { return _waitTime; }
-            set
-            {
-                if (value == _waitTime)
-                    return;
-
-                if (!_isLoading)
-                {
-                    SettingsManager.Current.Ping_WaitTime = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
-
-                _waitTime = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resolveHostnamePreferIPv4;
-        public bool ResolveHostnamePreferIPv4
-        {
-            get { return _resolveHostnamePreferIPv4; }
-            set
-            {
-                if (value == _resolveHostnamePreferIPv4)
-                    return;
-
-                if (!_isLoading)
-                {
-                    SettingsManager.Current.Ping_ResolveHostnamePreferIPv4 = value;
-
-                    // SettingsManager.Current.SettingsChanged = true;
-                }
-
-                _resolveHostnamePreferIPv4 = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resolveHostnamePreferIPv6;
-        public bool ResolveHostnamePreferIPv6
-        {
-            get { return _resolveHostnamePreferIPv6; }
-            set
-            {
-                if (value == _resolveHostnamePreferIPv6)
-                    return;
-
-                _resolveHostnamePreferIPv6 = value;
                 OnPropertyChanged();
             }
         }
@@ -368,29 +203,15 @@ namespace NETworkManager.ViewModels.Applications
         {
             if (SettingsManager.Current.Ping_HostnameOrIPAddressHistory != null)
                 HostnameOrIPAddressHistory = new List<string>(SettingsManager.Current.Ping_HostnameOrIPAddressHistory);
-
-            Attempts = SettingsManager.Current.Ping_Attempts;
-            Timeout = SettingsManager.Current.Ping_Timeout;
-            Buffer = SettingsManager.Current.Ping_Buffer;
-            TTL = SettingsManager.Current.Ping_TTL;
-            DontFragment = SettingsManager.Current.Ping_DontFragment;
-            WaitTime = SettingsManager.Current.Ping_WaitTime;
-
-            if (SettingsManager.Current.Ping_ResolveHostnamePreferIPv4)
-                ResolveHostnamePreferIPv4 = true;
-            else
-                ResolveHostnamePreferIPv6 = true;
         }
         #endregion
 
-        #region ICommands
+        #region ICommands & Actions
         public ICommand PingCommand
         {
             get { return new RelayCommand(p => PingAction()); }
         }
-        #endregion
 
-        #region Methods
         private void PingAction()
         {
             if (IsPingRunning)
@@ -398,7 +219,9 @@ namespace NETworkManager.ViewModels.Applications
             else
                 StartPing();
         }
+        #endregion
 
+        #region Methods      
         private async void StartPing()
         {
             IsPingRunning = true;
@@ -424,12 +247,12 @@ namespace NETworkManager.ViewModels.Applications
 
                     foreach (IPAddress ip in ipHostEntrys.AddressList)
                     {
-                        if (ip.AddressFamily == AddressFamily.InterNetwork && ResolveHostnamePreferIPv4)
+                        if (ip.AddressFamily == AddressFamily.InterNetwork && SettingsManager.Current.Ping_ResolveHostnamePreferIPv4)
                         {
                             ipAddress = ip;
                             continue;
                         }
-                        else if (ip.AddressFamily == AddressFamily.InterNetworkV6 && !ResolveHostnamePreferIPv4)
+                        else if (ip.AddressFamily == AddressFamily.InterNetworkV6 && !SettingsManager.Current.Ping_ResolveHostnamePreferIPv4)
                         {
                             ipAddress = ip;
                             continue;
@@ -463,12 +286,12 @@ namespace NETworkManager.ViewModels.Applications
 
             PingOptions pingOptions = new PingOptions()
             {
-                Attempts = Attempts,
-                Timeout = Timeout,
-                Buffer = new byte[Buffer],
-                TTL = TTL,
-                DontFragment = DontFragment,
-                WaitTime = WaitTime
+                Attempts = SettingsManager.Current.Ping_Attempts,
+                Timeout = SettingsManager.Current.Ping_Timeout,
+                Buffer = new byte[SettingsManager.Current.Ping_Buffer],
+                TTL = SettingsManager.Current.Ping_TTL,
+                DontFragment = SettingsManager.Current.Ping_DontFragment,
+                WaitTime = SettingsManager.Current.Ping_WaitTime
             };
 
             Ping ping = new Ping();

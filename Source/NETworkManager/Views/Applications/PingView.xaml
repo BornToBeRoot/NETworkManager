@@ -180,30 +180,5 @@
                 </StackPanel>
             </Grid>
         </TabItem>
-        <TabItem Header="{DynamicResource String_Settings}">
-            <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
-                <ScrollViewer.Resources>
-                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollViewerScrollBar}" />
-                </ScrollViewer.Resources>
-                <StackPanel >
-                    <TextBlock Text="{DynamicResource String_Header_Ping}" Style="{StaticResource HeaderTextBlock}" />
-                    <TextBlock  Text="{DynamicResource String_Attempts}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
-                    <mah:NumericUpDown Value="{Binding Attempts}" Maximum="10000" Minimum="0" Interval="1" Margin="0,0,0,10" />
-                    <TextBlock Text="{DynamicResource String_Timeout}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
-                    <mah:NumericUpDown Value="{Binding Timeout}" Maximum="10000" Minimum="100" Interval="100" Margin="0,0,0,10" />
-                    <TextBlock Text="{DynamicResource String_Buffer}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
-                    <mah:NumericUpDown Value="{Binding Buffer}" Minimum="1" Maximum="65535" Interval="1" Margin="0,0,0,10" />
-                    <TextBlock Text="{DynamicResource String_TTL}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
-                    <mah:NumericUpDown Value="{Binding TTL}" Minimum="1" Maximum="255" Interval="1" Margin="0,0,0,10" />
-                    <mah:ToggleSwitch IsChecked="{Binding DontFragment}" Header="{DynamicResource String_Header_DontFragment}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" Margin="0,0,0,10"/>
-                    <TextBlock Text="{DynamicResource String_TimeToWaitBetweenEachPing}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
-                    <mah:NumericUpDown Value="{Binding WaitTime}" Maximum="10000" Minimum="100" Interval="100" Margin="0,0,0,20"/>
-                    <TextBlock Text="{DynamicResource String_Header_DNS}" Style="{StaticResource HeaderTextBlock}" />
-                    <TextBlock Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_PreferredProtocolWhenResolvingHostname}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,0,10" />
-                    <RadioButton Content="{DynamicResource String_IPv4}" FontSize="14" IsChecked="{Binding ResolveHostnamePreferIPv4}" Margin="0,0,0,10" />
-                    <RadioButton Content="{DynamicResource String_IPv6}" FontSize="14" IsChecked="{Binding ResolveHostnamePreferIPv6}" />
-                </StackPanel>
-            </ScrollViewer>
-        </TabItem>
     </TabControl>
 </UserControl>

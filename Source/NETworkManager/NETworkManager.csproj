@@ -161,39 +161,55 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsGeneralView.xaml">
+    <Page Include="Views\Settings\SettingsApplicationPortScannerView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsDeveloperView.xaml">
+    <Page Include="Views\Settings\SettingsApplicationTracerouteView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsImportExportView.xaml">
+    <Page Include="Views\Settings\SettingsApplicationIPScannerView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsSettingsView.xaml">
+    <Page Include="Views\Settings\SettingsApplicationPingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsAutostartView.xaml">
+    <Page Include="Views\Settings\SettingsGeneralGeneralView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsHotKeysView.xaml">
+    <Page Include="Views\Settings\SettingsGeneralDeveloperView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsLanguageView.xaml">
+    <Page Include="Views\Settings\SettingsGeneralImportExportView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsAppearanceView.xaml">
+    <Page Include="Views\Settings\SettingsGeneralSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsWindowView.xaml">
+    <Page Include="Views\Settings\SettingsGeneralAutostartView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings\SettingsGeneralHotKeysView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings\SettingsGeneralLanguageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings\SettingsGeneralAppearanceView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings\SettingsGeneralWindowView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -260,7 +276,11 @@
     <Compile Include="Validators\MACAddressAndMACAddressFirst3BytesRangeValidator.cs" />
     <Compile Include="ViewModels\Applications\PortScannerViewModel.cs" />
     <Compile Include="ViewModels\Applications\LookupViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsGeneralViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsApplicationPortScannerViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsApplicationIPScannerViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsApplicationPingViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsGeneralGeneralViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsApplicationTracerouteViewModel.cs" />
     <Compile Include="Views\Applications\LookupView.xaml.cs">
       <DependentUpon>LookupView.xaml</DependentUpon>
     </Compile>
@@ -302,8 +322,9 @@
     <Compile Include="Models\Settings\LocalizationManager.cs" />
     <Compile Include="Models\Settings\SettingsInfo.cs" />
     <Compile Include="Models\Settings\SettingsManager.cs" />
-    <Compile Include="Views\SettingsViewInfo.cs" />
-    <Compile Include="Views\SettingsViewManager.cs" />
+    <Compile Include="Views\SettingsGeneralViewInfo.cs" />
+    <Compile Include="Views\SettingsApplicationViewManager.cs" />
+    <Compile Include="Views\SettingsGeneralViewManager.cs" />
     <Compile Include="Models\Settings\TemplateManager.cs" />
     <Compile Include="Models\Settings\TemplateNetworkInterfaceConfig.cs" />
     <Compile Include="Models\Settings\TemplateWakeOnLanInfo.cs" />
@@ -326,14 +347,14 @@
     <Compile Include="ViewModels\Notes\RestartAsAdministratorViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\Settings\AboutViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsWindowViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsAppearanceViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsLanguageViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsHotKeysViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsImportExportViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsSettingsViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsAutostartViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsDeveloperViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsGeneralWindowViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsGeneralAppearanceViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsGeneralLanguageViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsGeneralHotKeysViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsGeneralImportExportViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsGeneralSettingsViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsGeneralAutostartViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsGeneralDeveloperViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\Applications\TracerouteView.xaml.cs">
@@ -357,32 +378,44 @@
     <Compile Include="Converters\IPAddressToStringConverter.cs" />
     <Compile Include="Converters\SelectedItemsToBoolConverter.cs" />
     <Compile Include="Converters\IntToStringConverter.cs" />
-    <Compile Include="Views\Settings\SettingsGeneralView.xaml.cs">
-      <DependentUpon>SettingsGeneralView.xaml</DependentUpon>
+    <Compile Include="Views\Settings\SettingsApplicationPortScannerView.xaml.cs">
+      <DependentUpon>SettingsApplicationPortScannerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsDeveloperView.xaml.cs">
-      <DependentUpon>SettingsDeveloperView.xaml</DependentUpon>
+    <Compile Include="Views\Settings\SettingsApplicationTracerouteView.xaml.cs">
+      <DependentUpon>SettingsApplicationTracerouteView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsImportExportView.xaml.cs">
-      <DependentUpon>SettingsImportExportView.xaml</DependentUpon>
+    <Compile Include="Views\Settings\SettingsApplicationIPScannerView.xaml.cs">
+      <DependentUpon>SettingsApplicationIPScannerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsSettingsView.xaml.cs">
-      <DependentUpon>SettingsSettingsView.xaml</DependentUpon>
+    <Compile Include="Views\Settings\SettingsApplicationPingView.xaml.cs">
+      <DependentUpon>SettingsApplicationPingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsAutostartView.xaml.cs">
-      <DependentUpon>SettingsAutostartView.xaml</DependentUpon>
+    <Compile Include="Views\Settings\SettingsGeneralGeneralView.xaml.cs">
+      <DependentUpon>SettingsGeneralGeneralView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsHotKeysView.xaml.cs">
-      <DependentUpon>SettingsHotKeysView.xaml</DependentUpon>
+    <Compile Include="Views\Settings\SettingsGeneralDeveloperView.xaml.cs">
+      <DependentUpon>SettingsGeneralDeveloperView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsLanguageView.xaml.cs">
-      <DependentUpon>SettingsLanguageView.xaml</DependentUpon>
+    <Compile Include="Views\Settings\SettingsGeneralImportExportView.xaml.cs">
+      <DependentUpon>SettingsGeneralImportExportView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsAppearanceView.xaml.cs">
-      <DependentUpon>SettingsAppearanceView.xaml</DependentUpon>
+    <Compile Include="Views\Settings\SettingsGeneralSettingsView.xaml.cs">
+      <DependentUpon>SettingsGeneralSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsWindowView.xaml.cs">
-      <DependentUpon>SettingsWindowView.xaml</DependentUpon>
+    <Compile Include="Views\Settings\SettingsGeneralAutostartView.xaml.cs">
+      <DependentUpon>SettingsGeneralAutostartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsGeneralHotKeysView.xaml.cs">
+      <DependentUpon>SettingsGeneralHotKeysView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsGeneralLanguageView.xaml.cs">
+      <DependentUpon>SettingsGeneralLanguageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsGeneralAppearanceView.xaml.cs">
+      <DependentUpon>SettingsGeneralAppearanceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsGeneralWindowView.xaml.cs">
+      <DependentUpon>SettingsGeneralWindowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>

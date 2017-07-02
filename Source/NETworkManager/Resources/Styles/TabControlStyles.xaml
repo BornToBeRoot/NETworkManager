@@ -44,7 +44,7 @@
                 <ControlTemplate TargetType="{x:Type TabControl}">
                     <DockPanel LastChildFill="True">
                         <Grid x:Name="HeaderGrid" DockPanel.Dock="Left">
-                            <TabPanel x:Name="HeaderPanel" HorizontalAlignment="Left" Panel.ZIndex="1" IsItemsHost="True" KeyboardNavigation.TabIndex="1" />
+                            <UniformGrid x:Name="HeaderPanel" HorizontalAlignment="Stretch" Columns="{Binding Items.Count, RelativeSource={RelativeSource FindAncestor,AncestorType=TabControl}}" Panel.ZIndex="1" IsItemsHost="True" KeyboardNavigation.TabIndex="1" />
                         </Grid>
                         <Border x:Name="ContentPanel" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" KeyboardNavigation.DirectionalNavigation="Contained" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                             <ContentPresenter x:Name="PART_SelectedContentHost" UseLayoutRounding="False" Margin="{TemplateBinding Padding}" ContentSource="SelectedContent" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />

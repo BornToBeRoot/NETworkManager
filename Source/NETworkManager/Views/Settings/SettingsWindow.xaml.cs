@@ -9,11 +9,17 @@ namespace NETworkManager.Views.Settings
     /// </summary>
     public partial class SettingsWindow : MetroWindow
     {
-        private SettingsViewModel viewModel = new SettingsViewModel();
+        private SettingsViewModel viewModel;
 
-        public SettingsWindow()
+        public SettingsWindow() : this(ApplicationViewManager.Name.None)
+        {
+
+        }
+
+        public SettingsWindow(ApplicationViewManager.Name selectedApplicationName)
         {
             InitializeComponent();
+            viewModel = new SettingsViewModel(selectedApplicationName);
             DataContext = viewModel;
         }              
 

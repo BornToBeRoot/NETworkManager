@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="NETworkManager.Views.Settings.SettingsGeneralAppearanceView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Converter="clr-namespace:NETworkManager.Converters"
+        xmlns:metro="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"                      
+        mc:Ignorable="d">
+    <UserControl.Resources>
+        <!-- Converters -->
+        <Converter:AppThemeToBrushConverter x:Key="AppThemeToBrushConverter" />
+        <Converter:AppThemeToStringConverter x:Key="AppThemeToStringConverter" />
+        <Converter:AccentToBrushConverter x:Key="AccentToBrushConverter" />
+        <Converter:AccentToStringConverter x:Key="AccentToStringConverter" />
+   </UserControl.Resources>
+    <StackPanel>
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Theme}"  />
+        <ListView  ItemsSource="{x:Static metro:ThemeManager.AppThemes}" VerticalAlignment="Top" BorderThickness="0" Margin="0,0,0,20" SelectionMode="Single" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle Width="48" Height="48" Margin="-1,2" Fill="{Binding Converter={StaticResource AppThemeToBrushConverter}, ConverterParameter='Name'}" ToolTip="{Binding Converter={StaticResource AppThemeToStringConverter}, ConverterParameter='Name'}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" ItemWidth="{Binding (ListView.View).ItemWidth, RelativeSource={RelativeSource AncestorType=ListView}}"  ItemHeight="{Binding (ListView.View).ItemHeight, RelativeSource={RelativeSource AncestorType=ListView}}" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.SelectedItem>
+                <Binding Path="AppThemeSelectedItem" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
+            </ListView.SelectedItem>
+        </ListView>
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Accent}" />
+        <ListView ItemsSource="{x:Static metro:ThemeManager.Accents}" BorderThickness="0" SelectionMode="Single">
+            <ListView.ItemTemplate>
+                <DataTemplate >
+                    <Rectangle Width="48" Height="48" Margin="-1,2" Fill="{Binding Converter={StaticResource AccentToBrushConverter}, ConverterParameter='Name'}" ToolTip="{Binding Converter={StaticResource AccentToStringConverter}, ConverterParameter='Name'}"  />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" ItemWidth="{Binding (ListView.View).ItemWidth, RelativeSource={RelativeSource AncestorType=ListView}}" ItemHeight="{Binding (ListView.View).ItemHeight, RelativeSource={RelativeSource AncestorType=ListView}}" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.SelectedItem>
+                <Binding Path="AccentSelectedItem" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
+            </ListView.SelectedItem>
+        </ListView>
+    </StackPanel>
+</UserControl>
