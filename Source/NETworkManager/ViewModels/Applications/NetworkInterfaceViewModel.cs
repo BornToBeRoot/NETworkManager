@@ -606,7 +606,7 @@ namespace NETworkManager.ViewModels.Applications
 
             string configSubnetmask = ConfigSubnetmaskOrCidr;
 
-            if (ConfigSubnetmaskOrCidr.StartsWith("/"))
+            if (ConfigEnableStaticIPAddress && ConfigSubnetmaskOrCidr.StartsWith("/"))
                 configSubnetmask = Subnetmask.GetFromCidr(int.Parse(ConfigSubnetmaskOrCidr.TrimStart('/'))).Subnetmask;
 
             try
