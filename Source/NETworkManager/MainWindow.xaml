@@ -8,8 +8,8 @@
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"        
-        Title="{DynamicResource String_ProductName}" SaveWindowPosition="True" Icon="/Resources/Images/NETworkManager.ico" TitleCaps="False" TitleAlignment="Left" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged" Loaded="MetroWindowMain_Loaded" >
-    <Controls:MetroWindow.WindowButtonCommands>
+        Title="{DynamicResource String_ProductName}" Style="{DynamicResource DefaultWindow}" SaveWindowPosition="True" Icon="/Resources/Images/NETworkManager.ico" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged" Loaded="MetroWindowMain_Loaded" >
+       <Controls:MetroWindow.WindowButtonCommands>
         <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </Controls:MetroWindow.WindowButtonCommands>
     <Controls:MetroWindow.IconTemplate>
@@ -448,8 +448,10 @@
             </Border>
             <ContentControl x:Name="contentControlApplication" Grid.Column="1" Focusable="False" />
         </Grid>
-        <StatusBar Grid.Row="1">
+        <Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource GrayBrush8}">
+        <StatusBar>
             <StatusBarItem Content="Version 1.0.0.0" />
         </StatusBar>
+        </Border>
     </Grid>
 </Controls:MetroWindow>
