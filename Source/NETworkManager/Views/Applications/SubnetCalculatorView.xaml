@@ -108,7 +108,7 @@
                         </Style>
                     </StackPanel.Style>
                     <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Details}" />
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer Style="{DynamicResource DefaulScrollViewer}">
                         <Grid>
                             <Grid.Resources>
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" >

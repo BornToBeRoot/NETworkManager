@@ -8,7 +8,6 @@
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
         xmlns:Validator="clr-namespace:NETworkManager.Validators"
         xmlns:Control="clr-namespace:NETworkManager.Controls"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:Notes="clr-namespace:NETworkManager.Views.Notes"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         Dialog:DialogParticipation.Register="{Binding}"
@@ -489,6 +488,7 @@
                         <DataGridTextColumn Header="{DynamicResource String_SecondaryDNSServer}" Binding="{Binding SecondaryDnsServer}" />
                     </Control:MultiSelectDataGrid.Columns>
                     <Control:MultiSelectDataGrid.Resources>
+                        <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource MultiSelectDataGridScrollBar}" />
                         <ContextMenu x:Key="ContextMenuDataGridRow" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteSelectedConfigTemplatesCommand}">
                                 <MenuItem.Icon>

@@ -171,6 +171,7 @@
                         <DataGridTextColumn Header="{DynamicResource String_Port}" Binding="{Binding Port}" Width="*"/>
                     </Control:MultiSelectDataGrid.Columns>
                     <Control:MultiSelectDataGrid.Resources>
+                        <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource MultiSelectDataGridScrollBar}" />
                         <ContextMenu x:Key="ContextMenuDataGridRow" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{DynamicResource String_WakeUp}" Command="{Binding WakeUpSelectedWakeOnLANTemplatesCommand}">
                                 <MenuItem.Icon>

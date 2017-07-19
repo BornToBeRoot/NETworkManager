@@ -148,7 +148,7 @@
         <TextBlock Grid.Row="3" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
         <DataGrid Grid.Row="4" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding IPScanResult}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True" >
             <DataGrid.Resources>
-                <Style TargetType="{x:Type ScrollBar}" />
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <WpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
             </DataGrid.Resources>
             <DataGrid.Columns>
