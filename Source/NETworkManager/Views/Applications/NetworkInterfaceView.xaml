@@ -108,9 +108,8 @@
                         </Button>
                     </Grid>
                 </StackPanel>
-                <!-- <Controls:MetroProgressBar Grid.Row="1" Margin="0,0,0,20" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True" /> -->
                 <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Details}" />
-                <ScrollViewer Grid.Row="3" Style="{StaticResource DefaultScrollViewer}" PanningMode="Both">
+                <ScrollViewer Grid.Row="3" Style="{StaticResource DefaulScrollViewer}">
                     <Grid>
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" >
@@ -256,10 +255,7 @@
                         </Button>
                     </Grid>
                 </StackPanel>
-                <ScrollViewer Grid.Row="1" Style="{StaticResource DefaultScrollViewer}" Margin="0,0,0,10">
-                    <ScrollViewer.Resources>
-                        <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollViewerScrollBar}" />
-                    </ScrollViewer.Resources>
+                <ScrollViewer Grid.Row="1" Style="{StaticResource DefaulScrollViewer}" Margin="0,0,0,10">
                     <StackPanel>
                         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Template}" />
                         <ComboBox FontSize="14" IsReadOnly="True" ItemsSource="{Binding NetworkInterfaceConfigTemplates}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedConfigTemplate}" Margin="0,0,0,20">
@@ -493,7 +489,6 @@
                         <DataGridTextColumn Header="{DynamicResource String_SecondaryDNSServer}" Binding="{Binding SecondaryDnsServer}" />
                     </Control:MultiSelectDataGrid.Columns>
                     <Control:MultiSelectDataGrid.Resources>
-                        <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                         <ContextMenu x:Key="ContextMenuDataGridRow" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteSelectedConfigTemplatesCommand}">
                                 <MenuItem.Icon>

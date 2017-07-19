@@ -19,9 +19,7 @@
         <Converter:PercentConverter x:Key="PercentConverter" />
         <Converter:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
     </UserControl.Resources>
-    <TabControl Style="{StaticResource DefaultTabControl}">
-        <TabItem Header="{DynamicResource String_Header_Ping}">
-            <Grid>
+            <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -179,6 +177,4 @@
                     </Grid>
                 </StackPanel>
             </Grid>
-        </TabItem>
-    </TabControl>
 </UserControl>

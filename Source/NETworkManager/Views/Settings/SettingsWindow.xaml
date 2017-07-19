@@ -84,10 +84,7 @@
                             </ListBox.ItemContainerStyle>
                         </ListBox>
                     </Border>
-                    <ScrollViewer Grid.Column="1" Style="{StaticResource DefaultScrollViewer}" Margin="10">
-                        <ScrollViewer.Resources>
-                            <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollViewerScrollBar}" />
-                        </ScrollViewer.Resources>
+                    <ScrollViewer Grid.Column="1" Style="{StaticResource DefaulScrollViewer}" Margin="10">
                         <ContentControl Content="{Binding SettingsGeneralContent}" />
                     </ScrollViewer>
                 </Grid>
@@ -164,10 +161,7 @@
                             </ListBox.ItemContainerStyle>
                         </ListBox>
                     </Border>
-                    <ScrollViewer Grid.Column="1" Style="{StaticResource DefaultScrollViewer}" Margin="10">
-                        <ScrollViewer.Resources>
-                            <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollViewerScrollBar}" />
-                        </ScrollViewer.Resources>
+                    <ScrollViewer Grid.Column="1" Style="{StaticResource DefaulScrollViewer}" Margin="10">
                         <ContentControl Content="{Binding SettingsApplicationContent}" />
                     </ScrollViewer>
                 </Grid>

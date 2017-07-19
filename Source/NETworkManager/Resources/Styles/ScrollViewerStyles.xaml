@@ -1,14 +1,27 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style x:Key="DefaultScrollViewer" TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource MetroScrollViewer}">
+    <Style x:Key="DefaulScrollViewer" TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource MetroScrollViewer}">
         <Setter Property="PanningMode" Value="Both" />
         <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
-        <Style.Triggers>
-            <Trigger Property="ComputedVerticalScrollBarVisibility" Value="Visible">
-                <Setter Property="Padding" Value="0,0,10,0" />
-            </Trigger>
-        </Style.Triggers>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <ScrollContentPresenter Grid.ColumnSpan="1" Grid.RowSpan="1" />
+                        <ScrollBar Name="PART_VerticalScrollBar" Width="8" HorizontalAlignment="Right" Grid.Column="1" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Style="{StaticResource ScrollViewerScrollBar}" Margin="10,0,0,0"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
     
     <Style x:Key="ApplicationViewScrollViewer" TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource MetroScrollViewer}">
@@ -27,22 +40,15 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <ScrollContentPresenter Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-                        <ScrollBar Name="PART_VerticalScrollBar"
-                            HorizontalAlignment="Right"
-                            Opacity="0.5" 
-                            Grid.Column="1"
-                            Value="{TemplateBinding VerticalOffset}"
-                            Maximum="{TemplateBinding ScrollableHeight}"
-                            ViewportSize="{TemplateBinding ViewportHeight}"
-                            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
+                        <ScrollBar Name="PART_VerticalScrollBar" Width="8" HorizontalAlignment="Right" Opacity="0.5" Grid.Column="1" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
                     </Grid>
                 </ControlTemplate>
-            </Setter.Value>           
+            </Setter.Value>
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
             </Trigger>
         </Style.Triggers>
-    </Style>
+    </Style>    
 </ResourceDictionary>

@@ -8,15 +8,17 @@
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"        
-        Title="{DynamicResource String_ProductName}" Style="{DynamicResource DefaultWindow}" SaveWindowPosition="True" Icon="/Resources/Images/NETworkManager.ico" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged" Loaded="MetroWindowMain_Loaded" >
+        Title="{DynamicResource String_ProductName}" Style="{DynamicResource DefaultWindow}" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged" Loaded="MetroWindowMain_Loaded" >
        <Controls:MetroWindow.WindowButtonCommands>
         <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </Controls:MetroWindow.WindowButtonCommands>
     <Controls:MetroWindow.IconTemplate>
         <DataTemplate>
-            <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Background="Transparent" RenderOptions.EdgeMode="Aliased" RenderOptions.BitmapScalingMode="HighQuality">
-                <Image Source="/Resources/Images/NETworkManager.ico"  Height="20" Width="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Grid>
+            <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}">
+                <Rectangle.OpacityMask>
+                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Sitemap}" />
+                </Rectangle.OpacityMask>
+            </Rectangle>
         </DataTemplate>
     </Controls:MetroWindow.IconTemplate>
     <Controls:MetroWindow.RightWindowCommands>
@@ -80,7 +82,29 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" BorderThickness="0,0,1,0" BorderBrush="{DynamicResource GrayBrush8}">
+            <Border Grid.Column="0" BorderBrush="{DynamicResource GrayBrush8}">
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ApplicationView_Expand}" Value="True">
+                                <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsTextBoxSearchFocused}" Value="True">
+                                <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                            </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding OpenApplicationList}" Value="True" />
+                                    <Condition Binding="{Binding IsMouseOverApplicationList}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="BorderThickness" Value="0,0,1,0" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
                 <Grid >
                     <Grid.RowDefinitions>
                         <!-- 1 = Search, 2 = ApplicationList, 3 = Settings-->

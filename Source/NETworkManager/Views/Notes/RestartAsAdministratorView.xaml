@@ -7,7 +7,7 @@
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
-    <Border BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,1,0,0" Padding="10,10,10,0" Margin="-10,0">
+    <Border BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1,1,1,0" Padding="10" Margin="0,0,0,-10" HorizontalAlignment="Center">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />

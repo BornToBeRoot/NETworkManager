@@ -5,9 +5,10 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/Clean.xaml" />
     </ResourceDictionary.MergedDictionaries>
     <Style x:Key="DefaultWindow" TargetType="{x:Type Controls:MetroWindow}" BasedOn="{StaticResource CleanWindowStyleKey}" >
-        <Setter Property="NonActiveBorderBrush" Value="{DynamicResource GrayBrush8}" />
         <Setter Property="TitleCaps" Value="False" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="EnableDWMDropShadow" Value="True" />
+        <Setter Property="TitleForeground" Value="{DynamicResource GrayBrush3}" />
+        <Setter Property="TitlebarHeight" Value="35" />
     </Style>
 </ResourceDictionary>
