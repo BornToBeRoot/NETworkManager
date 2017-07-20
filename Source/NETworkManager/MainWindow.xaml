@@ -9,7 +9,7 @@
         xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"        
         Title="{DynamicResource String_ProductName}" Style="{DynamicResource DefaultWindow}" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged" Loaded="MetroWindowMain_Loaded" >
-       <Controls:MetroWindow.WindowButtonCommands>
+    <Controls:MetroWindow.WindowButtonCommands>
         <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </Controls:MetroWindow.WindowButtonCommands>
     <Controls:MetroWindow.IconTemplate>
@@ -82,30 +82,8 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" BorderBrush="{DynamicResource GrayBrush8}">
-                <Border.Style>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="BorderThickness" Value="0" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ApplicationView_Expand}" Value="True">
-                                <Setter Property="BorderThickness" Value="0,0,1,0"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding IsTextBoxSearchFocused}" Value="True">
-                                <Setter Property="BorderThickness" Value="0,0,1,0"/>
-                            </DataTrigger>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding OpenApplicationList}" Value="True" />
-                                    <Condition Binding="{Binding IsMouseOverApplicationList}" Value="True" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="BorderThickness" Value="0,0,1,0" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Border.Style>
-                <Grid >
+            <Border Grid.Column="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,1,0">
+                    <Grid >
                     <Grid.RowDefinitions>
                         <!-- 1 = Search, 2 = ApplicationList, 3 = Settings-->
                         <RowDefinition Height="Auto" />
@@ -470,12 +448,21 @@
                     </Interactivity:Interaction.Triggers>
                 </Grid>
             </Border>
-            <ContentControl x:Name="contentControlApplication" Grid.Column="1" Focusable="False" />
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Height="48" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,0,1" >
+                    <TextBlock VerticalAlignment="Center" TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Text="{Binding SelectedApplicationViewInfo.TranslatedName}" Foreground="{DynamicResource GrayBrush3}" Margin="10,0" />
+                </Border>
+                <ContentControl x:Name="contentControlApplication" Grid.Row="1" Focusable="False" />
+            </Grid>
         </Grid>
         <Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource GrayBrush8}">
-        <StatusBar>
-            <StatusBarItem Content="Version 1.0.0.0" />
-        </StatusBar>
+            <StatusBar>
+                <StatusBarItem Content="Version 1.0.0.0" />
+            </StatusBar>
         </Border>
     </Grid>
 </Controls:MetroWindow>

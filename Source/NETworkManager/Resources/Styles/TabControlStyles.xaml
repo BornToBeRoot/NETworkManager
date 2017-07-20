@@ -37,7 +37,6 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0,1,0,0" />
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
-        <Setter Property="Padding" Value="10" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource DefaultTabItem}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -47,7 +46,7 @@
                             <UniformGrid x:Name="HeaderPanel" HorizontalAlignment="Stretch" Columns="{Binding Items.Count, RelativeSource={RelativeSource FindAncestor,AncestorType=TabControl}}" Panel.ZIndex="1" IsItemsHost="True" KeyboardNavigation.TabIndex="1" />
                         </Grid>
                         <Border x:Name="ContentPanel" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" KeyboardNavigation.DirectionalNavigation="Contained" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                            <ContentPresenter x:Name="PART_SelectedContentHost" UseLayoutRounding="False" Margin="{TemplateBinding Padding}" ContentSource="SelectedContent" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <ContentPresenter x:Name="PART_SelectedContentHost" UseLayoutRounding="False" Margin="10" ContentSource="SelectedContent" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
                     </DockPanel>
                     <ControlTemplate.Triggers>

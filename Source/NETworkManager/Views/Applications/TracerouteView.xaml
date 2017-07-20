@@ -20,117 +20,117 @@
         <Converter:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
         <Converter:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
     </UserControl.Resources>
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Destination}" />
-        <Grid Grid.Row="1" Margin="0,0,0,20">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <ComboBox Grid.Column="0" x:Name="txtHostnameOrIPAddress" ItemsSource="{Binding HostnameOrIPAddressHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_HostnameOrIPAddress}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsTraceRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
-                <ComboBox.Text>
-                    <Binding Path="HostnameOrIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </ComboBox.Text>
-            </ComboBox>
-            <Button Grid.Column="1" Command="{Binding TraceCommand}" IsDefault="{Binding IsTraceRunning,Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsTraceRunning}" HorizontalAlignment="Right" Margin="10,0,0,0">
-                <Button.Resources>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                        <Setter Property="IsEnabled" Value="True" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=txtHostnameOrIPAddress}" Value="True" >
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding CancelTrace}" Value="True">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Resources>
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Width="20" Height="20" Margin="10,5,0,5">
-                            <Rectangle.Resources>
-                                <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Play}" />
-                                <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
-                            </Rectangle.Resources>
-                            <Rectangle.Style>
-                                <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
-                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsTraceRunning}" Value="True">
-                                            <Setter Property="OpacityMask" Value="{StaticResource VisualClose}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Rectangle.Style>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" FontSize="14" Margin="10,5" TextAlignment="Center">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Text" Value="{DynamicResource String_Button_Trace}"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsTraceRunning}" Value="True" >
-                                            <Setter Property="Text" Value="{DynamicResource String_Button_Cancel}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </Grid>
-                </Button.Content>
-            </Button>
-        </Grid>
-        <Controls:MetroProgressBar Grid.Row="2" Margin="0,0,0,20" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding IsTraceRunning, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True" />
-        <TextBlock Grid.Row="3" Text="{DynamicResource String_Header_Route}" Style="{StaticResource HeaderTextBlock}" />
-        <Control:ScrollingDataGrid Grid.Row="4" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding TraceResult}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False">
-            <Control:ScrollingDataGrid.Resources>
-                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollingDataGridScrollBar}" />
-            </Control:ScrollingDataGrid.Resources>
-            <Control:ScrollingDataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_Hop}" Binding="{Binding Hop}" Width="100" />
-                <DataGridTextColumn Header="{DynamicResource String_Time1}" Width="100">
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
-                            <Binding Path="Status1" />
-                            <Binding Path="Time1" />
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="{DynamicResource String_Time2}" Width="100">
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
-                            <Binding Path="Status2" />
-                            <Binding Path="Time2" />
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="{DynamicResource String_Time3}" Width="100">
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
-                            <Binding Path="Status3" />
-                            <Binding Path="Time3" />
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress, Converter={StaticResource IPAddressToStringConverter}}" Width="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" Width="*"/>
-            </Control:ScrollingDataGrid.Columns>
-        </Control:ScrollingDataGrid>
-    </Grid>
+        <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Destination}" />
+                <Grid Grid.Row="1" Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Grid.Column="0" x:Name="txtHostnameOrIPAddress" ItemsSource="{Binding HostnameOrIPAddressHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_HostnameOrIPAddress}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsTraceRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                        <ComboBox.Text>
+                            <Binding Path="HostnameOrIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.Text>
+                    </ComboBox>
+                    <Button Grid.Column="1" Command="{Binding TraceCommand}" IsDefault="{Binding IsTraceRunning,Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsTraceRunning}" HorizontalAlignment="Right" Margin="10,0,0,0">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                <Setter Property="IsEnabled" Value="True" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=txtHostnameOrIPAddress}" Value="True" >
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CancelTrace}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Resources>
+                        <Button.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Width="20" Height="20" Margin="10,5,0,5">
+                                    <Rectangle.Resources>
+                                        <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Play}" />
+                                        <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
+                                    </Rectangle.Resources>
+                                    <Rectangle.Style>
+                                        <Style TargetType="{x:Type Rectangle}">
+                                            <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
+                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsTraceRunning}" Value="True">
+                                                    <Setter Property="OpacityMask" Value="{StaticResource VisualClose}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1" FontSize="14" Margin="10,5" TextAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Text" Value="{DynamicResource String_Button_Trace}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsTraceRunning}" Value="True" >
+                                                    <Setter Property="Text" Value="{DynamicResource String_Button_Cancel}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+                </Grid>
+                <Controls:MetroProgressBar Grid.Row="2" Margin="0,0,0,20" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding IsTraceRunning, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True" />
+                <TextBlock Grid.Row="3" Text="{DynamicResource String_Header_Route}" Style="{StaticResource HeaderTextBlock}" />
+                <Control:ScrollingDataGrid Grid.Row="4" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding TraceResult}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False">
+                    <Control:ScrollingDataGrid.Resources>
+                        <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollingDataGridScrollBar}" />
+                    </Control:ScrollingDataGrid.Resources>
+                    <Control:ScrollingDataGrid.Columns>
+                        <DataGridTextColumn Header="{DynamicResource String_Hop}" Binding="{Binding Hop}" Width="100" />
+                        <DataGridTextColumn Header="{DynamicResource String_Time1}" Width="100">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
+                                    <Binding Path="Status1" />
+                                    <Binding Path="Time1" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="{DynamicResource String_Time2}" Width="100">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
+                                    <Binding Path="Status2" />
+                                    <Binding Path="Time2" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="{DynamicResource String_Time3}" Width="100">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
+                                    <Binding Path="Status3" />
+                                    <Binding Path="Time3" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress, Converter={StaticResource IPAddressToStringConverter}}" Width="150" />
+                        <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" Width="*"/>
+                    </Control:ScrollingDataGrid.Columns>
+                </Control:ScrollingDataGrid>
+            </Grid>
 </UserControl>
