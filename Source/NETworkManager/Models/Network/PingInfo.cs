@@ -40,7 +40,7 @@ namespace NETworkManager.Models.Network
             Status = status;
         }
 
-        public static PingInfo Parse(PingArgs e)
+        public static PingInfo Parse(PingReceivedArgs e)
         {
             return new PingInfo(e.IPAddress, e.Bytes, e.Time, e.TTL, e.Status);
         }

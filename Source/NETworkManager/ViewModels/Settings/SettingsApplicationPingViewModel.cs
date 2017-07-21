@@ -109,6 +109,23 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
+        private int _exceptionCancelCount;
+        public int ExceptionCancelCount
+        {
+            get { return _exceptionCancelCount; }
+            set
+            {
+                if (value == _exceptionCancelCount)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.Ping_ExceptionCancelCount = value;
+
+                _exceptionCancelCount = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _resolveHostnamePreferIPv4;
         public bool ResolveHostnamePreferIPv4
         {
@@ -157,6 +174,7 @@ namespace NETworkManager.ViewModels.Settings
             TTL = SettingsManager.Current.Ping_TTL;
             DontFragment = SettingsManager.Current.Ping_DontFragment;
             WaitTime = SettingsManager.Current.Ping_WaitTime;
+            ExceptionCancelCount = SettingsManager.Current.Ping_ExceptionCancelCount;
 
             if (SettingsManager.Current.Ping_ResolveHostnamePreferIPv4)
                 ResolveHostnamePreferIPv4 = true;

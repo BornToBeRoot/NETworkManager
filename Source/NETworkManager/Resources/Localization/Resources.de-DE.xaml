@@ -195,6 +195,8 @@
     <system:String x:Key="String_HostnameOrIPAddress">Hostname oder IP-Adresse</system:String>
     <system:String x:Key="String_Ports">Ports</system:String>
     <system:String x:Key="String_NumberOfStoredEntries">Anzahl gespeicherter Einträge:</system:String>
+    <system:String x:Key="String_NetworkLocationCannotBeReached">Die Netzwerkadresse kann nicht erreicht werden. Überprüfen Sie, ob Ihr Computer mit dem Netzwerk verbunden ist. Informationen zur Netzwerk-Fehlersuche finden Sie in der Windows-Hilfe.</system:String>
+    <system:String x:Key="String_NumberOfErrorsAfterWhichIsCanceled">Anzahl Fehler nach denen abgebrochen wird:</system:String>
 
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
@@ -334,6 +336,8 @@
     <!-- IPStatus -->
     <system:String x:Key="String_IPStatus_Success">Erfolgreich</system:String>
     <system:String x:Key="String_IPStatus_DestinationHostUnreachable">Zielhost nicht erreichbar.</system:String>
+    <system:String x:Key="String_IPStatus_DestinationNetworkUnreachable">Zielnetz nicht erreichbar.</system:String>
+    <system:String x:Key="String_IPStatus_DestinationPortUnreachable">Zielport nicht erreichbar</system:String>
     <system:String x:Key="String_IPStatus_TimedOut">Zeitüberschreitung der Anforderung.</system:String>
     <system:String x:Key="String_IPStatus_TtlExpired">Die Gültigkeitsdauer wurde bei der Übertragung überschritten.</system:String>
 

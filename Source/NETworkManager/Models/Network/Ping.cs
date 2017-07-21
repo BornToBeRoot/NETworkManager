@@ -10,9 +10,9 @@ namespace NETworkManager.Models.Network
 {
     public class Ping
     {
-        public event EventHandler<PingArgs> PingReceived;
+        public event EventHandler<PingReceivedArgs> PingReceived;
 
-        protected virtual void OnPingReceived(PingArgs e)
+        protected virtual void OnPingReceived(PingReceivedArgs e)
         {
             PingReceived?.Invoke(this, e);
         }
@@ -22,6 +22,13 @@ namespace NETworkManager.Models.Network
         protected virtual void OnPingCompleted()
         {
             PingCompleted?.Invoke(this, EventArgs.Empty);
+        }
+
+        public event EventHandler<PingExceptionArgs> PingException;
+
+        protected virtual void OnPingException(PingExceptionArgs e)
+        {
+            PingException?.Invoke(this, e);
         }
 
         public event EventHandler UserHasCanceled;
@@ -36,6 +43,7 @@ namespace NETworkManager.Models.Network
             Task.Run(() =>
             {
                 int pingTotal = 0;
+                int errorCount = 0;
 
                 System.Net.NetworkInformation.PingOptions options = new System.Net.NetworkInformation.PingOptions
                 {
@@ -47,19 +55,43 @@ namespace NETworkManager.Models.Network
                 {
                     do
                     {
-                        PingReply pingReply = ping.Send(ipAddress, pingOptions.Timeout, pingOptions.Buffer, options);
+                        PingReply pingReply;
 
-                        if (pingReply.Status == IPStatus.Success)
+                        try
                         {
-                            if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
-                                OnPingReceived(new PingArgs(pingReply.Address, pingReply.Buffer.Count(), pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status));
+                            pingReply = ping.Send(ipAddress, pingOptions.Timeout, pingOptions.Buffer, options);
+
+                            errorCount = 0;  // Reset the error count (if no exception was thrown)
+
+                            if (pingReply.Status == IPStatus.Success)
+                            {
+                                if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
+                                    OnPingReceived(new PingReceivedArgs(pingReply.Address, pingReply.Buffer.Count(), pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status));
+                                else
+                                    OnPingReceived(new PingReceivedArgs(pingReply.Address, pingReply.Buffer.Count(), pingReply.RoundtripTime, pingReply.Status));
+                            }
                             else
-                                OnPingReceived(new PingArgs(pingReply.Address, pingReply.Buffer.Count(), pingReply.RoundtripTime, pingReply.Status));
+                            {
+                                if (pingReply.Address == null)
+                                    OnPingReceived(new PingReceivedArgs(ipAddress, pingReply.Status));
+                                else
+                                    OnPingReceived(new PingReceivedArgs(pingReply.Address, pingReply.Status));
+                            }
+
                         }
-                        else
+                        catch (PingException ex)
                         {
-                            OnPingReceived(new PingArgs(pingReply.Address, pingReply.Status));
+                            errorCount++;
+
+                            if (errorCount == pingOptions.ExceptionCancelCount)
+                            {
+                                OnPingException(new PingExceptionArgs(ex.Message, ex.InnerException));
+
+                                break;
+                            }
                         }
+
+                        pingTotal++;
 
                         // If ping is canceled... dont wait for example 5 seconds
                         for (int i = 0; i < pingOptions.WaitTime; i += 100)
@@ -69,11 +101,9 @@ namespace NETworkManager.Models.Network
                             if (cancellationToken.IsCancellationRequested)
                                 break;
                         }
-
-                        pingTotal++;
                     } while ((pingOptions.Attempts == 0 || pingTotal < pingOptions.Attempts) && !cancellationToken.IsCancellationRequested);
                 }
-                               
+
                 if (cancellationToken.IsCancellationRequested)
                     OnUserHasCanceled();
                 else
@@ -82,3 +112,4 @@ namespace NETworkManager.Models.Network
         }
     }
 }
+

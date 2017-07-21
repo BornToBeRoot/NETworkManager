@@ -264,6 +264,7 @@
     <Compile Include="Helpers\SubnetHelper.cs" />
     <Compile Include="Helpers\SubnetmaskHelper.cs" />
     <Compile Include="Helpers\TimestampHelper.cs" />
+    <Compile Include="Models\Network\PingExceptionArgs.cs" />
     <Compile Include="Models\Network\PortInfo.cs" />
     <Compile Include="Models\Network\PortScannedArgs.cs" />
     <Compile Include="Models\Network\PortScannerOptions.cs" />
@@ -303,7 +304,7 @@
     <Compile Include="Models\Network\NetworkInterfaceConfig.cs" />
     <Compile Include="Models\Network\NetworkInterfaceInfo.cs" />
     <Compile Include="Models\Network\Ping.cs" />
-    <Compile Include="Models\Network\PingArgs.cs" />
+    <Compile Include="Models\Network\PingReceivedArgs.cs" />
     <Compile Include="Models\Network\PingInfo.cs" />
     <Compile Include="Models\Network\PingOptions.cs" />
     <Compile Include="Models\Network\Subnet.cs" />

@@ -501,6 +501,20 @@ namespace NETworkManager.Models.Settings
                 _ping_WaitTime = value;
             }
         }
+
+        private int _ping_ExceptionCancelCount = 3;
+        public int Ping_ExceptionCancelCount
+        {
+            get { return _ping_ExceptionCancelCount; }
+            set
+            {
+                if (value == _ping_ExceptionCancelCount)
+                    return;
+
+                SettingsChanged = true;
+                _ping_ExceptionCancelCount = value;
+            }
+        }
         #endregion
 
         #region Traceroute

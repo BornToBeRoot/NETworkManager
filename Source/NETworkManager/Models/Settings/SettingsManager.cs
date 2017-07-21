@@ -196,9 +196,11 @@ namespace NETworkManager.Models.Settings
         public static void Reset()
         {
             // Init new Settings with default data
-            Current = new SettingsInfo();
+            Current = new SettingsInfo()
+            {
+                SettingsChanged = true
+            };
 
-            Current.SettingsChanged = true;
             ForceRestart = true;
         }
         #endregion                

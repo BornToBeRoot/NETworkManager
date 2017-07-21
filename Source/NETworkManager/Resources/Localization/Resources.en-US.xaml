@@ -197,6 +197,8 @@
     <system:String x:Key="String_HostnameOrIPAddress">Hostname or IP-Address</system:String>
     <system:String x:Key="String_Ports">Ports</system:String>
     <system:String x:Key="String_NumberOfStoredEntries">Number of stored entries:</system:String>
+    <system:String x:Key="String_NetworkLocationCannotBeReached">The network address cannot be reached. Check if your computer is connected to the network. For information about network troubleshooting, see Windows Help.</system:String>
+    <system:String x:Key="String_NumberOfErrorsAfterWhichIsCanceled">Number of errors after which is canceled:</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
@@ -335,8 +337,11 @@
     <!-- IPStatus -->
     <system:String x:Key="String_IPStatus_Success">Success</system:String>
     <system:String x:Key="String_IPStatus_DestinationHostUnreachable">Destination host unreachable.</system:String>
+    <system:String x:Key="String_IPStatus_DestinationNetworkUnreachable">Destination network unreachable.</system:String>
+    <system:String x:Key="String_IPStatus_DestinationPortUnreachable">Destination port unreachable.</system:String>
     <system:String x:Key="String_IPStatus_TimedOut">Request timed out.</system:String>
     <system:String x:Key="String_IPStatus_TtlExpired">TTL expired in transit.</system:String>
+    
     
     <!-- PortStatus -->
     <system:String x:Key="String_PortStatus_Closed">Closed</system:String>

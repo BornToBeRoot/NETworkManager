@@ -11,7 +11,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using NETworkManager.Collections;
-
+using System.ComponentModel;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -235,8 +235,7 @@ namespace NETworkManager.ViewModels.Applications
             MaximumTime = 0;
 
             // Try to parse the string into an IP-Address
-            IPAddress ipAddress;
-            IPAddress.TryParse(HostnameOrIPAddress, out ipAddress);
+            IPAddress.TryParse(HostnameOrIPAddress, out IPAddress ipAddress);
 
             try
             {
@@ -291,17 +290,19 @@ namespace NETworkManager.ViewModels.Applications
                 Buffer = new byte[SettingsManager.Current.Ping_Buffer],
                 TTL = SettingsManager.Current.Ping_TTL,
                 DontFragment = SettingsManager.Current.Ping_DontFragment,
-                WaitTime = SettingsManager.Current.Ping_WaitTime
+                WaitTime = SettingsManager.Current.Ping_WaitTime,
+                ExceptionCancelCount = SettingsManager.Current.Ping_ExceptionCancelCount
             };
 
             Ping ping = new Ping();
 
             ping.PingReceived += Ping_PingReceived;
             ping.PingCompleted += Ping_PingCompleted;
+            ping.PingException += Ping_PingException;
             ping.UserHasCanceled += Ping_UserHasCanceled;
 
             ping.SendAsync(ipAddress, pingOptions, cancellationTokenSource.Token);
-        }
+        }              
 
         private void StopPing()
         {
@@ -317,18 +318,7 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Events
-        private void Ping_UserHasCanceled(object sender, System.EventArgs e)
-        {
-            CancelPing = false;
-            IsPingRunning = false;
-        }
-
-        private void Ping_PingCompleted(object sender, System.EventArgs e)
-        {
-            IsPingRunning = false;
-        }
-
-        private void Ping_PingReceived(object sender, PingArgs e)
+        private void Ping_PingReceived(object sender, PingReceivedArgs e)
         {
             PingInfo pingInfo = PingInfo.Parse(e);
 
@@ -363,6 +353,39 @@ namespace NETworkManager.ViewModels.Applications
             {
                 PingsLost++;
             }
+        }
+                
+        private void Ping_PingCompleted(object sender, System.EventArgs e)
+        {
+            IsPingRunning = false;
+        }
+
+        private async void Ping_PingException(object sender, PingExceptionArgs e)
+        {
+            // Get the error code and change the message (maybe we can help the user with troubleshooting)
+            Win32Exception w32ex = e.InnerException as Win32Exception;
+
+            string errorMessage = string.Empty;
+
+            switch(w32ex.NativeErrorCode)
+            {
+                case 1231:
+                    errorMessage = Application.Current.Resources["String_NetworkLocationCannotBeReached"] as string;
+                    break;
+                default:
+                    errorMessage = e.InnerException.Message;
+                    break;
+            }
+
+            await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_PingError"] as string, errorMessage , MessageDialogStyle.Affirmative, dialogSettings);
+
+            IsPingRunning = false;
+        }
+
+        private void Ping_UserHasCanceled(object sender, EventArgs e)
+        {
+            CancelPing = false;
+            IsPingRunning = false;
         }
         #endregion
     }

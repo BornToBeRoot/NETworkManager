@@ -39,8 +39,10 @@ namespace NETworkManager.ViewModels.Notes
         {
             try
             {
-                ProcessStartInfo info = new ProcessStartInfo(Assembly.GetExecutingAssembly().Location);
-                info.Verb = "runas";
+                ProcessStartInfo info = new ProcessStartInfo(Assembly.GetExecutingAssembly().Location)
+                {
+                    Verb = "runas"
+                };
 
                 Process.Start(info);
 

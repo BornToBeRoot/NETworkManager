@@ -8,13 +8,14 @@
         public byte[] Buffer { get; set; }
         public int TTL { get; set; }
         public bool DontFragment { get; set; }
+        public int ExceptionCancelCount { get; set; }
 
         public PingOptions()
         {
 
         }
 
-        public PingOptions(int attempts, int waitTime, int timeout, byte[] buffer, int ttl, bool dontFragment)
+        public PingOptions(int attempts, int waitTime, int timeout, byte[] buffer, int ttl, bool dontFragment, int exceptionCancelCount)
         {
             Attempts = attempts;
             WaitTime = waitTime;
@@ -22,6 +23,7 @@
             Buffer = buffer;
             TTL = ttl;
             DontFragment = dontFragment;
+            ExceptionCancelCount = exceptionCancelCount;
         }
     }
 }
