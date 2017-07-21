@@ -54,6 +54,9 @@ namespace NETworkManager
                 if (!_isLoading)
                     SettingsManager.Current.ApplicationView_Expand = value;
 
+                if (!value)
+                    ClearSearchFilterOnApplicationListMinimize();
+
                 _applicationView_Expand = value;
                 OnPropertyChanged("ApplicationView_Expand");
             }
@@ -67,6 +70,9 @@ namespace NETworkManager
             {
                 if (value == _isTextBoxSearchFocused)
                     return;
+
+                if (!value)
+                    ClearSearchFilterOnApplicationListMinimize();
 
                 _isTextBoxSearchFocused = value;
                 OnPropertyChanged("IsTextBoxSearchFocused");
@@ -82,6 +88,9 @@ namespace NETworkManager
                 if (value == _openApplicationList)
                     return;
 
+                if (!value)
+                    ClearSearchFilterOnApplicationListMinimize();
+
                 _openApplicationList = value;
                 OnPropertyChanged("OpenApplicationList");
             }
@@ -95,6 +104,9 @@ namespace NETworkManager
             {
                 if (value == _isMouseOverApplicationList)
                     return;
+
+                if (!value)
+                    ClearSearchFilterOnApplicationListMinimize();
 
                 _isMouseOverApplicationList = value;
                 OnPropertyChanged("IsMouseOverApplicationList");
@@ -159,7 +171,24 @@ namespace NETworkManager
 
                 filterLastCount = filteredCollectionCount;
 
+                // Show note when there was nothing found
+                SearchNothingFound = filteredCollectionCount == 0;
+
                 OnPropertyChanged("SearchText");
+            }
+        }
+
+        private bool _searchNothingFound;
+        public bool SearchNothingFound
+        {
+            get { return _searchNothingFound; }
+            set
+            {
+                if (value == _searchNothingFound)
+                    return;
+
+                _searchNothingFound = value;
+                OnPropertyChanged("SearchNothingFound");
             }
         }
         #endregion
@@ -383,6 +412,20 @@ namespace NETworkManager
                 e.Accepted = true;
             else
                 e.Accepted = false;
+        }
+
+        private void ClearSearchFilterOnApplicationListMinimize()
+        {
+            if (ApplicationView_Expand)
+                return;
+
+            if (OpenApplicationList && IsTextBoxSearchFocused)
+                return;
+
+            if (OpenApplicationList && IsMouseOverApplicationList)
+                return;
+
+            SearchText = string.Empty;
         }
         #endregion
 

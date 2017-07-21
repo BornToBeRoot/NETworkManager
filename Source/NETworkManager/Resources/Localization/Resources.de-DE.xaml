@@ -197,6 +197,7 @@
     <system:String x:Key="String_NumberOfStoredEntries">Anzahl gespeicherter Einträge:</system:String>
     <system:String x:Key="String_NetworkLocationCannotBeReached">Die Netzwerkadresse kann nicht erreicht werden. Überprüfen Sie, ob Ihr Computer mit dem Netzwerk verbunden ist. Informationen zur Netzwerk-Fehlersuche finden Sie in der Windows-Hilfe.</system:String>
     <system:String x:Key="String_NumberOfErrorsAfterWhichIsCanceled">Anzahl Fehler nach denen abgebrochen wird:</system:String>
+    <system:String x:Key="String_SearchedApplicationNotFound">Gesuchte Anwendung nicht gefunden</system:String>
 
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
