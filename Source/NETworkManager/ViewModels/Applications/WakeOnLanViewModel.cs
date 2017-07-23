@@ -164,7 +164,7 @@ namespace NETworkManager.ViewModels.Applications
             get { return new RelayCommand(p => WakeUpAction(), WakeUpAction_CanExecute); }
         }
 
-        private bool WakeUpAction_CanExecute(object obj)
+        private bool WakeUpAction_CanExecute(object parameter)
         {
             return !MACAddressHasError && !BroadcastHasError && !PortHasError;
         }

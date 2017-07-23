@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Validator="clr-namespace:NETworkManager.Validators"
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
+        xmlns:WpfHelper="clr-namespace:NETworkManager.WpfHelper"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
         xmlns:Control="clr-namespace:NETworkManager.Controls"
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             
@@ -30,7 +31,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <ComboBox Grid.Column="0" x:Name="txtMACAddressOrFirst3Bytes" ItemsSource="{Binding MACAddressHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddressesOrParts}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsOUILookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                    <ComboBox Grid.Column="0" x:Name="txtMACAddressOrFirst3Bytes" ItemsSource="{Binding MACAddressHistory}" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddressesOrParts}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsOUILookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                         <ComboBox.InputBindings>
                             <KeyBinding Command="{Binding OUILookupCommand}" Key="Return" />
                         </ComboBox.InputBindings>
@@ -137,7 +138,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <ComboBox Grid.Column="0" x:Name="txtPorts" ItemsSource="{Binding PortsHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EamplePortScanRange}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsPortLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                    <ComboBox Grid.Column="0" x:Name="txtPorts" ItemsSource="{Binding PortsHistory}" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding PortsHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EamplePortScanRange}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsPortLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                         <ComboBox.InputBindings>
                             <KeyBinding Command="{Binding PortLookupCommand}" Key="Return" />
                         </ComboBox.InputBindings>

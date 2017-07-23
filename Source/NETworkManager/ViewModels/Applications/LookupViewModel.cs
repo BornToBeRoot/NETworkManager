@@ -32,6 +32,20 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
+        private bool _macAddressHasError;
+        public bool MACAddressHasError
+        {
+            get { return _macAddressHasError; }
+            set
+            {
+                if (value == _macAddressHasError)
+                    return;
+
+                _macAddressHasError = value;
+                OnPropertyChanged();
+            }
+        }
+
         private List<string> _macAddressHistory = new List<string>();
         public List<string> MACAddressHistory
         {
@@ -42,9 +56,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                {
                     SettingsManager.Current.Lookup_MACAddressHistory = value;
-                }
 
                 _macAddressHistory = value;
                 OnPropertyChanged();
@@ -92,6 +104,19 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
+        private bool _portsHasError;
+        public bool PortsHasError
+        {
+            get { return _portsHasError; }
+            set
+            {
+                if (value == _portsHasError)
+                    return;
+                _portsHasError = value;
+                OnPropertyChanged();
+            }
+        }
+
         private List<string> _portsHistory = new List<string>();
         public List<string> PortsHistory
         {
@@ -102,9 +127,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                {
                     SettingsManager.Current.Lookup_PortsHistory = value;
-                }
 
                 _portsHistory = value;
                 OnPropertyChanged();
@@ -171,7 +194,12 @@ namespace NETworkManager.ViewModels.Applications
         #region ICommands & Actions
         public ICommand OUILookupCommand
         {
-            get { return new RelayCommand(p => OUILookupAction()); }
+            get { return new RelayCommand(p => OUILookupAction(), OUILookup_CanExecute); }
+        }
+        
+        private bool OUILookup_CanExecute(object parameter)
+        {
+            return !MACAddressHasError;
         }
 
         private async void OUILookupAction()
@@ -195,7 +223,12 @@ namespace NETworkManager.ViewModels.Applications
 
         public ICommand PortLookupCommand
         {
-            get { return new RelayCommand(p => PortLookupAction()); }
+            get { return new RelayCommand(p => PortLookupAction(),PortLookup_CanExecute); }
+        }
+
+        private bool PortLookup_CanExecute(object parameter)
+        {
+            return !PortsHasError;
         }
 
         private async void PortLookupAction()
