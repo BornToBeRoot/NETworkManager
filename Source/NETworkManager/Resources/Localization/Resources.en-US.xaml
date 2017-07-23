@@ -189,8 +189,6 @@
     <system:String x:Key="String_SettingsSuccessfullyReset">Settings successfully reset!</system:String>
     <system:String x:Key="String_SelectedSettingsAreOverwritten">The selected settings are overwritten and the application is restarted.</system:String>
     <system:String x:Key="String_Vendor">Vendor</system:String>
-    <system:String x:Key="String_MagicPacketSent">Magic Packet sent.</system:String>
-    <system:String x:Key="String_AllMagicPacketSent">All Magic Packet sent.</system:String>
     <system:String x:Key="String_Protocol">Protocol</system:String>
     <system:String x:Key="String_Service">Service</system:String>
     <system:String x:Key="String_ShowClosedPorts">Show closed ports</system:String>
@@ -200,6 +198,8 @@
     <system:String x:Key="String_NetworkLocationCannotBeReached">The network address cannot be reached. Check if your computer is connected to the network. For information about network troubleshooting, see Windows Help.</system:String>
     <system:String x:Key="String_NumberOfErrorsAfterWhichIsCanceled">Number of errors after which is canceled:</system:String>
     <system:String x:Key="String_SearchedApplicationNotFound">Searched application not found!</system:String>
+    <system:String x:Key="String_MagicPacketSuccessfulSended">Magic packet successful sended!</system:String>
+    <system:String x:Key="String_MagicPacketSuccessfulSendedToClients">Magic packet successful sended to {0} clients!</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>

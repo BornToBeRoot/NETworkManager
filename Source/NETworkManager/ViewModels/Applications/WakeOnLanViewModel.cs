@@ -182,7 +182,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 WakeOnLAN.Send(info);
 
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Successfull"] as string, "TRANSLATE - gesendet", MessageDialogStyle.Affirmative, dialogSettings);
+                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, Application.Current.Resources["String_MagicPacketSuccessfulSended"] as string, MessageDialogStyle.Affirmative, dialogSettings);
             }
             catch (Exception ex)
             {
@@ -246,7 +246,7 @@ namespace NETworkManager.ViewModels.Applications
                     WakeOnLAN.Send(info);
 
                     if (SelectedWakeOnLANTemplates.Count == 1)
-                        await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, Application.Current.Resources["String_MagicPacketSent"] as string, MessageDialogStyle.Affirmative, dialogSettings);
+                        await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, Application.Current.Resources["String_MagicPacketSuccessfulSended"] as string, MessageDialogStyle.Affirmative, dialogSettings);
                 }
                 catch (Exception ex)
                 {
@@ -256,7 +256,7 @@ namespace NETworkManager.ViewModels.Applications
             }
 
             if (SelectedWakeOnLANTemplates.Count > 1 && SelectedWakeOnLANTemplates.Count != errorCount)
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, Application.Current.Resources["String_AllMagicPacketSent"] as string, MessageDialogStyle.Affirmative, dialogSettings);
+                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, string.Format(Application.Current.Resources["String_MagicPacketSuccessfulSendedToClients"] as string, SelectedWakeOnLANTemplates.Count - errorCount), MessageDialogStyle.Affirmative, dialogSettings);
         }
 
         public ICommand DeleteSelectedWakeOnLANTemplatesCommand

@@ -187,8 +187,6 @@
     <system:String x:Key="String_SettingsSuccessfullyReset">Einstellungen erfolgreich zurückgesetzt!</system:String>
     <system:String x:Key="String_SelectedSettingsAreOverwritten">Die ausgewählten Einstellungen werden überschrieben und die Anwendung wird neu gestartet.</system:String>
     <system:String x:Key="String_Vendor">Hersteller</system:String>
-    <system:String x:Key="String_MagicPacketSent">Magic Packet gesendet.</system:String>
-    <system:String x:Key="String_AllMagicPacketSent">Alle Magic Packets gesendet.</system:String>
     <system:String x:Key="String_Protocol">Protokoll</system:String>
     <system:String x:Key="String_Service">Dienst</system:String>
     <system:String x:Key="String_ShowClosedPorts">Geschlossene Ports anzeigen</system:String>
@@ -198,6 +196,8 @@
     <system:String x:Key="String_NetworkLocationCannotBeReached">Die Netzwerkadresse kann nicht erreicht werden. Überprüfen Sie, ob Ihr Computer mit dem Netzwerk verbunden ist. Informationen zur Netzwerk-Fehlersuche finden Sie in der Windows-Hilfe.</system:String>
     <system:String x:Key="String_NumberOfErrorsAfterWhichIsCanceled">Anzahl Fehler nach denen abgebrochen wird:</system:String>
     <system:String x:Key="String_SearchedApplicationNotFound">Gesuchte Anwendung nicht gefunden!</system:String>
+    <system:String x:Key="String_MagicPacketSuccessfulSended">Magic Packet erfolgreich gesendet!</system:String>
+    <system:String x:Key="String_MagicPacketSuccessfulSendedToClients">Magic Paket erfolgreich an {0} Clients gesendet!</system:String>
 
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
