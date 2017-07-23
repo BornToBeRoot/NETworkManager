@@ -21,9 +21,7 @@ http://creativecommons.org/licenses/by-nd/3.0/ *
 - Jay Zawrotny (@JayZawrotny)
   - A Bunch
 - Oren Nachman
-  - 
-  
-  .chevron.down
+  - appbar.chevron.down
   - appbar.chevron.up
   - appbar.chevron.left
   - appbar.chevron.right

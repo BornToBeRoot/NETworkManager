@@ -6,6 +6,7 @@
              xmlns:Validator="clr-namespace:NETworkManager.Validators"
              xmlns:Converter="clr-namespace:NETworkManager.Converters"
              xmlns:Control="clr-namespace:NETworkManager.Controls"
+             xmlns:WpfHelper="clr-namespace:NETworkManager.WpfHelper"
              xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
@@ -36,7 +37,10 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_MACAddress}" />
-                <TextBox Grid.Column="1" Grid.Row="0" x:Name="txtMACAddress" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddress}" Style="{StaticResource DefaultTextBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                <TextBox Grid.Column="1" Grid.Row="0" x:Name="txtMACAddress" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddress}" Style="{StaticResource DefaultTextBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
+                    </TextBox.InputBindings>
                     <TextBox.Text>
                         <Binding Path="MACAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -47,7 +51,10 @@
                     </TextBox.Text>
                 </TextBox>
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Broadcast}" Style="{StaticResource CenterTextBlock}" />
-                <TextBox x:Name="txtBroadcast" Grid.Column="1" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Broadcast}" Style="{StaticResource DefaultTextBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                <TextBox x:Name="txtBroadcast" Grid.Column="1" Grid.Row="2" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding BroadcastHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Broadcast}" Style="{StaticResource DefaultTextBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
+                    </TextBox.InputBindings>
                     <TextBox.Text>
                         <Binding Path="Broadcast" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -58,7 +65,10 @@
                     </TextBox.Text>
                 </TextBox>
                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Port}" Style="{StaticResource CenterTextBlock}" />
-                <TextBox x:Name="txtPort" Grid.Column="1" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort}" Style="{StaticResource DefaultTextBox}" HorizontalAlignment="Left" Width="65" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                <TextBox x:Name="txtPort" Grid.Column="1" Grid.Row="4" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding PortHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort}" Style="{StaticResource DefaultTextBox}" HorizontalAlignment="Left" Width="65" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
+                    </TextBox.InputBindings>
                     <TextBox.Text>
                         <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -101,7 +111,7 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <Button HorizontalAlignment="Right" Command="{Binding WakeUpCommand}" IsDefault="True">
+                <Button HorizontalAlignment="Right" Command="{Binding WakeUpCommand}">
                     <Button.Content>
                         <Grid>
                             <Grid.ColumnDefinitions>

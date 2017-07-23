@@ -34,6 +34,20 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
+        private bool _macAddressHasError;
+        public bool MACAddressHasError
+        {
+            get { return _macAddressHasError; }
+            set
+            {
+                if (value == _macAddressHasError)
+                    return;
+
+                _macAddressHasError = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _broadcast;
         public string Broadcast
         {
@@ -48,6 +62,20 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
+        private bool _broadcastHasError;
+        public bool BroadcastHasError
+        {
+            get { return _broadcastHasError; }
+            set
+            {
+                if (value == _broadcastHasError)
+                    return;
+
+                _broadcastHasError = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _port;
         public string Port
         {
@@ -58,6 +86,20 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 _port = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _portHasError;
+        public bool PortHasError
+        {
+            get { return _portHasError; }
+            set
+            {
+                if (value == _portHasError)
+                    return;
+
+                _portHasError = value;
                 OnPropertyChanged();
             }
         }
@@ -119,7 +161,12 @@ namespace NETworkManager.ViewModels.Applications
         #region ICommands & Actions
         public ICommand WakeUpCommand
         {
-            get { return new RelayCommand(p => WakeUpAction()); }
+            get { return new RelayCommand(p => WakeUpAction(), WakeUpAction_CanExecute); }
+        }
+
+        private bool WakeUpAction_CanExecute(object obj)
+        {
+            return !MACAddressHasError && !BroadcastHasError && !PortHasError;
         }
 
         private async void WakeUpAction()
