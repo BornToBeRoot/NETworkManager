@@ -3,69 +3,49 @@ using NETworkManager.Views;
 using System.Windows.Controls;
 using NETworkManager.Views.Settings;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Data;
+using System;
+using System.Windows;
 
 namespace NETworkManager.ViewModels.Settings
 {
     public class SettingsViewModel : ViewModelBase
     {
-        #region Variables
-
-        private int _selectedSettingsTabIndex;
-        public int SelectedSettingsTabIndex
+        #region Setting
+        private CollectionViewSource _settingsGeneralViewsSource;
+        public ICollectionView SettingsGeneralViews
         {
-            get { return _selectedSettingsTabIndex; }
+            get { return _settingsGeneralViewsSource.View; }
+        }
+
+        private UserControl _settingsContent;
+        public UserControl SettingsContent
+        {
+            get { return _settingsContent; }
             set
             {
-                if (value == _selectedSettingsTabIndex)
+                if (value == _settingsContent)
                     return;
 
-                _selectedSettingsTabIndex = value;
+                _settingsContent = value;
                 OnPropertyChanged();
             }
         }
 
-        #region General
-        private List<SettingsGeneralViewInfo> _settingsGeneralViews = new List<SettingsGeneralViewInfo>();
-        public List<SettingsGeneralViewInfo> SettingsGeneralViews
+        private SettingsViewInfo _selectedSettingsView;
+        public SettingsViewInfo SelectedSettingsView
         {
-            get { return _settingsGeneralViews; }
+            get { return _selectedSettingsView; }
             set
             {
-                if (value == _settingsGeneralViews)
-                    return;
-
-                _settingsGeneralViews = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private UserControl _settingsGeneralContent;
-        public UserControl SettingsGeneralContent
-        {
-            get { return _settingsGeneralContent; }
-            set
-            {
-                if (value == _settingsGeneralContent)
-                    return;
-
-                _settingsGeneralContent = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private SettingsGeneralViewInfo _selectedSettingsGeneralView;
-        public SettingsGeneralViewInfo SelectedSettingsGeneralView
-        {
-            get { return _selectedSettingsGeneralView; }
-            set
-            {
-                if (value == _selectedSettingsGeneralView)
+                if (value == _selectedSettingsView)
                     return;
 
                 if (value != null)
                     ChangeSettingsGeneralView(value);
 
-                _selectedSettingsGeneralView = value;
+                _selectedSettingsView = value;
                 OnPropertyChanged();
             }
         }
@@ -79,178 +59,116 @@ namespace NETworkManager.ViewModels.Settings
         SettingsGeneralSettingsView _settingsGeneralSettingsView;
         SettingsGeneralImportExportView _settingsGeneralImportExportView;
         SettingsGeneralDeveloperView _settingsGeneralExperimentalView;
-        #endregion
-
-        #region Application
-        private List<ApplicationViewInfo> _settingsApplicationViews = new List<ApplicationViewInfo>();
-        public List<ApplicationViewInfo> SettingsApplicationViews
-        {
-            get { return _settingsApplicationViews; }
-            set
-            {
-                if (value == _settingsApplicationViews)
-                    return;
-
-                _settingsApplicationViews = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private UserControl _settingsApplicationContent;
-        public UserControl SettingsApplicationContent
-        {
-            get { return _settingsApplicationContent; }
-            set
-            {
-                if (value == _settingsApplicationContent)
-                    return;
-
-                _settingsApplicationContent = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private ApplicationViewInfo _selectedSettingsApplicationView;
-        public ApplicationViewInfo SelectedSettingsApplicationView
-        {
-            get { return _selectedSettingsApplicationView; }
-            set
-            {
-                if (value == _selectedSettingsApplicationView)
-                    return;
-
-                if (value != null)
-                    ChangeSettingsApplicationView(value);
-
-                _selectedSettingsApplicationView = value;
-                OnPropertyChanged();
-            }
-        }
-
         SettingsApplicationIPScannerView _settingsApplicationIPScannerView;
         SettingsApplicationPortScannerView _settingsApplicationPortScannerView;
         SettingsApplicationPingView _settingsApplicationPingView;
         SettingsApplicationTracerouteView _settingsApplicationTracerouteView;
         #endregion
-        #endregion
 
         #region Contructor, load settings
         public SettingsViewModel(ApplicationViewManager.Name selectedApplicationName)
         {
-            LoadSettings(selectedApplicationName);
+            LoadSettings(selectedApplicationName.ToString());
         }
 
-        private void LoadSettings(ApplicationViewManager.Name selectedApplicationName)
+        private void LoadSettings(string selectedApplicationName)
         {
             // General
-            SettingsGeneralViews = SettingsGeneralViewManager.List;
-            SelectedSettingsGeneralView = SettingsGeneralViews.Where(x => x.Name == SettingsGeneralViewManager.Name.General).FirstOrDefault();
+            _settingsGeneralViewsSource = new CollectionViewSource();
+            _settingsGeneralViewsSource.Source = SettingsViewManager.List;
+            _settingsGeneralViewsSource.GroupDescriptions.Add(new PropertyGroupDescription("TranslatedGroup"));
 
-            // Application
-            SettingsApplicationViews = SettingsApplicationViewManager.List;
-            ApplicationViewInfo applicationViewInfo = SettingsApplicationViews.FirstOrDefault(x => x.Name == selectedApplicationName);
-
-            if (applicationViewInfo == null || applicationViewInfo.Name == ApplicationViewManager.Name.None)
-            {
-                SelectedSettingsApplicationView = SettingsApplicationViews.First();
-            }
+            // Not nice, but works -.-
+            if (Enum.GetNames(typeof(SettingsViewManager.Name)).Contains(selectedApplicationName))
+                SelectedSettingsView = SettingsGeneralViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name.ToString() == selectedApplicationName);
             else
-            {
-                SelectedSettingsApplicationView = applicationViewInfo;
-                SelectedSettingsTabIndex = 1;
-            }
+                SelectedSettingsView = SettingsGeneralViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name == SettingsViewManager.Name.General);
         }
         #endregion
 
         #region Methods
-        private void ChangeSettingsGeneralView(SettingsGeneralViewInfo settingsViewInfo)
+        private void ChangeSettingsGeneralView(SettingsViewInfo settingsViewInfo)
         {
             switch (settingsViewInfo.Name)
             {
-                case SettingsGeneralViewManager.Name.General:
+                case SettingsViewManager.Name.General:
                     if (_settingsGeneralGerneralView == null)
                         _settingsGeneralGerneralView = new SettingsGeneralGeneralView();
 
-                    SettingsGeneralContent = _settingsGeneralGerneralView;
+                    SettingsContent = _settingsGeneralGerneralView;
                     break;
-                case SettingsGeneralViewManager.Name.Window:
+                case SettingsViewManager.Name.Window:
                     if (_settingsGeneralWindowView == null)
                         _settingsGeneralWindowView = new SettingsGeneralWindowView();
 
-                    SettingsGeneralContent = _settingsGeneralWindowView;
+                    SettingsContent = _settingsGeneralWindowView;
                     break;
-                case SettingsGeneralViewManager.Name.Appearance:
+                case SettingsViewManager.Name.Appearance:
                     if (_settingsGeneralApperanceView == null)
                         _settingsGeneralApperanceView = new SettingsGeneralAppearanceView();
 
-                    SettingsGeneralContent = _settingsGeneralApperanceView;
+                    SettingsContent = _settingsGeneralApperanceView;
                     break;
-                case SettingsGeneralViewManager.Name.Language:
+                case SettingsViewManager.Name.Language:
                     if (_settingsGeneralLanguageView == null)
                         _settingsGeneralLanguageView = new SettingsGeneralLanguageView();
 
-                    SettingsGeneralContent = _settingsGeneralLanguageView;
+                    SettingsContent = _settingsGeneralLanguageView;
                     break;
-                case SettingsGeneralViewManager.Name.HotKeys:
+                case SettingsViewManager.Name.HotKeys:
                     if (_settingsGeneralHotKeysView == null)
                         _settingsGeneralHotKeysView = new SettingsGeneralHotKeysView();
 
-                    SettingsGeneralContent = _settingsGeneralHotKeysView;
+                    SettingsContent = _settingsGeneralHotKeysView;
                     break;
-                case SettingsGeneralViewManager.Name.Autostart:
+                case SettingsViewManager.Name.Autostart:
                     if (_settingsGeneralAutostartView == null)
                         _settingsGeneralAutostartView = new SettingsGeneralAutostartView();
 
-                    SettingsGeneralContent = _settingsGeneralAutostartView;
+                    SettingsContent = _settingsGeneralAutostartView;
                     break;
-                case SettingsGeneralViewManager.Name.Settings:
+                case SettingsViewManager.Name.Settings:
                     if (_settingsGeneralSettingsView == null)
                         _settingsGeneralSettingsView = new SettingsGeneralSettingsView();
 
-                    SettingsGeneralContent = _settingsGeneralSettingsView;
+                    SettingsContent = _settingsGeneralSettingsView;
                     break;
-                case SettingsGeneralViewManager.Name.ImportExport:
+                case SettingsViewManager.Name.ImportExport:
                     if (_settingsGeneralImportExportView == null)
                         _settingsGeneralImportExportView = new SettingsGeneralImportExportView();
 
-                    SettingsGeneralContent = _settingsGeneralImportExportView;
+                    SettingsContent = _settingsGeneralImportExportView;
                     break;
-                case SettingsGeneralViewManager.Name.Developer:
+                case SettingsViewManager.Name.Developer:
                     if (_settingsGeneralExperimentalView == null)
                         _settingsGeneralExperimentalView = new SettingsGeneralDeveloperView();
 
-                    SettingsGeneralContent = _settingsGeneralExperimentalView;
+                    SettingsContent = _settingsGeneralExperimentalView;
                     break;
-            }
-        }
 
-        private void ChangeSettingsApplicationView(ApplicationViewInfo applicationViewInfo)
-        {
-            switch (applicationViewInfo.Name)
-            {
-                case ApplicationViewManager.Name.IPScanner:
+                case SettingsViewManager.Name.IPScanner:
                     if (_settingsApplicationIPScannerView == null)
                         _settingsApplicationIPScannerView = new SettingsApplicationIPScannerView();
 
-                    SettingsApplicationContent = _settingsApplicationIPScannerView;
+                    SettingsContent = _settingsApplicationIPScannerView;
                     break;
-                case ApplicationViewManager.Name.PortScanner:
+                case SettingsViewManager.Name.PortScanner:
                     if (_settingsApplicationPortScannerView == null)
                         _settingsApplicationPortScannerView = new SettingsApplicationPortScannerView();
 
-                    SettingsApplicationContent = _settingsApplicationPortScannerView;
+                    SettingsContent = _settingsApplicationPortScannerView;
                     break;
-                case ApplicationViewManager.Name.Ping:
+                case SettingsViewManager.Name.Ping:
                     if (_settingsApplicationPingView == null)
                         _settingsApplicationPingView = new SettingsApplicationPingView();
 
-                    SettingsApplicationContent = _settingsApplicationPingView;
+                    SettingsContent = _settingsApplicationPingView;
                     break;
-                case ApplicationViewManager.Name.Traceroute:
+                case SettingsViewManager.Name.Traceroute:
                     if (_settingsApplicationTracerouteView == null)
                         _settingsApplicationTracerouteView = new SettingsApplicationTracerouteView();
 
-                    SettingsApplicationContent = _settingsApplicationTracerouteView;
+                    SettingsContent = _settingsApplicationTracerouteView;
                     break;
             }
         }

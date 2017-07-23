@@ -8,7 +8,6 @@ namespace NETworkManager.Views
         public ApplicationViewManager.Name Name { get; set; }
         public string TranslatedName { get; set; }
         public Canvas Icon { get; set; }
-        public bool HasSettings { get; set; }
         public bool IsDev { get; set; }
 
         public ApplicationViewInfo()
@@ -16,83 +15,75 @@ namespace NETworkManager.Views
 
         }
 
-        public ApplicationViewInfo(ApplicationViewManager.Name name, Canvas icon, bool hasSettings)
+        public ApplicationViewInfo(ApplicationViewManager.Name name, Canvas icon)
         {
             Name = name;
             TranslatedName = ApplicationViewManager.TranslateName(name);
             Icon = icon;
-            HasSettings = hasSettings;
         }
 
-        public ApplicationViewInfo(ApplicationViewManager.Name name, Canvas icon, bool hasSettings, bool isDev)
+        public ApplicationViewInfo(ApplicationViewManager.Name name, Canvas icon, bool isDev)
         {
             Name = name;
             TranslatedName = ApplicationViewManager.TranslateName(name);
             Icon = icon;
-            HasSettings = hasSettings;
             IsDev = isDev;
         }
 
-        public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconModern packIconModern, bool hasSettings)
+        public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconModern packIconModern)
         {
             Name = name;
             TranslatedName = ApplicationViewManager.TranslateName(name);
             Canvas canvas = new Canvas();
             canvas.Children.Add(packIconModern);
             Icon = canvas;
-            HasSettings = hasSettings;
         }
 
-        public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconModern packIconModern, bool hasSettings, bool isDev)
+        public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconModern packIconModern, bool isDev)
         {
             Name = name;
             TranslatedName = ApplicationViewManager.TranslateName(name);
             Canvas canvas = new Canvas();
             canvas.Children.Add(packIconModern);
             Icon = canvas;
-            HasSettings = hasSettings;
             IsDev = isDev;
         }
 
-        public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconMaterial packIconMaterial, bool hasSettings)
+        public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconMaterial packIconMaterial)
         {
             Name = name;
             TranslatedName = ApplicationViewManager.TranslateName(name);
             Canvas canvas = new Canvas();
             canvas.Children.Add(packIconMaterial);
             Icon = canvas;
-            HasSettings = hasSettings;
         }
 
-        public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconMaterial packIconMaterial, bool hasSettings, bool isDev)
+        public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconMaterial packIconMaterial, bool isDev)
         {
             Name = name;
             TranslatedName = ApplicationViewManager.TranslateName(name);
             Canvas canvas = new Canvas();
             canvas.Children.Add(packIconMaterial);
             Icon = canvas;
-            HasSettings = hasSettings;
             IsDev = isDev;
         }
 
-        public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconFontAwesome packIconFontAwesome, bool hasSettings)
+        public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconFontAwesome packIconFontAwesome)
         {
             Name = name;
             TranslatedName = ApplicationViewManager.TranslateName(name);
             Canvas canvas = new Canvas();
             canvas.Children.Add(packIconFontAwesome);
             Icon = canvas;
-            HasSettings = hasSettings;
         }
 
-        public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconFontAwesome packIconFontAwesome, bool hasSettings, bool isDev)
+        public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconFontAwesome packIconFontAwesome, bool isDev)
         {
             Name = name;
             TranslatedName = ApplicationViewManager.TranslateName(name);
             Canvas canvas = new Canvas();
             canvas.Children.Add(packIconFontAwesome);
             Icon = canvas;
-            HasSettings = hasSettings;
             IsDev = isDev;
         }
     }

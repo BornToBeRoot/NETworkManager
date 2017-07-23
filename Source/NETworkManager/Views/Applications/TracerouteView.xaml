@@ -98,13 +98,13 @@
                 </Grid>
                 <Controls:MetroProgressBar Grid.Row="2" Margin="0,0,0,20" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding IsTraceRunning, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True" />
                 <TextBlock Grid.Row="3" Text="{DynamicResource String_Header_Route}" Style="{StaticResource HeaderTextBlock}" />
-                <Control:ScrollingDataGrid Grid.Row="4" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding TraceResult}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False">
+                <Control:ScrollingDataGrid Grid.Row="4" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding TraceResult}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False">
                     <Control:ScrollingDataGrid.Resources>
                         <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollingDataGridScrollBar}" />
                     </Control:ScrollingDataGrid.Resources>
                     <Control:ScrollingDataGrid.Columns>
-                        <DataGridTextColumn Header="{DynamicResource String_Hop}" Binding="{Binding Hop}" Width="100" />
-                        <DataGridTextColumn Header="{DynamicResource String_Time1}" Width="100">
+                        <DataGridTextColumn Header="{DynamicResource String_Hop}" Binding="{Binding Hop}" MinWidth="80" />
+                        <DataGridTextColumn Header="{DynamicResource String_Time1}" MinWidth="100">
                             <DataGridTextColumn.Binding>
                                 <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
                                     <Binding Path="Status1" />
@@ -112,7 +112,7 @@
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="{DynamicResource String_Time2}" Width="100">
+                <DataGridTextColumn Header="{DynamicResource String_Time2}" MinWidth="100">
                             <DataGridTextColumn.Binding>
                                 <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
                                     <Binding Path="Status2" />
@@ -120,7 +120,7 @@
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="{DynamicResource String_Time3}" Width="100">
+                <DataGridTextColumn Header="{DynamicResource String_Time3}" MinWidth="100">
                             <DataGridTextColumn.Binding>
                                 <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
                                     <Binding Path="Status3" />
@@ -128,8 +128,8 @@
                                 </MultiBinding>
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress, Converter={StaticResource IPAddressToStringConverter}}" Width="150" />
-                        <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" Width="*"/>
+                        <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress, Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" />
+                        <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" MinWidth="150"/>
                     </Control:ScrollingDataGrid.Columns>
                 </Control:ScrollingDataGrid>
             </Grid>

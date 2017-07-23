@@ -245,10 +245,7 @@ namespace NETworkManager
 
             _applicationViewCollectionSource.Filter += ApplicationView_Search;
             _applicationViewCollectionSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-        }
 
-        private void MetroWindowMain_Loaded(object sender, RoutedEventArgs e)
-        {
             SelectedApplicationViewInfo = ApplicationViewCollection.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Application_DefaultApplicationViewName);
         }
 

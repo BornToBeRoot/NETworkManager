@@ -105,6 +105,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Styles\ExpanderStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Styles\WindowStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -327,9 +331,8 @@
     <Compile Include="Models\Settings\LocalizationManager.cs" />
     <Compile Include="Models\Settings\SettingsInfo.cs" />
     <Compile Include="Models\Settings\SettingsManager.cs" />
-    <Compile Include="Views\SettingsGeneralViewInfo.cs" />
-    <Compile Include="Views\SettingsApplicationViewManager.cs" />
-    <Compile Include="Views\SettingsGeneralViewManager.cs" />
+    <Compile Include="Views\SettingsViewInfo.cs" />
+    <Compile Include="Views\SettingsViewManager.cs" />
     <Compile Include="Models\Settings\TemplateManager.cs" />
     <Compile Include="Models\Settings\TemplateNetworkInterfaceConfig.cs" />
     <Compile Include="Models\Settings\TemplateWakeOnLanInfo.cs" />

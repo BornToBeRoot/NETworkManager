@@ -197,7 +197,7 @@
     <system:String x:Key="String_NumberOfStoredEntries">Anzahl gespeicherter Einträge:</system:String>
     <system:String x:Key="String_NetworkLocationCannotBeReached">Die Netzwerkadresse kann nicht erreicht werden. Überprüfen Sie, ob Ihr Computer mit dem Netzwerk verbunden ist. Informationen zur Netzwerk-Fehlersuche finden Sie in der Windows-Hilfe.</system:String>
     <system:String x:Key="String_NumberOfErrorsAfterWhichIsCanceled">Anzahl Fehler nach denen abgebrochen wird:</system:String>
-    <system:String x:Key="String_SearchedApplicationNotFound">Gesuchte Anwendung nicht gefunden</system:String>
+    <system:String x:Key="String_SearchedApplicationNotFound">Gesuchte Anwendung nicht gefunden!</system:String>
 
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
@@ -243,17 +243,20 @@
     <system:String x:Key="String_Watermark_EnterLocation">Speicherort eingeben...</system:String>
     <system:String x:Key="String_Watermark_ExampleMACAddress">00:F1:21:AB:0B:35</system:String>
     <system:String x:Key="String_Watermark_ExampleHostname">SERVER-01</system:String>
-    <system:String x:Key="String_Watermark_ExampleBroadcast">192.168.178.255</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPv4Broadcast">192.168.178.255</system:String>
     <system:String x:Key="String_Watermark_ExamplePort">7</system:String>
-    <system:String x:Key="String_Watermark_ExampleIPv4Address">192.168.178.1</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPv4Address">192.168.178.55</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmask">255.255.255.0</system:String>
     <system:String x:Key="String_Watermark_HostnameOrIPAddress">Hostname oder IP-Adresse...</system:String>
     <system:String x:Key="String_Watermark_EampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.178.150</system:String>
     <system:String x:Key="String_Watermark_LocationOfTheImport">Speicherort der Importdatei...</system:String>
     <system:String x:Key="String_Watermark_ExampleMACAddressesOrParts">01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5</system:String>
     <system:String x:Key="String_Watermark_EamplePortScanRange">22; 80; 443; 500 - 999; 8080</system:String>
-    <system:String x:Key="String_Watermark_ExampleHostOrIPAddress">192.168.178.1 oder fritz.box</system:String>
-    
+    <system:String x:Key="String_Watermark_ExampleHostOrIPv4Address">192.168.178.1 oder fritz.box</system:String>
+    <system:String x:Key="String_Watermark_ExampleSubnetmaskOrCIDR">255.255.255.0 or /24</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPv4Gateway">192.168.178.1</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPv4DNS">8.8.8.8</system:String>
+
     <!-- ShowProgress -->
     <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Konfiguriere Netzwerkinterface</system:String>
     <system:String x:Key="String_Progress_SetStaticIPAddress">Setze statische IP-Adresse und Gateway...</system:String>
@@ -304,6 +307,14 @@
     <system:String x:Key="String_SettingsName_Settings">Einstellungen</system:String>
     <system:String x:Key="String_SettingsName_ImportExport">Import / Export</system:String>
     <system:String x:Key="String_SettingsName_Developer">Entwickler</system:String>
+    <system:String x:Key="String_SettingsName_IPScanner">IP-Scanner</system:String>
+    <system:String x:Key="String_SettingsName_PortScanner">Port-Scanner</system:String>
+    <system:String x:Key="String_SettingsName_Ping">Ping</system:String>
+    <system:String x:Key="String_SettingsName_Traceroute">Traceroute</system:String>
+
+    <!-- SettingsView.Group -->
+    <system:String x:Key="String_SettingsGroup_General">Allgemein</system:String>
+    <system:String x:Key="String_SettingsGroup_Applications">Anwendungen</system:String>
 
     <!-- AppTheme.Name -->
     <system:String x:Key="String_AppTheme_BaseLight">Hell</system:String>

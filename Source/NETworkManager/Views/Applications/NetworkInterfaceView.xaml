@@ -8,6 +8,7 @@
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
         xmlns:Validator="clr-namespace:NETworkManager.Validators"
         xmlns:Control="clr-namespace:NETworkManager.Controls"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:Notes="clr-namespace:NETworkManager.Views.Notes"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         Dialog:DialogParticipation.Register="{Binding}"
@@ -45,7 +46,7 @@
     </UserControl.Resources>
     <TabControl Style="{StaticResource  DefaultTabControl}">
         <TabItem Header="{DynamicResource String_Header_Information}">
-            <Grid>
+            <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -192,7 +193,7 @@
             </Grid>
         </TabItem>
         <TabItem Header="{DynamicResource String_Header_Configure}">
-            <Grid>
+            <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
@@ -291,7 +292,7 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_IPv4Address}" />
-                                <TextBox x:Name="txtConfigIPAddress" Grid.Column="1" Grid.Row="0" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                <TextBox x:Name="txtConfigIPAddress" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                     <TextBox.Text>
                                         <Binding Path="ConfigIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -301,8 +302,8 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_SubnetmaskOrCIDR}"  />
-                                <ComboBox x:Name="cbConfigSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" ItemsSource="{x:Static Network:Subnetmask.List}">
+                                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_SubnetmaskOrCIDR}" />
+                                <ComboBox x:Name="cbConfigSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnetmaskOrCIDR}" ItemsSource="{x:Static Network:Subnetmask.List}">
                                     <ComboBox.Text>
                                         <Binding Path="ConfigSubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -328,7 +329,7 @@
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
                                 <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_DefaultGateway}"  />
-                                <TextBox x:Name="txtConfigGateway" Grid.Column="1" Grid.Row="4" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                <TextBox x:Name="txtConfigGateway" Grid.Column="1" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                     <TextBox.Text>
                                         <Binding Path="ConfigGateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -366,7 +367,7 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_PrimaryDNSServer}"  />
-                                <TextBox x:Name="txtConfigPrimaryDnsServer" Grid.Column="1" Grid.Row="0" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                <TextBox x:Name="txtConfigPrimaryDnsServer" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                     <TextBox.Text>
                                         <Binding Path="ConfigPrimaryDnsServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -377,7 +378,7 @@
                                     </TextBox.Text>
                                 </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_SecondaryDNSServer}"  />
-                                <TextBox x:Name="txtConfigSecondaryDnsServer" Grid.Column="1" Grid.Row="2" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                <TextBox x:Name="txtConfigSecondaryDnsServer" Grid.Column="1" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNS}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                     <TextBox.Text>
                                         <Binding Path="ConfigSecondaryDnsServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -467,25 +468,25 @@
             </Grid>
         </TabItem>
         <TabItem Header="{DynamicResource String_Header_Templates}">
-            <Grid>
+            <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Templates}" />
-                <Control:MultiSelectDataGrid Style="{StaticResource MetroDataGrid}" Grid.Row="1" FontSize="14" ItemsSource="{Binding NetworkInterfaceConfigTemplates}" AutoGenerateColumns="False" GridLinesVisibility="Vertical" IsReadOnly="True" SelectionMode="Extended" SelectionUnit="FullRow" SelectedItemsList="{Binding SelectedConfigTemplates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{DynamicResource GrayBrush3}" CanUserReorderColumns="False" Margin="0,0,0,10">
+                <Control:MultiSelectDataGrid Style="{StaticResource MetroDataGrid}" Grid.Row="1" FontSize="14" ItemsSource="{Binding NetworkInterfaceConfigTemplates}" CanUserResizeColumns="False" AutoGenerateColumns="False" GridLinesVisibility="Vertical" IsReadOnly="True" SelectionMode="Extended" SelectionUnit="FullRow" SelectedItemsList="{Binding SelectedConfigTemplates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{DynamicResource GrayBrush3}" CanUserReorderColumns="False" Margin="0,0,0,10">
                     <Control:MultiSelectDataGrid.Columns>
                         <DataGridTextColumn Header="{DynamicResource String_Name}" Binding="{Binding Name}" MinWidth="200" />
-                        <DataGridCheckBoxColumn Header="{DynamicResource String_DynamicIPv4Address}" Binding="{Binding EnableStaticIPAddress, Converter={StaticResource BooleanReverseConverter}}" />
-                        <DataGridCheckBoxColumn Header="{DynamicResource String_StaticIPv4Address}" Binding="{Binding EnableStaticIPAddress}" />
-                        <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress}" />
-                        <DataGridTextColumn Header="{DynamicResource String_Subnetmask}" Binding="{Binding Subnetmask}" />
-                        <DataGridTextColumn Header="{DynamicResource String_DefaultGateway}" Binding="{Binding Gateway}" />
-                        <DataGridCheckBoxColumn Header="{DynamicResource String_DynamicIPv4DNSServer}" Binding="{Binding EnableStaticDns, Converter={StaticResource BooleanReverseConverter}}" />
-                        <DataGridCheckBoxColumn Header="{DynamicResource String_StaticIPv4DNSServer}" Binding="{Binding EnableStaticDns}" />
-                        <DataGridTextColumn Header="{DynamicResource String_PrimaryDNSServer}" Binding="{Binding PrimaryDnsServer}" />
-                        <DataGridTextColumn Header="{DynamicResource String_SecondaryDNSServer}" Binding="{Binding SecondaryDnsServer}" />
+                        <DataGridCheckBoxColumn Header="{DynamicResource String_DynamicIPv4Address}" Binding="{Binding EnableStaticIPAddress, Converter={StaticResource BooleanReverseConverter}}" MinWidth="150" />
+                        <DataGridCheckBoxColumn Header="{DynamicResource String_StaticIPv4Address}" Binding="{Binding EnableStaticIPAddress}" MinWidth="150" />
+                        <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress}" MinWidth="150" />
+                        <DataGridTextColumn Header="{DynamicResource String_Subnetmask}" Binding="{Binding Subnetmask}" MinWidth="150" />
+                        <DataGridTextColumn Header="{DynamicResource String_DefaultGateway}" Binding="{Binding Gateway}" MinWidth="150" />
+                        <DataGridCheckBoxColumn Header="{DynamicResource String_DynamicIPv4DNSServer}" Binding="{Binding EnableStaticDns, Converter={StaticResource BooleanReverseConverter}}" MinWidth="150" />
+                        <DataGridCheckBoxColumn Header="{DynamicResource String_StaticIPv4DNSServer}" Binding="{Binding EnableStaticDns}" MinWidth="150" />
+                        <DataGridTextColumn Header="{DynamicResource String_PrimaryDNSServer}" Binding="{Binding PrimaryDnsServer}" MinWidth="150" />
+                        <DataGridTextColumn Header="{DynamicResource String_SecondaryDNSServer}" Binding="{Binding SecondaryDnsServer}" MinWidth="150" />
                     </Control:MultiSelectDataGrid.Columns>
                     <Control:MultiSelectDataGrid.Resources>
                         <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource MultiSelectDataGridScrollBar}" />

@@ -16,7 +16,7 @@
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{DynamicResource String_Header_OUILookup}">
-            <Grid>
+            <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -111,19 +111,19 @@
                     <Controls:MetroProgressBar Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True"/>
                 </StackPanel>
                 <TextBlock Grid.Row="3" Text="{DynamicResource String_Header_Result}" Style="{StaticResource HeaderTextBlock}" />
-                <DataGrid Grid.Row="4" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding OUILookupResult}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False">
+                <DataGrid Grid.Row="4" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding OUILookupResult}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False">
                     <DataGrid.Resources>
                         <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                     </DataGrid.Resources>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress}" Width="150" />
-                        <DataGridTextColumn Header="{DynamicResource String_Vendor}" Binding="{Binding Vendor, Converter={StaticResource NullOrEmptyToStringConverter}}" Width="*" />
+                        <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress}" MinWidth="150" />
+                        <DataGridTextColumn Header="{DynamicResource String_Vendor}" Binding="{Binding Vendor, Converter={StaticResource NullOrEmptyToStringConverter}}" MinWidth="200" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </TabItem>
         <TabItem Header="{DynamicResource String_Header_PortLookup}">
-            <Grid>
+            <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -218,15 +218,15 @@
                     <Controls:MetroProgressBar Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True"/>
                 </StackPanel>
                 <TextBlock Grid.Row="3" Text="{DynamicResource String_Header_Result}" Style="{StaticResource HeaderTextBlock}" />
-                <DataGrid Grid.Row="4" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding PortLookupResult}" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False">
+                <DataGrid Grid.Row="4" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding PortLookupResult}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False">
                     <DataGrid.Resources>
                         <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                     </DataGrid.Resources>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="{DynamicResource String_Port}" Binding="{Binding Number}" Width="150" />
-                        <DataGridTextColumn Header="{DynamicResource String_Protocol}" Binding="{Binding Protocol}" Width="100" />
-                        <DataGridTextColumn Header="{DynamicResource String_Service}" Binding="{Binding Service}" Width="150" />
-                        <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding Description}" Width="*" />
+                        <DataGridTextColumn Header="{DynamicResource String_Port}" Binding="{Binding Number}" MinWidth="100" />
+                        <DataGridTextColumn Header="{DynamicResource String_Protocol}" Binding="{Binding Protocol}" MinWidth="100" />
+                        <DataGridTextColumn Header="{DynamicResource String_Service}" Binding="{Binding Service}" MinWidth="150" />
+                        <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding Description}" MinWidth="200" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
