@@ -336,7 +336,7 @@ namespace NETworkManager
         PingView pingView;
         TracerouteView tracerouteView;
         DNSLookupView dnsLookupView;
-        LookupView lookupView;
+        WikiView wikiView;
 
         private ApplicationViewManager.Name? currentApplicationViewName = null;
 
@@ -395,11 +395,11 @@ namespace NETworkManager
 
                     contentControlApplication.Content = dnsLookupView;
                     break;
-                case ApplicationViewManager.Name.Lookup:
-                    if (lookupView == null)
-                        lookupView = new LookupView();
+                case ApplicationViewManager.Name.Wiki:
+                    if (wikiView == null)
+                        wikiView = new WikiView();
 
-                    contentControlApplication.Content = lookupView;
+                    contentControlApplication.Content = wikiView;
                     break;
             }
 

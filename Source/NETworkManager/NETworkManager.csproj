@@ -142,7 +142,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\LookupView.xaml">
+    <Page Include="Views\Applications\WikiView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -285,14 +285,14 @@
     <Compile Include="Validators\PortRangeValidator.cs" />
     <Compile Include="Validators\MACAddressAndMACAddressFirst3BytesRangeValidator.cs" />
     <Compile Include="ViewModels\Applications\PortScannerViewModel.cs" />
-    <Compile Include="ViewModels\Applications\LookupViewModel.cs" />
+    <Compile Include="ViewModels\Applications\WikiViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationPortScannerViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationIPScannerViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationPingViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsGeneralGeneralViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationTracerouteViewModel.cs" />
-    <Compile Include="Views\Applications\LookupView.xaml.cs">
-      <DependentUpon>LookupView.xaml</DependentUpon>
+    <Compile Include="Views\Applications\WikiView.xaml.cs">
+      <DependentUpon>WikiView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ApplicationViewManager.cs" />
     <Compile Include="Views\ApplicationViewInfo.cs" />

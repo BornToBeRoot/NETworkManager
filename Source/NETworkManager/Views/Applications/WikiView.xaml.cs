@@ -4,11 +4,11 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views.Applications
 {
-    public partial class LookupView : UserControl
+    public partial class WikiView : UserControl
     {
-        LookupViewModel viewModel = new LookupViewModel(DialogCoordinator.Instance);
+        WikiViewModel viewModel = new WikiViewModel(DialogCoordinator.Instance);
 
-        public LookupView()
+        public WikiView()
         {
             InitializeComponent();
             DataContext = viewModel;

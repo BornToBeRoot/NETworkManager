@@ -10,7 +10,7 @@ using NETworkManager.Helpers;
 
 namespace NETworkManager.ViewModels.Applications
 {
-    public class LookupViewModel : ViewModelBase
+    public class WikiViewModel : ViewModelBase
     {
         #region Variables
         private IDialogCoordinator dialogCoordinator;
@@ -163,7 +163,7 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Constructor, Load settings
-        public LookupViewModel(IDialogCoordinator instance)
+        public WikiViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
 

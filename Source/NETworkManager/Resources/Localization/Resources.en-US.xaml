@@ -296,7 +296,7 @@
     <system:String x:Key="String_ApplicationName_Ping">Ping</system:String>
     <system:String x:Key="String_ApplicationName_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_ApplicationName_DNSLookup">DNS Lookup</system:String>
-    <system:String x:Key="String_ApplicationName_Lookup">Lookup</system:String>
+    <system:String x:Key="String_ApplicationName_Wiki">Wiki</system:String>
     
     <!-- SettingsView.Name -->
     <system:String x:Key="String_SettingsName_General">General</system:String>
