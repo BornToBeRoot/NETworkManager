@@ -139,9 +139,11 @@ namespace NETworkManager.ViewModels.Applications
             }
             catch (Exception ex)
             {
-                dialogSettings.AffirmativeButtonText = Application.Current.Resources["String_Button_OK"] as string;
+                MetroDialogSettings settings = dialogSettings;
 
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, dialogSettings);
+                settings.AffirmativeButtonText = Application.Current.Resources["String_Button_OK"] as string;
+
+                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, settings);
             }
         }
 
@@ -156,6 +158,7 @@ namespace NETworkManager.ViewModels.Applications
 
             settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Add"] as string;
             settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
+            settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
             string hostname = await dialogCoordinator.ShowInputAsync(this, Application.Current.Resources["String_AddTemplate"] as string, Application.Current.Resources["String_EnterHostnameForTemplate"] as string, settings);
 
@@ -202,7 +205,7 @@ namespace NETworkManager.ViewModels.Applications
                 {
                     errorCount++;
                     await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, dialogSettings);
-                }                
+                }
             }
 
             if (SelectedWakeOnLANTemplates.Count > 1 && SelectedWakeOnLANTemplates.Count != errorCount)
