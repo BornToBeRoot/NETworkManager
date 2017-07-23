@@ -33,7 +33,9 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
+
         private SettingsViewInfo _selectedSettingsView;
+
         public SettingsViewInfo SelectedSettingsView
         {
             get { return _selectedSettingsView; }
@@ -74,8 +76,11 @@ namespace NETworkManager.ViewModels.Settings
         private void LoadSettings(string selectedApplicationName)
         {
             // General
-            _settingsGeneralViewsSource = new CollectionViewSource();
-            _settingsGeneralViewsSource.Source = SettingsViewManager.List;
+            _settingsGeneralViewsSource = new CollectionViewSource()
+            {
+                Source = SettingsViewManager.List
+            };
+
             _settingsGeneralViewsSource.GroupDescriptions.Add(new PropertyGroupDescription("TranslatedGroup"));
 
             // Not nice, but works -.-

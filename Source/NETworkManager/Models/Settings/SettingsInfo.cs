@@ -457,7 +457,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        public int _ping_Timeout = 4000;
+        private int _ping_Timeout = 4000;
         public int Ping_Timeout
         {
             get { return _ping_Timeout; }
