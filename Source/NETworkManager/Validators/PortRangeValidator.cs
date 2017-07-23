@@ -16,10 +16,7 @@ namespace NETworkManager.Validators
                 {
                     string[] portRange = portOrRange.Split('-');
 
-                    int startPort = 0;
-                    int endPort = 0;
-
-                    if (int.TryParse(portRange[0], out startPort) && int.TryParse(portRange[1], out endPort))
+                    if (int.TryParse(portRange[0], out int startPort) && int.TryParse(portRange[1], out int endPort))
                     {
                         if (!((startPort > 0) && (startPort < 65536) && (endPort > 0) && (endPort < 65536) && (startPort < endPort)))
                             isValid = false;
@@ -31,9 +28,7 @@ namespace NETworkManager.Validators
                 }
                 else
                 {
-                    int portNumber = 0;
-
-                    if (int.TryParse(portOrRange, out portNumber))
+                    if (int.TryParse(portOrRange, out int portNumber))
                     {
                         if (!((portNumber > 0) && (portNumber < 65536)))
                             isValid = false;

@@ -191,6 +191,20 @@ namespace NETworkManager
                 OnPropertyChanged("SearchNothingFound");
             }
         }
+            
+        private string _version;
+        public string Version
+        {
+            get { return _version; }
+            set
+            {
+                if (value == _version)
+                    return;
+
+                _version = value;
+                OnPropertyChanged("Version");
+            }
+        }
         #endregion
 
         #region Constructor, window load and close events
@@ -201,6 +215,10 @@ namespace NETworkManager
 
             // Load settings
             SettingsManager.Load();
+
+            // Get assembly informations
+            AssemblyManager.Load();
+            Version = AssemblyManager.Current.AssemblyVersion.ToString();
 
             // Load localization
             LocalizationManager.Load();

@@ -52,10 +52,7 @@ namespace NETworkManager.ViewModels.Settings
 
         #region Constructor
         public AboutViewModel()
-        {
-            if (AssemblyManager.Current == null)
-                AssemblyManager.Load();
-
+        {           
             CopyrightAndAuthor = string.Format("{0} {1}.", AssemblyManager.Current.Copyright, AssemblyManager.Current.Company);
 
             Version = AssemblyManager.Current.AssemblyVersion.ToString();

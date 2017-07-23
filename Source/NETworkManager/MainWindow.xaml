@@ -504,8 +504,13 @@
             </Grid>
         </Grid>
         <Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource GrayBrush8}">
-            <StatusBar>
-                <StatusBarItem Content="Version 1.0.0.0" />
+            <StatusBar Foreground="{DynamicResource GrayBrush3}">
+                <StatusBarItem>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource GrayBrush3}" FontWeight="Bold" />
+                    <TextBlock Text="BETA 1" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource AccentColorBrush}" Margin="10,0,0,0" />
+                </StackPanel>
+                </StatusBarItem>
             </StatusBar>
         </Border>
     </Grid>
