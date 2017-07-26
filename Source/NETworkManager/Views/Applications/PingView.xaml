@@ -14,6 +14,7 @@
         mc:Ignorable="d">
     <UserControl.Resources>
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <Converter:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
         <Converter:IntToStringConverter x:Key="IntToStringConverter" />
         <Converter:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
         <Converter:PercentConverter x:Key="PercentConverter" />
@@ -111,7 +112,7 @@
                     </Style>
                 </Controls:MetroProgressBar.Style>
             </Controls:MetroProgressBar>
-        </Grid>        
+        </Grid>
         <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Status}" Style="{StaticResource HeaderTextBlock}" />
         <Control:ScrollingDataGrid Grid.Row="3" CanUserSortColumns="False" CanUserReorderColumns="False" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding PingResult}" CanUserAddRows="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,20">
             <Control:ScrollingDataGrid.Resources>
@@ -136,10 +137,13 @@
             <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" />
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -156,10 +160,16 @@
                         <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
                     </Style>
                 </Grid.Resources>
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_PacketsTransmitted}" />
-                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding PingsTransmitted}" />
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_ReceivedLost}" VerticalAlignment="Bottom" />
-                <TextBox Grid.Column="1" Grid.Row="2">
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_StartTime}" />
+                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding StartTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Duration}" />
+                <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Duration, StringFormat={}{0:hh}:{0:mm}:{0:ss}:{0:ff}}" />
+                <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_EndTime}" />
+                <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding EndTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
+                <TextBlock Grid.Column="3" Grid.Row="0" Text="{DynamicResource String_PacketsTransmitted}" />
+                <TextBox Grid.Column="4" Grid.Row="0" Text="{Binding PingsTransmitted}" />
+                <TextBlock Grid.Column="3" Grid.Row="2" Text="{DynamicResource String_ReceivedLost}" VerticalAlignment="Bottom" />
+                <TextBox Grid.Column="4" Grid.Row="2">
                     <TextBox.Text>
                         <MultiBinding StringFormat="{}{0} / {1}">
                             <Binding Path="PingsReceived" />
@@ -167,8 +177,8 @@
                         </MultiBinding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_PacketLoss}" />
-                <TextBox Grid.Column="1" Grid.Row="4">
+                <TextBlock Grid.Column="3" Grid.Row="4" Text="{DynamicResource String_PacketLoss}" />
+                <TextBox Grid.Column="4" Grid.Row="4">
                     <TextBox.Text>
                         <MultiBinding Converter="{StaticResource PercentConverter}" StringFormat="{}{0} %">
                             <Binding Path="PingsTransmitted" />
@@ -176,12 +186,12 @@
                         </MultiBinding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBlock Grid.Column="3" Grid.Row="0" Text="{DynamicResource String_AverageTime}" />
-                <TextBox Grid.Column="4" Grid.Row="0" Text="{Binding AverageTime, StringFormat={}{0} ms}" />
-                <TextBlock Grid.Column="3" Grid.Row="2" Text="{DynamicResource String_Minimum}" />
-                <TextBox Grid.Column="4" Grid.Row="2" Text="{Binding MinimumTime, StringFormat={}{0} ms}" />
-                <TextBlock Grid.Column="3" Grid.Row="4" Text="{DynamicResource String_Maximum}" />
-                <TextBox Grid.Column="4" Grid.Row="4" Text="{Binding MaximumTime, StringFormat={}{0} ms}" />
+                <TextBlock Grid.Column="6" Grid.Row="0" Text="{DynamicResource String_AverageTime}" />
+                <TextBox Grid.Column="7" Grid.Row="0" Text="{Binding AverageTime, StringFormat={}{0} ms}" />
+                <TextBlock Grid.Column="6" Grid.Row="2" Text="{DynamicResource String_Minimum}" />
+                <TextBox Grid.Column="7" Grid.Row="2" Text="{Binding MinimumTime, StringFormat={}{0} ms}" />
+                <TextBlock Grid.Column="6" Grid.Row="4" Text="{DynamicResource String_Maximum}" />
+                <TextBox Grid.Column="7" Grid.Row="4" Text="{Binding MaximumTime, StringFormat={}{0} ms}" />
             </Grid>
         </StackPanel>
     </Grid>

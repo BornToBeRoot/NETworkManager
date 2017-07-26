@@ -12,6 +12,8 @@ using System.Windows;
 using System.Windows.Input;
 using NETworkManager.Collections;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -22,6 +24,8 @@ namespace NETworkManager.ViewModels.Applications
         MetroDialogSettings dialogSettings = new MetroDialogSettings();
 
         CancellationTokenSource cancellationTokenSource;
+
+        DispatcherTimer dispatcherTimer = new DispatcherTimer();
 
         private bool _isLoading = true;
 
@@ -180,6 +184,48 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
+
+        private DateTime? _startTime;
+        public DateTime? StartTime
+        {
+            get { return _startTime; }
+            set
+            {
+                if (value == _startTime)
+                    return;
+
+                _startTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TimeSpan _duration;
+        public TimeSpan Duration
+        {
+            get { return _duration; }
+            set
+            {
+                if (value == _duration)
+                    return;
+
+                _duration = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DateTime? _endTime;
+        public DateTime? EndTime
+        {
+            get { return _endTime; }
+            set
+            {
+                if (value == _endTime)
+                    return;
+
+                _endTime = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Contructor
@@ -226,6 +272,12 @@ namespace NETworkManager.ViewModels.Applications
         {
             IsPingRunning = true;
 
+            StartTime = DateTime.Now;
+            Duration = new TimeSpan();
+            dispatcherTimer.Tick += DispatcherTimer_Tick;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            dispatcherTimer.Start();
+            EndTime = null;
             PingResult.Clear();
             PingsTransmitted = 0;
             PingsReceived = 0;
@@ -270,10 +322,10 @@ namespace NETworkManager.ViewModels.Applications
                 }
             }
             catch (SocketException) // This will catch DNS resolve errors
-            {               
+            {
                 await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_DnsError"] as string, Application.Current.Resources["String_CouldNotResolveHostnameMessage"] as string, MessageDialogStyle.Affirmative, dialogSettings);
 
-                IsPingRunning = false;
+                PingFinished();
 
                 return;
             }
@@ -302,12 +354,25 @@ namespace NETworkManager.ViewModels.Applications
             ping.UserHasCanceled += Ping_UserHasCanceled;
 
             ping.SendAsync(ipAddress, pingOptions, cancellationTokenSource.Token);
-        }              
+        }
+
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            Duration = (DateTime.Now - (DateTime)StartTime);
+        }
 
         private void StopPing()
         {
             CancelPing = true;
             cancellationTokenSource.Cancel();
+        }
+
+        private void PingFinished()
+        {
+            IsPingRunning = false;
+            dispatcherTimer.Stop();
+            EndTime = DateTime.Now;
+            Duration = (DateTime)EndTime - (DateTime)StartTime;
         }
 
         public void OnShutdown()
@@ -324,7 +389,7 @@ namespace NETworkManager.ViewModels.Applications
 
             // Add the result to the collection
             PingResult.Add(pingInfo);
-            
+
             // Calculate statistics
             PingsTransmitted++;
 
@@ -354,10 +419,10 @@ namespace NETworkManager.ViewModels.Applications
                 PingsLost++;
             }
         }
-                
+
         private void Ping_PingCompleted(object sender, System.EventArgs e)
         {
-            IsPingRunning = false;
+            PingFinished();
         }
 
         private async void Ping_PingException(object sender, PingExceptionArgs e)
@@ -367,7 +432,7 @@ namespace NETworkManager.ViewModels.Applications
 
             string errorMessage = string.Empty;
 
-            switch(w32ex.NativeErrorCode)
+            switch (w32ex.NativeErrorCode)
             {
                 case 1231:
                     errorMessage = Application.Current.Resources["String_NetworkLocationCannotBeReached"] as string;
@@ -377,15 +442,16 @@ namespace NETworkManager.ViewModels.Applications
                     break;
             }
 
-            await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_PingError"] as string, errorMessage , MessageDialogStyle.Affirmative, dialogSettings);
+            await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_PingError"] as string, errorMessage, MessageDialogStyle.Affirmative, dialogSettings);
 
-            IsPingRunning = false;
+            PingFinished();
         }
 
         private void Ping_UserHasCanceled(object sender, EventArgs e)
         {
             CancelPing = false;
-            IsPingRunning = false;
+
+            PingFinished();
         }
         #endregion
     }

@@ -497,8 +497,8 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Border Grid.Row="0" Height="48" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,0,1" >
-                    <TextBlock VerticalAlignment="Center" TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Text="{Binding SelectedApplicationViewInfo.TranslatedName}" Foreground="{DynamicResource GrayBrush3}" Margin="10,0" />
+                <Border Grid.Row="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,0,1" >
+                    <TextBlock VerticalAlignment="Center" Height="48"  TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Text="{Binding SelectedApplicationViewInfo.TranslatedName}" Foreground="{DynamicResource GrayBrush3}" Margin="10,0" />
                 </Border>
                 <ContentControl x:Name="contentControlApplication" Grid.Row="1" Focusable="False" />
             </Grid>

@@ -19,7 +19,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,1,0">
-                        <ListBox Background="Transparent" ItemsSource="{Binding SettingsGeneralViews}" SelectedItem="{Binding SelectedSettingsView}">
+                        <ListBox Background="Transparent" ItemsSource="{Binding SettingsGeneralViews}" SelectedItem="{Binding SelectedSettingsView}" Margin="0,0,10,0">
                             <ListBox.Resources>
                                 <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
                             </ListBox.Resources>

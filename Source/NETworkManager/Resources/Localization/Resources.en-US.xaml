@@ -200,6 +200,9 @@
     <system:String x:Key="String_SearchedApplicationNotFound">Searched application not found!</system:String>
     <system:String x:Key="String_MagicPacketSuccessfulSended">Magic packet successful sended!</system:String>
     <system:String x:Key="String_MagicPacketSuccessfulSendedToClients">Magic packet successful sended to {0} clients!</system:String>
+    <system:String x:Key="String_StartTime">Start time</system:String>
+    <system:String x:Key="String_Duration">Duration</system:String>
+    <system:String x:Key="String_EndTime">End time</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
@@ -353,7 +356,6 @@
     <system:String x:Key="String_IPStatus_DestinationPortUnreachable">Destination port unreachable.</system:String>
     <system:String x:Key="String_IPStatus_TimedOut">Request timed out.</system:String>
     <system:String x:Key="String_IPStatus_TtlExpired">TTL expired in transit.</system:String>
-    
     
     <!-- PortStatus -->
     <system:String x:Key="String_PortStatus_Closed">Closed</system:String>

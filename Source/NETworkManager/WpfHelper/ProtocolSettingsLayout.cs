@@ -57,9 +57,7 @@ namespace NETworkManager.WpfHelper
 
         private static void OnHasErrorChanged(object sender, EventArgs e)
         {
-            DependencyObject dependencyObject = sender as DependencyObject;
-
-            if (dependencyObject != null)
+            if (sender is DependencyObject dependencyObject)
             {
                 dependencyObject.SetValue(MVVMHasErrorProperty, dependencyObject.GetValue(Validation.HasErrorProperty));
             }
