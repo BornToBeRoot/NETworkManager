@@ -262,11 +262,11 @@ namespace NETworkManager.ViewModels.Applications
                     {
                         if ((startPort > 0) && (startPort < 65536) && (endPort > 0) && (endPort < 65536) && (startPort < endPort))
                         {
-                            for (int i = startPort; i < endPort +1; i++)
+                            for (int i = startPort; i < endPort + 1; i++)
                             {
                                 ports.Add(i);
                             }
-                        }   
+                        }
                         else
                         {
                             portsByService.Add(portOrService1);
@@ -299,16 +299,22 @@ namespace NETworkManager.ViewModels.Applications
                 PortLookupResult.Add(info);
             }
 
-            foreach(PortLookupInfo info in await PortLookup.LookupByServiceAsync(portsByService))
+            foreach (PortLookupInfo info in await PortLookup.LookupByServiceAsync(portsByService))
             {
                 PortLookupResult.Add(info);
             }
-                       
-            PortsHistory = new List<string>(HistoryListHelper.Modify(PortsHistory, PortsOrService, SettingsManager.Current.Application_HistoryListEntries));
+
+            if (PortLookupResult.Count == 0)
+            {
+                NoPortsFound = true;
+            }
+            else
+            {
+                PortsHistory = new List<string>(HistoryListHelper.Modify(PortsHistory, PortsOrService, SettingsManager.Current.Application_HistoryListEntries));
+                NoPortsFound = false;
+            }
 
             IsPortLookupRunning = false;
-
-            NoPortsFound = PortLookupResult.Count == 0;
         }
         #endregion
     }
