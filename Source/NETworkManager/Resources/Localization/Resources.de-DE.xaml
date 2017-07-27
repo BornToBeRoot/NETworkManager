@@ -201,7 +201,8 @@
     <system:String x:Key="String_StartTime">Startzeit</system:String>
     <system:String x:Key="String_Duration">Dauer</system:String>
     <system:String x:Key="String_EndTime">Endzeit</system:String>
-    
+    <system:String x:Key="String_NoPortsFoundCheckYourInput">Keine Ports gefunden. Überprüfen Sie Ihre Eingabe!</system:String>
+
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
     <system:String x:Key="String_Button_Default">Standard</system:String>

@@ -203,6 +203,7 @@
     <system:String x:Key="String_StartTime">Start time</system:String>
     <system:String x:Key="String_Duration">Duration</system:String>
     <system:String x:Key="String_EndTime">End time</system:String>
+    <system:String x:Key="String_NoPortsFoundCheckYourInput">No ports found. Check your input!</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>

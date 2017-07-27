@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.IO;
 using NETworkManager.Models.Settings;
 using System;
+using System.Globalization;
 
 namespace NETworkManager.Models.Network
 {
@@ -12,13 +13,14 @@ namespace NETworkManager.Models.Network
         #region Variables
         private static string PortsFilePath = Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "ports.txt");
 
-        public static Lookup<int, PortLookupInfo> Ports;
+        private static List<PortLookupInfo> PortList;
+        private static Lookup<int, PortLookupInfo> Ports;
         #endregion
 
         #region Methods
         static PortLookup()
         {
-            List<PortLookupInfo> portList = new List<PortLookupInfo>();
+            PortList = new List<PortLookupInfo>();
 
             // Load list from resource folder (.txt-file)
             foreach (string line in File.ReadAllLines(PortsFilePath))
@@ -33,10 +35,10 @@ namespace NETworkManager.Models.Network
 
                 // string key = GetKey(port, protocol);
 
-                portList.Add(new PortLookupInfo(port, protocol, portData[2], portData[3]));
+                PortList.Add(new PortLookupInfo(port, protocol, portData[2], portData[3]));
             }
 
-            Ports = (Lookup<int, PortLookupInfo>)portList.ToLookup(x => x.Number);
+            Ports = (Lookup<int, PortLookupInfo>)PortList.ToLookup(x => x.Number);
         }
 
         public static Task<List<PortLookupInfo>> LookupAsync(int port)
@@ -56,12 +58,12 @@ namespace NETworkManager.Models.Network
             return list;
         }
 
-        public static Task<List<PortLookupInfo>> LookupAsync(int[] ports)
+        public static Task<List<PortLookupInfo>> LookupAsync(List<int> ports)
         {
             return Task.Run(() => Lookup(ports));
         }
 
-        public static List<PortLookupInfo> Lookup(int[] ports)
+        public static List<PortLookupInfo> Lookup(List<int> ports)
         {
             List<PortLookupInfo> list = new List<PortLookupInfo>();
 
@@ -74,6 +76,28 @@ namespace NETworkManager.Models.Network
             }
 
             return list;
+        }
+
+        public static Task<List<PortLookupInfo>> LookupByServiceAsync(List<string> portsByService)
+        {
+            return Task.Run(() => LookupByService(portsByService));
+        }
+
+        public static List<PortLookupInfo> LookupByService(List<string> portsByService)
+        {
+            List<PortLookupInfo> list = new List<PortLookupInfo>();
+
+            foreach (PortLookupInfo info in PortList)
+            {
+                foreach (string portByService in portsByService)
+                {
+                    if (info.Service.IndexOf(portByService, StringComparison.OrdinalIgnoreCase) > 0 || info.Description.IndexOf(portByService, StringComparison.OrdinalIgnoreCase) > 0)
+                        list.Add(info);
+                }
+            }
+
+            return list;
+
         }
         #endregion
 

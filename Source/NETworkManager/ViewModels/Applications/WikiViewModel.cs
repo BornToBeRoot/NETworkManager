@@ -90,29 +90,29 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private string _ports;
-        public string Ports
+        private string _portsOrService;
+        public string PortsOrService
         {
-            get { return _ports; }
+            get { return _portsOrService; }
             set
             {
-                if (value == _ports)
+                if (value == _portsOrService)
                     return;
 
-                _ports = value;
+                _portsOrService = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _portsHasError;
-        public bool PortsHasError
+        private bool _portsOrServiceHasError;
+        public bool PortsOrServiceHasError
         {
-            get { return _portsHasError; }
+            get { return _portsOrServiceHasError; }
             set
             {
-                if (value == _portsHasError)
+                if (value == _portsOrServiceHasError)
                     return;
-                _portsHasError = value;
+                _portsOrServiceHasError = value;
                 OnPropertyChanged();
             }
         }
@@ -160,6 +160,20 @@ namespace NETworkManager.ViewModels.Applications
                 _portLookupResult = value;
             }
         }
+
+        private bool _noPortsFound;
+        public bool NoPortsFound
+        {
+            get { return _noPortsFound; }
+            set
+            {
+                if (value == _noPortsFound)
+                    return;
+
+                _noPortsFound = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, Load settings
@@ -187,16 +201,12 @@ namespace NETworkManager.ViewModels.Applications
         }
         #endregion
 
-        #region Settings
-
-        #endregion
-
         #region ICommands & Actions
         public ICommand OUILookupCommand
         {
             get { return new RelayCommand(p => OUILookupAction(), OUILookup_CanExecute); }
         }
-        
+
         private bool OUILookup_CanExecute(object parameter)
         {
             return !MACAddressHasError;
@@ -223,12 +233,12 @@ namespace NETworkManager.ViewModels.Applications
 
         public ICommand PortLookupCommand
         {
-            get { return new RelayCommand(p => PortLookupAction(),PortLookup_CanExecute); }
+            get { return new RelayCommand(p => PortLookupAction(), PortLookup_CanExecute); }
         }
 
         private bool PortLookup_CanExecute(object parameter)
         {
-            return !PortsHasError;
+            return !PortsOrServiceHasError;
         }
 
         private async void PortLookupAction()
@@ -237,16 +247,68 @@ namespace NETworkManager.ViewModels.Applications
 
             PortLookupResult.Clear();
 
-            int[] ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Ports);
+            List<int> ports = new List<int>();
+            List<string> portsByService = new List<string>();
+
+            foreach (string portOrService in PortsOrService.Split(';'))
+            {
+                string portOrService1 = portOrService.Trim();
+
+                if (portOrService1.Contains("-"))
+                {
+                    string[] portRange = portOrService1.Split('-');
+
+                    if (int.TryParse(portRange[0], out int startPort) && int.TryParse(portRange[1], out int endPort))
+                    {
+                        if ((startPort > 0) && (startPort < 65536) && (endPort > 0) && (endPort < 65536) && (startPort < endPort))
+                        {
+                            for (int i = startPort; i < endPort +1; i++)
+                            {
+                                ports.Add(i);
+                            }
+                        }   
+                        else
+                        {
+                            portsByService.Add(portOrService1);
+                        }
+
+                    }
+                    else
+                    {
+                        portsByService.Add(portOrService1);
+                    }
+                }
+                else
+                {
+                    if (int.TryParse(portOrService1, out int port))
+                    {
+                        if (port > 0 && port < 65536)
+                            ports.Add(port);
+                        else
+                            portsByService.Add(portOrService1);
+                    }
+                    else
+                    {
+                        portsByService.Add(portOrService1);
+                    }
+                }
+            }
 
             foreach (PortLookupInfo info in await PortLookup.LookupAsync(ports))
             {
                 PortLookupResult.Add(info);
             }
 
-            PortsHistory = new List<string>(HistoryListHelper.Modify(PortsHistory, Ports, SettingsManager.Current.Application_HistoryListEntries));
+            foreach(PortLookupInfo info in await PortLookup.LookupByServiceAsync(portsByService))
+            {
+                PortLookupResult.Add(info);
+            }
+                       
+            PortsHistory = new List<string>(HistoryListHelper.Modify(PortsHistory, PortsOrService, SettingsManager.Current.Application_HistoryListEntries));
 
             IsPortLookupRunning = false;
+
+            NoPortsFound = PortLookupResult.Count == 0;
         }
         #endregion
     }
