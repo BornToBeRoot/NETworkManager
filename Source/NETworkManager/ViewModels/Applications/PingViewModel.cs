@@ -26,6 +26,7 @@ namespace NETworkManager.ViewModels.Applications
         CancellationTokenSource cancellationTokenSource;
 
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        Stopwatch stopwatch = new Stopwatch();
 
         private bool _isLoading = true;
 
@@ -272,12 +273,15 @@ namespace NETworkManager.ViewModels.Applications
         {
             IsPingRunning = true;
 
+            // Measure the time
             StartTime = DateTime.Now;
-            Duration = new TimeSpan();
+            stopwatch.Start();
             dispatcherTimer.Tick += DispatcherTimer_Tick;
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
             dispatcherTimer.Start();
             EndTime = null;
+
+            // Reset the latest results
             PingResult.Clear();
             PingsTransmitted = 0;
             PingsReceived = 0;
@@ -358,7 +362,7 @@ namespace NETworkManager.ViewModels.Applications
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            Duration = (DateTime.Now - (DateTime)StartTime);
+            Duration = stopwatch.Elapsed;
         }
 
         private void StopPing()
@@ -370,9 +374,15 @@ namespace NETworkManager.ViewModels.Applications
         private void PingFinished()
         {
             IsPingRunning = false;
+
+            // Stop timer and stopwatch
+            stopwatch.Stop();
             dispatcherTimer.Stop();
+
+            Duration = stopwatch.Elapsed;
             EndTime = DateTime.Now;
-            Duration = (DateTime)EndTime - (DateTime)StartTime;
+
+            stopwatch.Reset();
         }
 
         public void OnShutdown()
