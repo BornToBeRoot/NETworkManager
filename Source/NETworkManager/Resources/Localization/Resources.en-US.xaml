@@ -9,6 +9,7 @@
     <system:String x:Key="String_Header_WakeUp">Wake Up</system:String>
     <system:String x:Key="String_Header_Templates">Templates</system:String>
     <system:String x:Key="String_Header_MACAddress">MAC-Address</system:String>
+    <system:String x:Key="String_Header_MACAddressOrVendor">MAC-Address or Vendor</system:String>
     <system:String x:Key="String_Header_Details">Details</system:String>
     <system:String x:Key="String_Header_IPv4Calculator">IPv4-Calculator</system:String>
     <system:String x:Key="String_Header_Input">Input</system:String>
@@ -59,6 +60,7 @@
     <system:String x:Key="String_Header_PortScanner">Port-Scanner</system:String>
     <system:String x:Key="String_Header_PortLookup">Port-Lookup</system:String>
     <system:String x:Key="String_Header_Port">Port</system:String>
+    <system:String x:Key="String_Header_PortPortRangeOrService">Port, port range or service</system:String>
     <system:String x:Key="String_Header_Socket">Socket</system:String>
     <system:String x:Key="String_Header_History">History</system:String>
     <system:String x:Key="String_Header_Applications">Applications</system:String>
@@ -204,6 +206,7 @@
     <system:String x:Key="String_Duration">Duration</system:String>
     <system:String x:Key="String_EndTime">End time</system:String>
     <system:String x:Key="String_NoPortsFoundCheckYourInput">No ports found. Check your input!</system:String>
+    <system:String x:Key="String_NoVendorFoundCheckYourInput">No vendor found. Check your input!</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
@@ -255,13 +258,14 @@
     <system:String x:Key="String_Watermark_HostnameOrIPAddress">Hostname or IP-Address...</system:String>
     <system:String x:Key="String_Watermark_EampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.178.150</system:String>
     <system:String x:Key="String_Watermark_LocationOfTheImport">Location of the import file...</system:String>
-    <system:String x:Key="String_Watermark_ExampleMACAddressesOrParts">01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5</system:String>
+    <system:String x:Key="String_Watermark_ExampleMACAddressesOrVendor">01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5; Intel Corp; Asus</system:String>
     <system:String x:Key="String_Watermark_EamplePortScanRange">22; 80; 443; 500 - 999; 8080</system:String>
     <system:String x:Key="String_Watermark_ExampleHostOrIPv4Address">192.168.178.1 or fritz.box</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmaskOrCIDR">255.255.255.0 or /24</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Gateway">192.168.178.1</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4DNS">8.8.8.8</system:String>
-    
+    <system:String x:Key="String_Watermark_EamplePortPortRangeOrService">22; 80; https; ldaps; 777 - 999; 8080</system:String>
+
     <!-- ShowProgress -->
     <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Configure Network Interface</system:String>
     <system:String x:Key="String_Progress_SetStaticIPAddress">Set static IP-Address and gateway...</system:String>

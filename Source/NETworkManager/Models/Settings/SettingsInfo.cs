@@ -595,18 +595,18 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region Lookup
-        private List<string> _lookup_MACAddressHistory = new List<string>();
-        public List<string> Lookup_MACAddressHistory
+        private List<string> _lookup_MACAddressOrVendorHistory = new List<string>();
+        public List<string> Lookup_MACAddressOrVendorHistory
         {
-            get { return _lookup_MACAddressHistory; }
+            get { return _lookup_MACAddressOrVendorHistory; }
             set
             {
-                if (value == _lookup_MACAddressHistory)
+                if (value == _lookup_MACAddressOrVendorHistory)
                     return;
 
                 SettingsChanged = true;
 
-                _lookup_MACAddressHistory = value;
+                _lookup_MACAddressOrVendorHistory = value;
             }
         }
 

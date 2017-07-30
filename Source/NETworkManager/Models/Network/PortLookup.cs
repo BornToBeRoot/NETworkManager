@@ -17,7 +17,7 @@ namespace NETworkManager.Models.Network
         private static Lookup<int, PortLookupInfo> Ports;
         #endregion
 
-        #region Methods
+        #region Constructor
         static PortLookup()
         {
             PortList = new List<PortLookupInfo>();
@@ -33,14 +33,14 @@ namespace NETworkManager.Models.Network
                 int port = int.Parse(portData[0]);
                 Protocol protocol = (Protocol)Enum.Parse(typeof(Protocol), portData[1]);
 
-                // string key = GetKey(port, protocol);
-
                 PortList.Add(new PortLookupInfo(port, protocol, portData[2], portData[3]));
             }
 
             Ports = (Lookup<int, PortLookupInfo>)PortList.ToLookup(x => x.Number);
         }
+        #endregion
 
+        #region Methods
         public static Task<List<PortLookupInfo>> LookupAsync(int port)
         {
             return Task.Run(() => Lookup(port));
@@ -53,26 +53,6 @@ namespace NETworkManager.Models.Network
             foreach (PortLookupInfo info in Ports[port])
             {
                 list.Add(info);
-            }
-
-            return list;
-        }
-
-        public static Task<List<PortLookupInfo>> LookupAsync(List<int> ports)
-        {
-            return Task.Run(() => Lookup(ports));
-        }
-
-        public static List<PortLookupInfo> Lookup(List<int> ports)
-        {
-            List<PortLookupInfo> list = new List<PortLookupInfo>();
-
-            foreach (int port in ports)
-            {
-                foreach (PortLookupInfo info in Ports[port])
-                {
-                    list.Add(info);
-                }
             }
 
             return list;
@@ -91,7 +71,7 @@ namespace NETworkManager.Models.Network
             {
                 foreach (string portByService in portsByService)
                 {
-                    if (info.Service.IndexOf(portByService, StringComparison.OrdinalIgnoreCase) > 0 || info.Description.IndexOf(portByService, StringComparison.OrdinalIgnoreCase) > 0)
+                    if (info.Service.IndexOf(portByService, StringComparison.OrdinalIgnoreCase) >= 0 || info.Description.IndexOf(portByService, StringComparison.OrdinalIgnoreCase) >= 0)
                         list.Add(info);
                 }
             }

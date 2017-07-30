@@ -284,7 +284,6 @@
     <Compile Include="Models\Settings\SettingsFileInfo.cs" />
     <Compile Include="Validators\FileExistsValidator.cs" />
     <Compile Include="Validators\PortRangeValidator.cs" />
-    <Compile Include="Validators\MACAddressAndMACAddressFirst3BytesRangeValidator.cs" />
     <Compile Include="ViewModels\Applications\PortScannerViewModel.cs" />
     <Compile Include="ViewModels\Applications\WikiViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationPortScannerViewModel.cs" />

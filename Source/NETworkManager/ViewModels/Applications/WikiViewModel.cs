@@ -7,6 +7,7 @@ using NETworkManager.Models.Settings;
 using System.Collections.Generic;
 using NETworkManager.Models.Network;
 using NETworkManager.Helpers;
+using System.Text.RegularExpressions;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -18,47 +19,47 @@ namespace NETworkManager.ViewModels.Applications
 
         private bool _isLoading = true;
 
-        private string _macAddress;
-        public string MACAddress
+        private string _macOrVendorAddress;
+        public string MACAddressOrVendor
         {
-            get { return _macAddress; }
+            get { return _macOrVendorAddress; }
             set
             {
-                if (value == _macAddress)
+                if (value == _macOrVendorAddress)
                     return;
 
-                _macAddress = value;
+                _macOrVendorAddress = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _macAddressHasError;
-        public bool MACAddressHasError
+        private bool _macAddressOrVendorHasError;
+        public bool MACAddressOrVendorHasError
         {
-            get { return _macAddressHasError; }
+            get { return _macAddressOrVendorHasError; }
             set
             {
-                if (value == _macAddressHasError)
+                if (value == _macAddressOrVendorHasError)
                     return;
 
-                _macAddressHasError = value;
+                _macAddressOrVendorHasError = value;
                 OnPropertyChanged();
             }
         }
 
-        private List<string> _macAddressHistory = new List<string>();
-        public List<string> MACAddressHistory
+        private List<string> _macAddressOrVendorHistory = new List<string>();
+        public List<string> MACAddressOrVendorHistory
         {
-            get { return _macAddressHistory; }
+            get { return _macAddressOrVendorHistory; }
             set
             {
-                if (value == _macAddressHistory)
+                if (value == _macAddressOrVendorHistory)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Lookup_MACAddressHistory = value;
+                    SettingsManager.Current.Lookup_MACAddressOrVendorHistory = value;
 
-                _macAddressHistory = value;
+                _macAddressOrVendorHistory = value;
                 OnPropertyChanged();
             }
         }
@@ -87,6 +88,20 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 _ouiLookupResult = value;
+            }
+        }
+
+        private bool _noVendorFound;
+        public bool NoVendorFound
+        {
+            get { return _noVendorFound; }
+            set
+            {
+                if (value == _noVendorFound)
+                    return;
+
+                _noVendorFound = value;
+                OnPropertyChanged();
             }
         }
 
@@ -193,8 +208,8 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LoadSettings()
         {
-            if (SettingsManager.Current.Lookup_MACAddressHistory != null)
-                MACAddressHistory = new List<string>(SettingsManager.Current.Lookup_MACAddressHistory);
+            if (SettingsManager.Current.Lookup_MACAddressOrVendorHistory != null)
+                MACAddressOrVendorHistory = new List<string>(SettingsManager.Current.Lookup_MACAddressOrVendorHistory);
 
             if (SettingsManager.Current.Lookup_PortsHistory != null)
                 PortsHistory = new List<string>(SettingsManager.Current.Lookup_PortsHistory);
@@ -209,7 +224,7 @@ namespace NETworkManager.ViewModels.Applications
 
         private bool OUILookup_CanExecute(object parameter)
         {
-            return !MACAddressHasError;
+            return !MACAddressOrVendorHasError;
         }
 
         private async void OUILookupAction()
@@ -218,15 +233,39 @@ namespace NETworkManager.ViewModels.Applications
 
             OUILookupResult.Clear();
 
-            foreach (string macAddress in MACAddress.Replace(" ", "").Split(';'))
+            List<string> vendors = new List<string>();
+
+            foreach (string macAddressOrVendor in MACAddressOrVendor.Split(';'))
             {
-                foreach (OUIInfo info in await OUILookup.LookupAsync(macAddress))
+                string macAddressOrVendor1 = macAddressOrVendor.Trim();
+
+                if (Regex.IsMatch(macAddressOrVendor1, RegexHelper.MACAddressRegex) || Regex.IsMatch(macAddressOrVendor1, RegexHelper.MACAddressFirst3BytesRegex))
                 {
-                    OUILookupResult.Add(info);
+                    foreach (OUIInfo info in await OUILookup.LookupAsync(macAddressOrVendor1))
+                    {
+                        OUILookupResult.Add(info);
+                    }
+                }
+                else
+                {
+                    vendors.Add(macAddressOrVendor1);
                 }
             }
 
-            MACAddressHistory = new List<string>(HistoryListHelper.Modify(MACAddressHistory, MACAddress, SettingsManager.Current.Application_HistoryListEntries));
+            foreach(OUIInfo info in await OUILookup.LookupByVendorAsync(vendors))
+            {
+                OUILookupResult.Add(info);
+            }
+
+            if (OUILookupResult.Count == 0)
+            {
+                NoVendorFound = true;
+            }
+            else
+            {
+                MACAddressOrVendorHistory = new List<string>(HistoryListHelper.Modify(MACAddressOrVendorHistory, MACAddressOrVendor, SettingsManager.Current.Application_HistoryListEntries));
+                NoVendorFound = false;
+            }
 
             IsOUILookupRunning = false;
         }
@@ -247,7 +286,6 @@ namespace NETworkManager.ViewModels.Applications
 
             PortLookupResult.Clear();
 
-            List<int> ports = new List<int>();
             List<string> portsByService = new List<string>();
 
             foreach (string portOrService in PortsOrService.Split(';'))
@@ -264,7 +302,10 @@ namespace NETworkManager.ViewModels.Applications
                         {
                             for (int i = startPort; i < endPort + 1; i++)
                             {
-                                ports.Add(i);
+                                foreach (PortLookupInfo info in await PortLookup.LookupAsync(i))
+                                {
+                                    PortLookupResult.Add(info);
+                                }
                             }
                         }
                         else
@@ -283,9 +324,16 @@ namespace NETworkManager.ViewModels.Applications
                     if (int.TryParse(portOrService1, out int port))
                     {
                         if (port > 0 && port < 65536)
-                            ports.Add(port);
+                        {
+                            foreach (PortLookupInfo info in await PortLookup.LookupAsync(port))
+                            {
+                                PortLookupResult.Add(info);
+                            }
+                        }
                         else
+                        {
                             portsByService.Add(portOrService1);
+                        }
                     }
                     else
                     {
@@ -294,12 +342,7 @@ namespace NETworkManager.ViewModels.Applications
                 }
             }
 
-            foreach (PortLookupInfo info in await PortLookup.LookupAsync(ports))
-            {
-                PortLookupResult.Add(info);
-            }
-
-            foreach (PortLookupInfo info in await PortLookup.LookupByServiceAsync(portsByService))
+                      foreach (PortLookupInfo info in await PortLookup.LookupByServiceAsync(portsByService))
             {
                 PortLookupResult.Add(info);
             }
