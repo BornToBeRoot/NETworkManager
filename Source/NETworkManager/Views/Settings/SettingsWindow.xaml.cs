@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using NETworkManager.Models.Settings;
 using NETworkManager.ViewModels.Settings;
 using System.Windows.Input;
 
@@ -19,9 +20,10 @@ namespace NETworkManager.Views.Settings
         public SettingsWindow(ApplicationViewManager.Name selectedApplicationName)
         {
             InitializeComponent();
+
             viewModel = new SettingsViewModel(selectedApplicationName);
             DataContext = viewModel;
-        }              
+        }
 
         private void MetroWindowSettings_PreviewKeyDown(object sender, KeyEventArgs e)
         {

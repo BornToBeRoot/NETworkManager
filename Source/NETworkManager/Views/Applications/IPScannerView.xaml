@@ -8,7 +8,6 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:Validator="clr-namespace:NETworkManager.Validators"
-        xmlns:Control="clr-namespace:NETworkManager.Controls"
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         Dialog:DialogParticipation.Register="{Binding}"

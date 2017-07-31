@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro;
 using NETworkManager.Models.Settings;
+using System.Windows;
 
 namespace NETworkManager.ViewModels.Settings
 {
@@ -58,7 +59,7 @@ namespace NETworkManager.ViewModels.Settings
         }
 
         private void LoadSettings()
-        {            
+        {
             AppThemeSelectedItem = ThemeManager.DetectAppStyle().Item1;
             AccentSelectedItem = ThemeManager.DetectAppStyle().Item2;
         }

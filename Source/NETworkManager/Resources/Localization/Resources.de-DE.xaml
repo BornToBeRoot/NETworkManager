@@ -292,7 +292,9 @@
     <system:String x:Key="String_ValidateError_EnterValidIPScanRange">Geben Sie einen gültigen IP-Bereich ein!</system:String>
     <system:String x:Key="String_ValidateError_FileDoesNotExist">Datei existiert nicht!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidMACAddressOrFirst3Bytes">Geben Sie eine gültige MAC-Adresse oder die ersten 6-Zeichen einer MAC-Adresse ein!</system:String>
-    <system:String x:Key="String_ValidationError_EnterValidPortOrPortRange">Geben Sie einen gültigen Port und/oder Port-Bereich ein (1 - 65535)!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidPortOrPortRange">Geben Sie einen gültigen Port und/oder Port-Bereich ein (1 - 65535)!</system:String>
+    <system:String x:Key="String_ValidateError_OnlyNumbersCanBeEntered">Es dürfen nur Zahlen eingegeben werden!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidValueBetween10and100">Geben Sie einen gültigen Wert ein zwischen 10 und 100!</system:String>
 
     <!-- ApplicationInfo.Name && ApplicationInfo.Description-->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>

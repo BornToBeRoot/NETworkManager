@@ -293,7 +293,9 @@
     <system:String x:Key="String_ValidateError_EnterValidIPScanRange">Enter a valid ip range!</system:String>
     <system:String x:Key="String_ValidateError_FileDoesNotExist">File does not exists!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidMACAddressOrFirst3Bytes">Enter a valid MAC address or the first 6 characters of a MAC address!</system:String>
-    <system:String x:Key="String_ValidationError_EnterValidPortOrPortRange">Enter a valid port and/or port range (1 - 65535)!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidPortOrPortRange">Enter a valid port and/or port range (1 - 65535)!</system:String>
+    <system:String x:Key="String_ValidateError_OnlyNumbersCanBeEntered">Only numbers can be entered!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidValueBetween10and100">Enter a valid value between 10 and 100!</system:String>
     
     <!-- ApplicationView.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>

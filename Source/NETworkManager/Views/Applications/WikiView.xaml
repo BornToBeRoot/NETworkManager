@@ -58,7 +58,7 @@
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                                     <Setter Property="IsEnabled" Value="True" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=txttxtMACAddressOrVendor}" Value="True" >
+                                        <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=txtMACAddressOrVendor}" Value="True" >
                                             <Setter Property="IsEnabled" Value="False" />
                                         </DataTrigger>
                                     </Style.Triggers>

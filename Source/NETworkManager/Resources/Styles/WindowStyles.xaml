@@ -6,7 +6,6 @@
     </ResourceDictionary.MergedDictionaries>
     <Style x:Key="DefaultWindow" TargetType="{x:Type Controls:MetroWindow}" BasedOn="{StaticResource CleanWindowStyleKey}" >
         <Setter Property="TitleCaps" Value="False" />
-        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="EnableDWMDropShadow" Value="True" />
         <Setter Property="TitleForeground" Value="{DynamicResource GrayBrush3}" />
         <Setter Property="TitlebarHeight" Value="35" />
