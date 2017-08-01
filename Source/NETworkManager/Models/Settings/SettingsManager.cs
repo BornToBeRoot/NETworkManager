@@ -14,7 +14,6 @@ namespace NETworkManager.Models.Settings
 
         public static SettingsInfo Current { get; set; }
 
-        public static bool RestartRequired { get; set; }
         public static bool ForceRestart { get; set; }
         public static bool HotKeysChanged { get; set; }
 

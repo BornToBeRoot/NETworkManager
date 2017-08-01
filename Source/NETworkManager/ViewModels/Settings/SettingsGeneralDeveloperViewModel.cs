@@ -17,11 +17,7 @@ namespace NETworkManager.ViewModels.Settings
                     return;
 
                 if (!_isLoading)
-                {
                     SettingsManager.Current.DeveloperMode = value;
-
-                    SettingsManager.RestartRequired = true;
-                }
 
                 _developerMode = value;
                 OnPropertyChanged();

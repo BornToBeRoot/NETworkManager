@@ -25,8 +25,6 @@ namespace NETworkManager.ViewModels.Settings
                     LocalizationManager.Change(value);
 
                     SettingsManager.Current.Localization_CultureCode = value.Code;
-
-                    SettingsManager.RestartRequired = true;
                 }
 
                 _localizationSelectedItem = value;

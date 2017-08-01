@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:metro="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"    
+        xmlns:Validator="clr-namespace:NETworkManager.Validators"
+        xmlns:metro="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d">
     <UserControl.Resources>
         <!-- Converters -->
@@ -46,5 +48,24 @@
                 <Binding Path="AccentSelectedItem" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
             </ListView.SelectedItem>
         </ListView>
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Transparency}" />
+        <mah:ToggleSwitch Header="{DynamicResource String_EnableTransparency}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding EnableTransparency}" Margin="0,0,0,10"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Slider Grid.Column="0" Minimum="10" MaxHeight="100" Value="{Binding Opacity}" IsEnabled="{Binding EnableTransparency}" Style="{DynamicResource FlatSlider}" ToolTip="{Binding Value, RelativeSource={RelativeSource Self}}" TickFrequency="1" IsSnapToTickEnabled="True" />
+            <TextBox Grid.Column="1" Width="80" IsEnabled="{Binding EnableTransparency}" Style="{StaticResource DefaultTextBox}" TextAlignment="Center" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Margin="10,0,0,0">
+                <TextBox.Text>
+                    <Binding Path="Opacity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                            <Validator:OpacityTextboxValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </Grid>
     </StackPanel>
 </UserControl>

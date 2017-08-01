@@ -144,8 +144,38 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private bool _appearance_EnableTransparency;
+        public bool Appearance_EnableTransparency
+        {
+            get { return _appearance_EnableTransparency; }
+            set
+            {
+                if (value == _appearance_EnableTransparency)
+                    return;
+
+                SettingsChanged = true;
+
+                _appearance_EnableTransparency = value;
+            }
+        }
+
+        private double _appearance_Opacity = 0.85;
+        public double Appearance_Opacity
+        {
+            get { return _appearance_Opacity; }
+            set
+            {
+                if (value == _appearance_Opacity)
+                    return;
+
+                SettingsChanged = true;
+
+                _appearance_Opacity = value;
+            }
+        }
+
         // Localization
-        private string _localization_CultureCode;
+        private string _localization_CultureCode = "en-US";
         public string Localization_CultureCode
         {
             get { return _localization_CultureCode; }

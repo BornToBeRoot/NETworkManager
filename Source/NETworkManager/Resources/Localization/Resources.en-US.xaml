@@ -65,6 +65,7 @@
     <system:String x:Key="String_Header_History">History</system:String>
     <system:String x:Key="String_Header_Applications">Applications</system:String>
     <system:String x:Key="String_Header_Update">Update</system:String>
+    <system:String x:Key="String_Header_Transparency">Transparency</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -207,7 +208,8 @@
     <system:String x:Key="String_EndTime">End time</system:String>
     <system:String x:Key="String_NoPortsFoundCheckYourInput">No ports found. Check your input!</system:String>
     <system:String x:Key="String_NoVendorFoundCheckYourInput">No vendor found. Check your input!</system:String>
-    
+    <system:String x:Key="String_EnableTransparency">Enable transparency</system:String>
+
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
     <system:String x:Key="String_Button_Default">Default</system:String>

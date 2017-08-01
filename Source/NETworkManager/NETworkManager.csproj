@@ -94,6 +94,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
+    <Compile Include="Validators\OpacityTextboxValidator.cs" />
     <Compile Include="WpfHelper\ProtocolSettingsLayout.cs" />
     <Page Include="Resources\ContextMenu\ContextMenu.xaml">
       <Generator>MSBuild:Compile</Generator>

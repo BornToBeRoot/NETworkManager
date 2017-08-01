@@ -48,6 +48,40 @@ namespace NETworkManager.ViewModels.Settings
                 OnPropertyChanged();
             }
         }
+
+        private bool _enableTransparency;
+        public bool EnableTransparency
+        {
+            get { return _enableTransparency; }
+            set
+            {
+                if (value == _enableTransparency)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.Appearance_EnableTransparency = value;
+
+                _enableTransparency = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _opacity;
+        public int Opacity
+        {
+            get { return _opacity; }
+            set
+            {
+                if (value == _opacity)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.Appearance_Opacity = (double)value / 100;
+
+                _opacity = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion        
 
         #region Constructor, LoadSettings
@@ -62,6 +96,8 @@ namespace NETworkManager.ViewModels.Settings
         {
             AppThemeSelectedItem = ThemeManager.DetectAppStyle().Item1;
             AccentSelectedItem = ThemeManager.DetectAppStyle().Item2;
+            EnableTransparency = SettingsManager.Current.Appearance_EnableTransparency;
+            Opacity = (int)(SettingsManager.Current.Appearance_Opacity * 100);
         }
         #endregion
     }

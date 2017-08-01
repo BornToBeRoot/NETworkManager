@@ -1,5 +1,4 @@
 ﻿using MahApps.Metro.Controls;
-using NETworkManager.Models.Settings;
 using NETworkManager.ViewModels.Settings;
 using System.Windows.Input;
 

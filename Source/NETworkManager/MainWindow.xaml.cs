@@ -35,12 +35,18 @@ namespace NETworkManager
         #endregion
 
         #region Variables        
+        MetroDialogSettings dialogSettings = new MetroDialogSettings();
+
         NotifyIcon notifyIcon;
 
         private bool _isLoading = true;
 
         private bool _isInTray;
         private bool _closeApplication;
+
+        // Indicates a restart message, when settings changed
+        private string _cultureCode;
+        private bool? _developerMode;
 
         private bool _applicationView_Expand;
         public bool ApplicationView_Expand
@@ -191,7 +197,7 @@ namespace NETworkManager
                 OnPropertyChanged("SearchNothingFound");
             }
         }
-            
+
         private string _version;
         public string Version
         {
@@ -226,6 +232,18 @@ namespace NETworkManager
 
             // Load appearance
             AppearanceManager.Load();
+
+            if (SettingsManager.Current.Appearance_EnableTransparency)
+            {
+                AllowsTransparency = true;
+                Opacity = SettingsManager.Current.Appearance_Opacity;
+            }
+
+            // Dialog 
+            dialogSettings.CustomResourceDictionary = new ResourceDictionary
+            {
+                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
+            };
 
             // Autostart & Window start
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray || SettingsManager.Current.TrayIcon_AlwaysShowIcon)
@@ -284,20 +302,13 @@ namespace NETworkManager
             {
                 e.Cancel = true;
 
-                MetroDialogSettings dialogSettings = new MetroDialogSettings()
-                {
-                    CustomResourceDictionary = new ResourceDictionary
-                    {
-                        Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
-                    },
+                MetroDialogSettings settings = dialogSettings;
 
-                    AffirmativeButtonText = System.Windows.Application.Current.Resources["String_Button_Close"] as string,
-                    NegativeButtonText = System.Windows.Application.Current.Resources["String_Button_Cancel"] as string,
+                settings.AffirmativeButtonText = System.Windows.Application.Current.Resources["String_Button_Close"] as string;
+                settings.NegativeButtonText = System.Windows.Application.Current.Resources["String_Button_Cancel"] as string;
+                settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-                    DefaultButtonFocus = MessageDialogResult.Affirmative
-                };
-
-                if (await this.ShowMessageAsync(System.Windows.Application.Current.Resources["String_Header_Confirm"] as string, System.Windows.Application.Current.Resources["String_ConfirmCloseQuesiton"] as string, MessageDialogStyle.AffirmativeAndNegative, dialogSettings) == MessageDialogResult.Affirmative)
+                if (await this.ShowMessageAsync(System.Windows.Application.Current.Resources["String_Header_Confirm"] as string, System.Windows.Application.Current.Resources["String_ConfirmCloseQuesiton"] as string, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
                 {
                     _closeApplication = true;
                     Close();
@@ -616,6 +627,12 @@ namespace NETworkManager
 
         private async void OpenSettingsAction()
         {
+            if (string.IsNullOrEmpty(_cultureCode))
+                _cultureCode = SettingsManager.Current.Localization_CultureCode;
+
+            if (_developerMode == null)
+                _developerMode = SettingsManager.Current.DeveloperMode;
+
             SettingsWindow settingsWindow = _isInTray ? new SettingsWindow() : new SettingsWindow(SelectedApplicationViewInfo.Name);
 
             if (_isInTray)
@@ -649,28 +666,30 @@ namespace NETworkManager
             }
 
             // Ask the user to restart (if he has changed the language or enables the developer mode)
-            if (SettingsManager.RestartRequired)
+            if ((_cultureCode != SettingsManager.Current.Localization_CultureCode) || (_developerMode != SettingsManager.Current.DeveloperMode) || (AllowsTransparency != SettingsManager.Current.Appearance_EnableTransparency))
             {
                 ShowWindowAction();
 
-                MetroDialogSettings dialogSettings = new MetroDialogSettings()
-                {
-                    CustomResourceDictionary = new ResourceDictionary
-                    {
-                        Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
-                    },
+                MetroDialogSettings settings = dialogSettings;
 
-                    AffirmativeButtonText = System.Windows.Application.Current.Resources["String_Button_RestartNow"] as string,
-                    NegativeButtonText = System.Windows.Application.Current.Resources["String_Button_OK"] as string,
+                settings.AffirmativeButtonText = System.Windows.Application.Current.Resources["String_Button_RestartNow"] as string;
+                settings.NegativeButtonText = System.Windows.Application.Current.Resources["String_Button_OK"] as string;
+                settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-                    DefaultButtonFocus = MessageDialogResult.Affirmative
-                };
-
-                if (await this.ShowMessageAsync(System.Windows.Application.Current.Resources["String_RestartRequired"] as string, System.Windows.Application.Current.Resources["String_RestartRequiredAfterSettingsChanged"] as string, MessageDialogStyle.AffirmativeAndNegative, dialogSettings) == MessageDialogResult.Affirmative)
+                if (await this.ShowMessageAsync(System.Windows.Application.Current.Resources["String_RestartRequired"] as string, System.Windows.Application.Current.Resources["String_RestartRequiredAfterSettingsChanged"] as string, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
                 {
                     RestartApplication();
                     return;
                 }
+            }
+
+            // Change the transparency
+            if ((AllowsTransparency != SettingsManager.Current.Appearance_EnableTransparency) || (Opacity != SettingsManager.Current.Appearance_Opacity))
+            {
+                if (!AllowsTransparency || !SettingsManager.Current.Appearance_EnableTransparency)
+                    Opacity = 1;
+                else
+                    Opacity = SettingsManager.Current.Appearance_Opacity;
             }
 
             if (SettingsManager.HotKeysChanged)
