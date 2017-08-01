@@ -66,6 +66,7 @@
     <system:String x:Key="String_Header_Applications">Applications</system:String>
     <system:String x:Key="String_Header_Update">Update</system:String>
     <system:String x:Key="String_Header_Transparency">Transparency</system:String>
+    <system:String x:Key="String_Header_WakeOnLAN">Wake on LAN</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -209,7 +210,8 @@
     <system:String x:Key="String_NoPortsFoundCheckYourInput">No ports found. Check your input!</system:String>
     <system:String x:Key="String_NoVendorFoundCheckYourInput">No vendor found. Check your input!</system:String>
     <system:String x:Key="String_EnableTransparency">Enable transparency</system:String>
-
+    <system:String x:Key="String_DefaultPort">Default port:</system:String>
+    
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
     <system:String x:Key="String_Button_Default">Default</system:String>
@@ -320,10 +322,6 @@
     <system:String x:Key="String_SettingsName_Settings">Settings</system:String>
     <system:String x:Key="String_SettingsName_ImportExport">Import / Export</system:String>
     <system:String x:Key="String_SettingsName_Developer">Developer</system:String>
-    <system:String x:Key="String_SettingsName_IPScanner">IP-Scanner</system:String>
-    <system:String x:Key="String_SettingsName_PortScanner">Port-Scanner</system:String>
-    <system:String x:Key="String_SettingsName_Ping">Ping</system:String>
-    <system:String x:Key="String_SettingsName_Traceroute">Traceroute</system:String>
 
     <!-- SettingsView.Group -->
     <system:String x:Key="String_SettingsGroup_General">General</system:String>

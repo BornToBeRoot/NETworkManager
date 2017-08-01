@@ -65,6 +65,7 @@
     <system:String x:Key="String_Header_Applications">Anwendungen</system:String>
     <system:String x:Key="String_Header_Update">Update</system:String>
     <system:String x:Key="String_Header_Transparency">Transparenz</system:String>
+    <system:String x:Key="String_Header_WakeOnLAN">Wake on LAN</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -207,7 +208,8 @@
     <system:String x:Key="String_NoPortsFoundCheckYourInput">Keine Ports gefunden. Überprüfen Sie Ihre Eingabe!</system:String>
     <system:String x:Key="String_NoVendorFoundCheckYourInput">Kein Hersteller gefunden. Überprüfen Sie Ihre Eingabe!</system:String>
     <system:String x:Key="String_EnableTransparency">Transparenz aktivieren</system:String>
-    
+    <system:String x:Key="String_DefaultPort">Standard-Port:</system:String>
+
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
     <system:String x:Key="String_Button_Default">Standard</system:String>
@@ -319,10 +321,6 @@
     <system:String x:Key="String_SettingsName_Settings">Einstellungen</system:String>
     <system:String x:Key="String_SettingsName_ImportExport">Import / Export</system:String>
     <system:String x:Key="String_SettingsName_Developer">Entwickler</system:String>
-    <system:String x:Key="String_SettingsName_IPScanner">IP-Scanner</system:String>
-    <system:String x:Key="String_SettingsName_PortScanner">Port-Scanner</system:String>
-    <system:String x:Key="String_SettingsName_Ping">Ping</system:String>
-    <system:String x:Key="String_SettingsName_Traceroute">Traceroute</system:String>
 
     <!-- SettingsView.Group -->
     <system:String x:Key="String_SettingsGroup_General">Allgemein</system:String>

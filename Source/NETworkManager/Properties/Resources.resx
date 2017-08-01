@@ -127,7 +127,4 @@
     <value>https://github.com/BornToBeRoot/NETworkManager</value>
     <comment>URL of the GitHub project page</comment>
   </data>
-  <data name="WakeOnLAN_DefaultPort" xml:space="preserve">
-    <value>7</value>
-  </data>
 </root>

@@ -25,6 +25,7 @@ namespace NETworkManager.Views
                     new SettingsViewInfo(Name.Developer,  new PackIconOcticons() { Kind = PackIconOcticonsKind.Beaker }, Group.General),
                     new SettingsViewInfo(Name.IPScanner, new PackIconMaterial() {Kind = PackIconMaterialKind.Sitemap }, Group.Applications),
                     new SettingsViewInfo(Name.PortScanner, new PackIconModern() {Kind = PackIconModernKind.NetworkPort }, Group.Applications),
+                    new SettingsViewInfo(Name.WakeOnLAN, new PackIconMaterial() {Kind = PackIconMaterialKind.Power} , Group.Applications),
                     new SettingsViewInfo(Name.Ping, new PackIconMaterial() { Kind = PackIconMaterialKind.LanConnect }, Group.Applications),
                     new SettingsViewInfo(Name.Traceroute, new PackIconModern() {Kind = PackIconModernKind.TransitConnection}, Group.Applications)
                 };
@@ -45,13 +46,22 @@ namespace NETworkManager.Views
             Developer,
             IPScanner,
             PortScanner,
+            WakeOnLAN,
             Ping,
             Traceroute
         }
 
-        public static string TranslateName(Name name)
+        public static string TranslateName(Name name, Group group)
         {
-            return Application.Current.Resources["String_SettingsName_" + name] as string;
+            switch(group)
+            {
+                case Group.General:
+                    return Application.Current.Resources["String_SettingsName_" + name] as string;
+                case Group.Applications:
+                    return Application.Current.Resources["String_ApplicationName_" + name] as string;
+                default:
+                    return "Not found!";
+            }
         }
 
         public enum Group

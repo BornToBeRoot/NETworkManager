@@ -733,7 +733,6 @@ namespace NETworkManager.Models.Settings
         }
 
         private bool _portScanner_ResolveHostnamePreferIPv4 = true;
-
         public bool PortScanner_ResolveHostnamePreferIPv4
         {
             get { return _portScanner_ResolveHostnamePreferIPv4; }
@@ -745,6 +744,23 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
 
                 _portScanner_ResolveHostnamePreferIPv4 = value;
+            }
+        }
+        #endregion
+
+        #region WakeOnLAN
+        private int _wakeOnLAN_DefaultPort = 7;
+        public int WakeOnLAN_DefaultPort
+        {
+            get { return _wakeOnLAN_DefaultPort; }
+            set
+            {
+                if (value == _wakeOnLAN_DefaultPort)
+                    return;
+
+                SettingsChanged = true;
+
+                _wakeOnLAN_DefaultPort = value;
             }
         }
         #endregion

@@ -12,7 +12,7 @@ namespace NETworkManager.ViewModels.Settings
 {
     public class SettingsViewModel : ViewModelBase
     {
-        #region Setting
+        #region Variables
         private CollectionViewSource _settingsGeneralViewsSource;
         public ICollectionView SettingsGeneralViews
         {
@@ -33,9 +33,7 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-
         private SettingsViewInfo _selectedSettingsView;
-
         public SettingsViewInfo SelectedSettingsView
         {
             get { return _selectedSettingsView; }
@@ -63,6 +61,7 @@ namespace NETworkManager.ViewModels.Settings
         SettingsGeneralDeveloperView _settingsGeneralExperimentalView;
         SettingsApplicationIPScannerView _settingsApplicationIPScannerView;
         SettingsApplicationPortScannerView _settingsApplicationPortScannerView;
+        SettingsApplicationWakeOnLANView _settingsApplicationWakeOnLANView;
         SettingsApplicationPingView _settingsApplicationPingView;
         SettingsApplicationTracerouteView _settingsApplicationTracerouteView;
         #endregion
@@ -162,6 +161,12 @@ namespace NETworkManager.ViewModels.Settings
                         _settingsApplicationPortScannerView = new SettingsApplicationPortScannerView();
 
                     SettingsContent = _settingsApplicationPortScannerView;
+                    break;
+                case SettingsViewManager.Name.WakeOnLAN:
+                    if (_settingsApplicationWakeOnLANView == null)
+                        _settingsApplicationWakeOnLANView = new SettingsApplicationWakeOnLANView();
+
+                    SettingsContent = _settingsApplicationWakeOnLANView;
                     break;
                 case SettingsViewManager.Name.Ping:
                     if (_settingsApplicationPingView == null)

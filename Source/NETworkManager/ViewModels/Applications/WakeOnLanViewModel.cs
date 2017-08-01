@@ -76,8 +76,8 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private string _port;
-        public string Port
+        private int _port;
+        public int Port
         {
             get { return _port; }
             set
@@ -122,7 +122,7 @@ namespace NETworkManager.ViewModels.Applications
                 if (value != null)
                 {
                     Broadcast = value.Broadcast.ToString();
-                    Port = value.Port.ToString();
+                    Port = value.Port;
                 }
 
                 _selectedWakeOnLANTemplate = value;
@@ -154,7 +154,7 @@ namespace NETworkManager.ViewModels.Applications
 
             _wakeOnLanTemplates = CollectionViewSource.GetDefaultView(TemplateManager.WakeOnLANTemplates);
 
-            Port = Properties.Resources.WakeOnLAN_DefaultPort;
+            Port = SettingsManager.Current.WakeOnLAN_DefaultPort;
         }
         #endregion
 
@@ -177,7 +177,7 @@ namespace NETworkManager.ViewModels.Applications
                 {
                     MagicPacket = MagicPacketHelper.Create(MACAddress),
                     Broadcast = IPAddress.Parse(Broadcast),
-                    Port = int.Parse(Port)
+                    Port = Port
                 };
 
                 WakeOnLAN.Send(info);
@@ -217,7 +217,7 @@ namespace NETworkManager.ViewModels.Applications
                 Hostname = hostname.ToUpper(),
                 MACAddress = MACAddressHelper.GetDefaultFormat(MACAddress),
                 Broadcast = Broadcast,
-                Port = int.Parse(Port)
+                Port = Port
             };
 
             TemplateManager.WakeOnLANTemplates.Add(template);
