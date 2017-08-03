@@ -1,11 +1,14 @@
-﻿using System;
+﻿using NETworkManager.Views.Settings;
+using System;
+using System.Windows;
 
 namespace NETworkManager.Models.Settings
 {
     public static class CommandLineManager
     {
         public const string ParameterIdentifier = "--";
-        public const string ParameterAutostart = "Autostart";
+        public const string ParameterAutostart = "autostart";
+        public const string ParameterResetSettings = "reset-settings";
 
         public static CommandLineInfo Current { get; set; }
 
@@ -30,6 +33,13 @@ namespace NETworkManager.Models.Settings
                     // Autostart
                     if (parameter.TrimStart(trimChars).Equals(ParameterAutostart, StringComparison.InvariantCultureIgnoreCase))
                         Current.Autostart = true;
+                    else if (parameter.TrimStart(trimChars).Equals(ParameterResetSettings, StringComparison.InvariantCultureIgnoreCase))
+                        Current.ResetSettings = true;
+                    else
+                    {
+                        MetroMessageBox msg = new MetroMessageBox();
+                        msg.ShowDialog();
+                    }
                 }
             }
         }

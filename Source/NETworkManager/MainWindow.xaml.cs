@@ -220,6 +220,12 @@ namespace NETworkManager
             InitializeComponent();
             DataContext = this;
 
+            // Parse the command line arguments and store them in the current configuration
+            CommandLineManager.Parse();
+
+            // Detect the current configuration
+            ConfigurationManager.Detect();
+
             // Load settings
             SettingsManager.Load();
 

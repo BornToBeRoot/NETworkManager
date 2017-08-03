@@ -10,13 +10,7 @@ namespace NETworkManager
     {
         public App()
         {
-            ShutdownMode = ShutdownMode.OnLastWindowClose;
-
-            // Parse the command line arguments and store them in the current configuration
-            CommandLineManager.Parse();
-
-            // Detect the current configuration
-            ConfigurationManager.Detect();
+            ShutdownMode = ShutdownMode.OnLastWindowClose;                        
         }
     }
 }

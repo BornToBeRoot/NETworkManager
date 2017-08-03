@@ -105,7 +105,7 @@ namespace NETworkManager.Models.Settings
         #region XmlSerializer (save and load) 
         public static void Load()
         {
-            if (File.Exists(SettingsFilePath))
+            if (File.Exists(SettingsFilePath) && !CommandLineManager.Current.ResetSettings)
             {
                 SettingsInfo settingsInfo = new SettingsInfo();
 
