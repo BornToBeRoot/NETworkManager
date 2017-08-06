@@ -219,9 +219,6 @@ namespace NETworkManager
             InitializeComponent();
             DataContext = this;
 
-            // Load settings
-            SettingsManager.Load();
-
             // Get assembly informations
             AssemblyManager.Load();
             Version = AssemblyManager.Current.AssemblyVersion.ToString();
@@ -261,10 +258,6 @@ namespace NETworkManager
 
             // Load settings
             ApplicationView_Expand = SettingsManager.Current.ApplicationView_Expand;
-
-            // Load templates
-            TemplateManager.LoadNetworkInterfaceConfigTemplates();
-            TemplateManager.LoadWakeOnLANTemplates();
 
             _isLoading = false;
         }
@@ -316,17 +309,6 @@ namespace NETworkManager
 
                 return;
             }
-
-            // Save templates
-            if (TemplateManager.NetworkInterfaceConfigTemplatesChanged && !ImportExportManager.ForceRestart)
-                TemplateManager.SaveNetworkInterfaceConfigTemplates();
-
-            if (TemplateManager.WakeOnLANTemplatesChanged && !ImportExportManager.ForceRestart)
-                TemplateManager.SaveWakeOnLANTemplates();
-
-            // Save settings
-            if (SettingsManager.Current.SettingsChanged && !ImportExportManager.ForceRestart)
-                SettingsManager.Save();
 
             // Unregister HotKeys
             if (RegisteredHotKeys.Count > 0)
@@ -727,7 +709,14 @@ namespace NETworkManager
 
         private void RestartApplication()
         {
-            Process.Start(ConfigurationManager.Current.ApplicationFullName);
+            new Process
+            {
+                StartInfo =
+                {
+                    FileName = ConfigurationManager.Current.ApplicationFullName,
+                    Arguments = string.Format("--restart-pid:{0}", Process.GetCurrentProcess().Id)
+                }
+            }.Start();
 
             _closeApplication = true;
             Close();

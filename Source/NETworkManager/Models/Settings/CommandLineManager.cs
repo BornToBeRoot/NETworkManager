@@ -1,11 +1,15 @@
-﻿using System;
+﻿using NETworkManager.Views.Settings;
+using System;
+using System.Windows;
 
 namespace NETworkManager.Models.Settings
 {
     public static class CommandLineManager
     {
         public const string ParameterIdentifier = "--";
-        public const string ParameterAutostart = "Autostart";
+        public const string ParameterAutostart = "autostart";
+        public const string ParameterResetSettings = "reset-settings";
+        public const string ParameterRestartPid = "restart-pid:";
 
         public static CommandLineInfo Current { get; set; }
 
@@ -27,9 +31,23 @@ namespace NETworkManager.Models.Settings
             {
                 if (parameter.StartsWith(ParameterIdentifier))
                 {
+                    string param = parameter.TrimStart(trimChars);
+
                     // Autostart
-                    if (parameter.TrimStart(trimChars).Equals(ParameterAutostart, StringComparison.InvariantCultureIgnoreCase))
+                    if (param.Equals(ParameterAutostart, StringComparison.InvariantCultureIgnoreCase))
+                    {
                         Current.Autostart = true;
+                    } // Reset Settings                    
+                    else if (param.Equals(ParameterResetSettings, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        Current.ResetSettings = true;
+                    } // Restart
+                    else if (param.StartsWith(ParameterRestartPid, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        int.TryParse(param.Split(':')[1], out int restartPid);
+
+                        Current.RestartPid = restartPid;
+                    }
                 }
             }
         }
