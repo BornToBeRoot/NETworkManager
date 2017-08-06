@@ -42,7 +42,6 @@ namespace NETworkManager
         private bool _isLoading = true;
 
         private bool _isInTray;
-        private bool _restartApplication;
         private bool _closeApplication;
 
         // Indicates a restart message, when settings changed
@@ -220,15 +219,6 @@ namespace NETworkManager
             InitializeComponent();
             DataContext = this;
 
-            // Parse the command line arguments and store them in the current configuration
-            CommandLineManager.Parse();
-
-            // Detect the current configuration
-            ConfigurationManager.Detect();
-
-            // Load settings
-            SettingsManager.Load();
-
             // Get assembly informations
             AssemblyManager.Load();
             Version = AssemblyManager.Current.AssemblyVersion.ToString();
@@ -269,10 +259,6 @@ namespace NETworkManager
             // Load settings
             ApplicationView_Expand = SettingsManager.Current.ApplicationView_Expand;
 
-            // Load templates
-            TemplateManager.LoadNetworkInterfaceConfigTemplates();
-            TemplateManager.LoadWakeOnLANTemplates();
-
             _isLoading = false;
         }
 
@@ -295,7 +281,7 @@ namespace NETworkManager
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
         {
             // Hide the application to tray
-            if (!_closeApplication && !_restartApplication && SettingsManager.Current.Window_MinimizeInsteadOfTerminating)
+            if (!_closeApplication && SettingsManager.Current.Window_MinimizeInsteadOfTerminating)
             {
                 e.Cancel = true;
 
@@ -305,7 +291,7 @@ namespace NETworkManager
             }
 
             // Confirm close
-            if (!_closeApplication && !_restartApplication && SettingsManager.Current.Window_ConfirmClose)
+            if (!_closeApplication && SettingsManager.Current.Window_ConfirmClose)
             {
                 e.Cancel = true;
 
@@ -324,9 +310,6 @@ namespace NETworkManager
                 return;
             }
 
-            if (!_restartApplication && !ImportExportManager.ForceRestart)
-                SaveTemplatesAndSettings();
-
             // Unregister HotKeys
             if (RegisteredHotKeys.Count > 0)
                 UnregisterHotKeys();
@@ -334,20 +317,6 @@ namespace NETworkManager
             // Dispose the notify icon to prevent errors
             if (notifyIcon != null)
                 notifyIcon.Dispose();
-        }
-
-        private void SaveTemplatesAndSettings()
-        {
-            // Save templates
-            if (TemplateManager.NetworkInterfaceConfigTemplatesChanged)
-                TemplateManager.SaveNetworkInterfaceConfigTemplates();
-
-            if (TemplateManager.WakeOnLANTemplatesChanged)
-                TemplateManager.SaveWakeOnLANTemplates();
-
-            // Save settings
-            if (SettingsManager.Current.SettingsChanged)
-                SettingsManager.Save();
         }
         #endregion
 
@@ -740,11 +709,16 @@ namespace NETworkManager
 
         private void RestartApplication()
         {
-            SaveTemplatesAndSettings();
+            new Process
+            {
+                StartInfo =
+                {
+                    FileName = ConfigurationManager.Current.ApplicationFullName,
+                    Arguments = string.Format("--restart-pid:{0}", Process.GetCurrentProcess().Id)
+                }
+            }.Start();
 
-            Process.Start(ConfigurationManager.Current.ApplicationFullName);
-
-            _restartApplication = true;
+            _closeApplication = true;
             Close();
         }
 
