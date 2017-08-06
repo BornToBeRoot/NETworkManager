@@ -373,4 +373,7 @@
     <system:String x:Key="String_Libary_MahAppsMetroDescription">A toolkit for creating Metro / Modern UI styled WPF apps.</system:String>
     <system:String x:Key="String_Libary_MahAppsMetroIconPacksName">MahApps.Metro.IconPacks</system:String>
     <system:String x:Key="String_Libary_MahAppsMetroIconPacksDescription">Some awesome icons for WPF and UWP all together...</system:String>
+    <system:String x:Key="String_Libary_HeijdenDNSName">Heijden.DNS</system:String>
+    <system:String x:Key="String_Libary_HeijdenDNSDescription">Reusable DNS resolver component</system:String>
+
 </ResourceDictionary>

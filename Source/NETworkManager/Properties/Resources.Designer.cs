@@ -61,6 +61,15 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://www.codeproject.com/Articles/23673/DNS-NET-Resolver-C.
+        /// </summary>
+        public static string Libary_HeijdenDNS_Url {
+            get {
+                return ResourceManager.GetString("Libary_HeijdenDNS_Url", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to http://mahapps.com/.
         /// </summary>
         public static string Libary_MahAppsMetro_Url {

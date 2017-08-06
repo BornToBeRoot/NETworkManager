@@ -372,4 +372,6 @@
     <system:String x:Key="String_Libary_MahAppsMetroDescription">Ein Toolkit für die Erstellung von WPF-Anwendungen im Metro - / Modern UI Stil.</system:String>
     <system:String x:Key="String_Libary_MahAppsMetroIconPacksName">MahApps.Metro.IconPacks</system:String>
     <system:String x:Key="String_Libary_MahAppsMetroIconPacksDescription">Eine Sammlung von Icons für WPF und UWP...</system:String>
+    <system:String x:Key="String_Libary_HeijdenDNSName">Heijden.DNS</system:String>
+    <system:String x:Key="String_Libary_HeijdenDNSDescription">Wiederverwendbare DNS-Resolver-Komponente</system:String>
 </ResourceDictionary>
