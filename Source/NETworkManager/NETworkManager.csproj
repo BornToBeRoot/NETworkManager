@@ -164,6 +164,7 @@
     <Compile Include="3rdParty\Heijden.DNS\Structs.cs" />
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
     <Compile Include="Validators\OpacityTextboxValidator.cs" />
+    <Compile Include="ViewModels\Applications\DNSLookupViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationWakeOnLANViewModel.cs" />
     <Compile Include="Views\Settings\SettingsApplicationWakeOnLANView.xaml.cs">
       <DependentUpon>SettingsApplicationWakeOnLANView.xaml</DependentUpon>
