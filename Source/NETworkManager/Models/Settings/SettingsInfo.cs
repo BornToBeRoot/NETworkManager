@@ -764,6 +764,23 @@ namespace NETworkManager.Models.Settings
             }
         }
         #endregion
+
+        #region DNS Lookup
+        private List<string> _dnsLookup_HostnameOrIPAddressHistory = new List<string>();
+        public List<string> DNSLookup_HostnameOrIPAddressHistory
+        {
+            get { return _dnsLookup_HostnameOrIPAddressHistory; }
+            set
+            {
+                if (value == _dnsLookup_HostnameOrIPAddressHistory)
+                    return;
+
+                SettingsChanged = true;
+
+                _dnsLookup_HostnameOrIPAddressHistory = value;
+            }
+        }
+        #endregion
         #endregion
 
         #region Constructor
