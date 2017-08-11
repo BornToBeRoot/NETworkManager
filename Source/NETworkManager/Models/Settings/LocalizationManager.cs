@@ -36,9 +36,9 @@ namespace NETworkManager.Models.Settings
             // If it's empty... detect the windows language
             if (string.IsNullOrEmpty(cultureCode))
                 cultureCode = CultureInfo.CurrentCulture.Name;
-            
+
             // Get the language from the list
-            LocalizationInfo info = List.Where(x => x.Code == cultureCode).First();
+            LocalizationInfo info = List.Where(x => x.Code == cultureCode).FirstOrDefault();
 
             // If it's not in the list, get the first one
             if (info == null)
@@ -55,7 +55,7 @@ namespace NETworkManager.Models.Settings
                 Culture = new CultureInfo(info.Code);
             }
         }
-        
+
         private static ResourceDictionary _resourceDictionaryLocalization;
 
         public static void Change(LocalizationInfo info)

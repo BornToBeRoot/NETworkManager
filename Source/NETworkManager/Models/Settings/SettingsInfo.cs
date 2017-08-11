@@ -175,7 +175,7 @@ namespace NETworkManager.Models.Settings
         }
 
         // Localization
-        private string _localization_CultureCode = "en-US";
+        private string _localization_CultureCode;
         public string Localization_CultureCode
         {
             get { return _localization_CultureCode; }
