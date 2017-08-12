@@ -4,18 +4,9 @@ using NETworkManager.Models.Settings;
 using NETworkManager.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using NETworkManager.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Threading;
-using Heijden.DNS;
-using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -24,10 +15,6 @@ namespace NETworkManager.ViewModels.Applications
         #region Variables
         private IDialogCoordinator dialogCoordinator;
         MetroDialogSettings dialogSettings = new MetroDialogSettings();
-
-        CancellationTokenSource cancellationTokenSource;
-
-        Resolver dnsResolver = new Resolver();
 
         private bool _isLoading = true;
 
@@ -136,9 +123,7 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LookupAction()
         {
-            if (IsLookupRunning)
-                StopLookup();
-            else
+            if (!IsLookupRunning)
                 StartLookup();
         }
         #endregion
@@ -151,59 +136,33 @@ namespace NETworkManager.ViewModels.Applications
             // Reset the latest results
             LookupResult.Clear();
 
-            dnsResolver.DnsServer = "8.8.8.8";
-            dnsResolver.TransportType = Heijden.DNS.TransportType.Udp;
-            dnsResolver.Recursion = true;
-            Response dnsResponse = dnsResolver.Query(HostnameOrIPAddress, QType.ANY, QClass.IN);
-
-            if (!string.IsNullOrEmpty(dnsResponse.Error))
-                MessageBox.Show(dnsResponse.Error);
-
-            foreach (RecordA r in dnsResponse.RecordsA)
-            {
-                MessageBox.Show(r.Address.ToString());
-            }
-
-            foreach (RecordAAAA r in dnsResponse.RecordsAAAA)
-            {
-                MessageBox.Show(r.Address.ToString());
-            }
-
-            foreach (RecordCNAME r in dnsResponse.RecordsCNAME)
-            {
-                MessageBox.Show(r.CNAME);
-            }
-
-            foreach (RecordPTR r in dnsResponse.RecordsPTR)
-            {
-                MessageBox.Show(r.PTRDNAME);
-            }
-
-            foreach (RecordMX r in dnsResponse.RecordsMX)
-            {
-                MessageBox.Show(r.EXCHANGE);
-            }
-
-            foreach(RecordNS r in dnsResponse.RecordsNS)
-            {
-                MessageBox.Show(r.NSDNAME);
-
-            }
-
             HostnameOrIPAddressHistory = new List<string>(HistoryListHelper.Modify(HostnameOrIPAddressHistory, HostnameOrIPAddress, SettingsManager.Current.Application_HistoryListEntries));
+            
+            DNSLookup dnsLookup = new DNSLookup();
 
-            IsLookupRunning = false;
+            dnsLookup.LookupComplete += DnsLookup_LookupComplete;
+
+            dnsLookup.LookupAsync(HostnameOrIPAddress);
         }
 
-        private void StopLookup()
+        /*private void StopLookup()
+        {
+            IsLookupRunning = false;
+        }*/
+        #endregion
+
+        #region Events
+        private void DnsLookup_LookupComplete(object sender, EventArgs e)
         {
             IsLookupRunning = false;
         }
+        #endregion
 
+        #region OnShutdown
         public void OnShutdown()
         {
-            if (IsLookupRunning)
-                LookupAction();
+            //if (IsLookupRunning)
+            //    LookupAction();
         }
         #endregion
     }

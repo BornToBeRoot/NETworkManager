@@ -36,8 +36,6 @@
     <system:String x:Key="String_Header_DNS">DNS</system:String>
     <system:String x:Key="String_Header_ARP">ARP</system:String>
     <system:String x:Key="String_Header_Traceroute">Traceroute</system:String>
-    <system:String x:Key="String_Header_Developer">Experimental</system:String>
-    <system:String x:Key="String_Header_DeveloperMode">Entwicklermodus</system:String>
     <system:String x:Key="String_Header_PingError">Ping-Fehler</system:String>
     <system:String x:Key="String_Header_DnsError">DNS-Fehler</system:String>
     <system:String x:Key="String_Header_Multithreading">Multithreading</system:String>
@@ -170,7 +168,6 @@
     <system:String x:Key="String_Time2">Zeit 2</system:String>
     <system:String x:Key="String_Time3">Zeit 3</system:String>
     <system:String x:Key="String_PreferredProtocolWhenResolvingHostname">Bevorzugtes Protokoll beim Auflösen des Hostnamens:</system:String>
-    <system:String x:Key="String_EnableDeveloperMode">Entwicklermodus aktivieren</system:String>
     <system:String x:Key="String_Hop">Hop</system:String>
     <system:String x:Key="String_MaximumHopsRouter">Maximale Hops/Router</system:String>
     <system:String x:Key="String_ConfirmClose">Schließen bestätigen</system:String>
@@ -209,7 +206,11 @@
     <system:String x:Key="String_NoVendorFoundCheckYourInput">Kein Hersteller gefunden. Überprüfen Sie Ihre Eingabe!</system:String>
     <system:String x:Key="String_EnableTransparency">Transparenz aktivieren</system:String>
     <system:String x:Key="String_DefaultPort">Standard-Port:</system:String>
-
+    <system:String x:Key="String_UseCustomDnsServer">Verwende benutzerdefinierten DNS-Server</system:String>
+    <system:String x:Key="String_Class">Klasse</system:String>
+    <system:String x:Key="String_Recursion">Rekursion</system:String>
+    <system:String x:Key="String_UseResolverCache">Resolver-Cache verwenden</system:String>
+    
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
     <system:String x:Key="String_Button_Default">Standard</system:String>
@@ -299,6 +300,7 @@
     <system:String x:Key="String_ValidateError_EnterValidPortOrPortRange">Geben Sie einen gültigen Port und/oder Port-Bereich ein (1 - 65535)!</system:String>
     <system:String x:Key="String_ValidateError_OnlyNumbersCanBeEntered">Es dürfen nur Zahlen eingegeben werden!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidValueBetween10and100">Geben Sie einen gültigen Wert ein zwischen 10 und 100!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidIPAddress">Geben Sie eine gültige IP-Adresse ein!</system:String>
 
     <!-- ApplicationInfo.Name && ApplicationInfo.Description-->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>
@@ -320,7 +322,6 @@
     <system:String x:Key="String_SettingsName_Autostart">Autostart</system:String>
     <system:String x:Key="String_SettingsName_Settings">Einstellungen</system:String>
     <system:String x:Key="String_SettingsName_ImportExport">Import / Export</system:String>
-    <system:String x:Key="String_SettingsName_Developer">Entwickler</system:String>
 
     <!-- SettingsView.Group -->
     <system:String x:Key="String_SettingsGroup_General">Allgemein</system:String>

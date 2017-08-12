@@ -46,7 +46,6 @@ namespace NETworkManager
 
         // Indicates a restart message, when settings changed
         private string _cultureCode;
-        private bool? _developerMode;
 
         private bool _applicationView_Expand;
         public bool ApplicationView_Expand
@@ -264,13 +263,10 @@ namespace NETworkManager
 
         private void LoadApplicationList()
         {
-            _applicationViewCollectionSource = new CollectionViewSource();
-
-            // Developer features
-            if (SettingsManager.Current.DeveloperMode)
-                _applicationViewCollectionSource.Source = ApplicationViewManager.List;
-            else
-                _applicationViewCollectionSource.Source = ApplicationViewManager.List.Where(x => x.IsDev == false);
+            _applicationViewCollectionSource = new CollectionViewSource()
+            {
+                Source = ApplicationViewManager.List
+            };
 
             _applicationViewCollectionSource.Filter += ApplicationView_Search;
             _applicationViewCollectionSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
@@ -612,9 +608,6 @@ namespace NETworkManager
             if (string.IsNullOrEmpty(_cultureCode))
                 _cultureCode = SettingsManager.Current.Localization_CultureCode;
 
-            if (_developerMode == null)
-                _developerMode = SettingsManager.Current.DeveloperMode;
-
             SettingsWindow settingsWindow = _isInTray ? new SettingsWindow() : new SettingsWindow(SelectedApplicationViewInfo.Name);
 
             if (_isInTray)
@@ -648,7 +641,7 @@ namespace NETworkManager
             }
 
             // Ask the user to restart (if he has changed the language or enables the developer mode)
-            if ((_cultureCode != SettingsManager.Current.Localization_CultureCode) || (_developerMode != SettingsManager.Current.DeveloperMode) || (AllowsTransparency != SettingsManager.Current.Appearance_EnableTransparency))
+            if ((_cultureCode != SettingsManager.Current.Localization_CultureCode) || (AllowsTransparency != SettingsManager.Current.Appearance_EnableTransparency))
             {
                 ShowWindowAction();
 

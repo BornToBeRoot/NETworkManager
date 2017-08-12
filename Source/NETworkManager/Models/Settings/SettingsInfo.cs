@@ -1,4 +1,5 @@
-﻿using NETworkManager.Views;
+﻿using Heijden.DNS;
+using NETworkManager.Views;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Serialization;
@@ -31,9 +32,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _window_ConfirmClose)
                     return;
 
-                SettingsChanged = true;
-
                 _window_ConfirmClose = value;
+                SettingsChanged = true;
             }
         }
 
@@ -46,9 +46,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _window_MinimizeInsteadOfTerminating)
                     return;
 
-                SettingsChanged = true;
-
                 _window_MinimizeInsteadOfTerminating = value;
+                SettingsChanged = true;
             }
         }
 
@@ -61,9 +60,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _window_MinimizeToTrayInsteadOfTaskbar)
                     return;
 
-                SettingsChanged = true;
-
                 _window_MinimizeToTrayInsteadOfTaskbar = value;
+                SettingsChanged = true;
             }
         }
 
@@ -77,9 +75,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _application_DefaultApplicationViewName)
                     return;
 
-                SettingsChanged = true;
-
                 _application_DefaultApplicationViewName = value;
+                SettingsChanged = true;
             }
         }
 
@@ -92,8 +89,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _application_HistoryListEntries)
                     return;
 
-                SettingsChanged = true;
                 _application_HistoryListEntries = value;
+                SettingsChanged = true;
             }
         }
 
@@ -107,9 +104,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _trayIcon_AlwaysShowIcon)
                     return;
 
-                SettingsChanged = true;
-
                 _trayIcon_AlwaysShowIcon = value;
+                SettingsChanged = true;
             }
         }
 
@@ -123,9 +119,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _appearance_AppTheme)
                     return;
 
-                SettingsChanged = true;
-
                 _appearance_AppTheme = value;
+                SettingsChanged = true;
             }
         }
 
@@ -138,9 +133,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _appearance_Accent)
                     return;
 
-                SettingsChanged = true;
-
                 _appearance_Accent = value;
+                SettingsChanged = true;
             }
         }
 
@@ -153,9 +147,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _appearance_EnableTransparency)
                     return;
 
-                SettingsChanged = true;
-
                 _appearance_EnableTransparency = value;
+                SettingsChanged = true;
             }
         }
 
@@ -168,9 +161,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _appearance_Opacity)
                     return;
 
-                SettingsChanged = true;
-
                 _appearance_Opacity = value;
+                SettingsChanged = true;
             }
         }
 
@@ -184,9 +176,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _localization_CultureCode)
                     return;
 
-                SettingsChanged = true;
-
                 _localization_CultureCode = value;
+                SettingsChanged = true;
             }
         }
 
@@ -200,9 +191,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _autostart_StartMinimizedInTray)
                     return;
 
-                SettingsChanged = true;
-
                 _autostart_StartMinimizedInTray = value;
+                SettingsChanged = true;
             }
         }
 
@@ -216,9 +206,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _hotKey_ShowWindowEnabled)
                     return;
 
-                SettingsChanged = true;
-
                 _hotKey_ShowWindowEnabled = value;
+                SettingsChanged = true;
             }
         }
 
@@ -231,9 +220,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _hotKey_ShowWindowKey)
                     return;
 
-                SettingsChanged = true;
-
                 _hotKey_ShowWindowKey = value;
+                SettingsChanged = true;
             }
         }
 
@@ -246,25 +234,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _hotKey_ShowWindowModifier)
                     return;
 
-                SettingsChanged = true;
-
                 _hotKey_ShowWindowModifier = value;
-            }
-        }
-
-        // Developer
-        private bool _developerMode;
-        public bool DeveloperMode
-        {
-            get { return _developerMode; }
-            set
-            {
-                if (value == _developerMode)
-                    return;
-
                 SettingsChanged = true;
-
-                _developerMode = value;
             }
         }
 
@@ -278,9 +249,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _applicationView_Expand)
                     return;
 
-                SettingsChanged = true;
-
                 _applicationView_Expand = value;
+                SettingsChanged = true;
             }
         }
 
@@ -296,8 +266,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _ipScanner_Attempts)
                     return;
 
-                SettingsChanged = true;
                 _ipScanner_Attempts = value;
+                SettingsChanged = true;
             }
         }
 
@@ -310,9 +280,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _ipScanner_Buffer)
                     return;
 
-                SettingsChanged = true;
-
                 _ipScanner_Buffer = value;
+                SettingsChanged = true;
             }
         }
 
@@ -325,9 +294,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _ipScanner_Threads)
                     return;
 
-                SettingsChanged = true;
-
                 _ipScanner_Threads = value;
+                SettingsChanged = true;
             }
         }
 
@@ -340,9 +308,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _ipScanner_IPRangeHistory)
                     return;
 
-                SettingsChanged = true;
-
                 _ipScanner_IPRangeHistory = value;
+                SettingsChanged = true;
             }
         }
 
@@ -355,10 +322,10 @@ namespace NETworkManager.Models.Settings
                 if (value == _ipScanner_ResolveHostname)
                     return;
 
-                SettingsChanged = true;
-
                 _ipScanner_ResolveHostname = value;
                 OnPropertyChanged(new PropertyChangedEventArgs("IPScanner_ResolveHostname"));
+
+                SettingsChanged = true;
             }
         }
 
@@ -371,10 +338,10 @@ namespace NETworkManager.Models.Settings
                 if (value == _ipScanner_ResolveMACAddress)
                     return;
 
-                SettingsChanged = true;
-
                 _ipScanner_ResolveMACAddress = value;
                 OnPropertyChanged(new PropertyChangedEventArgs("IPScanner_ResolveMACAddress"));
+
+                SettingsChanged = true;
             }
         }
 
@@ -387,9 +354,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _ipScanner_Timeout)
                     return;
 
-                SettingsChanged = true;
-
                 _ipScanner_Timeout = value;
+                SettingsChanged = true;
             }
         }
         #endregion
@@ -404,9 +370,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _networkInterface_SelectedInterfaceId)
                     return;
 
-                SettingsChanged = true;
-
                 _networkInterface_SelectedInterfaceId = value;
+                SettingsChanged = true;
             }
         }
         #endregion
@@ -421,9 +386,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _ping_Attempts)
                     return;
 
-                SettingsChanged = true;
-
                 _ping_Attempts = value;
+                SettingsChanged = true;
             }
         }
 
@@ -436,9 +400,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _ping_Buffer)
                     return;
 
-                SettingsChanged = true;
-
                 _ping_Buffer = value;
+                SettingsChanged = true;
             }
         }
 
@@ -451,9 +414,8 @@ namespace NETworkManager.Models.Settings
                 if (value = _ping_DontFragement)
                     return;
 
-                SettingsChanged = true;
-
                 _ping_DontFragement = value;
+                SettingsChanged = true;
             }
         }
 
@@ -466,9 +428,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _ping_HostnameOrIPAddressHistory)
                     return;
 
-                SettingsChanged = true;
-
                 _ping_HostnameOrIPAddressHistory = value;
+                SettingsChanged = true;
             }
         }
 
@@ -481,9 +442,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _ping_ResolveHostnamePreferIPv4)
                     return;
 
-                SettingsChanged = true;
-
                 _ping_ResolveHostnamePreferIPv4 = value;
+                SettingsChanged = true;
             }
         }
 
@@ -496,9 +456,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _ping_Timeout)
                     return;
 
-                SettingsChanged = true;
-
                 _ping_Timeout = value;
+                SettingsChanged = true;
             }
         }
 
@@ -511,9 +470,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _ping_TTL)
                     return;
 
-                SettingsChanged = true;
-
                 _ping_TTL = value;
+                SettingsChanged = true;
             }
         }
 
@@ -526,9 +484,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _ping_WaitTime)
                     return;
 
-                SettingsChanged = true;
-
                 _ping_WaitTime = value;
+                SettingsChanged = true;
             }
         }
 
@@ -541,8 +498,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _ping_ExceptionCancelCount)
                     return;
 
-                SettingsChanged = true;
                 _ping_ExceptionCancelCount = value;
+                SettingsChanged = true;
             }
         }
         #endregion
@@ -557,9 +514,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _traceroute_Buffer)
                     return;
 
-                SettingsChanged = true;
-
                 _traceroute_Buffer = value;
+                SettingsChanged = true;
             }
         }
 
@@ -572,9 +528,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _traceroute_HostnameOrIPAddressHistory)
                     return;
 
-                SettingsChanged = true;
-
                 _traceroute_HostnameOrIPAddressHistory = value;
+                SettingsChanged = true;
             }
         }
 
@@ -587,9 +542,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _traceroute_MaximumHops)
                     return;
 
-                SettingsChanged = true;
-
                 _traceroute_MaximumHops = value;
+                SettingsChanged = true;
             }
         }
 
@@ -602,9 +556,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _traceroute_ResolveHostnamePreferIPv4)
                     return;
 
-                SettingsChanged = true;
-
                 _traceroute_ResolveHostnamePreferIPv4 = value;
+                SettingsChanged = true;
             }
         }
 
@@ -617,9 +570,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _traceroute_Timeout)
                     return;
 
-                SettingsChanged = true;
-
                 _traceroute_Timeout = value;
+                SettingsChanged = true;
             }
         }
         #endregion
@@ -634,9 +586,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _lookup_MACAddressOrVendorHistory)
                     return;
 
-                SettingsChanged = true;
-
                 _lookup_MACAddressOrVendorHistory = value;
+                SettingsChanged = true;
             }
         }
 
@@ -649,9 +600,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _lookup_PortsHistory)
                     return;
 
-                SettingsChanged = true;
-
                 _lookup_PortsHistory = value;
+                SettingsChanged = true;
             }
         }
         #endregion
@@ -666,9 +616,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _portScanner_HostnameOrIPAddressHistory)
                     return;
 
-                SettingsChanged = true;
-
                 _portScanner_HostnameOrIPAddressHistory = value;
+                SettingsChanged = true;
             }
         }
 
@@ -681,9 +630,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _portScanner_PortsHistory)
                     return;
 
-                SettingsChanged = true;
-
                 _portScanner_PortsHistory = value;
+                SettingsChanged = true;
             }
         }
 
@@ -696,9 +644,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _portScanner_Threads)
                     return;
 
-                SettingsChanged = true;
-
                 _portScanner_Threads = value;
+                SettingsChanged = true;
             }
         }
 
@@ -711,9 +658,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _portScanner_ShowClosed)
                     return;
 
-                SettingsChanged = true;
-
                 _portScanner_ShowClosed = value;
+                SettingsChanged = true;
             }
         }
 
@@ -726,9 +672,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _portScanner_Timeout)
                     return;
 
-                SettingsChanged = true;
-
                 _portScanner_Timeout = value;
+                SettingsChanged = true;
             }
         }
 
@@ -741,9 +686,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _portScanner_ResolveHostnamePreferIPv4)
                     return;
 
-                SettingsChanged = true;
-
                 _portScanner_ResolveHostnamePreferIPv4 = value;
+                SettingsChanged = true;
             }
         }
         #endregion
@@ -758,9 +702,8 @@ namespace NETworkManager.Models.Settings
                 if (value == _wakeOnLAN_DefaultPort)
                     return;
 
-                SettingsChanged = true;
-
                 _wakeOnLAN_DefaultPort = value;
+                SettingsChanged = true;
             }
         }
         #endregion
@@ -775,9 +718,134 @@ namespace NETworkManager.Models.Settings
                 if (value == _dnsLookup_HostnameOrIPAddressHistory)
                     return;
 
-                SettingsChanged = true;
-
                 _dnsLookup_HostnameOrIPAddressHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _dnsLookup_UseCustomDNSServer;
+        public bool DNSLookup_UseCustomDNSServer
+        {
+            get { return _dnsLookup_UseCustomDNSServer; }
+            set
+            {
+                if (value == _dnsLookup_UseCustomDNSServer)
+                    return;
+
+                _dnsLookup_UseCustomDNSServer = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private string _dnsLookup_CustomDNSServer;
+        public string DNSLookup_CustomDNSServer
+        {
+            get { return _dnsLookup_CustomDNSServer; }
+            set
+            {
+                if (value == _dnsLookup_CustomDNSServer)
+                    return;
+
+                _dnsLookup_CustomDNSServer = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private QClass _dnsLookup_Class = QClass.IN;
+        public QClass DNSLookup_Class
+        {
+            get { return _dnsLookup_Class; }
+            set
+            {
+                if (value == _dnsLookup_Class)
+                    return;
+
+                _dnsLookup_Class = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private QType _dnsLookup_Type = QType.ANY;
+        public QType DNSLookup_Type
+        {
+            get { return _dnsLookup_Type; }
+            set
+            {
+                if (value == _dnsLookup_Type)
+                    return;
+
+                _dnsLookup_Type = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _dnsLookup_Recursion = true;
+        public bool DNSLookup_Recursion
+        {
+            get { return _dnsLookup_Recursion; }
+            set
+            {
+                if (value == _dnsLookup_Recursion)
+                    return;
+
+                _dnsLookup_Recursion = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _dnsLookup_UseResolverCache = false;
+        public bool DNSLookup_UseResolverCache
+        {
+            get { return _dnsLookup_UseResolverCache; }
+            set
+            {
+                if (value == _dnsLookup_UseResolverCache)
+                    return;
+
+                _dnsLookup_UseResolverCache = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private TransportType _dnsLookup_TransportType = TransportType.Udp;
+        public TransportType DNSLookup_TransportType
+        {
+            get { return _dnsLookup_TransportType; }
+            set
+            {
+                if (value == _dnsLookup_TransportType)
+                    return;
+
+                _dnsLookup_TransportType = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _dnsLookup_Attempts = 3;
+        public int DNSLookup_Attempts
+        {
+            get { return _dnsLookup_Attempts; }
+            set
+            {
+                if (value == _dnsLookup_Attempts)
+                    return;
+
+                _dnsLookup_Attempts = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _dnsLookup_Timeout = 2000;
+        public int DNSLookup_Timeout
+        {
+            get { return _dnsLookup_Timeout; }
+            set
+            {
+                if (value == _dnsLookup_Timeout)
+                    return;
+
+                _dnsLookup_Timeout = value;
+                SettingsChanged = true;
             }
         }
         #endregion

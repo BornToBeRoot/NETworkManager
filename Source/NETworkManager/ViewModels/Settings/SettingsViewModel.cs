@@ -58,12 +58,12 @@ namespace NETworkManager.ViewModels.Settings
         SettingsGeneralAutostartView _settingsGeneralAutostartView;
         SettingsGeneralSettingsView _settingsGeneralSettingsView;
         SettingsGeneralImportExportView _settingsGeneralImportExportView;
-        SettingsGeneralDeveloperView _settingsGeneralExperimentalView;
         SettingsApplicationIPScannerView _settingsApplicationIPScannerView;
         SettingsApplicationPortScannerView _settingsApplicationPortScannerView;
         SettingsApplicationWakeOnLANView _settingsApplicationWakeOnLANView;
         SettingsApplicationPingView _settingsApplicationPingView;
         SettingsApplicationTracerouteView _settingsApplicationTracerouteView;
+        SettingsApplicationDNSLookupView _settingsApplicationDNSLookupView;
         #endregion
 
         #region Contructor, load settings
@@ -143,13 +143,6 @@ namespace NETworkManager.ViewModels.Settings
 
                     SettingsContent = _settingsGeneralImportExportView;
                     break;
-                case SettingsViewManager.Name.Developer:
-                    if (_settingsGeneralExperimentalView == null)
-                        _settingsGeneralExperimentalView = new SettingsGeneralDeveloperView();
-
-                    SettingsContent = _settingsGeneralExperimentalView;
-                    break;
-
                 case SettingsViewManager.Name.IPScanner:
                     if (_settingsApplicationIPScannerView == null)
                         _settingsApplicationIPScannerView = new SettingsApplicationIPScannerView();
@@ -180,6 +173,12 @@ namespace NETworkManager.ViewModels.Settings
 
                     SettingsContent = _settingsApplicationTracerouteView;
                     break;
+                case SettingsViewManager.Name.DNSLookup:
+                    if (_settingsApplicationDNSLookupView == null)
+                        _settingsApplicationDNSLookupView = new SettingsApplicationDNSLookupView();
+
+                    SettingsContent = _settingsApplicationDNSLookupView;
+                    break;                       
             }
         }
         #endregion

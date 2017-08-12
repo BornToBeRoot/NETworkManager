@@ -163,9 +163,15 @@
     <Compile Include="3rdParty\Heijden.DNS\RR.cs" />
     <Compile Include="3rdParty\Heijden.DNS\Structs.cs" />
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
+    <Compile Include="Models\Network\DNSLookup.cs" />
+    <Compile Include="Validators\IPAddressValidator.cs" />
     <Compile Include="Validators\OpacityTextboxValidator.cs" />
     <Compile Include="ViewModels\Applications\DNSLookupViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsApplicationDNSLookupViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationWakeOnLANViewModel.cs" />
+    <Compile Include="Views\Settings\SettingsApplicationDNSLookupView.xaml.cs">
+      <DependentUpon>SettingsApplicationDNSLookupView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Settings\SettingsApplicationWakeOnLANView.xaml.cs">
       <DependentUpon>SettingsApplicationWakeOnLANView.xaml</DependentUpon>
     </Compile>
@@ -246,6 +252,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Settings\SettingsApplicationDNSLookupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Settings\SettingsApplicationWakeOnLANView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -267,10 +277,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Settings\SettingsGeneralGeneralView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Settings\SettingsGeneralDeveloperView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -442,7 +448,6 @@
     <Compile Include="ViewModels\Settings\SettingsGeneralImportExportViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsGeneralSettingsViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsGeneralAutostartViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsGeneralDeveloperViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\Applications\TracerouteView.xaml.cs">
@@ -480,9 +485,6 @@
     </Compile>
     <Compile Include="Views\Settings\SettingsGeneralGeneralView.xaml.cs">
       <DependentUpon>SettingsGeneralGeneralView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Settings\SettingsGeneralDeveloperView.xaml.cs">
-      <DependentUpon>SettingsGeneralDeveloperView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\SettingsGeneralImportExportView.xaml.cs">
       <DependentUpon>SettingsGeneralImportExportView.xaml</DependentUpon>

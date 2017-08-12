@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="NETworkManager.Views.Settings.SettingsApplicationDNSLookupView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Validator="clr-namespace:NETworkManager.Validators"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        mc:Ignorable="d">
+    <StackPanel>
+        <TextBlock Text="{DynamicResource String_Header_DNSLookup}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{DynamicResource String_UseCustomDnsServer}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding UseCustomDNSServer}" Margin="0,0,0,10"/>
+        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" Style="{StaticResource DefaultTextBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+            <TextBox.Text>
+                <Binding Path="CustomDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                        <Validator:IPAddressValidator ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBlock Text="{DynamicResource String_Class}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <ComboBox FontSize="14" ItemsSource="{Binding Classes}" SelectedItem="{Binding Class}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
+        <TextBlock Text="{DynamicResource String_Type}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <ComboBox FontSize="14" ItemsSource="{Binding Types}" SelectedItem="{Binding Type}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{DynamicResource String_Recursion}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding Recursion}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{DynamicResource String_UseResolverCache}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding UseResolverCache}" Margin="0,0,0,10"/>
+        <TextBlock Text="{DynamicResource String_Protocol}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <ComboBox FontSize="14" ItemsSource="{Binding TransportTypes}" SelectedItem="{Binding TransportType}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
+        <TextBlock Text="{DynamicResource String_Attempts}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding Attempts}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
+        <TextBlock Text="{DynamicResource String_Timeout}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding Timeout}" Maximum="10000" Minimum="100" Interval="100" Margin="0,0,0,10" />
+    </StackPanel>
+</UserControl>
