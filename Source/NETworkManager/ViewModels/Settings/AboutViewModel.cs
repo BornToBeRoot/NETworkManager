@@ -79,6 +79,16 @@ namespace NETworkManager.ViewModels.Settings
         {
             Process.Start(Properties.Resources.Libary_MahAppsMetroIconPacks_Url);
         }
+
+        public ICommand OpenWebsiteLibaryHeijdenDNSCommand
+        {
+            get { return new RelayCommand(p => OpenWebsiteLibaryHeijdenDNSAction()); }
+        }
+
+        private void OpenWebsiteLibaryHeijdenDNSAction()
+        {
+            Process.Start(Properties.Resources.Libary_HeijdenDNS_Url);
+        }
         #endregion
     }
 }

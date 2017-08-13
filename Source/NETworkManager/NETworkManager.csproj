@@ -93,9 +93,89 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="3rdParty\Heijden.DNS\Header.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Question.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\RecordReader.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordA6.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordAPL.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordATMA.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordCERT.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordDHCID.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordDNSKEY.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordEID.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordGID.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordHIP.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordIPSECKEY.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordNIMLOC.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordNSEC.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordNSEC3.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordNSEC3PARAM.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordOPT.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordRRSIG.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordSINK.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordSPF.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordSSHFP.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordUID.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordUINFO.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordUnknown.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\NotUsed\RecordUNSPEC.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\Obsolete\RecordGPOS.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\Obsolete\RecordMD.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\Obsolete\RecordMF.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\Obsolete\RecordNSAPPTR.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\Obsolete\RecordNXT.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\Record.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordA.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordAAAA.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordAFSDB.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordCNAME.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordDNAME.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordDS.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordHINFO.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordISDN.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordKEY.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordKX.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordLOC.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordMB.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordMG.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordMINFO.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordMR.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordMX.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordNAPTR.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordNS.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordNSAP.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordNULL.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordPTR.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordPX.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordRP.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordRT.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordSIG.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordSOA.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordSRV.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordTKEY.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordTSIG.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordTXT.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordWKS.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Records\RecordX25.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Request.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Resolver.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Response.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\RR.cs" />
+    <Compile Include="3rdParty\Heijden.DNS\Structs.cs" />
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
+    <Compile Include="Models\Network\DNSLookup.cs" />
+    <Compile Include="Models\Network\DNSLookupOptions.cs" />
+    <Compile Include="Models\Network\DNSLookupErrorArgs.cs" />
+    <Compile Include="Models\Network\DNSLookupRecordInfo.cs" />
+    <Compile Include="Models\Network\DNSLookupRecordArgs.cs" />
+    <Compile Include="Validators\IPAddressValidator.cs" />
     <Compile Include="Validators\OpacityTextboxValidator.cs" />
+    <Compile Include="ViewModels\Applications\DNSLookupViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsApplicationDNSLookupViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationWakeOnLANViewModel.cs" />
+    <Compile Include="Views\Settings\SettingsApplicationDNSLookupView.xaml.cs">
+      <DependentUpon>SettingsApplicationDNSLookupView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Settings\SettingsApplicationWakeOnLANView.xaml.cs">
       <DependentUpon>SettingsApplicationWakeOnLANView.xaml</DependentUpon>
     </Compile>
@@ -176,6 +256,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Settings\SettingsApplicationDNSLookupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Settings\SettingsApplicationWakeOnLANView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -197,10 +281,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Settings\SettingsGeneralGeneralView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Settings\SettingsGeneralDeveloperView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -372,7 +452,6 @@
     <Compile Include="ViewModels\Settings\SettingsGeneralImportExportViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsGeneralSettingsViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsGeneralAutostartViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsGeneralDeveloperViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\Applications\TracerouteView.xaml.cs">
@@ -410,9 +489,6 @@
     </Compile>
     <Compile Include="Views\Settings\SettingsGeneralGeneralView.xaml.cs">
       <DependentUpon>SettingsGeneralGeneralView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Settings\SettingsGeneralDeveloperView.xaml.cs">
-      <DependentUpon>SettingsGeneralDeveloperView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\SettingsGeneralImportExportView.xaml.cs">
       <DependentUpon>SettingsGeneralImportExportView.xaml</DependentUpon>
@@ -576,6 +652,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="3rdParty\Heijden.DNS\Records\totla.txt" />
+    <Resource Include="3rdParty\Heijden.DNS\Root\named_root.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

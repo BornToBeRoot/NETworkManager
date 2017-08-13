@@ -3,11 +3,11 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views.Settings
 {
-    public partial class SettingsGeneralDeveloperView : UserControl
+    public partial class SettingsApplicationDNSLookupView : UserControl
     {
-        SettingsGeneralDeveloperViewModel viewModel = new SettingsGeneralDeveloperViewModel();
+        SettingsApplicationDNSLookupViewModel viewModel = new SettingsApplicationDNSLookupViewModel();
 
-        public SettingsGeneralDeveloperView()
+        public SettingsApplicationDNSLookupView()
         {
             InitializeComponent();
             DataContext = viewModel;

@@ -37,14 +37,12 @@
     <system:String x:Key="String_Header_ARP">ARP</system:String>
     <system:String x:Key="String_Header_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_Header_Experimental">Experimental</system:String>
-    <system:String x:Key="String_Header_DeveloperMode">Developer mode</system:String>
     <system:String x:Key="String_Header_PingError">Ping error</system:String>
     <system:String x:Key="String_Header_DnsError">DNS error</system:String>
     <system:String x:Key="String_Header_Multithreading">Multithreading</system:String>
     <system:String x:Key="String_Header_Confirm">Confirm</system:String>
     <system:String x:Key="String_Header_HotKeys">HotKeys</system:String>
     <system:String x:Key="String_Header_DNSLookup">DNS Lookup</system:String>
-    <system:String x:Key="String_Button_Lookup">Lookup</system:String>
     <system:String x:Key="String_Header_Route">Route</system:String>
     <system:String x:Key="String_Header_MaximumHopsReached">Maximum hops reached</system:String>
     <system:String x:Key="String_Header_CanceledByUser">Canceled by user</system:String>
@@ -171,7 +169,6 @@
     <system:String x:Key="String_Time2">Time 2</system:String>
     <system:String x:Key="String_Time3">Time 3</system:String>
     <system:String x:Key="String_PreferredProtocolWhenResolvingHostname">Preferred protocol when resolving hostname:</system:String>
-    <system:String x:Key="String_EnableDeveloperMode">Enable developer mode</system:String>
     <system:String x:Key="String_Hop">Hop</system:String>
     <system:String x:Key="String_MaximumHopsRouter">Maximum hops/router</system:String>
     <system:String x:Key="String_ConfirmClose">Confirm close</system:String>
@@ -211,6 +208,11 @@
     <system:String x:Key="String_NoVendorFoundCheckYourInput">No vendor found. Check your input!</system:String>
     <system:String x:Key="String_EnableTransparency">Enable transparency</system:String>
     <system:String x:Key="String_DefaultPort">Default port:</system:String>
+    <system:String x:Key="String_UseCustomDnsServer">Use custom dns server</system:String>
+    <system:String x:Key="String_Class">Class</system:String>
+    <system:String x:Key="String_Recursion">Recursion</system:String>
+    <system:String x:Key="String_UseResolverCache">Use resolver cache</system:String>
+    <system:String x:Key="String_Result">Result</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
@@ -236,6 +238,7 @@
     <system:String x:Key="String_Button_Reset">Reset</system:String>
     <system:String x:Key="String_Button_Continue">Continue</system:String>
     <system:String x:Key="String_Button_Validate">Validate</system:String>
+    <system:String x:Key="String_Button_Lookup">Lookup</system:String>
 
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Cut</system:String>
@@ -300,6 +303,7 @@
     <system:String x:Key="String_ValidateError_EnterValidPortOrPortRange">Enter a valid port and/or port range (1 - 65535)!</system:String>
     <system:String x:Key="String_ValidateError_OnlyNumbersCanBeEntered">Only numbers can be entered!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidValueBetween10and100">Enter a valid value between 10 and 100!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidIPAddress">Enter a valid IP-Address!</system:String>
     
     <!-- ApplicationView.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>
@@ -321,7 +325,6 @@
     <system:String x:Key="String_SettingsName_Autostart">Autostart</system:String>
     <system:String x:Key="String_SettingsName_Settings">Settings</system:String>
     <system:String x:Key="String_SettingsName_ImportExport">Import / Export</system:String>
-    <system:String x:Key="String_SettingsName_Developer">Developer</system:String>
 
     <!-- SettingsView.Group -->
     <system:String x:Key="String_SettingsGroup_General">General</system:String>
@@ -373,4 +376,7 @@
     <system:String x:Key="String_Libary_MahAppsMetroDescription">A toolkit for creating Metro / Modern UI styled WPF apps.</system:String>
     <system:String x:Key="String_Libary_MahAppsMetroIconPacksName">MahApps.Metro.IconPacks</system:String>
     <system:String x:Key="String_Libary_MahAppsMetroIconPacksDescription">Some awesome icons for WPF and UWP all together...</system:String>
+    <system:String x:Key="String_Libary_HeijdenDNSName">Heijden.DNS</system:String>
+    <system:String x:Key="String_Libary_HeijdenDNSDescription">Reusable DNS resolver component</system:String>
+
 </ResourceDictionary>
