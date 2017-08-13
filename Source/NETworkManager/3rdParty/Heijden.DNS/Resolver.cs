@@ -409,7 +409,7 @@ namespace Heijden.DNS
                     {
                         IAsyncResult result = tcpClient.BeginConnect(m_DnsServers[intDnsServer].Address, m_DnsServers[intDnsServer].Port, null, null);
 
-                        bool success = result.AsyncWaitHandle.WaitOne(m_Timeout * 1000, true);
+                        bool success = result.AsyncWaitHandle.WaitOne(m_Timeout, true);
 
                         if (!success || !tcpClient.Connected)
                         {

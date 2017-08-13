@@ -62,21 +62,7 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
-
-        private bool _cancelLookup;
-        public bool CancelLookup
-        {
-            get { return _cancelLookup; }
-            set
-            {
-                if (value == _cancelLookup)
-                    return;
-
-                _cancelLookup = value;
-                OnPropertyChanged();
-            }
-        }
-
+             
         private AsyncObservableCollection<DNSLookupRecordInfo> _lookupResult = new AsyncObservableCollection<DNSLookupRecordInfo>();
         public AsyncObservableCollection<DNSLookupRecordInfo> LookupResult
         {
@@ -89,6 +75,35 @@ namespace NETworkManager.ViewModels.Applications
                 _lookupResult = value;
             }
         }
+
+        private bool _displayErrorMessage;
+        public bool DisplayErrorMessage
+        {
+            get { return _displayErrorMessage; }
+            set
+            {
+                if (value == _displayErrorMessage)
+                    return;
+
+                _displayErrorMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set
+            {
+                if (value == _errorMessage)
+                    return;
+
+                _errorMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Contructor
@@ -131,11 +146,12 @@ namespace NETworkManager.ViewModels.Applications
         #region Methods      
         private void StartLookup()
         {
+            DisplayErrorMessage = false;
             IsLookupRunning = true;
 
             // Reset the latest results
             LookupResult.Clear();
-
+            
             HostnameOrIPAddressHistory = new List<string>(HistoryListHelper.Modify(HostnameOrIPAddressHistory, HostnameOrIPAddress, SettingsManager.Current.Application_HistoryListEntries));
 
             DNSLookupOptions dnsLookupOptions = new DNSLookupOptions
@@ -174,12 +190,24 @@ namespace NETworkManager.ViewModels.Applications
 
         private void DnsLookup_LookupError(object sender, DNSLookupErrorArgs e)
         {
-            MessageBox.Show(e.Error);
+            if (e.ErrorCode == "Timeout Error")
+                ErrorMessage = string.Format(Application.Current.Resources["String_TimeoutWhenQueryingDNSServer"] as string, e.DNSServer);
+            else
+                ErrorMessage = Application.Current.Resources["String_UnkownError"] as string;
+
+            DisplayErrorMessage = true;
+
             IsLookupRunning = false;
         }
 
         private void DnsLookup_LookupComplete(object sender, EventArgs e)
         {
+            if (LookupResult.Count == 0)
+            {
+                ErrorMessage = string.Format(Application.Current.Resources["String_NoDnsRecordFoundCheckYourInputAndSettings"] as string, HostnameOrIPAddress);
+                DisplayErrorMessage = true;
+            }
+
             IsLookupRunning = false;
         }
         #endregion

@@ -63,7 +63,7 @@ namespace NETworkManager.Models.Network
                 // If there was an error... return
                 if (!string.IsNullOrEmpty(dnsResponse.Error))
                 {
-                    OnLookupError(new DNSLookupErrorArgs(dnsResponse.Error));
+                    OnLookupError(new DNSLookupErrorArgs(dnsResponse.Error, dnsResolver.DnsServer));
                     return;
                 }
                 
@@ -73,8 +73,18 @@ namespace NETworkManager.Models.Network
                 // If we get a CNAME back (from a result), do a second request and try to get the A, AAAA etc... 
                 if(dnsLookupOptions.Type != QType.CNAME)
                 {
-                    foreach(RecordCNAME r in dnsResponse.RecordsCNAME)
-                        ProcessResponse(dnsResolver.Query(r.CNAME, dnsLookupOptions.Type, dnsLookupOptions.Class));
+                    foreach (RecordCNAME r in dnsResponse.RecordsCNAME)
+                    {
+                        Response dnsResponse2 = dnsResolver.Query(r.CNAME, dnsLookupOptions.Type, dnsLookupOptions.Class);
+
+                        if(!string.IsNullOrEmpty(dnsResponse2.Error))
+                        {
+                            OnLookupError(new DNSLookupErrorArgs(dnsResponse2.Error, dnsResolver.DnsServer));
+                            continue;
+                        }
+
+                        ProcessResponse(dnsResponse2);
+                    }
                 }
 
                 OnLookupComplete();
