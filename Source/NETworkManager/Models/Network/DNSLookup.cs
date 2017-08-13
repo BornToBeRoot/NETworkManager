@@ -2,7 +2,6 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace NETworkManager.Models.Network
 {
@@ -67,41 +66,54 @@ namespace NETworkManager.Models.Network
                     OnLookupError(new DNSLookupErrorArgs(dnsResponse.Error));
                     return;
                 }
+                
+                // Process the results...
+                ProcessResponse(dnsResponse);
 
-                // A
-                foreach (RecordA r in dnsResponse.RecordsA)
-                    OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString()));
-
-                // AAAA
-                foreach (RecordAAAA r in dnsResponse.RecordsAAAA)
-                    OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString()));
-
-                // CNAME
-                foreach (RecordCNAME r in dnsResponse.RecordsCNAME)
-                    OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString()));
-
-                // MX
-                foreach (RecordMX r in dnsResponse.RecordsMX)
-                    OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString()));
-
-                // NS
-                foreach (RecordNS r in dnsResponse.RecordsNS)
-                    OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString()));
-
-                // PTR
-                foreach (RecordPTR r in dnsResponse.RecordsPTR)
-                    OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString()));
-
-                // SOA
-                foreach (RecordSOA r in dnsResponse.RecordsSOA)
-                    OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString()));
-
-                // TXT
-                foreach (RecordTXT r in dnsResponse.RecordsTXT)
-                    OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString()));
+                // If we get a CNAME back (from a result), do a second request and try to get the A, AAAA etc... 
+                if(dnsLookupOptions.Type != QType.CNAME)
+                {
+                    foreach(RecordCNAME r in dnsResponse.RecordsCNAME)
+                        ProcessResponse(dnsResolver.Query(r.CNAME, dnsLookupOptions.Type, dnsLookupOptions.Class));
+                }
 
                 OnLookupComplete();
             });
+        }
+
+        private void ProcessResponse(Response dnsResponse)
+        {
+            // A
+            foreach (RecordA r in dnsResponse.RecordsA)
+                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString().TrimEnd()));
+
+            // AAAA
+            foreach (RecordAAAA r in dnsResponse.RecordsAAAA)
+                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString().TrimEnd()));
+
+            // CNAME
+            foreach (RecordCNAME r in dnsResponse.RecordsCNAME)
+                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString().TrimEnd()));
+
+            // MX
+            foreach (RecordMX r in dnsResponse.RecordsMX)
+                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString().TrimEnd()));
+
+            // NS
+            foreach (RecordNS r in dnsResponse.RecordsNS)
+                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString().TrimEnd()));
+
+            // PTR
+            foreach (RecordPTR r in dnsResponse.RecordsPTR)
+                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString().TrimEnd()));
+
+            // SOA
+            foreach (RecordSOA r in dnsResponse.RecordsSOA)
+                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString().TrimEnd()));
+
+            // TXT
+            foreach (RecordTXT r in dnsResponse.RecordsTXT)
+                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString().TrimEnd()));
         }
         #endregion
     }
