@@ -353,7 +353,7 @@ namespace Heijden.DNS
                     else
                         socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp);
 
-                    socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, m_Timeout * 1000);
+                    socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, m_Timeout);
 
                     try
                     {
@@ -403,7 +403,7 @@ namespace Heijden.DNS
                     else
                         tcpClient = new TcpClient(AddressFamily.InterNetworkV6);
 
-                    tcpClient.ReceiveTimeout = m_Timeout * 1000;
+                    tcpClient.ReceiveTimeout = m_Timeout;
 
                     try
                     {

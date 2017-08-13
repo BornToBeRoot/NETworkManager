@@ -107,12 +107,16 @@
             </Controls:MetroProgressBar>
         </Grid>
         <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Result}" Style="{StaticResource HeaderTextBlock}" />
-        <Control:ScrollingDataGrid Grid.Row="3" CanUserSortColumns="False" CanUserReorderColumns="False" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding LookupResult}" CanUserAddRows="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,20">
+        <Control:ScrollingDataGrid Grid.Row="3" CanUserSortColumns="False" CanUserReorderColumns="False" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding LookupResult}" CanUserAddRows="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True">
             <Control:ScrollingDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollingDataGridScrollBar}" />
             </Control:ScrollingDataGrid.Resources>
             <Control:ScrollingDataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_Name}" Binding="{Binding Name}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_TTL}" Binding="{Binding TTL}" MinWidth="80" />
+                <DataGridTextColumn Header="{DynamicResource String_Class}" Binding="{Binding Class}" MinWidth="100" />
+                <DataGridTextColumn Header="{DynamicResource String_Type}" Binding="{Binding Type}" MinWidth="100" />
+                <DataGridTextColumn Header="{DynamicResource String_Result}" Binding="{Binding Result}" MinWidth="200" />
             </Control:ScrollingDataGrid.Columns>
         </Control:ScrollingDataGrid>
     </Grid>

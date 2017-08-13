@@ -13,15 +13,5 @@
         {
 
         }
-
-        public IPScannerOptions(int threads, int timeout, byte[] buffer, int attempts, bool resolveHostname, bool resolveMACAddress)
-        {
-            Threads = threads;
-            Timeout = timeout;
-            Buffer = buffer;
-            Attempts = attempts;
-            ResolveHostname = resolveHostname;
-            ResolveMACAddress = resolveMACAddress;
-        }
     }
 }

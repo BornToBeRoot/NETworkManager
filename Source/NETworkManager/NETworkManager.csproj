@@ -164,6 +164,10 @@
     <Compile Include="3rdParty\Heijden.DNS\Structs.cs" />
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
     <Compile Include="Models\Network\DNSLookup.cs" />
+    <Compile Include="Models\Network\DNSLookupOptions.cs" />
+    <Compile Include="Models\Network\DNSLookupErrorArgs.cs" />
+    <Compile Include="Models\Network\DNSLookupRecordInfo.cs" />
+    <Compile Include="Models\Network\DNSLookupRecordArgs.cs" />
     <Compile Include="Validators\IPAddressValidator.cs" />
     <Compile Include="Validators\OpacityTextboxValidator.cs" />
     <Compile Include="ViewModels\Applications\DNSLookupViewModel.cs" />

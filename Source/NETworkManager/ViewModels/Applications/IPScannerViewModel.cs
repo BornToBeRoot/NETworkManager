@@ -259,11 +259,11 @@ namespace NETworkManager.ViewModels.Applications
         #region Events
         private void IpScanner_HostFound(object sender, IPScannerHostFoundArgs e)
         {
-            IPScannerHostInfo ipScannerInfo = IPScannerHostInfo.Parse(e);
+            IPScannerHostInfo ipScannerHostInfo = IPScannerHostInfo.Parse(e);
 
             Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
             {
-                IPScanResult.Add(ipScannerInfo);
+                IPScanResult.Add(ipScannerHostInfo);
             }));
         }
 

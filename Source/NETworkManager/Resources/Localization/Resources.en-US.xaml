@@ -43,7 +43,6 @@
     <system:String x:Key="String_Header_Confirm">Confirm</system:String>
     <system:String x:Key="String_Header_HotKeys">HotKeys</system:String>
     <system:String x:Key="String_Header_DNSLookup">DNS Lookup</system:String>
-    <system:String x:Key="String_Button_Lookup">Lookup</system:String>
     <system:String x:Key="String_Header_Route">Route</system:String>
     <system:String x:Key="String_Header_MaximumHopsReached">Maximum hops reached</system:String>
     <system:String x:Key="String_Header_CanceledByUser">Canceled by user</system:String>
@@ -213,6 +212,7 @@
     <system:String x:Key="String_Class">Class</system:String>
     <system:String x:Key="String_Recursion">Recursion</system:String>
     <system:String x:Key="String_UseResolverCache">Use resolver cache</system:String>
+    <system:String x:Key="String_Result">Result</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
@@ -238,6 +238,7 @@
     <system:String x:Key="String_Button_Reset">Reset</system:String>
     <system:String x:Key="String_Button_Continue">Continue</system:String>
     <system:String x:Key="String_Button_Validate">Validate</system:String>
+    <system:String x:Key="String_Button_Lookup">Lookup</system:String>
 
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Cut</system:String>

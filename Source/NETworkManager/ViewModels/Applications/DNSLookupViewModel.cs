@@ -77,8 +77,8 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private AsyncObservableCollection<PingInfo> _lookupResult = new AsyncObservableCollection<PingInfo>();
-        public AsyncObservableCollection<PingInfo> LookupResult
+        private AsyncObservableCollection<DNSLookupRecordInfo> _lookupResult = new AsyncObservableCollection<DNSLookupRecordInfo>();
+        public AsyncObservableCollection<DNSLookupRecordInfo> LookupResult
         {
             get { return _lookupResult; }
             set
@@ -137,32 +137,50 @@ namespace NETworkManager.ViewModels.Applications
             LookupResult.Clear();
 
             HostnameOrIPAddressHistory = new List<string>(HistoryListHelper.Modify(HostnameOrIPAddressHistory, HostnameOrIPAddress, SettingsManager.Current.Application_HistoryListEntries));
-            
+
+            DNSLookupOptions dnsLookupOptions = new DNSLookupOptions
+            {
+                UseCustomDNSServer = SettingsManager.Current.DNSLookup_UseCustomDNSServer,
+                CustomDNSServer = SettingsManager.Current.DNSLookup_CustomDNSServer,
+                Class = SettingsManager.Current.DNSLookup_Class,
+                Type = SettingsManager.Current.DNSLookup_Type,
+                Recursion = SettingsManager.Current.DNSLookup_Recursion,
+                UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache,
+                TransportType = SettingsManager.Current.DNSLookup_TransportType,
+                Attempts = SettingsManager.Current.DNSLookup_Attempts,
+                Timeout = SettingsManager.Current.DNSLookup_Timeout
+            };
+
             DNSLookup dnsLookup = new DNSLookup();
 
+            dnsLookup.RecordReceived += DnsLookup_RecordReceived;
+            dnsLookup.LookupError += DnsLookup_LookupError;
             dnsLookup.LookupComplete += DnsLookup_LookupComplete;
 
-            dnsLookup.LookupAsync(HostnameOrIPAddress);
+            dnsLookup.LookupAsync(HostnameOrIPAddress, dnsLookupOptions);
         }
-
-        /*private void StopLookup()
-        {
-            IsLookupRunning = false;
-        }*/
         #endregion
 
         #region Events
+        private void DnsLookup_RecordReceived(object sender, DNSLookupRecordArgs e)
+        {
+            DNSLookupRecordInfo dnsLookupRecordInfo = DNSLookupRecordInfo.Parse(e);
+
+            Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
+            {
+                LookupResult.Add(dnsLookupRecordInfo);
+            }));                        
+        }
+
+        private void DnsLookup_LookupError(object sender, DNSLookupErrorArgs e)
+        {
+            MessageBox.Show(e.Error);
+            IsLookupRunning = false;
+        }
+
         private void DnsLookup_LookupComplete(object sender, EventArgs e)
         {
             IsLookupRunning = false;
-        }
-        #endregion
-
-        #region OnShutdown
-        public void OnShutdown()
-        {
-            //if (IsLookupRunning)
-            //    LookupAction();
         }
         #endregion
     }
