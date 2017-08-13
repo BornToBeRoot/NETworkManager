@@ -502,6 +502,20 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _ping_ExpandStatistics = true;
+        public bool Ping_ExpandStatistics
+        {
+            get { return _ping_ExpandStatistics; }
+            set
+            {
+                if (value == _ping_ExpandStatistics)
+                    return;
+
+                _ping_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Traceroute

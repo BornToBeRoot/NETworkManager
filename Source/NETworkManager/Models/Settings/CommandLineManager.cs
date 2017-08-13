@@ -56,10 +56,6 @@ namespace NETworkManager.Models.Settings
                         Current.Help = true;
                     }
                 }
-                else
-                {
-                    Current.Help = true;
-                }
             }
         }
 

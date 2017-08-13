@@ -202,6 +202,6 @@ namespace NETworkManager.Models.Settings
 
             ForceRestart = true;
         }
-        #endregion                
+        #endregion
     }
 }

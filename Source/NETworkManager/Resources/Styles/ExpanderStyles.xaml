@@ -14,16 +14,16 @@
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid Background="Transparent" SnapsToDevicePixels="False">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Rectangle x:Name="Test" Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                            <Rectangle Grid.Column="1" x:Name="Chevron" Width="16" Height="16" Fill="{DynamicResource GrayBrush3}" VerticalAlignment="Center">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ChevronDown}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <Controls:ContentControlEx Grid.Column="1" 
-                                                       Margin="4 0 0 0" 
+                            <Controls:ContentControlEx Grid.Column="0" 
+                                                       Margin="0" 
                                                        HorizontalAlignment="Stretch"
                                                        Padding="{TemplateBinding Padding}" 
                                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -39,14 +39,14 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="Test" Property="OpacityMask">
+                            <Setter TargetName="Chevron" Property="OpacityMask">
                                 <Setter.Value>
                                     <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ChevronUp}" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Test" Property="Fill" Value="{DynamicResource GrayBrush5}"/>
+                            <Setter TargetName="Chevron" Property="Fill" Value="{DynamicResource GrayBrush5}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

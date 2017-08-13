@@ -227,6 +227,23 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
+
+        private bool _expandStatistics;
+        public bool ExpandStatistics
+        {
+            get { return _expandStatistics; }
+            set
+            {
+                if (value == _expandStatistics)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.Ping_ExpandStatistics = value;
+
+                _expandStatistics = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Contructor
@@ -250,6 +267,8 @@ namespace NETworkManager.ViewModels.Applications
         {
             if (SettingsManager.Current.Ping_HostnameOrIPAddressHistory != null)
                 HostnameOrIPAddressHistory = new List<string>(SettingsManager.Current.Ping_HostnameOrIPAddressHistory);
+
+            ExpandStatistics = SettingsManager.Current.Ping_ExpandStatistics;
         }
         #endregion
 

@@ -133,9 +133,12 @@
                 <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding Status, Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150"/>
             </Control:ScrollingDataGrid.Columns>
         </Control:ScrollingDataGrid>
-        <StackPanel Grid.Row="4">
-            <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" />
-            <Grid>
+        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource DefaultExpander}">
+            <Expander.Header>
+                <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
+            </Expander.Header>
+        <StackPanel FlowDirection="LeftToRight">
+            <Grid Margin="0,10,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
@@ -194,5 +197,6 @@
                 <TextBox Grid.Column="7" Grid.Row="4" Text="{Binding MaximumTime, StringFormat={}{0} ms}" />
             </Grid>
         </StackPanel>
+        </Expander>
     </Grid>
 </UserControl>
