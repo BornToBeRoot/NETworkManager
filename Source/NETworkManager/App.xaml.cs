@@ -21,6 +21,12 @@ namespace NETworkManager
             // Parse the command line arguments and store them in the current configuration
             CommandLineManager.Parse();
 
+            if (CommandLineManager.Current.Help)
+            {
+                StartupUri = new Uri("/Views/Others/HelpCommandLineWindow.xaml", UriKind.Relative);
+                return;
+            }
+
             // If we have restart our application... wait until it has finished
             if (CommandLineManager.Current.RestartPid != 0)
             {
@@ -31,7 +37,7 @@ namespace NETworkManager
                 if (process != null)
                     process.WaitForExit();
             }
-
+                                        
             // Detect the current configuration
             ConfigurationManager.Detect();
 
@@ -54,7 +60,7 @@ namespace NETworkManager
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            if (!ImportExportManager.ForceRestart)
+            if (!ImportExportManager.ForceRestart && !CommandLineManager.Current.Help)
             {
                 // Save templates
                 if (TemplateManager.NetworkInterfaceConfigTemplatesChanged)

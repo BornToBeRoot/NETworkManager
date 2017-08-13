@@ -64,7 +64,8 @@
     <system:String x:Key="String_Header_Update">Update</system:String>
     <system:String x:Key="String_Header_Transparency">Transparenz</system:String>
     <system:String x:Key="String_Header_WakeOnLAN">Wake on LAN</system:String>
-    
+    <system:String x:Key="String_Header_HelpCommandLine">Hilfe - Kommandozeile</system:String>
+
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_ShowWindow">Fenster anzeigen</system:String>

@@ -7,6 +7,7 @@ namespace NETworkManager.Models.Settings
     public static class CommandLineManager
     {
         public const string ParameterIdentifier = "--";
+        public const string ParameterHelp = "help";
         public const string ParameterAutostart = "autostart";
         public const string ParameterResetSettings = "reset-settings";
         public const string ParameterRestartPid = "restart-pid:";
@@ -32,9 +33,11 @@ namespace NETworkManager.Models.Settings
                 if (parameter.StartsWith(ParameterIdentifier))
                 {
                     string param = parameter.TrimStart(trimChars);
-
-                    // Autostart
-                    if (param.Equals(ParameterAutostart, StringComparison.InvariantCultureIgnoreCase))
+                    if (param.Equals(ParameterHelp, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        Current.Help = true;
+                    }// Autostart
+                    else if(param.Equals(ParameterAutostart, StringComparison.InvariantCultureIgnoreCase))
                     {
                         Current.Autostart = true;
                     } // Reset Settings                    
@@ -48,6 +51,14 @@ namespace NETworkManager.Models.Settings
 
                         Current.RestartPid = restartPid;
                     }
+                    else
+                    {
+                        Current.Help = true;
+                    }
+                }
+                else
+                {
+                    Current.Help = true;
                 }
             }
         }

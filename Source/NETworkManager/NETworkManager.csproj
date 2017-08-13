@@ -179,6 +179,9 @@
     <Compile Include="Views\Settings\SettingsApplicationWakeOnLANView.xaml.cs">
       <DependentUpon>SettingsApplicationWakeOnLANView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Others\HelpCommandLineWindow.xaml.cs">
+      <DependentUpon>HelpCommandLineWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WpfHelper\ProtocolSettingsLayout.cs" />
     <Page Include="Resources\ContextMenu\ContextMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -313,6 +316,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Settings\AboutView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Others\HelpCommandLineWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

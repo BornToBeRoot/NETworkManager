@@ -218,7 +218,7 @@ namespace NETworkManager
             InitializeComponent();
             DataContext = this;
 
-            // Get assembly informations
+            // Get assembly informations   
             AssemblyManager.Load();
             Version = AssemblyManager.Current.AssemblyVersion.ToString();
 
