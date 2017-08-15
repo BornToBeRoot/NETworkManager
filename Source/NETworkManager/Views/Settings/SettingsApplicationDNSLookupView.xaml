@@ -31,6 +31,6 @@
         <TextBlock Text="{DynamicResource String_Attempts}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Attempts}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
         <TextBlock Text="{DynamicResource String_Timeout}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding Timeout}" Maximum="10000" Minimum="100" Interval="100" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding Timeout}" Maximum="10000" Minimum="100" Interval="100" />
     </StackPanel>
 </UserControl>
