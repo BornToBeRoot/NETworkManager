@@ -167,6 +167,34 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
+
+        private bool _displayErrorMessage;
+        public bool DisplayErrorMessage
+        {
+            get { return _displayErrorMessage; }
+            set
+            {
+                if (value == _displayErrorMessage)
+                    return;
+
+                _displayErrorMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set
+            {
+                if (value == _errorMessage)
+                    return;
+
+                _errorMessage = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, Load settings
@@ -214,6 +242,9 @@ namespace NETworkManager.ViewModels.Applications
         #region Methods
         private async void StartScan()
         {
+            DisplayErrorMessage = false;
+            ErrorMessage = string.Empty;
+
             IsScanRunning = true;
             PreparingScan = true;
 
@@ -221,14 +252,15 @@ namespace NETworkManager.ViewModels.Applications
 
             cancellationTokenSource = new CancellationTokenSource();
 
-            string[] HostnameOrIPAddresses = HostnameOrIPAddress.Split(';');
+            string[] hosts = HostnameOrIPAddress.Split(';');
 
             List<Tuple<IPAddress, string>> hostData = new List<Tuple<IPAddress, string>>();
 
-            for (int i = 0; i < HostnameOrIPAddresses.Length; i++)
+            for (int i = 0; i < hosts.Length; i++)
             {
-                string hostname = HostnameOrIPAddresses[i];
-                IPAddress.TryParse(hostname, out IPAddress ipAddress);
+                string host = hosts[i].Trim();
+                string hostname = string.Empty;
+                IPAddress.TryParse(host, out IPAddress ipAddress);
 
                 try
                 {
@@ -236,7 +268,7 @@ namespace NETworkManager.ViewModels.Applications
                     // Try to resolve the hostname
                     if (ipAddress == null)
                     {
-                        IPHostEntry ipHostEntry = await Dns.GetHostEntryAsync(HostnameOrIPAddress);
+                        IPHostEntry ipHostEntry = await Dns.GetHostEntryAsync(host);
 
                         foreach (IPAddress ip in ipHostEntry.AddressList)
                         {
@@ -261,18 +293,28 @@ namespace NETworkManager.ViewModels.Applications
                                 continue;
                             }
                         }
+
+                        hostname = host;
                     }
                     else
                     {
-                        IPHostEntry ipHostEntry = await Dns.GetHostEntryAsync(ipAddress);
+                        try
+                        {
+                            IPHostEntry ipHostEntry = await Dns.GetHostEntryAsync(ipAddress);
 
-                        if (ipHostEntry != null)
                             hostname = ipHostEntry.HostName;
+                        }
+                        catch { }
                     }
                 }
                 catch (SocketException) // This will catch DNS resolve errors
                 {
-                    await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_DnsError"] as string, Application.Current.Resources["String_CouldNotResolveHostnameMessage"] as string, MessageDialogStyle.Affirmative, dialogSettings);
+                    if (!string.IsNullOrEmpty(ErrorMessage))
+                        ErrorMessage += Environment.NewLine;
+
+                    ErrorMessage += string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, host);
+                    DisplayErrorMessage = true;
+
                     continue;
                 }
 
@@ -282,7 +324,9 @@ namespace NETworkManager.ViewModels.Applications
             if (hostData.Count == 0)
             {
                 IsScanRunning = false;
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_DnsError"] as string, "Nothing to do", MessageDialogStyle.Affirmative, dialogSettings);
+
+                ErrorMessage += Environment.NewLine + Application.Current.Resources["String_NothingToDoCheckYourInput"] as string;
+                DisplayErrorMessage = true;
 
                 return;
             }
@@ -318,17 +362,21 @@ namespace NETworkManager.ViewModels.Applications
             catch (Exception ex) // This will catch any exception
             {
                 IsScanRunning = false;
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, dialogSettings);
+
+                ErrorMessage = ex.Message;
+                DisplayErrorMessage = true;
             }
         }
 
         #region Events
-        private async void PortScanner_UserHasCanceled(object sender, EventArgs e)
+        private void PortScanner_UserHasCanceled(object sender, EventArgs e)
         {
             CancelScan = false;
             IsScanRunning = false;
 
-            await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_CanceledByUser"] as string, Application.Current.Resources["String_CanceledByUserMessage"] as string, MessageDialogStyle.Affirmative, dialogSettings);
+            ErrorMessage = Application.Current.Resources["String_CanceledByUserMessage"] as string;
+            DisplayErrorMessage = true;
+
         }
 
         private void PortScanner_ProgressChanged(object sender, ProgressChangedArgs e)
