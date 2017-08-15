@@ -83,6 +83,23 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
+        private bool _resolveCNAME;
+        public bool ResolveCNAME
+        {
+            get { return _resolveCNAME; }
+            set
+            {
+                if (value == _resolveCNAME)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.DNSLookup_ResolveCNAME = value;
+
+                _resolveCNAME = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _recursion;
         public bool Recursion
         {
@@ -187,6 +204,7 @@ namespace NETworkManager.ViewModels.Settings
             Class = Classes.First(x => x == SettingsManager.Current.DNSLookup_Class);
             Types = Enum.GetValues(typeof(QType)).Cast<QType>().OrderBy(x => x.ToString()).ToList();
             Type = Types.First(x => x == SettingsManager.Current.DNSLookup_Type);
+            ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME;
             Recursion = SettingsManager.Current.DNSLookup_Recursion;
             UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache;
             TransportTypes = Enum.GetValues(typeof(TransportType)).Cast<TransportType>().OrderBy(x => x.ToString()).ToList();

@@ -164,7 +164,8 @@ namespace NETworkManager.ViewModels.Applications
                 UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache,
                 TransportType = SettingsManager.Current.DNSLookup_TransportType,
                 Attempts = SettingsManager.Current.DNSLookup_Attempts,
-                Timeout = SettingsManager.Current.DNSLookup_Timeout
+                Timeout = SettingsManager.Current.DNSLookup_Timeout,
+                ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME
             };
 
             DNSLookup dnsLookup = new DNSLookup();
@@ -182,7 +183,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             DNSLookupRecordInfo dnsLookupRecordInfo = DNSLookupRecordInfo.Parse(e);
 
-            Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send,new Action(delegate ()
             {
                 LookupResult.Add(dnsLookupRecordInfo);
             }));                        
@@ -200,9 +201,9 @@ namespace NETworkManager.ViewModels.Applications
             IsLookupRunning = false;
         }
 
-        private void DnsLookup_LookupComplete(object sender, EventArgs e)
+        private void DnsLookup_LookupComplete(object sender, DNSLookupCompleteArgs e)
         {
-            if (LookupResult.Count == 0)
+            if (e.ResourceRecordsCount == 0)
             {
                 ErrorMessage = string.Format(Application.Current.Resources["String_NoDnsRecordFoundCheckYourInputAndSettings"] as string, HostnameOrIPAddress);
                 DisplayErrorMessage = true;

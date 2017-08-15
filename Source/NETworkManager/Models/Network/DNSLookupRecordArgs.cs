@@ -15,7 +15,7 @@ namespace NETworkManager.Models.Network
         public DNSLookupRecordArgs(RR resourceRecord, object result)
         {
             ResourceRecord = resourceRecord;
-            Result = result.ToString();
+            Result = result.ToString().TrimEnd();
         }
     }
 }

@@ -164,6 +164,7 @@
     <Compile Include="3rdParty\Heijden.DNS\Structs.cs" />
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
     <Compile Include="Models\Network\DNSLookup.cs" />
+    <Compile Include="Models\Network\DNSLookupCompleteArgs.cs" />
     <Compile Include="Models\Network\DNSLookupOptions.cs" />
     <Compile Include="Models\Network\DNSLookupErrorArgs.cs" />
     <Compile Include="Models\Network\DNSLookupRecordInfo.cs" />
@@ -179,7 +180,7 @@
     <Compile Include="Views\Settings\SettingsApplicationWakeOnLANView.xaml.cs">
       <DependentUpon>SettingsApplicationWakeOnLANView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Others\HelpCommandLineWindow.xaml.cs">
+    <Compile Include="Views\Help\HelpCommandLineWindow.xaml.cs">
       <DependentUpon>HelpCommandLineWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WpfHelper\ProtocolSettingsLayout.cs" />
@@ -319,7 +320,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Others\HelpCommandLineWindow.xaml">
+    <Page Include="Views\Help\HelpCommandLineWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

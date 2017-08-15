@@ -9,6 +9,8 @@ namespace NETworkManager.Models.Network
     {
         #region Variables
         Resolver dnsResolver = new Resolver();
+
+        int resourceRecordsCount;
         #endregion
 
         #region Events
@@ -26,11 +28,11 @@ namespace NETworkManager.Models.Network
             LookupError?.Invoke(this, e);
         }
 
-        public event EventHandler LookupComplete;
+        public event EventHandler<DNSLookupCompleteArgs> LookupComplete;
 
-        protected virtual void OnLookupComplete()
+        protected virtual void OnLookupComplete(DNSLookupCompleteArgs e)
         {
-            LookupComplete?.Invoke(this, EventArgs.Empty);
+            LookupComplete?.Invoke(this, e);
         }
         #endregion
 
@@ -71,7 +73,7 @@ namespace NETworkManager.Models.Network
                 ProcessResponse(dnsResponse);
 
                 // If we get a CNAME back (from a result), do a second request and try to get the A, AAAA etc... 
-                if(dnsLookupOptions.Type != QType.CNAME)
+                if(dnsLookupOptions.ResolveCNAME && dnsLookupOptions.Type != QType.CNAME)
                 {
                     foreach (RecordCNAME r in dnsResponse.RecordsCNAME)
                     {
@@ -87,7 +89,7 @@ namespace NETworkManager.Models.Network
                     }
                 }
 
-                OnLookupComplete();
+                OnLookupComplete(new DNSLookupCompleteArgs(dnsResponse.RecordsA.Length + dnsResponse.RecordsAAAA.Length + dnsResponse.RecordsCNAME.Length + dnsResponse.RecordsMX.Length + dnsResponse.RecordsNS.Length + dnsResponse.RecordsPTR.Length + dnsResponse.RecordsSOA.Length + dnsResponse.RecordsTXT.Length));
             });
         }
 
@@ -95,35 +97,35 @@ namespace NETworkManager.Models.Network
         {
             // A
             foreach (RecordA r in dnsResponse.RecordsA)
-                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString().TrimEnd()));
+                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r));
 
             // AAAA
             foreach (RecordAAAA r in dnsResponse.RecordsAAAA)
-                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString().TrimEnd()));
+                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r));
 
             // CNAME
             foreach (RecordCNAME r in dnsResponse.RecordsCNAME)
-                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString().TrimEnd()));
+                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r));
 
             // MX
             foreach (RecordMX r in dnsResponse.RecordsMX)
-                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString().TrimEnd()));
+                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r));
 
             // NS
             foreach (RecordNS r in dnsResponse.RecordsNS)
-                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString().TrimEnd()));
+                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r));
 
             // PTR
             foreach (RecordPTR r in dnsResponse.RecordsPTR)
-                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString().TrimEnd()));
+                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r));
 
             // SOA
             foreach (RecordSOA r in dnsResponse.RecordsSOA)
-                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString().TrimEnd()));
+                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r));
 
             // TXT
             foreach (RecordTXT r in dnsResponse.RecordsTXT)
-                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r.ToString().TrimEnd()));
+                OnRecordReceived(new DNSLookupRecordArgs(r.RR, r));
         }
         #endregion
     }

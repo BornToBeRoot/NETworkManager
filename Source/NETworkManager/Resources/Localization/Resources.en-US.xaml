@@ -217,6 +217,7 @@
     <system:String x:Key="String_NoDnsRecordFoundCheckYourInputAndSettings">No dns record found for "{0}"! Check your input and the settings.</system:String>
     <system:String x:Key="String_UnkownError">Unkown error!</system:String>
     <system:String x:Key="String_TimeoutWhenQueryingDNSServer">Timeout when querying the DNS server with the IP-Address "{0}"!</system:String>
+    <system:String x:Key="String_ResolveCNAME">Resolve CNAME</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>

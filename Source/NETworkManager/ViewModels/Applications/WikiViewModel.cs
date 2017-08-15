@@ -252,7 +252,7 @@ namespace NETworkManager.ViewModels.Applications
                 }
             }
 
-            foreach(OUIInfo info in await OUILookup.LookupByVendorAsync(vendors))
+            foreach (OUIInfo info in await OUILookup.LookupByVendorAsync(vendors))
             {
                 OUILookupResult.Add(info);
             }
@@ -342,7 +342,7 @@ namespace NETworkManager.ViewModels.Applications
                 }
             }
 
-                      foreach (PortLookupInfo info in await PortLookup.LookupByServiceAsync(portsByService))
+            foreach (PortLookupInfo info in await PortLookup.LookupByServiceAsync(portsByService))
             {
                 PortLookupResult.Add(info);
             }

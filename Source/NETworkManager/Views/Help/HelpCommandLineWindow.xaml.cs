@@ -1,6 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 
-namespace NETworkManager.Views.Others
+namespace NETworkManager.Views.Help
 {
     /// <summary>
     /// Interaktionslogik für Settings.xaml

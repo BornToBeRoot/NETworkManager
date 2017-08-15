@@ -793,6 +793,20 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private bool _dnsLookup_ResolveCNAME = true;
+        public bool DNSLookup_ResolveCNAME
+        {
+            get { return _dnsLookup_ResolveCNAME; }
+            set
+            {
+                if (value == _dnsLookup_ResolveCNAME)
+                    return;
+
+                _dnsLookup_ResolveCNAME = value;
+                SettingsChanged = true;
+            }
+        }
+
         private bool _dnsLookup_Recursion = true;
         public bool DNSLookup_Recursion
         {
@@ -861,7 +875,7 @@ namespace NETworkManager.Models.Settings
                 _dnsLookup_Timeout = value;
                 SettingsChanged = true;
             }
-        }
+        }        
         #endregion
         #endregion
 

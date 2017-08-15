@@ -13,6 +13,7 @@ namespace NETworkManager.Models.Network
         public TransportType TransportType { get; set; }
         public int Attempts { get; set; }
         public int Timeout { get; set;}
+        public bool ResolveCNAME { get; set; }
 
         public DNSLookupOptions()
         {
