@@ -221,45 +221,77 @@ namespace NETworkManager.ViewModels.Applications
 
             cancellationTokenSource = new CancellationTokenSource();
 
-            // Try to parse the string into an IP-Address
-            IPAddress.TryParse(HostnameOrIPAddress, out IPAddress ipAddress);
+            string[] HostnameOrIPAddresses = HostnameOrIPAddress.Split(';');
+
+            List<Tuple<IPAddress, string>> hostData = new List<Tuple<IPAddress, string>>();
+
+            for (int i = 0; i < HostnameOrIPAddresses.Length; i++)
+            {
+                string hostname = HostnameOrIPAddresses[i];
+                IPAddress.TryParse(hostname, out IPAddress ipAddress);
+
+                try
+                {
+                    // Resolve DNS
+                    // Try to resolve the hostname
+                    if (ipAddress == null)
+                    {
+                        IPHostEntry ipHostEntry = await Dns.GetHostEntryAsync(HostnameOrIPAddress);
+
+                        foreach (IPAddress ip in ipHostEntry.AddressList)
+                        {
+                            if (ip.AddressFamily == AddressFamily.InterNetwork && SettingsManager.Current.PortScanner_ResolveHostnamePreferIPv4)
+                            {
+                                ipAddress = ip;
+                                continue;
+                            }
+                            else if (ip.AddressFamily == AddressFamily.InterNetworkV6 && !SettingsManager.Current.PortScanner_ResolveHostnamePreferIPv4)
+                            {
+                                ipAddress = ip;
+                                continue;
+                            }
+                        }
+
+                        // Fallback --> If we could not resolve our prefered ip protocol
+                        if (ipAddress == null)
+                        {
+                            foreach (IPAddress ip in ipHostEntry.AddressList)
+                            {
+                                ipAddress = ip;
+                                continue;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        IPHostEntry ipHostEntry = await Dns.GetHostEntryAsync(ipAddress);
+
+                        if (ipHostEntry != null)
+                            hostname = ipHostEntry.HostName;
+                    }
+                }
+                catch (SocketException) // This will catch DNS resolve errors
+                {
+                    await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_DnsError"] as string, Application.Current.Resources["String_CouldNotResolveHostnameMessage"] as string, MessageDialogStyle.Affirmative, dialogSettings);
+                    continue;
+                }
+
+                hostData.Add(Tuple.Create(ipAddress, hostname));
+            }
+
+            if (hostData.Count == 0)
+            {
+                IsScanRunning = false;
+                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_DnsError"] as string, "Nothing to do", MessageDialogStyle.Affirmative, dialogSettings);
+
+                return;
+            }
+
+            int[] ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Ports);
 
             try
             {
-                // Resolve DNS
-                // Try to resolve the hostname
-                if (ipAddress == null)
-                {
-                    IPHostEntry ipHostEntrys = await Dns.GetHostEntryAsync(HostnameOrIPAddress);
-
-                    foreach (IPAddress ip in ipHostEntrys.AddressList)
-                    {
-                        if (ip.AddressFamily == AddressFamily.InterNetwork && SettingsManager.Current.PortScanner_ResolveHostnamePreferIPv4)
-                        {
-                            ipAddress = ip;
-                            continue;
-                        }
-                        else if (ip.AddressFamily == AddressFamily.InterNetworkV6 && !SettingsManager.Current.PortScanner_ResolveHostnamePreferIPv4)
-                        {
-                            ipAddress = ip;
-                            continue;
-                        }
-                    }
-
-                    // Fallback --> If we could not resolve our prefered ip protocol
-                    if (ipAddress == null)
-                    {
-                        foreach (IPAddress ip in ipHostEntrys.AddressList)
-                        {
-                            ipAddress = ip;
-                            continue;
-                        }
-                    }
-                }
-
-                int[] ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Ports);
-
-                ProgressBarMaximum = ports.Length;
+                ProgressBarMaximum = ports.Length * hostData.Count;
                 ProgressBarValue = 0;
 
                 PreparingScan = false;
@@ -280,13 +312,9 @@ namespace NETworkManager.ViewModels.Applications
                 portScanner.ProgressChanged += PortScanner_ProgressChanged;
                 portScanner.UserHasCanceled += PortScanner_UserHasCanceled;
 
-                portScanner.ScanAsync(ipAddress, ports, portScannerOptions, cancellationTokenSource.Token);
+                portScanner.ScanAsync(hostData, ports, portScannerOptions, cancellationTokenSource.Token);
             }
-            catch (SocketException) // This will catch DNS resolve errors
-            {
-                IsScanRunning = false;
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_DnsError"] as string, Application.Current.Resources["String_CouldNotResolveHostnameMessage"] as string, MessageDialogStyle.Affirmative, dialogSettings);
-            }
+
             catch (Exception ex) // This will catch any exception
             {
                 IsScanRunning = false;

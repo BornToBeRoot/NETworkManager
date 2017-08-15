@@ -14,6 +14,7 @@
         mc:Ignorable="d">
     <UserControl.Resources>
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <Converter:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
         <Converter:PortStatusToStringConverter x:Key="PortStatusToStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
@@ -37,7 +38,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_HostnameOrIPAddress}" />
-                <ComboBox Grid.Column="1" Grid.Row="0" x:Name="cbHostnameOrIPAddress" ItemsSource="{Binding HostnameOrIPAddressHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostOrIPv4Address}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}"  Style="{StaticResource HistoryComboBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                <ComboBox Grid.Column="1" Grid.Row="0" x:Name="cbHostnameOrIPAddress" ItemsSource="{Binding HostnameOrIPAddressHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameAndOrIPAddress}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}"  Style="{StaticResource HistoryComboBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                     <ComboBox.Text>
                         <Binding Path="HostnameOrIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -58,7 +59,7 @@
                     </ComboBox.Text>
                 </ComboBox>
             </Grid>
-            <Button Grid.Column="1" Grid.Row="1"  Command="{Binding ScanCommand}" IsDefault="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsScanRunning}" HorizontalAlignment="Right">
+            <Button Grid.Column="1" Grid.Row="1" Command="{Binding ScanCommand}" IsDefault="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsScanRunning}" HorizontalAlignment="Right">
                 <Button.Resources>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                         <Setter Property="IsEnabled" Value="True" />
@@ -168,6 +169,8 @@
                 <WpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
             </DataGrid.Resources>
             <DataGrid.Columns>
+                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Host.Item1}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding Host.Item2}" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_Port}" Binding="{Binding Port}" MinWidth="80" />
                 <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding Status, Converter={StaticResource PortStatusToStringConverter}}" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_Protocol}" Binding="{Binding LookupInfo.Protocol}" MinWidth="150" />

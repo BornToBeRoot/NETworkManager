@@ -218,7 +218,8 @@
     <system:String x:Key="String_UnkownError">Unkown error!</system:String>
     <system:String x:Key="String_TimeoutWhenQueryingDNSServer">Timeout when querying the DNS server with the IP-Address "{0}"!</system:String>
     <system:String x:Key="String_ResolveCNAME">Resolve CNAME</system:String>
-    
+    <system:String x:Key="String_Host">Host</system:String>
+
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
     <system:String x:Key="String_Button_Default">Default</system:String>
@@ -272,7 +273,7 @@
     <system:String x:Key="String_Watermark_LocationOfTheImport">Location of the import file...</system:String>
     <system:String x:Key="String_Watermark_ExampleMACAddressesOrVendor">01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5; Intel Corp; Asus</system:String>
     <system:String x:Key="String_Watermark_EamplePortScanRange">22; 80; 443; 500 - 999; 8080</system:String>
-    <system:String x:Key="String_Watermark_ExampleHostOrIPv4Address">192.168.178.1 or fritz.box</system:String>
+    <system:String x:Key="String_Watermark_ExampleHostnameAndOrIPAddress">192.168.178.1; fritz.box</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmaskOrCIDR">255.255.255.0 or /24</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Gateway">192.168.178.1</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4DNS">8.8.8.8</system:String>

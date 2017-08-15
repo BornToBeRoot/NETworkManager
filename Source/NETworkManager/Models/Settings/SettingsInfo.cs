@@ -649,7 +649,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _portScanner_Threads = 50;
+        private int _portScanner_Threads = 100;
         public int PortScanner_Threads
         {
             get { return _portScanner_Threads; }
