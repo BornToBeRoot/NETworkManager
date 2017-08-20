@@ -219,6 +219,8 @@
     <system:String x:Key="String_Host">Host</system:String>
     <system:String x:Key="String_CouldNotResolveHostnameFor">Hostname konnte nicht aufgelöst werden für: "{0}"</system:String>
     <system:String x:Key="String_NothingToDoCheckYourInput">Nichts zu tun. Überprüfen Sie Ihre Eingabe!</system:String>
+    <system:String x:Key="String_Scanned">Gescannt</system:String>
+    <system:String x:Key="String_Found">Found</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>

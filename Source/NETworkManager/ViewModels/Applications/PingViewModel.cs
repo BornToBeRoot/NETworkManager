@@ -379,11 +379,6 @@ namespace NETworkManager.ViewModels.Applications
             ping.SendAsync(ipAddress, pingOptions, cancellationTokenSource.Token);
         }
 
-        private void DispatcherTimer_Tick(object sender, EventArgs e)
-        {
-            Duration = stopwatch.Elapsed;
-        }
-
         private void StopPing()
         {
             CancelPing = true;
@@ -449,7 +444,7 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private void Ping_PingCompleted(object sender, System.EventArgs e)
+        private void Ping_PingCompleted(object sender, EventArgs e)
         {
             PingFinished();
         }
@@ -481,6 +476,11 @@ namespace NETworkManager.ViewModels.Applications
             CancelPing = false;
 
             PingFinished();
+        }
+
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            Duration = stopwatch.Elapsed;
         }
         #endregion
     }

@@ -221,6 +221,8 @@
     <system:String x:Key="String_Host">Host</system:String>
     <system:String x:Key="String_CouldNotResolveHostnameFor">Could not resolve hostname for: "{0}"</system:String>
     <system:String x:Key="String_NothingToDoCheckYourInput">Nothing to do. Check your input!</system:String>
+    <system:String x:Key="String_Scanned">Scanned</system:String>
+    <system:String x:Key="String_Found">Found</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>

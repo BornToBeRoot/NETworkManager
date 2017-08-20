@@ -358,6 +358,20 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _ipScanner_ExpandStatistics = true;
+        public bool IPScanner_ExpandStatistics
+        {
+            get { return _ipScanner_ExpandStatistics; }
+            set
+            {
+                if (value == _ipScanner_ExpandStatistics)
+                    return;
+
+                _ipScanner_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region NetworkInterface        

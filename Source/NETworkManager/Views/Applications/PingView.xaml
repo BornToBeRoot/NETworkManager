@@ -14,9 +14,9 @@
         mc:Ignorable="d">
     <UserControl.Resources>
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
         <Converter:IntToStringConverter x:Key="IntToStringConverter" />
         <Converter:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
+        <Converter:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
         <Converter:PercentConverter x:Key="PercentConverter" />
         <Converter:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
     </UserControl.Resources>
@@ -137,7 +137,7 @@
             <Expander.Header>
                 <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>
-        <StackPanel FlowDirection="LeftToRight">
+        <StackPanel>
             <Grid Margin="0,10,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
