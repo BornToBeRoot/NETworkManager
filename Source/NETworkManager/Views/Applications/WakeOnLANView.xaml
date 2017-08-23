@@ -86,7 +86,7 @@
                 </TextBox>
             </Grid>
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Command="{Binding AddTemplateCommand}" HorizontalAlignment="Right" ToolTip="{DynamicResource String_ToolTip_AddTemplate}" Margin="0,0,10,0">
+                <Button Command="{Binding AddTemplateCommand}" HorizontalAlignment="Right" Margin="0,0,10,0">
                     <Button.Content>
                         <Grid>
                             <Grid.ColumnDefinitions>

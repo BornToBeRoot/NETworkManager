@@ -6,12 +6,10 @@
     <system:String x:Key="String_Header_Destination">Destination</system:String>
     <system:String x:Key="String_Header_Settings">Settings</system:String>
     <system:String x:Key="String_Header_Status">Status</system:String>
-    <system:String x:Key="String_Header_WakeUp">Wake Up</system:String>
     <system:String x:Key="String_Header_Templates">Templates</system:String>
     <system:String x:Key="String_Header_MACAddress">MAC-Address</system:String>
     <system:String x:Key="String_Header_MACAddressOrVendor">MAC-Address or Vendor</system:String>
     <system:String x:Key="String_Header_Details">Details</system:String>
-    <system:String x:Key="String_Header_IPv4Calculator">IPv4-Calculator</system:String>
     <system:String x:Key="String_Header_Input">Input</system:String>
     <system:String x:Key="String_Header_Interface">Interface</system:String>
     <system:String x:Key="String_Header_Information">Information</system:String>
@@ -19,8 +17,6 @@
     <system:String x:Key="String_Header_Statistics">Statistics</system:String>
     <system:String x:Key="String_Header_About">About</system:String>
     <system:String x:Key="String_Header_Window">Window</system:String>
-    <system:String x:Key="String_Header_General">General</system:String>
-    <system:String x:Key="String_Header_Appearance">Appearance</system:String>
     <system:String x:Key="String_Header_Language">Language</system:String>
     <system:String x:Key="String_Header_Autostart">Autostart</system:String>
     <system:String x:Key="String_Header_Theme">Theme</system:String>
@@ -29,22 +25,17 @@
     <system:String x:Key="String_Header_Location">Location</system:String>
     <system:String x:Key="String_Header_Portable">Portable</system:String>
     <system:String x:Key="String_Header_DefaultApplication">Default application</system:String>
-    <system:String x:Key="String_Header_IPScanner">IP-Scanner</system:String>
     <system:String x:Key="String_Header_IPRange">IP-Range</system:String>
     <system:String x:Key="String_Header_Result">Result</system:String>
     <system:String x:Key="String_Header_Ping">Ping</system:String>
     <system:String x:Key="String_Header_DNS">DNS</system:String>
     <system:String x:Key="String_Header_ARP">ARP</system:String>
     <system:String x:Key="String_Header_Traceroute">Traceroute</system:String>
-    <system:String x:Key="String_Header_Experimental">Experimental</system:String>
-    <system:String x:Key="String_Header_PingError">Ping error</system:String>
-    <system:String x:Key="String_Header_DnsError">DNS error</system:String>
     <system:String x:Key="String_Header_Multithreading">Multithreading</system:String>
     <system:String x:Key="String_Header_Confirm">Confirm</system:String>
     <system:String x:Key="String_Header_HotKeys">HotKeys</system:String>
     <system:String x:Key="String_Header_DNSLookup">DNS Lookup</system:String>
     <system:String x:Key="String_Header_Route">Route</system:String>
-    <system:String x:Key="String_Header_CanceledByUser">Canceled by user</system:String>
     <system:String x:Key="String_Header_DontFragment">Don't fragment</system:String>
     <system:String x:Key="String_Header_Import">Import</system:String>
     <system:String x:Key="String_Header_Export">Export</system:String>
@@ -60,7 +51,6 @@
     <system:String x:Key="String_Header_PortPortRangeOrService">Port, port range or service</system:String>
     <system:String x:Key="String_Header_Socket">Socket</system:String>
     <system:String x:Key="String_Header_History">History</system:String>
-    <system:String x:Key="String_Header_Applications">Applications</system:String>
     <system:String x:Key="String_Header_Update">Update</system:String>
     <system:String x:Key="String_Header_Transparency">Transparency</system:String>
     <system:String x:Key="String_Header_WakeOnLAN">Wake on LAN</system:String>
@@ -68,24 +58,17 @@
 
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
-    <system:String x:Key="String_ShowWindow">Show window</system:String>
     <system:String x:Key="String_Settings">Settings</system:String>
     <system:String x:Key="String_RestartRequired">Restart Required</system:String>
     <system:String x:Key="String_RestartRequiredAfterSettingsChanged">Some settings are applied only after restarting the application!</system:String>
     <system:String x:Key="String_Template">Template</system:String>
-    <system:String x:Key="String_Templates">Templates</system:String>
-    <system:String x:Key="String_NewTemplate">New template</system:String>
     <system:String x:Key="String_WakeUp">Wake Up</system:String>
-    <system:String x:Key="String_Import">Import</system:String>
-    <system:String x:Key="String_Export">Export</system:String>
     <system:String x:Key="String_MACAddress">MAC-Address</system:String>
     <system:String x:Key="String_Hostname">Hostname</system:String>
     <system:String x:Key="String_Description">Description</system:String>
     <system:String x:Key="String_Broadcast">Broadcast</system:String>
     <system:String x:Key="String_Port">Port</system:String>
     <system:String x:Key="String_IPAddress">IP-Address</system:String>
-    <system:String x:Key="String_Output">Output</system:String>
-    <system:String x:Key="String_Calculate">Calculate</system:String>
     <system:String x:Key="String_StartWithWindows">Start with Windows (current user)</system:String>
     <system:String x:Key="String_StartMinimizedInTray">Start minimized in tray</system:String>
     <system:String x:Key="String_AlwaysShowIconInTray">Always show icon in tray</system:String>
@@ -104,10 +87,9 @@
     <system:String x:Key="String_Subnetmask">Subnetmask</system:String>
     <system:String x:Key="String_CIDR">CIDR</system:String>
     <system:String x:Key="String_SubnetmaskOrCIDR">Subnetmask oder CIDR</system:String>
-    <system:String x:Key="String_Gateway">Gateway</system:String>
     <system:String x:Key="String_IPv4DefaultGateway">IPv4-Default-Gateway</system:String>
-    <system:String x:Key="String_DHCPEnabled">DHCP Enabled</system:String>
-    <system:String x:Key="String_DHCPServer">DHCP Server</system:String>
+    <system:String x:Key="String_DHCPEnabled">DHCP enabled</system:String>
+    <system:String x:Key="String_DHCPServer">DHCP server</system:String>
     <system:String x:Key="String_DHCPLeaseObtained">DHCP Lease Obtained</system:String>
     <system:String x:Key="String_DHCPLeaseExpires">DHCP Lease Expires</system:String>
     <system:String x:Key="String_IPv6Address">IPv6-Address</system:String>
@@ -121,7 +103,6 @@
     <system:String x:Key="String_SecondaryDNSServer">Secondary DNS-Server</system:String>
     <system:String x:Key="String_Yes">Yes</system:String>
     <system:String x:Key="String_No">No</system:String>
-    <system:String x:Key="String_Save">Save</system:String>
     <system:String x:Key="String_DNSSuffix">DNS Suffix</system:String>
     <system:String x:Key="String_DNSServers">DNS Servers</system:String>
     <system:String x:Key="String_DynamicIPv4Address">Dynamic IPv4-Address</system:String>
@@ -132,16 +113,12 @@
     <system:String x:Key="String_AddTemplate">Add template</system:String>
     <system:String x:Key="String_EnterNameForTemplate">Enter a name under which you want to save the template</system:String>
     <system:String x:Key="String_EnterHostnameForTemplate">Enter the hostname to identify the template later</system:String>
-    <system:String x:Key="String_ReleaseDate">Veröffentlichungsdatum</system:String>
-    <system:String x:Key="String_Build">Build</system:String>
     <system:String x:Key="String_AllRightReserved">All rights reserved.</system:String>
     <system:String x:Key="String_Libraries">Libraries</system:String>
     <system:String x:Key="String_Administrator">Administrator</system:String>
     <system:String x:Key="String_RestartAsAdministrator">Restart as Administrator</system:String>
     <system:String x:Key="String_RestartAsAdministratorMessage">Administrative rights are required to change this configuration.</system:String>
-    <system:String x:Key="String_StartMaximized">Start window maximized</system:String>
     <system:String x:Key="String_NetworkAddress">Network address</system:String>
-    <system:String x:Key="String_CouldNotResolveHostnameMessage">Could not resolve hostname.</system:String>
     <system:String x:Key="String_DeleteTemplatesMessage">The selected templates will be deleted permanently.</system:String>
     <system:String x:Key="String_Timeout">Timeout</system:String>
     <system:String x:Key="String_Buffer">Buffer</system:String>
@@ -232,8 +209,6 @@
     <system:String x:Key="String_Button_Default">Default</system:String>
     <system:String x:Key="String_Button_WakeUp">Wake Up</system:String>
     <system:String x:Key="String_Button_Apply">Apply</system:String>
-    <system:String x:Key="String_Button_Refresh">Refresh</system:String>
-    <system:String x:Key="String_Button_Later">Later</system:String>
     <system:String x:Key="String_Button_RestartNow">Restart now</system:String>
     <system:String x:Key="String_Button_AddTemplate">Add template</system:String>
     <system:String x:Key="String_Button_Add">Add</system:String>
@@ -299,24 +274,16 @@
     <system:String x:Key="String_Progress_RenewDHCPLease">Renew DHCP lease...</system:String>
     <system:String x:Key="String_Progress_FixGatewayAfterDHCPEnabled">Fix gateway after DHCP is enabled...</system:String>
     
-    <!-- ToolTip-->
-    <system:String x:Key="String_ToolTip_Settings">Open settings</system:String>
-    <system:String x:Key="String_ToolTip_GitHub">Show project on GitHub</system:String>
-    <system:String x:Key="String_ToolTip_AddTemplate">Add template</system:String>
-    
     <!-- Validate (User Input in GUI) -->
     <system:String x:Key="String_ValidateError_FieldEmpty">Field cannot be empty!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidMACAddress">Enter a valid MAC-Address like 00:F1:23:AB:F2:35!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidPort">Enter a valid port (1 - 65535)!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidIPv4Address">Enter a valid IPv4-Address!</system:String>
-    <system:String x:Key="String_ValidateError_MACAddressEmpty">MAC-Address cannot be empty!</system:String>
-    <system:String x:Key="String_ValidateError_HostnameEmpty">Hostname cannot be empty!</system:String>
     <system:String x:Key="String_ValidateError_FolderDoesNotExist">Folder does not exists!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidSubnetmask">Enter a valid subnetmask (like 255.255.255.0)!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidSubnetmaskOrCIDR">Enter a valid subnetmask or CIDR (like 255.255.255.0 or 24)!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidIPScanRange">Enter a valid ip range!</system:String>
     <system:String x:Key="String_ValidateError_FileDoesNotExist">File does not exists!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidMACAddressOrFirst3Bytes">Enter a valid MAC address or the first 6 characters of a MAC address!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidPortOrPortRange">Enter a valid port and/or port range (1 - 65535)!</system:String>
     <system:String x:Key="String_ValidateError_OnlyNumbersCanBeEntered">Only numbers can be entered!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidValueBetween10and100">Enter a valid value between 10 and 100!</system:String>
@@ -395,5 +362,4 @@
     <system:String x:Key="String_Libary_MahAppsMetroIconPacksDescription">Some awesome icons for WPF and UWP all together...</system:String>
     <system:String x:Key="String_Libary_HeijdenDNSName">Heijden.DNS</system:String>
     <system:String x:Key="String_Libary_HeijdenDNSDescription">Reusable DNS resolver component</system:String>
-
 </ResourceDictionary>
