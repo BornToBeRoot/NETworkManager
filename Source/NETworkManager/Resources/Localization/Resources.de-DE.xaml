@@ -198,7 +198,7 @@
     <system:String x:Key="String_CouldNotResolveHostnameFor">Hostname konnte nicht aufgelöst werden für: "{0}"</system:String>
     <system:String x:Key="String_NothingToDoCheckYourInput">Nichts zu tun. Überprüfen Sie Ihre Eingabe!</system:String>
     <system:String x:Key="String_Scanned">Gescannt</system:String>
-    <system:String x:Key="String_Found">Found</system:String>
+    <system:String x:Key="String_Found">Gefunden</system:String>
     <system:String x:Key="String_TheApplicationCanBeStartedWithoutParameters">Die Anwendung kann ohne Parameter gestartet werden!</system:String>
     <system:String x:Key="String_TheFollwingParametersCanNotBeProcesses">Die folgenden Parameter können nicht verarbeitet werden:</system:String>
     <system:String x:Key="String_TheFollowingParametersAreAvailable">Folgende Parameter stehen zur Verfügung:</system:String>
