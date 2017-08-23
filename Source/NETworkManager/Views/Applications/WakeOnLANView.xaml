@@ -3,12 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"          
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"   
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:Validator="clr-namespace:NETworkManager.Validators"
              xmlns:Converter="clr-namespace:NETworkManager.Converters"
              xmlns:WpfHelper="clr-namespace:NETworkManager.WpfHelper"
              xmlns:Control="clr-namespace:NETworkManager.Controls"
-             xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              Dialog:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d">
@@ -22,9 +22,15 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Width="450" HorizontalAlignment="Left" Margin="0,0,0,20">
-            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Destination}" />
-            <Grid Margin="0,0,0,10">
+        <Grid Grid.Row="0" Width="450" HorizontalAlignment="Left" Margin="0,0,0,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Destination}" />
+            <Grid Grid.Row="1" Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
@@ -79,7 +85,7 @@
                     </TextBox.Text>
                 </TextBox>
             </Grid>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Command="{Binding AddTemplateCommand}" HorizontalAlignment="Right" ToolTip="{DynamicResource String_ToolTip_AddTemplate}" Margin="0,0,10,0">
                     <Button.Content>
                         <Grid>
@@ -143,7 +149,8 @@
                     </Button.Style>
                 </Button>
             </StackPanel>
-        </StackPanel>
+            <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+        </Grid>
         <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Templates}" />
         <Control:MultiSelectDataGrid Grid.Row="2" Style="{StaticResource MetroDataGrid}" FontSize="14" ItemsSource="{Binding WakeOnLANTemplates}" CanUserResizeColumns="False" AutoGenerateColumns="False" GridLinesVisibility="Vertical" IsReadOnly="True" SelectionMode="Extended" SelectionUnit="FullRow" SelectedItemsList="{Binding SelectedWakeOnLANTemplates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{DynamicResource GrayBrush3}" Margin="0,0,0,10">
             <Control:MultiSelectDataGrid.Columns>

@@ -6,6 +6,7 @@
         public bool Autostart { get; set; }
         public bool ResetSettings { get; set; }
         public int RestartPid { get; set; }
+        public string WrongParameter { get; set; }
 
         public CommandLineInfo()
         {

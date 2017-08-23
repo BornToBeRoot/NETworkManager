@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
 using System;
 using System.Collections.ObjectModel;
@@ -11,15 +10,11 @@ using NETworkManager.Models.Network;
 using System.Threading;
 using NETworkManager.Helpers;
 
-
 namespace NETworkManager.ViewModels.Applications
 {
     public class TracerouteViewModel : ViewModelBase
     {
         #region Variables
-        private IDialogCoordinator dialogCoordinator;
-        MetroDialogSettings dialogSettings = new MetroDialogSettings();
-
         CancellationTokenSource cancellationTokenSource;
 
         private bool _isLoading = true;
@@ -95,18 +90,39 @@ namespace NETworkManager.ViewModels.Applications
                 _traceResult = value;
             }
         }
+
+        private bool _displayStatusMessage;
+        public bool DisplayStatusMessage
+        {
+            get { return _displayStatusMessage; }
+            set
+            {
+                if (value == _displayStatusMessage)
+                    return;
+
+                _displayStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _statusMessage;
+        public string StatusMessage
+        {
+            get { return _statusMessage; }
+            set
+            {
+                if (value == _statusMessage)
+                    return;
+
+                _statusMessage = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, load settings
-        public TracerouteViewModel(IDialogCoordinator instance)
+        public TracerouteViewModel()
         {
-            dialogCoordinator = instance;
-
-            dialogSettings.CustomResourceDictionary = new ResourceDictionary
-            {
-                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
-            };
-
             LoadSettings();
 
             _isLoading = false;
@@ -118,7 +134,7 @@ namespace NETworkManager.ViewModels.Applications
                 HostnameOrIPAddressHistory = new List<string>(SettingsManager.Current.Traceroute_HostnameOrIPAddressHistory);
         }
         #endregion
-       
+
         #region ICommands & Actions
         public ICommand TraceCommand
         {
@@ -143,7 +159,9 @@ namespace NETworkManager.ViewModels.Applications
 
         private async void StartTrace()
         {
+            DisplayStatusMessage = false;
             IsTraceRunning = true;
+
             TraceResult.Clear();
 
             // Try to parse the string into an IP-Address
@@ -205,14 +223,30 @@ namespace NETworkManager.ViewModels.Applications
             }
             catch (SocketException) // This will catch DNS resolve errors
             {
-                IsTraceRunning = false;
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_DnsError"] as string, Application.Current.Resources["String_CouldNotResolveHostnameMessage"] as string, MessageDialogStyle.Affirmative, dialogSettings);
+                TracerouteFinished();
+
+                StatusMessage = string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, HostnameOrIPAddress);
+                DisplayStatusMessage = true;
             }
             catch (Exception ex) // This will catch any exception
             {
-                IsTraceRunning = false;
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, dialogSettings);
+                TracerouteFinished();
+
+                StatusMessage = ex.Message;
+                DisplayStatusMessage = true;
             }
+        }
+
+        private void TracerouteFinished()
+        {
+            IsTraceRunning = false;
+            CancelTrace = false;
+        }
+
+        public void OnShutdown()
+        {
+            if (IsTraceRunning)
+                StopTrace();
         }
         #endregion
 
@@ -227,33 +261,26 @@ namespace NETworkManager.ViewModels.Applications
             }));
         }
 
-        private async void Traceroute_MaximumHopsReached(object sender, MaximumHopsReachedArgs e)
+        private void Traceroute_MaximumHopsReached(object sender, MaximumHopsReachedArgs e)
         {
-            IsTraceRunning = false;
+            TracerouteFinished();
 
-            await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_MaximumHopsReached"] as string, string.Format(Application.Current.Resources["String_MaximumHopsReachedMessage"] as string, e.Hops), MessageDialogStyle.Affirmative, dialogSettings);
+            StatusMessage = string.Format(Application.Current.Resources["String_MaximumNumberOfHopsReached"] as string, e.Hops);
+            DisplayStatusMessage = true;
         }
 
-        private async void Traceroute_UserHasCanceled(object sender, System.EventArgs e)
-        {
-            CancelTrace = false;
-            IsTraceRunning = false;
+        private void Traceroute_UserHasCanceled(object sender, System.EventArgs e)
+        { 
+            TracerouteFinished();
 
-            await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_CanceledByUser"] as string, Application.Current.Resources["String_CanceledByUserMessage"] as string, MessageDialogStyle.Affirmative, dialogSettings);
+            StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
+            DisplayStatusMessage = true;
         }
 
         private void Traceroute_TraceComplete(object sender, System.EventArgs e)
         {
-            IsTraceRunning = false;
+            TracerouteFinished();
         }
-        #endregion
-
-        #region OnShutdown
-        public void OnShutdown()
-        {
-            if (IsTraceRunning)
-                StopTrace();
-        }
-        #endregion
+        #endregion               
     }
 }

@@ -20,9 +20,7 @@ namespace NETworkManager.ViewModels.Applications
         #region Variables
         private IDialogCoordinator dialogCoordinator;
         ProgressDialogController progressDialogController;
-
-        MetroDialogSettings dialogSettings = new MetroDialogSettings();
-
+        
         private bool _isLoading = true;
 
         public bool IsAdmin
@@ -537,11 +535,6 @@ namespace NETworkManager.ViewModels.Applications
         {
             dialogCoordinator = instance;
 
-            dialogSettings.CustomResourceDictionary = new ResourceDictionary
-            {
-                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
-            };
-
             // Load network interfaces
             LoadNetworkInterfaces();
 
@@ -629,10 +622,11 @@ namespace NETworkManager.ViewModels.Applications
             }
             catch (Exception ex)
             {
+                MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
-                dialogSettings.AffirmativeButtonText = Application.Current.Resources["String_Button_OK"] as string;
+                settings.AffirmativeButtonText = Application.Current.Resources["String_Button_OK"] as string;
 
-                await dialogCoordinator.ShowMessageAsync(this, "Error", ex.Message, MessageDialogStyle.Affirmative, dialogSettings);
+                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, settings);
             }
             finally
             {
@@ -715,9 +709,7 @@ namespace NETworkManager.ViewModels.Applications
                 DefaultButtonFocus = MessageDialogResult.Affirmative
             };
 
-            MessageDialogResult result = await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_AreYouSure"] as string, Application.Current.Resources["String_DeleteTemplatesMessage"] as string, MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
-
-            if (result == MessageDialogResult.Negative)
+            if (MessageDialogResult.Negative == await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_DeleteTemplatesMessage"] as string, MessageDialogStyle.AffirmativeAndNegative, dialogSettings))
                 return;
 
             List<TemplateNetworkInterfaceConfig> list = new List<TemplateNetworkInterfaceConfig>();

@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Network;
+﻿using NETworkManager.Models.Network;
 using NETworkManager.Models.Settings;
 using NETworkManager.Helpers;
 using System;
@@ -20,9 +19,6 @@ namespace NETworkManager.ViewModels.Applications
     public class PingViewModel : ViewModelBase
     {
         #region Variables
-        private IDialogCoordinator dialogCoordinator;
-        MetroDialogSettings dialogSettings = new MetroDialogSettings();
-
         CancellationTokenSource cancellationTokenSource;
 
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
@@ -244,18 +240,39 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
+
+        private bool _displayStatusMessage;
+        public bool DisplayStatusMessage
+        {
+            get { return _displayStatusMessage; }
+            set
+            {
+                if (value == _displayStatusMessage)
+                    return;
+
+                _displayStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _statusMessage;
+        public string StatusMessage
+        {
+            get { return _statusMessage; }
+            set
+            {
+                if (value == _statusMessage)
+                    return;
+
+                _statusMessage = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Contructor
-        public PingViewModel(IDialogCoordinator instance)
-        {
-            dialogCoordinator = instance;
-
-            dialogSettings.CustomResourceDictionary = new ResourceDictionary
-            {
-                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
-            };
-
+        public PingViewModel()
+        {         
             LoadSettings();
 
             _isLoading = false;
@@ -290,6 +307,7 @@ namespace NETworkManager.ViewModels.Applications
         #region Methods      
         private async void StartPing()
         {
+            DisplayStatusMessage = false;
             IsPingRunning = true;
 
             // Measure the time
@@ -346,9 +364,10 @@ namespace NETworkManager.ViewModels.Applications
             }
             catch (SocketException) // This will catch DNS resolve errors
             {
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_DnsError"] as string, Application.Current.Resources["String_CouldNotResolveHostnameMessage"] as string, MessageDialogStyle.Affirmative, dialogSettings);
-
                 PingFinished();
+
+                StatusMessage = string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, HostnameOrIPAddress);
+                DisplayStatusMessage = true;
 
                 return;
             }
@@ -449,7 +468,7 @@ namespace NETworkManager.ViewModels.Applications
             PingFinished();
         }
 
-        private async void Ping_PingException(object sender, PingExceptionArgs e)
+        private void Ping_PingException(object sender, PingExceptionArgs e)
         {
             // Get the error code and change the message (maybe we can help the user with troubleshooting)
             Win32Exception w32ex = e.InnerException as Win32Exception;
@@ -465,10 +484,11 @@ namespace NETworkManager.ViewModels.Applications
                     errorMessage = e.InnerException.Message;
                     break;
             }
-
-            await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_PingError"] as string, errorMessage, MessageDialogStyle.Affirmative, dialogSettings);
-
+                        
             PingFinished();
+
+            StatusMessage = errorMessage;
+            DisplayStatusMessage = true;            
         }
 
         private void Ping_UserHasCanceled(object sender, EventArgs e)

@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Windows.Controls;
 using NETworkManager.ViewModels.Applications;
-using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.Views.Applications
 {
     public partial class TracerouteView : UserControl
     {
-        TracerouteViewModel viewModel = new TracerouteViewModel(DialogCoordinator.Instance);
+        TracerouteViewModel viewModel = new TracerouteViewModel();
 
         public TracerouteView()
         {

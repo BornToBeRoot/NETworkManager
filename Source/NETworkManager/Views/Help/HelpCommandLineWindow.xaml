@@ -4,20 +4,42 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:Converter="clr-namespace:NETworkManager.Converters"
         mc:Ignorable="d"
-        Title="NETworkManager | Help" Topmost="True" Style="{DynamicResource DefaultWindow}" Height="450" Width="550" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" IsMinButtonEnabled="False" IsMaxRestoreButtonEnabled="False" ShowInTaskbar="False">
+        Title="{DynamicResource String_ProductName}" Topmost="True" Style="{DynamicResource DefaultWindow}" Height="450" Width="550" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" IsMinButtonEnabled="False" IsMaxRestoreButtonEnabled="False" ShowInTaskbar="False">
     <Controls:MetroWindow.WindowButtonCommands>
         <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </Controls:MetroWindow.WindowButtonCommands>
+    <Controls:MetroWindow.Resources>
+        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Controls:MetroWindow.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="Command Line Arguments" Style="{StaticResource HeaderTextBlock}" />
-        <Grid Grid.Row="1" Margin="0,0,0,10">
+        <Grid Grid.Row="0" Visibility="{Binding DisplayWrongParameterNote, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,0,0,20">
+            <Grid.Resources>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
+                    <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
+                </Style>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="{DynamicResource String_Header_WrongParameter}" Style="{StaticResource HeaderTextBlock}" />
+            <TextBlock Grid.Row="1" Text="{DynamicResource String_TheFollwingParametersCanNotBeProcesses}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+            <TextBox Grid.Row="2" Text="{Binding WrongParameterNote}" />
+        </Grid>       
+        <TextBlock Grid.Row="1" Text="{DynamicResource String_Header_CommandLineArguments}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Grid.Row="2" Text="{DynamicResource String_TheFollowingParametersAreAvailable}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <Grid Grid.Row="3" Margin="0,0,0,10">
             <Grid.Resources>
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
@@ -33,12 +55,19 @@
                 <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBox Grid.Column="0" Grid.Row="0" Text="--help" />
-            <TextBlock Grid.Column="1" Grid.Row="0" Text="Displays this dialog." />
-            <TextBox Grid.Column="0" Grid.Row="2" Text="--reset-settings" />
-            <TextBlock Grid.Column="1" Grid.Row="2" Text="Reset all settings." />
+            <TextBox Grid.Column="0" Grid.Row="0" Text="{Binding ParameterHelp}" />
+            <TextBlock Grid.Column="1" Grid.Row="0" Text="{DynamicResource String_Help_ParameterHelp}" />
+            <TextBox Grid.Column="0" Grid.Row="2" Text="{Binding ParameterResetSettings}" />
+            <TextBlock Grid.Column="1" Grid.Row="2" Text="{DynamicResource String_Help_ParameterResetSettings}" />
         </Grid>
-        <TextBlock Grid.Row="2" Text="The application can be started normally without parameters!" Foreground="{DynamicResource AccentColorBrush}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
-        <Button Grid.Row="3" Content="{DynamicResource String_Button_OK}" Click="Button_Click" HorizontalAlignment="Right" Style="{StaticResource DefaultButton}" />
+        <TextBlock Grid.Row="4" Text="{DynamicResource String_TheApplicationCanBeStartedWithoutParameters}" Foreground="{DynamicResource AccentColorBrush}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ComboBox FontSize="14" ItemsSource="{Binding LanguageCollection}" SelectedItem="{Binding LocalizationSelectedItem}" DisplayMemberPath="Code" Width="100" HorizontalAlignment="Left"/>
+            <Button Grid.Column="1" Content="{DynamicResource String_Button_OK}" Click="Button_Click" HorizontalAlignment="Right" Style="{StaticResource DefaultButton}" />
+        </Grid>
     </Grid>
 </Controls:MetroWindow>

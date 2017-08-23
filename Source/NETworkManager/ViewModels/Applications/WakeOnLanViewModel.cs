@@ -17,7 +17,7 @@ namespace NETworkManager.ViewModels.Applications
     {
         private IDialogCoordinator dialogCoordinator;
 
-        MetroDialogSettings dialogSettings = new MetroDialogSettings();
+        
 
         #region  Variables                
         private string _MACAddress;
@@ -140,17 +140,40 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
+
+        private bool _displayStatusMessage;
+        public bool DisplayStatusMessage
+        {
+            get { return _displayStatusMessage; }
+            set
+            {
+                if (value == _displayStatusMessage)
+                    return;
+
+                _displayStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _statusMessage;
+        public string StatusMessage
+        {
+            get { return _statusMessage; }
+            set
+            {
+                if (value == _statusMessage)
+                    return;
+
+                _statusMessage = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, Load templates
         public WakeOnLANViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
-
-            dialogSettings.CustomResourceDictionary = new ResourceDictionary
-            {
-                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
-            };
 
             _wakeOnLanTemplates = CollectionViewSource.GetDefaultView(TemplateManager.WakeOnLANTemplates);
 
@@ -169,8 +192,11 @@ namespace NETworkManager.ViewModels.Applications
             return !MACAddressHasError && !BroadcastHasError && !PortHasError;
         }
 
-        private async void WakeUpAction()
+        private void WakeUpAction()
         {
+            DisplayStatusMessage = false;
+            StatusMessage = string.Empty;
+
             try
             {
                 WakeOnLANInfo info = new WakeOnLANInfo
@@ -182,15 +208,13 @@ namespace NETworkManager.ViewModels.Applications
 
                 WakeOnLAN.Send(info);
 
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, Application.Current.Resources["String_MagicPacketSuccessfulSended"] as string, MessageDialogStyle.Affirmative, dialogSettings);
+                StatusMessage = Application.Current.Resources["String_MagicPacketSuccessfulSended"] as string;
+                DisplayStatusMessage = true;
             }
             catch (Exception ex)
             {
-                MetroDialogSettings settings = dialogSettings;
-
-                settings.AffirmativeButtonText = Application.Current.Resources["String_Button_OK"] as string;
-
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, settings);
+                StatusMessage = ex.Message;
+                DisplayStatusMessage = true;
             }
         }
 
@@ -201,7 +225,7 @@ namespace NETworkManager.ViewModels.Applications
 
         private async void AddTemplateAction()
         {
-            MetroDialogSettings settings = dialogSettings;
+            MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
             settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Add"] as string;
             settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
@@ -228,8 +252,11 @@ namespace NETworkManager.ViewModels.Applications
             get { return new RelayCommand(p => WakeUpSelectedWakeOnLANTemplatesAction()); }
         }
 
-        public async void WakeUpSelectedWakeOnLANTemplatesAction()
+        public void WakeUpSelectedWakeOnLANTemplatesAction()
         {
+            DisplayStatusMessage = false;
+            StatusMessage = string.Empty;
+
             int errorCount = 0;
 
             foreach (TemplateWakeOnLANInfo template in SelectedWakeOnLANTemplates)
@@ -243,20 +270,31 @@ namespace NETworkManager.ViewModels.Applications
                         Port = template.Port
                     };
 
-                    WakeOnLAN.Send(info);
-
-                    if (SelectedWakeOnLANTemplates.Count == 1)
-                        await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, Application.Current.Resources["String_MagicPacketSuccessfulSended"] as string, MessageDialogStyle.Affirmative, dialogSettings);
+                    WakeOnLAN.Send(info);                                        
                 }
                 catch (Exception ex)
                 {
                     errorCount++;
-                    await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, dialogSettings);
+
+                    if (!string.IsNullOrEmpty(StatusMessage))
+                        StatusMessage += Environment.NewLine;
+
+                    StatusMessage += ex.Message;
+                    DisplayStatusMessage = true;
                 }
             }
 
+            if (SelectedWakeOnLANTemplates.Count == 1)
+            {
+                StatusMessage = Application.Current.Resources["String_MagicPacketSuccessfulSended"] as string;
+                DisplayStatusMessage = true;
+            }
+
             if (SelectedWakeOnLANTemplates.Count > 1 && SelectedWakeOnLANTemplates.Count != errorCount)
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, string.Format(Application.Current.Resources["String_MagicPacketSuccessfulSendedToClients"] as string, SelectedWakeOnLANTemplates.Count - errorCount), MessageDialogStyle.Affirmative, dialogSettings);
+            {
+                StatusMessage = string.Format(Application.Current.Resources["String_MagicPacketSuccessfulSendedToClients"] as string, SelectedWakeOnLANTemplates.Count - errorCount);
+                DisplayStatusMessage = true;
+            }
         }
 
         public ICommand DeleteSelectedWakeOnLANTemplatesCommand
@@ -266,14 +304,14 @@ namespace NETworkManager.ViewModels.Applications
 
         private async void DeleteSelectedWakeOnLANTemplatesAction()
         {
-            dialogSettings.AffirmativeButtonText = Application.Current.Resources["String_Button_Delete"] as string;
-            dialogSettings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
+            MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
-            dialogSettings.DefaultButtonFocus = MessageDialogResult.Affirmative;
+            settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Delete"] as string;
+            settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
 
-            MessageDialogResult result = await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_DeleteTemplatesMessage"] as string, MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
+            settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            if (result == MessageDialogResult.Negative)
+            if (MessageDialogResult.Negative == await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_DeleteTemplatesMessage"] as string, MessageDialogStyle.AffirmativeAndNegative, settings))
                 return;
 
             List<TemplateWakeOnLANInfo> list = new List<TemplateWakeOnLANInfo>();

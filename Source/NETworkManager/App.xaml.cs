@@ -21,12 +21,6 @@ namespace NETworkManager
             // Parse the command line arguments and store them in the current configuration
             CommandLineManager.Parse();
 
-            if (CommandLineManager.Current.Help)
-            {
-                StartupUri = new Uri("/Views/Help/HelpCommandLineWindow.xaml", UriKind.Relative);
-                return;
-            }
-
             // If we have restart our application... wait until it has finished
             if (CommandLineManager.Current.RestartPid != 0)
             {
@@ -37,12 +31,26 @@ namespace NETworkManager
                 if (process != null)
                     process.WaitForExit();
             }
-                                        
+
             // Detect the current configuration
             ConfigurationManager.Detect();
 
+            // Get assembly informations   
+            AssemblyManager.Load();
+
             // Load settings
             SettingsManager.Load();
+
+            // Load localization (requires settings to be loaded first)
+            LocalizationManager.Load();
+
+            if (CommandLineManager.Current.Help)
+            {
+                StartupUri = new Uri("/Views/Help/HelpCommandLineWindow.xaml", UriKind.Relative);
+                return;
+            }
+
+            // Load templates
             TemplateManager.LoadNetworkInterfaceConfigTemplates();
             TemplateManager.LoadWakeOnLANTemplates();
 

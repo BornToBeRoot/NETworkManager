@@ -32,7 +32,7 @@ namespace NETworkManager.Models.Settings
         {
             RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(RunKeyCurrentUser, true);
 
-            string command = string.Format("{0} {1}", ConfigurationManager.Current.ApplicationFullName, CommandLineManager.GetCommandLineParameter(CommandLineManager.ParameterAutostart));
+            string command = string.Format("{0} {1}", ConfigurationManager.Current.ApplicationFullName, CommandLineManager.ParameterAutostart);
 
             registryKey.SetValue(ConfigurationManager.Current.ApplicationName, command);
             registryKey.Close();

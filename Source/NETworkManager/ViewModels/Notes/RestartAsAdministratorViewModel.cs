@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.ComponentModel;
 using MahApps.Metro.Controls.Dialogs;
 using System;
+using NETworkManager.Models.Settings;
 
 namespace NETworkManager.ViewModels.Notes
 {
@@ -12,18 +13,13 @@ namespace NETworkManager.ViewModels.Notes
     {
         #region Variables
         private IDialogCoordinator dialogCoordinator;
-        MetroDialogSettings dialogSettings = new MetroDialogSettings();
+        
         #endregion
 
         #region Constructor
         public RestartAsAdministratorViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
-
-            dialogSettings.CustomResourceDictionary = new ResourceDictionary
-            {
-                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
-            };
         }
         #endregion
 
@@ -51,7 +47,7 @@ namespace NETworkManager.ViewModels.Notes
             catch (Win32Exception ex)
             {
                 if (ex.NativeErrorCode != 1223) // User has canceled
-                    await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, dialogSettings);
+                    await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
         }
         #endregion

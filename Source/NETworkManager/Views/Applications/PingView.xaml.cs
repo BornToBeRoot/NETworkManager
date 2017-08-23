@@ -1,13 +1,12 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.ViewModels.Applications;
-using System.Windows.Controls;
+﻿using NETworkManager.ViewModels.Applications;
 using System;
+using System.Windows.Controls;
 
 namespace NETworkManager.Views.Applications
 {
     public partial class PingView : UserControl
     {
-        PingViewModel viewModel = new PingViewModel(DialogCoordinator.Instance);
+        PingViewModel viewModel = new PingViewModel();
             
         public PingView()
         {
@@ -17,7 +16,7 @@ namespace NETworkManager.Views.Applications
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
 
-        private void Dispatcher_ShutdownStarted(object sender, System.EventArgs e)
+        private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
         {
             viewModel.OnShutdown();
         }

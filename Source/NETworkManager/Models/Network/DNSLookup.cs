@@ -9,8 +9,6 @@ namespace NETworkManager.Models.Network
     {
         #region Variables
         Resolver dnsResolver = new Resolver();
-
-        int resourceRecordsCount;
         #endregion
 
         #region Events

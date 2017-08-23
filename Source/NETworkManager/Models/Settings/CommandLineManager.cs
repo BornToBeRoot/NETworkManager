@@ -1,16 +1,19 @@
-﻿using NETworkManager.Views.Settings;
-using System;
-using System.Windows;
+﻿using System;
 
 namespace NETworkManager.Models.Settings
 {
     public static class CommandLineManager
     {
         public const string ParameterIdentifier = "--";
-        public const string ParameterHelp = "help";
-        public const string ParameterAutostart = "autostart";
-        public const string ParameterResetSettings = "reset-settings";
-        public const string ParameterRestartPid = "restart-pid:";
+        public const char ParameterSplit = ':';
+
+        // Public + Help
+        public const string ParameterHelp = ParameterIdentifier + "help";
+        public const string ParameterResetSettings = ParameterIdentifier + "reset-settings";
+
+        // Internal use only
+        public const string ParameterAutostart = ParameterIdentifier + "autostart";
+        public const string ParameterRestartPid = ParameterIdentifier + "restart-pid";
 
         public static CommandLineInfo Current { get; set; }
 
@@ -22,46 +25,58 @@ namespace NETworkManager.Models.Settings
         {
             Current = new CommandLineInfo();
 
-            // Get the command line args
+            // Detect start parameters
             string[] parameters = Environment.GetCommandLineArgs();
 
-            char[] trimChars = ParameterIdentifier.ToCharArray();
-
-            // Detect start parameters
-            foreach (string parameter in parameters)
+            for (int i = 0; i < parameters.Length; i++)
             {
-                if (parameter.StartsWith(ParameterIdentifier))
+                string[] param = parameters[i].Split(ParameterSplit);
+
+                if (param[0].StartsWith(ParameterIdentifier))
                 {
-                    string param = parameter.TrimStart(trimChars);
-                    if (param.Equals(ParameterHelp, StringComparison.InvariantCultureIgnoreCase))
+                    if (param[0].Equals(ParameterHelp, StringComparison.InvariantCultureIgnoreCase))
                     {
                         Current.Help = true;
                     }// Autostart
-                    else if(param.Equals(ParameterAutostart, StringComparison.InvariantCultureIgnoreCase))
+                    else if (param[0].Equals(ParameterAutostart, StringComparison.InvariantCultureIgnoreCase))
                     {
                         Current.Autostart = true;
                     } // Reset Settings                    
-                    else if (param.Equals(ParameterResetSettings, StringComparison.InvariantCultureIgnoreCase))
+                    else if (param[0].Equals(ParameterResetSettings, StringComparison.InvariantCultureIgnoreCase))
                     {
                         Current.ResetSettings = true;
                     } // Restart
-                    else if (param.StartsWith(ParameterRestartPid, StringComparison.InvariantCultureIgnoreCase))
+                    else if (param[0].Equals(ParameterRestartPid, StringComparison.InvariantCultureIgnoreCase))
                     {
-                        int.TryParse(param.Split(':')[1], out int restartPid);
+                        int.TryParse(param[1], out int restartPid);
 
                         Current.RestartPid = restartPid;
                     }
                     else
                     {
+                        AddToWrongParameter(parameters[i]);
+
+                        Current.Help = true;
+                    }
+                }
+                else
+                {
+                    // Ignore the first parameter because it's the path of the .exe
+                    if (i != 0)
+                    {
+                        AddToWrongParameter(parameters[i]);
                         Current.Help = true;
                     }
                 }
             }
         }
 
-        public static string GetCommandLineParameter(string parameter)
+        private static void AddToWrongParameter(string parameter)
         {
-            return string.Format("{0}{1}", ParameterIdentifier, parameter);
+            if (!string.IsNullOrEmpty(Current.WrongParameter))
+                Current.WrongParameter += Environment.NewLine;
+
+            Current.WrongParameter += parameter;
         }
     }
 }

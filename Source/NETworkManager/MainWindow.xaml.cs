@@ -35,7 +35,7 @@ namespace NETworkManager
         #endregion
 
         #region Variables        
-        MetroDialogSettings dialogSettings = new MetroDialogSettings();
+
 
         NotifyIcon notifyIcon;
 
@@ -218,12 +218,8 @@ namespace NETworkManager
             InitializeComponent();
             DataContext = this;
 
-            // Get assembly informations   
-            AssemblyManager.Load();
             Version = AssemblyManager.Current.AssemblyVersion.ToString();
 
-            // Load localization
-            LocalizationManager.Load();
             LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
 
             // Load appearance
@@ -234,12 +230,6 @@ namespace NETworkManager
                 AllowsTransparency = true;
                 Opacity = SettingsManager.Current.Appearance_Opacity;
             }
-
-            // Dialog 
-            dialogSettings.CustomResourceDictionary = new ResourceDictionary
-            {
-                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
-            };
 
             // Autostart & Window start
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray || SettingsManager.Current.TrayIcon_AlwaysShowIcon)
@@ -291,7 +281,7 @@ namespace NETworkManager
             {
                 e.Cancel = true;
 
-                MetroDialogSettings settings = dialogSettings;
+                MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
                 settings.AffirmativeButtonText = System.Windows.Application.Current.Resources["String_Button_Close"] as string;
                 settings.NegativeButtonText = System.Windows.Application.Current.Resources["String_Button_Cancel"] as string;
@@ -645,7 +635,7 @@ namespace NETworkManager
             {
                 ShowWindowAction();
 
-                MetroDialogSettings settings = dialogSettings;
+                MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
                 settings.AffirmativeButtonText = System.Windows.Application.Current.Resources["String_Button_RestartNow"] as string;
                 settings.NegativeButtonText = System.Windows.Application.Current.Resources["String_Button_OK"] as string;

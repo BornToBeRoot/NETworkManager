@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Net;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
 using System;
 using System.Threading;
@@ -17,9 +16,6 @@ namespace NETworkManager.ViewModels.Applications
     public class IPScannerViewModel : ViewModelBase
     {
         #region Variables
-        private IDialogCoordinator dialogCoordinator;
-        MetroDialogSettings dialogSettings = new MetroDialogSettings();
-
         CancellationTokenSource cancellationTokenSource;
 
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
@@ -223,18 +219,39 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
+
+        private bool _displayStatusMessage;
+        public bool DisplayStatusMessage
+        {
+            get { return _displayStatusMessage; }
+            set
+            {
+                if (value == _displayStatusMessage)
+                    return;
+
+                _displayStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _statusMessage;
+        public string StatusMessage
+        {
+            get { return _statusMessage; }
+            set
+            {
+                if (value == _statusMessage)
+                    return;
+
+                _statusMessage = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, load settings
-        public IPScannerViewModel(IDialogCoordinator instance)
+        public IPScannerViewModel()
         {
-            dialogCoordinator = instance;
-
-            dialogSettings.CustomResourceDictionary = new ResourceDictionary
-            {
-                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
-            };
-
             LoadSettings();
 
             // Detect if settings have changed...
@@ -279,6 +296,7 @@ namespace NETworkManager.ViewModels.Applications
         #region Methods
         private async void StartScan()
         {
+            DisplayStatusMessage = false;
             IsScanRunning = true;
             PreparingScan = true;
 
@@ -386,13 +404,14 @@ namespace NETworkManager.ViewModels.Applications
             IPAddressesScanned = e.Value;
         }
 
-        private async void UserHasCanceled(object sender, EventArgs e)
+        private void UserHasCanceled(object sender, EventArgs e)
         {
             CancelScan = false;
 
             ScanFinished();
 
-            await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_CanceledByUser"] as string, Application.Current.Resources["String_CanceledByUserMessage"] as string, MessageDialogStyle.Affirmative, dialogSettings);
+            StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
+            DisplayStatusMessage = true;
         }
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)

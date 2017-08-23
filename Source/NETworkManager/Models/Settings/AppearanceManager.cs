@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro;
+using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Windows;
 
@@ -6,6 +7,8 @@ namespace NETworkManager.Models.Settings
 {
     public static class AppearanceManager
     {
+        public static MetroDialogSettings MetroDialog = new MetroDialogSettings();
+
         /// <summary>
         /// Load Appearance (AppTheme and Accent) from the user settings.
         /// </summary>
@@ -22,6 +25,11 @@ namespace NETworkManager.Models.Settings
 
             if (!string.IsNullOrEmpty(accentName) && accentName != ThemeManager.DetectAppStyle().Item2.Name)
                 ChangeAccent(accentName);
+
+            MetroDialog.CustomResourceDictionary = new ResourceDictionary
+            {
+                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
+            };
         }
 
         /// <summary>

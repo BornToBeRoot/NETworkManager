@@ -15,7 +15,7 @@ namespace NETworkManager.ViewModels.Applications
     {
         #region Variables
         private IDialogCoordinator dialogCoordinator;
-        MetroDialogSettings dialogSettings = new MetroDialogSettings();
+        
 
         private bool _isLoading = true;
 
@@ -195,11 +195,6 @@ namespace NETworkManager.ViewModels.Applications
         public WikiViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
-
-            dialogSettings.CustomResourceDictionary = new ResourceDictionary
-            {
-                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
-            };
 
             LoadSettings();
 

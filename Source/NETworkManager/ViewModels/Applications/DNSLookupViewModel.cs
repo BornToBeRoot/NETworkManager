@@ -14,7 +14,7 @@ namespace NETworkManager.ViewModels.Applications
     {
         #region Variables
         private IDialogCoordinator dialogCoordinator;
-        MetroDialogSettings dialogSettings = new MetroDialogSettings();
+        
 
         private bool _isLoading = true;
 
@@ -76,30 +76,30 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private bool _displayErrorMessage;
-        public bool DisplayErrorMessage
+        private bool _displayStatusMessage;
+        public bool DisplayStatusMessage
         {
-            get { return _displayErrorMessage; }
+            get { return _displayStatusMessage; }
             set
             {
-                if (value == _displayErrorMessage)
+                if (value == _displayStatusMessage)
                     return;
 
-                _displayErrorMessage = value;
+                _displayStatusMessage = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _errorMessage;
-        public string ErrorMessage
+        private string _statusMessage;
+        public string StatusMessage
         {
-            get { return _errorMessage; }
+            get { return _statusMessage; }
             set
             {
-                if (value == _errorMessage)
+                if (value == _statusMessage)
                     return;
 
-                _errorMessage = value;
+                _statusMessage = value;
                 OnPropertyChanged();
             }
         }
@@ -109,11 +109,6 @@ namespace NETworkManager.ViewModels.Applications
         public DNSLookupViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
-
-            dialogSettings.CustomResourceDictionary = new ResourceDictionary
-            {
-                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
-            };
 
             LoadSettings();
 
@@ -145,7 +140,7 @@ namespace NETworkManager.ViewModels.Applications
         #region Methods      
         private void StartLookup()
         {
-            DisplayErrorMessage = false;
+            DisplayStatusMessage = false;
             IsLookupRunning = true;
 
             // Reset the latest results
@@ -191,11 +186,11 @@ namespace NETworkManager.ViewModels.Applications
         private void DnsLookup_LookupError(object sender, DNSLookupErrorArgs e)
         {
             if (e.ErrorCode == "Timeout Error")
-                ErrorMessage = string.Format(Application.Current.Resources["String_TimeoutWhenQueryingDNSServer"] as string, e.DNSServer);
+                StatusMessage = string.Format(Application.Current.Resources["String_TimeoutWhenQueryingDNSServer"] as string, e.DNSServer);
             else
-                ErrorMessage = Application.Current.Resources["String_UnkownError"] as string;
+                StatusMessage = Application.Current.Resources["String_UnkownError"] as string;
 
-            DisplayErrorMessage = true;
+            DisplayStatusMessage = true;
 
             IsLookupRunning = false;
         }
@@ -204,8 +199,8 @@ namespace NETworkManager.ViewModels.Applications
         {
             if (e.ResourceRecordsCount == 0)
             {
-                ErrorMessage = string.Format(Application.Current.Resources["String_NoDnsRecordFoundCheckYourInputAndSettings"] as string, HostnameOrIPAddress);
-                DisplayErrorMessage = true;
+                StatusMessage = string.Format(Application.Current.Resources["String_NoDnsRecordFoundCheckYourInputAndSettings"] as string, HostnameOrIPAddress);
+                DisplayStatusMessage = true;
             }
 
             IsLookupRunning = false;

@@ -43,7 +43,6 @@
     <system:String x:Key="String_Header_HotKeys">HotKeys</system:String>
     <system:String x:Key="String_Header_DNSLookup">DNS Lookup</system:String>
     <system:String x:Key="String_Header_Route">Route</system:String>
-    <system:String x:Key="String_Header_MaximumHopsReached">Maximale Hops erreicht</system:String>
     <system:String x:Key="String_Header_CanceledByUser">Vom Benutzer abgebrochen</system:String>
     <system:String x:Key="String_Header_DontFragment">Nicht fragmentieren</system:String>
     <system:String x:Key="String_Header_Import">Importieren</system:String>
@@ -64,8 +63,9 @@
     <system:String x:Key="String_Header_Update">Update</system:String>
     <system:String x:Key="String_Header_Transparency">Transparenz</system:String>
     <system:String x:Key="String_Header_WakeOnLAN">Wake on LAN</system:String>
-    <system:String x:Key="String_Header_HelpCommandLine">Hilfe - Kommandozeile</system:String>
-
+    <system:String x:Key="String_Header_CommandLineArguments">Befehlszeilenargumente</system:String>
+    <system:String x:Key="String_Header_WrongParameter">Falscher Parameter</system:String>
+    
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_ShowWindow">Fenster anzeigen</system:String>
@@ -174,8 +174,8 @@
     <system:String x:Key="String_ConfirmClose">Schließen bestätigen</system:String>
     <system:String x:Key="String_ConfirmCloseQuesiton">Sind Sie sicher, dass Sie die Anwendung beenden möchten?</system:String>
     <system:String x:Key="String_UntrayBringWindowToFront">Untray / Fenster in den Vordergrund bringen</system:String>
-    <system:String x:Key="String_MaximumHopsReachedMessage">Traceroute wurde nach {0} Hops abgebrochen.</system:String>
-    <system:String x:Key="String_CanceledByUserMessage">Der Vorgang wurde vom Benutzer abgebrochen!</system:String>
+    <system:String x:Key="String_MaximumNumberOfHopsReached">Maximale Anzahl ({0}) an Hops/Router erreicht! </system:String>
+    <system:String x:Key="String_CanceledByUser">Der Vorgang wurde vom Benutzer abgebrochen!</system:String>
     <system:String x:Key="String_NetworkInterfaceConfigTemplates">Netzwerkinterface Konfigurations Templates</system:String>
     <system:String x:Key="String_WakeOnLANTemplates">Wake on LAN Templates</system:String>
     <system:String x:Key="String_SelectedSettingsAreReset">Die ausgewählten Einstellungen werden zurückgesetzt. (Der Speicherpfad ist hiervon nicht betroffen.)</system:String>
@@ -221,7 +221,10 @@
     <system:String x:Key="String_NothingToDoCheckYourInput">Nichts zu tun. Überprüfen Sie Ihre Eingabe!</system:String>
     <system:String x:Key="String_Scanned">Gescannt</system:String>
     <system:String x:Key="String_Found">Found</system:String>
-    
+    <system:String x:Key="String_TheApplicationCanBeStartedWithoutParameters">Die Anwendung kann ohne Parameter gestartet werden!</system:String>
+    <system:String x:Key="String_TheFollwingParametersCanNotBeProcesses">Die folgenden Parameter können nicht verarbeitet werden:</system:String>
+    <system:String x:Key="String_TheFollowingParametersAreAvailable">Folgende Parameter stehen zur Verfügung:</system:String>
+
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
     <system:String x:Key="String_Button_Default">Standard</system:String>
@@ -247,6 +250,10 @@
     <system:String x:Key="String_Button_Reset">Zurücksetzen</system:String>
     <system:String x:Key="String_Button_Continue">Weiter</system:String>
     <system:String x:Key="String_Button_Validate">Validieren</system:String>
+    
+    <!-- Help -->
+    <system:String x:Key="String_Help_ParameterHelp">Zeigt diesen Dialog an.</system:String>
+    <system:String x:Key="String_Help_ParameterResetSettings">Setzt alle Einstellungen zurück.</system:String>
 
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Ausschneiden</system:String>

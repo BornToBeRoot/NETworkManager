@@ -11,7 +11,7 @@ namespace NETworkManager.ViewModels.Settings
         #region Variables
         private IDialogCoordinator dialogCoordinator;
 
-        MetroDialogSettings dialogSettings = new MetroDialogSettings();
+        
 
         private bool _isLoading = true;
 
@@ -69,11 +69,6 @@ namespace NETworkManager.ViewModels.Settings
         {
             dialogCoordinator = instance;
 
-            dialogSettings.CustomResourceDictionary = new ResourceDictionary
-            {
-                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
-            };
-
             LoadSettings();
 
             _isLoading = false;
@@ -105,7 +100,7 @@ namespace NETworkManager.ViewModels.Settings
             }
             catch (Exception ex)
             {
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, dialogSettings);
+                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
 
             ConfiguringAutostart = false;

@@ -13,7 +13,7 @@ namespace NETworkManager.ViewModels.Settings
     {
         private IDialogCoordinator dialogCoordinator;
 
-        MetroDialogSettings dialogSettings = new MetroDialogSettings();
+        
 
         public Action CloseAction { get; set; }
 
@@ -255,11 +255,6 @@ namespace NETworkManager.ViewModels.Settings
         {
             dialogCoordinator = instance;
 
-            dialogSettings.CustomResourceDictionary = new ResourceDictionary
-            {
-                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
-            };
-
             LoadSettings();
         }
 
@@ -306,7 +301,7 @@ namespace NETworkManager.ViewModels.Settings
             }
             catch (ImportFileNotValidException)
             {
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_ValidationFailed"] as string, Application.Current.Resources["String_NoValidFileFoundToImport"] as string, MessageDialogStyle.Affirmative, dialogSettings);
+                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_ValidationFailed"] as string, Application.Current.Resources["String_NoValidFileFoundToImport"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
         }
 
@@ -317,7 +312,7 @@ namespace NETworkManager.ViewModels.Settings
 
         private async void ImportSettingsAction()
         {
-            MetroDialogSettings settings = dialogSettings;
+            MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
             settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Continue"] as string;
             settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
@@ -375,7 +370,7 @@ namespace NETworkManager.ViewModels.Settings
             {
                 ImportExportManager.Export(exportOptions, saveFileDialog.FileName);
 
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, string.Format("{0}\n\n{1}: {2}", Application.Current.Resources["String_SettingsSuccessfullyExported"] as string, Application.Current.Resources["String_Path"] as string, saveFileDialog.FileName), MessageDialogStyle.Affirmative, dialogSettings);
+                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, string.Format("{0}\n\n{1}: {2}", Application.Current.Resources["String_SettingsSuccessfullyExported"] as string, Application.Current.Resources["String_Path"] as string, saveFileDialog.FileName), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
         }
     }

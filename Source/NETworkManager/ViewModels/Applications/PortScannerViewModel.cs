@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
 using System;
 using System.Collections.ObjectModel;
@@ -16,9 +15,6 @@ namespace NETworkManager.ViewModels.Applications
     public class PortScannerViewModel : ViewModelBase
     {
         #region Variables
-        private IDialogCoordinator dialogCoordinator;
-        MetroDialogSettings dialogSettings = new MetroDialogSettings();
-
         CancellationTokenSource cancellationTokenSource;
 
         private bool _isLoading = true;
@@ -168,45 +164,38 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private bool _displayErrorMessage;
-        public bool DisplayErrorMessage
+        private bool _displayStatusMessage;
+        public bool DisplayStatusMessage
         {
-            get { return _displayErrorMessage; }
+            get { return _displayStatusMessage; }
             set
             {
-                if (value == _displayErrorMessage)
+                if (value == _displayStatusMessage)
                     return;
 
-                _displayErrorMessage = value;
+                _displayStatusMessage = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _errorMessage;
-        public string ErrorMessage
+        private string _statusMessage;
+        public string StatusMessage
         {
-            get { return _errorMessage; }
+            get { return _statusMessage; }
             set
             {
-                if (value == _errorMessage)
+                if (value == _statusMessage)
                     return;
 
-                _errorMessage = value;
+                _statusMessage = value;
                 OnPropertyChanged();
             }
         }
         #endregion
 
         #region Constructor, Load settings
-        public PortScannerViewModel(IDialogCoordinator instance)
+        public PortScannerViewModel()
         {
-            dialogCoordinator = instance;
-
-            dialogSettings.CustomResourceDictionary = new ResourceDictionary
-            {
-                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
-            };
-
             LoadSettings();
 
             _isLoading = false;
@@ -242,8 +231,8 @@ namespace NETworkManager.ViewModels.Applications
         #region Methods
         private async void StartScan()
         {
-            DisplayErrorMessage = false;
-            ErrorMessage = string.Empty;
+            DisplayStatusMessage = false;
+            StatusMessage = string.Empty;
 
             IsScanRunning = true;
             PreparingScan = true;
@@ -309,11 +298,11 @@ namespace NETworkManager.ViewModels.Applications
                 }
                 catch (SocketException) // This will catch DNS resolve errors
                 {
-                    if (!string.IsNullOrEmpty(ErrorMessage))
-                        ErrorMessage += Environment.NewLine;
+                    if (!string.IsNullOrEmpty(StatusMessage))
+                        StatusMessage += Environment.NewLine;
 
-                    ErrorMessage += string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, host);
-                    DisplayErrorMessage = true;
+                    StatusMessage += string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, host);
+                    DisplayStatusMessage = true;
 
                     continue;
                 }
@@ -325,8 +314,8 @@ namespace NETworkManager.ViewModels.Applications
             {
                 IsScanRunning = false;
 
-                ErrorMessage += Environment.NewLine + Application.Current.Resources["String_NothingToDoCheckYourInput"] as string;
-                DisplayErrorMessage = true;
+                StatusMessage += Environment.NewLine + Application.Current.Resources["String_NothingToDoCheckYourInput"] as string;
+                DisplayStatusMessage = true;
 
                 return;
             }
@@ -363,10 +352,23 @@ namespace NETworkManager.ViewModels.Applications
             {
                 IsScanRunning = false;
 
-                ErrorMessage = ex.Message;
-                DisplayErrorMessage = true;
+                StatusMessage = ex.Message;
+                DisplayStatusMessage = true;
             }
         }
+
+        private void StopScan()
+        {
+            CancelScan = true;
+            cancellationTokenSource.Cancel();
+        }
+
+        public void OnShutdown()
+        {
+            if (IsScanRunning)
+                StopScan();
+        }
+        #endregion
 
         #region Events
         private void PortScanner_UserHasCanceled(object sender, EventArgs e)
@@ -374,8 +376,8 @@ namespace NETworkManager.ViewModels.Applications
             CancelScan = false;
             IsScanRunning = false;
 
-            ErrorMessage = Application.Current.Resources["String_CanceledByUserMessage"] as string;
-            DisplayErrorMessage = true;
+            StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
+            DisplayStatusMessage = true;
 
         }
 
@@ -398,21 +400,6 @@ namespace NETworkManager.ViewModels.Applications
                 PortScanResult.Add(portInfo);
             }));
         }
-        #endregion
-
-        private void StopScan()
-        {
-            CancelScan = true;
-            cancellationTokenSource.Cancel();
-        }
-        #endregion
-
-        #region OnShutdown
-        public void OnShutdown()
-        {
-            if (IsScanRunning)
-                StopScan();
-        }
-        #endregion
+        #endregion               
     }
 }
