@@ -239,8 +239,8 @@ namespace NETworkManager.ViewModels.Applications
 
         private void TracerouteFinished()
         {
-            IsTraceRunning = false;
             CancelTrace = false;
+            IsTraceRunning = false;
         }
 
         public void OnShutdown()

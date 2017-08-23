@@ -718,6 +718,20 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _portScanner_ExpandStatistics = true;
+        public bool PortScanner_ExpandStatistics
+        {
+            get { return _portScanner_ExpandStatistics; }
+            set
+            {
+                if (value == _portScanner_ExpandStatistics)
+                    return;
+
+                _portScanner_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region WakeOnLAN

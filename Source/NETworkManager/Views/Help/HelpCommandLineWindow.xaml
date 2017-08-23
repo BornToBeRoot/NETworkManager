@@ -6,7 +6,7 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
         mc:Ignorable="d"
-        Title="{DynamicResource String_ProductName}" Topmost="True" Style="{DynamicResource DefaultWindow}" Height="450" Width="550" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" IsMinButtonEnabled="False" IsMaxRestoreButtonEnabled="False" ShowInTaskbar="False">
+        Title="{DynamicResource String_ProductName}" Topmost="True" Style="{DynamicResource DefaultWindow}" MinHeight="500" Height="500" MinWidth="500" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" IsMinButtonEnabled="False" IsMaxRestoreButtonEnabled="False" ShowInTaskbar="False">
     <Controls:MetroWindow.WindowButtonCommands>
         <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </Controls:MetroWindow.WindowButtonCommands>
@@ -17,40 +17,27 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Visibility="{Binding DisplayWrongParameterNote, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,0,0,20">
-            <Grid.Resources>
-                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
-                    <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
-                </Style>
-            </Grid.Resources>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="{DynamicResource String_Header_WrongParameter}" Style="{StaticResource HeaderTextBlock}" />
-            <TextBlock Grid.Row="1" Text="{DynamicResource String_TheFollwingParametersCanNotBeProcesses}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
-            <TextBox Grid.Row="2" Text="{Binding WrongParameterNote}" />
-        </Grid>       
-        <TextBlock Grid.Row="1" Text="{DynamicResource String_Header_CommandLineArguments}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Grid.Row="2" Text="{DynamicResource String_TheFollowingParametersAreAvailable}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <Grid Grid.Row="3" Margin="0,0,0,10">
+        <TextBlock Grid.Row="0" Text="{DynamicResource String_Header_CommandLineArguments}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Grid.Row="1" Text="{DynamicResource String_TheFollowingParametersAreAvailable}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <Border Grid.Row="2" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" Margin="0,0,0,10" Padding="5">
+        <ScrollViewer Style="{StaticResource DefaulScrollViewer}" >
+        <Grid>
             <Grid.Resources>
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
                     <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
                 </Style>
             </Grid.Resources>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="2*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
@@ -59,6 +46,23 @@
             <TextBlock Grid.Column="1" Grid.Row="0" Text="{DynamicResource String_Help_ParameterHelp}" />
             <TextBox Grid.Column="0" Grid.Row="2" Text="{Binding ParameterResetSettings}" />
             <TextBlock Grid.Column="1" Grid.Row="2" Text="{DynamicResource String_Help_ParameterResetSettings}" />
+        </Grid>
+        </ScrollViewer>
+        </Border>
+        <Grid Grid.Row="3" Visibility="{Binding DisplayWrongParameterNote, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,0,0,10">
+            <Grid.Resources>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
+                    <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
+                </Style>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="{DynamicResource String_TheFollwingParametersCanNotBeProcesses}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+            <Border Grid.Row="1" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" Padding="5">
+                <TextBox Text="{Binding WrongParameter}"/>
+            </Border>
         </Grid>
         <TextBlock Grid.Row="4" Text="{DynamicResource String_TheApplicationCanBeStartedWithoutParameters}" Foreground="{DynamicResource AccentColorBrush}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
         <Grid Grid.Row="5">

@@ -54,9 +54,8 @@ namespace NETworkManager.Models.Settings
                     }
                     else
                     {
-                        AddToWrongParameter(parameters[i]);
-
-                        Current.Help = true;
+                        WrongParameterDetected(parameters);
+                        return;
                     }
                 }
                 else
@@ -64,19 +63,17 @@ namespace NETworkManager.Models.Settings
                     // Ignore the first parameter because it's the path of the .exe
                     if (i != 0)
                     {
-                        AddToWrongParameter(parameters[i]);
-                        Current.Help = true;
+                        WrongParameterDetected(parameters);
+                        return;
                     }
                 }
             }
         }
 
-        private static void AddToWrongParameter(string parameter)
+        private static void WrongParameterDetected(string[] parameters)
         {
-            if (!string.IsNullOrEmpty(Current.WrongParameter))
-                Current.WrongParameter += Environment.NewLine;
-
-            Current.WrongParameter += parameter;
+            Current.WrongParameter = string.Join(" ", parameters);
+            Current.Help = true;
         }
     }
 }

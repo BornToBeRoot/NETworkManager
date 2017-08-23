@@ -9,6 +9,8 @@ using NETworkManager.Helpers;
 using System.Threading;
 using System.Net;
 using System.Net.Sockets;
+using System.Windows.Threading;
+using System.Diagnostics;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -16,6 +18,9 @@ namespace NETworkManager.ViewModels.Applications
     {
         #region Variables
         CancellationTokenSource cancellationTokenSource;
+
+        DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        Stopwatch stopwatch = new Stopwatch();
 
         private bool _isLoading = true;
 
@@ -122,30 +127,44 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private int _progressBarMaximum;
-        public int ProgressBarMaximum
+        private int _portsToScan;
+        public int PortsToScan
         {
-            get { return _progressBarMaximum; }
+            get { return _portsToScan; }
             set
             {
-                if (value == _progressBarMaximum)
+                if (value == _portsToScan)
                     return;
 
-                _progressBarMaximum = value;
+                _portsToScan = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _progressBarValue;
-        public int ProgressBarValue
+        private int _portsScanned;
+        public int PortsScanned
         {
-            get { return _progressBarValue; }
+            get { return _portsScanned; }
             set
             {
-                if (value == _progressBarValue)
+                if (value == _portsScanned)
                     return;
 
-                _progressBarValue = value;
+                _portsScanned = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _portsOpen;
+        public int PortsOpen
+        {
+            get { return _portsOpen; }
+            set
+            {
+                if (value == _portsOpen)
+                    return;
+
+                _portsOpen = value;
                 OnPropertyChanged();
             }
         }
@@ -160,6 +179,65 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 _preparingScan = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DateTime? _startTime;
+        public DateTime? StartTime
+        {
+            get { return _startTime; }
+            set
+            {
+                if (value == _startTime)
+                    return;
+
+                _startTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TimeSpan _duration;
+        public TimeSpan Duration
+        {
+            get { return _duration; }
+            set
+            {
+                if (value == _duration)
+                    return;
+
+                _duration = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DateTime? _endTime;
+        public DateTime? EndTime
+        {
+            get { return _endTime; }
+            set
+            {
+                if (value == _endTime)
+                    return;
+
+                _endTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _expandStatistics;
+        public bool ExpandStatistics
+        {
+            get { return _expandStatistics; }
+            set
+            {
+                if (value == _expandStatistics)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.PortScanner_ExpandStatistics = value;
+
+                _expandStatistics = value;
                 OnPropertyChanged();
             }
         }
@@ -200,9 +278,7 @@ namespace NETworkManager.ViewModels.Applications
 
             _isLoading = false;
         }
-        #endregion
 
-        #region Settings
         private void LoadSettings()
         {
             if (SettingsManager.Current.PortScanner_HostnameOrIPAddressHistory != null)
@@ -210,6 +286,8 @@ namespace NETworkManager.ViewModels.Applications
 
             if (SettingsManager.Current.PortScanner_PortsHistory != null)
                 PortsHistory = new List<string>(SettingsManager.Current.PortScanner_PortsHistory);
+
+            ExpandStatistics = SettingsManager.Current.PortScanner_ExpandStatistics;
         }
         #endregion
 
@@ -237,7 +315,16 @@ namespace NETworkManager.ViewModels.Applications
             IsScanRunning = true;
             PreparingScan = true;
 
+            // Measure the time
+            StartTime = DateTime.Now;
+            stopwatch.Start();
+            dispatcherTimer.Tick += DispatcherTimer_Tick;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            dispatcherTimer.Start();
+            EndTime = null;
+
             PortScanResult.Clear();
+            PortsOpen = 0;
 
             cancellationTokenSource = new CancellationTokenSource();
 
@@ -312,10 +399,10 @@ namespace NETworkManager.ViewModels.Applications
 
             if (hostData.Count == 0)
             {
-                IsScanRunning = false;
-
                 StatusMessage += Environment.NewLine + Application.Current.Resources["String_NothingToDoCheckYourInput"] as string;
                 DisplayStatusMessage = true;
+
+                ScanFinished();
 
                 return;
             }
@@ -324,8 +411,8 @@ namespace NETworkManager.ViewModels.Applications
 
             try
             {
-                ProgressBarMaximum = ports.Length * hostData.Count;
-                ProgressBarValue = 0;
+                PortsToScan = ports.Length * hostData.Count;
+                PortsScanned = 0;
 
                 PreparingScan = false;
 
@@ -350,10 +437,10 @@ namespace NETworkManager.ViewModels.Applications
 
             catch (Exception ex) // This will catch any exception
             {
-                IsScanRunning = false;
-
                 StatusMessage = ex.Message;
                 DisplayStatusMessage = true;
+
+                ScanFinished();
             }
         }
 
@@ -361,6 +448,21 @@ namespace NETworkManager.ViewModels.Applications
         {
             CancelScan = true;
             cancellationTokenSource.Cancel();
+        }
+
+        private void ScanFinished()
+        {
+            // Stop timer and stopwatch
+            stopwatch.Stop();
+            dispatcherTimer.Stop();
+
+            Duration = stopwatch.Elapsed;
+            EndTime = DateTime.Now;
+
+            stopwatch.Reset();
+
+            CancelScan = false;
+            IsScanRunning = false;
         }
 
         public void OnShutdown()
@@ -373,32 +475,39 @@ namespace NETworkManager.ViewModels.Applications
         #region Events
         private void PortScanner_UserHasCanceled(object sender, EventArgs e)
         {
-            CancelScan = false;
-            IsScanRunning = false;
-
             StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
             DisplayStatusMessage = true;
 
+
+            ScanFinished();
         }
 
         private void PortScanner_ProgressChanged(object sender, ProgressChangedArgs e)
         {
-            ProgressBarValue = e.Value;
+            PortsScanned = e.Value;
         }
 
         private void PortScanner_ScanComplete(object sender, EventArgs e)
         {
-            IsScanRunning = false;
+            ScanFinished();
         }
 
         private void PortScanner_PortScanned(object sender, PortScannedArgs e)
         {
             PortInfo portInfo = PortInfo.Parse(e);
-
+                       
             Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
             {
                 PortScanResult.Add(portInfo);
             }));
+
+            if (portInfo.Status == PortInfo.PortStatus.Open)
+                PortsOpen++;
+        }
+
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            Duration = stopwatch.Elapsed;
         }
         #endregion               
     }

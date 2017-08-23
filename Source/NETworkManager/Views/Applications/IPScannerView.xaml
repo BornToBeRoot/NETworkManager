@@ -219,8 +219,6 @@
                     </TextBox>
                     <TextBlock Grid.Column="3" Grid.Row="2" Text="{DynamicResource String_Found}" VerticalAlignment="Bottom" />
                     <TextBox Grid.Column="4" Grid.Row="2" Text="{Binding HostsFound}" />
-                    <!--<TextBlock Grid.Column="3" Grid.Row="4" Text="{DynamicResource String_HostsDown}" />
-                    <TextBox Grid.Column="4" Grid.Row="4" Text="{Binding HostsDown}"/>-->
                 </Grid>
             </StackPanel>
         </Expander>

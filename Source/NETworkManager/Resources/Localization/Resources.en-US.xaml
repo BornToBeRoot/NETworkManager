@@ -65,7 +65,6 @@
     <system:String x:Key="String_Header_Transparency">Transparency</system:String>
     <system:String x:Key="String_Header_WakeOnLAN">Wake on LAN</system:String>
     <system:String x:Key="String_Header_CommandLineArguments">Command Line Arguments</system:String>
-    <system:String x:Key="String_Header_WrongParameter">Wrong parameter</system:String>
 
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -226,6 +225,7 @@
     <system:String x:Key="String_TheApplicationCanBeStartedWithoutParameters">The application can be started without parameters!</system:String>
     <system:String x:Key="String_TheFollwingParametersCanNotBeProcesses">The following parameters can not be processed:</system:String>
     <system:String x:Key="String_TheFollowingParametersAreAvailable">The following parameters are available:</system:String>
+    <system:String x:Key="String_Open">Open</system:String>
 
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>

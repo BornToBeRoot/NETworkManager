@@ -361,9 +361,7 @@ namespace NETworkManager.ViewModels.Applications
         }
 
         private void ScanFinished()
-        {
-            IsScanRunning = false;
-
+        {            
             // Stop timer and stopwatch
             stopwatch.Stop();
             dispatcherTimer.Stop();
@@ -372,6 +370,9 @@ namespace NETworkManager.ViewModels.Applications
             EndTime = DateTime.Now;
 
             stopwatch.Reset();
+
+            CancelScan = false;
+            IsScanRunning = false;
         }
 
         public void OnShutdown()
@@ -406,12 +407,10 @@ namespace NETworkManager.ViewModels.Applications
 
         private void UserHasCanceled(object sender, EventArgs e)
         {
-            CancelScan = false;
-
-            ScanFinished();
-
             StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
             DisplayStatusMessage = true;
+
+            ScanFinished();
         }
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)

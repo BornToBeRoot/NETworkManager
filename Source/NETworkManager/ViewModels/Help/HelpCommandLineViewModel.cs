@@ -39,30 +39,30 @@ namespace NETworkManager.ViewModels.Help
             }
         }
 
-        private bool _displayWrongParameterNote;
-        public bool DisplayWrongParameterNote
+        private bool _displayWrongParameter;
+        public bool DisplayWrongParameter
         {
-            get { return _displayWrongParameterNote; }
+            get { return _displayWrongParameter; }
             set
             {
-                if (value == _displayWrongParameterNote)
+                if (value == _displayWrongParameter)
                     return;
 
-                _displayWrongParameterNote = value;
+                _displayWrongParameter = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _wrongParameterNote;
-        public string WrongParameterNote
+        private string _wrongParameter;
+        public string WrongParameter
         {
-            get { return _wrongParameterNote; }
+            get { return _wrongParameter; }
             set
             {
-                if (value == _wrongParameterNote)
+                if (value == _wrongParameter)
                     return;
 
-                _wrongParameterNote = value;
+                _wrongParameter = value;
                 OnPropertyChanged();
             }
         }
@@ -104,8 +104,8 @@ namespace NETworkManager.ViewModels.Help
 
             if (!string.IsNullOrEmpty(CommandLineManager.Current.WrongParameter))
             {
-                WrongParameterNote = CommandLineManager.Current.WrongParameter;
-                DisplayWrongParameterNote = true;
+                WrongParameter = CommandLineManager.Current.WrongParameter;
+                DisplayWrongParameter = true;
             }
 
             ParameterHelp = CommandLineManager.ParameterHelp;
