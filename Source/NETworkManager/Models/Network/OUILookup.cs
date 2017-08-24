@@ -48,7 +48,7 @@ namespace NETworkManager.Models.Network
         {
             List<OUIInfo> list = new List<OUIInfo>();
 
-            string ouiKey = Regex.Replace(macAddress, "-|:", "").Substring(0, 6);
+            string ouiKey = Regex.Replace(macAddress, "-|:", "").Substring(0, 6).ToUpper();
 
             foreach (OUIInfo info in OUIs[ouiKey])
             {
