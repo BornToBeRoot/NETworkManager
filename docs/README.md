@@ -65,4 +65,4 @@ Let me know it on GitHub by submitting a [new issue](https://github.com/BornToBe
 You can also help developing! Create a feature request first. Then fork the repository, do your changes and send me a pull request with the reference to the feature request. 
 
 # License
-[GNU GENERAL PUBLIC LICENSE](https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE)
+This software is published under the [GNU GENERAL PUBLIC LICENSE](https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE)
