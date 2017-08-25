@@ -40,8 +40,7 @@ The source code can be found [here](https://github.com/BornToBeRoot/NETworkManag
 
 # Changelog
 
-The changelog can be found [here](https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog)!
-
+The changelog can be found [here](https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog).
 # Found an issue?
 
 [Issues](https://github.com/BornToBeRoot/NETworkManager/issues) are tracked on GitHub. If you found something that does not work and has not yet been reported, submit a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new).
