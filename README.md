@@ -41,9 +41,10 @@ The source code can be found [here](https://github.com/BornToBeRoot/NETworkManag
 # Changelog
 
 The changelog can be found [here](https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog).
+
 # Found an issue?
 
-[Issues](https://github.com/BornToBeRoot/NETworkManager/issues) are tracked on GitHub. If you found something that does not work and has not yet been reported, submit a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new).
+Check the [Issues](https://github.com/BornToBeRoot/NETworkManager/issues) if the problem has already been reported. If not, submit a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new).
 
 **Minimum informations**
 - NETworkManager version 
@@ -59,11 +60,11 @@ The more information you can provide me, the quicker i can reproduce and solve t
 
 You can also fork the repository, fix the issue by yourself and send me a pull request.
 
-# Improve this software!
+# Suggestions?
 
-You have an idea how the software can be improved? Great!
+You have an idea how i can improve the NETworkManager? Great!
 
-Let me know it on GitHub by submitting a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new) with your feature request. I will check whether it is useful and feasible.
+Let me know it by submitting a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new) with your feature request. I will check whether it is useful and feasible.
 
 You can also help developing! Create a feature request first. Then fork the repository, do your changes and send me a pull request with the reference to the feature request. 
 
