@@ -203,7 +203,8 @@
     <system:String x:Key="String_TheFollwingParametersCanNotBeProcesses">Die folgenden Parameter können nicht verarbeitet werden:</system:String>
     <system:String x:Key="String_TheFollowingParametersAreAvailable">Folgende Parameter stehen zur Verfügung:</system:String>
     <system:String x:Key="String_Open">Offen</system:String>
-    
+    <system:String x:Key="String_CustomDNSServerIsEmptyCheckYourSettingsUseWindowsOwnDNSServer">Benutzerdefinierte DNS-Server ist leer. Überprüfe deine Einstellungen! (Verwende Windows eigenen DNS-Server...)</system:String>
+
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
     <system:String x:Key="String_Button_Default">Standard</system:String>

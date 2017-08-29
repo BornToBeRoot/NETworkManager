@@ -203,7 +203,8 @@
     <system:String x:Key="String_TheFollwingParametersCanNotBeProcesses">The following parameters can not be processed:</system:String>
     <system:String x:Key="String_TheFollowingParametersAreAvailable">The following parameters are available:</system:String>
     <system:String x:Key="String_Open">Open</system:String>
-
+    <system:String x:Key="String_CustomDNSServerIsEmptyCheckYourSettingsUseWindowsOwnDNSServer">Custom dns server is empty. Check your settings! (Use windows own dns server...)</system:String>
+    
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
     <system:String x:Key="String_Button_Default">Default</system:String>
