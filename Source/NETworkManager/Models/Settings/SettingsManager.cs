@@ -17,101 +17,89 @@ namespace NETworkManager.Models.Settings
         public static bool ForceRestart { get; set; }
         public static bool HotKeysChanged { get; set; }
 
-        private static string ApplicationName
+        private static string GetApplicationName()
         {
-            get { return Assembly.GetEntryAssembly().GetName().Name; }
+            return Assembly.GetEntryAssembly().GetName().Name;
         }
 
-        private static string ApplicationLocation
+        private static string GetApplicationLocation()
         {
-            get { return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location); }
+            return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         }
 
-        public static string SettingsFileName
+        public static string GetSettingsFileName()
         {
-            get { return string.Format("{0}{1}", ApplicationName, SettingsFileExtension); }
+            return string.Format("{0}{1}", GetApplicationName(), SettingsFileExtension);
         }
 
         #region Settings locations (default, custom, portable)
-        // %AppData%\PRODUCTNAME\Settings
-        public static string DefaultSettingsLocation
+        public static string GetDefaultSettingsLocation()
         {
-            get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ApplicationName, SettingsFolderName); }
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), GetApplicationName(), SettingsFolderName);
         }
 
-        // Custom location
-        public static string CustomSettingsLocation
+        public static string GetCustomSettingsLocation()
         {
-            get { return Properties.Settings.Default.Settings_CustomSettingsLocation; }
+            return Properties.Settings.Default.Settings_CustomSettingsLocation;
         }
 
-        // STARTUPPATH\Settings
-        public static string PortableSettingsLocation
+        public static string GetPortableSettingsLocation()
         {
-            get { return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), SettingsFolderName); }
+            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), SettingsFolderName);
         }
+
         #endregion
-
         #region File paths
-        // This is the file (stored in the application folder) which tells the application that it is portable
-        private static string IsPortableFilePath
+        private static string GetIsPortableFilePath()
         {
-            get { return Path.Combine(ApplicationLocation, IsPortableFileName); }
+            return Path.Combine(GetApplicationLocation(), IsPortableFileName);
         }
 
-        public static string SettingsFilePath
+        public static string GetSettingsFilePath()
         {
-            get { return Path.Combine(SettingsLocation, SettingsFileName); }
+            return Path.Combine(GetSettingsLocation(), GetSettingsFileName());
         }
 
         #endregion
-
         #region IsPortable, SettingsLocation, SettingsLocationNotPortable
-        public static bool IsPortable
+        public static bool GetIsPortable()
         {
-            get { return File.Exists(IsPortableFilePath); }
+            return File.Exists(GetIsPortableFilePath());
         }
 
-        public static string SettingsLocation
+        public static string GetSettingsLocation()
         {
-            get
-            {
-                if (IsPortable)
-                    return PortableSettingsLocation;
+            if (GetIsPortable())
+                return GetPortableSettingsLocation();
 
-                string settingsLocation = CustomSettingsLocation;
+            string settingsLocation = GetCustomSettingsLocation();
 
-                if (!string.IsNullOrEmpty(settingsLocation) && Directory.Exists(settingsLocation))
-                    return settingsLocation;
+            if (!string.IsNullOrEmpty(settingsLocation) && Directory.Exists(settingsLocation))
+                return settingsLocation;
 
-                return DefaultSettingsLocation;
-            }
+            return GetDefaultSettingsLocation();
         }
 
-        public static string SettingsLocationNotPortable
+        public static string GetSettingsLocationNotPortable()
         {
-            get
-            {
-                string settingsLocation = CustomSettingsLocation;
+            string settingsLocation = GetCustomSettingsLocation();
 
-                if (!string.IsNullOrEmpty(settingsLocation) && Directory.Exists(settingsLocation))
-                    return settingsLocation;
+            if (!string.IsNullOrEmpty(settingsLocation) && Directory.Exists(settingsLocation))
+                return settingsLocation;
 
-                return DefaultSettingsLocation;
-            }
+            return GetDefaultSettingsLocation();
         }
         #endregion
 
-        #region XmlSerializer (save and load) 
         public static void Load()
         {
-            if (File.Exists(SettingsFilePath) && !CommandLineManager.Current.ResetSettings)
+            if (File.Exists(GetSettingsFilePath()) && !CommandLineManager.Current.ResetSettings)
             {
                 SettingsInfo settingsInfo = new SettingsInfo();
 
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(SettingsInfo));
 
-                using (FileStream fileStream = new FileStream(SettingsFilePath, FileMode.Open))
+                using (FileStream fileStream = new FileStream(GetSettingsFilePath(), FileMode.Open))
                 {
                     settingsInfo = (SettingsInfo)(xmlSerializer.Deserialize(fileStream));
                 }
@@ -130,11 +118,11 @@ namespace NETworkManager.Models.Settings
         public static void Save()
         {
             // Create the directory if it does not exist
-            Directory.CreateDirectory(SettingsLocation);
+            Directory.CreateDirectory(GetSettingsLocation());
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(SettingsInfo));
 
-            using (FileStream fileStream = new FileStream(Path.Combine(SettingsFilePath), FileMode.Create))
+            using (FileStream fileStream = new FileStream(Path.Combine(GetSettingsFilePath()), FileMode.Create))
             {
                 xmlSerializer.Serialize(fileStream, Current);
             }
@@ -142,9 +130,7 @@ namespace NETworkManager.Models.Settings
             // Set the setting changed to false after saving them as file...
             Current.SettingsChanged = false;
         }
-        #endregion
 
-        #region Methods       
         public static Task MoveSettingsAsync(string sourceLocation, string targedLocation)
         {
             return Task.Run(() => MoveSettings(sourceLocation, targedLocation));
@@ -165,7 +151,7 @@ namespace NETworkManager.Models.Settings
                 File.Delete(file);
 
             // Delete the folder, if it is not the default settings locations and does not contain any files or directories
-            if (sourceLocation != DefaultSettingsLocation && Directory.GetFiles(sourceLocation).Length == 0 && Directory.GetDirectories(sourceLocation).Length == 0)
+            if (sourceLocation != GetDefaultSettingsLocation() && Directory.GetFiles(sourceLocation).Length == 0 && Directory.GetDirectories(sourceLocation).Length == 0)
                 Directory.Delete(sourceLocation);
         }
 
@@ -178,17 +164,17 @@ namespace NETworkManager.Models.Settings
         {
             if (isPortable)
             {
-                MoveSettings(SettingsLocationNotPortable, PortableSettingsLocation);
+                MoveSettings(GetSettingsLocationNotPortable(), GetPortableSettingsLocation());
 
                 // After moving the files, set the indicator that the settings are now portable
-                File.Create(IsPortableFilePath);
+                File.Create(GetIsPortableFilePath());
             }
             else
             {
-                MoveSettings(PortableSettingsLocation, SettingsLocationNotPortable);
+                MoveSettings(GetPortableSettingsLocation(), GetSettingsLocationNotPortable());
 
                 // Remove the indicator after moving the files...
-                File.Delete(IsPortableFilePath);
+                File.Delete(GetIsPortableFilePath());
             }
         }
 
@@ -202,6 +188,5 @@ namespace NETworkManager.Models.Settings
 
             ForceRestart = true;
         }
-        #endregion
     }
 }

@@ -119,34 +119,35 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-        private bool _importWakeOnLANTemplatesExists;
-        public bool ImportWakeOnLANTemplatesExists
+        private bool _importWakeOnLANClientsExists;
+        public bool ImportWakeOnLANClientsExists
         {
-            get { return _importWakeOnLANTemplatesExists; }
+            get { return _importWakeOnLANClientsExists; }
             set
             {
-                if (value == _importWakeOnLANTemplatesExists)
+                if (value == _importWakeOnLANClientsExists)
                     return;
 
-                _importWakeOnLANTemplatesExists = value;
+                _importWakeOnLANClientsExists = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _importWakeOnLANTemplates;
-        public bool ImportWakeOnLANTemplates
+        private bool _importWakeOnLANClients;
+        public bool ImportWakeOnLANClients
         {
-            get { return _importWakeOnLANTemplates; }
+            get { return _importWakeOnLANClients; }
             set
             {
-                if (value == _importWakeOnLANTemplates)
+                if (value == _importWakeOnLANClients)
                     return;
 
-                _importWakeOnLANTemplates = value;
+                _importWakeOnLANClients = value;
                 OnPropertyChanged();
             }
         }
         #endregion
+
         #region Export
         private bool _exportEverything;
         public bool ExportEverything
@@ -218,30 +219,30 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-        private bool _wakeOnLanTemplatesExists;
-        public bool WakeOnLANTemplatesExists
+        private bool _wakeOnLANClientsExists;
+        public bool WakeOnLANClientsExists
         {
-            get { return _wakeOnLanTemplatesExists; }
+            get { return _wakeOnLANClientsExists; }
             set
             {
-                if (value == _wakeOnLanTemplatesExists)
+                if (value == _wakeOnLANClientsExists)
                     return;
 
-                _wakeOnLanTemplatesExists = value;
+                _wakeOnLANClientsExists = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _exportWakeOnLANTemplates;
-        public bool ExportWakeOnLANTemplates
+        private bool _exportWakeOnLANClients;
+        public bool ExportWakeOnLANClients
         {
-            get { return _exportWakeOnLANTemplates; }
+            get { return _exportWakeOnLANClients; }
             set
             {
-                if (value == _exportWakeOnLANTemplates)
+                if (value == _exportWakeOnLANClients)
                     return;
 
-                _exportWakeOnLANTemplates = value;
+                _exportWakeOnLANClients = value;
                 OnPropertyChanged();
             }
         }
@@ -258,9 +259,9 @@ namespace NETworkManager.ViewModels.Settings
 
         private void LoadSettings()
         {
-            ApplicationSettingsExists = File.Exists(SettingsManager.SettingsFilePath);
-            NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.ProfilesFilePath);
-            WakeOnLANTemplatesExists = File.Exists(TemplateManager.WakeOnLANTemplatesFilePath);
+            ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
+            NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
+            WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
         }
         #endregion
 
@@ -295,7 +296,7 @@ namespace NETworkManager.ViewModels.Settings
                 ImportFileIsValid = true;
                 ImportApplicationSettingsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.ApplicationSettings);
                 ImportNetworkInterfaceProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
-                ImportWakeOnLANTemplatesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANTemplates);
+                ImportWakeOnLANClientsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients);
             }
             catch (ImportFileNotValidException)
             {
@@ -327,8 +328,8 @@ namespace NETworkManager.ViewModels.Settings
                 if (ImportNetworkInterfaceProfilesExists && (ImportEverything || ImportNetworkInterfaceProfiles))
                     importOptions.Add(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
 
-                if (ImportWakeOnLANTemplatesExists && (ImportEverything || ImportWakeOnLANTemplates))
-                    importOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANTemplates);
+                if (ImportWakeOnLANClientsExists && (ImportEverything || ImportWakeOnLANClients))
+                    importOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANClients);
 
                 ImportExportManager.Import(ImportLocationSelectedPath, importOptions);
 
@@ -351,8 +352,8 @@ namespace NETworkManager.ViewModels.Settings
             if (NetworkInterfaceProfilesExists && (ExportEverything || ExportNetworkInterfaceProfiles))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
 
-            if (WakeOnLANTemplatesExists && (ExportEverything || ExportWakeOnLANTemplates))
-                exportOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANTemplates);
+            if (WakeOnLANClientsExists && (ExportEverything || ExportWakeOnLANClients))
+                exportOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANClients);
 
             // Save the settings before exporting them
             if (SettingsManager.Current.SettingsChanged)
@@ -368,7 +369,11 @@ namespace NETworkManager.ViewModels.Settings
             {
                 ImportExportManager.Export(exportOptions, saveFileDialog.FileName);
 
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, string.Format("{0}\n\n{1}: {2}", Application.Current.Resources["String_SettingsSuccessfullyExported"] as string, Application.Current.Resources["String_Path"] as string, saveFileDialog.FileName), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                MetroDialogSettings settings = AppearanceManager.MetroDialog;
+
+                settings.AffirmativeButtonText = Application.Current.Resources["String_Button_OK"] as string;
+
+                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, string.Format("{0}\n\n{1}: {2}", Application.Current.Resources["String_SettingsSuccessfullyExported"] as string, Application.Current.Resources["String_Path"] as string, saveFileDialog.FileName), MessageDialogStyle.Affirmative, settings);
             }
         }
     }

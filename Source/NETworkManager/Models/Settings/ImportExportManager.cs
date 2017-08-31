@@ -45,7 +45,7 @@ namespace NETworkManager.Models.Settings
                 {
                     string fileName = GetImportExportOptionFileName(importOption);
 
-                    zipArchive.GetEntry(fileName).ExtractToFile(Path.Combine(SettingsManager.SettingsLocation, fileName), true);
+                    zipArchive.GetEntry(fileName).ExtractToFile(Path.Combine(SettingsManager.GetSettingsLocation(), fileName), true);
                 }
             }
 
@@ -80,19 +80,19 @@ namespace NETworkManager.Models.Settings
             None,
             ApplicationSettings,
             NetworkInterfaceProfiles,
-            WakeOnLANTemplates
+            WakeOnLANClients
         }
 
         public static ImportExportOptions GetImportExportOption(string fileName)
         {
-            if (fileName == SettingsManager.SettingsFileName)
+            if (fileName == SettingsManager.GetSettingsFileName())
                 return ImportExportOptions.ApplicationSettings;
 
             if (fileName == NetworkInterfaceProfileManager.ProfilesFileName)
                 return ImportExportOptions.NetworkInterfaceProfiles;
 
-            if (fileName == TemplateManager.WakeOnLANTemplatesFileName)
-                return ImportExportOptions.WakeOnLANTemplates;
+            if (fileName == WakeOnLANClientManager.ClientsFileName)
+                return ImportExportOptions.WakeOnLANClients;
 
             return ImportExportOptions.None;
         }
@@ -102,11 +102,11 @@ namespace NETworkManager.Models.Settings
             switch (importExportOption)
             {
                 case ImportExportOptions.ApplicationSettings:
-                    return SettingsManager.SettingsFileName;
+                    return SettingsManager.GetSettingsFileName();
                 case ImportExportOptions.NetworkInterfaceProfiles:
                     return NetworkInterfaceProfileManager.ProfilesFileName;
-                case ImportExportOptions.WakeOnLANTemplates:
-                    return TemplateManager.WakeOnLANTemplatesFileName;
+                case ImportExportOptions.WakeOnLANClients:
+                    return WakeOnLANClientManager.ClientsFileName;
             }
 
             return string.Empty;
@@ -117,11 +117,11 @@ namespace NETworkManager.Models.Settings
             switch (importExportOption)
             {
                 case ImportExportOptions.ApplicationSettings:
-                    return SettingsManager.SettingsFilePath;
+                    return SettingsManager.GetSettingsFilePath();
                 case ImportExportOptions.NetworkInterfaceProfiles:
-                    return NetworkInterfaceProfileManager.ProfilesFilePath;
-                case ImportExportOptions.WakeOnLANTemplates:
-                    return TemplateManager.WakeOnLANTemplatesFilePath;
+                    return NetworkInterfaceProfileManager.GetProfilesFilePath();
+                case ImportExportOptions.WakeOnLANClients:
+                    return WakeOnLANClientManager.GetClientsFilePath();
             }
 
             return string.Empty;

@@ -17,8 +17,6 @@ namespace NETworkManager.ViewModels.Applications
     {
         private IDialogCoordinator dialogCoordinator;
 
-        
-
         #region  Variables                
         private string _MACAddress;
         public string MACAddress
@@ -104,39 +102,19 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        ICollectionView _wakeOnLanTemplates;
-        public ICollectionView WakeOnLANTemplates
+        ICollectionView _wakeOnLANClients;
+        public ICollectionView WakeOnLANClients
         {
-            get { return _wakeOnLanTemplates; }
+            get { return _wakeOnLANClients; }
         }
 
-        private TemplateWakeOnLANInfo _selectedWakeOnLANTemplate = new TemplateWakeOnLANInfo();
-        public TemplateWakeOnLANInfo SelectedWakeOnLANTemplate
+        private IList _selectedWakeOnLANClients = new ArrayList();
+        public IList SelectedWakeOnLANClients
         {
-            get { return _selectedWakeOnLANTemplate; }
+            get { return _selectedWakeOnLANClients; }
             set
             {
-                if (value == _selectedWakeOnLANTemplate)
-                    return;
-
-                if (value != null)
-                {
-                    Broadcast = value.Broadcast.ToString();
-                    Port = value.Port;
-                }
-
-                _selectedWakeOnLANTemplate = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private IList _selectedWakeOnLANTemplates = new ArrayList();
-        public IList SelectedWakeOnLANTemplates
-        {
-            get { return _selectedWakeOnLANTemplates; }
-            set
-            {
-                _selectedWakeOnLANTemplates = value;
+                _selectedWakeOnLANClients = value;
                 OnPropertyChanged();
             }
         }
@@ -170,14 +148,26 @@ namespace NETworkManager.ViewModels.Applications
         }
         #endregion
 
-        #region Constructor, Load templates
+        #region Constructor, LoadSettings() , OnShutdown()
         public WakeOnLANViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
 
-            _wakeOnLanTemplates = CollectionViewSource.GetDefaultView(TemplateManager.WakeOnLANTemplates);
+            WakeOnLANClientManager.Load();
+            _wakeOnLANClients = CollectionViewSource.GetDefaultView(WakeOnLANClientManager.Clients);
 
+            LoadSettings();
+        }
+
+        private void LoadSettings()
+        {
             Port = SettingsManager.Current.WakeOnLAN_DefaultPort;
+        }
+
+        public void OnShutdown()
+        {
+            if (WakeOnLANClientManager.ClientsChanged)
+                WakeOnLANClientManager.Save();
         }
         #endregion
 
@@ -218,12 +208,12 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        public ICommand AddTemplateCommand
+        public ICommand AddClientCommand
         {
-            get { return new RelayCommand(p => AddTemplateAction()); }
+            get { return new RelayCommand(p => AddClientAction()); }
         }
 
-        private async void AddTemplateAction()
+        private async void AddClientAction()
         {
             MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
@@ -231,12 +221,12 @@ namespace NETworkManager.ViewModels.Applications
             settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            string hostname = await dialogCoordinator.ShowInputAsync(this, Application.Current.Resources["String_AddTemplate"] as string, Application.Current.Resources["String_EnterHostnameForTemplate"] as string, settings);
+            string hostname = await dialogCoordinator.ShowInputAsync(this, Application.Current.Resources["String_Header_AddClient"] as string, Application.Current.Resources["String_EnterHostnameForClient"] as string, settings);
 
             if (string.IsNullOrEmpty(hostname))
                 return;
 
-            TemplateWakeOnLANInfo template = new TemplateWakeOnLANInfo
+            WakeOnLANClientInfo client = new WakeOnLANClientInfo
             {
                 Hostname = hostname.ToUpper(),
                 MACAddress = MACAddressHelper.GetDefaultFormat(MACAddress),
@@ -244,22 +234,22 @@ namespace NETworkManager.ViewModels.Applications
                 Port = Port
             };
 
-            TemplateManager.WakeOnLANTemplates.Add(template);
+            WakeOnLANClientManager.AddClient(client);
         }
 
-        public ICommand WakeUpSelectedWakeOnLANTemplatesCommand
+        public ICommand WakeUpSelectedClientsCommand
         {
-            get { return new RelayCommand(p => WakeUpSelectedWakeOnLANTemplatesAction()); }
+            get { return new RelayCommand(p => WakeUpSelectedClientsAction()); }
         }
 
-        public void WakeUpSelectedWakeOnLANTemplatesAction()
+        public void WakeUpSelectedClientsAction()
         {
             DisplayStatusMessage = false;
             StatusMessage = string.Empty;
 
             int errorCount = 0;
 
-            foreach (TemplateWakeOnLANInfo template in SelectedWakeOnLANTemplates)
+            foreach (WakeOnLANClientInfo template in SelectedWakeOnLANClients)
             {
                 try
                 {
@@ -270,7 +260,7 @@ namespace NETworkManager.ViewModels.Applications
                         Port = template.Port
                     };
 
-                    WakeOnLAN.Send(info);                                        
+                    WakeOnLAN.Send(info);
                 }
                 catch (Exception ex)
                 {
@@ -284,25 +274,25 @@ namespace NETworkManager.ViewModels.Applications
                 }
             }
 
-            if (SelectedWakeOnLANTemplates.Count == 1)
+            if (SelectedWakeOnLANClients.Count == 1)
             {
                 StatusMessage = Application.Current.Resources["String_MagicPacketSuccessfulSended"] as string;
                 DisplayStatusMessage = true;
             }
 
-            if (SelectedWakeOnLANTemplates.Count > 1 && SelectedWakeOnLANTemplates.Count != errorCount)
+            if (SelectedWakeOnLANClients.Count > 1 && SelectedWakeOnLANClients.Count != errorCount)
             {
-                StatusMessage = string.Format(Application.Current.Resources["String_MagicPacketSuccessfulSendedToClients"] as string, SelectedWakeOnLANTemplates.Count - errorCount);
+                StatusMessage = string.Format(Application.Current.Resources["String_MagicPacketSuccessfulSendedToClients"] as string, SelectedWakeOnLANClients.Count - errorCount);
                 DisplayStatusMessage = true;
             }
         }
 
-        public ICommand DeleteSelectedWakeOnLANTemplatesCommand
+        public ICommand DeleteSelectedClientsCommand
         {
-            get { return new RelayCommand(p => DeleteSelectedWakeOnLANTemplatesAction()); }
+            get { return new RelayCommand(p => DeleteSelectedClientsAction()); }
         }
 
-        private async void DeleteSelectedWakeOnLANTemplatesAction()
+        private async void DeleteSelectedClientsAction()
         {
             MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
@@ -314,13 +304,13 @@ namespace NETworkManager.ViewModels.Applications
             if (MessageDialogResult.Negative == await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_DeleteTemplatesMessage"] as string, MessageDialogStyle.AffirmativeAndNegative, settings))
                 return;
 
-            List<TemplateWakeOnLANInfo> list = new List<TemplateWakeOnLANInfo>();
+            List<WakeOnLANClientInfo> clients = new List<WakeOnLANClientInfo>();
 
-            foreach (TemplateWakeOnLANInfo template in SelectedWakeOnLANTemplates)
-                list.Add(template);
+            foreach (WakeOnLANClientInfo client in SelectedWakeOnLANClients)
+                clients.Add(client);
 
-            foreach (TemplateWakeOnLANInfo info in list)
-                TemplateManager.WakeOnLANTemplates.Remove(info);
+            foreach (WakeOnLANClientInfo client in clients)
+                WakeOnLANClientManager.RemoveClient(client);
         }
         #endregion
     }

@@ -433,9 +433,9 @@
     <Compile Include="Models\Settings\SettingsManager.cs" />
     <Compile Include="Views\SettingsViewInfo.cs" />
     <Compile Include="Views\SettingsViewManager.cs" />
-    <Compile Include="Models\Settings\TemplateManager.cs" />
+    <Compile Include="Models\Settings\WakeOnLANClientManager.cs" />
     <Compile Include="Models\Settings\NetworkInterfaceProfileInfo.cs" />
-    <Compile Include="Models\Settings\TemplateWakeOnLanInfo.cs" />
+    <Compile Include="Models\Settings\WakeOnLANClientInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>
       <AutoGen>True</AutoGen>

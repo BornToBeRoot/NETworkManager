@@ -49,9 +49,7 @@ namespace NETworkManager
                 StartupUri = new Uri("/Views/Help/HelpCommandLineWindow.xaml", UriKind.Relative);
                 return;
             }
-
-            TemplateManager.LoadWakeOnLANTemplates();
-
+                        
             StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
         }
 
@@ -67,11 +65,7 @@ namespace NETworkManager
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             if (!ImportExportManager.ForceRestart && !CommandLineManager.Current.Help)
-            {
-                // Save templates
-                if (TemplateManager.WakeOnLANTemplatesChanged)
-                    TemplateManager.SaveWakeOnLANTemplates();
-
+            {                         
                 // Save settings
                 if (SettingsManager.Current.SettingsChanged)
                     SettingsManager.Save();

@@ -12,7 +12,7 @@ namespace NETworkManager.Validators
         {
             string path = value as string;
 
-            if (Directory.Exists(path) || SettingsManager.DefaultSettingsLocation == path)
+            if (Directory.Exists(path) || SettingsManager.GetDefaultSettingsLocation() == path)
                 return ValidationResult.ValidResult;
 
             return new ValidationResult(false, Application.Current.Resources["String_ValidateError_FolderDoesNotExist"] as string);

@@ -146,30 +146,30 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-        private bool _wakeOnLanTemplatesExists;
-        public bool WakeOnLANTemplatesExists
+        private bool _wakeOnLANClientsExists;
+        public bool WakeOnLANClientsExists
         {
-            get { return _wakeOnLanTemplatesExists; }
+            get { return _wakeOnLANClientsExists; }
             set
             {
-                if (value == _wakeOnLanTemplatesExists)
+                if (value == _wakeOnLANClientsExists)
                     return;
 
-                _wakeOnLanTemplatesExists = value;
+                _wakeOnLANClientsExists = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _resetWakeOnLANTemplates;
-        public bool ResetWakeOnLANTemplates
+        private bool _resetWakeOnLANClients;
+        public bool ResetWakeOnLANClients
         {
-            get { return _resetWakeOnLANTemplates; }
+            get { return _resetWakeOnLANClients; }
             set
             {
-                if (value == _resetWakeOnLANTemplates)
+                if (value == _resetWakeOnLANClients)
                     return;
 
-                _resetWakeOnLANTemplates = value;
+                _resetWakeOnLANClients = value;
                 OnPropertyChanged();
             }
         }
@@ -187,12 +187,12 @@ namespace NETworkManager.ViewModels.Settings
 
         private void LoadSettings()
         {
-            LocationSelectedPath = SettingsManager.SettingsLocationNotPortable;
-            IsPortable = SettingsManager.IsPortable;
+            LocationSelectedPath = SettingsManager.GetSettingsLocationNotPortable();
+            IsPortable = SettingsManager.GetIsPortable();
 
-            ApplicationSettingsExists = File.Exists(SettingsManager.SettingsFilePath);
-            NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.ProfilesFilePath);
-            WakeOnLANTemplatesExists = File.Exists(TemplateManager.WakeOnLANTemplatesFilePath);
+            ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
+            NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
+            WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
         }
         #endregion
 
@@ -227,7 +227,7 @@ namespace NETworkManager.ViewModels.Settings
             // Try moving files (permissions, file is in use...)
             try
             {
-                await SettingsManager.MoveSettingsAsync(SettingsManager.SettingsLocation, LocationSelectedPath);
+                await SettingsManager.MoveSettingsAsync(SettingsManager.GetSettingsLocation(), LocationSelectedPath);
 
                 Properties.Settings.Default.Settings_CustomSettingsLocation = LocationSelectedPath;
 
@@ -252,7 +252,7 @@ namespace NETworkManager.ViewModels.Settings
 
         private void RestoreDefaultSettingsLocationAction()
         {
-            LocationSelectedPath = SettingsManager.DefaultSettingsLocation;
+            LocationSelectedPath = SettingsManager.GetDefaultSettingsLocation();
         }
 
         public ICommand ResetSettingsCommand
@@ -288,8 +288,8 @@ namespace NETworkManager.ViewModels.Settings
             if (NetworkInterfaceProfilesExists && (ResetEverything || ResetNetworkInterfaceProfiles))
                 NetworkInterfaceProfileManager.Reset();
 
-            if (WakeOnLANTemplatesExists && (ResetEverything || ResetWakeOnLANTemplates))
-                TemplateManager.ResetWakeOnLANTemplates();
+            if (WakeOnLANClientsExists && (ResetEverything || ResetWakeOnLANClients))
+                WakeOnLANClientManager.Reset();
 
             if (forceRestart)
                 CloseAction();
@@ -313,7 +313,7 @@ namespace NETworkManager.ViewModels.Settings
                 await SettingsManager.MakePortableAsync(isPortable);
 
                 Properties.Settings.Default.Settings_CustomSettingsLocation = string.Empty;
-                LocationSelectedPath = SettingsManager.SettingsLocationNotPortable;
+                LocationSelectedPath = SettingsManager.GetSettingsLocationNotPortable();
 
                 // Show the user some awesome animation to indicate we are working on it :)
                 await Task.Delay(2000);

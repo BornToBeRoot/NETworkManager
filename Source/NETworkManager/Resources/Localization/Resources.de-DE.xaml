@@ -6,7 +6,7 @@
     <system:String x:Key="String_Header_Destination">Ziel</system:String>
     <system:String x:Key="String_Header_Settings">Einstellungen</system:String>
     <system:String x:Key="String_Header_Status">Status</system:String>
-    <system:String x:Key="String_Header_Templates">Templates</system:String>
+    <system:String x:Key="String_Header_Clients">Clients</system:String>
     <system:String x:Key="String_Header_MACAddress">MAC-Adresse</system:String>
     <system:String x:Key="String_Header_MACAddressOrVendor">MAC-Adresse oder Hersteller</system:String>
     <system:String x:Key="String_Header_Details">Details</system:String>
@@ -58,13 +58,14 @@
     <system:String x:Key="String_Header_SelectAProfile">Profil auswählen...</system:String>
     <system:String x:Key="String_Header_Profiles">Profile</system:String>
     <system:String x:Key="String_Header_AddProfile">Profil hinzufügen</system:String>
-
+    <system:String x:Key="String_Header_WakeUp">Aufwecken</system:String>
+    <system:String x:Key="String_Header_AddClient">Client hinzufügen</system:String>
+    
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Settings">Einstellungen</system:String>
     <system:String x:Key="String_RestartRequired">Neustart Erforderlich</system:String>
     <system:String x:Key="String_RestartRequiredAfterSettingsChanged">Einige Einstellungen werden erst nach einem Neustart der Anwendung angewendet!</system:String>
-    <system:String x:Key="String_Template">Template</system:String>
     <system:String x:Key="String_WakeUp">Aufwecken</system:String>
     <system:String x:Key="String_MACAddress">MAC-Adresse</system:String>
     <system:String x:Key="String_Hostname">Hostname</system:String>
@@ -114,8 +115,7 @@
     <system:String x:Key="String_DynamicIPv4DNSServer">Dynamischer IPv4-DNS-Server</system:String>
     <system:String x:Key="String_DefaultGateway">Standardgateway</system:String>
     <system:String x:Key="String_AddTemplate">Template hinzufügen</system:String>
-    <system:String x:Key="String_EnterNameForTemplate">Geben Sie einen Namen ein, unter dem das Template gespeichert werden soll</system:String>
-    <system:String x:Key="String_EnterHostnameForTemplate">Geben Sie den Hostnamen ein, um das Template später zu identifizieren</system:String>
+    <system:String x:Key="String_EnterHostnameForClient">Geben Sie den Hostnamen ein, um den Client später zu identifizieren.</system:String>
     <system:String x:Key="String_AllRightReserved">Alle Rechte vorbehalten.</system:String>
     <system:String x:Key="String_Libraries">Bibliotheken</system:String>
     <system:String x:Key="String_Administrator">Administrator</system:String>
@@ -158,7 +158,7 @@
     <system:String x:Key="String_CanceledByUser">Der Vorgang wurde vom Benutzer abgebrochen!</system:String>
     <system:String x:Key="String_ApplicationSettings">Anwendungseinstellungen</system:String>
     <system:String x:Key="String_NetworkInterfaceProfiles">Netzwerkinterface Profile</system:String>
-    <system:String x:Key="String_WakeOnLANTemplates">Wake on LAN Templates</system:String>
+    <system:String x:Key="String_WakeOnLANClients">Wake on LAN Clients</system:String>
     <system:String x:Key="String_SelectedSettingsAreReset">Die ausgewählten Einstellungen werden zurückgesetzt. (Der Speicherpfad ist hiervon nicht betroffen.)</system:String>
     <system:String x:Key="String_ApplicationIsRestartedAfterwards">* Die Anwendung wird danach neu gestartet</system:String>
     <system:String x:Key="String_SelectTheSettingsYouWantToImport">Wählen Sie die Einstellungen aus, die Sie importieren möchten:</system:String>
@@ -217,7 +217,7 @@
     <system:String x:Key="String_Button_WakeUp">Aufwecken</system:String>
     <system:String x:Key="String_Button_Apply">Anwenden</system:String>
     <system:String x:Key="String_Button_RestartNow">Jetzt neu starten</system:String>
-    <system:String x:Key="String_Button_AddTemplate">Template hinzufügen</system:String>
+    <system:String x:Key="String_Button_AddClient">Client hinzufügen...</system:String>
     <system:String x:Key="String_Button_Add">Hinzufügen</system:String>
     <system:String x:Key="String_Button_Cancel">Abbrechen</system:String>
     <system:String x:Key="String_Button_OK">OK</system:String>

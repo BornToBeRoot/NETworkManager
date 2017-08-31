@@ -9,7 +9,7 @@ namespace NETworkManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value as string == SettingsManager.SettingsLocation)
+            if (value as string == SettingsManager.GetSettingsLocation())
                 return true;
 
             return false;

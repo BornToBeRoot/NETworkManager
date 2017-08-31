@@ -13,20 +13,20 @@ namespace NETworkManager.Models.Settings
         public static ObservableCollection<NetworkInterfaceProfileInfo> Profiles { get; set; }
         public static bool ProfilesChanged { get; set; }
 
-        public static string ProfilesFilePath
+        public static string GetProfilesFilePath()
         {
-            get { return Path.Combine(SettingsManager.SettingsLocation, ProfilesFileName); }
+            return Path.Combine(SettingsManager.GetSettingsLocation(), ProfilesFileName);
         }
 
         public static void Load()
         {
             Profiles = new ObservableCollection<NetworkInterfaceProfileInfo>();
 
-            if (File.Exists(ProfilesFilePath))
+            if (File.Exists(GetProfilesFilePath()))
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<NetworkInterfaceProfileInfo>));
 
-                using (FileStream fileStream = new FileStream(ProfilesFilePath, FileMode.Open))
+                using (FileStream fileStream = new FileStream(GetProfilesFilePath(), FileMode.Open))
                 {
                     ((List<NetworkInterfaceProfileInfo>)(xmlSerializer.Deserialize(fileStream))).ForEach(template => Profiles.Add(template));
                 }
@@ -44,7 +44,7 @@ namespace NETworkManager.Models.Settings
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<NetworkInterfaceProfileInfo>));
 
-            using (FileStream fileStream = new FileStream(ProfilesFilePath, FileMode.Create))
+            using (FileStream fileStream = new FileStream(GetProfilesFilePath(), FileMode.Create))
             {
                 xmlSerializer.Serialize(fileStream, new List<NetworkInterfaceProfileInfo>(Profiles));
             }
