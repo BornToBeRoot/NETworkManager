@@ -21,7 +21,7 @@
         <Converter:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />
         <Converter:NullToFalseConverter x:Key="NullToFalseConverter" />
         <Converter:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
-        <Converter:ValidateNetworkInterfaceConfigConverter x:Key="ValidateNetworkInterfaceConfigConverter" />
+        <Converter:ValidateNetworkInterfaceProfileConverter x:Key="ValidateNetworkInterfaceProfileConverter" />
         <Converter:TrueFalseToStringConverter x:Key="TrueFalseToStringConverter" />
         <Converter:SelectedItemsToBoolConverter x:Key="SelectedItemsToBoolConverter" />
         <Style x:Key="ReloadAnimation" TargetType="Rectangle">
@@ -60,7 +60,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <ComboBox Grid.Column="0" x:Name="cbNetworkInterfaces" Grid.Row="1" FontSize="14" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
+                        <ComboBox Grid.Column="0" x:Name="cbNetworkInterfaceProfiles" Grid.Row="1" FontSize="14" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
@@ -89,7 +89,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=cbNetworkInterfaces, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
+                        <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=cbNetworkInterfaceProfiles, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Refresh}" />
@@ -236,7 +236,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=cbNetworkInterfaces, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
+                        <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=cbNetworkInterfaceProfiles, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Refresh}" />
@@ -257,10 +257,10 @@
                 </StackPanel>
                 <ScrollViewer Grid.Row="1" Style="{StaticResource DefaulScrollViewer}" Margin="0,0,0,10">
                     <StackPanel>
-                        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Template}" />
-                        <ComboBox FontSize="14" IsReadOnly="True" ItemsSource="{Binding NetworkInterfaceConfigTemplates}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedConfigTemplate}" Margin="0,0,0,20">
+                        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_SelectAProfile}" />
+                        <ComboBox FontSize="14" IsReadOnly="True" ItemsSource="{Binding NetworkInterfaceProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Margin="0,0,0,20">
                             <ComboBox.InputBindings>
-                                <KeyBinding Command="{Binding UnselectTemplateCommand}" Key="Delete" />
+                                <KeyBinding Command="{Binding UnselectProfileCommand}" Key="Delete" />
                             </ComboBox.InputBindings>
                         </ComboBox>
                         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Configure}" />
@@ -393,7 +393,7 @@
                     </StackPanel>
                 </ScrollViewer>
                 <StackPanel Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button x:Name="btnAddTemplate" Command="{Binding AddTemplateCommand}">
+                    <Button x:Name="btnAddProfile" Command="{Binding AddProfileCommand}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -405,7 +405,7 @@
                                         <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Plus}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddTemplate}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
                             </Grid>
                         </Button.Content>
                         <Button.Style>
@@ -413,7 +413,7 @@
                                 <Style.Triggers>
                                     <DataTrigger Value="False">
                                         <DataTrigger.Binding>
-                                            <MultiBinding Converter="{StaticResource ValidateNetworkInterfaceConfigConverter}">
+                                            <MultiBinding Converter="{StaticResource ValidateNetworkInterfaceProfileConverter}">
                                                 <Binding Path="ConfigEnableDynamicIPAddress" />
                                                 <Binding Path="ConfigEnableStaticIPAddress" />
                                                 <Binding ElementName="txtConfigIPAddress" Path="(Validation.HasError)" />
@@ -453,7 +453,7 @@
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
                                             <Condition Binding="{Binding IsAdmin}" Value="True"/>
-                                            <Condition  Binding="{Binding ElementName=btnAddTemplate,Path=IsEnabled}" Value="True"/>
+                                            <Condition  Binding="{Binding ElementName=btnAddProfile,Path=IsEnabled}" Value="True"/>
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="IsEnabled" Value="True" />
                                     </MultiDataTrigger>
@@ -467,15 +467,15 @@
                 </Grid>
             </Grid>
         </TabItem>
-        <TabItem Header="{DynamicResource String_Header_Templates}">
+        <TabItem Header="{DynamicResource String_Header_Profiles}">
             <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Templates}" />
-                <Control:MultiSelectDataGrid Style="{StaticResource MetroDataGrid}" Grid.Row="1" FontSize="14" ItemsSource="{Binding NetworkInterfaceConfigTemplates}" CanUserResizeColumns="False" AutoGenerateColumns="False" GridLinesVisibility="Vertical" IsReadOnly="True" SelectionMode="Extended" SelectionUnit="FullRow" SelectedItemsList="{Binding SelectedConfigTemplates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{DynamicResource GrayBrush3}" CanUserReorderColumns="False" Margin="0,0,0,10">
+                <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Profiles}" />
+                <Control:MultiSelectDataGrid Style="{StaticResource MetroDataGrid}" Grid.Row="1" FontSize="14" ItemsSource="{Binding NetworkInterfaceProfiles}" CanUserResizeColumns="False" AutoGenerateColumns="False" GridLinesVisibility="Vertical" IsReadOnly="True" SelectionMode="Extended" SelectionUnit="FullRow" SelectedItemsList="{Binding SelectedProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{DynamicResource GrayBrush3}" CanUserReorderColumns="False" Margin="0,0,0,10">
                     <Control:MultiSelectDataGrid.Columns>
                         <DataGridTextColumn Header="{DynamicResource String_Name}" Binding="{Binding Name}" MinWidth="200" />
                         <DataGridCheckBoxColumn Header="{DynamicResource String_DynamicIPv4Address}" Binding="{Binding EnableStaticIPAddress, Converter={StaticResource BooleanReverseConverter}}" MinWidth="150" />
@@ -491,7 +491,7 @@
                     <Control:MultiSelectDataGrid.Resources>
                         <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource MultiSelectDataGridScrollBar}" />
                         <ContextMenu x:Key="ContextMenuDataGridRow" Opened="ContextMenu_Opened" MinWidth="150">
-                            <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteSelectedConfigTemplatesCommand}">
+                            <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteSelectedProfilesCommand}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>
@@ -508,10 +508,10 @@
                         </Style>
                     </Control:MultiSelectDataGrid.RowStyle>
                     <Control:MultiSelectDataGrid.InputBindings>
-                        <KeyBinding Command="{Binding DeleteSelectedConfigTemplatesCommand}" Key="Delete" />
+                        <KeyBinding Command="{Binding DeleteSelectedProfilesCommand}" Key="Delete" />
                     </Control:MultiSelectDataGrid.InputBindings>
                 </Control:MultiSelectDataGrid>
-                <Button Grid.Row="3" Command="{Binding DeleteSelectedConfigTemplatesCommand}" HorizontalAlignment="Right" >
+                <Button Grid.Row="3" Command="{Binding DeleteSelectedProfilesCommand}" HorizontalAlignment="Right" >
                     <Button.Content>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -530,7 +530,7 @@
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="False" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding SelectedConfigTemplates, Converter={StaticResource SelectedItemsToBoolConverter}}" Value="True" >
+                                <DataTrigger Binding="{Binding SelectedProfiles, Converter={StaticResource SelectedItemsToBoolConverter}}" Value="True" >
                                     <Setter Property="IsEnabled"  Value="True" />
                                 </DataTrigger>
                             </Style.Triggers>

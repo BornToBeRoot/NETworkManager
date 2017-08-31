@@ -1,6 +1,6 @@
 ﻿namespace NETworkManager.Models.Settings
 {
-    public class TemplateNetworkInterfaceConfig
+    public class NetworkInterfaceProfileInfo
     {
         public string Name { get; set; }
         public bool EnableStaticIPAddress { get; set; }
@@ -11,7 +11,7 @@
         public string PrimaryDnsServer { get; set; }
         public string SecondaryDnsServer { get; set; }
 
-        public TemplateNetworkInterfaceConfig()
+        public NetworkInterfaceProfileInfo()
         {
 
         }        

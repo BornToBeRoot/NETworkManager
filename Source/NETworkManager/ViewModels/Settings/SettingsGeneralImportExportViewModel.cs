@@ -13,13 +13,11 @@ namespace NETworkManager.ViewModels.Settings
     {
         private IDialogCoordinator dialogCoordinator;
 
-        
-
         public Action CloseAction { get; set; }
 
         private const string ImportExportFileExtensionFilter = "ZIP Archive (*.zip)|*.zip";
-        #region Variables
 
+        #region Variables
         #region Import
         private string _importLocationSelectedPath;
         public string ImportLocationSelectedPath
@@ -93,30 +91,30 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-        private bool _importNetworkInterfaceConfigTemplatesExists;
-        public bool ImportNetworkInterfaceConfigTemplatesExists
+        private bool _importNetworkInterfaceProfilesExists;
+        public bool ImportNetworkInterfaceProfilesExists
         {
-            get { return _importNetworkInterfaceConfigTemplatesExists; }
+            get { return _importNetworkInterfaceProfilesExists; }
             set
             {
-                if (value == _importNetworkInterfaceConfigTemplatesExists)
+                if (value == _importNetworkInterfaceProfilesExists)
                     return;
 
-                _importNetworkInterfaceConfigTemplatesExists = value;
+                _importNetworkInterfaceProfilesExists = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _importNetworkInterfaceConfigTemplates;
-        public bool ImportNetworkInterfaceConfigTemplates
+        private bool _importNetworkInterfaceProfiles;
+        public bool ImportNetworkInterfaceProfiles
         {
-            get { return _importNetworkInterfaceConfigTemplates; }
+            get { return _importNetworkInterfaceProfiles; }
             set
             {
-                if (value == _importNetworkInterfaceConfigTemplates)
+                if (value == _importNetworkInterfaceProfiles)
                     return;
 
-                _importNetworkInterfaceConfigTemplates = value;
+                _importNetworkInterfaceProfiles = value;
                 OnPropertyChanged();
             }
         }
@@ -192,30 +190,30 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-        private bool _networkInterfaceConfigTemplatesExists;
-        public bool NetworkInterfaceConfigTemplatesExists
+        private bool _networkInterfaceProfilesExists;
+        public bool NetworkInterfaceProfilesExists
         {
-            get { return _networkInterfaceConfigTemplatesExists; }
+            get { return _networkInterfaceProfilesExists; }
             set
             {
-                if (value == _networkInterfaceConfigTemplatesExists)
+                if (value == _networkInterfaceProfilesExists)
                     return;
 
-                _networkInterfaceConfigTemplatesExists = value;
+                _networkInterfaceProfilesExists = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _exportNetworkInterfaceConfigTemplates;
-        public bool ExportNetworkInterfaceConfigTemplates
+        private bool _exportNetworkInterfaceProfiles;
+        public bool ExportNetworkInterfaceProfiles
         {
-            get { return _exportNetworkInterfaceConfigTemplates; }
+            get { return _exportNetworkInterfaceProfiles; }
             set
             {
-                if (value == _exportNetworkInterfaceConfigTemplates)
+                if (value == _exportNetworkInterfaceProfiles)
                     return;
 
-                _exportNetworkInterfaceConfigTemplates = value;
+                _exportNetworkInterfaceProfiles = value;
                 OnPropertyChanged();
             }
         }
@@ -261,7 +259,7 @@ namespace NETworkManager.ViewModels.Settings
         private void LoadSettings()
         {
             ApplicationSettingsExists = File.Exists(SettingsManager.SettingsFilePath);
-            NetworkInterfaceConfigTemplatesExists = File.Exists(TemplateManager.NetworkInterfaceConfigTemplatesFilePath);
+            NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.ProfilesFilePath);
             WakeOnLANTemplatesExists = File.Exists(TemplateManager.WakeOnLANTemplatesFilePath);
         }
         #endregion
@@ -296,7 +294,7 @@ namespace NETworkManager.ViewModels.Settings
 
                 ImportFileIsValid = true;
                 ImportApplicationSettingsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.ApplicationSettings);
-                ImportNetworkInterfaceConfigTemplatesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceConfigTemplates);
+                ImportNetworkInterfaceProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
                 ImportWakeOnLANTemplatesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANTemplates);
             }
             catch (ImportFileNotValidException)
@@ -326,8 +324,8 @@ namespace NETworkManager.ViewModels.Settings
                 if (ImportApplicationSettingsExists && (ImportEverything || ImportApplicationSettings))
                     importOptions.Add(ImportExportManager.ImportExportOptions.ApplicationSettings);
 
-                if (ImportNetworkInterfaceConfigTemplatesExists && (ImportEverything || ImportNetworkInterfaceConfigTemplates))
-                    importOptions.Add(ImportExportManager.ImportExportOptions.NetworkInterfaceConfigTemplates);
+                if (ImportNetworkInterfaceProfilesExists && (ImportEverything || ImportNetworkInterfaceProfiles))
+                    importOptions.Add(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
 
                 if (ImportWakeOnLANTemplatesExists && (ImportEverything || ImportWakeOnLANTemplates))
                     importOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANTemplates);
@@ -350,8 +348,8 @@ namespace NETworkManager.ViewModels.Settings
             if (ApplicationSettingsExists && (ExportEverything || ExportApplicationSettings))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.ApplicationSettings);
 
-            if (NetworkInterfaceConfigTemplatesExists && (ExportEverything || ExportNetworkInterfaceConfigTemplates))
-                exportOptions.Add(ImportExportManager.ImportExportOptions.NetworkInterfaceConfigTemplates);
+            if (NetworkInterfaceProfilesExists && (ExportEverything || ExportNetworkInterfaceProfiles))
+                exportOptions.Add(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
 
             if (WakeOnLANTemplatesExists && (ExportEverything || ExportWakeOnLANTemplates))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANTemplates);
@@ -363,7 +361,7 @@ namespace NETworkManager.ViewModels.Settings
             System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog()
             {
                 Filter = ImportExportFileExtensionFilter,
-                FileName = string.Format("{0}_{1}{2}", Application.Current.Resources["String_ProductName"] as string, TimestampHelper.GetTimestamp(), ImportExportManager.ImportExportFileExtension)
+                FileName = string.Format("{0}_{1}_{2}{3}", Application.Current.Resources["String_ProductName"] as string, Application.Current.Resources["String_Backup"] as string,TimestampHelper.GetTimestamp(), ImportExportManager.ImportExportFileExtension)
             };
 
             if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)

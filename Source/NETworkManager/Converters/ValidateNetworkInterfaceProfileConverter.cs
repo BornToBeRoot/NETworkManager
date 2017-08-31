@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace NETworkManager.Converters
 {
-    public sealed class ValidateNetworkInterfaceConfigConverter : IMultiValueConverter
+    public sealed class ValidateNetworkInterfaceProfileConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {

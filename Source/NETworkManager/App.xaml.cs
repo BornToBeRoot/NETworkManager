@@ -50,8 +50,6 @@ namespace NETworkManager
                 return;
             }
 
-            // Load templates
-            TemplateManager.LoadNetworkInterfaceConfigTemplates();
             TemplateManager.LoadWakeOnLANTemplates();
 
             StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
@@ -71,9 +69,6 @@ namespace NETworkManager
             if (!ImportExportManager.ForceRestart && !CommandLineManager.Current.Help)
             {
                 // Save templates
-                if (TemplateManager.NetworkInterfaceConfigTemplatesChanged)
-                    TemplateManager.SaveNetworkInterfaceConfigTemplates();
-
                 if (TemplateManager.WakeOnLANTemplatesChanged)
                     TemplateManager.SaveWakeOnLANTemplates();
 

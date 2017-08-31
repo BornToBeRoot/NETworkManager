@@ -55,7 +55,10 @@
     <system:String x:Key="String_Header_Transparency">Transparency</system:String>
     <system:String x:Key="String_Header_WakeOnLAN">Wake on LAN</system:String>
     <system:String x:Key="String_Header_CommandLineArguments">Command Line Arguments</system:String>
-
+    <system:String x:Key="String_Header_SelectAProfile">Select a profile...</system:String>
+    <system:String x:Key="String_Header_Profiles">Profiles</system:String>
+    <system:String x:Key="String_Header_AddProfile">Add profile</system:String>
+    
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Settings">Settings</system:String>
@@ -154,7 +157,7 @@
     <system:String x:Key="String_MaximumNumberOfHopsReached">Maximum number ({0}) of hops/router reached!</system:String>
     <system:String x:Key="String_CanceledByUser">The operation has been canceled by the user!</system:String>
     <system:String x:Key="String_ApplicationSettings">Application settings</system:String>
-    <system:String x:Key="String_NetworkInterfaceConfigTemplates">Network Interface config templates</system:String>
+    <system:String x:Key="String_NetworkInterfaceProfiles">Network interface profiles</system:String>
     <system:String x:Key="String_WakeOnLANTemplates">Wake on LAN templates</system:String>
     <system:String x:Key="String_SelectedSettingsAreReset">The selected settings are reset (The settings location is not affected.)</system:String>
     <system:String x:Key="String_ApplicationIsRestartedAfterwards">* Application is restarted afterwards</system:String>
@@ -204,7 +207,10 @@
     <system:String x:Key="String_TheFollowingParametersAreAvailable">The following parameters are available:</system:String>
     <system:String x:Key="String_Open">Open</system:String>
     <system:String x:Key="String_CustomDNSServerIsEmptyCheckYourSettingsUseWindowsOwnDNSServer">Custom dns server is empty. Check your settings! (Use windows own dns server...)</system:String>
-    
+    <system:String x:Key="String_EnterNameForProfile">Enter a name under which you want to save the profile.</system:String>
+    <system:String x:Key="String_DeleteProfilesMessage">The selected profiles will be deleted permanently.</system:String>
+    <system:String x:Key="String_Backup">Backup</system:String>
+
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
     <system:String x:Key="String_Button_Default">Default</system:String>
@@ -228,6 +234,7 @@
     <system:String x:Key="String_Button_Continue">Continue</system:String>
     <system:String x:Key="String_Button_Validate">Validate</system:String>
     <system:String x:Key="String_Button_Lookup">Lookup</system:String>
+    <system:String x:Key="String_Button_AddProfile">Add profile...</system:String>
     
     <!-- Help -->
     <system:String x:Key="String_Help_ParameterHelp">Displays this dialog.</system:String>

@@ -20,7 +20,7 @@ namespace NETworkManager.ViewModels.Applications
         #region Variables
         private IDialogCoordinator dialogCoordinator;
         ProgressDialogController progressDialogController;
-        
+
         private bool _isLoading = true;
 
         public bool IsAdmin
@@ -483,20 +483,20 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Templates
-        ICollectionView _networkInterfaceConfigTemplates;
-        public ICollectionView NetworkInterfaceConfigTemplates
+        ICollectionView _networkInterfaceProfiles;
+        public ICollectionView NetworkInterfaceProfiles
         {
-            get { return _networkInterfaceConfigTemplates; }
+            get { return _networkInterfaceProfiles; }
         }
 
 
-        private TemplateNetworkInterfaceConfig _selectedConfigTemplate = new TemplateNetworkInterfaceConfig();
-        public TemplateNetworkInterfaceConfig SelectedConfigTemplate
+        private NetworkInterfaceProfileInfo _selectedProfile = new NetworkInterfaceProfileInfo();
+        public NetworkInterfaceProfileInfo SelectedProfile
         {
-            get { return _selectedConfigTemplate; }
+            get { return _selectedProfile; }
             set
             {
-                if (value == _selectedConfigTemplate)
+                if (value == _selectedProfile)
                     return;
 
                 if (value != null)
@@ -511,18 +511,18 @@ namespace NETworkManager.ViewModels.Applications
                     ConfigSecondaryDnsServer = value.SecondaryDnsServer;
                 }
 
-                _selectedConfigTemplate = value;
+                _selectedProfile = value;
                 OnPropertyChanged();
             }
         }
 
-        private IList _selectedConfigTemplates = new ArrayList();
-        public IList SelectedConfigTemplates
+        private IList _selectedProfiles = new ArrayList();
+        public IList SelectedProfiles
         {
-            get { return _selectedConfigTemplates; }
+            get { return _selectedProfiles; }
             set
             {
-                _selectedConfigTemplates = value;
+                _selectedProfiles = value;
                 OnPropertyChanged();
             }
         }
@@ -538,7 +538,9 @@ namespace NETworkManager.ViewModels.Applications
             // Load network interfaces
             LoadNetworkInterfaces();
 
-            _networkInterfaceConfigTemplates = CollectionViewSource.GetDefaultView(TemplateManager.NetworkInterfaceConfigTemplates);
+            // Load profiles
+            NetworkInterfaceProfileManager.Load();
+            _networkInterfaceProfiles = CollectionViewSource.GetDefaultView(NetworkInterfaceProfileManager.Profiles);
 
             _isLoading = false;
         }
@@ -561,6 +563,12 @@ namespace NETworkManager.ViewModels.Applications
             }
 
             IsNetworkInterfaceLoading = false;
+        }
+
+        public void OnShutdown()
+        {
+            if (NetworkInterfaceProfileManager.ProfilesChanged)
+                NetworkInterfaceProfileManager.Save();
         }
         #endregion
 
@@ -636,25 +644,19 @@ namespace NETworkManager.ViewModels.Applications
             ReloadNetworkInterfacesAction();
         }
 
-        public ICommand AddTemplateCommand
+        public ICommand AddProfileCommand
         {
-            get { return new RelayCommand(p => AddTemplateAction()); }
+            get { return new RelayCommand(p => AddProfileAction()); }
         }
 
-        private async void AddTemplateAction()
+        private async void AddProfileAction()
         {
-            MetroDialogSettings dialogSettings = new MetroDialogSettings()
-            {
-                CustomResourceDictionary = new ResourceDictionary
-                {
-                    Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
-                },
+            MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
-                AffirmativeButtonText = Application.Current.Resources["String_Button_Add"] as string,
-                NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string
-            };
+            settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Add"] as string;
+            settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
 
-            string name = await dialogCoordinator.ShowInputAsync(this, Application.Current.Resources["String_AddTemplate"] as string, Application.Current.Resources["String_EnterNameForTemplate"] as string, dialogSettings);
+            string name = await dialogCoordinator.ShowInputAsync(this, Application.Current.Resources["String_Header_AddProfile"] as string, Application.Current.Resources["String_EnterNameForProfile"] as string, settings);
 
             if (string.IsNullOrEmpty(name))
                 return;
@@ -664,7 +666,7 @@ namespace NETworkManager.ViewModels.Applications
             if (ConfigEnableStaticIPAddress && ConfigSubnetmaskOrCidr.StartsWith("/"))
                 configSubnetmask = Subnetmask.GetFromCidr(int.Parse(ConfigSubnetmaskOrCidr.TrimStart('/'))).Subnetmask;
 
-            TemplateNetworkInterfaceConfig template = new TemplateNetworkInterfaceConfig
+            NetworkInterfaceProfileInfo profile = new NetworkInterfaceProfileInfo
             {
                 Name = name,
                 EnableStaticIPAddress = ConfigEnableStaticIPAddress,
@@ -676,52 +678,46 @@ namespace NETworkManager.ViewModels.Applications
                 SecondaryDnsServer = ConfigSecondaryDnsServer
             };
 
-            TemplateManager.NetworkInterfaceConfigTemplates.Add(template);
+            NetworkInterfaceProfileManager.AddProfile(profile);
         }
 
-        public ICommand UnselectTemplateCommand
+        public ICommand UnselectProfileCommand
         {
-            get { return new RelayCommand(p => UnselectTemplateAction()); }
+            get { return new RelayCommand(p => UnselectProfileAction()); }
         }
 
-        private void UnselectTemplateAction()
+        private void UnselectProfileAction()
         {
-            SelectedConfigTemplate = null;
+            SelectedProfile = null;
         }
 
-        public ICommand DeleteSelectedConfigTemplatesCommand
+        public ICommand DeleteSelectedProfilesCommand
         {
-            get { return new RelayCommand(p => DeleteSelectedConfigTemplatesAction()); }
+            get { return new RelayCommand(p => DeleteSelectedProfilesAction()); }
         }
 
-        private async void DeleteSelectedConfigTemplatesAction()
+        private async void DeleteSelectedProfilesAction()
         {
-            MetroDialogSettings dialogSettings = new MetroDialogSettings()
-            {
-                CustomResourceDictionary = new ResourceDictionary
-                {
-                    Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
-                },
+            MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
-                AffirmativeButtonText = Application.Current.Resources["String_Button_Delete"] as string,
-                NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string,
+            settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Delete"] as string;
+            settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
 
-                DefaultButtonFocus = MessageDialogResult.Affirmative
-            };
+            settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            if (MessageDialogResult.Negative == await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_DeleteTemplatesMessage"] as string, MessageDialogStyle.AffirmativeAndNegative, dialogSettings))
+            if (MessageDialogResult.Negative == await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_DeleteProfilesMessage"] as string, MessageDialogStyle.AffirmativeAndNegative, settings))
                 return;
 
-            List<TemplateNetworkInterfaceConfig> list = new List<TemplateNetworkInterfaceConfig>();
+            List<NetworkInterfaceProfileInfo> list = new List<NetworkInterfaceProfileInfo>();
 
-            foreach (TemplateNetworkInterfaceConfig template in SelectedConfigTemplates)
+            foreach (NetworkInterfaceProfileInfo template in SelectedProfiles)
             {
                 list.Add(template);
             }
 
-            foreach (TemplateNetworkInterfaceConfig info in list)
+            foreach (NetworkInterfaceProfileInfo profile in list)
             {
-                TemplateManager.NetworkInterfaceConfigTemplates.Remove(info);
+                NetworkInterfaceProfileManager.RemoveProfile(profile);
             }
         }
         #endregion

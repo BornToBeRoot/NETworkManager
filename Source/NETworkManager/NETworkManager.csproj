@@ -169,6 +169,7 @@
     <Compile Include="Models\Network\DNSLookupErrorArgs.cs" />
     <Compile Include="Models\Network\DNSLookupRecordInfo.cs" />
     <Compile Include="Models\Network\DNSLookupRecordArgs.cs" />
+    <Compile Include="Models\Settings\NetworkInterfaceProfileManager.cs" />
     <Compile Include="Validators\IPAddressValidator.cs" />
     <Compile Include="Validators\OpacityTextboxValidator.cs" />
     <Compile Include="ViewModels\Applications\DNSLookupViewModel.cs" />
@@ -433,7 +434,7 @@
     <Compile Include="Views\SettingsViewInfo.cs" />
     <Compile Include="Views\SettingsViewManager.cs" />
     <Compile Include="Models\Settings\TemplateManager.cs" />
-    <Compile Include="Models\Settings\TemplateNetworkInterfaceConfig.cs" />
+    <Compile Include="Models\Settings\NetworkInterfaceProfileInfo.cs" />
     <Compile Include="Models\Settings\TemplateWakeOnLanInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>
@@ -526,7 +527,7 @@
     <Compile Include="WpfHelper\BindingProxy.cs" />
     <Compile Include="Converters\BooleanReverseConverter.cs" />
     <Compile Include="Converters\NullToFalseConverter.cs" />
-    <Compile Include="Converters\ValidateNetworkInterfaceConfigConverter.cs" />
+    <Compile Include="Converters\ValidateNetworkInterfaceProfileConverter.cs" />
     <Compile Include="Converters\PhysicalAddressToStringConverter.cs" />
     <Compile Include="Converters\IPAddressArrayToStringConverter.cs" />
     <Compile Include="Converters\BitsToHumanReadableSizeConverter.cs" />

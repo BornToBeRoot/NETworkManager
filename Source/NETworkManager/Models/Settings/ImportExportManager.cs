@@ -79,7 +79,7 @@ namespace NETworkManager.Models.Settings
         {
             None,
             ApplicationSettings,
-            NetworkInterfaceConfigTemplates,
+            NetworkInterfaceProfiles,
             WakeOnLANTemplates
         }
 
@@ -88,8 +88,8 @@ namespace NETworkManager.Models.Settings
             if (fileName == SettingsManager.SettingsFileName)
                 return ImportExportOptions.ApplicationSettings;
 
-            if (fileName == TemplateManager.NetworkInterfaceConfigTemplatesFileName)
-                return ImportExportOptions.NetworkInterfaceConfigTemplates;
+            if (fileName == NetworkInterfaceProfileManager.ProfilesFileName)
+                return ImportExportOptions.NetworkInterfaceProfiles;
 
             if (fileName == TemplateManager.WakeOnLANTemplatesFileName)
                 return ImportExportOptions.WakeOnLANTemplates;
@@ -103,8 +103,8 @@ namespace NETworkManager.Models.Settings
             {
                 case ImportExportOptions.ApplicationSettings:
                     return SettingsManager.SettingsFileName;
-                case ImportExportOptions.NetworkInterfaceConfigTemplates:
-                    return TemplateManager.NetworkInterfaceConfigTemplatesFileName;
+                case ImportExportOptions.NetworkInterfaceProfiles:
+                    return NetworkInterfaceProfileManager.ProfilesFileName;
                 case ImportExportOptions.WakeOnLANTemplates:
                     return TemplateManager.WakeOnLANTemplatesFileName;
             }
@@ -118,8 +118,8 @@ namespace NETworkManager.Models.Settings
             {
                 case ImportExportOptions.ApplicationSettings:
                     return SettingsManager.SettingsFilePath;
-                case ImportExportOptions.NetworkInterfaceConfigTemplates:
-                    return TemplateManager.NetworkInterfaceConfigTemplatesFilePath;
+                case ImportExportOptions.NetworkInterfaceProfiles:
+                    return NetworkInterfaceProfileManager.ProfilesFilePath;
                 case ImportExportOptions.WakeOnLANTemplates:
                     return TemplateManager.WakeOnLANTemplatesFilePath;
             }

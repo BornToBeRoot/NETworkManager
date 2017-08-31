@@ -57,7 +57,7 @@
                 </GroupBox.Style>
                 <StackPanel>
                     <CheckBox Content="{DynamicResource String_ApplicationSettings}" IsEnabled="{Binding ImportApplicationSettingsExists}" IsChecked="{Binding ImportApplicationSettings}" Margin="0,0,0,10"/>
-                    <CheckBox Content="{DynamicResource String_NetworkInterfaceConfigTemplates}" IsEnabled="{Binding ImportNetworkInterfaceConfigTemplatesExists}" IsChecked="{Binding ImportNetworkInterfaceConfigTemplates}" Margin="0,0,0,10"/>
+                    <CheckBox Content="{DynamicResource String_NetworkInterfaceProfiles}" IsEnabled="{Binding ImportNetworkInterfaceProfilesExists}" IsChecked="{Binding ImportNetworkInterfaceProfiles}" Margin="0,0,0,10"/>
                     <CheckBox Content="{DynamicResource String_WakeOnLANTemplates}" IsEnabled="{Binding ImportWakeOnLANTemplatesExists}" IsChecked="{Binding ImportWakeOnLANTemplates}" />
                 </StackPanel>
             </GroupBox>
@@ -74,7 +74,7 @@
                                     <MultiBinding Converter="{StaticResource ValidateSettingsExportConverter}">
                                         <Binding Path="ImportEverything" />
                                         <Binding Path="ImportApplicationSettings" />
-                                        <Binding Path="ImportNetworkInterfaceConfigTemplates" />
+                                        <Binding Path="ImportNetworkInterfaceProfiles" />
                                         <Binding Path="ImportWakeOnLANTemplates" />
                                     </MultiBinding>
                                 </DataTrigger.Binding>
@@ -102,7 +102,7 @@
             </GroupBox.Style>
             <StackPanel>
                 <CheckBox Content="{DynamicResource String_ApplicationSettings}" IsEnabled="{Binding ApplicationSettingsExists}" IsChecked="{Binding ExportApplicationSettings}" Margin="0,0,0,10"/>
-                <CheckBox Content="{DynamicResource String_NetworkInterfaceConfigTemplates}" IsEnabled="{Binding NetworkInterfaceConfigTemplatesExists}" IsChecked="{Binding ExportNetworkInterfaceConfigTemplates}" Margin="0,0,0,10"/>
+                <CheckBox Content="{DynamicResource String_NetworkInterfaceProfiles}" IsEnabled="{Binding NetworkInterfaceProfilesExists}" IsChecked="{Binding ExportNetworkInterfaceProfiles}" Margin="0,0,0,10"/>
                 <CheckBox Content="{DynamicResource String_WakeOnLANTemplates}" IsEnabled="{Binding WakeOnLANTemplatesExists}" IsChecked="{Binding ExportWakeOnLANTemplates}" />
             </StackPanel>
         </GroupBox>
@@ -119,7 +119,7 @@
                                 <MultiBinding Converter="{StaticResource ValidateSettingsExportConverter}">
                                     <Binding Path="ExportEverything" />
                                     <Binding Path="ExportApplicationSettings" />
-                                    <Binding Path="ExportNetworkInterfaceConfigTemplates" />
+                                    <Binding Path="ExportNetworkInterfaceProfiles" />
                                     <Binding Path="ExportWakeOnLANTemplates" />
                                 </MultiBinding>
                             </DataTrigger.Binding>

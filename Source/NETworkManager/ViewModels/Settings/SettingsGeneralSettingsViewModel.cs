@@ -13,8 +13,6 @@ namespace NETworkManager.ViewModels.Settings
         #region Variables
         private IDialogCoordinator dialogCoordinator;
 
-        
-
         private bool _isLoading = true;
 
         public Action CloseAction { get; set; }
@@ -120,30 +118,30 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-        private bool _networkInterfaceConfigTemplatesExists;
-        public bool NetworkInterfaceConfigTemplatesExists
+        private bool _networkInterfaceProfilesExists;
+        public bool NetworkInterfaceProfilesExists
         {
-            get { return _networkInterfaceConfigTemplatesExists; }
+            get { return _networkInterfaceProfilesExists; }
             set
             {
-                if (value == _networkInterfaceConfigTemplatesExists)
+                if (value == _networkInterfaceProfilesExists)
                     return;
 
-                _networkInterfaceConfigTemplatesExists = value;
+                _networkInterfaceProfilesExists = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _resetNetworkInterfaceConfigTemplates;
-        public bool ResetNetworkInterfaceConfigTemplates
+        private bool _resetNetworkInterfaceProfiles;
+        public bool ResetNetworkInterfaceProfiles
         {
-            get { return _resetNetworkInterfaceConfigTemplates; }
+            get { return _resetNetworkInterfaceProfiles; }
             set
             {
-                if (value == _resetNetworkInterfaceConfigTemplates)
+                if (value == _resetNetworkInterfaceProfiles)
                     return;
 
-                _resetNetworkInterfaceConfigTemplates = value;
+                _resetNetworkInterfaceProfiles = value;
                 OnPropertyChanged();
             }
         }
@@ -193,7 +191,7 @@ namespace NETworkManager.ViewModels.Settings
             IsPortable = SettingsManager.IsPortable;
 
             ApplicationSettingsExists = File.Exists(SettingsManager.SettingsFilePath);
-            NetworkInterfaceConfigTemplatesExists = File.Exists(TemplateManager.NetworkInterfaceConfigTemplatesFilePath);
+            NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.ProfilesFilePath);
             WakeOnLANTemplatesExists = File.Exists(TemplateManager.WakeOnLANTemplatesFilePath);
         }
         #endregion
@@ -287,8 +285,8 @@ namespace NETworkManager.ViewModels.Settings
                 forceRestart = true;
             }
 
-            if (NetworkInterfaceConfigTemplatesExists && (ResetEverything || ResetNetworkInterfaceConfigTemplates))
-                TemplateManager.ResetNetworkInterfaceConfigTemplates();
+            if (NetworkInterfaceProfilesExists && (ResetEverything || ResetNetworkInterfaceProfiles))
+                NetworkInterfaceProfileManager.Reset();
 
             if (WakeOnLANTemplatesExists && (ResetEverything || ResetWakeOnLANTemplates))
                 TemplateManager.ResetWakeOnLANTemplates();

@@ -55,7 +55,10 @@
     <system:String x:Key="String_Header_Transparency">Transparenz</system:String>
     <system:String x:Key="String_Header_WakeOnLAN">Wake on LAN</system:String>
     <system:String x:Key="String_Header_CommandLineArguments">Befehlszeilenargumente</system:String>
-    
+    <system:String x:Key="String_Header_SelectAProfile">Profil auswählen...</system:String>
+    <system:String x:Key="String_Header_Profiles">Profile</system:String>
+    <system:String x:Key="String_Header_AddProfile">Profil hinzufügen</system:String>
+
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Settings">Einstellungen</system:String>
@@ -154,7 +157,7 @@
     <system:String x:Key="String_MaximumNumberOfHopsReached">Maximale Anzahl ({0}) an Hops/Router erreicht! </system:String>
     <system:String x:Key="String_CanceledByUser">Der Vorgang wurde vom Benutzer abgebrochen!</system:String>
     <system:String x:Key="String_ApplicationSettings">Anwendungseinstellungen</system:String>
-    <system:String x:Key="String_NetworkInterfaceConfigTemplates">Netzwerkinterface Konfigurations Templates</system:String>
+    <system:String x:Key="String_NetworkInterfaceProfiles">Netzwerkinterface Profile</system:String>
     <system:String x:Key="String_WakeOnLANTemplates">Wake on LAN Templates</system:String>
     <system:String x:Key="String_SelectedSettingsAreReset">Die ausgewählten Einstellungen werden zurückgesetzt. (Der Speicherpfad ist hiervon nicht betroffen.)</system:String>
     <system:String x:Key="String_ApplicationIsRestartedAfterwards">* Die Anwendung wird danach neu gestartet</system:String>
@@ -204,7 +207,10 @@
     <system:String x:Key="String_TheFollowingParametersAreAvailable">Folgende Parameter stehen zur Verfügung:</system:String>
     <system:String x:Key="String_Open">Offen</system:String>
     <system:String x:Key="String_CustomDNSServerIsEmptyCheckYourSettingsUseWindowsOwnDNSServer">Benutzerdefinierte DNS-Server ist leer. Überprüfe deine Einstellungen! (Verwende Windows eigenen DNS-Server...)</system:String>
-
+    <system:String x:Key="String_EnterNameForProfile">Geben Sie einen Namen ein, unter dem das Profil gespeichert werden soll.</system:String>
+    <system:String x:Key="String_DeleteProfilesMessage">Die ausgewählten Profile werden unwiderruflich gelöscht.</system:String>
+    <system:String x:Key="String_Backup">Sicherung</system:String>
+    
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
     <system:String x:Key="String_Button_Default">Standard</system:String>
@@ -228,7 +234,8 @@
     <system:String x:Key="String_Button_Reset">Zurücksetzen</system:String>
     <system:String x:Key="String_Button_Continue">Weiter</system:String>
     <system:String x:Key="String_Button_Validate">Validieren</system:String>
-    
+    <system:String x:Key="String_Button_AddProfile">Profil hinzufügen...</system:String>
+
     <!-- Help -->
     <system:String x:Key="String_Help_ParameterHelp">Zeigt diesen Dialog an.</system:String>
     <system:String x:Key="String_Help_ParameterResetSettings">Setzt alle Einstellungen zurück.</system:String>
