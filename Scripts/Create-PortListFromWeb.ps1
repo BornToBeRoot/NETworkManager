@@ -1,32 +1,87 @@
-#[xml]$LatestPorts = Get-Content -Path "$PSScriptRoot\Service Name and Transport Protocol Port Number Registry.xml"
-[xml]$LatestPorts = (Invoke-WebRequest -Uri "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml").Content
+# Filepath in the resources
+[string]$OutFilePath = Join-Path -Path (Split-Path $PSScriptRoot -Parent) -ChildPath "Source\NETworkManager\Resources\Ports.xml"
 
-$Output = ""
+# Download from IANA...
+[xml]$ServiceNamePortNumbers = (Invoke-WebRequest -Uri "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml").Content
 
-foreach($record in $LatestPorts.ChildNodes.record)
+# Create xml document
+[xml]$Document = New-Object System.Xml.XmlDocument
+$Declaration = $Document.CreateXmlDeclaration("1.0", "UTF-8", $null)
+
+[void]$Document.AppendChild($Declaration)
+
+# Description
+$Description = @"
+Service Name and Transport Protocol Port Number Registry
+Generated $(Get-Date)
+"@
+
+[void]$Document.AppendChild($Document.CreateComment($Description))
+
+# Root node
+$RootNode = $Document.CreateNode("element", "Ports", $null)
+
+# Create node for each port
+foreach($Record in $ServiceNamePortNumbers.ChildNodes.record)
 {
-    if([string]::IsNullOrEmpty($record.number) -or ([string]::IsNullOrEmpty($record.protocol)))
+    if([string]::IsNullOrEmpty($Record.number) -or ([string]::IsNullOrEmpty($Record.protocol)))
     {        
         continue   
-    }
-    
-    $Description = ($record.description -replace '`n','') -replace '\s+',' '
+    }       
 
-    $Number = $record.number
+    $Description = ($Record.description -replace '`n','') -replace '\s+',' '
+    $Number = $Record.number
 
     if($Number -like "*-*")
     {
         $NumberArr = $Number.Split('-')
 
         foreach($Number1 in $NumberArr[0]..$NumberArr[1])
-        {
-            $Output += "$Number1|$($record.protocol)|$($record.name)|$Description`n"   
+        {      
+            $PortNode = $Document.CreateNode("element", "Port", $null)
+            
+            $NumberElement = $Document.CreateElement("Number")
+            $NumberElement.InnerText = $Number1
+            [void]$PortNode.AppendChild($NumberElement)
+
+            $ProtocolElement = $Document.CreateElement("Protocol")
+            $ProtocolElement.InnerText = $record.protocol
+            [void]$PortNode.AppendChild($ProtocolElement)
+
+            $NumberName = $Document.CreateElement("Name")
+            $NumberName.InnerText = $Record.name
+            [void]$PortNode.AppendChild($NumberName)
+
+            $NumberDescription = $Document.CreateElement("Description")
+            $NumberDescription.InnerText = $Description
+            [void]$PortNode.AppendChild($NumberDescription)
+
+            [void]$RootNode.AppendChild($PortNode)
         }
     }
     else 
     {
-        $Output += "$Number|$($record.protocol)|$($record.name)|$Description`n"   
-    }    
-}
+        $PortNode = $Document.CreateNode("element", "Port", $null)
+        
+        $NumberElement = $Document.CreateElement("Number")
+        $NumberElement.InnerText = $Number
+        [void]$PortNode.AppendChild($NumberElement)
 
-Out-File -InputObject $Output -FilePath (Join-Path -Path (Split-Path $PSScriptRoot -Parent) -ChildPath "Source\NETworkManager\Resources\ports.txt")
+        $ProtocolElement = $Document.CreateElement("Protocol")
+        $ProtocolElement.InnerText = $record.protocol
+        [void]$PortNode.AppendChild($ProtocolElement)
+
+        $NumberName = $Document.CreateElement("Name")
+        $NumberName.InnerText = $Record.name
+        [void]$PortNode.AppendChild($NumberName)
+
+        $NumberDescription = $Document.CreateElement("Description")
+        $NumberDescription.InnerText = $Description
+        [void]$PortNode.AppendChild($NumberDescription)
+
+        [void]$RootNode.AppendChild($PortNode)
+    }    
+}          
+
+[void]$Document.AppendChild($RootNode)
+$Document.Save($OutFilePath)

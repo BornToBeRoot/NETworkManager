@@ -653,11 +653,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ports.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="3rdParty\Heijden.DNS\Records\totla.txt" />
     <Resource Include="3rdParty\Heijden.DNS\Root\named_root.txt" />
   </ItemGroup>
@@ -666,6 +661,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Ports.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

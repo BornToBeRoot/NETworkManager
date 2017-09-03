@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 using System.IO;
 using NETworkManager.Models.Settings;
 using System;
-using System.Globalization;
+using System.Xml;
 
 namespace NETworkManager.Models.Network
 {
     public static class PortLookup
     {
         #region Variables
-        private static string PortsFilePath = Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "ports.txt");
+        private static string PortsFilePath = Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "Ports.xml");
 
         private static List<PortLookupInfo> PortList;
         private static Lookup<int, PortLookupInfo> Ports;
@@ -22,18 +22,15 @@ namespace NETworkManager.Models.Network
         {
             PortList = new List<PortLookupInfo>();
 
-            // Load list from resource folder (.txt-file)
-            foreach (string line in File.ReadAllLines(PortsFilePath))
+            XmlDocument document = new XmlDocument();
+            document.Load(PortsFilePath);
+
+            foreach (XmlNode node in document.SelectNodes("/Ports/Port"))
             {
-                if (string.IsNullOrEmpty(line))
-                    continue;
+                int port = int.Parse(node.SelectSingleNode("Number").InnerText);
+                Protocol protocol = (Protocol)Enum.Parse(typeof(Protocol), node.SelectSingleNode("Protocol").InnerText);
 
-                string[] portData = line.Split('|');
-
-                int port = int.Parse(portData[0]);
-                Protocol protocol = (Protocol)Enum.Parse(typeof(Protocol), portData[1]);
-
-                PortList.Add(new PortLookupInfo(port, protocol, portData[2], portData[3]));
+                PortList.Add(new PortLookupInfo(port, protocol, node.SelectSingleNode("Name").InnerText, node.SelectSingleNode("Description").InnerText));
             }
 
             Ports = (Lookup<int, PortLookupInfo>)PortList.ToLookup(x => x.Number);
