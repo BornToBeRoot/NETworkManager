@@ -648,9 +648,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo.ttf" />
-    <None Include="Resources\oui.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="3rdParty\Heijden.DNS\Records\totla.txt" />
@@ -664,6 +661,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Ports.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OUI.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -6,13 +6,14 @@ using NETworkManager.Models.Settings;
 using System.Text.RegularExpressions;
 using System;
 using System.Windows;
+using System.Xml;
 
 namespace NETworkManager.Models.Network
 {
     public static class OUILookup
     {
         #region Variables
-        private static string OUIFilePath = Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "oui.txt");
+        private static string OUIFilePath = Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "OUI.xml");
 
         private static List<OUIInfo> OUIList;
         private static Lookup<string, OUIInfo> OUIs;
@@ -23,15 +24,12 @@ namespace NETworkManager.Models.Network
         {
             OUIList = new List<OUIInfo>();
 
-            // Load list from resource folder (.txt-file)
-            foreach (string line in File.ReadAllLines(OUIFilePath))
+            XmlDocument document = new XmlDocument();
+            document.Load(OUIFilePath);
+
+            foreach(XmlNode node in document.SelectNodes("/OUIs/OUI"))
             {
-                if (string.IsNullOrEmpty(line))
-                    continue;
-
-                string[] ouiData = line.Split('|');
-
-                OUIList.Add(new OUIInfo(ouiData[0], ouiData[1]));
+                OUIList.Add(new OUIInfo(node.SelectSingleNode("MACAddress").InnerText, node.SelectSingleNode("Vendor").InnerText));
             }
 
             OUIs = (Lookup<string, OUIInfo>)OUIList.ToLookup(x => x.MACAddress);
