@@ -51,6 +51,20 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private bool _window_MultipleInstances;
+        public bool Window_MultipleInstances
+        {
+            get { return _window_MultipleInstances; }
+            set
+            {
+                if (value == _window_MultipleInstances)
+                    return;
+
+                _window_MultipleInstances = value;
+                SettingsChanged = true;
+            }
+        }
+
         private bool _window_MinimizeToTrayInsteadOfTaskbar;
         public bool Window_MinimizeToTrayInsteadOfTaskbar
         {

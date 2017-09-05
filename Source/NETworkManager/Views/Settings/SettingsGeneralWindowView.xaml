@@ -9,7 +9,8 @@
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Window}" />
         <Controls:ToggleSwitch Header="{DynamicResource String_MinimizeInsteadOfTerminating}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding MinimizeInsteadOfTerminating}" Margin="0,0,0,10" />
         <Controls:ToggleSwitch Header="{DynamicResource String_MinimizeToTrayInsteadOfTaskbar}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding MinimizeToTrayInsteadOfTaskbar}" Margin="0,0,0,10" />
-        <Controls:ToggleSwitch Header="{DynamicResource String_ConfirmClose}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ConfirmClose}" Margin="0,0,0,20"/>
+        <Controls:ToggleSwitch Header="{DynamicResource String_ConfirmClose}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ConfirmClose}" Margin="0,0,0,10"/>
+        <Controls:ToggleSwitch Header="Allow multiple instances" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding MultipleInstances}" Margin="0,0,0,20"/>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Tray}" />
         <Controls:ToggleSwitch Header="{DynamicResource String_AlwaysShowIconInTray}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding AlwaysShowIconInTray}" />
     </StackPanel>

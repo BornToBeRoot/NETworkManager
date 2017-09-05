@@ -210,6 +210,7 @@
     <system:String x:Key="String_EnterNameForProfile">Geben Sie einen Namen ein, unter dem das Profil gespeichert werden soll.</system:String>
     <system:String x:Key="String_DeleteProfilesMessage">Die ausgewählten Profile werden unwiderruflich gelöscht.</system:String>
     <system:String x:Key="String_Backup">Sicherung</system:String>
+    <system:String x:Key="String_MultipleInstances">Mehrere Instanzen</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>

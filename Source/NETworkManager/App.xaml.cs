@@ -1,7 +1,9 @@
-﻿using NETworkManager.Models.Settings;
+﻿using NETworkManager.Helpers;
+using NETworkManager.Models.Settings;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 
 namespace NETworkManager
@@ -11,6 +13,12 @@ namespace NETworkManager
     /// </summary>
     public partial class App : Application
     {
+        // Single instance unique identifier
+        private const string Guid = "6A3F34B2-161F-4F70-A8BC-A19C40F79CFB";
+        static Mutex _mutex = new Mutex(true, "{" + Guid + "}");
+
+        private bool _singleInstanceClose = false;
+
         public App()
         {
             ShutdownMode = ShutdownMode.OnLastWindowClose;
@@ -49,8 +57,25 @@ namespace NETworkManager
                 StartupUri = new Uri("/Views/Help/HelpCommandLineWindow.xaml", UriKind.Relative);
                 return;
             }
-                        
-            StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
+
+            bool applicationIsRunning = !_mutex.WaitOne(TimeSpan.Zero, true);
+
+            // Single instance
+            if (SettingsManager.Current.Window_MultipleInstances || !applicationIsRunning)
+            {
+                StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
+
+                if (!applicationIsRunning)
+                    _mutex.ReleaseMutex();
+            }
+            else
+            {
+                // Bring the already running application into the foreground
+                SingleInstanceHelper.PostMessage((IntPtr)SingleInstanceHelper.HWND_BROADCAST, SingleInstanceHelper.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);
+
+                _singleInstanceClose = true;
+                Shutdown();
+            }
         }
 
         protected override void OnSessionEnding(SessionEndingCancelEventArgs e)
@@ -64,8 +89,8 @@ namespace NETworkManager
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            if (!ImportExportManager.ForceRestart && !CommandLineManager.Current.Help)
-            {                         
+            if (!_singleInstanceClose && !ImportExportManager.ForceRestart && !CommandLineManager.Current.Help)
+            {
                 // Save settings
                 if (SettingsManager.Current.SettingsChanged)
                     SettingsManager.Save();

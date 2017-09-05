@@ -20,6 +20,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Collections.Generic;
 using NETworkManager.Views;
+using NETworkManager.Helpers;
 
 namespace NETworkManager
 {
@@ -35,8 +36,6 @@ namespace NETworkManager
         #endregion
 
         #region Variables        
-
-
         NotifyIcon notifyIcon;
 
         private bool _isLoading = true;
@@ -423,26 +422,51 @@ namespace NETworkManager
         }
         #endregion
 
-        #region HotKeys (Initialized / Register / Unregister / HwndHook)
+        #region Handle WndProc messages (Single instance, handle HotKeys)
+        private HwndSource hwndSoure;
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            hwndSoure = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
+            hwndSoure.AddHook(HwndHook);
+
+            RegisterHotKeys();
+        }
+
+        private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            // Single instance
+            if (msg == SingleInstanceHelper.WM_SHOWME)
+            {
+                ShowWindowAction();
+                handled = true;
+            }
+
+            // Handle hotkeys
+            if (msg == WM_HOTKEY)
+            {
+                switch (wParam.ToInt32())
+                {
+                    case 1:
+                        ShowWindowAction();
+                        handled = true;
+                        break;
+                }
+            }
+
+            return IntPtr.Zero;
+        }
+        #endregion
+
+        #region HotKeys (Register / Unregister)
         [DllImport("user32.dll")]
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
         [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
         const int WM_HOTKEY = 0x0312;
-
-        private HwndSource hwndSoure;
-
-        protected override void OnSourceInitialized(System.EventArgs e)
-        {
-            base.OnSourceInitialized(e);
-
-            // Hotkeys
-            hwndSoure = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
-            hwndSoure.AddHook(HwndHook);
-
-            RegisterHotKeys();
-        }
 
         /* ID | Command
         *  ---|-------------------
@@ -468,22 +492,6 @@ namespace NETworkManager
 
             // Clear list
             RegisteredHotKeys.Clear();
-        }
-
-        private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            if (msg == WM_HOTKEY)
-            {
-                switch (wParam.ToInt32())
-                {
-                    case 1:
-                        ShowWindowAction();
-                        handled = true;
-                        break;
-                }
-            }
-
-            return IntPtr.Zero;
         }
         #endregion
 
@@ -545,15 +553,11 @@ namespace NETworkManager
             Hide();
         }
 
-
         private void ShowWindowFromTray()
         {
             _isInTray = false;
 
             Show();
-
-            if (WindowState == WindowState.Minimized)
-                WindowState = WindowState.Normal;
 
             notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
         }
@@ -675,8 +679,8 @@ namespace NETworkManager
         {
             if (_isInTray)
                 ShowWindowFromTray();
-            else
-                BringWindowToFront();
+
+            BringWindowToFront();
         }
 
         public ICommand CloseApplicationCommand

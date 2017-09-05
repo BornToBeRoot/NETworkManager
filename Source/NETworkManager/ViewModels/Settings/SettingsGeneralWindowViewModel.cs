@@ -58,6 +58,23 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
+        private bool _multipleInstances;
+        public bool MultipleInstances
+        {
+            get { return _multipleInstances; }
+            set
+            {
+                if (value == _multipleInstances)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.Window_MultipleInstances = value;
+
+                OnPropertyChanged();
+                _multipleInstances = value;
+            }
+        }
+
         private bool _alwaysShowIconInTray;
         public bool AlwaysShowIconInTray
         {
@@ -89,6 +106,7 @@ namespace NETworkManager.ViewModels.Settings
             AlwaysShowIconInTray = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
             MinimizeInsteadOfTerminating = SettingsManager.Current.Window_MinimizeInsteadOfTerminating;
             ConfirmClose = SettingsManager.Current.Window_ConfirmClose;
+            MultipleInstances = SettingsManager.Current.Window_MultipleInstances;
             MinimizeToTrayInsteadOfTaskbar = SettingsManager.Current.Window_MinimizeToTrayInsteadOfTaskbar;
         }
         #endregion

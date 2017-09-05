@@ -210,7 +210,8 @@
     <system:String x:Key="String_EnterNameForProfile">Enter a name under which you want to save the profile.</system:String>
     <system:String x:Key="String_DeleteProfilesMessage">The selected profiles will be deleted permanently.</system:String>
     <system:String x:Key="String_Backup">Backup</system:String>
-
+    <system:String x:Key="String_MultipleInstances">Multiple instances</system:String>
+    
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
     <system:String x:Key="String_Button_Default">Default</system:String>
