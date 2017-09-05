@@ -89,9 +89,9 @@ namespace NETworkManager
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
+            // Save settings, when the application is normally closed
             if (!_singleInstanceClose && !ImportExportManager.ForceRestart && !CommandLineManager.Current.Help)
-            {
-                // Save settings
+            {                
                 if (SettingsManager.Current.SettingsChanged)
                     SettingsManager.Save();
             }

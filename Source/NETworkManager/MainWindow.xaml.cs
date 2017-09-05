@@ -614,8 +614,10 @@ namespace NETworkManager
                 MetroWindowMain.ShowOverlay();
             }
 
+            // Open settings window
             settingsWindow.ShowDialog();
 
+            // Enable/disable tray icon
             if (!_isInTray)
             {
                 if (SettingsManager.Current.TrayIcon_AlwaysShowIcon && notifyIcon == null)
@@ -634,7 +636,7 @@ namespace NETworkManager
                 return;
             }
 
-            // Ask the user to restart (if he has changed the language or enables the developer mode)
+            // Ask the user to restart (if he has changed the language)
             if ((_cultureCode != SettingsManager.Current.Localization_CultureCode) || (AllowsTransparency != SettingsManager.Current.Appearance_EnableTransparency))
             {
                 ShowWindowAction();
@@ -661,6 +663,7 @@ namespace NETworkManager
                     Opacity = SettingsManager.Current.Appearance_Opacity;
             }
 
+            // Change HotKeys
             if (SettingsManager.HotKeysChanged)
             {
                 UnregisterHotKeys();
@@ -668,6 +671,10 @@ namespace NETworkManager
 
                 SettingsManager.HotKeysChanged = false;
             }
+
+            // Save the settings
+            if (SettingsManager.Current.SettingsChanged)
+                SettingsManager.Save();
         }
 
         public ICommand ShowWindowCommand
