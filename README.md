@@ -12,8 +12,6 @@ The software is portable by default. Simply unpack the ZIP archive and put the f
 
 _On Windows 10 systems, SmartScreen may prevent the execution of the_ `NETworkManger.exe`. _This happens because the binary is not digitaly signed. To open it anyway, click in the dialog on "More info" then click the button "Run anyway"._
 
-The source code can be found [here](https://github.com/BornToBeRoot/NETworkManager).
-
 # Available features
 
 - Network Interface (Information, Configure)
