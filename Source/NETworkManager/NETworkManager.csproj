@@ -259,10 +259,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Notes\RestartAsAdministratorView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\Settings\SettingsApplicationDNSLookupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -453,7 +449,6 @@
     <Compile Include="ViewModels\Applications\SubnetCalculatorViewModel.cs" />
     <Compile Include="ViewModels\Applications\TracerouteViewModel.cs" />
     <Compile Include="ViewModels\Applications\WakeOnLANViewModel.cs" />
-    <Compile Include="ViewModels\Notes\RestartAsAdministratorViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\Settings\AboutViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsGeneralWindowViewModel.cs" />
@@ -473,9 +468,6 @@
     </Compile>
     <Compile Include="Views\Applications\DNSLookupView.xaml.cs">
       <DependentUpon>DNSLookupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Notes\RestartAsAdministratorView.xaml.cs">
-      <DependentUpon>RestartAsAdministratorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BooleanReverseToVisibilityConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />

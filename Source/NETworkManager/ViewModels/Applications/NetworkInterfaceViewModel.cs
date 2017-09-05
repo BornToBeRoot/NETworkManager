@@ -515,17 +515,6 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
-
-        private IList _selectedProfiles = new ArrayList();
-        public IList SelectedProfiles
-        {
-            get { return _selectedProfiles; }
-            set
-            {
-                _selectedProfiles = value;
-                OnPropertyChanged();
-            }
-        }
         #endregion
 
         #endregion
@@ -691,12 +680,12 @@ namespace NETworkManager.ViewModels.Applications
             SelectedProfile = null;
         }
 
-        public ICommand DeleteSelectedProfilesCommand
+        public ICommand DeleteProfileCommand
         {
-            get { return new RelayCommand(p => DeleteSelectedProfilesAction()); }
+            get { return new RelayCommand(p => DeleteProfileAction()); }
         }
 
-        private async void DeleteSelectedProfilesAction()
+        private async void DeleteProfileAction()
         {
             MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
@@ -708,17 +697,7 @@ namespace NETworkManager.ViewModels.Applications
             if (MessageDialogResult.Negative == await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_DeleteProfilesMessage"] as string, MessageDialogStyle.AffirmativeAndNegative, settings))
                 return;
 
-            List<NetworkInterfaceProfileInfo> list = new List<NetworkInterfaceProfileInfo>();
-
-            foreach (NetworkInterfaceProfileInfo template in SelectedProfiles)
-            {
-                list.Add(template);
-            }
-
-            foreach (NetworkInterfaceProfileInfo profile in list)
-            {
-                NetworkInterfaceProfileManager.RemoveProfile(profile);
-            }
+            NetworkInterfaceProfileManager.RemoveProfile(SelectedProfile);
         }
         #endregion
 

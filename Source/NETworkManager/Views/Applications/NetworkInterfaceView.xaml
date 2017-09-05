@@ -9,7 +9,6 @@
         xmlns:Validator="clr-namespace:NETworkManager.Validators"
         xmlns:Control="clr-namespace:NETworkManager.Controls"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:Notes="clr-namespace:NETworkManager.Views.Notes"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
@@ -194,20 +193,20 @@
         </TabItem>
         <TabItem Header="{DynamicResource String_Header_Configure}">
             <Grid Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Margin="0,0,0,20">
-                    <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Interface}" />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <ComboBox Grid.Column="0" FontSize="14" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Margin="0,0,10,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Interface}" />
+                        <ComboBox FontSize="14" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
@@ -236,164 +235,30 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=cbNetworkInterfaceProfiles, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
-                            <Rectangle Width="24" Height="24">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Refresh}" />
-                                </Rectangle.OpacityMask>
-                                <Rectangle.Style>
-                                    <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ReloadAnimation}">
-                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Rectangle.Style>
-                            </Rectangle>
-                        </Button>
-                    </Grid>
-                </StackPanel>
-                <ScrollViewer Grid.Row="1" Style="{StaticResource DefaulScrollViewer}" Margin="0,0,0,10">
-                    <StackPanel>
-                        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_SelectAProfile}" />
-                        <ComboBox FontSize="14" IsReadOnly="True" ItemsSource="{Binding NetworkInterfaceProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Margin="0,0,0,20">
-                            <ComboBox.InputBindings>
-                                <KeyBinding Command="{Binding UnselectProfileCommand}" Key="Delete" />
-                            </ComboBox.InputBindings>
-                        </ComboBox>
-                        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Configure}" />
-                        <RadioButton x:Name="radioButtonConfigEnableDynamicIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding ConfigEnableDynamicIPAddress}" Content="{DynamicResource String_ObtainAnIPAddressAutomatically}" FontSize="14" Margin="0,0,0,10"/>
-                        <RadioButton x:Name="radioButtonConfigEnableStaticIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding ConfigEnableStaticIPAddress}" Content="{DynamicResource String_UseTheFollowingIPAddress}" FontSize="14" Margin="0,0,0,10"/>
-                        <GroupBox Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigEnableStaticIPAddress}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="20,0,0,10">
-                            <Grid>
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
-                                        <Setter Property="Margin" Value="0,0,10,0" />
-                                    </Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ConfigEnableStaticIPAddress}" Value="False">
-                                                <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Grid.Resources>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="1*" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_IPv4Address}" />
-                                <TextBox x:Name="txtConfigIPAddress" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
-                                    <TextBox.Text>
-                                        <Binding Path="ConfigIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
-                                                <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_SubnetmaskOrCIDR}" />
-                                <ComboBox x:Name="cbConfigSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnetmaskOrCIDR}" ItemsSource="{x:Static Network:Subnetmask.List}">
-                                    <ComboBox.Text>
-                                        <Binding Path="ConfigSubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
-                                                <Validator:SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True"/>
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </ComboBox.Text>
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="150" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="25" />
-                                                </Grid.RowDefinitions>
-                                                <TextBlock Grid.Column="0" VerticalAlignment="Center" Style="{StaticResource DefaultTextBlock}" FontFamily="Consolas" Text="{Binding Path=Subnetmask}" />
-                                                <TextBlock Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource DefaultTextBlock}" Text="{Binding Path=CIDR,StringFormat=/{0}}" Foreground="{DynamicResource GrayBrush2}" />
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                                <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_DefaultGateway}"  />
-                                <TextBox x:Name="txtConfigGateway" Grid.Column="1" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
-                                    <TextBox.Text>
-                                        <Binding Path="ConfigGateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
-                                                <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                            </Grid>
-                        </GroupBox>
-                        <RadioButton x:Name="radioButtonConfigEnableDynamicDns" GroupName="DNSServerConfig" Content="{DynamicResource String_ObtainDNSServerAddressAutomatically}" IsChecked="{Binding ConfigEnableDynamicDns}" FontSize="14"  Margin="0,0,0,10" IsEnabled="{Binding ConfigEnableDynamicIPAddress}" />
-                        <RadioButton x:Name="radioButtonConfigEnableStaticDns" GroupName="DNSServerConfig" Content="{DynamicResource String_UseTheFollowingDNSServerAddresses}" IsChecked="{Binding ConfigEnableStaticDns}" FontSize="14" Margin="0,0,0,10"/>
-                        <GroupBox Grid.Row="10" Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigEnableStaticDns}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="20,0,0,0">
-                            <Grid>
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
-                                        <Setter Property="Margin" Value="0,0,10,0" />
-                                    </Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" >
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ConfigEnableStaticDns}" Value="False">
-                                                <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Grid.Resources>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="1*" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_PrimaryDNSServer}"  />
-                                <TextBox x:Name="txtConfigPrimaryDnsServer" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
-                                    <TextBox.Text>
-                                        <Binding Path="ConfigPrimaryDnsServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
-                                                <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_SecondaryDNSServer}"  />
-                                <TextBox x:Name="txtConfigSecondaryDnsServer" Grid.Column="1" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNS}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
-                                    <TextBox.Text>
-                                        <Binding Path="ConfigSecondaryDnsServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
-                                                <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                            </Grid>
-                        </GroupBox>
                     </StackPanel>
-                </ScrollViewer>
-                <StackPanel Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button x:Name="btnAddProfile" Command="{Binding AddProfileCommand}">
+                    <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Profiles}" />
+                    <ListBox Grid.Row="2" x:Name="listBoxProfiles" FontSize="14" ItemsSource="{Binding NetworkInterfaceProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}">
+                        <ListBox.Resources>
+                            <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                                <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteProfileCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterialLight Kind=Delete}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
+                                <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
+                            </Style>
+                        </ListBox.Resources>
+                        <ListBox.InputBindings>
+                            <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
+                        </ListBox.InputBindings>
+                    </ListBox>
+                    <Button Grid.Row="3" Command="{Binding DeleteProfileCommand}" HorizontalAlignment="Right" >
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -402,141 +267,230 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Plus}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterialLight Kind=Delete}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Delete}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
                             </Grid>
                         </Button.Content>
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                                 <Style.Triggers>
-                                    <DataTrigger Value="False">
-                                        <DataTrigger.Binding>
-                                            <MultiBinding Converter="{StaticResource ValidateNetworkInterfaceProfileConverter}">
-                                                <Binding Path="ConfigEnableDynamicIPAddress" />
-                                                <Binding Path="ConfigEnableStaticIPAddress" />
-                                                <Binding ElementName="txtConfigIPAddress" Path="(Validation.HasError)" />
-                                                <Binding ElementName="cbConfigSubnetmaskOrCidr" Path="(Validation.HasError)" />
-                                                <Binding ElementName="txtConfigGateway" Path="(Validation.HasError)" />
-                                                <Binding Path="ConfigEnableDynamicDns" />
-                                                <Binding Path="ConfigEnableStaticDns" />
-                                                <Binding ElementName="txtConfigPrimaryDnsServer" Path="(Validation.HasError)" />
-                                                <Binding ElementName="txtConfigSecondaryDnsServer" Path="(Validation.HasError)" />
-                                            </MultiBinding>
-                                        </DataTrigger.Binding>
-                                        <Setter  Property="IsEnabled" Value="False" />
+                                    <DataTrigger Binding="{Binding ElementName=listBoxProfiles, Path=SelectedItem}" Value="{x:Null}" >
+                                        <Setter Property="IsEnabled"  Value="False" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Button Command="{Binding ApplyNetworkInterfaceConfigCommand}" Margin="10,0,0,0">
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentSave}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Apply}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
-                            </Grid>
-                        </Button.Content>
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                                <Setter Property="IsEnabled" Value="False" />
-                                <Style.Triggers>
-                                    <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding IsAdmin}" Value="True"/>
-                                            <Condition  Binding="{Binding ElementName=btnAddProfile,Path=IsEnabled}" Value="True"/>
-                                        </MultiDataTrigger.Conditions>
-                                        <Setter Property="IsEnabled" Value="True" />
-                                    </MultiDataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                </StackPanel>
-                <Grid Grid.Row="3" Visibility="{Binding IsAdmin, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Margin="0,20,0,0">
-                    <Notes:RestartAsAdministratorView />
                 </Grid>
-            </Grid>
-        </TabItem>
-        <TabItem Header="{DynamicResource String_Header_Profiles}">
-            <Grid Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Profiles}" />
-                <Control:MultiSelectDataGrid Style="{StaticResource MetroDataGrid}" Grid.Row="1" FontSize="14" ItemsSource="{Binding NetworkInterfaceProfiles}" CanUserResizeColumns="False" AutoGenerateColumns="False" GridLinesVisibility="Vertical" IsReadOnly="True" SelectionMode="Extended" SelectionUnit="FullRow" SelectedItemsList="{Binding SelectedProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{DynamicResource GrayBrush3}" CanUserReorderColumns="False" Margin="0,0,0,10">
-                    <Control:MultiSelectDataGrid.Columns>
-                        <DataGridTextColumn Header="{DynamicResource String_Name}" Binding="{Binding Name}" MinWidth="200" />
-                        <DataGridCheckBoxColumn Header="{DynamicResource String_DynamicIPv4Address}" Binding="{Binding EnableStaticIPAddress, Converter={StaticResource BooleanReverseConverter}}" MinWidth="150" />
-                        <DataGridCheckBoxColumn Header="{DynamicResource String_StaticIPv4Address}" Binding="{Binding EnableStaticIPAddress}" MinWidth="150" />
-                        <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress}" MinWidth="150" />
-                        <DataGridTextColumn Header="{DynamicResource String_Subnetmask}" Binding="{Binding Subnetmask}" MinWidth="150" />
-                        <DataGridTextColumn Header="{DynamicResource String_DefaultGateway}" Binding="{Binding Gateway}" MinWidth="150" />
-                        <DataGridCheckBoxColumn Header="{DynamicResource String_DynamicIPv4DNSServer}" Binding="{Binding EnableStaticDns, Converter={StaticResource BooleanReverseConverter}}" MinWidth="150" />
-                        <DataGridCheckBoxColumn Header="{DynamicResource String_StaticIPv4DNSServer}" Binding="{Binding EnableStaticDns}" MinWidth="150" />
-                        <DataGridTextColumn Header="{DynamicResource String_PrimaryDNSServer}" Binding="{Binding PrimaryDnsServer}" MinWidth="150" />
-                        <DataGridTextColumn Header="{DynamicResource String_SecondaryDNSServer}" Binding="{Binding SecondaryDnsServer}" MinWidth="150" />
-                    </Control:MultiSelectDataGrid.Columns>
-                    <Control:MultiSelectDataGrid.Resources>
-                        <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource MultiSelectDataGridScrollBar}" />
-                        <ContextMenu x:Key="ContextMenuDataGridRow" Opened="ContextMenu_Opened" MinWidth="150">
-                            <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteSelectedProfilesCommand}">
-                                <MenuItem.Icon>
-                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                <Grid Grid.Column="1" Margin="10,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ScrollViewer Grid.Row="0" Style="{StaticResource DefaulScrollViewer}" Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Configure}" />
+                            <RadioButton x:Name="radioButtonConfigEnableDynamicIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding ConfigEnableDynamicIPAddress}" Content="{DynamicResource String_ObtainAnIPAddressAutomatically}" FontSize="14" Margin="0,0,0,10"/>
+                            <RadioButton x:Name="radioButtonConfigEnableStaticIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding ConfigEnableStaticIPAddress}" Content="{DynamicResource String_UseTheFollowingIPAddress}" FontSize="14" Margin="0,0,0,10"/>
+                            <GroupBox Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigEnableStaticIPAddress}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="20,0,0,10">
+                                <Grid>
+                                    <Grid.Resources>
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
+                                            <Setter Property="Margin" Value="0,0,10,0" />
+                                        </Style>
+                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ConfigEnableStaticIPAddress}" Value="False">
+                                                    <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Resources>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_IPv4Address}" />
+                                    <TextBox x:Name="txtConfigIPAddress" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                        <TextBox.Text>
+                                            <Binding Path="ConfigIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                                                    <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_SubnetmaskOrCIDR}" />
+                                    <ComboBox x:Name="cbConfigSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnetmaskOrCIDR}" ItemsSource="{x:Static Network:Subnetmask.List}">
+                                        <ComboBox.Text>
+                                            <Binding Path="ConfigSubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                                                    <Validator:SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True"/>
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </ComboBox.Text>
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="150" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="25" />
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Column="0" VerticalAlignment="Center" Style="{StaticResource DefaultTextBlock}" FontFamily="Consolas" Text="{Binding Path=Subnetmask}" />
+                                                    <TextBlock Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource DefaultTextBlock}" Text="{Binding Path=CIDR,StringFormat=/{0}}" Foreground="{DynamicResource GrayBrush2}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                    <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_DefaultGateway}"  />
+                                    <TextBox x:Name="txtConfigGateway" Grid.Column="1" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                        <TextBox.Text>
+                                            <Binding Path="ConfigGateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                                                    <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </Grid>
+                            </GroupBox>
+                            <RadioButton x:Name="radioButtonConfigEnableDynamicDns" GroupName="DNSServerConfig" Content="{DynamicResource String_ObtainDNSServerAddressAutomatically}" IsChecked="{Binding ConfigEnableDynamicDns}" FontSize="14"  Margin="0,0,0,10" IsEnabled="{Binding ConfigEnableDynamicIPAddress}" />
+                            <RadioButton x:Name="radioButtonConfigEnableStaticDns" GroupName="DNSServerConfig" Content="{DynamicResource String_UseTheFollowingDNSServerAddresses}" IsChecked="{Binding ConfigEnableStaticDns}" FontSize="14" Margin="0,0,0,10"/>
+                            <GroupBox Grid.Row="10" Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigEnableStaticDns}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="20,0,0,0">
+                                <Grid>
+                                    <Grid.Resources>
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
+                                            <Setter Property="Margin" Value="0,0,10,0" />
+                                        </Style>
+                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" >
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ConfigEnableStaticDns}" Value="False">
+                                                    <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Resources>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_PrimaryDNSServer}"  />
+                                    <TextBox x:Name="txtConfigPrimaryDnsServer" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                        <TextBox.Text>
+                                            <Binding Path="ConfigPrimaryDnsServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                                                    <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_SecondaryDNSServer}"  />
+                                    <TextBox x:Name="txtConfigSecondaryDnsServer" Grid.Column="1" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNS}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                        <TextBox.Text>
+                                            <Binding Path="ConfigSecondaryDnsServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                                                    <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </Grid>
+                            </GroupBox>
+                        </StackPanel>
+                    </ScrollViewer>
+                    <StackPanel Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Button x:Name="btnAddProfile" Command="{Binding AddProfileCommand}">
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterialLight Kind=Delete}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Plus}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
-                                </MenuItem.Icon>
-                            </MenuItem>
-                        </ContextMenu>
-                    </Control:MultiSelectDataGrid.Resources>
-                    <Control:MultiSelectDataGrid.RowStyle>
-                        <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
-                            <Setter Property="ContextMenu" Value="{StaticResource ContextMenuDataGridRow}" />
-                        </Style>
-                    </Control:MultiSelectDataGrid.RowStyle>
-                    <Control:MultiSelectDataGrid.InputBindings>
-                        <KeyBinding Command="{Binding DeleteSelectedProfilesCommand}" Key="Delete" />
-                    </Control:MultiSelectDataGrid.InputBindings>
-                </Control:MultiSelectDataGrid>
-                <Button Grid.Row="3" Command="{Binding DeleteSelectedProfilesCommand}" HorizontalAlignment="Right" >
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterialLight Kind=Delete}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Delete}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
-                        </Grid>
-                    </Button.Content>
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                            <Setter Property="IsEnabled" Value="False" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding SelectedProfiles, Converter={StaticResource SelectedItemsToBoolConverter}}" Value="True" >
-                                    <Setter Property="IsEnabled"  Value="True" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
+                                    <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                                </Grid>
+                            </Button.Content>
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                    <Style.Triggers>
+                                        <DataTrigger Value="False">
+                                            <DataTrigger.Binding>
+                                                <MultiBinding Converter="{StaticResource ValidateNetworkInterfaceProfileConverter}">
+                                                    <Binding Path="ConfigEnableDynamicIPAddress" />
+                                                    <Binding Path="ConfigEnableStaticIPAddress" />
+                                                    <Binding ElementName="txtConfigIPAddress" Path="(Validation.HasError)" />
+                                                    <Binding ElementName="cbConfigSubnetmaskOrCidr" Path="(Validation.HasError)" />
+                                                    <Binding ElementName="txtConfigGateway" Path="(Validation.HasError)" />
+                                                    <Binding Path="ConfigEnableDynamicDns" />
+                                                    <Binding Path="ConfigEnableStaticDns" />
+                                                    <Binding ElementName="txtConfigPrimaryDnsServer" Path="(Validation.HasError)" />
+                                                    <Binding ElementName="txtConfigSecondaryDnsServer" Path="(Validation.HasError)" />
+                                                </MultiBinding>
+                                            </DataTrigger.Binding>
+                                            <Setter  Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Command="{Binding ApplyNetworkInterfaceConfigCommand}" Margin="10,0,0,0">
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentSave}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Apply}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                                </Grid>
+                            </Button.Content>
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsAdmin}" Value="True"/>
+                                                <Condition  Binding="{Binding ElementName=btnAddProfile,Path=IsEnabled}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="True" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </StackPanel>
+                </Grid>
             </Grid>
         </TabItem>
     </TabControl>
