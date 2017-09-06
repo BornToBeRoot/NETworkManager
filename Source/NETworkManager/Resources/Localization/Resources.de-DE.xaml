@@ -122,7 +122,7 @@
     <system:String x:Key="String_RestartAsAdministrator">Neustart als Administrator</system:String>
     <system:String x:Key="String_RestartAsAdministratorMessage">Zum ändern dieser Konfiguration werden administrative Rechte benötigt.</system:String>
     <system:String x:Key="String_NetworkAddress">Netzwerkadresse</system:String>
-    <system:String x:Key="String_DeleteTemplatesMessage">Die ausgewählten Templates werden unwiderruflich gelöscht.</system:String>
+    <system:String x:Key="String_DeleteClientsMessage">Die ausgewählten Clients werden unwiderruflich gelöscht.</system:String>
     <system:String x:Key="String_Timeout">Timeout</system:String>
     <system:String x:Key="String_Buffer">Buffer</system:String>
     <system:String x:Key="String_Bytes">Bytes</system:String>
@@ -208,7 +208,7 @@
     <system:String x:Key="String_Open">Offen</system:String>
     <system:String x:Key="String_CustomDNSServerIsEmptyCheckYourSettingsUseWindowsOwnDNSServer">Benutzerdefinierte DNS-Server ist leer. Überprüfe deine Einstellungen! (Verwende Windows eigenen DNS-Server...)</system:String>
     <system:String x:Key="String_EnterNameForProfile">Geben Sie einen Namen ein, unter dem das Profil gespeichert werden soll.</system:String>
-    <system:String x:Key="String_DeleteProfilesMessage">Die ausgewählten Profile werden unwiderruflich gelöscht.</system:String>
+    <system:String x:Key="String_DeleteProfileMessage">Das ausgewählte Profil wird unwiderruflich gelöscht.</system:String>
     <system:String x:Key="String_Backup">Sicherung</system:String>
     <system:String x:Key="String_MultipleInstances">Mehrere Instanzen</system:String>
     

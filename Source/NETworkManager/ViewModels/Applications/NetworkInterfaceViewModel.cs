@@ -694,7 +694,7 @@ namespace NETworkManager.ViewModels.Applications
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            if (MessageDialogResult.Negative == await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_DeleteProfilesMessage"] as string, MessageDialogStyle.AffirmativeAndNegative, settings))
+            if (MessageDialogResult.Negative == await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_DeleteProfileMessage"] as string, MessageDialogStyle.AffirmativeAndNegative, settings))
                 return;
 
             NetworkInterfaceProfileManager.RemoveProfile(SelectedProfile);
