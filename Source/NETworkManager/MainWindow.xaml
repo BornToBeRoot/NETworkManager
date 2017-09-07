@@ -257,7 +257,7 @@
                                         </Style.Triggers>
                                     </Style>
                                 </ToggleButton.Style>
-                                <Rectangle Width="20" Height="20">
+                                <Rectangle Width="16" Height="16">
                                     <Rectangle.Resources>
                                         <VisualBrush x:Key="VisualPin" Visual="{IconPacks:PackIconModern Kind=Pin}" />
                                     </Rectangle.Resources>
