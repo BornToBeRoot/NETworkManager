@@ -79,8 +79,8 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{TemplateBinding Content}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
-                            <Rectangle Grid.Column="1" x:Name="Chevron" Width="16" Height="16" Fill="{DynamicResource GrayBrush3}" Margin="0,0,6.5,0" VerticalAlignment="Center">
+                            <TextBlock Grid.Column="0" Text="{TemplateBinding Content}" Style="{StaticResource HeaderTextBlock}" Margin="10,10,10,0" />
+                            <Rectangle Grid.Column="1" x:Name="Chevron" Width="16" Height="16" Fill="{DynamicResource GrayBrush3}" Margin="0,10,10,0" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ChevronLeft}" />
                                 </Rectangle.OpacityMask>
@@ -110,12 +110,12 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Rectangle Grid.Row="0" x:Name="Chevron" Width="16" Height="16" Fill="{DynamicResource GrayBrush3}" Margin="0,6.5,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Rectangle Grid.Row="0" x:Name="Chevron" Width="16" Height="16" Fill="{DynamicResource GrayBrush3}" Margin="10,16.5,10,10" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ChevronRight}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Grid.Row="1" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" FontSize="18" Style="{StaticResource HeaderTextBlock}" Margin="0" VerticalAlignment="Center">
+                            <TextBlock Grid.Row="1" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" FontSize="18" Style="{StaticResource HeaderTextBlock}" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <TextBlock.LayoutTransform>
                                     <RotateTransform Angle="90" />
                                 </TextBlock.LayoutTransform>
@@ -136,7 +136,7 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="ExpandDirection" Value="Right" />
-        <Setter Property="Padding" Value="0" />
+        <Setter Property="Padding" Value="10" />
         <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource GrayBrush3}" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="14" />
