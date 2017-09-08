@@ -12,7 +12,7 @@
             <TextBox.Text>
                 <Binding Path="DefaultPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                         <Validator:PortValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>

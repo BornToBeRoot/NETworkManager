@@ -30,7 +30,7 @@
                             <TextBox.Text>
                                 <Binding Path="IPv4Address" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
-                                        <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                                         <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
@@ -41,7 +41,7 @@
                             <ComboBox.Text>
                                 <Binding Path="SubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
-                                        <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                                         <Validator:SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True"/>
                                     </Binding.ValidationRules>
                                 </Binding>

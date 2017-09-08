@@ -42,7 +42,7 @@
                     <ComboBox.Text>
                         <Binding Path="HostnameOrIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.Text>

@@ -482,7 +482,7 @@ namespace NETworkManager.ViewModels.Applications
         }
         #endregion
 
-        #region Templates
+        #region Profiles
         ICollectionView _networkInterfaceProfiles;
         public ICollectionView NetworkInterfaceProfiles
         {
@@ -515,11 +515,28 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
+
+        private bool _expandProfileView;
+        public bool ExpandProfileView
+        {
+            get { return _expandProfileView; }
+            set
+            {
+                if (value == _expandProfileView)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.NetworkInterface_ExpandProfileView = value;
+
+                _expandProfileView = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #endregion
 
-        #region Constructor, LoadTemplates, OnShutdown
+        #region Constructor, LoadTemplates, LoadSettings, OnShutdown
         public NetworkInterfaceViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
@@ -531,9 +548,11 @@ namespace NETworkManager.ViewModels.Applications
             NetworkInterfaceProfileManager.Load();
             _networkInterfaceProfiles = CollectionViewSource.GetDefaultView(NetworkInterfaceProfileManager.Profiles);
 
+            LoadSettings();
+
             _isLoading = false;
         }
-
+               
         private async void LoadNetworkInterfaces()
         {
             IsNetworkInterfaceLoading = true;
@@ -552,6 +571,11 @@ namespace NETworkManager.ViewModels.Applications
             }
 
             IsNetworkInterfaceLoading = false;
+        }
+
+        private void LoadSettings()
+        {
+            ExpandProfileView = SettingsManager.Current.NetworkInterface_ExpandProfileView;
         }
 
         public void OnShutdown()

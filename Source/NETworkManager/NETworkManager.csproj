@@ -175,6 +175,7 @@
     <Compile Include="Models\Network\DNSLookupRecordArgs.cs" />
     <Compile Include="Models\Settings\NetworkInterfaceProfileManager.cs" />
     <Compile Include="Validators\IPAddressValidator.cs" />
+    <Compile Include="Validators\EmptyOrIPv4AddressValidator.cs" />
     <Compile Include="Validators\OpacityTextboxValidator.cs" />
     <Compile Include="ViewModels\Applications\DNSLookupViewModel.cs" />
     <Compile Include="ViewModels\Help\HelpCommandLineViewModel.cs" />
@@ -551,7 +552,7 @@
     <Compile Include="Validators\SubnetmaskValidator.cs" />
     <Compile Include="Validators\SubnetmaskOrCIDRValidator.cs" />
     <Compile Include="Validators\IPv4AddressValidator.cs" />
-    <Compile Include="Validators\EmptyFieldValidator.cs" />
+    <Compile Include="Validators\EmptyValidator.cs" />
     <Compile Include="Validators\PortValidator.cs" />
     <Compile Include="Validators\MACAddressValidator.cs" />
     <Compile Include="Views\Applications\WakeOnLANView.xaml.cs">

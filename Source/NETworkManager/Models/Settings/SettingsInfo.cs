@@ -402,6 +402,20 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _networkInterface_ExpandProfileView = true;
+        public bool NetworkInterface_ExpandProfileView
+        {
+            get { return _networkInterface_ExpandProfileView; }
+            set
+            {
+                if (value == _networkInterface_ExpandProfileView)
+                    return;
+
+                _networkInterface_ExpandProfileView = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Ping

@@ -13,7 +13,7 @@
             <TextBox.Text>
                 <Binding Path="CustomDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                         <Validator:IPAddressValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>

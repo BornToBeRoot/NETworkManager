@@ -42,7 +42,7 @@
                     <ComboBox.Text>
                         <Binding Path="HostnameOrIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.Text>
@@ -137,7 +137,6 @@
             <Expander.Header>
                 <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>
-        <StackPanel>
             <Grid Margin="0,10,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
@@ -196,7 +195,6 @@
                 <TextBlock Grid.Column="6" Grid.Row="4" Text="{DynamicResource String_Maximum}" />
                 <TextBox Grid.Column="7" Grid.Row="4" Text="{Binding MaximumTime, StringFormat={}{0} ms}" />
             </Grid>
-        </StackPanel>
         </Expander>
     </Grid>
 </UserControl>
