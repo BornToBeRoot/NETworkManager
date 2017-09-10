@@ -6,7 +6,6 @@ using System.Windows;
 using System;
 using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
-using System.Collections;
 using NETworkManager.Models.Settings;
 using NETworkManager.Models.Network;
 using System.Threading.Tasks;
@@ -38,6 +37,48 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 _isNetworkInteraceLoading = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _canConfigure;
+        public bool CanConfigure
+        {
+            get { return _canConfigure; }
+            set
+            {
+                if (value == _canConfigure)
+                    return;
+
+                _canConfigure = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _displayStatusMessage;
+        public bool DisplayStatusMessage
+        {
+            get { return _displayStatusMessage; }
+            set
+            {
+                if (value == _displayStatusMessage)
+                    return;
+
+                _displayStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _statusMessage;
+        public string StatusMessage
+        {
+            get { return _statusMessage; }
+            set
+            {
+                if (value == _statusMessage)
+                    return;
+
+                _statusMessage = value;
                 OnPropertyChanged();
             }
         }
@@ -89,6 +130,8 @@ namespace NETworkManager.ViewModels.Applications
                     DetailsIPv6Gateway = value.IPv6Gateway;
                     DetailsDnsSuffix = value.DnsSuffix;
                     DetailsDnsServer = value.DnsServer;
+
+                    CanConfigure = value.IsOperational;
                 }
 
                 _selectedNetworkInterface = value;
@@ -489,7 +532,6 @@ namespace NETworkManager.ViewModels.Applications
             get { return _networkInterfaceProfiles; }
         }
 
-
         private NetworkInterfaceProfileInfo _selectedProfile = new NetworkInterfaceProfileInfo();
         public NetworkInterfaceProfileInfo SelectedProfile
         {
@@ -507,6 +549,7 @@ namespace NETworkManager.ViewModels.Applications
                     ConfigGateway = value.Gateway;
                     ConfigSubnetmaskOrCidr = value.Subnetmask;
                     ConfigEnableDynamicDns = !value.EnableStaticDns;
+                    ConfigEnableStaticDns = value.EnableStaticDns;
                     ConfigPrimaryDnsServer = value.PrimaryDnsServer;
                     ConfigSecondaryDnsServer = value.SecondaryDnsServer;
                 }
@@ -532,8 +575,7 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
-        #endregion
-
+        #endregion               
         #endregion
 
         #region Constructor, LoadTemplates, LoadSettings, OnShutdown
@@ -615,6 +657,8 @@ namespace NETworkManager.ViewModels.Applications
 
         public async void ApplyNetworkInterfaceConfigAction()
         {
+            DisplayStatusMessage = false;
+
             progressDialogController = await dialogCoordinator.ShowProgressAsync(this, Application.Current.Resources["String_ProgessHeader_ConfigureNetworkInterface"] as string, string.Empty);
             progressDialogController.SetIndeterminate();
 
@@ -623,38 +667,43 @@ namespace NETworkManager.ViewModels.Applications
             if (ConfigEnableStaticIPAddress && ConfigSubnetmaskOrCidr.StartsWith("/"))
                 configSubnetmask = Subnetmask.GetFromCidr(int.Parse(ConfigSubnetmaskOrCidr.TrimStart('/'))).Subnetmask;
 
-            try
+            NetworkInterfaceConfig config = new NetworkInterfaceConfig
             {
-                NetworkInterfaceConfig config = new NetworkInterfaceConfig
-                {
-                    Name = SelectedNetworkInterface.Name,
-                    EnableStaticIPAddress = ConfigEnableStaticIPAddress,
-                    IPAddress = ConfigIPAddress,
-                    Subnetmask = configSubnetmask,
-                    Gateway = ConfigGateway,
-                    EnableStaticDns = ConfigEnableStaticDns,
-                    PrimaryDnsServer = ConfigPrimaryDnsServer,
-                    SecondaryDnsServer = ConfigSecondaryDnsServer
-                };
+                Name = SelectedNetworkInterface.Name,
+                EnableStaticIPAddress = ConfigEnableStaticIPAddress,
+                IPAddress = ConfigIPAddress,
+                Subnetmask = configSubnetmask,
+                Gateway = ConfigGateway,
+                EnableStaticDns = ConfigEnableStaticDns,
+                PrimaryDnsServer = ConfigPrimaryDnsServer,
+                SecondaryDnsServer = ConfigSecondaryDnsServer
+            };
 
+            try
+            {             
                 Models.Network.NetworkInterface networkInterface = new Models.Network.NetworkInterface();
-               
+
+                networkInterface.UserHasCanceled += NetworkInterface_UserHasCanceled;
+
                 await networkInterface.ConfigureNetworkInterfaceAsync(config);
+
+                ReloadNetworkInterfacesAction();
             }
             catch (Exception ex)
             {
-                MetroDialogSettings settings = AppearanceManager.MetroDialog;
-
-                settings.AffirmativeButtonText = Application.Current.Resources["String_Button_OK"] as string;
-
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, settings);
+                StatusMessage = ex.Message;
+                DisplayStatusMessage = true;
             }
             finally
             {
                 await progressDialogController.CloseAsync();
             }
+        }
 
-            ReloadNetworkInterfacesAction();
+        private void NetworkInterface_UserHasCanceled(object sender, EventArgs e)
+        {
+            StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
+            DisplayStatusMessage = true;
         }
 
         public ICommand AddProfileCommand

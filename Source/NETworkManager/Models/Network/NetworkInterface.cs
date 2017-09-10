@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NETworkManager.Models.Network
 {
     public class NetworkInterface
     {
         #region Events
-        //public event EventHandler<ProgressChangedArgs> ConfigureProgressChanged;
+        public event EventHandler UserHasCanceled;
 
-        //protected virtual void OnConfigureProgressChanged(ProgressChangedArgs e)
-        //{
-        //    ConfigureProgressChanged?.Invoke(this, e);
-        //}
+        protected virtual void OnUserHasCanceled()
+        {
+            UserHasCanceled?.Invoke(this, EventArgs.Empty);
+        }
         #endregion
 
         #region Methods
@@ -137,11 +139,27 @@ namespace NETworkManager.Models.Network
             processStartInfo.Arguments = string.Format("-NoProfile -NoLogo -Command {0}", command); ;
             processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
-            Process process = new Process();
-            process.StartInfo = processStartInfo;
-            process.Start();
+            using (Process process = new Process())
+            {
+                process.StartInfo = processStartInfo;
 
-            process.WaitForExit();
+                try
+                {
+                    process.Start();
+                    process.WaitForExit();
+                }
+                catch (Win32Exception win32ex)
+                {
+                    switch (win32ex.NativeErrorCode)
+                    {
+                        case 1223:
+                            OnUserHasCanceled();
+                            break;
+                        default:
+                            throw;
+                    }
+                }
+            }
         }
         #endregion
     }

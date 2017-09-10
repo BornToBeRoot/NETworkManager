@@ -211,7 +211,8 @@
     <system:String x:Key="String_DeleteProfileMessage">Das ausgewählte Profil wird unwiderruflich gelöscht.</system:String>
     <system:String x:Key="String_Backup">Sicherung</system:String>
     <system:String x:Key="String_MultipleInstances">Mehrere Instanzen</system:String>
-    
+    <system:String x:Key="String_ConnectTheNetworkCardToConfigureIt">Verbinde die Netzwerkkarte mit einem Netzwerk, um diese zu konfigurieren!</system:String>
+
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
     <system:String x:Key="String_Button_Default">Standard</system:String>
