@@ -90,7 +90,7 @@
     <system:String x:Key="String_IPv4Address">IPv4-Adresse</system:String>
     <system:String x:Key="String_Subnetmask">Subnetzmaske</system:String>
     <system:String x:Key="String_CIDR">CIDR</system:String>
-    <system:String x:Key="String_SubnetmaskOrCIDR">Subnetmask oder CIDR</system:String>
+    <system:String x:Key="String_SubnetmaskOrCIDR">Subnetmaske oder CIDR</system:String>
     <system:String x:Key="String_IPv4DefaultGateway">IPv4-Standardgateway</system:String>
     <system:String x:Key="String_DHCPEnabled">DHCP aktiviert</system:String>
     <system:String x:Key="String_DHCPServer">DHCP-Server</system:String>
@@ -122,7 +122,7 @@
     <system:String x:Key="String_RestartAsAdministrator">Neustart als Administrator</system:String>
     <system:String x:Key="String_RestartAsAdministratorMessage">Zum ändern dieser Konfiguration werden administrative Rechte benötigt.</system:String>
     <system:String x:Key="String_NetworkAddress">Netzwerkadresse</system:String>
-    <system:String x:Key="String_DeleteTemplatesMessage">Die ausgewählten Templates werden unwiderruflich gelöscht.</system:String>
+    <system:String x:Key="String_DeleteClientsMessage">Die ausgewählten Clients werden unwiderruflich gelöscht.</system:String>
     <system:String x:Key="String_Timeout">Timeout</system:String>
     <system:String x:Key="String_Buffer">Buffer</system:String>
     <system:String x:Key="String_Bytes">Bytes</system:String>
@@ -208,10 +208,11 @@
     <system:String x:Key="String_Open">Offen</system:String>
     <system:String x:Key="String_CustomDNSServerIsEmptyCheckYourSettingsUseWindowsOwnDNSServer">Benutzerdefinierte DNS-Server ist leer. Überprüfe deine Einstellungen! (Verwende Windows eigenen DNS-Server...)</system:String>
     <system:String x:Key="String_EnterNameForProfile">Geben Sie einen Namen ein, unter dem das Profil gespeichert werden soll.</system:String>
-    <system:String x:Key="String_DeleteProfilesMessage">Die ausgewählten Profile werden unwiderruflich gelöscht.</system:String>
+    <system:String x:Key="String_DeleteProfileMessage">Das ausgewählte Profil wird unwiderruflich gelöscht.</system:String>
     <system:String x:Key="String_Backup">Sicherung</system:String>
     <system:String x:Key="String_MultipleInstances">Mehrere Instanzen</system:String>
-    
+    <system:String x:Key="String_ConnectTheNetworkCardToConfigureIt">Verbinde die Netzwerkkarte mit einem Netzwerk, um diese zu konfigurieren!</system:String>
+
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
     <system:String x:Key="String_Button_Default">Standard</system:String>

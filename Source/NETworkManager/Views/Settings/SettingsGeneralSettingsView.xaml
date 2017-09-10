@@ -24,7 +24,7 @@
             <TextBox.Text>
                 <Binding Path="LocationSelectedPath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                         <Validator:SettingsFolderExistsValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>

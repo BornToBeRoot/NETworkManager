@@ -60,7 +60,7 @@
                 <TextBox.Text>
                     <Binding Path="Opacity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                             <Validator:OpacityTextboxValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>

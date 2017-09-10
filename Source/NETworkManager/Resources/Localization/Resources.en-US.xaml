@@ -122,7 +122,7 @@
     <system:String x:Key="String_RestartAsAdministrator">Restart as Administrator</system:String>
     <system:String x:Key="String_RestartAsAdministratorMessage">Administrative rights are required to change this configuration.</system:String>
     <system:String x:Key="String_NetworkAddress">Network address</system:String>
-    <system:String x:Key="String_DeleteTemplatesMessage">The selected templates will be deleted permanently.</system:String>
+    <system:String x:Key="String_DeleteClientsMessage">The selected clients will be deleted permanently.</system:String>
     <system:String x:Key="String_Timeout">Timeout</system:String>
     <system:String x:Key="String_Buffer">Buffer</system:String>
     <system:String x:Key="String_Bytes">Bytes</system:String>
@@ -208,9 +208,10 @@
     <system:String x:Key="String_Open">Open</system:String>
     <system:String x:Key="String_CustomDNSServerIsEmptyCheckYourSettingsUseWindowsOwnDNSServer">Custom dns server is empty. Check your settings! (Use windows own dns server...)</system:String>
     <system:String x:Key="String_EnterNameForProfile">Enter a name under which you want to save the profile.</system:String>
-    <system:String x:Key="String_DeleteProfilesMessage">The selected profiles will be deleted permanently.</system:String>
+    <system:String x:Key="String_DeleteProfileMessage">The selected profile will be deleted permanently.</system:String>
     <system:String x:Key="String_Backup">Backup</system:String>
     <system:String x:Key="String_MultipleInstances">Multiple instances</system:String>
+    <system:String x:Key="String_ConnectTheNetworkCardToConfigureIt">Connect the network card to a network to configure it!</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>

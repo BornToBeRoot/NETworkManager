@@ -15,7 +15,7 @@ namespace NETworkManager
     {
         // Single instance unique identifier
         private const string Guid = "6A3F34B2-161F-4F70-A8BC-A19C40F79CFB";
-        static Mutex _mutex = new Mutex(true, "{" + Guid + "}");
+        Mutex _mutex;
 
         private bool _singleInstanceClose = false;
 
@@ -58,15 +58,13 @@ namespace NETworkManager
                 return;
             }
 
-            bool applicationIsRunning = !_mutex.WaitOne(TimeSpan.Zero, true);
-
             // Single instance
-            if (SettingsManager.Current.Window_MultipleInstances || !applicationIsRunning)
+            _mutex = new Mutex(true, "{" + Guid + "}");
+
+            if (SettingsManager.Current.Window_MultipleInstances || _mutex.WaitOne(TimeSpan.Zero, true))
             {
                 StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
-
-                if (!applicationIsRunning)
-                    _mutex.ReleaseMutex();
+                _mutex.ReleaseMutex();
             }
             else
             {
@@ -91,7 +89,7 @@ namespace NETworkManager
         {
             // Save settings, when the application is normally closed
             if (!_singleInstanceClose && !ImportExportManager.ForceRestart && !CommandLineManager.Current.Help)
-            {                
+            {
                 if (SettingsManager.Current.SettingsChanged)
                     SettingsManager.Save();
             }

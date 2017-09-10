@@ -50,7 +50,7 @@
                     <TextBox.Text>
                         <Binding Path="MACAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                                 <Validator:MACAddressValidator ValidatesOnTargetUpdated="True"/>
                             </Binding.ValidationRules>
                         </Binding>
@@ -64,7 +64,7 @@
                     <TextBox.Text>
                         <Binding Path="Broadcast" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                                 <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
@@ -78,7 +78,7 @@
                     <TextBox.Text>
                         <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <Validator:EmptyFieldValidator ValidatesOnTargetUpdated="True" />
+                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                                 <Validator:PortValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
