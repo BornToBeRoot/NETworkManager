@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Management;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NETworkManager.Models.Network
 {
     public class NetworkInterface
     {
         #region Events
-        public event EventHandler<ProgressChangedArgs> ConfigureProgressChanged;
+        //public event EventHandler<ProgressChangedArgs> ConfigureProgressChanged;
 
-        protected virtual void OnConfigureProgressChanged(ProgressChangedArgs e)
-        {
-            ConfigureProgressChanged?.Invoke(this, e);
-        }
+        //protected virtual void OnConfigureProgressChanged(ProgressChangedArgs e)
+        //{
+        //    ConfigureProgressChanged?.Invoke(this, e);
+        //}
         #endregion
 
         #region Methods
@@ -121,48 +123,30 @@ namespace NETworkManager.Models.Network
 
         public void ConfigureNetworkInterface(NetworkInterfaceConfig config)
         {
-            if (config.EnableStaticIPAddress)
-            {
-                OnConfigureProgressChanged(new ProgressChangedArgs() { Value = 1 });
-                SetStaticIPAddress(config.Id, config.IPAddress, config.Subnetmask, config.Gateway);
+            // IP
+            string command = string.Format("netsh interface ipv4 set address name=\"{0}\" ", config.Name);
+            command += config.EnableStaticIPAddress ? string.Format("source=static address={0} mask={1} gateway={2}", config.IPAddress, config.Subnetmask, config.Gateway) : "source=dhcp";
 
-                if (config.EnableStaticDns)
-                {
-                    OnConfigureProgressChanged(new ProgressChangedArgs() { Value = 3 });
-                    SetStaticDNSServer(config.Id, config.PrimaryDnsServer, config.SecondaryDnsServer);
-                }
-                else
-                {
-                    OnConfigureProgressChanged(new ProgressChangedArgs() { Value = 4 });
-                    SetDynamicDNSServer(config.Id);
-                }
-            }
-            else
-            {
-                OnConfigureProgressChanged(new ProgressChangedArgs() { Value = 2 });
-                SetDynamicIPAddress(config.Id);
+            // DNS
+            command += string.Format(";netsh interface ipv4 set dnsservers name=\"{0}\" ", config.Name);
+            command += config.EnableStaticDns ? string.Format("source=static address={0} register=primary validate=no", config.PrimaryDnsServer) : "source=dhcp";
+            command += (config.EnableStaticDns && !string.IsNullOrEmpty(config.SecondaryDnsServer)) ? string.Format(";netsh interface ipv4 add dnsservers name=\"{0}\" address={1} index=2 validate=no", config.Name, config.SecondaryDnsServer) : "";
 
-                if (config.EnableStaticDns)
-                {
-                    OnConfigureProgressChanged(new ProgressChangedArgs() { Value = 3 });
-                    SetStaticDNSServer(config.Id, config.PrimaryDnsServer, config.SecondaryDnsServer);
-                }
+            ProcessStartInfo processStartInfo = new ProcessStartInfo();
+            processStartInfo.Verb = "runas";
+            processStartInfo.FileName = "powershell.exe";
+            processStartInfo.Arguments = string.Format("-NoProfile -NoExit -NoLogo -Command {0}", command); ;
 
-                else
-                {
-                    OnConfigureProgressChanged(new ProgressChangedArgs() { Value = 4 });
-                    SetDynamicDNSServer(config.Id);
-                }
+            Process process = new Process();
+            process.StartInfo = processStartInfo;
+            process.Start();
 
-                // Renew dhcp release
-                OnConfigureProgressChanged(new ProgressChangedArgs() { Value = 5 });
-                RenewDhcpLease(config.Id);
-
-                // Fix gateway
-                OnConfigureProgressChanged(new ProgressChangedArgs() { Value = 6 });
-                FixGatewayAfterDHCPEnabled(config.Id);
-            }
+            process.WaitForExit();
         }
+
+
+
+        /* WMI
         private void SetStaticIPAddress(string id, string ipAddress, string subnetmask, string gateway)
         {
             foreach (ManagementObject adapter in new ManagementClass("Win32_NetworkAdapterConfiguration").GetInstances())
@@ -268,6 +252,7 @@ namespace NETworkManager.Models.Network
                 }
             }
         }
+        */
         #endregion
     }
 }

@@ -627,7 +627,7 @@ namespace NETworkManager.ViewModels.Applications
             {
                 NetworkInterfaceConfig config = new NetworkInterfaceConfig
                 {
-                    Id = SelectedNetworkInterface.Id,
+                    Name = SelectedNetworkInterface.Name,
                     EnableStaticIPAddress = ConfigEnableStaticIPAddress,
                     IPAddress = ConfigIPAddress,
                     Subnetmask = configSubnetmask,
@@ -638,7 +638,7 @@ namespace NETworkManager.ViewModels.Applications
                 };
 
                 Models.Network.NetworkInterface networkInterface = new Models.Network.NetworkInterface();
-                networkInterface.ConfigureProgressChanged += NetworkInterface_ConfigureProgressChanged;
+               // networkInterface.ConfigureProgressChanged += NetworkInterface_ConfigureProgressChanged;
                 await networkInterface.ConfigureNetworkInterfaceAsync(config);
             }
             catch (Exception ex)

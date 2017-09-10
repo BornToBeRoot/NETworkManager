@@ -437,7 +437,7 @@
                                                     <Binding ElementName="txtConfigSecondaryDnsServer" Path="(Validation.HasError)" />
                                                 </MultiBinding>
                                             </DataTrigger.Binding>
-                                            <Setter  Property="IsEnabled" Value="False" />
+                                            <Setter Property="IsEnabled" Value="False" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
