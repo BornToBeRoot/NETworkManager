@@ -638,7 +638,7 @@ namespace NETworkManager.ViewModels.Applications
                 };
 
                 Models.Network.NetworkInterface networkInterface = new Models.Network.NetworkInterface();
-               // networkInterface.ConfigureProgressChanged += NetworkInterface_ConfigureProgressChanged;
+               
                 await networkInterface.ConfigureNetworkInterfaceAsync(config);
             }
             catch (Exception ex)
@@ -722,33 +722,6 @@ namespace NETworkManager.ViewModels.Applications
                 return;
 
             NetworkInterfaceProfileManager.RemoveProfile(SelectedProfile);
-        }
-        #endregion
-
-        #region Events
-        private void NetworkInterface_ConfigureProgressChanged(object sender, ProgressChangedArgs e)
-        {
-            switch (e.Value)
-            {
-                case 1:
-                    progressDialogController.SetMessage(Application.Current.Resources["String_Progress_SetStaticIPAddress"] as string);
-                    break;
-                case 2:
-                    progressDialogController.SetMessage(Application.Current.Resources["String_Progress_SetDynamicIPAddress"] as string);
-                    break;
-                case 3:
-                    progressDialogController.SetMessage(Application.Current.Resources["String_Progress_SetStaticDNSServer"] as string);
-                    break;
-                case 4:
-                    progressDialogController.SetMessage(Application.Current.Resources["String_Progesss_SetDynamicDNSServer"] as string);
-                    break;
-                case 5:
-                    progressDialogController.SetMessage(Application.Current.Resources["String_Progress_RenewDHCPLease"] as string);
-                    break;
-                case 6:
-                    progressDialogController.SetMessage(Application.Current.Resources["String_Progress_FixGatewayAfterDHCPEnabled"] as string);
-                    break;
-            }
         }
         #endregion
     }

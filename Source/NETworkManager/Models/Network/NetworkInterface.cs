@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Management;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace NETworkManager.Models.Network
 {
@@ -132,10 +130,12 @@ namespace NETworkManager.Models.Network
             command += config.EnableStaticDns ? string.Format("source=static address={0} register=primary validate=no", config.PrimaryDnsServer) : "source=dhcp";
             command += (config.EnableStaticDns && !string.IsNullOrEmpty(config.SecondaryDnsServer)) ? string.Format(";netsh interface ipv4 add dnsservers name=\"{0}\" address={1} index=2 validate=no", config.Name, config.SecondaryDnsServer) : "";
 
+            // Start process with elevated rights...
             ProcessStartInfo processStartInfo = new ProcessStartInfo();
             processStartInfo.Verb = "runas";
             processStartInfo.FileName = "powershell.exe";
-            processStartInfo.Arguments = string.Format("-NoProfile -NoExit -NoLogo -Command {0}", command); ;
+            processStartInfo.Arguments = string.Format("-NoProfile -NoLogo -Command {0}", command); ;
+            processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
             Process process = new Process();
             process.StartInfo = processStartInfo;
@@ -143,116 +143,6 @@ namespace NETworkManager.Models.Network
 
             process.WaitForExit();
         }
-
-
-
-        /* WMI
-        private void SetStaticIPAddress(string id, string ipAddress, string subnetmask, string gateway)
-        {
-            foreach (ManagementObject adapter in new ManagementClass("Win32_NetworkAdapterConfiguration").GetInstances())
-            {
-                if (adapter["SettingID"] as string == id)
-                {
-                    ManagementBaseObject newIPAddress = adapter.GetMethodParameters("EnableStatic");
-
-                    newIPAddress["IPAddress"] = new string[] { ipAddress };
-                    newIPAddress["SubnetMask"] = new string[] { subnetmask };
-
-                    adapter.InvokeMethod("EnableStatic", newIPAddress, null);
-
-                    ManagementBaseObject newGateway = adapter.GetMethodParameters("SetGateways");
-
-                    newGateway["DefaultIPGateway"] = new string[] { gateway };
-                    newGateway["GatewayCostMetric"] = new int[] { 1 };
-
-                    adapter.InvokeMethod("SetGateways", newGateway, null);
-                }
-            }
-        }
-
-        private void SetDynamicIPAddress(string id)
-        {
-            foreach (ManagementObject adapter in new ManagementClass("Win32_NetworkAdapterConfiguration").GetInstances())
-            {
-                if (adapter["SettingID"] as string == id)
-                    adapter.InvokeMethod("EnableDHCP", null, null);
-            }
-        }
-
-        private void SetStaticDNSServer(string id, string primaryServer, string secondaryServer)
-        {
-            foreach (ManagementObject adapter in new ManagementClass("Win32_NetworkAdapterConfiguration").GetInstances())
-            {
-                if (adapter["SettingID"] as string == id)
-                {
-                    ManagementBaseObject newDNSServer = adapter.GetMethodParameters("SetDNSServerSearchOrder");
-
-                    newDNSServer["DNSServerSearchOrder"] = new string[] { primaryServer, secondaryServer };
-
-                    adapter.InvokeMethod("SetDNSServerSearchOrder", newDNSServer, null);
-                }
-            }
-        }
-
-        private void SetDynamicDNSServer(string id)
-        {
-            foreach (ManagementObject adapter in new ManagementClass("Win32_NetworkAdapterConfiguration").GetInstances())
-            {
-                if (adapter["SettingID"] as string == id)
-                {
-                    ManagementBaseObject newDNSServer = adapter.GetMethodParameters("SetDNSServerSearchOrder");
-
-                    newDNSServer["DNSServerSearchOrder"] = null;
-
-                    adapter.InvokeMethod("SetDNSServerSearchOrder", newDNSServer, null);
-                }
-            }
-        }
-
-        private void RenewDhcpLease(string id)
-        {
-            foreach (ManagementObject adapter in new ManagementClass("Win32_NetworkAdapterConfiguration").GetInstances())
-            {
-                if (adapter["SettingID"] as string == id)
-                {
-                    adapter.InvokeMethod("RenewDHCPLease", null, null);
-                }
-            }
-        }
-
-        private void FixGatewayAfterDHCPEnabled(string id)
-        {
-            foreach (ManagementObject adapter in new ManagementClass("Win32_NetworkAdapterConfiguration").GetInstances())
-            {
-                if (adapter["SettingID"] as string == id)
-                {
-                    // Bugfix - Based on https://www.codeproject.com/Questions/58393/How-to-clear-TCP-IP-Gateway-using-WMI-in-Vista-Ser
-                    string[] gateways = (string[])adapter["DefaultIPGateway"];
-
-                    string gateway = string.Empty;
-
-                    foreach (string gw in gateways)
-                    {
-                        if (IPAddress.Parse(gw).AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                            gateway = gw;
-                    }
-
-                    ManagementBaseObject newIP = adapter.GetMethodParameters("EnableStatic");
-
-                    adapter.InvokeMethod("EnableStatic", newIP, null);
-
-                    ManagementBaseObject newGateway = adapter.GetMethodParameters("SetGateways");
-
-                    newGateway["DefaultIPGateway"] = new string[] { gateway };
-                    newGateway["GatewayCostMetric"] = new int[] { 1 };
-
-                    adapter.InvokeMethod("SetGateways", newGateway, null);
-
-                    adapter.InvokeMethod("EnableDHCP", null, null);
-                }
-            }
-        }
-        */
         #endregion
     }
 }
