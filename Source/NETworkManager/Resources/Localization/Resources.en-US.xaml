@@ -212,6 +212,7 @@
     <system:String x:Key="String_Backup">Backup</system:String>
     <system:String x:Key="String_MultipleInstances">Multiple instances</system:String>
     <system:String x:Key="String_ConnectTheNetworkCardToConfigureIt">Connect the network card to a network to configure it!</system:String>
+    <system:String x:Key="String_DNSAutoconfiguration">DNS Autconfiguration</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>

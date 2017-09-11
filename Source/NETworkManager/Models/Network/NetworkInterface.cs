@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -81,6 +82,10 @@ namespace NETworkManager.Models.Network
                         listDhcpServer.Add(dhcpServerIPAddress);
                 }
 
+                // Check if autoconfiguration for dns is enabled (only via registry key)
+                RegistryKey nameServerKey = Registry.LocalMachine.OpenSubKey(String.Format(@"SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{0}", networkInterface.Id));
+                bool dnsAutoconfigurationEnabled = string.IsNullOrEmpty(nameServerKey.GetValue("NameServer").ToString());
+
                 List<IPAddress> listDnsServer = new List<IPAddress>();
 
                 foreach (IPAddress dnsServerIPAddress in networkInterface.GetIPProperties().DnsAddresses)
@@ -101,13 +106,14 @@ namespace NETworkManager.Models.Network
                     IPv4Address = listIPv4Address.ToArray(),
                     Subnetmask = listSubnetmask.ToArray(),
                     IPv4Gateway = listIPv4Gateway.ToArray(),
-                    IsDhcpEnabled = networkInterface.GetIPProperties().GetIPv4Properties().IsDhcpEnabled,
+                    DhcpEnabled = networkInterface.GetIPProperties().GetIPv4Properties().IsDhcpEnabled,
                     DhcpServer = listDhcpServer.ToArray(),
                     DhcpLeaseObtained = dhcpLeaseObtained,
                     DhcpLeaseExpires = dhcpLeaseExpires,
                     IPv6AddressLinkLocal = listIPv6AddressLinkLocal.ToArray(),
                     IPv6Address = listIPv6Address.ToArray(),
                     IPv6Gateway = listIPv6Gateway.ToArray(),
+                    DnsAutoconfigurationEnabled = dnsAutoconfigurationEnabled,
                     DnsSuffix = networkInterface.GetIPProperties().DnsSuffix,
                     DnsServer = listDnsServer.ToArray()
                 });
@@ -131,6 +137,8 @@ namespace NETworkManager.Models.Network
             command += string.Format(";netsh interface ipv4 set dnsservers name=\"{0}\" ", config.Name);
             command += config.EnableStaticDns ? string.Format("source=static address={0} register=primary validate=no", config.PrimaryDnsServer) : "source=dhcp";
             command += (config.EnableStaticDns && !string.IsNullOrEmpty(config.SecondaryDnsServer)) ? string.Format(";netsh interface ipv4 add dnsservers name=\"{0}\" address={1} index=2 validate=no", config.Name, config.SecondaryDnsServer) : "";
+
+            MessageBox.Show(command);
 
             // Start process with elevated rights...
             ProcessStartInfo processStartInfo = new ProcessStartInfo();

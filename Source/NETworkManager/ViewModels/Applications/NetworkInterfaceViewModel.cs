@@ -112,6 +112,7 @@ namespace NETworkManager.ViewModels.Applications
                     if (!_isLoading)
                         SettingsManager.Current.NetworkInterface_SelectedInterfaceId = value.Id;
 
+                    // Details
                     DetailsName = value.Name;
                     DetailsDescription = value.Description;
                     DetailsType = value.Type;
@@ -121,15 +122,42 @@ namespace NETworkManager.ViewModels.Applications
                     DetailsIPv4Address = value.IPv4Address;
                     DetailsSubnetmask = value.Subnetmask;
                     DetailsIPv4Gateway = value.IPv4Gateway;
-                    DetailsIsIPv4DhcpEnabled = value.IsDhcpEnabled;
-                    DetailsIsIPv4DhcpServer = value.DhcpServer;
+                    DetailsIPv4DhcpEnabled = value.DhcpEnabled;
+                    DetailsIPv4DhcpServer = value.DhcpServer;
                     DetailsDhcpLeaseObtained = value.DhcpLeaseObtained;
                     DetailsDhcpLeaseExpires = value.DhcpLeaseExpires;
                     DetailsIPv6AddressLinkLocal = value.IPv6AddressLinkLocal;
                     DetailsIPv6Address = value.IPv6Address;
                     DetailsIPv6Gateway = value.IPv6Gateway;
+                    DetailsDnsAutoconfigurationEnabled = value.DnsAutoconfigurationEnabled;
                     DetailsDnsSuffix = value.DnsSuffix;
                     DetailsDnsServer = value.DnsServer;
+
+                    // Configuration
+                    if(value.DhcpEnabled)
+                    {
+                        ConfigEnableDynamicIPAddress = true;
+                    }
+                    else
+                    {
+                        ConfigEnableStaticIPAddress = true;
+                        ConfigIPAddress = value.IPv4Address.FirstOrDefault().ToString();
+                        ConfigSubnetmaskOrCidr = value.Subnetmask.FirstOrDefault().ToString();
+                        ConfigGateway = value.IPv4Gateway.FirstOrDefault().ToString();
+                    }
+
+                    if(value.DnsAutoconfigurationEnabled)
+                    {
+                        ConfigEnableDynamicDns = true;
+                    }
+                    else
+                    {
+                        ConfigEnableStaticDns = true;
+
+                        List<IPAddress> dnsServers = value.DnsServer.Where(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToList();
+                        ConfigPrimaryDnsServer = dnsServers.Count > 0 ? dnsServers[0].ToString() : string.Empty ;
+                        ConfigSecondaryDnsServer = dnsServers.Count > 1 ? dnsServers[1].ToString() : string.Empty;
+                    }
 
                     CanConfigure = value.IsOperational;
                 }
@@ -267,30 +295,30 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private bool _detailsIsIPv4DhcpEnabled;
-        public bool DetailsIsIPv4DhcpEnabled
+        private bool _detailsIPv4DhcpEnabled;
+        public bool DetailsIPv4DhcpEnabled
         {
-            get { return _detailsIsIPv4DhcpEnabled; }
+            get { return _detailsIPv4DhcpEnabled; }
             set
             {
-                if (value == _detailsIsIPv4DhcpEnabled)
+                if (value == _detailsIPv4DhcpEnabled)
                     return;
 
-                _detailsIsIPv4DhcpEnabled = value;
+                _detailsIPv4DhcpEnabled = value;
                 OnPropertyChanged();
             }
         }
 
-        private IPAddress[] _detailsIsIPv4DhcpServer;
-        public IPAddress[] DetailsIsIPv4DhcpServer
+        private IPAddress[] _detailsIPv4DhcpServer;
+        public IPAddress[] DetailsIPv4DhcpServer
         {
-            get { return _detailsIsIPv4DhcpServer; }
+            get { return _detailsIPv4DhcpServer; }
             set
             {
-                if (value == _detailsIsIPv4DhcpServer)
+                if (value == _detailsIPv4DhcpServer)
                     return;
 
-                _detailsIsIPv4DhcpServer = value;
+                _detailsIPv4DhcpServer = value;
                 OnPropertyChanged();
             }
         }
@@ -362,6 +390,20 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 _detailsIPv6Gateway = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _detailsDnsAutoconfigurationEnabled;
+        public bool DetailsDnsAutoconfigurationEnabled
+        {
+            get { return _detailsDnsAutoconfigurationEnabled; }
+            set
+            {
+                if (value == _detailsDnsAutoconfigurationEnabled)
+                    return;
+
+                _detailsDnsAutoconfigurationEnabled = value;
                 OnPropertyChanged();
             }
         }
@@ -594,7 +636,7 @@ namespace NETworkManager.ViewModels.Applications
 
             _isLoading = false;
         }
-               
+
         private async void LoadNetworkInterfaces()
         {
             IsNetworkInterfaceLoading = true;
@@ -680,7 +722,7 @@ namespace NETworkManager.ViewModels.Applications
             };
 
             try
-            {             
+            {
                 Models.Network.NetworkInterface networkInterface = new Models.Network.NetworkInterface();
 
                 networkInterface.UserHasCanceled += NetworkInterface_UserHasCanceled;
