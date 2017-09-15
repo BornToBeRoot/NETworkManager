@@ -24,7 +24,7 @@
         </Setter>
     </Style>
     
-    <Style x:Key="ApplicationViewScrollViewer" TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource MetroScrollViewer}">
+    <Style x:Key="FadeOutScrollViewer" TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource MetroScrollViewer}">
         <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
         <Setter Property="PanningMode" Value="VerticalOnly" />
         <Setter Property="Template">
@@ -40,7 +40,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <ScrollContentPresenter Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-                        <ScrollBar Name="PART_VerticalScrollBar" Width="8" HorizontalAlignment="Right" Opacity="0.5" Grid.Column="1" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
+                        <ScrollBar Name="PART_VerticalScrollBar" Width="8" HorizontalAlignment="Right" Grid.Column="1" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

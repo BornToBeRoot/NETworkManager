@@ -184,11 +184,11 @@
                         <TextBlock Grid.Column="0" Grid.Row="15" Text="{DynamicResource String_IPv6DefaultGateway}" />
                         <TextBox Grid.Column="2" Grid.Row="15" Text="{Binding DetailsIPv6Gateway , Converter={StaticResource IPAddressArrayToStringConverter}}" />
                         <TextBlock Grid.Column="0" Grid.Row="16" Text="{DynamicResource String_DNSAutoconfiguration}" />
-                        <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding DetailsDnsAutoconfigurationEnabled, Converter={StaticResource TrueFalseToStringConverter}}" />
+                        <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding DetailsDNSAutoconfigurationEnabled, Converter={StaticResource TrueFalseToStringConverter}}" />
                         <TextBlock Grid.Column="0" Grid.Row="17" Text="{DynamicResource String_DNSSuffix}" />
-                        <TextBox Grid.Column="2" Grid.Row="17" Text="{Binding DetailsDnsSuffix}" />
+                        <TextBox Grid.Column="2" Grid.Row="17" Text="{Binding DetailsDNSSuffix}" />
                         <TextBlock Grid.Column="0" Grid.Row="18" Text="{DynamicResource String_DNSServers}" Margin="0,0,10,0" />
-                        <TextBox Grid.Column="2" Grid.Row="18" Text="{Binding DetailsDnsServer, Converter={StaticResource IPAddressArrayToStringConverter}}" Margin="0,0,10,0" />
+                        <TextBox Grid.Column="2" Grid.Row="18" Text="{Binding DetailsDNSServer, Converter={StaticResource IPAddressArrayToStringConverter}}" Margin="0,0,10,0" />
                     </Grid>
                 </ScrollViewer>
             </Grid>
@@ -347,9 +347,9 @@
                                     </TextBox>
                                 </Grid>
                             </GroupBox>
-                            <RadioButton x:Name="radioButtonConfigEnableDynamicDns" GroupName="DNSServerConfig" Content="{DynamicResource String_ObtainDNSServerAddressAutomatically}" IsChecked="{Binding ConfigEnableDynamicDns}" FontSize="14"  Margin="0,0,0,10" IsEnabled="{Binding ConfigEnableDynamicIPAddress}" />
-                            <RadioButton x:Name="radioButtonConfigEnableStaticDns" GroupName="DNSServerConfig" Content="{DynamicResource String_UseTheFollowingDNSServerAddresses}" IsChecked="{Binding ConfigEnableStaticDns}" FontSize="14" Margin="0,0,0,10"/>
-                            <GroupBox Grid.Row="10" Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigEnableStaticDns}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="20,0,0,0">
+                            <RadioButton x:Name="radioButtonConfigEnableDynamicDNS" GroupName="DNSServerConfig" Content="{DynamicResource String_ObtainDNSServerAddressAutomatically}" IsChecked="{Binding ConfigEnableDynamicDNS}" FontSize="14"  Margin="0,0,0,10" IsEnabled="{Binding ConfigEnableDynamicIPAddress}" />
+                            <RadioButton x:Name="radioButtonConfigEnableStaticDNS" GroupName="DNSServerConfig" Content="{DynamicResource String_UseTheFollowingDNSServerAddresses}" IsChecked="{Binding ConfigEnableStaticDNS}" FontSize="14" Margin="0,0,0,10"/>
+                            <GroupBox Grid.Row="10" Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigEnableStaticDNS}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="20,0,0,0">
                                 <Grid>
                                     <Grid.Resources>
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
@@ -357,7 +357,7 @@
                                         </Style>
                                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" >
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding ConfigEnableStaticDns}" Value="False">
+                                                <DataTrigger Binding="{Binding ConfigEnableStaticDNS}" Value="False">
                                                     <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -373,20 +373,19 @@
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_PrimaryDNSServer}"  />
-                                    <TextBox x:Name="txtConfigPrimaryDnsServer" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                    <TextBox x:Name="txtConfigPrimaryDNSServer" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                         <TextBox.Text>
-                                            <Binding Path="ConfigPrimaryDnsServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding Path="ConfigPrimaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                 <Binding.ValidationRules>
-                                                    <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                    <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                    <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
                                     </TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_SecondaryDNSServer}"  />
-                                    <TextBox x:Name="txtConfigSecondaryDnsServer" Grid.Column="1" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNS}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                    <TextBox x:Name="txtConfigSecondaryDNSServer" Grid.Column="1" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNS}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                         <TextBox.Text>
-                                            <Binding Path="ConfigSecondaryDnsServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding Path="ConfigSecondaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                 <Binding.ValidationRules>
                                                     <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                                 </Binding.ValidationRules>
@@ -424,10 +423,10 @@
                                                     <Binding ElementName="txtConfigIPAddress" Path="(Validation.HasError)" />
                                                     <Binding ElementName="cbConfigSubnetmaskOrCidr" Path="(Validation.HasError)" />
                                                     <Binding ElementName="txtConfigGateway" Path="(Validation.HasError)" />
-                                                    <Binding Path="ConfigEnableDynamicDns" />
-                                                    <Binding Path="ConfigEnableStaticDns" />
-                                                    <Binding ElementName="txtConfigPrimaryDnsServer" Path="(Validation.HasError)" />
-                                                    <Binding ElementName="txtConfigSecondaryDnsServer" Path="(Validation.HasError)" />
+                                                    <Binding Path="ConfigEnableDynamicDNS" />
+                                                    <Binding Path="ConfigEnableStaticDNS" />
+                                                    <Binding ElementName="txtConfigPrimaryDNSServer" Path="(Validation.HasError)" />
+                                                    <Binding ElementName="txtConfigSecondaryDNSServer" Path="(Validation.HasError)" />
                                                 </MultiBinding>
                                             </DataTrigger.Binding>
                                             <Setter Property="IsEnabled" Value="False" />
@@ -462,10 +461,10 @@
                                                     <Binding ElementName="txtConfigIPAddress" Path="(Validation.HasError)" />
                                                     <Binding ElementName="cbConfigSubnetmaskOrCidr" Path="(Validation.HasError)" />
                                                     <Binding ElementName="txtConfigGateway" Path="(Validation.HasError)" />
-                                                    <Binding Path="ConfigEnableDynamicDns" />
-                                                    <Binding Path="ConfigEnableStaticDns" />
-                                                    <Binding ElementName="txtConfigPrimaryDnsServer" Path="(Validation.HasError)" />
-                                                    <Binding ElementName="txtConfigSecondaryDnsServer" Path="(Validation.HasError)" />
+                                                    <Binding Path="ConfigEnableDynamicDNS" />
+                                                    <Binding Path="ConfigEnableStaticDNS" />
+                                                    <Binding ElementName="txtConfigPrimaryDNSServer" Path="(Validation.HasError)" />
+                                                    <Binding ElementName="txtConfigSecondaryDNSServer" Path="(Validation.HasError)" />
                                                     <Binding Path="CanConfigure" />
                                                 </MultiBinding>
                                             </DataTrigger.Binding>

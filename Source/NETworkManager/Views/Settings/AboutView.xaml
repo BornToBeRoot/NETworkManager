@@ -34,25 +34,33 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="5" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Libary_MahAppsMetroName}" Style="{StaticResource LinkTextBlock}">
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Libary_ControlzExName}" Style="{StaticResource LinkTextBlock}">
+                <TextBlock.InputBindings>
+                    <MouseBinding Command="{Binding OpenWebsiteLibaryControlzExCommand}" MouseAction="LeftClick" />
+                </TextBlock.InputBindings>
+            </TextBlock>
+            <TextBlock Grid.Column="2" Grid.Row="0" Text="{DynamicResource String_Libary_ControlzExDescription}" Style="{StaticResource WrapTextBlock}" />
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Libary_MahAppsMetroName}" Style="{StaticResource LinkTextBlock}">
                 <TextBlock.InputBindings>
                     <MouseBinding Command="{Binding OpenWebsiteLibaryMahAppsMetroCommand}" MouseAction="LeftClick" />
                 </TextBlock.InputBindings>
             </TextBlock>
-            <TextBlock Grid.Column="2" Grid.Row="0" Text="{DynamicResource String_Libary_MahAppsMetroDescription}" Style="{StaticResource WrapTextBlock}" />
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Libary_MahAppsMetroIconPacksName}" Style="{StaticResource LinkTextBlock}">
+            <TextBlock Grid.Column="2" Grid.Row="2" Text="{DynamicResource String_Libary_MahAppsMetroDescription}" Style="{StaticResource WrapTextBlock}" />
+            <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Libary_MahAppsMetroIconPacksName}" Style="{StaticResource LinkTextBlock}">
                 <TextBlock.InputBindings>
                     <MouseBinding Command="{Binding OpenWebsiteLibaryMahAppsMetroIconPacksCommand}" MouseAction="LeftClick" />
                 </TextBlock.InputBindings>
             </TextBlock>
-            <TextBlock Grid.Column="2" Grid.Row="2" Text="{DynamicResource String_Libary_MahAppsMetroIconPacksDescription}" Style="{StaticResource WrapTextBlock}" />
-            <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Libary_HeijdenDNSName}" Style="{StaticResource LinkTextBlock}">
+            <TextBlock Grid.Column="2" Grid.Row="4" Text="{DynamicResource String_Libary_MahAppsMetroIconPacksDescription}" Style="{StaticResource WrapTextBlock}" />
+            <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_Libary_HeijdenDNSName}" Style="{StaticResource LinkTextBlock}">
                 <TextBlock.InputBindings>
                     <MouseBinding Command="{Binding OpenWebsiteLibaryHeijdenDNSCommand}" MouseAction="LeftClick" />
                 </TextBlock.InputBindings>
             </TextBlock>
-            <TextBlock Grid.Column="2" Grid.Row="4" Text="{DynamicResource String_Libary_HeijdenDNSDescription}" Style="{StaticResource WrapTextBlock}" />
+            <TextBlock Grid.Column="2" Grid.Row="6" Text="{DynamicResource String_Libary_HeijdenDNSDescription}" Style="{StaticResource WrapTextBlock}" />
         </Grid>
     </StackPanel>
 </UserControl>

@@ -1157,13 +1157,13 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>90</Number>
     <Protocol>tcp</Protocol>
-    <Name>dnsix</Name>
+    <Name>DNSix</Name>
     <Description>DNSIX Securit Attribute Token Map</Description>
   </Port>
   <Port>
     <Number>90</Number>
     <Protocol>udp</Protocol>
-    <Name>dnsix</Name>
+    <Name>DNSix</Name>
     <Description>DNSIX Securit Attribute Token Map</Description>
   </Port>
   <Port>
@@ -6050,13 +6050,13 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>558</Number>
     <Protocol>tcp</Protocol>
-    <Name>sdnskmp</Name>
+    <Name>sDNSkmp</Name>
     <Description>SDNSKMP</Description>
   </Port>
   <Port>
     <Number>558</Number>
     <Protocol>udp</Protocol>
-    <Name>sdnskmp</Name>
+    <Name>sDNSkmp</Name>
     <Description>SDNSKMP</Description>
   </Port>
   <Port>
@@ -11461,13 +11461,13 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>1227</Number>
     <Protocol>tcp</Protocol>
-    <Name>dns2go</Name>
+    <Name>DNS2go</Name>
     <Description>DNS2Go</Description>
   </Port>
   <Port>
     <Number>1227</Number>
     <Protocol>udp</Protocol>
-    <Name>dns2go</Name>
+    <Name>DNS2go</Name>
     <Description>DNS2Go</Description>
   </Port>
   <Port>
@@ -12793,13 +12793,13 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>1337</Number>
     <Protocol>tcp</Protocol>
-    <Name>menandmice-dns</Name>
+    <Name>menandmice-DNS</Name>
     <Description>menandmice DNS</Description>
   </Port>
   <Port>
     <Number>1337</Number>
     <Protocol>udp</Protocol>
-    <Name>menandmice-dns</Name>
+    <Name>menandmice-DNS</Name>
     <Description>menandmice DNS</Description>
   </Port>
   <Port>
@@ -19327,13 +19327,13 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>1870</Number>
     <Protocol>tcp</Protocol>
-    <Name>sunscalar-dns</Name>
+    <Name>sunscalar-DNS</Name>
     <Description>SunSCALAR DNS Service</Description>
   </Port>
   <Port>
     <Number>1870</Number>
     <Protocol>udp</Protocol>
-    <Name>sunscalar-dns</Name>
+    <Name>sunscalar-DNS</Name>
     <Description>SunSCALAR DNS Service</Description>
   </Port>
   <Port>
@@ -22981,13 +22981,13 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>2164</Number>
     <Protocol>tcp</Protocol>
-    <Name>ddns-v3</Name>
+    <Name>dDNS-v3</Name>
     <Description>Dynamic DNS Version 3</Description>
   </Port>
   <Port>
     <Number>2164</Number>
     <Protocol>udp</Protocol>
-    <Name>ddns-v3</Name>
+    <Name>dDNS-v3</Name>
     <Description>Dynamic DNS Version 3</Description>
   </Port>
   <Port>
@@ -43259,13 +43259,13 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>3849</Number>
     <Protocol>tcp</Protocol>
-    <Name>spw-dnspreload</Name>
+    <Name>spw-DNSpreload</Name>
     <Description>SPACEWAY DNS Preload</Description>
   </Port>
   <Port>
     <Number>3849</Number>
     <Protocol>udp</Protocol>
-    <Name>spw-dnspreload</Name>
+    <Name>spw-DNSpreload</Name>
     <Description>SPACEWAY DNS Prelaod</Description>
   </Port>
   <Port>
@@ -53933,37 +53933,37 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>5352</Number>
     <Protocol>tcp</Protocol>
-    <Name>dns-llq</Name>
+    <Name>DNS-llq</Name>
     <Description>DNS Long-Lived Queries</Description>
   </Port>
   <Port>
     <Number>5352</Number>
     <Protocol>udp</Protocol>
-    <Name>dns-llq</Name>
+    <Name>DNS-llq</Name>
     <Description>DNS Long-Lived Queries</Description>
   </Port>
   <Port>
     <Number>5353</Number>
     <Protocol>tcp</Protocol>
-    <Name>mdns</Name>
+    <Name>mDNS</Name>
     <Description>Multicast DNS</Description>
   </Port>
   <Port>
     <Number>5353</Number>
     <Protocol>udp</Protocol>
-    <Name>mdns</Name>
+    <Name>mDNS</Name>
     <Description>Multicast DNS</Description>
   </Port>
   <Port>
     <Number>5354</Number>
     <Protocol>tcp</Protocol>
-    <Name>mdnsresponder</Name>
+    <Name>mDNSresponder</Name>
     <Description>Multicast DNS Responder IPC</Description>
   </Port>
   <Port>
     <Number>5354</Number>
     <Protocol>udp</Protocol>
-    <Name>mdnsresponder</Name>
+    <Name>mDNSresponder</Name>
     <Description>Multicast DNS Responder IPC</Description>
   </Port>
   <Port>
@@ -65401,8 +65401,8 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>8953</Number>
     <Protocol>tcp</Protocol>
-    <Name>ub-dns-control</Name>
-    <Description>unbound dns nameserver control</Description>
+    <Name>ub-DNS-control</Name>
+    <Description>unbound DNS nameserver control</Description>
   </Port>
   <Port>
     <Number>8953</Number>
@@ -67555,13 +67555,13 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>9966</Number>
     <Protocol>tcp</Protocol>
-    <Name>odnsp</Name>
+    <Name>oDNSp</Name>
     <Description>OKI Data Network Setting Protocol</Description>
   </Port>
   <Port>
     <Number>9966</Number>
     <Protocol>udp</Protocol>
-    <Name>odnsp</Name>
+    <Name>oDNSp</Name>
     <Description>OKI Data Network Setting Protocol</Description>
   </Port>
   <Port>

@@ -50,10 +50,7 @@ namespace NETworkManager.Models.Network
             progressValue = 0;
 
             // Modify the ThreadPool for better performance
-            int workerThreads;
-            int completionPortThreads;
-
-            ThreadPool.GetMinThreads(out workerThreads, out completionPortThreads);
+            ThreadPool.GetMinThreads(out int workerThreads, out int completionPortThreads);
             ThreadPool.SetMinThreads(workerThreads + ipScannerOptions.Threads, completionPortThreads + ipScannerOptions.Threads);
 
             // Start the scan in a separat task
@@ -61,9 +58,11 @@ namespace NETworkManager.Models.Network
             {
                 try
                 {
-                    ParallelOptions parallelOptions = new ParallelOptions();
-                    parallelOptions.CancellationToken = cancellationToken;
-                    parallelOptions.MaxDegreeOfParallelism = ipScannerOptions.Threads;
+                    ParallelOptions parallelOptions = new ParallelOptions()
+                    {
+                        CancellationToken = cancellationToken,
+                        MaxDegreeOfParallelism = ipScannerOptions.Threads
+                    };
 
                     string localHostname = ipScannerOptions.ResolveHostname ? Dns.GetHostName() : string.Empty;
 

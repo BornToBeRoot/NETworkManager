@@ -165,6 +165,7 @@
     <Compile Include="3rdParty\Heijden.DNS\Response.cs" />
     <Compile Include="3rdParty\Heijden.DNS\RR.cs" />
     <Compile Include="3rdParty\Heijden.DNS\Structs.cs" />
+    <Compile Include="Converters\TimestampToStringConverter.cs" />
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
     <Compile Include="Helpers\SingleInstanceHelper.cs" />
     <Compile Include="Models\Network\DNSLookup.cs" />
@@ -192,14 +193,6 @@
     </Compile>
     <Compile Include="WpfHelper\ProtocolSettingsLayout.cs" />
     <Page Include="Resources\ContextMenu\ContextMenu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Icons.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\IconsNonShared.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -327,7 +320,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsWindow.xaml">
+    <Page Include="Views\Settings\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -545,8 +538,8 @@
       <DependentUpon>IPScannerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Validators\IPScanRangeValidator.cs" />
-    <Compile Include="Views\Settings\SettingsWindow.xaml.cs">
-      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    <Compile Include="Views\Settings\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Validators\SettingsFolderExistsValidator.cs" />
     <Compile Include="Validators\SubnetmaskValidator.cs" />
@@ -644,17 +637,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Entypo.ttf" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="3rdParty\Heijden.DNS\Records\totla.txt" />
     <Resource Include="3rdParty\Heijden.DNS\Root\named_root.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\WindowsIcons-license.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Ports.xml">

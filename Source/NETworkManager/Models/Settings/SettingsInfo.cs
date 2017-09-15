@@ -849,6 +849,48 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private bool _dnsLookup_AppendPrimarySuffix = true;
+        public bool DNSLookup_AppendPrimarySuffix
+        {
+            get { return _dnsLookup_AppendPrimarySuffix; }
+            set
+            {
+                if (value == _dnsLookup_AppendPrimarySuffix)
+                    return;
+
+                _dnsLookup_AppendPrimarySuffix = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _dnsLookup_UseCustomSuffix;
+        public bool DNSLookup_UseCustomSuffix
+        {
+            get { return _dnsLookup_UseCustomSuffix; }
+            set
+            {
+                if (value == _dnsLookup_UseCustomSuffix)
+                    return;
+
+                _dnsLookup_UseCustomSuffix = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private string _dnsLookup_CustomSuffix;
+        public string DNSLookup_CustomSuffix
+        {
+            get { return _dnsLookup_CustomSuffix; }
+            set
+            {
+                if (value == _dnsLookup_CustomSuffix)
+                    return;
+
+                _dnsLookup_CustomSuffix = value;
+                SettingsChanged = true;
+            }
+        }
+
         private bool _dnsLookup_ResolveCNAME = true;
         public bool DNSLookup_ResolveCNAME
         {
@@ -931,7 +973,7 @@ namespace NETworkManager.Models.Settings
                 _dnsLookup_Timeout = value;
                 SettingsChanged = true;
             }
-        }        
+        }
         #endregion
         #endregion
 

@@ -129,9 +129,9 @@ namespace NETworkManager.ViewModels.Applications
                     DetailsIPv6AddressLinkLocal = value.IPv6AddressLinkLocal;
                     DetailsIPv6Address = value.IPv6Address;
                     DetailsIPv6Gateway = value.IPv6Gateway;
-                    DetailsDnsAutoconfigurationEnabled = value.DnsAutoconfigurationEnabled;
-                    DetailsDnsSuffix = value.DnsSuffix;
-                    DetailsDnsServer = value.DnsServer;
+                    DetailsDNSAutoconfigurationEnabled = value.DNSAutoconfigurationEnabled;
+                    DetailsDNSSuffix = value.DNSSuffix;
+                    DetailsDNSServer = value.DNSServer;
 
                     // Configuration
                     if(value.DhcpEnabled)
@@ -146,17 +146,17 @@ namespace NETworkManager.ViewModels.Applications
                         ConfigGateway = value.IPv4Gateway.FirstOrDefault().ToString();
                     }
 
-                    if(value.DnsAutoconfigurationEnabled)
+                    if(value.DNSAutoconfigurationEnabled)
                     {
-                        ConfigEnableDynamicDns = true;
+                        ConfigEnableDynamicDNS = true;
                     }
                     else
                     {
-                        ConfigEnableStaticDns = true;
+                        ConfigEnableStaticDNS = true;
 
-                        List<IPAddress> dnsServers = value.DnsServer.Where(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToList();
-                        ConfigPrimaryDnsServer = dnsServers.Count > 0 ? dnsServers[0].ToString() : string.Empty ;
-                        ConfigSecondaryDnsServer = dnsServers.Count > 1 ? dnsServers[1].ToString() : string.Empty;
+                        List<IPAddress> DNSServers = value.DNSServer.Where(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToList();
+                        ConfigPrimaryDNSServer = DNSServers.Count > 0 ? DNSServers[0].ToString() : string.Empty ;
+                        ConfigSecondaryDNSServer = DNSServers.Count > 1 ? DNSServers[1].ToString() : string.Empty;
                     }
 
                     CanConfigure = value.IsOperational;
@@ -394,44 +394,44 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private bool _detailsDnsAutoconfigurationEnabled;
-        public bool DetailsDnsAutoconfigurationEnabled
+        private bool _detailsDNSAutoconfigurationEnabled;
+        public bool DetailsDNSAutoconfigurationEnabled
         {
-            get { return _detailsDnsAutoconfigurationEnabled; }
+            get { return _detailsDNSAutoconfigurationEnabled; }
             set
             {
-                if (value == _detailsDnsAutoconfigurationEnabled)
+                if (value == _detailsDNSAutoconfigurationEnabled)
                     return;
 
-                _detailsDnsAutoconfigurationEnabled = value;
+                _detailsDNSAutoconfigurationEnabled = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _detailsDnsSuffix;
-        public string DetailsDnsSuffix
+        private string _detailsDNSSuffix;
+        public string DetailsDNSSuffix
         {
-            get { return _detailsDnsSuffix; }
+            get { return _detailsDNSSuffix; }
             set
             {
-                if (value == _detailsDnsSuffix)
+                if (value == _detailsDNSSuffix)
                     return;
 
-                _detailsDnsSuffix = value;
+                _detailsDNSSuffix = value;
                 OnPropertyChanged();
             }
         }
 
-        private IPAddress[] _detailsDnsServer;
-        public IPAddress[] DetailsDnsServer
+        private IPAddress[] _detailsDNSServer;
+        public IPAddress[] DetailsDNSServer
         {
-            get { return _detailsDnsServer; }
+            get { return _detailsDNSServer; }
             set
             {
-                if (value == _detailsDnsServer)
+                if (value == _detailsDNSServer)
                     return;
 
-                _detailsDnsServer = value;
+                _detailsDNSServer = value;
                 OnPropertyChanged();
             }
         }
@@ -461,7 +461,7 @@ namespace NETworkManager.ViewModels.Applications
                 if (value == _configEnableStaticIPAddress)
                     return;
 
-                ConfigEnableStaticDns = true;
+                ConfigEnableStaticDNS = true;
 
                 _configEnableStaticIPAddress = value;
                 OnPropertyChanged();
@@ -510,58 +510,58 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private bool _configEnableDynamicDns = true;
-        public bool ConfigEnableDynamicDns
+        private bool _configEnableDynamicDNS = true;
+        public bool ConfigEnableDynamicDNS
         {
-            get { return _configEnableDynamicDns; }
+            get { return _configEnableDynamicDNS; }
             set
             {
-                if (value == _configEnableDynamicDns)
+                if (value == _configEnableDynamicDNS)
                     return;
 
-                _configEnableDynamicDns = value;
+                _configEnableDynamicDNS = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _configEnableStaticDns;
-        public bool ConfigEnableStaticDns
+        private bool _configEnableStaticDNS;
+        public bool ConfigEnableStaticDNS
         {
-            get { return _configEnableStaticDns; }
+            get { return _configEnableStaticDNS; }
             set
             {
-                if (value == _configEnableStaticDns)
+                if (value == _configEnableStaticDNS)
                     return;
 
-                _configEnableStaticDns = value;
+                _configEnableStaticDNS = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _configPrimaryDnsServer;
-        public string ConfigPrimaryDnsServer
+        private string _configPrimaryDNSServer;
+        public string ConfigPrimaryDNSServer
         {
-            get { return _configPrimaryDnsServer; }
+            get { return _configPrimaryDNSServer; }
             set
             {
-                if (value == _configPrimaryDnsServer)
+                if (value == _configPrimaryDNSServer)
                     return;
 
-                _configPrimaryDnsServer = value;
+                _configPrimaryDNSServer = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _configSecondaryDnsServer;
-        public string ConfigSecondaryDnsServer
+        private string _configSecondaryDNSServer;
+        public string ConfigSecondaryDNSServer
         {
-            get { return _configSecondaryDnsServer; }
+            get { return _configSecondaryDNSServer; }
             set
             {
-                if (value == _configSecondaryDnsServer)
+                if (value == _configSecondaryDNSServer)
                     return;
 
-                _configSecondaryDnsServer = value;
+                _configSecondaryDNSServer = value;
                 OnPropertyChanged();
             }
         }
@@ -590,10 +590,10 @@ namespace NETworkManager.ViewModels.Applications
                     ConfigIPAddress = value.IPAddress;
                     ConfigGateway = value.Gateway;
                     ConfigSubnetmaskOrCidr = value.Subnetmask;
-                    ConfigEnableDynamicDns = !value.EnableStaticDns;
-                    ConfigEnableStaticDns = value.EnableStaticDns;
-                    ConfigPrimaryDnsServer = value.PrimaryDnsServer;
-                    ConfigSecondaryDnsServer = value.SecondaryDnsServer;
+                    ConfigEnableDynamicDNS = !value.EnableStaticDNS;
+                    ConfigEnableStaticDNS = value.EnableStaticDNS;
+                    ConfigPrimaryDNSServer = value.PrimaryDNSServer;
+                    ConfigSecondaryDNSServer = value.SecondaryDNSServer;
                 }
 
                 _selectedProfile = value;
@@ -706,8 +706,20 @@ namespace NETworkManager.ViewModels.Applications
 
             string configSubnetmask = ConfigSubnetmaskOrCidr;
 
+            // CIDR to subnetmask
             if (ConfigEnableStaticIPAddress && ConfigSubnetmaskOrCidr.StartsWith("/"))
                 configSubnetmask = Subnetmask.GetFromCidr(int.Parse(ConfigSubnetmaskOrCidr.TrimStart('/'))).Subnetmask;
+
+            // If primary and secondary DNS are empty --> autoconfiguration
+            if (ConfigEnableStaticDNS && string.IsNullOrEmpty(ConfigPrimaryDNSServer) && string.IsNullOrEmpty(ConfigSecondaryDNSServer))
+                ConfigEnableDynamicDNS = true;
+
+            // When primary DNS is empty, swap it with secondary (if not empty)
+            if (ConfigEnableStaticDNS && string.IsNullOrEmpty(ConfigPrimaryDNSServer) && !string.IsNullOrEmpty(ConfigSecondaryDNSServer))
+            {
+                ConfigPrimaryDNSServer = ConfigSecondaryDNSServer;
+                ConfigSecondaryDNSServer = string.Empty;
+            }
 
             NetworkInterfaceConfig config = new NetworkInterfaceConfig
             {
@@ -716,9 +728,9 @@ namespace NETworkManager.ViewModels.Applications
                 IPAddress = ConfigIPAddress,
                 Subnetmask = configSubnetmask,
                 Gateway = ConfigGateway,
-                EnableStaticDns = ConfigEnableStaticDns,
-                PrimaryDnsServer = ConfigPrimaryDnsServer,
-                SecondaryDnsServer = ConfigSecondaryDnsServer
+                EnableStaticDNS = ConfigEnableStaticDNS,
+                PrimaryDNSServer = ConfigPrimaryDNSServer,
+                SecondaryDNSServer = ConfigSecondaryDNSServer
             };
 
             try
@@ -777,9 +789,9 @@ namespace NETworkManager.ViewModels.Applications
                 IPAddress = ConfigIPAddress,
                 Gateway = ConfigGateway,
                 Subnetmask = configSubnetmask,
-                EnableStaticDns = ConfigEnableStaticDns,
-                PrimaryDnsServer = ConfigPrimaryDnsServer,
-                SecondaryDnsServer = ConfigSecondaryDnsServer
+                EnableStaticDNS = ConfigEnableStaticDNS,
+                PrimaryDNSServer = ConfigPrimaryDNSServer,
+                SecondaryDNSServer = ConfigSecondaryDNSServer
             };
 
             NetworkInterfaceProfileManager.AddProfile(profile);

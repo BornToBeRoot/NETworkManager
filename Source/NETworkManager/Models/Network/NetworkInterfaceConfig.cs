@@ -7,9 +7,9 @@
         public string IPAddress { get; set; }
         public string Subnetmask { get; set; }
         public string Gateway { get; set; }
-        public bool EnableStaticDns { get; set; }
-        public string PrimaryDnsServer { get; set; }
-        public string SecondaryDnsServer { get; set; }
+        public bool EnableStaticDNS { get; set; }
+        public string PrimaryDNSServer { get; set; }
+        public string SecondaryDNSServer { get; set; }
 
         public NetworkInterfaceConfig()
         {

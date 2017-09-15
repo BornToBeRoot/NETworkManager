@@ -313,7 +313,7 @@ namespace NETworkManager
         WakeOnLANView wakeOnLANView;
         PingView pingView;
         TracerouteView tracerouteView;
-        DNSLookupView dnsLookupView;
+        DNSLookupView DNSLookupView;
         WikiView wikiView;
 
         private ApplicationViewManager.Name? currentApplicationViewName = null;
@@ -368,10 +368,10 @@ namespace NETworkManager
                     contentControlApplication.Content = tracerouteView;
                     break;
                 case ApplicationViewManager.Name.DNSLookup:
-                    if (dnsLookupView == null)
-                        dnsLookupView = new DNSLookupView();
+                    if (DNSLookupView == null)
+                        DNSLookupView = new DNSLookupView();
 
-                    contentControlApplication.Content = dnsLookupView;
+                    contentControlApplication.Content = DNSLookupView;
                     break;
                 case ApplicationViewManager.Name.Wiki:
                     if (wikiView == null)
@@ -597,25 +597,25 @@ namespace NETworkManager
             get { return new RelayCommand(p => OpenSettingsAction()); }
         }
 
-        private async void OpenSettingsAction()
+        private void OpenSettingsAction()
         {
             if (string.IsNullOrEmpty(_cultureCode))
                 _cultureCode = SettingsManager.Current.Localization_CultureCode;
 
-            SettingsWindow settingsWindow = _isInTray ? new SettingsWindow() : new SettingsWindow(SelectedApplicationViewInfo.Name);
+            ShowWindowAction();
 
-            if (_isInTray)
-            {
-                settingsWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            }
-            else
-            {
-                settingsWindow.Owner = this;
-                MetroWindowMain.ShowOverlay();
-            }
+            contentControlSettings.Content = _isInTray ? new SettingsView() : new SettingsView(SelectedApplicationViewInfo.Name);
+        }
 
-            // Open settings window
-            settingsWindow.ShowDialog();
+        public ICommand CloseSettingsCommand
+        {
+            get { return new RelayCommand(p => CloseSettingsAction()); }
+        }
+
+        private async void CloseSettingsAction()
+        {
+            contentControlSettings.Content = null;
+
 
             // Enable/disable tray icon
             if (!_isInTray)
@@ -782,6 +782,6 @@ namespace NETworkManager
         {
             e.Handled = true;
         }
-        #endregion
+        #endregion           
     }
 }

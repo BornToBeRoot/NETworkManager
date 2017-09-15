@@ -8,7 +8,7 @@ namespace NETworkManager.Models.Network
     public class DNSLookup
     {
         #region Variables
-        Resolver dnsResolver = new Resolver();
+        Resolver DNSResolver = new Resolver();
         #endregion
 
         #region Events
@@ -35,94 +35,93 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Methods        
-        public void LookupAsync(string hostnameOrIPAddress, DNSLookupOptions dnsLookupOptions)
+        public void LookupAsync(string hostnameOrIPAddress, DNSLookupOptions DNSLookupOptions)
         {
             Task.Run(() =>
             {
                 // This will convert the query to an Arpa request
-                if (dnsLookupOptions.Type == QType.PTR)
+                if (DNSLookupOptions.Type == QType.PTR)
                 {
-                    IPAddress ip;
-                    if (IPAddress.TryParse(hostnameOrIPAddress, out ip))
+                    if (IPAddress.TryParse(hostnameOrIPAddress, out IPAddress ip))
                         hostnameOrIPAddress = Resolver.GetArpaFromIp(ip);
                 }
 
-                if (dnsLookupOptions.Type == QType.NAPTR)
+                if (DNSLookupOptions.Type == QType.NAPTR)
                     hostnameOrIPAddress = Resolver.GetArpaFromEnum(hostnameOrIPAddress);
 
-                if (dnsLookupOptions.UseCustomDNSServer)
-                    dnsResolver.DnsServer = dnsLookupOptions.CustomDNSServer;
+                if (DNSLookupOptions.UseCustomDNSServer)
+                    DNSResolver.DnsServer = DNSLookupOptions.CustomDNSServer;
                 
-                dnsResolver.Recursion = dnsLookupOptions.Recursion;
-                dnsResolver.TransportType = dnsLookupOptions.TransportType;
-                dnsResolver.Retries = dnsLookupOptions.Attempts;
-                dnsResolver.TimeOut = dnsLookupOptions.Timeout;
+                DNSResolver.Recursion = DNSLookupOptions.Recursion;
+                DNSResolver.TransportType = DNSLookupOptions.TransportType;
+                DNSResolver.Retries = DNSLookupOptions.Attempts;
+                DNSResolver.TimeOut = DNSLookupOptions.Timeout;
 
-                Response dnsResponse = dnsResolver.Query(hostnameOrIPAddress, dnsLookupOptions.Type, dnsLookupOptions.Class);
+                Response DNSResponse = DNSResolver.Query(hostnameOrIPAddress, DNSLookupOptions.Type, DNSLookupOptions.Class);
 
                 // If there was an error... return
-                if (!string.IsNullOrEmpty(dnsResponse.Error))
+                if (!string.IsNullOrEmpty(DNSResponse.Error))
                 {
-                    OnLookupError(new DNSLookupErrorArgs(dnsResponse.Error, dnsResolver.DnsServer));
+                    OnLookupError(new DNSLookupErrorArgs(DNSResponse.Error, DNSResolver.DnsServer));
                     return;
                 }
                 
                 // Process the results...
-                ProcessResponse(dnsResponse);
+                ProcessResponse(DNSResponse);
 
                 // If we get a CNAME back (from a result), do a second request and try to get the A, AAAA etc... 
-                if(dnsLookupOptions.ResolveCNAME && dnsLookupOptions.Type != QType.CNAME)
+                if(DNSLookupOptions.ResolveCNAME && DNSLookupOptions.Type != QType.CNAME)
                 {
-                    foreach (RecordCNAME r in dnsResponse.RecordsCNAME)
+                    foreach (RecordCNAME r in DNSResponse.RecordsCNAME)
                     {
-                        Response dnsResponse2 = dnsResolver.Query(r.CNAME, dnsLookupOptions.Type, dnsLookupOptions.Class);
+                        Response DNSResponse2 = DNSResolver.Query(r.CNAME, DNSLookupOptions.Type, DNSLookupOptions.Class);
 
-                        if(!string.IsNullOrEmpty(dnsResponse2.Error))
+                        if(!string.IsNullOrEmpty(DNSResponse2.Error))
                         {
-                            OnLookupError(new DNSLookupErrorArgs(dnsResponse2.Error, dnsResolver.DnsServer));
+                            OnLookupError(new DNSLookupErrorArgs(DNSResponse2.Error, DNSResolver.DnsServer));
                             continue;
                         }
 
-                        ProcessResponse(dnsResponse2);
+                        ProcessResponse(DNSResponse2);
                     }
                 }
 
-                OnLookupComplete(new DNSLookupCompleteArgs(dnsResponse.RecordsA.Length + dnsResponse.RecordsAAAA.Length + dnsResponse.RecordsCNAME.Length + dnsResponse.RecordsMX.Length + dnsResponse.RecordsNS.Length + dnsResponse.RecordsPTR.Length + dnsResponse.RecordsSOA.Length + dnsResponse.RecordsTXT.Length));
+                OnLookupComplete(new DNSLookupCompleteArgs(DNSResponse.RecordsA.Length + DNSResponse.RecordsAAAA.Length + DNSResponse.RecordsCNAME.Length + DNSResponse.RecordsMX.Length + DNSResponse.RecordsNS.Length + DNSResponse.RecordsPTR.Length + DNSResponse.RecordsSOA.Length + DNSResponse.RecordsTXT.Length));
             });
         }
 
-        private void ProcessResponse(Response dnsResponse)
+        private void ProcessResponse(Response DNSResponse)
         {
             // A
-            foreach (RecordA r in dnsResponse.RecordsA)
+            foreach (RecordA r in DNSResponse.RecordsA)
                 OnRecordReceived(new DNSLookupRecordArgs(r.RR, r));
 
             // AAAA
-            foreach (RecordAAAA r in dnsResponse.RecordsAAAA)
+            foreach (RecordAAAA r in DNSResponse.RecordsAAAA)
                 OnRecordReceived(new DNSLookupRecordArgs(r.RR, r));
 
             // CNAME
-            foreach (RecordCNAME r in dnsResponse.RecordsCNAME)
+            foreach (RecordCNAME r in DNSResponse.RecordsCNAME)
                 OnRecordReceived(new DNSLookupRecordArgs(r.RR, r));
 
             // MX
-            foreach (RecordMX r in dnsResponse.RecordsMX)
+            foreach (RecordMX r in DNSResponse.RecordsMX)
                 OnRecordReceived(new DNSLookupRecordArgs(r.RR, r));
 
             // NS
-            foreach (RecordNS r in dnsResponse.RecordsNS)
+            foreach (RecordNS r in DNSResponse.RecordsNS)
                 OnRecordReceived(new DNSLookupRecordArgs(r.RR, r));
 
             // PTR
-            foreach (RecordPTR r in dnsResponse.RecordsPTR)
+            foreach (RecordPTR r in DNSResponse.RecordsPTR)
                 OnRecordReceived(new DNSLookupRecordArgs(r.RR, r));
 
             // SOA
-            foreach (RecordSOA r in dnsResponse.RecordsSOA)
+            foreach (RecordSOA r in DNSResponse.RecordsSOA)
                 OnRecordReceived(new DNSLookupRecordArgs(r.RR, r));
 
             // TXT
-            foreach (RecordTXT r in dnsResponse.RecordsTXT)
+            foreach (RecordTXT r in DNSResponse.RecordsTXT)
                 OnRecordReceived(new DNSLookupRecordArgs(r.RR, r));
         }
         #endregion

@@ -79,6 +79,16 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=contentControlSettings, Path=HasContent}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
             <!-- 1 = Search & ApplicationList, 2 = ApplicationView-->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -295,7 +305,7 @@
                             </ToggleButton>
                         </Grid>
                     </Border>
-                    <ScrollViewer Grid.Row="1" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" Style="{StaticResource ApplicationViewScrollViewer}">
+                    <ScrollViewer Grid.Row="1" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" Style="{StaticResource FadeOutScrollViewer}">
                         <ListView ItemsSource="{Binding ApplicationViewCollection}" SelectedItem="{Binding SelectedApplicationViewInfo, Mode=TwoWay}" SelectionMode="Single" BorderThickness="0">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
@@ -318,15 +328,6 @@
                                                         <DataTrigger Binding="{Binding Path=IsSelected,RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True" >
                                                             <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
                                                         </DataTrigger>
-                                                        <MultiDataTrigger>
-                                                            <MultiDataTrigger.Conditions>
-                                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.OpenApplicationList}" Value="False" />
-                                                                <Condition Binding="{Binding Path=IsMouseOver,RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True" />
-                                                            </MultiDataTrigger.Conditions>
-                                                            <MultiDataTrigger.Setters>
-                                                                <Setter Property="ToolTip" Value="{Binding TranslatedName}" />
-                                                            </MultiDataTrigger.Setters>
-                                                        </MultiDataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
                                             </Rectangle.Style>
@@ -423,7 +424,7 @@
                         <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_SearchedApplicationNotFound}" Margin="10,0" TextWrapping="Wrap" TextAlignment="Center" />
                     </Grid>
                     <Border Grid.Row="2" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,1,0,0" Background="Transparent">
-                        <Button Height="48" HorizontalContentAlignment="Stretch" Command="{Binding OpenSettingsCommand}" Focusable="False" Style="{StaticResource SettingsButton}">
+                        <Button Height="48" HorizontalContentAlignment="Stretch" Command="{Binding OpenSettingsCommand}" Style="{StaticResource SettingsButton}" Focusable="False">
                             <Grid HorizontalAlignment="Left">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="48" />
@@ -431,7 +432,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Grid.Column="0" Width="24" Height="24">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconOcticons Kind=Settings}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconModern Kind=Settings}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -503,13 +504,76 @@
                 <ContentControl x:Name="contentControlApplication" Grid.Row="1" Focusable="False" />
             </Grid>
         </Grid>
+        <Grid Grid.Row="0">
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=contentControlSettings, Path=HasContent}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,0,1" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" HorizontalAlignment="Right" Command="{Binding CloseSettingsCommand}" Style="{StaticResource CleanButton}" Margin="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Grid.Column="0" Width="24" Height="24">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterialLight Kind=ArrowLeftCircle}" />
+                                    </Rectangle.OpacityMask>
+                                    <Rectangle.Style>
+                                        <Style TargetType="{x:Type Rectangle}">
+                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1" Text="{DynamicResource String_Back}" VerticalAlignment="Center" Margin="10,0,0,0">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+                                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                    <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Button>
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Height="48"  TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Settings}" Foreground="{DynamicResource GrayBrush3}" Margin="10,0" />
+                    </Grid>
+                </Border>
+                <ContentControl Grid.Row="1" x:Name="contentControlSettings" />
+            </Grid>
+        </Grid>
         <Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource GrayBrush8}">
             <StatusBar Foreground="{DynamicResource GrayBrush3}">
                 <StatusBarItem>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource GrayBrush3}" FontWeight="Bold" />
-                    <TextBlock Text="BETA" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource AccentColorBrush}" Margin="10,0,0,0" />
-                </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource GrayBrush3}" FontWeight="Bold" />
+                        <TextBlock Text="BETA" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource AccentColorBrush}" Margin="10,0,0,0" />
+                    </StackPanel>
                 </StatusBarItem>
             </StatusBar>
         </Border>

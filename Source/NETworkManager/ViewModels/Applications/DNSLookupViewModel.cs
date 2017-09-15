@@ -14,8 +14,7 @@ namespace NETworkManager.ViewModels.Applications
     {
         #region Variables
         private IDialogCoordinator dialogCoordinator;
-
-
+        
         private bool _isLoading = true;
 
         private string _hostnameOrIPAddress;
@@ -148,14 +147,14 @@ namespace NETworkManager.ViewModels.Applications
 
             HostnameOrIPAddressHistory = new List<string>(HistoryListHelper.Modify(HostnameOrIPAddressHistory, HostnameOrIPAddress, SettingsManager.Current.Application_HistoryListEntries));
 
-            DNSLookupOptions dnsLookupOptions = new DNSLookupOptions();
+            DNSLookupOptions DNSLookupOptions = new DNSLookupOptions();
 
             if (SettingsManager.Current.DNSLookup_UseCustomDNSServer)
             {
                 if (!string.IsNullOrEmpty(SettingsManager.Current.DNSLookup_CustomDNSServer))
                 {
-                    dnsLookupOptions.UseCustomDNSServer = SettingsManager.Current.DNSLookup_UseCustomDNSServer;
-                    dnsLookupOptions.CustomDNSServer = SettingsManager.Current.DNSLookup_CustomDNSServer;
+                    DNSLookupOptions.UseCustomDNSServer = SettingsManager.Current.DNSLookup_UseCustomDNSServer;
+                    DNSLookupOptions.CustomDNSServer = SettingsManager.Current.DNSLookup_CustomDNSServer;
                 }
                 else
                 {
@@ -164,37 +163,37 @@ namespace NETworkManager.ViewModels.Applications
                 }
             }
 
-            dnsLookupOptions.Class = SettingsManager.Current.DNSLookup_Class;
-            dnsLookupOptions.Type = SettingsManager.Current.DNSLookup_Type;
-            dnsLookupOptions.Recursion = SettingsManager.Current.DNSLookup_Recursion;
-            dnsLookupOptions.UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache;
-            dnsLookupOptions.TransportType = SettingsManager.Current.DNSLookup_TransportType;
-            dnsLookupOptions.Attempts = SettingsManager.Current.DNSLookup_Attempts;
-            dnsLookupOptions.Timeout = SettingsManager.Current.DNSLookup_Timeout;
-            dnsLookupOptions.ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME;
+            DNSLookupOptions.Class = SettingsManager.Current.DNSLookup_Class;
+            DNSLookupOptions.Type = SettingsManager.Current.DNSLookup_Type;
+            DNSLookupOptions.Recursion = SettingsManager.Current.DNSLookup_Recursion;
+            DNSLookupOptions.UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache;
+            DNSLookupOptions.TransportType = SettingsManager.Current.DNSLookup_TransportType;
+            DNSLookupOptions.Attempts = SettingsManager.Current.DNSLookup_Attempts;
+            DNSLookupOptions.Timeout = SettingsManager.Current.DNSLookup_Timeout;
+            DNSLookupOptions.ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME;
 
-            DNSLookup dnsLookup = new DNSLookup();
+            DNSLookup DNSLookup = new DNSLookup();
 
-            dnsLookup.RecordReceived += DnsLookup_RecordReceived;
-            dnsLookup.LookupError += DnsLookup_LookupError;
-            dnsLookup.LookupComplete += DnsLookup_LookupComplete;
+            DNSLookup.RecordReceived += DNSLookup_RecordReceived;
+            DNSLookup.LookupError += DNSLookup_LookupError;
+            DNSLookup.LookupComplete += DNSLookup_LookupComplete;
 
-            dnsLookup.LookupAsync(HostnameOrIPAddress, dnsLookupOptions);
+            DNSLookup.LookupAsync(HostnameOrIPAddress, DNSLookupOptions);
         }
         #endregion
 
         #region Events
-        private void DnsLookup_RecordReceived(object sender, DNSLookupRecordArgs e)
+        private void DNSLookup_RecordReceived(object sender, DNSLookupRecordArgs e)
         {
-            DNSLookupRecordInfo dnsLookupRecordInfo = DNSLookupRecordInfo.Parse(e);
+            DNSLookupRecordInfo DNSLookupRecordInfo = DNSLookupRecordInfo.Parse(e);
 
             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(delegate ()
              {
-                 LookupResult.Add(dnsLookupRecordInfo);
+                 LookupResult.Add(DNSLookupRecordInfo);
              }));
         }
 
-        private void DnsLookup_LookupError(object sender, DNSLookupErrorArgs e)
+        private void DNSLookup_LookupError(object sender, DNSLookupErrorArgs e)
         {
             if (e.ErrorCode == "Timeout Error")
                 StatusMessage = string.Format(Application.Current.Resources["String_TimeoutWhenQueryingDNSServer"] as string, e.DNSServer);
@@ -206,11 +205,11 @@ namespace NETworkManager.ViewModels.Applications
             IsLookupRunning = false;
         }
 
-        private void DnsLookup_LookupComplete(object sender, DNSLookupCompleteArgs e)
+        private void DNSLookup_LookupComplete(object sender, DNSLookupCompleteArgs e)
         {
             if (e.ResourceRecordsCount == 0)
             {
-                StatusMessage = string.Format(Application.Current.Resources["String_NoDnsRecordFoundCheckYourInputAndSettings"] as string, HostnameOrIPAddress);
+                StatusMessage = string.Format(Application.Current.Resources["String_NoDNSRecordFoundCheckYourInputAndSettings"] as string, HostnameOrIPAddress);
                 DisplayStatusMessage = true;
             }
 

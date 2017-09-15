@@ -11,8 +11,6 @@ namespace NETworkManager.ViewModels.Settings
         #region Variables
         private IDialogCoordinator dialogCoordinator;
 
-        
-
         private bool _isLoading = true;
 
         private bool _startWithWindows;

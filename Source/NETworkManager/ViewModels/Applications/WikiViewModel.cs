@@ -16,7 +16,6 @@ namespace NETworkManager.ViewModels.Applications
         #region Variables
         private IDialogCoordinator dialogCoordinator;
         
-
         private bool _isLoading = true;
 
         private string _macOrVendorAddress;

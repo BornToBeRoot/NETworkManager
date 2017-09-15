@@ -5,6 +5,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NETworkManager.Models.Network
 {
@@ -59,23 +60,29 @@ namespace NETworkManager.Models.Network
 
                         try
                         {
+                            // Get timestamp 
+                            DateTime timestamp = DateTime.Now;
+
+                            // Send ping
                             pingReply = ping.Send(ipAddress, pingOptions.Timeout, pingOptions.Buffer, options);
 
-                            errorCount = 0;  // Reset the error count (if no exception was thrown)
+                            // Reset the error count (if no exception was thrown)
+                            errorCount = 0;  
 
                             if (pingReply.Status == IPStatus.Success)
                             {
+                                
                                 if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
-                                    OnPingReceived(new PingReceivedArgs(pingReply.Address, pingReply.Buffer.Count(), pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status));
+                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, pingReply.Buffer.Count(), pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status));
                                 else
-                                    OnPingReceived(new PingReceivedArgs(pingReply.Address, pingReply.Buffer.Count(), pingReply.RoundtripTime, pingReply.Status));
+                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, pingReply.Buffer.Count(), pingReply.RoundtripTime, pingReply.Status));
                             }
                             else
                             {
                                 if (pingReply.Address == null)
-                                    OnPingReceived(new PingReceivedArgs(ipAddress, pingReply.Status));
+                                    OnPingReceived(new PingReceivedArgs(timestamp, ipAddress, pingReply.Status));
                                 else
-                                    OnPingReceived(new PingReceivedArgs(pingReply.Address, pingReply.Status));
+                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, pingReply.Status));
                             }
 
                         }

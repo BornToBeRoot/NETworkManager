@@ -8,7 +8,7 @@
         mc:Ignorable="d">
     <StackPanel>
         <TextBlock Text="{DynamicResource String_Header_DNSLookup}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{DynamicResource String_UseCustomDnsServer}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding UseCustomDNSServer}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{DynamicResource String_UseCustomDNSServer}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding UseCustomDNSServer}" Margin="0,0,0,10"/>
         <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" Style="{StaticResource DefaultTextBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
             <TextBox.Text>
                 <Binding Path="CustomDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -23,6 +23,19 @@
         <ComboBox FontSize="14" ItemsSource="{Binding Classes}" SelectedItem="{Binding Class}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
         <TextBlock Text="{DynamicResource String_Type}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <ComboBox FontSize="14" ItemsSource="{Binding Types}" SelectedItem="{Binding Type}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
+
+        <mah:ToggleSwitch Header="Append primary DNS suffix to hostname" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding AppendPrimarySuffix}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="Overwrite primary DNS suffix" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding UseCustomSuffix}" Margin="0,0,0,10"/>
+        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" IsEnabled="{Binding UseCustomSuffix}" Style="{StaticResource DefaultTextBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+            <TextBox.Text>
+                <Binding Path="CustomSuffix" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
         <mah:ToggleSwitch Header="{DynamicResource String_ResolveCNAME}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ResolveCNAME}" Margin="0,0,0,10"/>
         <mah:ToggleSwitch Header="{DynamicResource String_Recursion}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding Recursion}" Margin="0,0,0,10"/>
         <mah:ToggleSwitch Header="{DynamicResource String_UseResolverCache}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding UseResolverCache}" Margin="0,0,0,10"/>

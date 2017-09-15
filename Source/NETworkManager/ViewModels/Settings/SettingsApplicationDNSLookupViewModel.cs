@@ -83,6 +83,57 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
+        private bool _appendPrimarySuffix;
+        public bool AppendPrimarySuffix
+        {
+            get { return _appendPrimarySuffix; }
+            set
+            {
+                if (value == _appendPrimarySuffix)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.DNSLookup_AppendPrimarySuffix = value;
+
+                _appendPrimarySuffix = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _useCustomSuffix;
+        public bool UseCustomSuffix
+        {
+            get { return _useCustomSuffix; }
+            set
+            {
+                if (value == _useCustomSuffix)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.DNSLookup_UseCustomSuffix = value;
+
+                _useCustomSuffix = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _customSuffix;
+        public string CustomSuffix
+        {
+            get { return _customSuffix; }
+            set
+            {
+                if (value == _customSuffix)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.DNSLookup_CustomSuffix = value;
+
+                _customSuffix = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _resolveCNAME;
         public bool ResolveCNAME
         {

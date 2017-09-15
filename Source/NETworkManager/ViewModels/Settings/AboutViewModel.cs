@@ -60,6 +60,16 @@ namespace NETworkManager.ViewModels.Settings
         #endregion
 
         #region Commands & Actions
+        public ICommand OpenWebsiteLibaryControlzExCommand
+        {
+            get { return new RelayCommand(p => OpenWebsiteLibaryControlzExAction()); }
+        }
+
+        private void OpenWebsiteLibaryControlzExAction()
+        {
+            Process.Start(Properties.Resources.Libary_ControlzEx_Url);
+        }
+
         public ICommand OpenWebsiteLibaryMahAppsMetroCommand
         {
             get { return new RelayCommand(p => OpenWebsiteLibaryMahAppsMetroAction()); }

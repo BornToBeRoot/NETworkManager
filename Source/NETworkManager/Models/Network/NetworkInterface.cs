@@ -82,15 +82,15 @@ namespace NETworkManager.Models.Network
                         listDhcpServer.Add(dhcpServerIPAddress);
                 }
 
-                // Check if autoconfiguration for dns is enabled (only via registry key)
+                // Check if autoconfiguration for DNS is enabled (only via registry key)
                 RegistryKey nameServerKey = Registry.LocalMachine.OpenSubKey(String.Format(@"SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{0}", networkInterface.Id));
-                bool dnsAutoconfigurationEnabled = string.IsNullOrEmpty(nameServerKey.GetValue("NameServer").ToString());
+                bool DNSAutoconfigurationEnabled = string.IsNullOrEmpty(nameServerKey.GetValue("NameServer").ToString());
 
-                List<IPAddress> listDnsServer = new List<IPAddress>();
+                List<IPAddress> listDNSServer = new List<IPAddress>();
 
-                foreach (IPAddress dnsServerIPAddress in networkInterface.GetIPProperties().DnsAddresses)
+                foreach (IPAddress DNSServerIPAddress in networkInterface.GetIPProperties().DnsAddresses)
                 {
-                    listDnsServer.Add(dnsServerIPAddress);
+                    listDNSServer.Add(DNSServerIPAddress);
                 }
 
                 listNetworkInterfaceInfo.Add(new NetworkInterfaceInfo
@@ -113,9 +113,9 @@ namespace NETworkManager.Models.Network
                     IPv6AddressLinkLocal = listIPv6AddressLinkLocal.ToArray(),
                     IPv6Address = listIPv6Address.ToArray(),
                     IPv6Gateway = listIPv6Gateway.ToArray(),
-                    DnsAutoconfigurationEnabled = dnsAutoconfigurationEnabled,
-                    DnsSuffix = networkInterface.GetIPProperties().DnsSuffix,
-                    DnsServer = listDnsServer.ToArray()
+                    DNSAutoconfigurationEnabled = DNSAutoconfigurationEnabled,
+                    DNSSuffix = networkInterface.GetIPProperties().DnsSuffix,
+                    DNSServer = listDNSServer.ToArray()
                 });
             }
 
@@ -134,17 +134,18 @@ namespace NETworkManager.Models.Network
             command += config.EnableStaticIPAddress ? string.Format("source=static address={0} mask={1} gateway={2}", config.IPAddress, config.Subnetmask, config.Gateway) : "source=dhcp";
 
             // DNS
-            command += string.Format(";netsh interface ipv4 set dnsservers name=\"{0}\" ", config.Name);
-            command += config.EnableStaticDns ? string.Format("source=static address={0} register=primary validate=no", config.PrimaryDnsServer) : "source=dhcp";
-            command += (config.EnableStaticDns && !string.IsNullOrEmpty(config.SecondaryDnsServer)) ? string.Format(";netsh interface ipv4 add dnsservers name=\"{0}\" address={1} index=2 validate=no", config.Name, config.SecondaryDnsServer) : "";
-
-            MessageBox.Show(command);
+            command += string.Format(";netsh interface ipv4 set DNSservers name=\"{0}\" ", config.Name);
+            command += config.EnableStaticDNS ? string.Format("source=static address={0} register=primary validate=no", config.PrimaryDNSServer) : "source=dhcp";
+            command += (config.EnableStaticDNS && !string.IsNullOrEmpty(config.SecondaryDNSServer)) ? string.Format(";netsh interface ipv4 add DNSservers name=\"{0}\" address={1} index=2 validate=no", config.Name, config.SecondaryDNSServer) : "";
 
             // Start process with elevated rights...
-            ProcessStartInfo processStartInfo = new ProcessStartInfo();
-            processStartInfo.Verb = "runas";
-            processStartInfo.FileName = "powershell.exe";
-            processStartInfo.Arguments = string.Format("-NoProfile -NoLogo -Command {0}", command); ;
+            ProcessStartInfo processStartInfo = new ProcessStartInfo()
+            {
+                Verb = "runas",
+                FileName = "powershell.exe",
+                Arguments = string.Format("-NoProfile -NoLogo -Command {0}", command)
+            };
+            
             processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
             using (Process process = new Process())

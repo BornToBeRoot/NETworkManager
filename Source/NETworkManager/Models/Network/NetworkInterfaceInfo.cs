@@ -24,9 +24,9 @@ namespace NETworkManager.Models.Network
         public IPAddress[] IPv6Address { get; set; }
         public IPAddress[] IPv6AddressLinkLocal { get; set; }
         public IPAddress[] IPv6Gateway { get; set; }
-        public bool DnsAutoconfigurationEnabled { get; set; }
-        public string DnsSuffix { get; set; }
-        public IPAddress[] DnsServer { get; set; }
+        public bool DNSAutoconfigurationEnabled { get; set; }
+        public string DNSSuffix { get; set; }
+        public IPAddress[] DNSServer { get; set; }
 
         public NetworkInterfaceInfo()
         {

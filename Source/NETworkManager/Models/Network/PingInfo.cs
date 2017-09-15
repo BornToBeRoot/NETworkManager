@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 using System.Net;
 using System.Net.NetworkInformation;
 
@@ -6,6 +6,7 @@ namespace NETworkManager.Models.Network
 {
     public class PingInfo
     {
+        public DateTime Timestamp { get; set; }
         public IPAddress IPAddress { get; set; }
         public int Bytes { get; set; }
         public long Time { get; set; }
@@ -17,17 +18,29 @@ namespace NETworkManager.Models.Network
 
         }
 
-        public PingInfo(IPAddress ipAddress, IPStatus status)
+        public PingInfo(DateTime timestamp, IPAddress ipAddress, IPStatus status)
         {
+            Timestamp = timestamp;
             IPAddress = ipAddress;
             Status = status;
         }
 
-        public PingInfo(IPAddress ipAddress, int bytes, long time, IPStatus status)
+        public PingInfo(DateTime timestamp, IPAddress ipAddress, int bytes, long time, IPStatus status)
         {
+            Timestamp = timestamp;
             IPAddress = ipAddress;
             Bytes = bytes;
             Time = time;
+            Status = status;
+        }
+
+        public PingInfo(DateTime timestamp, IPAddress ipAddress, int bytes, long time, int ttl, IPStatus status)
+        {
+            Timestamp = timestamp;
+            IPAddress = ipAddress;
+            Bytes = bytes;
+            Time = time;
+            TTL = ttl;
             Status = status;
         }
 
@@ -42,7 +55,7 @@ namespace NETworkManager.Models.Network
 
         public static PingInfo Parse(PingReceivedArgs e)
         {
-            return new PingInfo(e.IPAddress, e.Bytes, e.Time, e.TTL, e.Status);
+            return new PingInfo(e.Timestamp, e.IPAddress, e.Bytes, e.Time, e.TTL, e.Status);
         }
     }
 }

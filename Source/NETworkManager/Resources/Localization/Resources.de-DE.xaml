@@ -107,8 +107,8 @@
     <system:String x:Key="String_SecondaryDNSServer">Sekundärer DNS-Server</system:String>
     <system:String x:Key="String_Yes">Ja</system:String>
     <system:String x:Key="String_No">Nein</system:String>
-    <system:String x:Key="String_DNSSuffix">DNS Suffix</system:String>
-    <system:String x:Key="String_DNSServers">DNS Servers</system:String>
+    <system:String x:Key="String_DNSSuffix">DNS-Suffix</system:String>
+    <system:String x:Key="String_DNSServers">DNS-Servers</system:String>
     <system:String x:Key="String_DynamicIPv4Address">Dynamische IPv4-Adresse</system:String>
     <system:String x:Key="String_StaticIPv4Address">Statische IPv4-Address</system:String>
     <system:String x:Key="String_StaticIPv4DNSServer">Statischer IPv4-DNS-Server</system:String>
@@ -188,12 +188,12 @@
     <system:String x:Key="String_NoVendorFoundCheckYourInput">Kein Hersteller gefunden. Überprüfen Sie Ihre Eingabe!</system:String>
     <system:String x:Key="String_EnableTransparency">Transparenz aktivieren</system:String>
     <system:String x:Key="String_DefaultPort">Standard-Port:</system:String>
-    <system:String x:Key="String_UseCustomDnsServer">Verwende benutzerdefinierten DNS-Server</system:String>
+    <system:String x:Key="String_UseCustomDNSServer">Verwende benutzerdefinierten DNS-Server</system:String>
     <system:String x:Key="String_Class">Klasse</system:String>
     <system:String x:Key="String_Recursion">Rekursion</system:String>
     <system:String x:Key="String_UseResolverCache">Resolver-Cache verwenden</system:String>
     <system:String x:Key="String_Result">Ergebnis</system:String>
-    <system:String x:Key="String_NoDnsRecordFoundCheckYourInputAndSettings">Kein DNS-Eintrag für "{0}" gefunden! Überprüfe deine Eingabe und die Einstellungen.</system:String>
+    <system:String x:Key="String_NoDNSRecordFoundCheckYourInputAndSettings">Kein DNS-Eintrag für "{0}" gefunden! Überprüfe deine Eingabe und die Einstellungen.</system:String>
     <system:String x:Key="String_UnkownError">Unbekannter Fehler!</system:String>
     <system:String x:Key="String_TimeoutWhenQueryingDNSServer">Timeout beim Abfragen des DNS-Servers mit der IP-Adresse "{0}"!</system:String>
     <system:String x:Key="String_ResolveCNAME">CNAME auflösen</system:String>
@@ -213,7 +213,8 @@
     <system:String x:Key="String_MultipleInstances">Mehrere Instanzen</system:String>
     <system:String x:Key="String_ConnectTheNetworkCardToConfigureIt">Verbinde die Netzwerkkarte mit einem Netzwerk, um diese zu konfigurieren!</system:String>
     <system:String x:Key="String_DNSAutoconfiguration">DNS Autkonfiguration</system:String>
-
+    <system:String x:Key="String_Back">zurück</system:String>
+    
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
     <system:String x:Key="String_Button_Default">Standard</system:String>
@@ -367,6 +368,8 @@
     <system:String x:Key="String_PortStatus_Open">Offen</system:String>
     
     <!-- Libaries -->
+    <system:String x:Key="String_Libary_ControlzExName">ControlzEx</system:String>
+    <system:String x:Key="String_Libary_ControlzExDescription">Shared Controlz for WPF and ... more.</system:String>
     <system:String x:Key="String_Libary_MahAppsMetroName">MahApps.Metro</system:String>
     <system:String x:Key="String_Libary_MahAppsMetroDescription">Ein Toolkit für die Erstellung von WPF-Anwendungen im Metro - / Modern UI Stil.</system:String>
     <system:String x:Key="String_Libary_MahAppsMetroIconPacksName">MahApps.Metro.IconPacks</system:String>

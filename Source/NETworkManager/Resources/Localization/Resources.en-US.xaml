@@ -188,12 +188,12 @@
     <system:String x:Key="String_NoVendorFoundCheckYourInput">No vendor found. Check your input!</system:String>
     <system:String x:Key="String_EnableTransparency">Enable transparency</system:String>
     <system:String x:Key="String_DefaultPort">Default port:</system:String>
-    <system:String x:Key="String_UseCustomDnsServer">Use custom dns server</system:String>
+    <system:String x:Key="String_UseCustomDNSServer">Use custom DNS server</system:String>
     <system:String x:Key="String_Class">Class</system:String>
     <system:String x:Key="String_Recursion">Recursion</system:String>
     <system:String x:Key="String_UseResolverCache">Use resolver cache</system:String>
     <system:String x:Key="String_Result">Result</system:String>
-    <system:String x:Key="String_NoDnsRecordFoundCheckYourInputAndSettings">No dns record found for "{0}"! Check your input and the settings.</system:String>
+    <system:String x:Key="String_NoDNSRecordFoundCheckYourInputAndSettings">No DNS record found for "{0}"! Check your input and the settings.</system:String>
     <system:String x:Key="String_UnkownError">Unkown error!</system:String>
     <system:String x:Key="String_TimeoutWhenQueryingDNSServer">Timeout when querying the DNS server with the IP-Address "{0}"!</system:String>
     <system:String x:Key="String_ResolveCNAME">Resolve CNAME</system:String>
@@ -206,13 +206,14 @@
     <system:String x:Key="String_TheFollwingParametersCanNotBeProcesses">The following parameters can not be processed:</system:String>
     <system:String x:Key="String_TheFollowingParametersAreAvailable">The following parameters are available:</system:String>
     <system:String x:Key="String_Open">Open</system:String>
-    <system:String x:Key="String_CustomDNSServerIsEmptyCheckYourSettingsUseWindowsOwnDNSServer">Custom dns server is empty. Check your settings! (Use windows own dns server...)</system:String>
+    <system:String x:Key="String_CustomDNSServerIsEmptyCheckYourSettingsUseWindowsOwnDNSServer">Custom DNS server is empty. Check your settings! (Use windows own DNS server...)</system:String>
     <system:String x:Key="String_EnterNameForProfile">Enter a name under which you want to save the profile.</system:String>
     <system:String x:Key="String_DeleteProfileMessage">The selected profile will be deleted permanently.</system:String>
     <system:String x:Key="String_Backup">Backup</system:String>
     <system:String x:Key="String_MultipleInstances">Multiple instances</system:String>
     <system:String x:Key="String_ConnectTheNetworkCardToConfigureIt">Connect the network card to a network to configure it!</system:String>
     <system:String x:Key="String_DNSAutoconfiguration">DNS Autconfiguration</system:String>
+    <system:String x:Key="String_Back">back</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
@@ -365,8 +366,10 @@
     <!-- PortStatus -->
     <system:String x:Key="String_PortStatus_Closed">Closed</system:String>
     <system:String x:Key="String_PortStatus_Open">Open</system:String>
-    
+        
     <!-- Libaries -->
+    <system:String x:Key="String_Libary_ControlzExName">ControlzEx</system:String>
+    <system:String x:Key="String_Libary_ControlzExDescription">Shared Controlz for WPF and ... more.</system:String>
     <system:String x:Key="String_Libary_MahAppsMetroName">MahApps.Metro</system:String>
     <system:String x:Key="String_Libary_MahAppsMetroDescription">A toolkit for creating Metro / Modern UI styled WPF apps.</system:String>
     <system:String x:Key="String_Libary_MahAppsMetroIconPacksName">MahApps.Metro.IconPacks</system:String>
