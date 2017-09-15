@@ -214,7 +214,9 @@
     <system:String x:Key="String_ConnectTheNetworkCardToConfigureIt">Connect the network card to a network to configure it!</system:String>
     <system:String x:Key="String_DNSAutoconfiguration">DNS Autconfiguration</system:String>
     <system:String x:Key="String_Back">back</system:String>
-    
+    <system:String x:Key="String_AddDNSSuffixToHostname">Add DNS suffix (primary) to hostname</system:String>
+    <system:String x:Key="String_UseCustomDNSSuffix">Use custom DNS suffix</system:String>
+
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
     <system:String x:Key="String_Button_Default">Default</system:String>
@@ -274,7 +276,7 @@
     <system:String x:Key="String_Watermark_ExampleHostnameAndOrIPAddress">192.168.178.1; fritz.box</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmaskOrCIDR">255.255.255.0 or /24</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Gateway">192.168.178.1</system:String>
-    <system:String x:Key="String_Watermark_ExampleIPv4DNS">8.8.8.8</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPv4DNSServer">8.8.8.8</system:String>
     <system:String x:Key="String_Watermark_EamplePortPortRangeOrService">22; 80; https; ldaps; 777 - 999; 8080</system:String>
 
     <!-- ShowProgress -->

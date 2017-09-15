@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using NETworkManager.Collections;
+using System.Net;
+using System.Net.NetworkInformation;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -14,7 +16,7 @@ namespace NETworkManager.ViewModels.Applications
     {
         #region Variables
         private IDialogCoordinator dialogCoordinator;
-        
+
         private bool _isLoading = true;
 
         private string _hostnameOrIPAddress;
@@ -178,7 +180,26 @@ namespace NETworkManager.ViewModels.Applications
             DNSLookup.LookupError += DNSLookup_LookupError;
             DNSLookup.LookupComplete += DNSLookup_LookupComplete;
 
-            DNSLookup.LookupAsync(HostnameOrIPAddress, DNSLookupOptions);
+            string hostnameOrIPAddress = HostnameOrIPAddress;
+            string dnsSuffix = string.Empty;
+
+            // Detect hostname (usually they don't contain ".")
+            if (HostnameOrIPAddress.IndexOf(".", StringComparison.OrdinalIgnoreCase) == -1)
+            {
+                if (SettingsManager.Current.DNSLookup_AddDNSSuffix)
+                {
+                    if (SettingsManager.Current.DNSLookup_UseCustomDNSSuffix)
+                        dnsSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix;
+                    else
+                        dnsSuffix = IPGlobalProperties.GetIPGlobalProperties().DomainName;
+                }
+            }
+
+            // Append dns suffix to hostname
+            if (!string.IsNullOrEmpty(dnsSuffix))
+                hostnameOrIPAddress += string.Format("{0}{1}", dnsSuffix.StartsWith(".") ? "" : ".", dnsSuffix);
+
+            DNSLookup.LookupAsync(hostnameOrIPAddress, DNSLookupOptions);
         }
         #endregion
 

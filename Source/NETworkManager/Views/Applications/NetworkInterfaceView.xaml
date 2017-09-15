@@ -383,7 +383,7 @@
                                         </TextBox.Text>
                                     </TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_SecondaryDNSServer}"  />
-                                    <TextBox x:Name="txtConfigSecondaryDNSServer" Grid.Column="1" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNS}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                    <TextBox x:Name="txtConfigSecondaryDNSServer" Grid.Column="1" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNSServer}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                         <TextBox.Text>
                                             <Binding Path="ConfigSecondaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                 <Binding.ValidationRules>

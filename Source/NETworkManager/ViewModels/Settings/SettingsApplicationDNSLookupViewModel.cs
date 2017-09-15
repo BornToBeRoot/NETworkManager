@@ -83,53 +83,53 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-        private bool _appendPrimarySuffix;
-        public bool AppendPrimarySuffix
+        private bool _addDNSSuffix;
+        public bool AddDNSSuffix
         {
-            get { return _appendPrimarySuffix; }
+            get { return _addDNSSuffix; }
             set
             {
-                if (value == _appendPrimarySuffix)
+                if (value == _addDNSSuffix)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_AppendPrimarySuffix = value;
+                    SettingsManager.Current.DNSLookup_AddDNSSuffix = value;
 
-                _appendPrimarySuffix = value;
+                _addDNSSuffix = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _useCustomSuffix;
-        public bool UseCustomSuffix
+        private bool _useCustomDNSSuffix;
+        public bool UseCustomDNSSuffix
         {
-            get { return _useCustomSuffix; }
+            get { return _useCustomDNSSuffix; }
             set
             {
-                if (value == _useCustomSuffix)
+                if (value == _useCustomDNSSuffix)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_UseCustomSuffix = value;
+                    SettingsManager.Current.DNSLookup_UseCustomDNSSuffix = value;
 
-                _useCustomSuffix = value;
+                _useCustomDNSSuffix = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _customSuffix;
-        public string CustomSuffix
+        private string _customDNSSuffix;
+        public string CustomDNSSuffix
         {
-            get { return _customSuffix; }
+            get { return _customDNSSuffix; }
             set
             {
-                if (value == _customSuffix)
+                if (value == _customDNSSuffix)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_CustomSuffix = value;
+                    SettingsManager.Current.DNSLookup_CustomDNSSuffix = value;
 
-                _customSuffix = value;
+                _customDNSSuffix = value;
                 OnPropertyChanged();
             }
         }
@@ -255,6 +255,9 @@ namespace NETworkManager.ViewModels.Settings
             Class = Classes.First(x => x == SettingsManager.Current.DNSLookup_Class);
             Types = Enum.GetValues(typeof(QType)).Cast<QType>().OrderBy(x => x.ToString()).ToList();
             Type = Types.First(x => x == SettingsManager.Current.DNSLookup_Type);
+            AddDNSSuffix = SettingsManager.Current.DNSLookup_AddDNSSuffix;
+            UseCustomDNSSuffix = SettingsManager.Current.DNSLookup_UseCustomDNSSuffix;
+            CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix;
             ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME;
             Recursion = SettingsManager.Current.DNSLookup_Recursion;
             UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache;

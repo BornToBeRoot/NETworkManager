@@ -849,44 +849,44 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _dnsLookup_AppendPrimarySuffix = true;
-        public bool DNSLookup_AppendPrimarySuffix
+        private bool _dnsLookup_AddDNSSuffix = true;
+        public bool DNSLookup_AddDNSSuffix
         {
-            get { return _dnsLookup_AppendPrimarySuffix; }
+            get { return _dnsLookup_AddDNSSuffix; }
             set
             {
-                if (value == _dnsLookup_AppendPrimarySuffix)
+                if (value == _dnsLookup_AddDNSSuffix)
                     return;
 
-                _dnsLookup_AppendPrimarySuffix = value;
+                _dnsLookup_AddDNSSuffix = value;
                 SettingsChanged = true;
             }
         }
 
-        private bool _dnsLookup_UseCustomSuffix;
-        public bool DNSLookup_UseCustomSuffix
+        private bool _dnsLookup_UseCustomDNSSuffix;
+        public bool DNSLookup_UseCustomDNSSuffix
         {
-            get { return _dnsLookup_UseCustomSuffix; }
+            get { return _dnsLookup_UseCustomDNSSuffix; }
             set
             {
-                if (value == _dnsLookup_UseCustomSuffix)
+                if (value == _dnsLookup_UseCustomDNSSuffix)
                     return;
 
-                _dnsLookup_UseCustomSuffix = value;
+                _dnsLookup_UseCustomDNSSuffix = value;
                 SettingsChanged = true;
             }
         }
 
-        private string _dnsLookup_CustomSuffix;
-        public string DNSLookup_CustomSuffix
+        private string _dnsLookup_CustomDNSSuffix;
+        public string DNSLookup_CustomDNSSuffix
         {
-            get { return _dnsLookup_CustomSuffix; }
+            get { return _dnsLookup_CustomDNSSuffix; }
             set
             {
-                if (value == _dnsLookup_CustomSuffix)
+                if (value == _dnsLookup_CustomDNSSuffix)
                     return;
 
-                _dnsLookup_CustomSuffix = value;
+                _dnsLookup_CustomDNSSuffix = value;
                 SettingsChanged = true;
             }
         }
