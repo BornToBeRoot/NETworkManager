@@ -150,6 +150,7 @@
     <system:String x:Key="String_Time3">Zeit 3</system:String>
     <system:String x:Key="String_PreferredProtocolWhenResolvingHostname">Bevorzugtes Protokoll beim Auflösen des Hostnamens:</system:String>
     <system:String x:Key="String_Hop">Hop</system:String>
+    <system:String x:Key="String_Hops">Hops</system:String>
     <system:String x:Key="String_MaximumHopsRouter">Maximale Hops/Router</system:String>
     <system:String x:Key="String_ConfirmClose">Schließen bestätigen</system:String>
     <system:String x:Key="String_ConfirmCloseQuesiton">Sind Sie sicher, dass Sie die Anwendung beenden möchten?</system:String>

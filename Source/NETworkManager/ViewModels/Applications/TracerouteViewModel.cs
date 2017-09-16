@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using NETworkManager.Models.Network;
 using System.Threading;
 using NETworkManager.Helpers;
+using System.Diagnostics;
+using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -16,6 +18,9 @@ namespace NETworkManager.ViewModels.Applications
     {
         #region Variables
         CancellationTokenSource cancellationTokenSource;
+
+        DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        Stopwatch stopwatch = new Stopwatch();
 
         private bool _isLoading = true;
 
@@ -118,6 +123,79 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
+
+        private DateTime? _startTime;
+        public DateTime? StartTime
+        {
+            get { return _startTime; }
+            set
+            {
+                if (value == _startTime)
+                    return;
+
+                _startTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TimeSpan _duration;
+        public TimeSpan Duration
+        {
+            get { return _duration; }
+            set
+            {
+                if (value == _duration)
+                    return;
+
+                _duration = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DateTime? _endTime;
+        public DateTime? EndTime
+        {
+            get { return _endTime; }
+            set
+            {
+                if (value == _endTime)
+                    return;
+
+                _endTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _expandStatistics;
+        public bool ExpandStatistics
+        {
+            get { return _expandStatistics; }
+            set
+            {
+                if (value == _expandStatistics)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.Traceroute_ExpandStatistics = value;
+
+                _expandStatistics = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _hops;
+        public int Hops
+        {
+            get { return _hops; }
+            set
+            {
+                if (value == _hops)
+                    return;
+
+                _hops = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, load settings
@@ -132,6 +210,8 @@ namespace NETworkManager.ViewModels.Applications
         {
             if (SettingsManager.Current.Traceroute_HostnameOrIPAddressHistory != null)
                 HostnameOrIPAddressHistory = new List<string>(SettingsManager.Current.Traceroute_HostnameOrIPAddressHistory);
+
+            ExpandStatistics = SettingsManager.Current.Traceroute_ExpandStatistics;
         }
         #endregion
 
@@ -162,7 +242,16 @@ namespace NETworkManager.ViewModels.Applications
             DisplayStatusMessage = false;
             IsTraceRunning = true;
 
+            // Measure the time
+            StartTime = DateTime.Now;
+            stopwatch.Start();
+            dispatcherTimer.Tick += DispatcherTimer_Tick;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            dispatcherTimer.Start();
+            EndTime = null;
+
             TraceResult.Clear();
+            Hops = 0;
 
             // Try to parse the string into an IP-Address
             IPAddress.TryParse(HostnameOrIPAddress, out IPAddress ipAddress);
@@ -239,6 +328,15 @@ namespace NETworkManager.ViewModels.Applications
 
         private void TracerouteFinished()
         {
+            // Stop timer and stopwatch
+            stopwatch.Stop();
+            dispatcherTimer.Stop();
+
+            Duration = stopwatch.Elapsed;
+            EndTime = DateTime.Now;
+
+            stopwatch.Reset();
+
             CancelTrace = false;
             IsTraceRunning = false;
         }
@@ -259,6 +357,8 @@ namespace NETworkManager.ViewModels.Applications
             {
                 TraceResult.Add(tracerouteInfo);
             }));
+
+            Hops++;
         }
 
         private void Traceroute_MaximumHopsReached(object sender, MaximumHopsReachedArgs e)
@@ -270,7 +370,7 @@ namespace NETworkManager.ViewModels.Applications
         }
 
         private void Traceroute_UserHasCanceled(object sender, System.EventArgs e)
-        { 
+        {
             TracerouteFinished();
 
             StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
@@ -280,6 +380,11 @@ namespace NETworkManager.ViewModels.Applications
         private void Traceroute_TraceComplete(object sender, System.EventArgs e)
         {
             TracerouteFinished();
+        }
+
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            Duration = stopwatch.Elapsed;
         }
         #endregion               
     }

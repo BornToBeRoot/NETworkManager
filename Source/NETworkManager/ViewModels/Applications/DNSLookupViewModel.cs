@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using NETworkManager.Collections;
-using System.Net;
 using System.Net.NetworkInformation;
 
 namespace NETworkManager.ViewModels.Applications

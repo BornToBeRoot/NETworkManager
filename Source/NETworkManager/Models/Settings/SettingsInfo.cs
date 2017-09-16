@@ -630,6 +630,20 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _traceroute_ExpandStatistics;
+        public bool Traceroute_ExpandStatistics
+        {
+            get { return _traceroute_ExpandStatistics; }
+            set
+            {
+                if (value == _traceroute_ExpandStatistics)
+                    return;
+
+                _traceroute_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Lookup

@@ -233,6 +233,5 @@
                 </Grid>
             </StackPanel>
         </Expander>
-
     </Grid>
 </UserControl>
