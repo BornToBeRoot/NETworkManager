@@ -196,6 +196,22 @@ namespace NETworkManager
             }
         }
 
+        SettingsView _settingsView;
+
+        private bool _showSettingsView;
+        public bool ShowSettingsView
+        {
+            get { return _showSettingsView; }
+            set
+            {
+                if (value == _showSettingsView)
+                    return;
+
+                _showSettingsView = value;
+                OnPropertyChanged("ShowSettingsView");
+            }
+        }
+
         private string _version;
         public string Version
         {
@@ -591,7 +607,7 @@ namespace NETworkManager
         {
             OpenApplicationList = true;
         }
-
+                
         public ICommand OpenSettingsCommand
         {
             get { return new RelayCommand(p => OpenSettingsAction()); }
@@ -604,7 +620,15 @@ namespace NETworkManager
 
             ShowWindowAction();
 
-            contentControlSettings.Content = _isInTray ? new SettingsView() : new SettingsView(SelectedApplicationViewInfo.Name);
+            if (_settingsView == null)
+            {
+                _settingsView = new SettingsView();
+                contentControlSettings.Content = _settingsView;
+            }
+
+            _settingsView.SelectedApplicationName = SelectedApplicationViewInfo.Name;
+
+            ShowSettingsView = true;
         }
 
         public ICommand CloseSettingsCommand
@@ -614,8 +638,7 @@ namespace NETworkManager
 
         private async void CloseSettingsAction()
         {
-            contentControlSettings.Content = null;
-
+            ShowSettingsView = false;
 
             // Enable/disable tray icon
             if (!_isInTray)

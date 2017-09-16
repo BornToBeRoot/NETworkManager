@@ -15,7 +15,7 @@
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,1,0">
                         <ScrollViewer ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" Style="{StaticResource FadeOutScrollViewer}">
-                            <ListBox ItemsSource="{Binding SettingsGeneralViews}" SelectedItem="{Binding SelectedSettingsView}" Margin="10">
+                            <ListBox ItemsSource="{Binding SettingsViews}" SelectedItem="{Binding SelectedSettingsView}" Margin="10">
                                 <ListBox.GroupStyle>
                                     <GroupStyle>
                                         <GroupStyle.ContainerStyle>

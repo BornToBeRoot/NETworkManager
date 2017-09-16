@@ -2,21 +2,34 @@
 using NETworkManager.Views;
 using System.Windows.Controls;
 using NETworkManager.Views.Settings;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Data;
 using System;
-using System.Windows;
 
 namespace NETworkManager.ViewModels.Settings
 {
     public class SettingsViewModel : ViewModelBase
     {
         #region Variables
-        private CollectionViewSource _settingsGeneralViewsSource;
-        public ICollectionView SettingsGeneralViews
+        private ApplicationViewManager.Name _selectedApplicationName;
+        public ApplicationViewManager.Name SelectedApplicationName
         {
-            get { return _settingsGeneralViewsSource.View; }
+            get { return _selectedApplicationName; }
+            set
+            {
+                ChangeSelectedSettingsView(value.ToString());
+
+                if (value == _selectedApplicationName)
+                    return;
+
+                _selectedApplicationName = value;
+            }
+        }
+
+        private CollectionViewSource _settingsViewsSource;
+        public ICollectionView SettingsViews
+        {
+            get { return _settingsViewsSource.View; }
         }
 
         private UserControl _settingsContent;
@@ -43,7 +56,7 @@ namespace NETworkManager.ViewModels.Settings
                     return;
 
                 if (value != null)
-                    ChangeSettingsGeneralView(value);
+                    ChangeSettingsContent(value);
 
                 _selectedSettingsView = value;
                 OnPropertyChanged();
@@ -67,31 +80,33 @@ namespace NETworkManager.ViewModels.Settings
         #endregion
 
         #region Contructor, load settings
-        public SettingsViewModel(ApplicationViewManager.Name selectedApplicationName)
+        public SettingsViewModel()
         {
-            LoadSettings(selectedApplicationName.ToString());
+            LoadSettings();
         }
 
-        private void LoadSettings(string selectedApplicationName)
+        private void LoadSettings()
         {
             // General
-            _settingsGeneralViewsSource = new CollectionViewSource()
+            _settingsViewsSource = new CollectionViewSource()
             {
                 Source = SettingsViewManager.List
             };
 
-            _settingsGeneralViewsSource.GroupDescriptions.Add(new PropertyGroupDescription("TranslatedGroup"));
-
-            // Not nice, but works -.-
-            if (Enum.GetNames(typeof(SettingsViewManager.Name)).Contains(selectedApplicationName))
-                SelectedSettingsView = SettingsGeneralViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name.ToString() == selectedApplicationName);
-            else
-                SelectedSettingsView = SettingsGeneralViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name == SettingsViewManager.Name.General);
+            _settingsViewsSource.GroupDescriptions.Add(new PropertyGroupDescription("TranslatedGroup"));
         }
         #endregion
 
         #region Methods
-        private void ChangeSettingsGeneralView(SettingsViewInfo settingsViewInfo)
+        private void ChangeSelectedSettingsView(string applicationName)
+        {
+            if (Enum.GetNames(typeof(SettingsViewManager.Name)).Contains(applicationName))
+                SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name.ToString() == applicationName);
+            else
+                SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name == SettingsViewManager.Name.General);
+        }
+
+        private void ChangeSettingsContent(SettingsViewInfo settingsViewInfo)
         {
             switch (settingsViewInfo.Name)
             {
@@ -178,7 +193,7 @@ namespace NETworkManager.ViewModels.Settings
                         _settingsApplicationDNSLookupView = new SettingsApplicationDNSLookupView();
 
                     SettingsContent = _settingsApplicationDNSLookupView;
-                    break;                       
+                    break;
             }
         }
         #endregion

@@ -83,7 +83,7 @@
                 <Style TargetType="{x:Type Grid}">
                     <Setter Property="Visibility" Value="Visible" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=contentControlSettings, Path=HasContent}" Value="True">
+                        <DataTrigger Binding="{Binding ShowSettingsView}" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -509,7 +509,7 @@
                 <Style TargetType="{x:Type Grid}">
                     <Setter Property="Visibility" Value="Collapsed" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=contentControlSettings, Path=HasContent}" Value="True">
+                        <DataTrigger Binding="{Binding ShowSettingsView}" Value="True">
                             <Setter Property="Visibility" Value="Visible" />
                         </DataTrigger>
                     </Style.Triggers>

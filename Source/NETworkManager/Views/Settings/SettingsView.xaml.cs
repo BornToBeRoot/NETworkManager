@@ -8,18 +8,26 @@ namespace NETworkManager.Views.Settings
     /// </summary>
     public partial class SettingsView : UserControl
     {
-        private SettingsViewModel viewModel;
-
-        public SettingsView() : this(ApplicationViewManager.Name.None)
+        private ApplicationViewManager.Name _selectedApplicationName;
+        public ApplicationViewManager.Name SelectedApplicationName
         {
+            get { return _selectedApplicationName; }
+            set
+            {
+                viewModel.SelectedApplicationName = value;
 
+                if (value == _selectedApplicationName)
+                    return;
+
+                _selectedApplicationName = value;
+            }
         }
 
-        public SettingsView(ApplicationViewManager.Name selectedApplicationName)
+        private SettingsViewModel viewModel = new SettingsViewModel();
+
+        public SettingsView()
         {
             InitializeComponent();
-
-            viewModel = new SettingsViewModel(selectedApplicationName);
             DataContext = viewModel;
         }
 
@@ -27,11 +35,5 @@ namespace NETworkManager.Views.Settings
         {
             e.Handled = true;
         }
-
-        //private void MetroWindowSettings_PreviewKeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if (e.Key == Key.Escape)
-        //        Close();
-        //}
     }
 }
