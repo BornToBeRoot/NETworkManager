@@ -161,6 +161,34 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
+        private bool _displayStatusMessage;
+        public bool DisplayStatusMessage
+        {
+            get { return _displayStatusMessage; }
+            set
+            {
+                if (value == _displayStatusMessage)
+                    return;
+
+                _displayStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _statusMessage;
+        public string StatusMessage
+        {
+            get { return _statusMessage; }
+            set
+            {
+                if (value == _statusMessage)
+                    return;
+
+                _statusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
         private DateTime? _startTime;
         public DateTime? StartTime
         {
@@ -218,35 +246,7 @@ namespace NETworkManager.ViewModels.Applications
                 _expandStatistics = value;
                 OnPropertyChanged();
             }
-        }
-
-        private bool _displayStatusMessage;
-        public bool DisplayStatusMessage
-        {
-            get { return _displayStatusMessage; }
-            set
-            {
-                if (value == _displayStatusMessage)
-                    return;
-
-                _displayStatusMessage = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _statusMessage;
-        public string StatusMessage
-        {
-            get { return _statusMessage; }
-            set
-            {
-                if (value == _statusMessage)
-                    return;
-
-                _statusMessage = value;
-                OnPropertyChanged();
-            }
-        }
+        }        
         #endregion
 
         #region Constructor, load settings

@@ -13,6 +13,7 @@
     <UserControl.Resources>
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <Converter:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
+        <Converter:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -20,6 +21,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Destination}" />
         <Grid Grid.Row="1" Margin="0,0,0,20">
@@ -93,7 +95,7 @@
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Result}" Style="{StaticResource HeaderTextBlock}" />
-        <Control:ScrollingDataGrid Grid.Row="3" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding LookupResult}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True">
+        <Control:ScrollingDataGrid Grid.Row="3" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding LookupResult}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,20">
             <Control:ScrollingDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollingDataGridScrollBar}" />
             </Control:ScrollingDataGrid.Resources>
@@ -105,5 +107,52 @@
                 <DataGridTextColumn Header="{DynamicResource String_Result}" Binding="{Binding Result}" MinWidth="200" />
             </Control:ScrollingDataGrid.Columns>
         </Control:ScrollingDataGrid>
+        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource DefaultExpander}">
+            <Expander.Header>
+                <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
+            </Expander.Header>
+            <StackPanel>
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
+                        </Style>
+                    </Grid.Resources>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_StartTime}" />
+                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding StartTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Duration}" />
+                    <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Duration, StringFormat={}{0:hh}h {0:mm}m {0:ss}s {0:ff}ms}" />
+                    <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_EndTime}" />
+                    <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding EndTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
+                    <!--<TextBlock Grid.Column="3" Grid.Row="0" Text="{DynamicResource String_Scanned}" />
+                    <TextBox Grid.Column="4" Grid.Row="0">
+                        <TextBox.Text>
+                            <MultiBinding StringFormat="{}{0} / {1}">
+                                <Binding Path="IPAddressesScanned" />
+                                <Binding Path="IPAddressesToScan" />
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBlock Grid.Column="3" Grid.Row="2" Text="{DynamicResource String_Found}" VerticalAlignment="Bottom" />
+                    <TextBox Grid.Column="4" Grid.Row="2" Text="{Binding HostsFound}" />-->
+                </Grid>
+            </StackPanel>
+        </Expander>
     </Grid>
 </UserControl>

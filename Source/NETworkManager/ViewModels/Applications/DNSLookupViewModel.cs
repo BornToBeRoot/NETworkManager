@@ -8,13 +8,16 @@ using System.Windows;
 using System.Windows.Input;
 using NETworkManager.Collections;
 using System.Net.NetworkInformation;
+using System.Windows.Threading;
+using System.Diagnostics;
 
 namespace NETworkManager.ViewModels.Applications
 {
     public class DNSLookupViewModel : ViewModelBase
     {
         #region Variables
-        private IDialogCoordinator dialogCoordinator;
+        DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        Stopwatch stopwatch = new Stopwatch();
 
         private bool _isLoading = true;
 
@@ -103,13 +106,70 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
+
+        private DateTime? _startTime;
+        public DateTime? StartTime
+        {
+            get { return _startTime; }
+            set
+            {
+                if (value == _startTime)
+                    return;
+
+                _startTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TimeSpan _duration;
+        public TimeSpan Duration
+        {
+            get { return _duration; }
+            set
+            {
+                if (value == _duration)
+                    return;
+
+                _duration = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DateTime? _endTime;
+        public DateTime? EndTime
+        {
+            get { return _endTime; }
+            set
+            {
+                if (value == _endTime)
+                    return;
+
+                _endTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _expandStatistics;
+        public bool ExpandStatistics
+        {
+            get { return _expandStatistics; }
+            set
+            {
+                if (value == _expandStatistics)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.DNSLookup_ExpandStatistics = value;
+
+                _expandStatistics = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Contructor
-        public DNSLookupViewModel(IDialogCoordinator instance)
+        public DNSLookupViewModel()
         {
-            dialogCoordinator = instance;
-
             LoadSettings();
 
             _isLoading = false;
@@ -121,6 +181,8 @@ namespace NETworkManager.ViewModels.Applications
         {
             if (SettingsManager.Current.DNSLookup_HostnameOrIPAddressHistory != null)
                 HostnameOrIPAddressHistory = new List<string>(SettingsManager.Current.DNSLookup_HostnameOrIPAddressHistory);
+
+            ExpandStatistics = SettingsManager.Current.DNSLookup_ExpandStatistics;
         }
         #endregion
 
@@ -142,6 +204,14 @@ namespace NETworkManager.ViewModels.Applications
         {
             DisplayStatusMessage = false;
             IsLookupRunning = true;
+
+            // Measure the time
+            StartTime = DateTime.Now;
+            stopwatch.Start();
+            dispatcherTimer.Tick += DispatcherTimer_Tick;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            dispatcherTimer.Start();
+            EndTime = null;
 
             // Reset the latest results
             LookupResult.Clear();
@@ -200,6 +270,20 @@ namespace NETworkManager.ViewModels.Applications
 
             DNSLookup.LookupAsync(hostnameOrIPAddress, DNSLookupOptions);
         }
+
+        private void LookupFinished()
+        {
+            // Stop timer and stopwatch
+            stopwatch.Stop();
+            dispatcherTimer.Stop();
+
+            Duration = stopwatch.Elapsed;
+            EndTime = DateTime.Now;
+
+            stopwatch.Reset();
+
+            IsLookupRunning = false;
+        }
         #endregion
 
         #region Events
@@ -222,7 +306,7 @@ namespace NETworkManager.ViewModels.Applications
 
             DisplayStatusMessage = true;
 
-            IsLookupRunning = false;
+            LookupFinished();
         }
 
         private void DNSLookup_LookupComplete(object sender, DNSLookupCompleteArgs e)
@@ -233,7 +317,12 @@ namespace NETworkManager.ViewModels.Applications
                 DisplayStatusMessage = true;
             }
 
-            IsLookupRunning = false;
+            LookupFinished();
+        }
+
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            Duration = stopwatch.Elapsed;
         }
         #endregion
     }

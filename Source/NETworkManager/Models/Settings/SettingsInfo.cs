@@ -988,6 +988,20 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _dnsLookup_ExpandStatistics = false;
+        public bool DNSLookup_ExpandStatistics
+        {
+            get { return _dnsLookup_ExpandStatistics; }
+            set
+            {
+                if (value == _dnsLookup_ExpandStatistics)
+                    return;
+
+                _dnsLookup_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
         #endregion
 
