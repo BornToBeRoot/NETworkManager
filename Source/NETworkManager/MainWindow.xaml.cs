@@ -537,12 +537,12 @@ namespace NETworkManager
             }
         }
 
-        private void NotifyIcon_DoubleClick(object sender, System.EventArgs e)
+        private void NotifyIcon_DoubleClick(object sender, EventArgs e)
         {
             ShowWindowAction();
         }
 
-        private void MetroWindowMain_StateChanged(object sender, System.EventArgs e)
+        private void MetroWindowMain_StateChanged(object sender, EventArgs e)
         {
             if (WindowState == WindowState.Minimized)
             {
@@ -607,7 +607,7 @@ namespace NETworkManager
         {
             OpenApplicationList = true;
         }
-                
+
         public ICommand OpenSettingsCommand
         {
             get { return new RelayCommand(p => OpenSettingsAction()); }
@@ -615,20 +615,25 @@ namespace NETworkManager
 
         private void OpenSettingsAction()
         {
+            // Save current language code
             if (string.IsNullOrEmpty(_cultureCode))
                 _cultureCode = SettingsManager.Current.Localization_CultureCode;
 
-            ShowWindowAction();
-
+            // Init settings view
             if (_settingsView == null)
             {
                 _settingsView = new SettingsView();
                 contentControlSettings.Content = _settingsView;
             }
 
-            _settingsView.SelectedApplicationName = SelectedApplicationViewInfo.Name;
+            // Change selected settings view
+            _settingsView.SelectedApplicationName = _isInTray ? ApplicationViewManager.Name.None : SelectedApplicationViewInfo.Name;
 
+            // Show the view (this will hide other content)
             ShowSettingsView = true;
+
+            // Bring window to front
+            ShowWindowAction();
         }
 
         public ICommand CloseSettingsCommand
@@ -710,7 +715,8 @@ namespace NETworkManager
             if (_isInTray)
                 ShowWindowFromTray();
 
-            BringWindowToFront();
+            if (!IsActive)
+                BringWindowToFront();
         }
 
         public ICommand CloseApplicationCommand
