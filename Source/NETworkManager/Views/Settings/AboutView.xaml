@@ -21,8 +21,8 @@
                 <TextBlock Text="{DynamicResource String_AllRightReserved}" Style="{StaticResource DefaultTextBlock}" />
             </StackPanel>
         </Grid>
-        <TextBlock Text="{DynamicResource String_Libraries}" Style="{StaticResource HeaderTextBlock}"/>
-        <Grid>
+        <TextBlock Text="{DynamicResource String_Header_Libraries}" Style="{StaticResource HeaderTextBlock}"/>
+        <Grid Margin="0,0,0,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="10" />
@@ -62,5 +62,6 @@
             </TextBlock>
             <TextBlock Grid.Column="2" Grid.Row="6" Text="{DynamicResource String_Libary_HeijdenDNSDescription}" Style="{StaticResource WrapTextBlock}" />
         </Grid>
+        <TextBlock Text="{DynamicResource String_Header_License}" Style="{StaticResource HeaderTextBlock}"/>
     </StackPanel>
 </UserControl>

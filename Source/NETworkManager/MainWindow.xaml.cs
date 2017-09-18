@@ -281,6 +281,14 @@ namespace NETworkManager
 
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
         {
+            // Force restart (if user has reset the settings or import them)
+            if (SettingsManager.ForceRestart || ImportExportManager.ForceRestart)
+            {
+                RestartApplication(false);
+
+                _closeApplication = true;
+            }
+
             // Hide the application to tray
             if (!_closeApplication && SettingsManager.Current.Window_MinimizeInsteadOfTerminating)
             {
@@ -657,13 +665,6 @@ namespace NETworkManager
                 MetroWindowMain.HideOverlay();
             }
 
-            // Force restart (if user has reset the settings or import them)
-            if (SettingsManager.ForceRestart || ImportExportManager.ForceRestart)
-            {
-                RestartApplication();
-                return;
-            }
-
             // Ask the user to restart (if he has changed the language)
             if ((_cultureCode != SettingsManager.Current.Localization_CultureCode) || (AllowsTransparency != SettingsManager.Current.Appearance_EnableTransparency))
             {
@@ -730,7 +731,7 @@ namespace NETworkManager
             Close();
         }
 
-        private void RestartApplication()
+        private void RestartApplication(bool closeApplication = true)
         {
             new Process
             {
@@ -741,8 +742,11 @@ namespace NETworkManager
                 }
             }.Start();
 
-            _closeApplication = true;
-            Close();
+            if (closeApplication)
+            {
+                _closeApplication = true;
+                Close();
+            }
         }
 
         public ICommand TextBoxSearchCommand

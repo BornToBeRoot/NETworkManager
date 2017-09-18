@@ -60,6 +60,8 @@
     <system:String x:Key="String_Header_AddProfile">Add profile</system:String>
     <system:String x:Key="String_Header_WakeUp">Wake up</system:String>
     <system:String x:Key="String_Header_AddClient">Add client</system:String>
+    <system:String x:Key="String_Header_Libraries">Libraries</system:String>
+    <system:String x:Key="String_Header_License">License</system:String>
 
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -117,7 +119,6 @@
     <system:String x:Key="String_AddTemplate">Add template</system:String>
     <system:String x:Key="String_EnterHostnameForClient">Enter the hostname to identify the client later.</system:String>
     <system:String x:Key="String_AllRightReserved">All rights reserved.</system:String>
-    <system:String x:Key="String_Libraries">Libraries</system:String>
     <system:String x:Key="String_Administrator">Administrator</system:String>
     <system:String x:Key="String_RestartAsAdministrator">Restart as Administrator</system:String>
     <system:String x:Key="String_RestartAsAdministratorMessage">Administrative rights are required to change this configuration.</system:String>
