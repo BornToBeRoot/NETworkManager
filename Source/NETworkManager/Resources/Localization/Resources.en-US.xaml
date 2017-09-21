@@ -171,7 +171,7 @@
     <system:String x:Key="String_SettingsSuccessfullyExported">Settings successfully exported!</system:String>
     <system:String x:Key="String_Path">Path</system:String>
     <system:String x:Key="String_SettingsSuccessfullyReset">Settings successfully reset!</system:String>
-    <system:String x:Key="String_SelectedSettingsAreOverwritten">The selected settings are overwritten and the application is restarted.</system:String>
+    <system:String x:Key="String_SelectedSettingsAreOverwritten">The selected settings are overwritten.</system:String>
     <system:String x:Key="String_Vendor">Vendor</system:String>
     <system:String x:Key="String_Protocol">Protocol</system:String>
     <system:String x:Key="String_Service">Service</system:String>
@@ -219,7 +219,10 @@
     <system:String x:Key="String_Back">back</system:String>
     <system:String x:Key="String_AddDNSSuffixToHostname">Add DNS suffix (primary) to hostname</system:String>
     <system:String x:Key="String_UseCustomDNSSuffix">Use custom DNS suffix</system:String>
-
+    <system:String x:Key="String_SettingsSuccessfullyImported">Settings successfully imported!</system:String>
+    <system:String x:Key="String_WakeOnLANClientsReloaded">Wake on LAN clients reloaded</system:String>
+    <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Network interface profiles reloaded</system:String>
+        
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
     <system:String x:Key="String_Button_Default">Default</system:String>

@@ -22,17 +22,33 @@ namespace NETworkManager.Models.Settings
         {
             Profiles = new ObservableCollection<NetworkInterfaceProfileInfo>();
 
+            Deserialize().ForEach(profile => AddProfile(profile));
+            
+            Profiles.CollectionChanged += Profiles_CollectionChanged;
+        }
+
+        public static void Reload()
+        {
+            Profiles.Clear();
+
+            Deserialize().ForEach(profile => AddProfile(profile));
+        }
+
+        private static List<NetworkInterfaceProfileInfo> Deserialize()
+        {
+            List<NetworkInterfaceProfileInfo> list = new List<NetworkInterfaceProfileInfo>();
+
             if (File.Exists(GetProfilesFilePath()))
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<NetworkInterfaceProfileInfo>));
 
                 using (FileStream fileStream = new FileStream(GetProfilesFilePath(), FileMode.Open))
                 {
-                    ((List<NetworkInterfaceProfileInfo>)(xmlSerializer.Deserialize(fileStream))).ForEach(template => Profiles.Add(template));
+                    ((List<NetworkInterfaceProfileInfo>)(xmlSerializer.Deserialize(fileStream))).ForEach(profile => Profiles.Add(profile));
                 }
             }
 
-            Profiles.CollectionChanged += Profiles_CollectionChanged;
+            return list;
         }
 
         private static void Profiles_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -42,14 +58,19 @@ namespace NETworkManager.Models.Settings
 
         public static void Save()
         {
+            Serialize();
+
+            ProfilesChanged = false;
+        }
+
+        private static void Serialize()
+        {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<NetworkInterfaceProfileInfo>));
 
             using (FileStream fileStream = new FileStream(GetProfilesFilePath(), FileMode.Create))
             {
                 xmlSerializer.Serialize(fileStream, new List<NetworkInterfaceProfileInfo>(Profiles));
             }
-
-            ProfilesChanged = false;
         }
 
         public static void Reset()

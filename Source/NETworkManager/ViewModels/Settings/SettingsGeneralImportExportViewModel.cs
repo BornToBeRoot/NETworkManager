@@ -254,10 +254,10 @@ namespace NETworkManager.ViewModels.Settings
         {
             dialogCoordinator = instance;
 
-            LoadSettings();
+            CheckFilesExist();
         }
 
-        private void LoadSettings()
+        private void CheckFilesExist()
         {
             ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
             NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
@@ -318,7 +318,12 @@ namespace NETworkManager.ViewModels.Settings
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            if (await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_SelectedSettingsAreOverwritten"] as string, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
+            string message = Application.Current.Resources["String_SelectedSettingsAreOverwritten"] as string;
+
+            if (ImportApplicationSettingsExists && (ImportEverything || ImportApplicationSettings))
+                message += Environment.NewLine + Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_ApplicationIsRestartedAfterwards"] as string);
+
+            if (await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, message, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
             {
                 List<ImportExportManager.ImportExportOptions> importOptions = new List<ImportExportManager.ImportExportOptions>();
 
@@ -333,7 +338,33 @@ namespace NETworkManager.ViewModels.Settings
 
                 ImportExportManager.Import(ImportLocationSelectedPath, importOptions);
 
-                CloseAction();
+                // Restart if application settings are changed
+                if (ImportExportManager.ForceRestart)
+                {
+                    CloseAction();
+                }
+                else
+                {
+                    settings.AffirmativeButtonText = Application.Current.Resources["String_Button_OK"] as string;
+
+                    message = Application.Current.Resources["String_SettingsSuccessfullyImported"] as string + Environment.NewLine;
+
+                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles))
+                    {
+                        NetworkInterfaceProfileManager.Reload();
+
+                        message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_NetworkInterfaceProfilesReloaded"] as string);
+                    }
+
+                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients))
+                    {
+                        WakeOnLANClientManager.Reload();
+
+                        message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_WakeOnLANClientsReloaded"] as string);
+                    }
+
+                    await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, message, MessageDialogStyle.Affirmative, settings);
+                }
             }
         }
 
@@ -347,22 +378,39 @@ namespace NETworkManager.ViewModels.Settings
             List<ImportExportManager.ImportExportOptions> exportOptions = new List<ImportExportManager.ImportExportOptions>();
 
             if (ApplicationSettingsExists && (ExportEverything || ExportApplicationSettings))
+            {
+                // Save them, before export
+                if (SettingsManager.Current.SettingsChanged)
+                    SettingsManager.Save();
+
+                // Add to export
                 exportOptions.Add(ImportExportManager.ImportExportOptions.ApplicationSettings);
+            }
 
             if (NetworkInterfaceProfilesExists && (ExportEverything || ExportNetworkInterfaceProfiles))
+            {
+                // Save them, before export
+                if (NetworkInterfaceProfileManager.ProfilesChanged)
+                    NetworkInterfaceProfileManager.Save();
+
+                // Add to export
                 exportOptions.Add(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
+            }
 
             if (WakeOnLANClientsExists && (ExportEverything || ExportWakeOnLANClients))
+            {
+                // Save them, before export
+                if (WakeOnLANClientManager.ClientsChanged)
+                    WakeOnLANClientManager.Save();
+
+                // Add to export
                 exportOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANClients);
-
-            // Save the settings before exporting them
-            if (SettingsManager.Current.SettingsChanged)
-                SettingsManager.Save();
-
+            }
+            
             System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog()
             {
                 Filter = ImportExportFileExtensionFilter,
-                FileName = string.Format("{0}_{1}_{2}{3}", Application.Current.Resources["String_ProductName"] as string, Application.Current.Resources["String_Backup"] as string,TimestampHelper.GetTimestamp(), ImportExportManager.ImportExportFileExtension)
+                FileName = string.Format("{0}_{1}_{2}{3}", Application.Current.Resources["String_ProductName"] as string, Application.Current.Resources["String_Backup"] as string, TimestampHelper.GetTimestamp(), ImportExportManager.ImportExportFileExtension)
             };
 
             if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)

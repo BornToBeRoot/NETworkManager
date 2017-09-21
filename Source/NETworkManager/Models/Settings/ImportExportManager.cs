@@ -49,7 +49,9 @@ namespace NETworkManager.Models.Settings
                 }
             }
 
-            ForceRestart = true;
+            // Restart, when application settings are changed
+            if (importOptions.Contains(ImportExportOptions.ApplicationSettings))
+                ForceRestart = true;
         }
 
         public static void Export(List<ImportExportOptions> exportOptions, string filePath)
