@@ -241,7 +241,7 @@ namespace NETworkManager.ViewModels.Settings
 
             LocationSelectedPath = string.Empty;
             LocationSelectedPath = Properties.Settings.Default.Settings_CustomSettingsLocation;
-            
+
             MovingFiles = false;
         }
 
@@ -272,7 +272,10 @@ namespace NETworkManager.ViewModels.Settings
             string message = Application.Current.Resources["String_SelectedSettingsAreReset"] as string;
 
             if (ResetEverything || ResetApplicationSettings)
-                message += Environment.NewLine + Environment.NewLine + Application.Current.Resources["String_ApplicationIsRestartedAfterwards"] as string;
+            {
+                message += Environment.NewLine + Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_TheSettingsLocationIsNotAffected"] as string);
+                message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_ApplicationIsRestartedAfterwards"] as string);
+            }
 
             if (await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 return;
@@ -291,10 +294,17 @@ namespace NETworkManager.ViewModels.Settings
             if (WakeOnLANClientsExists && (ResetEverything || ResetWakeOnLANClients))
                 WakeOnLANClientManager.Reset();
 
+            // Restart after reset or show a completed message
             if (forceRestart)
+            {
                 CloseAction();
+            }
             else
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, Application.Current.Resources["String_SettingsSuccessfullyReset"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+            {
+                settings.AffirmativeButtonText = Application.Current.Resources["String_Button_OK"] as string;
+
+                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, Application.Current.Resources["String_SettingsSuccessfullyReset"] as string, MessageDialogStyle.Affirmative, settings);
+            }
         }
         #endregion
 

@@ -161,8 +161,9 @@
     <system:String x:Key="String_ApplicationSettings">Application settings</system:String>
     <system:String x:Key="String_NetworkInterfaceProfiles">Network interface profiles</system:String>
     <system:String x:Key="String_WakeOnLANClients">Wake on LAN clients</system:String>
-    <system:String x:Key="String_SelectedSettingsAreReset">The selected settings are reset (The settings location is not affected.)</system:String>
-    <system:String x:Key="String_ApplicationIsRestartedAfterwards">* Application is restarted afterwards</system:String>
+    <system:String x:Key="String_SelectedSettingsAreReset">The selected settings are reset.</system:String>
+    <system:String x:Key="String_TheSettingsLocationIsNotAffected">The settings location is not affected</system:String>
+    <system:String x:Key="String_ApplicationIsRestartedAfterwards">Application is restarted afterwards</system:String>
     <system:String x:Key="String_SelectTheSettingsYouWantToImport">Select the settings you want to import:</system:String>
     <system:String x:Key="String_SelectTheSettingsYouWantToExport">Select the settings you want to export:</system:String>
     <system:String x:Key="String_SelectTheSettingsYouWantToReset">Select the settings you want to reset:</system:String>
