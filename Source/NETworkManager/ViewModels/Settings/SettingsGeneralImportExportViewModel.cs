@@ -253,15 +253,6 @@ namespace NETworkManager.ViewModels.Settings
         public SettingsGeneralImportExportViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
-
-            CheckFilesExist();
-        }
-
-        private void CheckFilesExist()
-        {
-            ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
-            NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
-            WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
         }
         #endregion
 
@@ -378,35 +369,14 @@ namespace NETworkManager.ViewModels.Settings
             List<ImportExportManager.ImportExportOptions> exportOptions = new List<ImportExportManager.ImportExportOptions>();
 
             if (ApplicationSettingsExists && (ExportEverything || ExportApplicationSettings))
-            {
-                // Save them, before export
-                if (SettingsManager.Current.SettingsChanged)
-                    SettingsManager.Save();
-
-                // Add to export
                 exportOptions.Add(ImportExportManager.ImportExportOptions.ApplicationSettings);
-            }
-
+            
             if (NetworkInterfaceProfilesExists && (ExportEverything || ExportNetworkInterfaceProfiles))
-            {
-                // Save them, before export
-                if (NetworkInterfaceProfileManager.ProfilesChanged)
-                    NetworkInterfaceProfileManager.Save();
-
-                // Add to export
                 exportOptions.Add(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
-            }
 
             if (WakeOnLANClientsExists && (ExportEverything || ExportWakeOnLANClients))
-            {
-                // Save them, before export
-                if (WakeOnLANClientManager.ClientsChanged)
-                    WakeOnLANClientManager.Save();
-
-                // Add to export
                 exportOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANClients);
-            }
-            
+
             System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog()
             {
                 Filter = ImportExportFileExtensionFilter,
@@ -424,6 +394,26 @@ namespace NETworkManager.ViewModels.Settings
                 await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, string.Format("{0}\n\n{1}: {2}", Application.Current.Resources["String_SettingsSuccessfullyExported"] as string, Application.Current.Resources["String_Path"] as string, saveFileDialog.FileName), MessageDialogStyle.Affirmative, settings);
             }
         }
+        #endregion
+
+        #region Methods
+        public void SaveAndCheckSettings()
+        {
+            // Save everything
+            if (SettingsManager.Current.SettingsChanged)
+                SettingsManager.Save();
+
+            if (NetworkInterfaceProfileManager.ProfilesChanged)
+                NetworkInterfaceProfileManager.Save();
+
+            if (WakeOnLANClientManager.ClientsChanged)
+                WakeOnLANClientManager.Save();
+
+            // Check if files exist
+            ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
+            NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
+            WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
+        }
+        #endregion
     }
-    #endregion
 }

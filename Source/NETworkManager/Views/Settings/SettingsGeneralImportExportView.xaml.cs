@@ -20,5 +20,10 @@ namespace NETworkManager.Views.Settings
             if (viewModel.CloseAction == null)
                 viewModel.CloseAction = new System.Action(Window.GetWindow(this).Close);
         }
+
+        public void SaveAndCheckSettings()
+        {
+            viewModel.SaveAndCheckSettings();
+        }
     }
 }

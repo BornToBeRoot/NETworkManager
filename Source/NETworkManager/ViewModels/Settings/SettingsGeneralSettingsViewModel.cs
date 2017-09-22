@@ -335,6 +335,24 @@ namespace NETworkManager.ViewModels.Settings
 
             MakingPortable = false;
         }
+
+        public void SaveAndCheckSettings()
+        {
+            // Save everything
+            if (SettingsManager.Current.SettingsChanged)
+                SettingsManager.Save();
+
+            if (NetworkInterfaceProfileManager.ProfilesChanged)
+                NetworkInterfaceProfileManager.Save();
+
+            if (WakeOnLANClientManager.ClientsChanged)
+                WakeOnLANClientManager.Save();
+
+            // Check if files exist
+            ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
+            NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
+            WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
+        }
         #endregion
     }
 }

@@ -150,18 +150,24 @@ namespace NETworkManager.ViewModels.Settings
                     if (_settingsGeneralSettingsView == null)
                         _settingsGeneralSettingsView = new SettingsGeneralSettingsView();
 
+                    // Save settings (if changed) and check if files exists
+                    _settingsGeneralSettingsView.SaveAndCheckSettings();
+
                     SettingsContent = _settingsGeneralSettingsView;
                     break;
                 case SettingsViewManager.Name.ImportExport:
                     if (_settingsGeneralImportExportView == null)
                         _settingsGeneralImportExportView = new SettingsGeneralImportExportView();
 
+                    // Save settings (if changed) and check if files exists
+                    _settingsGeneralImportExportView.SaveAndCheckSettings();
+
                     SettingsContent = _settingsGeneralImportExportView;
                     break;
                 case SettingsViewManager.Name.IPScanner:
                     if (_settingsApplicationIPScannerView == null)
                         _settingsApplicationIPScannerView = new SettingsApplicationIPScannerView();
-
+                                        
                     SettingsContent = _settingsApplicationIPScannerView;
                     break;
                 case SettingsViewManager.Name.PortScanner:
