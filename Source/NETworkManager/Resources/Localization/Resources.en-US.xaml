@@ -65,6 +65,7 @@
 
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
+    <system:String x:Key="String_Slogan">A powerful tool for managing networks and troubleshoot network problems!</system:String>
     <system:String x:Key="String_Settings">Settings</system:String>
     <system:String x:Key="String_RestartRequired">Restart Required</system:String>
     <system:String x:Key="String_RestartRequiredAfterSettingsChanged">Some settings are applied only after restarting the application!</system:String>
