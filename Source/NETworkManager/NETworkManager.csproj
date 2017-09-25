@@ -179,9 +179,16 @@
     <Compile Include="Validators\EmptyOrIPv4AddressValidator.cs" />
     <Compile Include="Validators\OpacityTextboxValidator.cs" />
     <Compile Include="ViewModels\Applications\DNSLookupViewModel.cs" />
+    <Compile Include="ViewModels\Applications\WikiOUILookupViewModel.cs" />
     <Compile Include="ViewModels\Help\HelpCommandLineViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationDNSLookupViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationWakeOnLANViewModel.cs" />
+    <Compile Include="Views\Applications\WikiOUILookupView.xaml.cs">
+      <DependentUpon>WikiOUILookupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Applications\WikiPortView.xaml.cs">
+      <DependentUpon>WikiPortView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Settings\UpdateView.xaml.cs">
       <DependentUpon>UpdateView.xaml</DependentUpon>
     </Compile>
@@ -232,6 +239,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Styles\MetroDialogStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Applications\WikiOUILookupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Applications\WikiPortView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -385,7 +400,7 @@
     <Compile Include="Validators\FileExistsValidator.cs" />
     <Compile Include="Validators\PortRangeValidator.cs" />
     <Compile Include="ViewModels\Applications\PortScannerViewModel.cs" />
-    <Compile Include="ViewModels\Applications\WikiViewModel.cs" />
+    <Compile Include="ViewModels\Applications\WikiPortViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationPortScannerViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationIPScannerViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationPingViewModel.cs" />
