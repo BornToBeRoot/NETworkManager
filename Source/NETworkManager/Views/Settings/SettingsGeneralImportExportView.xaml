@@ -44,7 +44,7 @@
             <TextBlock Style="{StaticResource DefaultTextBlock}" Text="{StaticResource String_SelectTheSettingsYouWantToImport}" Margin="0,0,0,10" />
             <RadioButton x:Name="radioButtonImportEverything" Content="{DynamicResource String_RadioButton_Everything}" IsChecked="{Binding ImportEverything}" Margin="0,0,0,10"/>
             <RadioButton x:Name="radioButtonImportCustom" Content="{DynamicResource String_RadioButton_Custom}" Margin="0,0,0,10"/>
-            <GroupBox Margin="20,0,0,10" MinWidth="250" HorizontalAlignment="Left">
+            <GroupBox HorizontalAlignment="Left" Margin="20,0,0,10">
                 <GroupBox.Style>
                     <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource WithoutHeaderGroupBox}">
                         <Setter Property="IsEnabled" Value="False" />
@@ -55,11 +55,41 @@
                         </Style.Triggers>
                     </Style>
                 </GroupBox.Style>
-                <StackPanel>
-                    <CheckBox Content="{DynamicResource String_ApplicationSettings}" IsEnabled="{Binding ImportApplicationSettingsExists}" IsChecked="{Binding ImportApplicationSettings}" Margin="0,0,0,10"/>
-                    <CheckBox Content="{DynamicResource String_NetworkInterfaceProfiles}" IsEnabled="{Binding ImportNetworkInterfaceProfilesExists}" IsChecked="{Binding ImportNetworkInterfaceProfiles}" Margin="0,0,0,10"/>
-                    <CheckBox Content="{DynamicResource String_WakeOnLANClients}" IsEnabled="{Binding ImportWakeOnLANClientsExists}" IsChecked="{Binding ImportWakeOnLANClients}" />
-                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition MinWidth="240" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <CheckBox Grid.Column="0" Grid.Row="0" Content="{DynamicResource String_ApplicationSettings}" IsEnabled="{Binding ImportApplicationSettingsExists}" IsChecked="{Binding ImportApplicationSettings}" />
+                    <CheckBox Grid.Column="0" Grid.Row="2" Content="{DynamicResource String_NetworkInterfaceProfiles}" IsEnabled="{Binding ImportNetworkInterfaceProfilesExists}" IsChecked="{Binding ImportNetworkInterfaceProfiles}" />
+                    <Grid Grid.Column="2" Grid.Row="2" IsEnabled="{Binding ImportNetworkInterfaceProfilesExists}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="100" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition MinWidth="100" />
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Grid.Column="0" Grid.Row="0" Content="Replace" />
+                        <RadioButton Grid.Column="2" Grid.Row="0" Content="Add" />
+                    </Grid>
+                    <CheckBox Grid.Column="0" Grid.Row="4" Content="{DynamicResource String_WakeOnLANClients}" IsEnabled="{Binding ImportWakeOnLANClientsExists}" IsChecked="{Binding ImportWakeOnLANClients}" />
+                    <Grid Grid.Column="2" Grid.Row="4" IsEnabled="{Binding ImportWakeOnLANClientsExists}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="100" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition MinWidth="100" />
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Grid.Column="0" Grid.Row="0" Content="Replace" />
+                        <RadioButton Grid.Column="2" Grid.Row="0" Content="Add" />
+                    </Grid>
+                </Grid>
             </GroupBox>
             <Button Content="{DynamicResource String_Button_Import}" Command="{Binding ImportSettingsCommand}" HorizontalAlignment="Left"  >
                 <Button.Style>
