@@ -117,19 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Libary_ControlzEx_Url" xml:space="preserve">
+  <data name="Libary_ControlzEx_LicenseUrl" xml:space="preserve">
+    <value>https://github.com/ControlzEx/ControlzEx/blob/master/LICENSE</value>
+  </data>
+  <data name="Libary_ControlzEx_Name" xml:space="preserve">
+    <value>ControlzEx</value>
+  </data>
+  <data name="Libary_ControlzEx_ProjectUrl" xml:space="preserve">
     <value>https://github.com/ControlzEx/ControlzEx</value>
   </data>
-  <data name="Libary_HeijdenDNS_Url" xml:space="preserve">
+  <data name="Libary_HeijdenDNS_LicenseUrl" xml:space="preserve">
+    <value>https://www.codeproject.com/info/cpol10.aspx</value>
+  </data>
+  <data name="Libary_HeijdenDNS_Name" xml:space="preserve">
+    <value>Heijden.DNS</value>
+  </data>
+  <data name="Libary_HeijdenDNS_ProjectUrl" xml:space="preserve">
     <value>https://www.codeproject.com/Articles/23673/DNS-NET-Resolver-C</value>
   </data>
-  <data name="Libary_MahAppsMetroIconPacks_Url" xml:space="preserve">
+  <data name="Libary_MahAppsMetroIconPacks_LicenseUrl" xml:space="preserve">
+    <value>https://github.com/MahApps/MahApps.Metro.IconPacks/blob/master/LICENSE</value>
+  </data>
+  <data name="Libary_MahAppsMetroIconPacks_Name" xml:space="preserve">
+    <value>MahApps.Metro.IconPacks</value>
+  </data>
+  <data name="Libary_MahAppsMetroIconPacks_ProjectUrl" xml:space="preserve">
     <value>https://github.com/MahApps/MahApps.Metro.IconPacks</value>
   </data>
-  <data name="Libary_MahAppsMetro_Url" xml:space="preserve">
+  <data name="Libary_MahAppsMetro_LicenseUrl" xml:space="preserve">
+    <value>https://github.com/MahApps/MahApps.Metro/blob/master/LICENSE</value>
+  </data>
+  <data name="Libary_MahAppsMetro_Name" xml:space="preserve">
+    <value>MahApps.Metro</value>
+  </data>
+  <data name="Libary_MahAppsMetro_ProjectUrl" xml:space="preserve">
     <value>http://mahapps.com/</value>
   </data>
-  <data name="Project_GitHub_Url" xml:space="preserve">
+  <data name="License_CPOL" xml:space="preserve">
+    <value>Code Project Open License</value>
+  </data>
+  <data name="License_GNUGPLv3" xml:space="preserve">
+    <value>GNU General Public License v3.0</value>
+  </data>
+  <data name="License_MIT" xml:space="preserve">
+    <value>MIT License</value>
+  </data>
+  <data name="NETworkManager_LicenseUrl" xml:space="preserve">
+    <value>https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE</value>
+  </data>
+  <data name="NETworkManager_ProjectUrl" xml:space="preserve">
     <value>https://github.com/BornToBeRoot/NETworkManager</value>
   </data>
 </root>

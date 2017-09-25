@@ -61,47 +61,155 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://github.com/ControlzEx/ControlzEx/blob/master/LICENSE.
+        /// </summary>
+        public static string Libary_ControlzEx_LicenseUrl {
+            get {
+                return ResourceManager.GetString("Libary_ControlzEx_LicenseUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ControlzEx.
+        /// </summary>
+        public static string Libary_ControlzEx_Name {
+            get {
+                return ResourceManager.GetString("Libary_ControlzEx_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://github.com/ControlzEx/ControlzEx.
         /// </summary>
-        public static string Libary_ControlzEx_Url {
+        public static string Libary_ControlzEx_ProjectUrl {
             get {
-                return ResourceManager.GetString("Libary_ControlzEx_Url", resourceCulture);
+                return ResourceManager.GetString("Libary_ControlzEx_ProjectUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://www.codeproject.com/info/cpol10.aspx.
+        /// </summary>
+        public static string Libary_HeijdenDNS_LicenseUrl {
+            get {
+                return ResourceManager.GetString("Libary_HeijdenDNS_LicenseUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heijden.DNS.
+        /// </summary>
+        public static string Libary_HeijdenDNS_Name {
+            get {
+                return ResourceManager.GetString("Libary_HeijdenDNS_Name", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to https://www.codeproject.com/Articles/23673/DNS-NET-Resolver-C.
         /// </summary>
-        public static string Libary_HeijdenDNS_Url {
+        public static string Libary_HeijdenDNS_ProjectUrl {
             get {
-                return ResourceManager.GetString("Libary_HeijdenDNS_Url", resourceCulture);
+                return ResourceManager.GetString("Libary_HeijdenDNS_ProjectUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/MahApps/MahApps.Metro/blob/master/LICENSE.
+        /// </summary>
+        public static string Libary_MahAppsMetro_LicenseUrl {
+            get {
+                return ResourceManager.GetString("Libary_MahAppsMetro_LicenseUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MahApps.Metro.
+        /// </summary>
+        public static string Libary_MahAppsMetro_Name {
+            get {
+                return ResourceManager.GetString("Libary_MahAppsMetro_Name", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to http://mahapps.com/.
         /// </summary>
-        public static string Libary_MahAppsMetro_Url {
+        public static string Libary_MahAppsMetro_ProjectUrl {
             get {
-                return ResourceManager.GetString("Libary_MahAppsMetro_Url", resourceCulture);
+                return ResourceManager.GetString("Libary_MahAppsMetro_ProjectUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/MahApps/MahApps.Metro.IconPacks/blob/master/LICENSE.
+        /// </summary>
+        public static string Libary_MahAppsMetroIconPacks_LicenseUrl {
+            get {
+                return ResourceManager.GetString("Libary_MahAppsMetroIconPacks_LicenseUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MahApps.Metro.IconPacks.
+        /// </summary>
+        public static string Libary_MahAppsMetroIconPacks_Name {
+            get {
+                return ResourceManager.GetString("Libary_MahAppsMetroIconPacks_Name", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to https://github.com/MahApps/MahApps.Metro.IconPacks.
         /// </summary>
-        public static string Libary_MahAppsMetroIconPacks_Url {
+        public static string Libary_MahAppsMetroIconPacks_ProjectUrl {
             get {
-                return ResourceManager.GetString("Libary_MahAppsMetroIconPacks_Url", resourceCulture);
+                return ResourceManager.GetString("Libary_MahAppsMetroIconPacks_ProjectUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Code Project Open License.
+        /// </summary>
+        public static string License_CPOL {
+            get {
+                return ResourceManager.GetString("License_CPOL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GNU General Public License v3.0.
+        /// </summary>
+        public static string License_GNUGPLv3 {
+            get {
+                return ResourceManager.GetString("License_GNUGPLv3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MIT License.
+        /// </summary>
+        public static string License_MIT {
+            get {
+                return ResourceManager.GetString("License_MIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE.
+        /// </summary>
+        public static string NETworkManager_LicenseUrl {
+            get {
+                return ResourceManager.GetString("NETworkManager_LicenseUrl", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager.
         /// </summary>
-        public static string Project_GitHub_Url {
+        public static string NETworkManager_ProjectUrl {
             get {
-                return ResourceManager.GetString("Project_GitHub_Url", resourceCulture);
+                return ResourceManager.GetString("NETworkManager_ProjectUrl", resourceCulture);
             }
         }
     }

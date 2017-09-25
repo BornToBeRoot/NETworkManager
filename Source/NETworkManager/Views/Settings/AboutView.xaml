@@ -3,9 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Resources="clr-namespace:NETworkManager.Properties"
         mc:Ignorable="d">
-    <StackPanel>
-        <Grid Margin="0,0,0,20">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="0,0,0,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -19,11 +25,16 @@
                     <TextBlock Text="BETA" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource AccentColorBrush}" Margin="10,0" />
                 </StackPanel>
                 <TextBlock Text="{Binding CopyrightAndAuthor}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,5"/>
-                <TextBlock Text="{DynamicResource String_AllRightReserved}" Style="{StaticResource DefaultTextBlock}" />
+                <TextBlock Text="{x:Static Resources:Resources.License_GNUGPLv3 }" Style="{StaticResource LinkTextBlock}">
+                    <TextBlock.InputBindings>
+                        <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.NETworkManager_LicenseUrl}" MouseAction="LeftClick" />
+                    </TextBlock.InputBindings>
+                </TextBlock>
             </StackPanel>
         </Grid>
-        <TextBlock Text="{DynamicResource String_Header_Libraries}" Style="{StaticResource HeaderTextBlock}"/>
-        <Grid Margin="0,0,0,20">
+        <TextBlock Grid.Row="1" Text="{DynamicResource String_Header_Libraries}" Style="{StaticResource HeaderTextBlock}"/>
+        <ScrollViewer Grid.Row="2" Style="{StaticResource DefaulScrollViewer}" Margin="0,0,0,20">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="10" />
@@ -40,61 +51,51 @@
                 <RowDefinition Height="5" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Libary_ControlzExName}" Style="{StaticResource LinkTextBlock}">
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static Resources:Resources.Libary_ControlzEx_Name}" Style="{StaticResource LinkTextBlock}">
                 <TextBlock.InputBindings>
-                    <MouseBinding Command="{Binding OpenWebsiteLibaryControlzExCommand}" MouseAction="LeftClick" />
+                    <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.Libary_ControlzEx_ProjectUrl}" MouseAction="LeftClick" />
                 </TextBlock.InputBindings>
             </TextBlock>
             <TextBlock Grid.Column="2" Grid.Row="0" Text="{DynamicResource String_Libary_ControlzExDescription}" Style="{StaticResource WrapTextBlock}" />
-            <TextBlock Grid.Column="4" Grid.Row="0" Text="MIT" Style="{StaticResource LinkTextBlock}">
+            <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static Resources:Resources.License_MIT}" Style="{StaticResource LinkTextBlock}">
                 <TextBlock.InputBindings>
-                    <MouseBinding Command="{Binding OpenWebsiteLibaryControlzExCommand}" MouseAction="LeftClick" />
+                    <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.Libary_ControlzEx_ProjectUrl }" MouseAction="LeftClick" />
                 </TextBlock.InputBindings>
             </TextBlock>
-            
-            
-            
-            
-            
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Libary_MahAppsMetroName}" Style="{StaticResource LinkTextBlock}">
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static Resources:Resources.Libary_MahAppsMetro_Name}" Style="{StaticResource LinkTextBlock}">
                 <TextBlock.InputBindings>
-                    <MouseBinding Command="{Binding OpenWebsiteLibaryMahAppsMetroCommand}" MouseAction="LeftClick" />
+                    <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.Libary_MahAppsMetro_ProjectUrl}" MouseAction="LeftClick" />
                 </TextBlock.InputBindings>
             </TextBlock>
             <TextBlock Grid.Column="2" Grid.Row="2" Text="{DynamicResource String_Libary_MahAppsMetroDescription}" Style="{StaticResource WrapTextBlock}" />
-            <TextBlock Grid.Column="4" Grid.Row="2" Text="MIT" Style="{StaticResource LinkTextBlock}">
+            <TextBlock Grid.Column="4" Grid.Row="2" Text="{x:Static Resources:Resources.License_MIT}" Style="{StaticResource LinkTextBlock}">
                 <TextBlock.InputBindings>
-                    <MouseBinding Command="{Binding OpenWebsiteLibaryControlzExCommand}" MouseAction="LeftClick" />
+                    <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.Libary_MahAppsMetro_LicenseUrl}" MouseAction="LeftClick" />
                 </TextBlock.InputBindings>
             </TextBlock>
-            
-            
-            <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Libary_MahAppsMetroIconPacksName}" Style="{StaticResource LinkTextBlock}">
+            <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static Resources:Resources.Libary_MahAppsMetroIconPacks_Name}" Style="{StaticResource LinkTextBlock}">
                 <TextBlock.InputBindings>
-                    <MouseBinding Command="{Binding OpenWebsiteLibaryMahAppsMetroIconPacksCommand}" MouseAction="LeftClick" />
+                    <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.Libary_MahAppsMetroIconPacks_ProjectUrl}" MouseAction="LeftClick" />
                 </TextBlock.InputBindings>
             </TextBlock>
-
             <TextBlock Grid.Column="2" Grid.Row="4" Text="{DynamicResource String_Libary_MahAppsMetroIconPacksDescription}" Style="{StaticResource WrapTextBlock}" />
-            <TextBlock Grid.Column="4" Grid.Row="4" Text="MIT" Style="{StaticResource LinkTextBlock}">
+            <TextBlock Grid.Column="4" Grid.Row="4" Text="{x:Static Resources:Resources.License_MIT}" Style="{StaticResource LinkTextBlock}">
                 <TextBlock.InputBindings>
-                    <MouseBinding Command="{Binding OpenWebsiteLibaryControlzExCommand}" MouseAction="LeftClick" />
+                    <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.Libary_MahAppsMetroIconPacks_LicenseUrl}" MouseAction="LeftClick" />
                 </TextBlock.InputBindings>
             </TextBlock>
-            
-            
-            <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_Libary_HeijdenDNSName}" Style="{StaticResource LinkTextBlock}">
+            <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static Resources:Resources.Libary_HeijdenDNS_Name}" Style="{StaticResource LinkTextBlock}">
                 <TextBlock.InputBindings>
-                    <MouseBinding Command="{Binding OpenWebsiteLibaryHeijdenDNSCommand}" MouseAction="LeftClick" />
+                    <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.Libary_HeijdenDNS_ProjectUrl}" MouseAction="LeftClick" />
                 </TextBlock.InputBindings>
             </TextBlock>            
             <TextBlock Grid.Column="2" Grid.Row="6" Text="{DynamicResource String_Libary_HeijdenDNSDescription}" Style="{StaticResource WrapTextBlock}" />
-            <TextBlock Grid.Column="4" Grid.Row="6" Text="CPOL" Style="{StaticResource LinkTextBlock}">
+            <TextBlock Grid.Column="4" Grid.Row="6" Text="{x:Static Resources:Resources.License_CPOL}" Style="{StaticResource LinkTextBlock}">
                 <TextBlock.InputBindings>
-                    <MouseBinding Command="{Binding OpenWebsiteLibaryControlzExCommand}" MouseAction="LeftClick" />
+                    <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.Libary_HeijdenDNS_LicenseUrl}" MouseAction="LeftClick" />
                 </TextBlock.InputBindings>
             </TextBlock>
         </Grid>
-        <TextBlock Text="{DynamicResource String_Header_License}" Style="{StaticResource HeaderTextBlock}"/>
-    </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

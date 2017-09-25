@@ -603,7 +603,7 @@ namespace NETworkManager
 
         private void OpenGithubProjectAction()
         {
-            Process.Start(Properties.Resources.Project_GitHub_Url);
+            Process.Start(Properties.Resources.NETworkManager_ProjectUrl);
         }
 
         public ICommand OpenApplicationListCommand

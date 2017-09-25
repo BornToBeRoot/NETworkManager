@@ -1,0 +1,10 @@
+﻿<UserControl x:Class="NETworkManager.Views.Settings.UpdateView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d">
+    <Grid>
+        <TextBlock Text="{DynamicResource String_ComingSoon}" Foreground="{DynamicResource GrayBrush3}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+    </Grid>
+</UserControl>

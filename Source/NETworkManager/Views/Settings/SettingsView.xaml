@@ -121,7 +121,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="{DynamicResource String_Header_Update}">
-
+                <SettingsViews:UpdateView Margin="10" />
             </TabItem>
             <!-- About -->
             <TabItem Header="{DynamicResource String_Header_About}">

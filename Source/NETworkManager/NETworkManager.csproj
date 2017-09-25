@@ -182,6 +182,9 @@
     <Compile Include="ViewModels\Help\HelpCommandLineViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationDNSLookupViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationWakeOnLANViewModel.cs" />
+    <Compile Include="Views\Settings\UpdateView.xaml.cs">
+      <DependentUpon>UpdateView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Settings\SettingsApplicationDNSLookupView.xaml.cs">
       <DependentUpon>SettingsApplicationDNSLookupView.xaml</DependentUpon>
     </Compile>
@@ -255,6 +258,10 @@
     <Page Include="Views\Applications\IPScannerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\UpdateView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Settings\SettingsApplicationDNSLookupView.xaml">
       <Generator>MSBuild:Compile</Generator>

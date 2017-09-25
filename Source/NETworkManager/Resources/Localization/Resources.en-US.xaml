@@ -223,7 +223,8 @@
     <system:String x:Key="String_SettingsSuccessfullyImported">Settings successfully imported!</system:String>
     <system:String x:Key="String_WakeOnLANClientsReloaded">Wake on LAN clients reloaded</system:String>
     <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Network interface profiles reloaded</system:String>
-        
+    <system:String x:Key="String_ComingSoon">Coming Soon!</system:String>
+    
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
     <system:String x:Key="String_Button_Default">Default</system:String>
@@ -377,12 +378,8 @@
     <system:String x:Key="String_PortStatus_Open">Open</system:String>
         
     <!-- Libaries -->
-    <system:String x:Key="String_Libary_ControlzExName">ControlzEx</system:String>
     <system:String x:Key="String_Libary_ControlzExDescription">Shared Controlz for WPF and ... more.</system:String>
-    <system:String x:Key="String_Libary_MahAppsMetroName">MahApps.Metro</system:String>
     <system:String x:Key="String_Libary_MahAppsMetroDescription">A toolkit for creating Metro / Modern UI styled WPF apps.</system:String>
-    <system:String x:Key="String_Libary_MahAppsMetroIconPacksName">MahApps.Metro.IconPacks</system:String>
     <system:String x:Key="String_Libary_MahAppsMetroIconPacksDescription">Some awesome icons for WPF and UWP all together...</system:String>
-    <system:String x:Key="String_Libary_HeijdenDNSName">Heijden.DNS</system:String>
     <system:String x:Key="String_Libary_HeijdenDNSDescription">Reusable DNS resolver component</system:String>
 </ResourceDictionary>

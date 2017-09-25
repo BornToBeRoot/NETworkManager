@@ -60,44 +60,14 @@ namespace NETworkManager.ViewModels.Settings
         #endregion
 
         #region Commands & Actions
-        public ICommand OpenWebsiteLibaryControlzExCommand
+        public ICommand OpenWebsiteCommand
         {
-            get { return new RelayCommand(p => OpenWebsiteLibaryControlzExAction()); }
+            get { return new RelayCommand(p => OpenWebsiteAction(p)); }
         }
 
-        private void OpenWebsiteLibaryControlzExAction()
+        private void OpenWebsiteAction(object url)
         {
-            Process.Start(Properties.Resources.Libary_ControlzEx_Url);
-        }
-
-        public ICommand OpenWebsiteLibaryMahAppsMetroCommand
-        {
-            get { return new RelayCommand(p => OpenWebsiteLibaryMahAppsMetroAction()); }
-        }
-
-        private void OpenWebsiteLibaryMahAppsMetroAction()
-        {
-            Process.Start(Properties.Resources.Libary_MahAppsMetro_Url);
-        }
-
-        public ICommand OpenWebsiteLibaryMahAppsMetroIconPacksCommand
-        {
-            get { return new RelayCommand(p => OpenWebsiteLibaryMahAppsMetroIconPacksAction()); }
-        }
-
-        private void OpenWebsiteLibaryMahAppsMetroIconPacksAction()
-        {
-            Process.Start(Properties.Resources.Libary_MahAppsMetroIconPacks_Url);
-        }
-
-        public ICommand OpenWebsiteLibaryHeijdenDNSCommand
-        {
-            get { return new RelayCommand(p => OpenWebsiteLibaryHeijdenDNSAction()); }
-        }
-
-        private void OpenWebsiteLibaryHeijdenDNSAction()
-        {
-            Process.Start(Properties.Resources.Libary_HeijdenDNS_Url);
+            Process.Start((string)url);
         }
         #endregion
     }
