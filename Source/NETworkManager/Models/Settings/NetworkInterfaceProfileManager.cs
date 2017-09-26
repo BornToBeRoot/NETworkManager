@@ -18,18 +18,20 @@ namespace NETworkManager.Models.Settings
             return Path.Combine(SettingsManager.GetSettingsLocation(), ProfilesFileName);
         }
 
-        public static void Load()
+        public static void Load(bool deserialize = true)
         {
             Profiles = new ObservableCollection<NetworkInterfaceProfileInfo>();
 
-            Deserialize().ForEach(profile => AddProfile(profile));
-            
+            if (deserialize)
+                Deserialize().ForEach(profile => AddProfile(profile));
+
             Profiles.CollectionChanged += Profiles_CollectionChanged;
         }
 
-        public static void Reload()
+        public static void Import(bool overwrite)
         {
-            Profiles.Clear();
+            if (overwrite)
+                Profiles.Clear();
 
             Deserialize().ForEach(profile => AddProfile(profile));
         }

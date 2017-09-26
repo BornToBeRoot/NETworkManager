@@ -119,6 +119,20 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
+        private bool _importOverrideNetworkInterfaceProfiles = true;
+        public bool ImportOverrideNetworkInterfaceProfiles
+        {
+            get { return _importOverrideNetworkInterfaceProfiles; }
+            set
+            {
+                if (value == _importOverrideNetworkInterfaceProfiles)
+                    return;
+
+                _importOverrideNetworkInterfaceProfiles = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _importWakeOnLANClientsExists;
         public bool ImportWakeOnLANClientsExists
         {
@@ -143,6 +157,20 @@ namespace NETworkManager.ViewModels.Settings
                     return;
 
                 _importWakeOnLANClients = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _importOverrideWakeOnLANClients = true;
+        public bool ImportOverrideWakeOnLANClients
+        {
+            get { return _importOverrideWakeOnLANClients; }
+            set
+            {
+                if (value == _importOverrideWakeOnLANClients)
+                    return;
+
+                _importOverrideWakeOnLANClients = value;
                 OnPropertyChanged();
             }
         }
@@ -327,35 +355,44 @@ namespace NETworkManager.ViewModels.Settings
                 if (ImportWakeOnLANClientsExists && (ImportEverything || ImportWakeOnLANClients))
                     importOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANClients);
 
+                // Load network interface profile (option: add)
+                if (NetworkInterfaceProfileManager.Profiles == null)
+                    NetworkInterfaceProfileManager.Load(!ImportOverrideNetworkInterfaceProfiles);
+
+                // Load WoL clients (option: add)
+                if (WakeOnLANClientManager.Clients == null)
+                    WakeOnLANClientManager.Load(!ImportOverrideWakeOnLANClients);
+
+                // Import (copy) files from zip archive
                 ImportExportManager.Import(ImportLocationSelectedPath, importOptions);
 
-                // Restart if application settings are changed
-                if (ImportExportManager.ForceRestart)
-                {
-                    CloseAction();
-                }
-                else
+                // Do the import (replace or add)
+                if (importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles))
+                    NetworkInterfaceProfileManager.Import(ImportEverything || ImportOverrideNetworkInterfaceProfiles);
+
+                if (importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients))
+                    WakeOnLANClientManager.Import(ImportEverything || ImportOverrideWakeOnLANClients);
+
+                // Show the user a message what happened
+                if (!ImportExportManager.ForceRestart)
                 {
                     settings.AffirmativeButtonText = Application.Current.Resources["String_Button_OK"] as string;
 
                     message = Application.Current.Resources["String_SettingsSuccessfullyImported"] as string + Environment.NewLine;
 
                     if (importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles))
-                    {
-                        NetworkInterfaceProfileManager.Reload();
-
                         message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_NetworkInterfaceProfilesReloaded"] as string);
-                    }
 
                     if (importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients))
-                    {
-                        WakeOnLANClientManager.Reload();
-
                         message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_WakeOnLANClientsReloaded"] as string);
-                    }
 
                     await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, message, MessageDialogStyle.Affirmative, settings);
+
+                    return;
                 }
+
+                // Close this view (this will restart the application)
+                CloseAction();
             }
         }
 
@@ -370,7 +407,7 @@ namespace NETworkManager.ViewModels.Settings
 
             if (ApplicationSettingsExists && (ExportEverything || ExportApplicationSettings))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.ApplicationSettings);
-            
+
             if (NetworkInterfaceProfilesExists && (ExportEverything || ExportNetworkInterfaceProfiles))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
 

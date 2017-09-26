@@ -76,8 +76,8 @@
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition MinWidth="100" />
                         </Grid.ColumnDefinitions>
-                        <RadioButton Grid.Column="0" Grid.Row="0" Content="Replace" />
-                        <RadioButton Grid.Column="2" Grid.Row="0" Content="Add" />
+                        <RadioButton Grid.Column="0" Grid.Row="0" GroupName="ImportNetworkInterfaceProfiles" Content="{DynamicResource String_Override}" IsEnabled="{Binding ImportNetworkInterfaceProfilesExists}" IsChecked="{Binding ImportOverrideNetworkInterfaceProfiles}" />
+                        <RadioButton Grid.Column="2" Grid.Row="0" GroupName="ImportNetworkInterfaceProfiles" Content="{DynamicResource String_Add}" IsEnabled="{Binding ImportNetworkInterfaceProfilesExists}" />
                     </Grid>
                     <CheckBox Grid.Column="0" Grid.Row="4" Content="{DynamicResource String_WakeOnLANClients}" IsEnabled="{Binding ImportWakeOnLANClientsExists}" IsChecked="{Binding ImportWakeOnLANClients}" />
                     <Grid Grid.Column="2" Grid.Row="4" IsEnabled="{Binding ImportWakeOnLANClientsExists}">
@@ -86,8 +86,8 @@
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition MinWidth="100" />
                         </Grid.ColumnDefinitions>
-                        <RadioButton Grid.Column="0" Grid.Row="0" Content="Replace" />
-                        <RadioButton Grid.Column="2" Grid.Row="0" Content="Add" />
+                        <RadioButton Grid.Column="0" Grid.Row="0" GroupName="ImportWakeOnLANClients" Content="{DynamicResource String_Override}" IsEnabled="{Binding ImportWakeOnLANClientsExists}" IsChecked="{Binding ImportOverrideWakeOnLANClients}" />
+                        <RadioButton Grid.Column="2" Grid.Row="0" GroupName="ImportWakeOnLANClients" Content="{DynamicResource String_Add}" IsEnabled="{Binding ImportWakeOnLANClientsExists}" />
                     </Grid>
                 </Grid>
             </GroupBox>
