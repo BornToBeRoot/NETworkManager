@@ -134,7 +134,7 @@ namespace NETworkManager.ViewModels.Applications
                     DetailsDNSServer = value.DNSServer;
 
                     // Configuration
-                    if(value.DhcpEnabled)
+                    if (value.DhcpEnabled)
                     {
                         ConfigEnableDynamicIPAddress = true;
                     }
@@ -146,7 +146,7 @@ namespace NETworkManager.ViewModels.Applications
                         ConfigGateway = value.IPv4Gateway.FirstOrDefault().ToString();
                     }
 
-                    if(value.DNSAutoconfigurationEnabled)
+                    if (value.DNSAutoconfigurationEnabled)
                     {
                         ConfigEnableDynamicDNS = true;
                     }
@@ -155,7 +155,7 @@ namespace NETworkManager.ViewModels.Applications
                         ConfigEnableStaticDNS = true;
 
                         List<IPAddress> DNSServers = value.DNSServer.Where(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToList();
-                        ConfigPrimaryDNSServer = DNSServers.Count > 0 ? DNSServers[0].ToString() : string.Empty ;
+                        ConfigPrimaryDNSServer = DNSServers.Count > 0 ? DNSServers[0].ToString() : string.Empty;
                         ConfigSecondaryDNSServer = DNSServers.Count > 1 ? DNSServers[1].ToString() : string.Empty;
                     }
 
@@ -629,7 +629,9 @@ namespace NETworkManager.ViewModels.Applications
             LoadNetworkInterfaces();
 
             // Load profiles
-            NetworkInterfaceProfileManager.Load();
+            if (NetworkInterfaceProfileManager.Profiles == null)
+                NetworkInterfaceProfileManager.Load();
+
             _networkInterfaceProfiles = CollectionViewSource.GetDefaultView(NetworkInterfaceProfileManager.Profiles);
 
             LoadSettings();

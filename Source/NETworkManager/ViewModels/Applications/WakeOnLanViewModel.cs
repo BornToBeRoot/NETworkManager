@@ -153,7 +153,9 @@ namespace NETworkManager.ViewModels.Applications
         {
             dialogCoordinator = instance;
 
-            WakeOnLANClientManager.Load();
+            if (WakeOnLANClientManager.Clients == null)
+                WakeOnLANClientManager.Load();
+
             _wakeOnLANClients = CollectionViewSource.GetDefaultView(WakeOnLANClientManager.Clients);
 
             LoadSettings();

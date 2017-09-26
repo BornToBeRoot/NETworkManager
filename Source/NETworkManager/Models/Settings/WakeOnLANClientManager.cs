@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows;
 using System.Xml.Serialization;
 
 namespace NETworkManager.Models.Settings
@@ -17,18 +18,20 @@ namespace NETworkManager.Models.Settings
             return Path.Combine(SettingsManager.GetSettingsLocation(), ClientsFileName);
         }
 
-        public static void Load()
+        public static void Load(bool deserialize = true)
         {
             Clients = new ObservableCollection<WakeOnLANClientInfo>();
 
-            Deserialize().ForEach(client => AddClient(client));
+            if (deserialize)
+                Deserialize().ForEach(client => AddClient(client));
 
             Clients.CollectionChanged += WakeOnLANClients_CollectionChanged;
         }
 
-        public static void Reload()
+        public static void Import(bool overwrite)
         {
-            Clients.Clear();
+            if (overwrite)
+                Clients.Clear();
 
             Deserialize().ForEach(client => AddClient(client));
         }

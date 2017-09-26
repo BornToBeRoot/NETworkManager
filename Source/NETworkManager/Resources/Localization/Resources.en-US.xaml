@@ -119,7 +119,6 @@
     <system:String x:Key="String_DefaultGateway">Default-Gateway</system:String>
     <system:String x:Key="String_AddTemplate">Add template</system:String>
     <system:String x:Key="String_EnterHostnameForClient">Enter the hostname to identify the client later.</system:String>
-    <system:String x:Key="String_AllRightReserved">All rights reserved.</system:String>
     <system:String x:Key="String_Administrator">Administrator</system:String>
     <system:String x:Key="String_RestartAsAdministrator">Restart as Administrator</system:String>
     <system:String x:Key="String_RestartAsAdministratorMessage">Administrative rights are required to change this configuration.</system:String>
@@ -224,6 +223,8 @@
     <system:String x:Key="String_WakeOnLANClientsReloaded">Wake on LAN clients reloaded</system:String>
     <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Network interface profiles reloaded</system:String>
     <system:String x:Key="String_ComingSoon">Coming Soon!</system:String>
+    <system:String x:Key="String_Override">override</system:String>
+    <system:String x:Key="String_Add">add</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
