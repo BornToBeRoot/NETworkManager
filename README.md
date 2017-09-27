@@ -60,11 +60,11 @@ You can also fork the repository, fix the issue by yourself and send me a pull r
 
 # Suggestions?
 
-You have an idea how i can improve the NETworkManager? Great!
+You have an idea how the NETworkManager can be improved? Great!
 
 Let me know it by submitting a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new) with your feature request. I will check whether it is useful and feasible.
 
 You can also help developing! Create a feature request first. Then fork the repository, do your changes and send me a pull request with the reference to the feature request. 
 
 # License
-This software is published under the [GNU GENERAL PUBLIC LICENSE](https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE)
+This software is published under the [GNU GENERAL PUBLIC LICENSE](https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE).
