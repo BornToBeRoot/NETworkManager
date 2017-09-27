@@ -13,7 +13,9 @@
     <UserControl.Resources>
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <Converter:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
+        <Converter:IntToStringConverter x:Key="IntToStringConverter" />
         <Converter:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
+        <Converter:NullOrEmptyToStringConverter x:Key="NullOrEmptyToStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -114,11 +116,14 @@
             <StackPanel>
                 <Grid Margin="0,10,0,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -132,6 +137,7 @@
                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
                             <Setter Property="VerticalAlignment" Value="Center" />
                             <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
+                            <Setter Property="TextWrapping" Value="NoWrap" />
                         </Style>
                     </Grid.Resources>
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_StartTime}" />
@@ -140,17 +146,18 @@
                     <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Duration, StringFormat={}{0:hh}h {0:mm}m {0:ss}s {0:ff}ms}" />
                     <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_EndTime}" />
                     <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding EndTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
-                    <!--<TextBlock Grid.Column="3" Grid.Row="0" Text="{DynamicResource String_Scanned}" />
-                    <TextBox Grid.Column="4" Grid.Row="0">
-                        <TextBox.Text>
-                            <MultiBinding StringFormat="{}{0} / {1}">
-                                <Binding Path="IPAddressesScanned" />
-                                <Binding Path="IPAddressesToScan" />
-                            </MultiBinding>
-                        </TextBox.Text>
-                    </TextBox>
-                    <TextBlock Grid.Column="3" Grid.Row="2" Text="{DynamicResource String_Found}" VerticalAlignment="Bottom" />
-                    <TextBox Grid.Column="4" Grid.Row="2" Text="{Binding HostsFound}" />-->
+                    <TextBlock Grid.Column="3" Grid.Row="0" Text="{DynamicResource String_DNSServer}" />
+                    <TextBox Grid.Column="4" Grid.Row="0" Text="{Binding DNSServerAndPort, Converter={StaticResource NullOrEmptyToStringConverter}}"/>
+                    <TextBlock Grid.Column="3" Grid.Row="2" Text="{DynamicResource String_Questions}" />
+                    <TextBox Grid.Column="4" Grid.Row="2" Text="{Binding Questions, Converter={StaticResource IntToStringConverter}}" />
+                    <TextBlock Grid.Column="3" Grid.Row="4" Text="{DynamicResource String_Answers}" />
+                    <TextBox Grid.Column="4" Grid.Row="4" Text="{Binding Answers, Converter={StaticResource IntToStringConverter}}" />
+                    <TextBlock Grid.Column="6" Grid.Row="0" Text="{DynamicResource String_Authorities}" />
+                    <TextBox Grid.Column="7" Grid.Row="0" Text="{Binding Authorities, Converter={StaticResource IntToStringConverter}}" />
+                    <TextBlock Grid.Column="6" Grid.Row="2" Text="{DynamicResource String_Additionals}" />
+                    <TextBox Grid.Column="7" Grid.Row="2" Text="{Binding Additionals, Converter={StaticResource IntToStringConverter}}" />
+                    <TextBlock Grid.Column="6" Grid.Row="4" Text="{DynamicResource String_MessageSize}" />
+                    <TextBox Grid.Column="7" Grid.Row="4" Text="{Binding MessageSize, Converter={StaticResource IntToStringConverter}}" />
                 </Grid>
             </StackPanel>
         </Expander>

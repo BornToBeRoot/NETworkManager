@@ -226,6 +226,12 @@
     <system:String x:Key="String_Override">überschreiben</system:String>
     <system:String x:Key="String_Add">hinzufügen</system:String>
     <system:String x:Key="String_NoProfilesFoundCreateOne">Keine Profile gefunden! Erstelle eins...</system:String>
+    <system:String x:Key="String_DNSServer">DNS-Server</system:String>
+    <system:String x:Key="String_Questions">Anfragen</system:String>
+    <system:String x:Key="String_Answers">Antworten</system:String>
+    <system:String x:Key="String_Authorities">Authorities</system:String>
+    <system:String x:Key="String_Additionals">Additionals</system:String>
+    <system:String x:Key="String_MessageSize">Nachrichtengröße</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>

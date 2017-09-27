@@ -149,6 +149,90 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
+        private string _dnsServerAndPort;
+        public string DNSServerAndPort
+        {
+            get { return _dnsServerAndPort; }
+            set
+            {
+                if (value == _dnsServerAndPort)
+                    return;
+
+                _dnsServerAndPort = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _questions;
+        public int Questions
+        {
+            get { return _questions; }
+            set
+            {
+                if (value == _questions)
+                    return;
+
+                _questions = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _answers;
+        public int Answers
+        {
+            get { return _answers; }
+            set
+            {
+                if (value == _answers)
+                    return;
+
+                _answers = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _authorities;
+        public int Authorities
+        {
+            get { return _authorities; }
+            set
+            {
+                if (value == _authorities)
+                    return;
+
+                _authorities = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _additionals;
+        public int Additionals
+        {
+            get { return _additionals; }
+            set
+            {
+                if (value == _additionals)
+                    return;
+
+                _additionals = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _messageSize;
+        public int MessageSize
+        {
+            get { return _messageSize; }
+            set
+            {
+                if (value == _messageSize)
+                    return;
+
+                _messageSize = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _expandStatistics;
         public bool ExpandStatistics
         {
@@ -204,6 +288,14 @@ namespace NETworkManager.ViewModels.Applications
         {
             DisplayStatusMessage = false;
             IsLookupRunning = true;
+
+            // Reset statistic
+            DNSServerAndPort = string.Empty;
+            Questions = 0;
+            Answers = 0;
+            Authorities = 0;
+            Additionals = 0;
+            MessageSize = 0;
 
             // Measure the time
             StartTime = DateTime.Now;
@@ -311,7 +403,14 @@ namespace NETworkManager.ViewModels.Applications
 
         private void DNSLookup_LookupComplete(object sender, DNSLookupCompleteArgs e)
         {
-            if (e.ResourceRecordsCount == 0)
+            DNSServerAndPort = e.ServerAndPort;
+            Questions = e.QuestionsCount;
+            Answers = e.AnswersCount;
+            Authorities = e.AuthoritiesCount;
+            Additionals = e.AdditionalsCount;
+            MessageSize = e.MessageSize;
+
+            if (e.AnswersCount == 0)
             {
                 StatusMessage = string.Format(Application.Current.Resources["String_NoDNSRecordFoundCheckYourInputAndSettings"] as string, HostnameOrIPAddress);
                 DisplayStatusMessage = true;

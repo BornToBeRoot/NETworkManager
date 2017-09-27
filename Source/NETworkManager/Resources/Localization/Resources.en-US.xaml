@@ -226,7 +226,13 @@
     <system:String x:Key="String_Override">override</system:String>
     <system:String x:Key="String_Add">add</system:String>
     <system:String x:Key="String_NoProfilesFoundCreateOne">No profiles found! Create one...</system:String>
-
+    <system:String x:Key="String_DNSServer">DNS Server</system:String>
+    <system:String x:Key="String_Questions">Questions</system:String>
+    <system:String x:Key="String_Answers">Answers</system:String>
+    <system:String x:Key="String_Authorities">Authorities</system:String>
+    <system:String x:Key="String_Additionals">Additionals</system:String>
+    <system:String x:Key="String_MessageSize">Message size</system:String>
+    
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
     <system:String x:Key="String_Button_Default">Default</system:String>

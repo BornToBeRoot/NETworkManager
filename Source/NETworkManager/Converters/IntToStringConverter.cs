@@ -8,11 +8,9 @@ namespace NETworkManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            long test;
+            long.TryParse(value.ToString(), out long intValue);
 
-            long.TryParse(value.ToString(), out test);
-
-            if (test == 0)
+            if (intValue == 0)
                 return string.Format("-/-");
 
             return value.ToString();
