@@ -7,8 +7,8 @@
     <system:String x:Key="String_Header_Settings">Settings</system:String>
     <system:String x:Key="String_Header_Status">Status</system:String>
     <system:String x:Key="String_Header_Clients">Clients</system:String>
+    <system:String x:Key="String_Header_Client">Clients</system:String>
     <system:String x:Key="String_Header_MACAddress">MAC-Address</system:String>
-    <system:String x:Key="String_Header_MACAddressOrVendor">MAC-Address or Vendor</system:String>
     <system:String x:Key="String_Header_Details">Details</system:String>
     <system:String x:Key="String_Header_Input">Input</system:String>
     <system:String x:Key="String_Header_Interface">Interface</system:String>
@@ -25,7 +25,6 @@
     <system:String x:Key="String_Header_Location">Location</system:String>
     <system:String x:Key="String_Header_Portable">Portable</system:String>
     <system:String x:Key="String_Header_DefaultApplication">Default application</system:String>
-    <system:String x:Key="String_Header_IPRange">IP-Range</system:String>
     <system:String x:Key="String_Header_Result">Result</system:String>
     <system:String x:Key="String_Header_Ping">Ping</system:String>
     <system:String x:Key="String_Header_DNS">DNS</system:String>
@@ -48,7 +47,6 @@
     <system:String x:Key="String_Header_PortScanner">Port-Scanner</system:String>
     <system:String x:Key="String_Header_PortLookup">Port-Lookup</system:String>
     <system:String x:Key="String_Header_Port">Port</system:String>
-    <system:String x:Key="String_Header_PortPortRangeOrService">Port, port range or service</system:String>
     <system:String x:Key="String_Header_Socket">Socket</system:String>
     <system:String x:Key="String_Header_History">History</system:String>
     <system:String x:Key="String_Header_Update">Update</system:String>
@@ -58,11 +56,13 @@
     <system:String x:Key="String_Header_SelectAProfile">Select a profile...</system:String>
     <system:String x:Key="String_Header_Profiles">Profiles</system:String>
     <system:String x:Key="String_Header_AddProfile">Add profile</system:String>
-    <system:String x:Key="String_Header_WakeUp">Wake up</system:String>
     <system:String x:Key="String_Header_AddClient">Add client</system:String>
     <system:String x:Key="String_Header_Libraries">Libraries</system:String>
     <system:String x:Key="String_Header_License">License</system:String>
-
+    <system:String x:Key="String_Header_Search">Search</system:String>
+    <system:String x:Key="String_Header_Scan">Scan</system:String>
+    <system:String x:Key="String_Header_Lookup">Lookup</system:String>
+    
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">A powerful tool for managing networks and troubleshoot network problems!</system:String>
@@ -232,7 +232,8 @@
     <system:String x:Key="String_Authorities">Authorities</system:String>
     <system:String x:Key="String_Additionals">Additionals</system:String>
     <system:String x:Key="String_MessageSize">Message size</system:String>
-    
+    <system:String x:Key="String_Destination">Destination</system:String>
+        
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
     <system:String x:Key="String_Button_Default">Default</system:String>

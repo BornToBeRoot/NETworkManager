@@ -22,18 +22,19 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Width="450" HorizontalAlignment="Left" Margin="0,0,0,20">
+        <Grid Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_WakeUp}" />
+            <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Client}" />
             <Grid Grid.Row="1" Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition MinWidth="150" Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -43,7 +44,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_MACAddress}" />
-                <TextBox Grid.Column="1" Grid.Row="0" x:Name="txtMACAddress" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddress}" Style="{StaticResource DefaultTextBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                <TextBox Grid.Column="2" Grid.Row="0" x:Name="txtMACAddress" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddress}" Style="{StaticResource DefaultTextBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
                     </TextBox.InputBindings>
@@ -57,7 +58,7 @@
                     </TextBox.Text>
                 </TextBox>
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Broadcast}" Style="{StaticResource CenterTextBlock}" />
-                <TextBox x:Name="txtBroadcast" Grid.Column="1" Grid.Row="2" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding BroadcastHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Broadcast}" Style="{StaticResource DefaultTextBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                <TextBox x:Name="txtBroadcast" Grid.Column="2" Grid.Row="2" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding BroadcastHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Broadcast}" Style="{StaticResource DefaultTextBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
                     </TextBox.InputBindings>
@@ -71,7 +72,7 @@
                     </TextBox.Text>
                 </TextBox>
                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Port}" Style="{StaticResource CenterTextBlock}" />
-                <TextBox x:Name="txtPort" Grid.Column="1" Grid.Row="4" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding PortHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort}" Style="{StaticResource DefaultTextBox}" HorizontalAlignment="Left" Width="65" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                <TextBox x:Name="txtPort" Grid.Column="2" Grid.Row="4" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding PortHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort}" Style="{StaticResource DefaultTextBox}" HorizontalAlignment="Left" Width="65" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
                     </TextBox.InputBindings>

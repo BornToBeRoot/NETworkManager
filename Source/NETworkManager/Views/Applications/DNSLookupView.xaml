@@ -25,7 +25,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Destination}" />
+        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Lookup}" />
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

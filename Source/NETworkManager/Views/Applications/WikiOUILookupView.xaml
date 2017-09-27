@@ -22,7 +22,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_MACAddressOrVendor}" />
+        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Search}" />
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

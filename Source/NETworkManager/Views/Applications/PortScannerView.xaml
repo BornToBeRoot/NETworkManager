@@ -25,7 +25,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Destination}" />
+        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Scan}" />
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -35,7 +35,8 @@
             <StackPanel Grid.Row="0">
                 <Grid Margin="0,0,0,10">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -43,8 +44,8 @@
                         <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_HostnameOrIPAddress}" />
-                    <ComboBox Grid.Column="1" Grid.Row="0" x:Name="cbHostnameOrIPAddress" ItemsSource="{Binding HostnameOrIPAddressHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameAndOrIPAddress}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}"  Style="{StaticResource HistoryComboBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                    <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_Destination}" />
+                    <ComboBox Grid.Column="2" Grid.Row="0" x:Name="cbHostnameOrIPAddress" ItemsSource="{Binding HostnameOrIPAddressHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameAndOrIPAddress}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}"  Style="{StaticResource HistoryComboBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                         <ComboBox.Text>
                             <Binding Path="HostnameOrIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
@@ -54,7 +55,7 @@
                         </ComboBox.Text>
                     </ComboBox>
                     <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_Ports}" />
-                    <ComboBox Grid.Column="1" Grid.Row="2" x:Name="cbPorts" ItemsSource="{Binding PortsHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EamplePortScanRange}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                    <ComboBox Grid.Column="2" Grid.Row="2" x:Name="cbPorts" ItemsSource="{Binding PortsHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EamplePortScanRange}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                         <ComboBox.Text>
                             <Binding Path="Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
@@ -65,7 +66,7 @@
                         </ComboBox.Text>
                     </ComboBox>
                 </Grid>
-                <Button Grid.Column="1" Grid.Row="1" Command="{Binding ScanCommand}" IsDefault="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsScanRunning}" HorizontalAlignment="Right">
+                <Button Command="{Binding ScanCommand}" IsDefault="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsScanRunning}" HorizontalAlignment="Right">
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
