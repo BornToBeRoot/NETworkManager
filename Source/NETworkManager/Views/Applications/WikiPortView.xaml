@@ -44,11 +44,6 @@
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.Text>
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="{x:Type ComboBoxItem}">
-                            <Setter Property="Width" Value="{Binding ActualWidth,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBox}}}"/>
-                        </Style>
-                    </ComboBox.ItemContainerStyle>
                 </ComboBox>
                 <Button Grid.Column="1" Command="{Binding PortLookupCommand}" HorizontalAlignment="Right" Margin="10,0,0,0">
                     <Button.Resources>
