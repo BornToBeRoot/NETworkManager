@@ -478,28 +478,45 @@
                 </Grid>
                 <Border Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource GrayBrush8}">
                     <Expander x:Name="expanderProfile" Header="{DynamicResource String_Header_Profiles}" Style="{StaticResource ProfileExpander}" IsExpanded="{Binding ExpandProfileView}">
-                        <ListBox x:Name="listBoxProfiles" Width="250" FontSize="14" ItemsSource="{Binding NetworkInterfaceProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}">
-                            <ListBox.Resources>
-                                <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
-                                <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                                    <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteProfileCommand}">
-                                        <MenuItem.Icon>
-                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                                <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterialLight Kind=Delete}" />
-                                                </Rectangle.OpacityMask>
-                                            </Rectangle>
-                                        </MenuItem.Icon>
-                                    </MenuItem>
-                                </ContextMenu>
-                                <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
-                                    <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
-                                </Style>
-                            </ListBox.Resources>
-                            <ListBox.InputBindings>
-                                <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
-                            </ListBox.InputBindings>
-                        </ListBox>
+                        <Grid Width="250">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <ListBox Grid.Column="0" Grid.Row="0" x:Name="listBoxProfiles"  FontSize="14" ItemsSource="{Binding NetworkInterfaceProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}">
+                                <ListBox.Resources>
+                                    <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
+                                    <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                                        <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteProfileCommand}">
+                                            <MenuItem.Icon>
+                                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                                    <Rectangle.OpacityMask>
+                                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterialLight Kind=Delete}" />
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                    <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
+                                        <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
+                                    </Style>
+                                </ListBox.Resources>
+                                <ListBox.InputBindings>
+                                    <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
+                                </ListBox.InputBindings>
+                            </ListBox>
+                            <TextBlock Grid.Row="0" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_NoProfilesFoundCreateOne}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding NetworkInterfaceProfiles.Count}" Value="0">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
                     </Expander>
                 </Border>
             </Grid>

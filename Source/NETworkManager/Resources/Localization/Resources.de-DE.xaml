@@ -225,6 +225,7 @@
     <system:String x:Key="String_ComingSoon">Kommt demnächst!</system:String>
     <system:String x:Key="String_Override">überschreiben</system:String>
     <system:String x:Key="String_Add">hinzufügen</system:String>
+    <system:String x:Key="String_NoProfilesFoundCreateOne">Keine Profile gefunden! Erstelle eins...</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>

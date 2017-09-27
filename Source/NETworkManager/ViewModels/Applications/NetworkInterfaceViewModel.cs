@@ -579,7 +579,9 @@ namespace NETworkManager.ViewModels.Applications
         {
             get { return _selectedProfile; }
             set
-            {
+            {  
+                               
+
                 if (value == _selectedProfile)
                     return;
 
@@ -633,7 +635,7 @@ namespace NETworkManager.ViewModels.Applications
                 NetworkInterfaceProfileManager.Load();
 
             _networkInterfaceProfiles = CollectionViewSource.GetDefaultView(NetworkInterfaceProfileManager.Profiles);
-
+            
             LoadSettings();
 
             _isLoading = false;
