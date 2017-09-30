@@ -1,4 +1,5 @@
 ﻿using NETworkManager.Helpers;
+using System.Collections.Generic;
 using System.Net;
 
 namespace NETworkManager.Models.Network
@@ -23,6 +24,15 @@ namespace NETworkManager.Models.Network
                 HostLastIP = IPv4AddressHelper.DecrementIPv4Address(broadcast, 1),
                 HostIPs = totalIPs - 2
             };
-        }        
+        }
+
+        public static List<SubnetInfo> SplitIPv4Subnet(IPAddress ipv45Address, IPAddress subnetmask, IPAddress newSubnetmask)
+        {
+            List<SubnetInfo> list = new List<SubnetInfo>();
+
+
+
+            return list;
+        }
     }
 }

@@ -167,6 +167,7 @@
     <Compile Include="3rdParty\Heijden.DNS\Structs.cs" />
     <Compile Include="Converters\TimestampToStringConverter.cs" />
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
+    <Compile Include="Converters\ValidateSubnetCalculatorIPv4SplitterConverter.cs" />
     <Compile Include="Helpers\SingleInstanceHelper.cs" />
     <Compile Include="Models\Network\DNSLookup.cs" />
     <Compile Include="Models\Network\DNSLookupCompleteArgs.cs" />
@@ -180,10 +181,15 @@
     <Compile Include="Validators\SubnetValidator.cs" />
     <Compile Include="Validators\OpacityTextboxValidator.cs" />
     <Compile Include="ViewModels\Applications\DNSLookupViewModel.cs" />
+    <Compile Include="ViewModels\Applications\ObserverableCollection.cs" />
+    <Compile Include="ViewModels\Applications\SubnetCalculatorIPv4SplitterViewModel.cs" />
     <Compile Include="ViewModels\Applications\WikiOUILookupViewModel.cs" />
     <Compile Include="ViewModels\Help\HelpCommandLineViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationDNSLookupViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationWakeOnLANViewModel.cs" />
+    <Compile Include="Views\Applications\SubnetCalculatorIPv4SplitterView.xaml.cs">
+      <DependentUpon>SubnetCalculatorIPv4SplitterView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Applications\SubnetCalculatorView.xaml.cs">
       <DependentUpon>SubnetCalculatorView.xaml</DependentUpon>
     </Compile>
@@ -243,6 +249,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Styles\MetroDialogStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Applications\SubnetCalculatorIPv4SplitterView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

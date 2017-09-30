@@ -10,7 +10,7 @@
             <ApplicationViews:SubnetCalculatorIPv4CalculatorView Margin="10" />
         </TabItem>
         <TabItem Header="{DynamicResource String_Header_IPv4Splitter}">
-            
+            <ApplicationViews:SubnetCalculatorIPv4SplitterView Margin="10" />
         </TabItem>
     </TabControl>
 </UserControl>

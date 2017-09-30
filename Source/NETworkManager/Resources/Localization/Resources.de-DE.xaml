@@ -96,6 +96,7 @@
     <system:String x:Key="String_Subnetmask">Subnetzmaske</system:String>
     <system:String x:Key="String_CIDR">CIDR</system:String>
     <system:String x:Key="String_SubnetmaskOrCIDR">Subnetmaske oder CIDR</system:String>
+    <system:String x:Key="String_NewSubnetmaskOrCIDR">Neue Subnetmaske oder CIDR</system:String>
     <system:String x:Key="String_IPv4DefaultGateway">IPv4-Standardgateway</system:String>
     <system:String x:Key="String_DHCPEnabled">DHCP aktiviert</system:String>
     <system:String x:Key="String_DHCPServer">DHCP-Server</system:String>
@@ -235,6 +236,8 @@
     <system:String x:Key="String_Additionals">Additionals</system:String>
     <system:String x:Key="String_MessageSize">Nachrichtengröße</system:String>
     <system:String x:Key="String_Destination">Ziel</system:String>
+    <system:String x:Key="String_EnterASubnetToCalculateIt">Geben Sie ein Subnetz ein, um es zu berechnen ...</system:String>
+    <system:String x:Key="String_Subnet">Subnetz</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
@@ -293,11 +296,11 @@
     <system:String x:Key="String_Watermark_ExampleMACAddressesOrVendor">01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5; Intel Corp; Asus</system:String>
     <system:String x:Key="String_Watermark_EamplePortScanRange">22; 80; 443; 500 - 999; 8080</system:String>
     <system:String x:Key="String_Watermark_ExampleHostnameAndOrIPAddress">192.168.178.1; fritz.box; localhost</system:String>
-    <system:String x:Key="String_Watermark_ExampleSubnetmaskOrCIDR">255.255.255.0 or /24</system:String>
+    <system:String x:Key="String_Watermark_ExampleSubnetmaskOrCIDR">/24 oder 255.255.255.0</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Gateway">192.168.178.1</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4DNSServer">8.8.8.8</system:String>
     <system:String x:Key="String_Watermark_EamplePortPortRangeOrService">22; 80; https; ldaps; 777 - 999; 8080</system:String>
-    <system:String x:Key="String_Watermark_ExampleSubnet">192.168.178.133/26</system:String>
+    <system:String x:Key="String_Watermark_ExampleSubnet">192.168.178.133/22 oder 192.168.178.133/255.255.252.0</system:String>
     
     <!-- ShowProgress -->
     <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Konfiguriere Netzwerkinterface</system:String>

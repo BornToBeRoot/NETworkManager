@@ -1018,6 +1018,34 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private List<string> _subnetCalculator_IPv4Splitter_SubnetHistory = new List<string>();
+        public List<string> SubnetCalculator_IPv4Splitter_SubnetHistory
+        {
+            get { return _subnetCalculator_IPv4Splitter_SubnetHistory; }
+            set
+            {
+                if (value == _subnetCalculator_IPv4Splitter_SubnetHistory)
+                    return;
+
+                _subnetCalculator_IPv4Splitter_SubnetHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private List<string> _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory = new List<string>();
+        public List<string> SubnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory
+        {
+            get { return _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory; }
+            set
+            {
+                if (value == _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory)
+                    return;
+
+                _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
         #endregion
 
