@@ -1,4 +1,6 @@
 ﻿using NETworkManager.Models.Network;
+using NETworkManager.Models.Settings;
+using System.Collections.Generic;
 using System.Net;
 using System.Windows.Input;
 
@@ -7,6 +9,39 @@ namespace NETworkManager.ViewModels.Applications
     public class SubnetCalculatorViewModel : ViewModelBase
     {
         #region Variables
+        private bool _isLoading = true;
+        
+        private string _subnet;
+        public string Subnet
+        {
+            get { return _subnet; }
+            set
+            {
+                if (value == _subnet)
+                    return;
+
+                _subnet = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private List<string> _subnetHistory = new List<string>();
+        public List<string> SubnetHistory
+        {
+            get { return _subnetHistory; }
+            set
+            {
+                if (value == _subnetHistory)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.SubnetCalculator_SubnetHistory = value;
+
+                _subnetHistory = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _isDetailsVisible;
         public bool IsDetailsVisible
         {
@@ -16,36 +51,8 @@ namespace NETworkManager.ViewModels.Applications
                 if (value == _isDetailsVisible)
                     return;
 
+
                 _isDetailsVisible = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _ipv4Address;
-
-        public string IPv4Address
-        {
-            get { return _ipv4Address; }
-            set
-            {
-                if (value == _ipv4Address)
-                    return;
-
-                _ipv4Address = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _subnetmaskOrCidr;
-        public string SubnetmaskOrCidr
-        {
-            get { return _subnetmaskOrCidr; }
-            set
-            {
-                if (value == _subnetmaskOrCidr)
-                    return;
-
-                _subnetmaskOrCidr = value;
                 OnPropertyChanged();
             }
         }
@@ -159,12 +166,17 @@ namespace NETworkManager.ViewModels.Applications
         #region Methods
         private void CalculateIPv4SubnetAction()
         {
-            string subnetmask = SubnetmaskOrCidr;
+            IsDetailsVisible = false;
 
-            if (SubnetmaskOrCidr.StartsWith("/"))
-                subnetmask = Subnetmask.GetFromCidr(int.Parse(SubnetmaskOrCidr.TrimStart('/'))).Subnetmask;
+            string[] subnet = Subnet.Trim().Split('/');
 
-            SubnetInfo subnetInfo = Subnet.CalculateIPv4Subnet(IPAddress.Parse(IPv4Address), IPAddress.Parse(subnetmask));
+            string subnetmask = subnet[1];
+            
+            // Convert CIDR to subnetmask
+            if (subnetmask.Length < 3)
+                subnetmask = Subnetmask.GetFromCidr(int.Parse(subnet[1])).Subnetmask;
+            
+            SubnetInfo subnetInfo = Models.Network.Subnet.CalculateIPv4Subnet(IPAddress.Parse(subnet[0]), IPAddress.Parse(subnetmask));
 
             DetailsNetworkAddress = subnetInfo.NetworkAddress;
             DetailsBroadcast = subnetInfo.Broadcast;

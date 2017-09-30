@@ -1003,6 +1003,22 @@ namespace NETworkManager.Models.Settings
             }
         }
         #endregion
+
+        #region Calculator
+        private List<string> _subnetCalculator_SubnetHistory = new List<string>();
+        public List<string> SubnetCalculator_SubnetHistory
+        {
+            get { return _subnetCalculator_SubnetHistory; }
+            set
+            {
+                if (value == _subnetCalculator_SubnetHistory)
+                    return;
+
+                _subnetCalculator_SubnetHistory = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
         #endregion
 
         #region Constructor

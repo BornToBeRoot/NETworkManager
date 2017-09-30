@@ -4,11 +4,11 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views.Applications
 {
-    public partial class WikiPortView : UserControl
+    public partial class WikiPortLookupView : UserControl
     {
-        WikiPortViewModel viewModel = new WikiPortViewModel(DialogCoordinator.Instance);
+        WikiPortLookupViewModel viewModel = new WikiPortLookupViewModel(DialogCoordinator.Instance);
 
-        public WikiPortView()
+        public WikiPortLookupView()
         {
             InitializeComponent();
             DataContext = viewModel;

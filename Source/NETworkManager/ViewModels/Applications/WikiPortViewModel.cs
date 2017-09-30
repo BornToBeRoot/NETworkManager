@@ -8,7 +8,7 @@ using NETworkManager.Helpers;
 
 namespace NETworkManager.ViewModels.Applications
 {
-    public class WikiPortViewModel : ViewModelBase
+    public class WikiPortLookupViewModel : ViewModelBase
     {
         #region Variables
         private IDialogCoordinator dialogCoordinator;
@@ -102,7 +102,7 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Constructor, Load settings
-        public WikiPortViewModel(IDialogCoordinator instance)
+        public WikiPortLookupViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
 

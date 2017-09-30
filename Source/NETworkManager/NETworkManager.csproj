@@ -177,6 +177,7 @@
     <Compile Include="Models\Settings\NetworkInterfaceProfileManager.cs" />
     <Compile Include="Validators\IPAddressValidator.cs" />
     <Compile Include="Validators\EmptyOrIPv4AddressValidator.cs" />
+    <Compile Include="Validators\SubnetValidator.cs" />
     <Compile Include="Validators\OpacityTextboxValidator.cs" />
     <Compile Include="ViewModels\Applications\DNSLookupViewModel.cs" />
     <Compile Include="ViewModels\Applications\WikiOUILookupViewModel.cs" />
@@ -186,8 +187,8 @@
     <Compile Include="Views\Applications\WikiOUILookupView.xaml.cs">
       <DependentUpon>WikiOUILookupView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\WikiPortView.xaml.cs">
-      <DependentUpon>WikiPortView.xaml</DependentUpon>
+    <Compile Include="Views\Applications\WikiPortLookupView.xaml.cs">
+      <DependentUpon>WikiPortLookupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\UpdateView.xaml.cs">
       <DependentUpon>UpdateView.xaml</DependentUpon>
@@ -246,7 +247,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\WikiPortView.xaml">
+    <Page Include="Views\Applications\WikiPortLookupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

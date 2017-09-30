@@ -10,7 +10,6 @@
     <system:String x:Key="String_Header_Client">Clients</system:String>
     <system:String x:Key="String_Header_MACAddress">MAC-Address</system:String>
     <system:String x:Key="String_Header_Details">Details</system:String>
-    <system:String x:Key="String_Header_Input">Input</system:String>
     <system:String x:Key="String_Header_Interface">Interface</system:String>
     <system:String x:Key="String_Header_Information">Information</system:String>
     <system:String x:Key="String_Header_Configure">Configure</system:String>
@@ -62,6 +61,7 @@
     <system:String x:Key="String_Header_Search">Search</system:String>
     <system:String x:Key="String_Header_Scan">Scan</system:String>
     <system:String x:Key="String_Header_Lookup">Lookup</system:String>
+    <system:String x:Key="String_Header_Subnet">Subnet</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -295,6 +295,7 @@
     <system:String x:Key="String_Watermark_ExampleIPv4Gateway">192.168.178.1</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4DNSServer">8.8.8.8</system:String>
     <system:String x:Key="String_Watermark_EamplePortPortRangeOrService">22; 80; https; ldaps; 777 - 999; 8080</system:String>
+    <system:String x:Key="String_Watermark_ExampleSubnet">192.168.178.133/26</system:String>
 
     <!-- ShowProgress -->
     <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Configure Network Interface</system:String>
@@ -319,6 +320,7 @@
     <system:String x:Key="String_ValidateError_OnlyNumbersCanBeEntered">Only numbers can be entered!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidValueBetween10and100">Enter a valid value between 10 and 100!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidIPAddress">Enter a valid IP-Address!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidSubnet">Enter a valid subnet (like 192.168.178.133/26)</system:String>
     
     <!-- ApplicationView.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>

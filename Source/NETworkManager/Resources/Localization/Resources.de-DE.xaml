@@ -10,7 +10,6 @@
     <system:String x:Key="String_Header_Client">Client</system:String>
     <system:String x:Key="String_Header_MACAddress">MAC-Adresse</system:String>
     <system:String x:Key="String_Header_Details">Details</system:String>
-    <system:String x:Key="String_Header_Input">Eingabe</system:String>
     <system:String x:Key="String_Header_Interface">Interface</system:String>
     <system:String x:Key="String_Header_Information">Informationen</system:String>
     <system:String x:Key="String_Header_Configure">Konfigurieren</system:String>
@@ -62,6 +61,7 @@
     <system:String x:Key="String_Header_Search">Suche</system:String>
     <system:String x:Key="String_Header_Scan">Scannen</system:String>
     <system:String x:Key="String_Header_Lookup">Lookup</system:String>
+    <system:String x:Key="String_Header_Subnet">Subnetz</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -295,7 +295,8 @@
     <system:String x:Key="String_Watermark_ExampleIPv4Gateway">192.168.178.1</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4DNSServer">8.8.8.8</system:String>
     <system:String x:Key="String_Watermark_EamplePortPortRangeOrService">22; 80; https; ldaps; 777 - 999; 8080</system:String>
-
+    <system:String x:Key="String_Watermark_ExampleSubnet">192.168.178.133/26</system:String>
+    
     <!-- ShowProgress -->
     <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Konfiguriere Netzwerkinterface</system:String>
     <system:String x:Key="String_Progress_SetStaticIPAddress">Setze statische IP-Adresse und Gateway...</system:String>
@@ -319,7 +320,8 @@
     <system:String x:Key="String_ValidateError_OnlyNumbersCanBeEntered">Es dürfen nur Zahlen eingegeben werden!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidValueBetween10and100">Geben Sie einen gültigen Wert ein zwischen 10 und 100!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidIPAddress">Geben Sie eine gültige IP-Adresse ein!</system:String>
-
+    <system:String x:Key="String_ValidateError_EnterValidSubnet">Geben Sie ein gültiges Subnetz ein (z.B. 192.168.178.133/26)</system:String>
+    
     <!-- ApplicationInfo.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>
     <system:String x:Key="String_ApplicationName_NetworkInterface">Netzwerkinterface</system:String>

@@ -10,7 +10,7 @@
             <ApplicationViews:WikiOUILookupView Margin="10" />
         </TabItem>
         <TabItem Header="{DynamicResource String_Header_PortLookup}">
-            <ApplicationViews:WikiPortView Margin="10" />
+            <ApplicationViews:WikiPortLookupView Margin="10" />
         </TabItem>
     </TabControl>
 </UserControl>
