@@ -3,116 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Network="clr-namespace:NETworkManager.Models.Network"
-        xmlns:Validator="clr-namespace:NETworkManager.Validators"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:ApplicationViews="clr-namespace:NETworkManager.Views.Applications"
         mc:Ignorable="d" >
-    <UserControl.Resources>
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <Converter:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
-    </UserControl.Resources>
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Subnet}" />
-        <Grid Grid.Row="1" Margin="0,0,0,20">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <ComboBox Grid.Column="0" x:Name="cbSubnet" ItemStringFormat="{Binding SubnetHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnet}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Style="{StaticResource HistoryComboBox}" >
-                <ComboBox.Text>
-                    <Binding Path="Subnet" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
-                        <Binding.ValidationRules>
-                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <Validator:SubnetValidator ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </ComboBox.Text>
-            </ComboBox>
-            <Button Grid.Column="2" Command="{Binding CalculateIPv4SubnetCommand}" HorizontalAlignment="Right" IsDefault="True">
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Calculator}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Calculate}" Margin="10,5" FontSize="14" TextAlignment="Center"/>
-                    </Grid>
-                </Button.Content>
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}" >
-                        <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=cbSubnet}" Value="False"/>
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="IsEnabled" Value="True" />
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-        </Grid>
-        <StackPanel Grid.Row="2">
-            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Details}" Visibility="{Binding IsDetailsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <ScrollViewer Style="{DynamicResource DefaulScrollViewer}" Visibility="{Binding IsDetailsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <Grid>
-                    <Grid.Resources>
-                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />
-                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
-                            <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />                            
-                        </Style>
-                    </Grid.Resources>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="5" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="5" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="5" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="5" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="5" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="5" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <GridSplitter Grid.Column="1" Grid.RowSpan="7" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False"/>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_NetworkAddress}" />
-                    <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding DetailsNetworkAddress, Converter={StaticResource IPAddressToStringConverter}}" />
-                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Broadcast}" />
-                    <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding DetailsBroadcast, Converter={StaticResource IPAddressToStringConverter}}" />
-                    <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_TotalIPAddresses}" />
-                    <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding DetailsTotalIPs}" />
-                    <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_Subnetmask}" />
-                    <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding DetailsSubnetmask, Converter={StaticResource IPAddressToStringConverter}}" />
-                    <TextBlock Grid.Column="0" Grid.Row="8" Text="{DynamicResource String_CIDR}" />
-                    <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding DetailsCIDR, StringFormat='/{0}'}" />
-                    <TextBlock Grid.Column="0" Grid.Row="10" Text="{DynamicResource String_HostAddressRange}" />
-                    <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding DetailsHostIPRange}" />
-                    <TextBlock Grid.Column="0" Grid.Row="12" Text="{DynamicResource String_AvailableIPAddresses}" />
-                    <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding DetailsHostIPs}" />
-                </Grid>
-            </ScrollViewer>
-        </StackPanel>
-    </Grid>
+    <TabControl Style="{StaticResource DefaultTabControl}">
+        <TabItem Header="{DynamicResource String_Header_IPv4Calculator}">
+            <ApplicationViews:SubnetCalculatorIPv4CalculatorView Margin="10" />
+        </TabItem>
+        <TabItem Header="{DynamicResource String_Header_IPv4Splitter}">
+            
+        </TabItem>
+    </TabControl>
 </UserControl>

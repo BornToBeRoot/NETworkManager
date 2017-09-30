@@ -3,14 +3,15 @@ using NETworkManager.Models.Settings;
 using System.Collections.Generic;
 using System.Net;
 using System.Windows.Input;
+using NETworkManager.Helpers;
 
 namespace NETworkManager.ViewModels.Applications
 {
-    public class SubnetCalculatorViewModel : ViewModelBase
+    public class SubnetCalculatorIPv4CalculatorViewModel : ViewModelBase
     {
         #region Variables
         private bool _isLoading = true;
-        
+
         private string _subnet;
         public string Subnet
         {
@@ -35,7 +36,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.SubnetCalculator_SubnetHistory = value;
+                    SettingsManager.Current.SubnetCalculator_IPv4Calculator_SubnetHistory = value;
 
                 _subnetHistory = value;
                 OnPropertyChanged();
@@ -156,6 +157,21 @@ namespace NETworkManager.ViewModels.Applications
         }
         #endregion
 
+        #region Constructor, load settings
+        public SubnetCalculatorIPv4CalculatorViewModel()
+        {
+            LoadSettings();
+
+            _isLoading = false;
+        }
+
+        private void LoadSettings()
+        {
+            if (SettingsManager.Current.SubnetCalculator_IPv4Calculator_SubnetHistory != null)
+                SubnetHistory = new List<string>(SettingsManager.Current.SubnetCalculator_IPv4Calculator_SubnetHistory);
+        }
+        #endregion
+
         #region ICommands
         public ICommand CalculateIPv4SubnetCommand
         {
@@ -171,11 +187,11 @@ namespace NETworkManager.ViewModels.Applications
             string[] subnet = Subnet.Trim().Split('/');
 
             string subnetmask = subnet[1];
-            
+
             // Convert CIDR to subnetmask
             if (subnetmask.Length < 3)
                 subnetmask = Subnetmask.GetFromCidr(int.Parse(subnet[1])).Subnetmask;
-            
+
             SubnetInfo subnetInfo = Models.Network.Subnet.CalculateIPv4Subnet(IPAddress.Parse(subnet[0]), IPAddress.Parse(subnetmask));
 
             DetailsNetworkAddress = subnetInfo.NetworkAddress;
@@ -187,6 +203,8 @@ namespace NETworkManager.ViewModels.Applications
             DetailsHostIPs = subnetInfo.HostIPs;
 
             IsDetailsVisible = true;
+
+            SubnetHistory = new List<string>(HistoryListHelper.Modify(SubnetHistory, Subnet, SettingsManager.Current.Application_HistoryListEntries));
         }
         #endregion
     }

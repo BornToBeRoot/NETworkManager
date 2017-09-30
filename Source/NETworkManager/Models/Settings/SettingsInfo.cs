@@ -1005,16 +1005,16 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region Calculator
-        private List<string> _subnetCalculator_SubnetHistory = new List<string>();
-        public List<string> SubnetCalculator_SubnetHistory
+        private List<string> _subnetCalculator_IPv4Calculator_SubnetHistory = new List<string>();
+        public List<string> SubnetCalculator_IPv4Calculator_SubnetHistory
         {
-            get { return _subnetCalculator_SubnetHistory; }
+            get { return _subnetCalculator_IPv4Calculator_SubnetHistory; }
             set
             {
-                if (value == _subnetCalculator_SubnetHistory)
+                if (value == _subnetCalculator_IPv4Calculator_SubnetHistory)
                     return;
 
-                _subnetCalculator_SubnetHistory = value;
+                _subnetCalculator_IPv4Calculator_SubnetHistory = value;
                 SettingsChanged = true;
             }
         }

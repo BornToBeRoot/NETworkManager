@@ -110,13 +110,9 @@
                 <ScrollViewer Grid.Row="3" Style="{StaticResource DefaulScrollViewer}">
                     <Grid>
                         <Grid.Resources>
-                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" >
-                                <Setter Property="VerticalAlignment" Value="Top" />
-                                <Setter Property="Margin" Value="0,0,10,5" />
-                            </Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />
                             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
                                 <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
-                                <Setter Property="Margin" Value="0,0,10,5" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding SelectedNetworkInterface, Converter={StaticResource NullToFalseConverter}}" Value="False">
                                         <Setter Property="Visibility" Value="Collapsed" />
@@ -125,70 +121,88 @@
                             </Style>
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <GridSplitter Grid.Column="1" Grid.RowSpan="18" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
+                        <GridSplitter Grid.Column="1" Grid.RowSpan="38" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
                         <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Name}" />
                         <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding DetailsName}" />
-                        <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource String_Description}" />
-                        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding DetailsDescription}" />
-                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Type}" />
-                        <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding DetailsType}" />
-                        <TextBlock Grid.Column="0" Grid.Row="3" Text="{DynamicResource String_PhysicalAddress}" />
-                        <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding DetailsPhysicalAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Status}" />
-                        <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding DetailsStatus}" />
-                        <TextBlock Grid.Column="0" Grid.Row="5" Text="{DynamicResource String_Speed}" />
-                        <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding DetailsSpeed, Converter={StaticResource BitsToHumanReadableSizeConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_IPv4Address}" />
-                        <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding DetailsIPv4Address, Converter={StaticResource IPAddressArrayToStringConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="7" Text="{DynamicResource String_Subnetmask}"  />
-                        <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding DetailsSubnetmask, Converter={StaticResource IPAddressArrayToStringConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="8" Text="{DynamicResource String_IPv4DefaultGateway}" />
-                        <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding DetailsIPv4Gateway, Converter={StaticResource IPAddressArrayToStringConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="9" Text="{DynamicResource String_DHCPEnabled}"  />
-                        <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding DetailsIPv4DhcpEnabled, Converter={StaticResource TrueFalseToStringConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="10" Text="{DynamicResource String_DHCPServer}"  />
-                        <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding DetailsIPv4DhcpServer, Converter={StaticResource IPAddressArrayToStringConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="11" Text="{DynamicResource String_DHCPLeaseObtained}"  />
-                        <TextBox Grid.Column="2" Grid.Row="11" Text="{Binding DetailsDhcpLeaseObtained}" />
-                        <TextBlock Grid.Column="0" Grid.Row="12" Text="{DynamicResource String_DHCPLeaseExpires}"  />
-                        <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding DetailsDhcpLeaseExpires}" />
-                        <TextBlock Grid.Column="0" Grid.Row="13" Text="{DynamicResource String_IPv6AddressLinkLocal}"  />
-                        <TextBox Grid.Column="2" Grid.Row="13" Text="{Binding DetailsIPv6AddressLinkLocal, Converter={StaticResource IPAddressArrayToStringConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="14" Text="{DynamicResource String_IPv6Address}" />
-                        <TextBox Grid.Column="2" Grid.Row="14" Text="{Binding DetailsIPv6Address, Converter={StaticResource IPAddressArrayToStringConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="15" Text="{DynamicResource String_IPv6DefaultGateway}" />
-                        <TextBox Grid.Column="2" Grid.Row="15" Text="{Binding DetailsIPv6Gateway , Converter={StaticResource IPAddressArrayToStringConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="16" Text="{DynamicResource String_DNSAutoconfiguration}" />
-                        <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding DetailsDNSAutoconfigurationEnabled, Converter={StaticResource TrueFalseToStringConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="17" Text="{DynamicResource String_DNSSuffix}" />
-                        <TextBox Grid.Column="2" Grid.Row="17" Text="{Binding DetailsDNSSuffix}" />
-                        <TextBlock Grid.Column="0" Grid.Row="18" Text="{DynamicResource String_DNSServers}" Margin="0,0,10,0" />
-                        <TextBox Grid.Column="2" Grid.Row="18" Text="{Binding DetailsDNSServer, Converter={StaticResource IPAddressArrayToStringConverter}}" Margin="0,0,10,0" />
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Description}" />
+                        <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding DetailsDescription}" />
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Type}" />
+                        <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding DetailsType}" />
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_PhysicalAddress}" />
+                        <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding DetailsPhysicalAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="8" Text="{DynamicResource String_Status}" />
+                        <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding DetailsStatus}" />
+                        <TextBlock Grid.Column="0" Grid.Row="10" Text="{DynamicResource String_Speed}" />
+                        <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding DetailsSpeed, Converter={StaticResource BitsToHumanReadableSizeConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="12" Text="{DynamicResource String_IPv4Address}" />
+                        <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding DetailsIPv4Address, Converter={StaticResource IPAddressArrayToStringConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="14" Text="{DynamicResource String_Subnetmask}"  />
+                        <TextBox Grid.Column="2" Grid.Row="14" Text="{Binding DetailsSubnetmask, Converter={StaticResource IPAddressArrayToStringConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="16" Text="{DynamicResource String_IPv4DefaultGateway}" />
+                        <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding DetailsIPv4Gateway, Converter={StaticResource IPAddressArrayToStringConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="18" Text="{DynamicResource String_DHCPEnabled}"  />
+                        <TextBox Grid.Column="2" Grid.Row="18" Text="{Binding DetailsIPv4DhcpEnabled, Converter={StaticResource TrueFalseToStringConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="20" Text="{DynamicResource String_DHCPServer}"  />
+                        <TextBox Grid.Column="2" Grid.Row="20" Text="{Binding DetailsIPv4DhcpServer, Converter={StaticResource IPAddressArrayToStringConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="22" Text="{DynamicResource String_DHCPLeaseObtained}"  />
+                        <TextBox Grid.Column="2" Grid.Row="22" Text="{Binding DetailsDhcpLeaseObtained}" />
+                        <TextBlock Grid.Column="0" Grid.Row="24" Text="{DynamicResource String_DHCPLeaseExpires}"  />
+                        <TextBox Grid.Column="2" Grid.Row="24" Text="{Binding DetailsDhcpLeaseExpires}" />
+                        <TextBlock Grid.Column="0" Grid.Row="26" Text="{DynamicResource String_IPv6AddressLinkLocal}"  />
+                        <TextBox Grid.Column="2" Grid.Row="26" Text="{Binding DetailsIPv6AddressLinkLocal, Converter={StaticResource IPAddressArrayToStringConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="28" Text="{DynamicResource String_IPv6Address}" />
+                        <TextBox Grid.Column="2" Grid.Row="28" Text="{Binding DetailsIPv6Address, Converter={StaticResource IPAddressArrayToStringConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="30" Text="{DynamicResource String_IPv6DefaultGateway}" />
+                        <TextBox Grid.Column="2" Grid.Row="30" Text="{Binding DetailsIPv6Gateway , Converter={StaticResource IPAddressArrayToStringConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="32" Text="{DynamicResource String_DNSAutoconfiguration}" />
+                        <TextBox Grid.Column="2" Grid.Row="32" Text="{Binding DetailsDNSAutoconfigurationEnabled, Converter={StaticResource TrueFalseToStringConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="34" Text="{DynamicResource String_DNSSuffix}" />
+                        <TextBox Grid.Column="2" Grid.Row="34" Text="{Binding DetailsDNSSuffix}" />
+                        <TextBlock Grid.Column="0" Grid.Row="36" Text="{DynamicResource String_DNSServers}" />
+                        <TextBox Grid.Column="2" Grid.Row="36" Text="{Binding DetailsDNSServer, Converter={StaticResource IPAddressArrayToStringConverter}}" />
                     </Grid>
                 </ScrollViewer>
             </Grid>

@@ -184,6 +184,9 @@
     <Compile Include="ViewModels\Help\HelpCommandLineViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationDNSLookupViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationWakeOnLANViewModel.cs" />
+    <Compile Include="Views\Applications\SubnetCalculatorView.xaml.cs">
+      <DependentUpon>SubnetCalculatorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Applications\WikiOUILookupView.xaml.cs">
       <DependentUpon>WikiOUILookupView.xaml</DependentUpon>
     </Compile>
@@ -240,6 +243,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Styles\MetroDialogStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Applications\SubnetCalculatorView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -355,7 +362,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Applications\SubnetCalculatorView.xaml">
+    <Page Include="Views\Applications\SubnetCalculatorIPv4CalculatorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -466,7 +473,7 @@
     <Compile Include="ViewModels\Applications\IPScannerViewModel.cs" />
     <Compile Include="ViewModels\Applications\NetworkInterfaceViewModel.cs" />
     <Compile Include="ViewModels\Applications\PingViewModel.cs" />
-    <Compile Include="ViewModels\Applications\SubnetCalculatorViewModel.cs" />
+    <Compile Include="ViewModels\Applications\SubnetCalculatorIPv4CalculatorViewModel.cs" />
     <Compile Include="ViewModels\Applications\TracerouteViewModel.cs" />
     <Compile Include="ViewModels\Applications\WakeOnLANViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
@@ -574,8 +581,8 @@
     <Compile Include="Views\Applications\WakeOnLANView.xaml.cs">
       <DependentUpon>WakeOnLANView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\SubnetCalculatorView.xaml.cs">
-      <DependentUpon>SubnetCalculatorView.xaml</DependentUpon>
+    <Compile Include="Views\Applications\SubnetCalculatorIPv4CalculatorView.xaml.cs">
+      <DependentUpon>SubnetCalculatorIPv4CalculatorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
