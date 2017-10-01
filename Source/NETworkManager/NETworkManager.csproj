@@ -55,7 +55,7 @@
     <StartupObject>NETworkManager.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Images\NETworkManager.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Images\NETworkManager.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
@@ -652,10 +652,10 @@
     <Resource Include="Resources\Localization\Flags\en-US.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\NETworkManager.ico" />
+    <Resource Include="Resources\Images\NETworkManager.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\NETworkManager_128x128.png" />
+    <Resource Include="Resources\Images\NETworkManager_128x128.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
