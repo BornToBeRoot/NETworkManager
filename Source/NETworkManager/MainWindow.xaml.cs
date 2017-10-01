@@ -337,7 +337,8 @@ namespace NETworkManager
         WakeOnLANView wakeOnLANView;
         PingView pingView;
         TracerouteView tracerouteView;
-        DNSLookupView DNSLookupView;
+        DNSLookupView dnsLookupView;
+        RemoteDesktopView remoteDesktopView;
         WikiView wikiView;
 
         private ApplicationViewManager.Name? currentApplicationViewName = null;
@@ -392,10 +393,16 @@ namespace NETworkManager
                     contentControlApplication.Content = tracerouteView;
                     break;
                 case ApplicationViewManager.Name.DNSLookup:
-                    if (DNSLookupView == null)
-                        DNSLookupView = new DNSLookupView();
+                    if (dnsLookupView == null)
+                        dnsLookupView = new DNSLookupView();
 
-                    contentControlApplication.Content = DNSLookupView;
+                    contentControlApplication.Content = dnsLookupView;
+                    break;
+                case ApplicationViewManager.Name.RemoteDesktop:
+                    if (remoteDesktopView == null)
+                        remoteDesktopView = new RemoteDesktopView();
+
+                    contentControlApplication.Content = remoteDesktopView;
                     break;
                 case ApplicationViewManager.Name.Wiki:
                     if (wikiView == null)

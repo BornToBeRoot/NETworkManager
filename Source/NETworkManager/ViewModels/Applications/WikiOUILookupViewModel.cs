@@ -12,8 +12,6 @@ namespace NETworkManager.ViewModels.Applications
     public class WikiOUILookupViewModel : ViewModelBase
     {
         #region Variables
-        private IDialogCoordinator dialogCoordinator;
-        
         private bool _isLoading = true;
 
         private string _macOrVendorAddress;
@@ -104,10 +102,8 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Constructor, Load settings
-        public WikiOUILookupViewModel(IDialogCoordinator instance)
+        public WikiOUILookupViewModel()
         {
-            dialogCoordinator = instance;
-
             LoadSettings();
 
             _isLoading = false;

@@ -3,11 +3,11 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views.Applications
 {
-    public partial class WikiOUILookupView : UserControl
+    public partial class RemoteDesktopView : UserControl
     {
-        WikiOUILookupViewModel viewModel = new WikiOUILookupViewModel();
+        RemoteDesktopViewModel viewModel = new RemoteDesktopViewModel();
 
-        public WikiOUILookupView()
+        public RemoteDesktopView()
         {
             InitializeComponent();
             DataContext = viewModel;

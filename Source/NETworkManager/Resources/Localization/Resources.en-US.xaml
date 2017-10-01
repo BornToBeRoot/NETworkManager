@@ -339,6 +339,7 @@
     <system:String x:Key="String_ApplicationName_Ping">Ping</system:String>
     <system:String x:Key="String_ApplicationName_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_ApplicationName_DNSLookup">DNS Lookup</system:String>
+    <system:String x:Key="String_ApplicationName_RemoteDesktop">Remote Desktop</system:String>
     <system:String x:Key="String_ApplicationName_Wiki">Wiki</system:String>
     
     <!-- SettingsView.Name -->

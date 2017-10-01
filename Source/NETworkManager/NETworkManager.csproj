@@ -183,6 +183,7 @@
     <Compile Include="ViewModels\Applications\DNSLookupViewModel.cs" />
     <Compile Include="ViewModels\Applications\SubnetCalculatorIPv4SplitterViewModel.cs" />
     <Compile Include="ViewModels\Applications\WikiOUILookupViewModel.cs" />
+    <Compile Include="ViewModels\Applications\RemoteDesktopViewModel.cs" />
     <Compile Include="ViewModels\Help\HelpCommandLineViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationDNSLookupViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationWakeOnLANViewModel.cs" />
@@ -197,6 +198,9 @@
     </Compile>
     <Compile Include="Views\Applications\WikiPortLookupView.xaml.cs">
       <DependentUpon>WikiPortLookupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Applications\RemoteDesktopView.xaml.cs">
+      <DependentUpon>RemoteDesktopView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\UpdateView.xaml.cs">
       <DependentUpon>UpdateView.xaml</DependentUpon>
@@ -264,6 +268,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Applications\WikiPortLookupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Applications\RemoteDesktopView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
