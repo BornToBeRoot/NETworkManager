@@ -97,14 +97,14 @@
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Network Address" Binding="{Binding NetworkAddress}" MinWidth="150" />
-                <DataGridTextColumn Header="Broadcast" Binding="{Binding Broadcast}" MinWidth="150" />
-                <DataGridTextColumn Header="Total IPs" Binding="{Binding TotalIPs}" MinWidth="80" />
-                <DataGridTextColumn Header="Subnetmask" Binding="{Binding Subnetmask}" MinWidth="150" />
-                <DataGridTextColumn Header="CIDR" Binding="{Binding CIDR}" MinWidth="80" />
-                <DataGridTextColumn Header="Host First IP" Binding="{Binding HostFirstIP}" MinWidth="150" />
-                <DataGridTextColumn Header="Host Last IP" Binding="{Binding HostLastIP}" MinWidth="150" />
-                <DataGridTextColumn Header="Host IPs" Binding="{Binding HostIPs}" MinWidth="80" />
+                <DataGridTextColumn Header="{DynamicResource String_NetworkAddress}" Binding="{Binding NetworkAddress}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_Broadcast}" Binding="{Binding Broadcast}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_TotalIPAddresses}" Binding="{Binding TotalIPs}" MinWidth="80" />
+                <DataGridTextColumn Header="{DynamicResource String_Subnetmask}" Binding="{Binding Subnetmask}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_CIDR}" Binding="{Binding CIDR}" MinWidth="80" />
+                <DataGridTextColumn Header="{DynamicResource String_HostFirstIPAddress}" Binding="{Binding HostFirstIP}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_HostLastIPAddress}" Binding="{Binding HostLastIP}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_HostIPAddresses}" Binding="{Binding HostIPs}" MinWidth="80" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

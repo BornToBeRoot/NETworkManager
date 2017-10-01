@@ -236,8 +236,11 @@
     <system:String x:Key="String_Additionals">Additionals</system:String>
     <system:String x:Key="String_MessageSize">Nachrichtengröße</system:String>
     <system:String x:Key="String_Destination">Ziel</system:String>
-    <system:String x:Key="String_EnterASubnetToCalculateIt">Geben Sie ein Subnetz ein, um es zu berechnen ...</system:String>
+    <system:String x:Key="String_EnterASubnetToCalculateIt">Geben Sie ein Subnetz ein, um es zu berechnen...</system:String>
     <system:String x:Key="String_Subnet">Subnetz</system:String>
+    <system:String x:Key="String_HostFirstIPAddress">Host erste IP-Adresse</system:String>
+    <system:String x:Key="String_HostLastIPAddress">Host letzte IP-Adresse</system:String>
+    <system:String x:Key="String_HostIPAddresses">Host IP-Adressen</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>

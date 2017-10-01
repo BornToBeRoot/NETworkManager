@@ -238,6 +238,9 @@
     <system:String x:Key="String_Destination">Destination</system:String>
     <system:String x:Key="String_EnterASubnetToCalculateIt">Enter a subnet to calculate it...</system:String>
     <system:String x:Key="String_Subnet">Subnet</system:String>
+    <system:String x:Key="String_HostFirstIPAddress">Host first IP-Address</system:String>
+    <system:String x:Key="String_HostLastIPAddress">Host last IP-Address</system:String>
+    <system:String x:Key="String_HostIPAddresses">Host IP-Addresses</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
