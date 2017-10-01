@@ -6,9 +6,9 @@ NETworkManager is a powerful tool for managing networks and troubleshoot network
 
 # Download
 
-Latest binary: [Version 1.2.0.0 (BETA)](https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.2.0.0_BETA/NETworkManager_v1.2.0.0_BETA.zip)
+Latest binary: [Version 1.2.1.0 (BETA)](https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.2.1.0_BETA/NETworkManager_v1.2.1.0_BETA.zip)
 
-SHA256: `823D49F2EE0FD0C41AEE887E48729D724F722253D9EFBC7DB8AF19A4420D99B8`
+SHA256: `A67F0DE6ED4CCEA0D966A878B69DEA9C8DB12F2F3498DFA261464F076332DF9F`
 
 The software is portable by default. Simply unpack the ZIP archive and put the files somewhere the windows user has write permissions.
 
