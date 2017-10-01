@@ -6,7 +6,7 @@ using System.Windows;
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
 [assembly: AssemblyTitle("NETworkManager")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A powerful tool for managing networks and troubleshoot network problems!")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BornToBeRoot")]
 [assembly: AssemblyProduct("NETworkManager")]
@@ -49,5 +49,5 @@ using System.Windows;
 // Sie können alle Werte angeben oder die standardmäßigen Build- und Revisionsnummern 
 // übernehmen, indem Sie "*" eingeben:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2.0.0")]
-[assembly: AssemblyFileVersion("1.2.0.0")]
+[assembly: AssemblyVersion("1.2.1.0")]
+[assembly: AssemblyFileVersion("1.2.1.0")]
