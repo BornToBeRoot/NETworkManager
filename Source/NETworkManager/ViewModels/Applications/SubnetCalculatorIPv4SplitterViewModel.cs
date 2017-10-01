@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Windows.Input;
 using NETworkManager.Helpers;
-using System.Windows;
 using System.Collections.ObjectModel;
 
 namespace NETworkManager.ViewModels.Applications
@@ -118,6 +117,8 @@ namespace NETworkManager.ViewModels.Applications
         #region Methods
         private void SplitIPv4SubnetAction()
         {
+            SplitResult.Clear();
+
             string[] subnet = Subnet.Trim().Split('/');
 
             string subnetmask = subnet[1];
@@ -126,8 +127,13 @@ namespace NETworkManager.ViewModels.Applications
             if (subnetmask.Length < 3)
                 subnetmask = Subnetmask.GetFromCidr(int.Parse(subnet[1])).Subnetmask;
 
-            SubnetInfo subnetInfo = Models.Network.Subnet.CalculateIPv4Subnet(IPAddress.Parse(subnet[0]), IPAddress.Parse(subnetmask));
-            
+            string newSubnetmask = NewSubnetmaskOrCIDR.TrimStart('/');
+
+            if (newSubnetmask.Length < 3)
+                newSubnetmask = Subnetmask.GetFromCidr(int.Parse(newSubnetmask)).Subnetmask;
+
+            Models.Network.Subnet.SplitIPv4Subnet(IPAddress.Parse(subnet[0]), IPAddress.Parse(subnetmask), IPAddress.Parse(newSubnetmask)).ForEach(x => SplitResult.Add(x));
+
             SubnetHistory = new List<string>(HistoryListHelper.Modify(SubnetHistory, Subnet, SettingsManager.Current.Application_HistoryListEntries));
             NewSubnetmaskOrCIDRHistory = new List<string>(HistoryListHelper.Modify(NewSubnetmaskOrCIDRHistory, NewSubnetmaskOrCIDR, SettingsManager.Current.Application_HistoryListEntries));
         }

@@ -181,7 +181,6 @@
     <Compile Include="Validators\SubnetValidator.cs" />
     <Compile Include="Validators\OpacityTextboxValidator.cs" />
     <Compile Include="ViewModels\Applications\DNSLookupViewModel.cs" />
-    <Compile Include="ViewModels\Applications\ObserverableCollection.cs" />
     <Compile Include="ViewModels\Applications\SubnetCalculatorIPv4SplitterViewModel.cs" />
     <Compile Include="ViewModels\Applications\WikiOUILookupViewModel.cs" />
     <Compile Include="ViewModels\Help\HelpCommandLineViewModel.cs" />

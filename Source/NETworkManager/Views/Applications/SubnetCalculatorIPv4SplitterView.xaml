@@ -18,10 +18,11 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Margin="0,0,0,20">
-            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Subnet}" />
+        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Subnet}" />
+        <StackPanel Grid.Row="1" Margin="0,0,0,20">
             <Grid Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -45,7 +46,7 @@
                     </ComboBox.Text>
                 </ComboBox>
                 <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_NewSubnetmaskOrCIDR}" />
-                <ComboBox Grid.Column="2" Grid.Row="2" x:Name="cbNewSubnetmaskOrCIDR" ItemsSource="{Binding SubnetHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnetmaskOrCIDR}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" Grid.Row="2" x:Name="cbNewSubnetmaskOrCIDR" ItemsSource="{Binding NewSubnetmaskOrCIDRHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnetmaskOrCIDR}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="NewSubnetmaskOrCIDR" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>
@@ -90,6 +91,21 @@
                 </Button.Style>
             </Button>
         </StackPanel>
-        <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
+        <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
+        <DataGrid Grid.Row="3" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding SplitResult}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Network Address" Binding="{Binding NetworkAddress}" MinWidth="150" />
+                <DataGridTextColumn Header="Broadcast" Binding="{Binding Broadcast}" MinWidth="150" />
+                <DataGridTextColumn Header="Total IPs" Binding="{Binding TotalIPs}" MinWidth="80" />
+                <DataGridTextColumn Header="Subnetmask" Binding="{Binding Subnetmask}" MinWidth="150" />
+                <DataGridTextColumn Header="CIDR" Binding="{Binding CIDR}" MinWidth="80" />
+                <DataGridTextColumn Header="Host First IP" Binding="{Binding HostFirstIP}" MinWidth="150" />
+                <DataGridTextColumn Header="Host Last IP" Binding="{Binding HostLastIP}" MinWidth="150" />
+                <DataGridTextColumn Header="Host IPs" Binding="{Binding HostIPs}" MinWidth="80" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>
