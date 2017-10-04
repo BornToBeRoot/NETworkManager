@@ -64,7 +64,7 @@
     <system:String x:Key="String_Header_Subnet">Subnetz</system:String>
     <system:String x:Key="String_Header_IPv4Calculator">IPv4-Rechner</system:String>
     <system:String x:Key="String_Header_IPv4Splitter">IPv4-Splitter</system:String>
-
+    
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Ein leistungsstarkes Tool zum Verwalten von Netzwerken und zur Behebung von Netzwerkproblemen!</system:String>

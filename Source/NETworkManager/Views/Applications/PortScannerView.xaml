@@ -17,223 +17,272 @@
         <Converter:NullOrEmptyToStringConverter x:Key="NullOrEmptyToStringConverter" />
         <Converter:PortStatusToStringConverter x:Key="PortStatusToStringConverter" />
     </UserControl.Resources>
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Scan}" />
-        <Grid Grid.Row="1" Margin="0,0,0,20">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0">
-                <Grid Margin="0,0,0,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_Destination}" />
-                    <ComboBox Grid.Column="2" Grid.Row="0" x:Name="cbHostnameOrIPAddress" ItemsSource="{Binding HostnameOrIPAddressHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameAndOrIPAddress}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}"  Style="{StaticResource HistoryComboBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
-                        <ComboBox.Text>
-                            <Binding Path="HostnameOrIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.Text>
-                    </ComboBox>
-                    <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_Ports}" />
-                    <ComboBox Grid.Column="2" Grid.Row="2" x:Name="cbPorts" ItemsSource="{Binding PortsHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EamplePortScanRange}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
-                        <ComboBox.Text>
-                            <Binding Path="Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                    <Validator:PortRangeValidator ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.Text>
-                    </ComboBox>
-                </Grid>
-                <Button Command="{Binding ScanCommand}" IsDefault="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsScanRunning}" HorizontalAlignment="Right">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                            <Setter Property="IsEnabled" Value="True" />
+            <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Scan}" />
+            <Grid Grid.Row="1" Margin="0,0,0,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_Destination}" />
+                        <ComboBox Grid.Column="2" Grid.Row="0" x:Name="cbHostnameOrIPAddress" ItemsSource="{Binding HostnameOrIPAddressHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameAndOrIPAddress}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}"  Style="{StaticResource HistoryComboBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                            <ComboBox.Text>
+                                <Binding Path="HostnameOrIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.Text>
+                        </ComboBox>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_Ports}" />
+                        <ComboBox Grid.Column="2" Grid.Row="2" x:Name="cbPorts" ItemsSource="{Binding PortsHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EamplePortScanRange}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                            <ComboBox.Text>
+                                <Binding Path="Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                        <Validator:PortRangeValidator ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.Text>
+                        </ComboBox>
+                    </Grid>
+                    <Button Command="{Binding ScanCommand}" IsDefault="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsScanRunning}" HorizontalAlignment="Right">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                <Setter Property="IsEnabled" Value="True" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=cbHostnameOrIPAddress}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=cbPorts}" Value="True" >
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CancelScan}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Resources>
+                        <Button.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Width="20" Height="20" Margin="10,5,0,5">
+                                    <Rectangle.Resources>
+                                        <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Play}"/>
+                                        <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
+                                    </Rectangle.Resources>
+                                    <Rectangle.Style>
+                                        <Style TargetType="{x:Type Rectangle}">
+                                            <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
+                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsScanRunning}" Value="True">
+                                                    <Setter Property="OpacityMask" Value="{StaticResource VisualClose}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+                                            <Setter Property="Text" Value="{DynamicResource String_Button_Scan}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsScanRunning}" Value="True" >
+                                                    <Setter Property="Text" Value="{DynamicResource String_Button_Cancel}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Margin="0,10,0,0">
+                    <StackPanel.Style>
+                        <Style TargetType="{x:Type StackPanel}">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=cbHostnameOrIPAddress}" Value="True">
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=cbPorts}" Value="True" >
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding CancelScan}" Value="True">
-                                    <Setter Property="IsEnabled" Value="False" />
+                                <DataTrigger Binding="{Binding IsScanRunning}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </Button.Resources>
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Width="20" Height="20" Margin="10,5,0,5">
-                                <Rectangle.Resources>
-                                    <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Play}"/>
-                                    <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
-                                </Rectangle.Resources>
-                                <Rectangle.Style>
-                                    <Style TargetType="{x:Type Rectangle}">
-                                        <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
-                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsScanRunning}" Value="True">
-                                                <Setter Property="OpacityMask" Value="{StaticResource VisualClose}" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Rectangle.Style>
-                            </Rectangle>
-                            <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
-                                        <Setter Property="Text" Value="{DynamicResource String_Button_Scan}"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsScanRunning}" Value="True" >
-                                                <Setter Property="Text" Value="{DynamicResource String_Button_Cancel}"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                    </Button.Content>
-                </Button>
-            </StackPanel>
-            <StackPanel Grid.Row="1" Margin="0,10,0,0">
-                <StackPanel.Style>
-                    <Style TargetType="{x:Type StackPanel}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsScanRunning}" Value="False">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </StackPanel.Style>
-                <Controls:MetroProgressBar Maximum="{Binding PortsToScan}" Foreground="{DynamicResource AccentColorBrush}" Value="{Binding PortsScanned}">
-                    <Controls:MetroProgressBar.Style>
-                        <Style TargetType="{x:Type Controls:MetroProgressBar}" >
-                            <Setter Property="IsIndeterminate" Value="False" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding PreparingScan}" Value="True">
-                                    <Setter Property="IsIndeterminate" Value="True" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding CancelScan}" Value="True">
-                                    <Setter Property="IsIndeterminate" Value="True" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Controls:MetroProgressBar.Style>
-                </Controls:MetroProgressBar>
-                <TextBlock HorizontalAlignment="Center">
-                    <TextBlock.Style>
-                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
-                            <Setter Property="Visibility" Value="Visible"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding PreparingScan}" Value="True">
-                                    <Setter Property="Visibility" Value="Hidden" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding CancelScan}" Value="True">
-                                    <Setter Property="Visibility" Value="Hidden" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                    <TextBlock.Text>
-                        <MultiBinding StringFormat="{}{0} / {1} ">
-                            <Binding Path="PortsScanned" />
-                            <Binding Path="PortsToScan" />
-                        </MultiBinding>
-                    </TextBlock.Text>
-                </TextBlock>
-            </StackPanel>
-            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
-        </Grid>
-        <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
-        <DataGrid Grid.Row="3" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding PortScanResult}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True" Margin="0,0,0,20">
-            <DataGrid.Resources>
-                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
-                <WpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
-            </DataGrid.Resources>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding Host.Item1}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Host.Item2, Converter={StaticResource NullOrEmptyToStringConverter}}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Port}" Binding="{Binding Port}" MinWidth="80" />
-                <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding Status, Converter={StaticResource PortStatusToStringConverter}}" MinWidth="100" />
-                <DataGridTextColumn Header="{DynamicResource String_Protocol}" Binding="{Binding LookupInfo.Protocol}" MinWidth="100" />
-                <DataGridTextColumn Header="{DynamicResource String_Service}" Binding="{Binding LookupInfo.Service}" MinWidth="100" />
-                <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding LookupInfo.Description}" MinWidth="200" />
-            </DataGrid.Columns>
-        </DataGrid>
-        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource DefaultExpander}">
-            <Expander.Header>
-                <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
-            </Expander.Header>
-            <StackPanel>
-                <Grid Margin="0,10,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.Resources>
-                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
-                            <Setter Property="VerticalAlignment" Value="Center" />
-                            <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
-                            <Setter Property="TextWrapping" Value="NoWrap" />
-                        </Style>
-                    </Grid.Resources>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_StartTime}" />
-                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding StartTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
-                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Duration}" />
-                    <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Duration, StringFormat={}{0:hh}h {0:mm}m {0:ss}s {0:ff}ms}" />
-                    <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_EndTime}" />
-                    <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding EndTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
-                    <TextBlock Grid.Column="3" Grid.Row="0" Text="{DynamicResource String_Scanned}" />
-                    <TextBox Grid.Column="4" Grid.Row="0">
-                        <TextBox.Text>
-                            <MultiBinding StringFormat="{}{0} / {1}">
+                    </StackPanel.Style>
+                    <Controls:MetroProgressBar Maximum="{Binding PortsToScan}" Foreground="{DynamicResource AccentColorBrush}" Value="{Binding PortsScanned}">
+                        <Controls:MetroProgressBar.Style>
+                            <Style TargetType="{x:Type Controls:MetroProgressBar}" >
+                                <Setter Property="IsIndeterminate" Value="False" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding PreparingScan}" Value="True">
+                                        <Setter Property="IsIndeterminate" Value="True" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CancelScan}" Value="True">
+                                        <Setter Property="IsIndeterminate" Value="True" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Controls:MetroProgressBar.Style>
+                    </Controls:MetroProgressBar>
+                    <TextBlock HorizontalAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding PreparingScan}" Value="True">
+                                        <Setter Property="Visibility" Value="Hidden" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CancelScan}" Value="True">
+                                        <Setter Property="Visibility" Value="Hidden" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} / {1} ">
                                 <Binding Path="PortsScanned" />
                                 <Binding Path="PortsToScan" />
                             </MultiBinding>
-                        </TextBox.Text>
-                    </TextBox>
-                    <TextBlock Grid.Column="3" Grid.Row="2" Text="{DynamicResource String_Open}" VerticalAlignment="Bottom" />
-                    <TextBox Grid.Column="4" Grid.Row="2" Text="{Binding PortsOpen}" />
+                        </TextBlock.Text>
+                    </TextBlock>
+                </StackPanel>
+                <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+            </Grid>
+            <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
+            <DataGrid Grid.Row="3" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding PortScanResult}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True" Margin="0,0,0,20">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
+                    <WpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding Host.Item1}" MinWidth="150" />
+                    <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Host.Item2, Converter={StaticResource NullOrEmptyToStringConverter}}" MinWidth="150" />
+                    <DataGridTextColumn Header="{DynamicResource String_Port}" Binding="{Binding Port}" MinWidth="80" />
+                    <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding Status, Converter={StaticResource PortStatusToStringConverter}}" MinWidth="100" />
+                    <DataGridTextColumn Header="{DynamicResource String_Protocol}" Binding="{Binding LookupInfo.Protocol}" MinWidth="100" />
+                    <DataGridTextColumn Header="{DynamicResource String_Service}" Binding="{Binding LookupInfo.Service}" MinWidth="100" />
+                    <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding LookupInfo.Description}" MinWidth="200" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource DefaultExpander}">
+                <Expander.Header>
+                    <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
+                </Expander.Header>
+                <StackPanel>
+                    <Grid Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
+                                <Setter Property="TextWrapping" Value="NoWrap" />
+                            </Style>
+                        </Grid.Resources>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_StartTime}" />
+                        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding StartTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Duration}" />
+                        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Duration, StringFormat={}{0:hh}h {0:mm}m {0:ss}s {0:ff}ms}" />
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_EndTime}" />
+                        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding EndTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
+                        <TextBlock Grid.Column="3" Grid.Row="0" Text="{DynamicResource String_Scanned}" />
+                        <TextBox Grid.Column="4" Grid.Row="0">
+                            <TextBox.Text>
+                                <MultiBinding StringFormat="{}{0} / {1}">
+                                    <Binding Path="PortsScanned" />
+                                    <Binding Path="PortsToScan" />
+                                </MultiBinding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock Grid.Column="3" Grid.Row="2" Text="{DynamicResource String_Open}" VerticalAlignment="Bottom" />
+                        <TextBox Grid.Column="4" Grid.Row="2" Text="{Binding PortsOpen}" />
+                    </Grid>
+                </StackPanel>
+            </Expander>
+        </Grid>
+        <Border Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource GrayBrush8}">
+            <Expander x:Name="expanderProfiles" Header="{DynamicResource String_Header_Profiles}" Style="{StaticResource ProfileExpander}" IsExpanded="{Binding ExpandProfileView}">
+                <Grid Width="250">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <ListBox Grid.Column="0" Grid.Row="0" x:Name="listBoxProfiles"  FontSize="14" ItemsSource="{Binding NetworkInterfaceProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}">
+                        <ListBox.Resources>
+                            <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
+                            <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                                <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteProfileCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterialLight Kind=Delete}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
+                                <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
+                            </Style>
+                        </ListBox.Resources>
+                        <ListBox.InputBindings>
+                            <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
+                        </ListBox.InputBindings>
+                    </ListBox>
+                    <TextBlock Grid.Row="0" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_NoProfilesFoundCreateOne}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding NetworkInterfaceProfiles.Count}" Value="0">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                 </Grid>
-            </StackPanel>
-        </Expander>
+            </Expander>
+        </Border>
     </Grid>
 </UserControl>
