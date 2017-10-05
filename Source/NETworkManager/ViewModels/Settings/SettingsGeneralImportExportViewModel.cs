@@ -277,7 +277,7 @@ namespace NETworkManager.ViewModels.Settings
         #endregion
         #endregion
 
-        #region Constructor, LoadSettings
+        #region Constructor
         public SettingsGeneralImportExportViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;

@@ -23,7 +23,8 @@ namespace NETworkManager.Models.Settings
 
             if (deserialize)
                 Deserialize().ForEach(profile => AddProfile(profile));
-                        
+                     
+            // Add default profiles
             if (Profiles.Count == 0)
                 GetDefaultProfiles().ForEach(profile => AddProfile(profile));
 
@@ -92,6 +93,10 @@ namespace NETworkManager.Models.Settings
                 Profiles = new ObservableCollection<PortScannerProfileInfo>();
             else
                 Profiles.Clear();
+
+            // Add default profiles
+            if (Profiles.Count == 0)
+                GetDefaultProfiles().ForEach(profile => AddProfile(profile));
         }
 
         public static void AddProfile(PortScannerProfileInfo profile)

@@ -163,6 +163,7 @@
     <system:String x:Key="String_CanceledByUser">The operation has been canceled by the user!</system:String>
     <system:String x:Key="String_ApplicationSettings">Application settings</system:String>
     <system:String x:Key="String_NetworkInterfaceProfiles">Network interface profiles</system:String>
+    <system:String x:Key="String_PortScannerProfiles">Port scanner profiles</system:String>
     <system:String x:Key="String_WakeOnLANClients">Wake on LAN clients</system:String>
     <system:String x:Key="String_SelectedSettingsAreReset">The selected settings are reset.</system:String>
     <system:String x:Key="String_TheSettingsLocationIsNotAffected">The settings location is not affected</system:String>

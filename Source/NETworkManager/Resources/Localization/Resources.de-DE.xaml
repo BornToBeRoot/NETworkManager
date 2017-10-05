@@ -163,6 +163,7 @@
     <system:String x:Key="String_CanceledByUser">Der Vorgang wurde vom Benutzer abgebrochen!</system:String>
     <system:String x:Key="String_ApplicationSettings">Anwendungseinstellungen</system:String>
     <system:String x:Key="String_NetworkInterfaceProfiles">Netzwerkinterface Profile</system:String>
+    <system:String x:Key="String_PortScannerProfiles">Port-Scanner Profile</system:String>
     <system:String x:Key="String_WakeOnLANClients">Wake on LAN Clients</system:String>
     <system:String x:Key="String_SelectedSettingsAreReset">Die ausgewählten Einstellungen werden zurückgesetzt.</system:String>
     <system:String x:Key="String_TheSettingsLocationIsNotAffected">Der Speicherpfad ist hiervon nicht betroffen</system:String>
