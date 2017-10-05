@@ -580,8 +580,6 @@ namespace NETworkManager.ViewModels.Applications
             get { return _selectedProfile; }
             set
             {  
-                               
-
                 if (value == _selectedProfile)
                     return;
 
@@ -799,16 +797,6 @@ namespace NETworkManager.ViewModels.Applications
             };
 
             NetworkInterfaceProfileManager.AddProfile(profile);
-        }
-
-        public ICommand UnselectProfileCommand
-        {
-            get { return new RelayCommand(p => UnselectProfileAction()); }
-        }
-
-        private void UnselectProfileAction()
-        {
-            SelectedProfile = null;
         }
 
         public ICommand DeleteProfileCommand

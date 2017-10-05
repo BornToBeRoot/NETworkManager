@@ -9,6 +9,8 @@
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
         xmlns:WpfHelper="clr-namespace:NETworkManager.WpfHelper"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
     <UserControl.Resources>
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
@@ -76,10 +78,10 @@
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                                 <Setter Property="IsEnabled" Value="True" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=cbHostnameOrIPAddress}" Value="True">
+                                    <DataTrigger Binding="{Binding ElementName=cbHostnameOrIPAddress, Path=(Validation.HasError)}" Value="True">
                                         <Setter Property="IsEnabled" Value="False" />
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=cbPorts}" Value="True" >
+                                    <DataTrigger Binding="{Binding ElementName=cbPorts, Path=(Validation.HasError)}" Value="True" >
                                         <Setter Property="IsEnabled" Value="False" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding CancelScan}" Value="True">
@@ -246,8 +248,10 @@
                 <Grid Width="250">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <ListBox Grid.Column="0" Grid.Row="0" x:Name="listBoxProfiles"  FontSize="14" ItemsSource="{Binding NetworkInterfaceProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}">
+                    <ListBox Grid.Column="0" Grid.Row="0" x:Name="listBoxProfiles"  FontSize="14" ItemsSource="{Binding PortScannerProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}">
                         <ListBox.Resources>
                             <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
                             <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -274,13 +278,38 @@
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding NetworkInterfaceProfiles.Count}" Value="0">
+                                    <DataTrigger Binding="{Binding PortScannerProfiles.Count}" Value="0">
                                         <Setter Property="Visibility" Value="Visible" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
+                    <Button x:Name="btnAddProfile" Grid.Row="2" Command="{Binding AddProfileCommand}">
+                        <Button.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Plus}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                            </Grid>
+                        </Button.Content>
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=cbPorts, Path=(Validation.HasError)}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                 </Grid>
             </Expander>
         </Border>

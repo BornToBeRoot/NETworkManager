@@ -774,6 +774,20 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _portScanner_ExpandProfileView = true;
+        public bool PortScanner_ExpandProfileView
+        {
+            get { return _portScanner_ExpandProfileView; }
+            set
+            {
+                if (value == _portScanner_ExpandProfileView)
+                    return;
+
+                _portScanner_ExpandProfileView = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region WakeOnLAN
@@ -1004,7 +1018,8 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
-        #region Calculator
+        #region Subnet Calculator
+        #region IPv4 Calculator
         private List<string> _subnetCalculator_IPv4Calculator_SubnetHistory = new List<string>();
         public List<string> SubnetCalculator_IPv4Calculator_SubnetHistory
         {
@@ -1018,7 +1033,9 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+        #endregion
 
+        #region IPv4 Splitter
         private List<string> _subnetCalculator_IPv4Splitter_SubnetHistory = new List<string>();
         public List<string> SubnetCalculator_IPv4Splitter_SubnetHistory
         {
@@ -1046,6 +1063,7 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+        #endregion
         #endregion
         #endregion
 

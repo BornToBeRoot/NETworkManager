@@ -23,8 +23,20 @@ namespace NETworkManager.Models.Settings
 
             if (deserialize)
                 Deserialize().ForEach(profile => AddProfile(profile));
+                        
+            if (Profiles.Count == 0)
+                GetDefaultProfiles().ForEach(profile => AddProfile(profile));
 
             Profiles.CollectionChanged += Templates_CollectionChanged; ;
+        }
+
+        public static List<PortScannerProfileInfo> GetDefaultProfiles()
+        {
+            return new List<PortScannerProfileInfo>
+            {
+                new PortScannerProfileInfo("Webserver", "80; 443; 8080; 8443"),
+                new PortScannerProfileInfo("FTP","20; 21")
+            };
         }
 
         public static void Import(bool overwrite)

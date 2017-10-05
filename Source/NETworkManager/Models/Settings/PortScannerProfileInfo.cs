@@ -9,5 +9,11 @@
         {
 
         }
+
+        public PortScannerProfileInfo(string name, string ports)
+        {
+            Name = name;
+            Ports = ports;
+        }
     }
 }
