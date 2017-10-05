@@ -11,12 +11,16 @@ using System.Net;
 using System.Net.Sockets;
 using System.Windows.Threading;
 using System.Diagnostics;
+using System.ComponentModel;
+using System.Windows.Data;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.ViewModels.Applications
 {
     public class PortScannerViewModel : ViewModelBase
     {
         #region Variables
+        private IDialogCoordinator dialogCoordinator;
         CancellationTokenSource cancellationTokenSource;
 
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
@@ -269,13 +273,64 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
+
+        #region Profiles
+        ICollectionView _portScannerProfiles;
+        public ICollectionView PortScannerProfiles
+        {
+            get { return _portScannerProfiles; }
+        }
+
+        private PortScannerProfileInfo _selectedProfile = new PortScannerProfileInfo();
+        public PortScannerProfileInfo SelectedProfile
+        {
+            get { return _selectedProfile; }
+            set
+            {
+                if (value == _selectedProfile)
+                    return;
+
+                if (value != null)
+                    Ports = value.Ports;
+
+                _selectedProfile = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _expandProfileView;
+        public bool ExpandProfileView
+        {
+            get { return _expandProfileView; }
+            set
+            {
+                if (value == _expandProfileView)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.PortScanner_ExpandProfileView = value;
+
+                _expandProfileView = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
         #endregion
 
         #region Constructor, Load settings
-        public PortScannerViewModel()
+        public PortScannerViewModel(IDialogCoordinator instance)
         {
-            LoadSettings();
+            dialogCoordinator = instance;
 
+            // Load profiles
+            if (PortScannerProfileManager.Profiles == null)
+                PortScannerProfileManager.Load();
+
+            _portScannerProfiles = CollectionViewSource.GetDefaultView(PortScannerProfileManager.Profiles);
+            _portScannerProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+
+            LoadSettings();
+                        
             _isLoading = false;
         }
 
@@ -288,6 +343,18 @@ namespace NETworkManager.ViewModels.Applications
                 PortsHistory = new List<string>(SettingsManager.Current.PortScanner_PortsHistory);
 
             ExpandStatistics = SettingsManager.Current.PortScanner_ExpandStatistics;
+            ExpandProfileView = SettingsManager.Current.PortScanner_ExpandProfileView;
+        }
+
+        public void OnShutdown()
+        {
+            // Stop scan
+            if (IsScanRunning)
+                StopScan();
+
+            // Save profiles
+            if (PortScannerProfileManager.ProfilesChanged)
+                PortScannerProfileManager.Save();
         }
         #endregion
 
@@ -303,6 +370,52 @@ namespace NETworkManager.ViewModels.Applications
                 StopScan();
             else
                 StartScan();
+        }
+
+        public ICommand AddProfileCommand
+        {
+            get { return new RelayCommand(p => AddProfileAction()); }
+        }
+
+        private async void AddProfileAction()
+        {
+            MetroDialogSettings settings = AppearanceManager.MetroDialog;
+
+            settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Add"] as string;
+            settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
+
+            string name = await dialogCoordinator.ShowInputAsync(this, Application.Current.Resources["String_Header_AddProfile"] as string, Application.Current.Resources["String_EnterNameForProfile"] as string, settings);
+
+            if (string.IsNullOrEmpty(name))
+                return;
+
+            PortScannerProfileInfo profile = new PortScannerProfileInfo
+            {
+                Name = name,
+                Ports = Ports
+            };
+
+            PortScannerProfileManager.AddProfile(profile);
+        }
+
+        public ICommand DeleteProfileCommand
+        {
+            get { return new RelayCommand(p => DeleteProfileAction()); }
+        }
+
+        private async void DeleteProfileAction()
+        {
+            MetroDialogSettings settings = AppearanceManager.MetroDialog;
+
+            settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Delete"] as string;
+            settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
+
+            settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
+
+            if (MessageDialogResult.Negative == await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_DeleteProfileMessage"] as string, MessageDialogStyle.AffirmativeAndNegative, settings))
+                return;
+
+            PortScannerProfileManager.RemoveProfile(SelectedProfile);
         }
         #endregion
 
@@ -460,15 +573,9 @@ namespace NETworkManager.ViewModels.Applications
             EndTime = DateTime.Now;
 
             stopwatch.Reset();
-            
+
             CancelScan = false;
             IsScanRunning = false;
-        }
-
-        public void OnShutdown()
-        {
-            if (IsScanRunning)
-                StopScan();
         }
         #endregion
 
@@ -492,7 +599,7 @@ namespace NETworkManager.ViewModels.Applications
         private void PortScanner_PortScanned(object sender, PortScannedArgs e)
         {
             PortInfo portInfo = PortInfo.Parse(e);
-                       
+
             Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
             {
                 PortScanResult.Add(portInfo);

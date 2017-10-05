@@ -13,6 +13,7 @@
     <UserControl.Resources>
         <!-- Converter -->
         <Converter:ValidateSettingsExportConverter x:Key="ValidateSettingsExportConverter" />
+        <Converter:ValidateSettingsImportConverter x:Key="ValidateSettingsImportConverter" />
         <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
@@ -67,6 +68,8 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <CheckBox Grid.Column="0" Grid.Row="0" Content="{DynamicResource String_ApplicationSettings}" IsEnabled="{Binding ImportApplicationSettingsExists}" IsChecked="{Binding ImportApplicationSettings}" />
                     <CheckBox Grid.Column="0" Grid.Row="2" Content="{DynamicResource String_NetworkInterfaceProfiles}" IsEnabled="{Binding ImportNetworkInterfaceProfilesExists}" IsChecked="{Binding ImportNetworkInterfaceProfiles}" />
@@ -89,6 +92,16 @@
                         <RadioButton Grid.Column="0" Grid.Row="0" GroupName="ImportWakeOnLANClients" Content="{DynamicResource String_Override}" IsEnabled="{Binding ImportWakeOnLANClientsExists}" IsChecked="{Binding ImportOverrideWakeOnLANClients}" />
                         <RadioButton Grid.Column="2" Grid.Row="0" GroupName="ImportWakeOnLANClients" Content="{DynamicResource String_Add}" IsEnabled="{Binding ImportWakeOnLANClientsExists}" />
                     </Grid>
+                    <CheckBox Grid.Column="0" Grid.Row="6" Content="{DynamicResource String_PortScannerProfiles}" IsEnabled="{Binding ImportPortScannerProfilesExists}" IsChecked="{Binding ImportPortScannerProfiles}" />
+                    <Grid Grid.Column="2" Grid.Row="6" IsEnabled="{Binding ImportWakeOnLANClientsExists}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="100" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition MinWidth="100" />
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Grid.Column="0" Grid.Row="0" GroupName="ImportPortScannerProfiles" Content="{DynamicResource String_Override}" IsEnabled="{Binding ImportPortScannerProfilesExists}" IsChecked="{Binding ImportOverridePortScannerProfiles}" />
+                        <RadioButton Grid.Column="2" Grid.Row="0" GroupName="ImportPortScannerProfiles" Content="{DynamicResource String_Add}" IsEnabled="{Binding ImportPortScannerProfilesExists}" />
+                    </Grid>
                 </Grid>
             </GroupBox>
             <Button Content="{DynamicResource String_Button_Import}" Command="{Binding ImportSettingsCommand}" HorizontalAlignment="Left"  >
@@ -101,11 +114,12 @@
                             </DataTrigger>
                             <DataTrigger Value="True">
                                 <DataTrigger.Binding>
-                                    <MultiBinding Converter="{StaticResource ValidateSettingsExportConverter}">
+                                    <MultiBinding Converter="{StaticResource ValidateSettingsImportConverter}">
                                         <Binding Path="ImportEverything" />
                                         <Binding Path="ImportApplicationSettings" />
                                         <Binding Path="ImportNetworkInterfaceProfiles" />
                                         <Binding Path="ImportWakeOnLANClients" />
+                                        <Binding Path="ImportPortScannerProfiles" />
                                     </MultiBinding>
                                 </DataTrigger.Binding>
                                 <Setter  Property="IsEnabled" Value="True" />
@@ -131,9 +145,10 @@
                 </Style>
             </GroupBox.Style>
             <StackPanel>
-                <CheckBox Content="{DynamicResource String_ApplicationSettings}" IsEnabled="{Binding ApplicationSettingsExists}" IsChecked="{Binding ExportApplicationSettings}" Margin="0,0,0,10"/>
-                <CheckBox Content="{DynamicResource String_NetworkInterfaceProfiles}" IsEnabled="{Binding NetworkInterfaceProfilesExists}" IsChecked="{Binding ExportNetworkInterfaceProfiles}" Margin="0,0,0,10"/>
-                <CheckBox Content="{DynamicResource String_WakeOnLANClients}" IsEnabled="{Binding WakeOnLANClientsExists}" IsChecked="{Binding ExportWakeOnLANClients}" />
+                <CheckBox Content="{DynamicResource String_ApplicationSettings}" IsEnabled="{Binding ApplicationSettingsExists}" IsChecked="{Binding ExportApplicationSettings}" Margin="0,0,0,10" />
+                <CheckBox Content="{DynamicResource String_NetworkInterfaceProfiles}" IsEnabled="{Binding NetworkInterfaceProfilesExists}" IsChecked="{Binding ExportNetworkInterfaceProfiles}" Margin="0,0,0,10" />
+                <CheckBox Content="{DynamicResource String_WakeOnLANClients}" IsEnabled="{Binding WakeOnLANClientsExists}" IsChecked="{Binding ExportWakeOnLANClients}" Margin="0,0,0,10" />
+                <CheckBox Content="{DynamicResource String_PortScannerProfiles}" IsEnabled="{Binding PortScannerProfilesExists}" IsChecked="{Binding ExportPortScannerProfiles}" />
             </StackPanel>
         </GroupBox>
         <Button Content="{DynamicResource String_Button_Export}" Command="{Binding ExportSettingsCommand}" HorizontalAlignment="Left">
@@ -151,6 +166,7 @@
                                     <Binding Path="ExportApplicationSettings" />
                                     <Binding Path="ExportNetworkInterfaceProfiles" />
                                     <Binding Path="ExportWakeOnLANClients" />
+                                    <Binding Path="ExportPortScannerProfiles" />
                                 </MultiBinding>
                             </DataTrigger.Binding>
                             <Setter  Property="IsEnabled" Value="True" />
