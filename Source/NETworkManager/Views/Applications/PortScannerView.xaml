@@ -251,7 +251,7 @@
                         <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <ListBox Grid.Column="0" Grid.Row="0" x:Name="listBoxProfiles"  FontSize="14" ItemsSource="{Binding PortScannerProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}">
+                    <ListBox Grid.Column="0" Grid.Row="0" x:Name="listBoxProfiles" FontSize="14" ItemsSource="{Binding PortScannerProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}">
                         <ListBox.Resources>
                             <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
                             <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">

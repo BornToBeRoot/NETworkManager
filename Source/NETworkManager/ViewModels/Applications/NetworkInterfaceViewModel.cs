@@ -633,6 +633,7 @@ namespace NETworkManager.ViewModels.Applications
                 NetworkInterfaceProfileManager.Load();
 
             _networkInterfaceProfiles = CollectionViewSource.GetDefaultView(NetworkInterfaceProfileManager.Profiles);
+            _networkInterfaceProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             
             LoadSettings();
 

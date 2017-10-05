@@ -327,6 +327,7 @@ namespace NETworkManager.ViewModels.Applications
                 PortScannerProfileManager.Load();
 
             _portScannerProfiles = CollectionViewSource.GetDefaultView(PortScannerProfileManager.Profiles);
+            _portScannerProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
 
             LoadSettings();
                         

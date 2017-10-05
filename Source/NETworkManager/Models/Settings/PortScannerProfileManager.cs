@@ -37,8 +37,12 @@ namespace NETworkManager.Models.Settings
         {
             return new List<PortScannerProfileInfo>
             {
-                new PortScannerProfileInfo("Webserver", "80; 443; 8080; 8443"),
-                new PortScannerProfileInfo("FTP","20; 21")
+                new PortScannerProfileInfo("1-1023 (well known)", "1-1023"),
+                new PortScannerProfileInfo("FTP","20; 21"),
+                new PortScannerProfileInfo("LDAP/LDAPS", "389; 636"),
+                new PortScannerProfileInfo("RDP", "3389"),
+                new PortScannerProfileInfo("SSH", "22"),
+                new PortScannerProfileInfo("Webserver", "80; 443"),
             };
         }
 
