@@ -273,7 +273,7 @@
                             <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
                         </ListBox.InputBindings>
                     </ListBox>
-                    <TextBlock Grid.Row="0" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_NoProfilesFoundCreateOne}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
+                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_NoProfilesFoundCreateOne}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed" />
@@ -285,7 +285,7 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                    <Button x:Name="btnAddProfile" Grid.Row="2" Command="{Binding AddProfileCommand}">
+                    <Button x:Name="btnAddProfile" Grid.Column="0" Grid.Row="2" Command="{Binding AddProfileCommand}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
