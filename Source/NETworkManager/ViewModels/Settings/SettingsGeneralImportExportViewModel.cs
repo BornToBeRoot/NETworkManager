@@ -174,7 +174,7 @@ namespace NETworkManager.ViewModels.Settings
                 OnPropertyChanged();
             }
         }
-        
+
         private bool _importPortScannerProfilesExists;
         public bool ImportPortScannerProfilesExists
         {
@@ -421,25 +421,31 @@ namespace NETworkManager.ViewModels.Settings
                     importOptions.Add(ImportExportManager.ImportExportOptions.ApplicationSettings);
 
                 if (ImportNetworkInterfaceProfilesExists && (ImportEverything || ImportNetworkInterfaceProfiles))
+                {
                     importOptions.Add(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
 
+                    // Load network interface profile (option: add)
+                    if (NetworkInterfaceProfileManager.Profiles == null)
+                        NetworkInterfaceProfileManager.Load(!ImportOverrideNetworkInterfaceProfiles);
+                }
+
                 if (ImportWakeOnLANClientsExists && (ImportEverything || ImportWakeOnLANClients))
+                {
                     importOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANClients);
 
+                    // Load WoL clients (option: add)
+                    if (WakeOnLANClientManager.Clients == null)
+                        WakeOnLANClientManager.Load(!ImportOverrideWakeOnLANClients);
+                }
+
                 if (ImportPortScannerProfilesExists && (ImportEverything || ImportPortScannerProfiles))
+                {
                     importOptions.Add(ImportExportManager.ImportExportOptions.PortScannerProfiles);
 
-                // Load network interface profile (option: add)
-                if (NetworkInterfaceProfileManager.Profiles == null)
-                    NetworkInterfaceProfileManager.Load(!ImportOverrideNetworkInterfaceProfiles);
-
-                // Load WoL clients (option: add)
-                if (WakeOnLANClientManager.Clients == null)
-                    WakeOnLANClientManager.Load(!ImportOverrideWakeOnLANClients);
-
-                // Load port scanner profiles (option: add)
-                if (PortScannerProfileManager.Profiles == null)
-                    PortScannerProfileManager.Load(!ImportOverridePortScannerProfiles);
+                    // Load port scanner profiles (option: add)
+                    if (PortScannerProfileManager.Profiles == null)
+                        PortScannerProfileManager.Load(!ImportOverridePortScannerProfiles);
+                }
 
                 // Import (copy) files from zip archive
                 ImportExportManager.Import(ImportLocationSelectedPath, importOptions);
@@ -467,6 +473,9 @@ namespace NETworkManager.ViewModels.Settings
                     if (importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients))
                         message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_WakeOnLANClientsReloaded"] as string);
 
+                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.PortScannerProfiles))
+                        message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_PortScannerProfilesReloaded"] as string);
+                    
                     await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, message, MessageDialogStyle.Affirmative, settings);
 
                     return;
