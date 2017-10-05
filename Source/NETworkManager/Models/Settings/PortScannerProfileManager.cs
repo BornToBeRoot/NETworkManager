@@ -7,14 +7,14 @@ namespace NETworkManager.Models.Settings
 {
     public static class PortScannerProfileManager
     {
-        public const string TemplatesFileName = "PortScanner.profiles";
+        public const string ProfilesFileName = "PortScanner.profiles";
 
         public static ObservableCollection<PortScannerProfileInfo> Profiles { get; set; }
         public static bool ProfilesChanged { get; set; }
 
-        public static string GetClientsFilePath()
+        public static string GetProfilesFilePath()
         {
-            return Path.Combine(SettingsManager.GetSettingsLocation(), TemplatesFileName);
+            return Path.Combine(SettingsManager.GetSettingsLocation(), ProfilesFileName);
         }
 
         public static void Load(bool deserialize = true)
@@ -30,7 +30,7 @@ namespace NETworkManager.Models.Settings
             Profiles.CollectionChanged += Templates_CollectionChanged; ;
         }
 
-        public static List<PortScannerProfileInfo> GetDefaultProfiles()
+        private static List<PortScannerProfileInfo> GetDefaultProfiles()
         {
             return new List<PortScannerProfileInfo>
             {
@@ -51,11 +51,11 @@ namespace NETworkManager.Models.Settings
         {
             List<PortScannerProfileInfo> list = new List<PortScannerProfileInfo>();
 
-            if (File.Exists(GetClientsFilePath()))
+            if (File.Exists(GetProfilesFilePath()))
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<PortScannerProfileInfo>));
 
-                using (FileStream fileStream = new FileStream(GetClientsFilePath(), FileMode.Open))
+                using (FileStream fileStream = new FileStream(GetProfilesFilePath(), FileMode.Open))
                 {
                     ((List<PortScannerProfileInfo>)(xmlSerializer.Deserialize(fileStream))).ForEach(profile => list.Add(profile));
                 }
@@ -80,7 +80,7 @@ namespace NETworkManager.Models.Settings
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<PortScannerProfileInfo>));
 
-            using (FileStream fileStream = new FileStream(GetClientsFilePath(), FileMode.Create))
+            using (FileStream fileStream = new FileStream(GetProfilesFilePath(), FileMode.Create))
             {
                 xmlSerializer.Serialize(fileStream, new List<PortScannerProfileInfo>(Profiles));
             }
