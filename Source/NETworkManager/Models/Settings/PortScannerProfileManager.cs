@@ -22,11 +22,13 @@ namespace NETworkManager.Models.Settings
             Profiles = new ObservableCollection<PortScannerProfileInfo>();
 
             if (deserialize)
+            {
                 Deserialize().ForEach(profile => AddProfile(profile));
-                     
-            // Add default profiles
-            if (Profiles.Count == 0)
-                GetDefaultProfiles().ForEach(profile => AddProfile(profile));
+
+                // Add default profiles
+                if (Profiles.Count == 0)
+                    GetDefaultProfiles().ForEach(profile => AddProfile(profile));
+            }
 
             Profiles.CollectionChanged += Templates_CollectionChanged; ;
         }
