@@ -9,8 +9,7 @@ param(
 if((Test-Path -Path "$OutPath\MSTSCLib.dll") -and (Test-Path -Path "$OutPath\AxMSTSCLib.dll"))
 {
     Write-Host "MSTSCLib.dll and AxMSTSCLib.dll already created!"
-
-    exit 0
+    return
 }
 
 # x86 or x64
