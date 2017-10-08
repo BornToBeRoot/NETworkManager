@@ -177,6 +177,8 @@
     <Compile Include="Models\Network\DNSLookupRecordInfo.cs" />
     <Compile Include="Models\Network\DNSLookupRecordArgs.cs" />
     <Compile Include="Models\Settings\NetworkInterfaceProfileManager.cs" />
+    <Compile Include="Models\Settings\PortScannerProfileInfo.cs" />
+    <Compile Include="Models\Settings\PortScannerProfileManager.cs" />
     <Compile Include="Validators\IPAddressValidator.cs" />
     <Compile Include="Validators\EmptyOrIPv4AddressValidator.cs" />
     <Compile Include="Validators\SubnetValidator.cs" />

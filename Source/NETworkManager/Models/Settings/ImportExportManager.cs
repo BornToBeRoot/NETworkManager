@@ -82,11 +82,13 @@ namespace NETworkManager.Models.Settings
             None,
             ApplicationSettings,
             NetworkInterfaceProfiles,
-            WakeOnLANClients
+            WakeOnLANClients,
+            PortScannerProfiles
         }
 
         public static ImportExportOptions GetImportExportOption(string fileName)
         {
+            
             if (fileName == SettingsManager.GetSettingsFileName())
                 return ImportExportOptions.ApplicationSettings;
 
@@ -95,6 +97,9 @@ namespace NETworkManager.Models.Settings
 
             if (fileName == WakeOnLANClientManager.ClientsFileName)
                 return ImportExportOptions.WakeOnLANClients;
+
+            if (fileName == PortScannerProfileManager.ProfilesFileName)
+                return ImportExportOptions.PortScannerProfiles;
 
             return ImportExportOptions.None;
         }
@@ -109,6 +114,8 @@ namespace NETworkManager.Models.Settings
                     return NetworkInterfaceProfileManager.ProfilesFileName;
                 case ImportExportOptions.WakeOnLANClients:
                     return WakeOnLANClientManager.ClientsFileName;
+                case ImportExportOptions.PortScannerProfiles:
+                    return PortScannerProfileManager.ProfilesFileName;
             }
 
             return string.Empty;
@@ -124,6 +131,8 @@ namespace NETworkManager.Models.Settings
                     return NetworkInterfaceProfileManager.GetProfilesFilePath();
                 case ImportExportOptions.WakeOnLANClients:
                     return WakeOnLANClientManager.GetClientsFilePath();
+                case ImportExportOptions.PortScannerProfiles:
+                    return PortScannerProfileManager.GetProfilesFilePath();
             }
 
             return string.Empty;

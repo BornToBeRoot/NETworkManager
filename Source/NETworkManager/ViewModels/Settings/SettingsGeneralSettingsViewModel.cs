@@ -173,6 +173,34 @@ namespace NETworkManager.ViewModels.Settings
                 OnPropertyChanged();
             }
         }
+
+        private bool _portScannerProfilesExists;
+        public bool PortScannerProfilesExists
+        {
+            get { return _portScannerProfilesExists; }
+            set
+            {
+                if (value == _portScannerProfilesExists)
+                    return;
+
+                _portScannerProfilesExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _resetPortScannerProfiles;
+        public bool ResetPortScannerProfiles
+        {
+            get { return _resetPortScannerProfiles; }
+            set
+            {
+                if (value == _resetPortScannerProfiles)
+                    return;
+
+                _resetPortScannerProfiles = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, LoadSettings
@@ -189,10 +217,6 @@ namespace NETworkManager.ViewModels.Settings
         {
             LocationSelectedPath = SettingsManager.GetSettingsLocationNotPortable();
             IsPortable = SettingsManager.GetIsPortable();
-
-            ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
-            NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
-            WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
         }
         #endregion
 
@@ -294,6 +318,9 @@ namespace NETworkManager.ViewModels.Settings
             if (WakeOnLANClientsExists && (ResetEverything || ResetWakeOnLANClients))
                 WakeOnLANClientManager.Reset();
 
+            if (PortScannerProfilesExists && (ResetEverything || ResetPortScannerProfiles))
+                PortScannerProfileManager.Reset();
+
             // Restart after reset or show a completed message
             if (forceRestart)
             {
@@ -348,10 +375,14 @@ namespace NETworkManager.ViewModels.Settings
             if (WakeOnLANClientManager.ClientsChanged)
                 WakeOnLANClientManager.Save();
 
+            if (PortScannerProfileManager.ProfilesChanged)
+                PortScannerProfileManager.Save();
+
             // Check if files exist
             ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
             NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
             WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
+            PortScannerProfilesExists = File.Exists(PortScannerProfileManager.GetProfilesFilePath());
         }
         #endregion
     }

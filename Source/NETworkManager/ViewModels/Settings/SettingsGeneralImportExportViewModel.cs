@@ -174,6 +174,48 @@ namespace NETworkManager.ViewModels.Settings
                 OnPropertyChanged();
             }
         }
+
+        private bool _importPortScannerProfilesExists;
+        public bool ImportPortScannerProfilesExists
+        {
+            get { return _importPortScannerProfilesExists; }
+            set
+            {
+                if (value == _importPortScannerProfilesExists)
+                    return;
+
+                _importPortScannerProfilesExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _importPortScannerProfiles;
+        public bool ImportPortScannerProfiles
+        {
+            get { return _importPortScannerProfiles; }
+            set
+            {
+                if (value == _importPortScannerProfiles)
+                    return;
+
+                _importPortScannerProfiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _importOverridePortScannerProfiles = true;
+        public bool ImportOverridePortScannerProfiles
+        {
+            get { return _importOverridePortScannerProfiles; }
+            set
+            {
+                if (value == _importOverridePortScannerProfiles)
+                    return;
+
+                _importOverridePortScannerProfiles = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Export
@@ -274,10 +316,38 @@ namespace NETworkManager.ViewModels.Settings
                 OnPropertyChanged();
             }
         }
+
+        private bool _portScannerProfilesExists;
+        public bool PortScannerProfilesExists
+        {
+            get { return _portScannerProfilesExists; }
+            set
+            {
+                if (value == _portScannerProfilesExists)
+                    return;
+
+                _portScannerProfilesExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _exportPortScannerProfiles;
+        public bool ExportPortScannerProfiles
+        {
+            get { return _exportPortScannerProfiles; }
+            set
+            {
+                if (value == _exportPortScannerProfiles)
+                    return;
+
+                _exportPortScannerProfiles = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
         #endregion
 
-        #region Constructor, LoadSettings
+        #region Constructor
         public SettingsGeneralImportExportViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
@@ -316,6 +386,7 @@ namespace NETworkManager.ViewModels.Settings
                 ImportApplicationSettingsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.ApplicationSettings);
                 ImportNetworkInterfaceProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
                 ImportWakeOnLANClientsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients);
+                ImportPortScannerProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.PortScannerProfiles);
             }
             catch (ImportFileNotValidException)
             {
@@ -350,18 +421,31 @@ namespace NETworkManager.ViewModels.Settings
                     importOptions.Add(ImportExportManager.ImportExportOptions.ApplicationSettings);
 
                 if (ImportNetworkInterfaceProfilesExists && (ImportEverything || ImportNetworkInterfaceProfiles))
+                {
                     importOptions.Add(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
 
+                    // Load network interface profile (option: add)
+                    if (NetworkInterfaceProfileManager.Profiles == null)
+                        NetworkInterfaceProfileManager.Load(!ImportOverrideNetworkInterfaceProfiles);
+                }
+
                 if (ImportWakeOnLANClientsExists && (ImportEverything || ImportWakeOnLANClients))
+                {
                     importOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANClients);
 
-                // Load network interface profile (option: add)
-                if (NetworkInterfaceProfileManager.Profiles == null)
-                    NetworkInterfaceProfileManager.Load(!ImportOverrideNetworkInterfaceProfiles);
+                    // Load WoL clients (option: add)
+                    if (WakeOnLANClientManager.Clients == null)
+                        WakeOnLANClientManager.Load(!ImportOverrideWakeOnLANClients);
+                }
 
-                // Load WoL clients (option: add)
-                if (WakeOnLANClientManager.Clients == null)
-                    WakeOnLANClientManager.Load(!ImportOverrideWakeOnLANClients);
+                if (ImportPortScannerProfilesExists && (ImportEverything || ImportPortScannerProfiles))
+                {
+                    importOptions.Add(ImportExportManager.ImportExportOptions.PortScannerProfiles);
+
+                    // Load port scanner profiles (option: add)
+                    if (PortScannerProfileManager.Profiles == null)
+                        PortScannerProfileManager.Load(!ImportOverridePortScannerProfiles);
+                }
 
                 // Import (copy) files from zip archive
                 ImportExportManager.Import(ImportLocationSelectedPath, importOptions);
@@ -372,6 +456,9 @@ namespace NETworkManager.ViewModels.Settings
 
                 if (importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients))
                     WakeOnLANClientManager.Import(ImportEverything || ImportOverrideWakeOnLANClients);
+
+                if (importOptions.Contains(ImportExportManager.ImportExportOptions.PortScannerProfiles))
+                    PortScannerProfileManager.Import(ImportEverything || ImportOverridePortScannerProfiles);
 
                 // Show the user a message what happened
                 if (!ImportExportManager.ForceRestart)
@@ -386,6 +473,9 @@ namespace NETworkManager.ViewModels.Settings
                     if (importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients))
                         message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_WakeOnLANClientsReloaded"] as string);
 
+                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.PortScannerProfiles))
+                        message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_PortScannerProfilesReloaded"] as string);
+                    
                     await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, message, MessageDialogStyle.Affirmative, settings);
 
                     return;
@@ -413,6 +503,9 @@ namespace NETworkManager.ViewModels.Settings
 
             if (WakeOnLANClientsExists && (ExportEverything || ExportWakeOnLANClients))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANClients);
+
+            if (PortScannerProfilesExists && (ExportEverything || ExportPortScannerProfiles))
+                exportOptions.Add(ImportExportManager.ImportExportOptions.PortScannerProfiles);
 
             System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog()
             {
@@ -446,10 +539,14 @@ namespace NETworkManager.ViewModels.Settings
             if (WakeOnLANClientManager.ClientsChanged)
                 WakeOnLANClientManager.Save();
 
+            if (PortScannerProfileManager.ProfilesChanged)
+                PortScannerProfileManager.Save();
+
             // Check if files exist
             ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
             NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
             WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
+            PortScannerProfilesExists = File.Exists(PortScannerProfileManager.GetProfilesFilePath());
         }
         #endregion
     }
