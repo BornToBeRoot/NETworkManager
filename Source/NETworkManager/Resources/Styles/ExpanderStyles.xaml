@@ -3,10 +3,6 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                     xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Resources/Styles/TextBlockStyles.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-    
     <Style x:Key="ExpanderDownHeader" BasedOn="{StaticResource ExpanderDownHeaderStyle}" TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>

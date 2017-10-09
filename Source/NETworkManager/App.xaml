@@ -26,8 +26,6 @@
                 <ResourceDictionary Source="/Resources/Styles/ButtonStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ComboBoxStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/DataGridStyles.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/DragablzStyles.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/ExpanderStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/GroupBoxStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/NumericUpDownStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ScrollBarStyles.xaml" />
@@ -37,6 +35,9 @@
                 <ResourceDictionary Source="/Resources/Styles/TextBoxStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ToogleSwitchStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/WindowStyles.xaml" />
+                <!-- Dependent styles -->
+                <ResourceDictionary Source="/Resources/Styles/DragablzStyles.xaml" /> <!-- Requires button and textbox styles -->
+                <ResourceDictionary Source="/Resources/Styles/ExpanderStyles.xaml" /> <!-- Required button styles -->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
