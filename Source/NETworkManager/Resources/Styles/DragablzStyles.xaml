@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz">
+    <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MahAppsTabablzControlStyle}" >
+        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
+        <Setter Property="BorderThickness" Value="0,1,0,0" />
+    </Style>
+</ResourceDictionary>

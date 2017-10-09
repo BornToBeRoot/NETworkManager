@@ -4,7 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ApplicationViews ="clr-namespace:NETworkManager.Views.Applications"
+        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         mc:Ignorable="d">
-    <Grid Margin="10" >
+    <Grid>
+        <dragablz:TabablzControl>
+            <TabItem Header="One">
+                <Button HorizontalAlignment="Center" VerticalAlignment="Center">Hello World</Button>
+            </TabItem>
+            <TabItem Header="Two">
+                <Button HorizontalAlignment="Center" VerticalAlignment="Center">How are you doing</Button>
+            </TabItem>
+            <TabItem Header="Three">
+                <Button HorizontalAlignment="Center" VerticalAlignment="Center">Goodbye</Button>
+            </TabItem>
+        </dragablz:TabablzControl>
     </Grid>
 </UserControl>

@@ -14,6 +14,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
+                <!-- Dragablz -->
+                <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/MahApps.xaml" />
                 <!-- Localization -->
                 <ResourceDictionary Source="/Resources/Localization/Resources.en-US.xaml" />
                 <!-- Context menu (import berfore styles)-->
@@ -24,6 +26,7 @@
                 <ResourceDictionary Source="/Resources/Styles/ButtonStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ComboBoxStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/DataGridStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/DragablzStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ExpanderStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/GroupBoxStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/NumericUpDownStyles.xaml" />
