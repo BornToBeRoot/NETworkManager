@@ -243,6 +243,7 @@
     <system:String x:Key="String_HostFirstIPAddress">Host erste IP-Adresse</system:String>
     <system:String x:Key="String_HostLastIPAddress">Host letzte IP-Adresse</system:String>
     <system:String x:Key="String_HostIPAddresses">Host IP-Adressen</system:String>
+    <system:String x:Key="String_NoEnabledNetworkAdaptersFound">Keine aktivierten Netzwerkadapter gefunden!</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
@@ -268,6 +269,7 @@
     <system:String x:Key="String_Button_Continue">Weiter</system:String>
     <system:String x:Key="String_Button_Validate">Validieren</system:String>
     <system:String x:Key="String_Button_AddProfile">Profil hinzufügen...</system:String>
+    <system:String x:Key="String_Button_NetworkConnections">Netzwerkverbindungen...</system:String>
 
     <!-- Help -->
     <system:String x:Key="String_Help_ParameterHelp">Zeigt diesen Dialog an.</system:String>
