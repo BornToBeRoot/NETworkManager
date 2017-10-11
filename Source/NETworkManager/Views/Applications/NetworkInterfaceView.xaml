@@ -106,18 +106,34 @@
                         </Button>
                     </Grid>
                 </StackPanel>
-                <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Details}" />
-                <ScrollViewer Grid.Row="3" Style="{StaticResource DefaulScrollViewer}">
+                <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Details}">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <ScrollViewer Grid.Row="3">
+                    <ScrollViewer.Style>
+                        <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}">
+                        <Setter Property="Visibility" Value="Visible" />
+                        <Style.Triggers>
+                                <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                        </Style>
+                    </ScrollViewer.Style>
                     <Grid>
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />
                             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
                                 <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding SelectedNetworkInterface, Converter={StaticResource NullToFalseConverter}}" Value="False">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </DataTrigger>
-                                </Style.Triggers>
                             </Style>
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
@@ -205,6 +221,20 @@
                         <TextBox Grid.Column="2" Grid.Row="36" Text="{Binding DetailsDNSServer, Converter={StaticResource IPAddressArrayToStringConverter}}" />
                     </Grid>
                 </ScrollViewer>
+                <StackPanel Grid.Row="3" VerticalAlignment="Center">
+                    <StackPanel.Style>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                    </StackPanel.Style>
+                    <TextBlock FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_NoEnabledNetworkAdaptersFound}" TextWrapping="Wrap" TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Margin="0,0,0,10" />
+                    <Button Content="{DynamicResource String_Button_NetworkConnections}" Command="{Binding OpenNetworkConnectionsCommand}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Center"/>
+                </StackPanel>
             </Grid>
         </TabItem>
         <TabItem Header="{DynamicResource String_Header_Configure}">

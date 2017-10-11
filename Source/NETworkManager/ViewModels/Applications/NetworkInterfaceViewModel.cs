@@ -11,6 +11,7 @@ using NETworkManager.Models.Network;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -579,7 +580,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             get { return _selectedProfile; }
             set
-            {  
+            {
                 if (value == _selectedProfile)
                     return;
 
@@ -634,7 +635,7 @@ namespace NETworkManager.ViewModels.Applications
 
             _networkInterfaceProfiles = CollectionViewSource.GetDefaultView(NetworkInterfaceProfileManager.Profiles);
             _networkInterfaceProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            
+
             LoadSettings();
 
             _isLoading = false;
@@ -690,9 +691,27 @@ namespace NETworkManager.ViewModels.Applications
 
             NetworkInterfaces = await Models.Network.NetworkInterface.GetNetworkInterfacesAsync();
 
-            SelectedNetworkInterface = NetworkInterfaces.Where(x => x.Id == id).FirstOrDefault();
+            // Change interface...
+            SelectedNetworkInterface = string.IsNullOrEmpty(id) ? NetworkInterfaces.FirstOrDefault() : NetworkInterfaces.Where(x => x.Id == id).FirstOrDefault();
 
             IsNetworkInterfaceLoading = false;
+        }
+
+        public ICommand OpenNetworkConnectionsCommand
+        {
+            get { return new RelayCommand(p => OpenNetworkConnectionsAction()); }
+        }
+
+        public async void OpenNetworkConnectionsAction()
+        {
+            try
+            {
+                Process.Start("NCPA.cpl");
+            }
+            catch (Exception ex)
+            {
+                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+            }
         }
 
         public ICommand ApplyNetworkInterfaceConfigCommand
