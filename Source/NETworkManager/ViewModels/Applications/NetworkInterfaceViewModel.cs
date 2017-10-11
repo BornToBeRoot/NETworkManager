@@ -706,7 +706,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             try
             {
-                Process.Start("NCPA1.cpl");
+                Process.Start("NCPA.cpl");
             }
             catch (Exception ex)
             {
