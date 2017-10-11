@@ -13,82 +13,104 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style TargetType="{x:Type Button}" x:Key="MahAppsMenuCommandButtonStyle">
+    
+    <Style x:Key="CustomHeaderItemTemplate" TargetType="{x:Type dragablz:DragablzItem}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource MahAppsFocusVisual}"/>
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Padding" Value="1"/>
-        <Setter Property="Opacity" Value=".8"/>
-        <Setter Property="Width" Value="24"/>
-        <Setter Property="Height" Value="20"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </Border>
+                <ControlTemplate TargetType="{x:Type dragablz:DragablzItem}">
+                    <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
+                        <Border x:Name="Rectangle" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" Margin="{TemplateBinding Control.Padding }" x:Name="contentPresenter" />
+                                <Thumb Grid.Column="0" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" x:Name="PART_Thumb" Style="{StaticResource MahAppsInvisibleThumbStyle}" />
+                            </Grid>
+                        </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsDefaulted" Value="true">
-                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Opacity" TargetName="border" Value=".5"/>
+                        <Trigger Property="dragablz:TabablzControl.IsWrappingTabItem" Value="True">
+                            <Setter TargetName="contentPresenter" Property="Content" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.Header}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Background" Value="{x:Static dragablz:DragablzColors.WindowGlassBrush}"/>
-                <Setter Property="Foreground" Value="{x:Static SystemColors.HighlightTextBrush}" />
-            </Trigger>
-            <Trigger Property="IsPressed" Value="true">
-                <Setter Property="Opacity" Value="1"/>
-            </Trigger>
-        </Style.Triggers>
     </Style>
 
-    <Style TargetType="{x:Type Button}" x:Key="AddItemCommandButtonStyle" BasedOn="{StaticResource MahAppsMenuCommandButtonStyle}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Rectangle Width="16" Height="16" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MahAppsTabablzControlStyle}" >
+    <Style x:Key="DefaultTabablzControl" TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MahAppsTabablzControlStyle}" >
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
         <Setter Property="BorderThickness" Value="0,1,0,0" />
-        <Setter Property="ShowDefaultAddButton" Value="True" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource CustomHeaderItemTemplate}" />
+        <Setter Property="AdjacentHeaderItemOffset" Value="0" />
         <Setter Property="HeaderItemTemplate">
             <Setter.Value>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <Grid>
-                            <TextBlock Text="{Binding}" FontSize="18" Style="{StaticResource HeaderTextBlock}" Margin="0" />
+                            <TextBlock Text="{Binding}" VerticalAlignment="Center" Margin="10">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+                                        <Setter Property="FontSize" Value="18" />
+                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
+                                                <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>                            
                             <Thumb Style="{DynamicResource InvisibleThumbStyle}" dragablz:DragablzItem.IsCustomThumb="True" />
                         </Grid>
-                        <Button Style="{StaticResource CleanButton}" Command="dragablz:TabablzControl.CloseItemCommand">
-                            <Rectangle Width="16" Height="16" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                        <Button Style="{StaticResource CleanButton}" Command="dragablz:TabablzControl.CloseItemCommand" Margin="0,0,10,0">
+                            <Rectangle Width="16" Height="16">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=WindowClose}" />
                                 </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
                             </Rectangle>
                         </Button>
                     </StackPanel>
                 </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="HeaderSuffixContent" >
+            <Setter.Value>
+                <Button HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource CleanButton}" Command="dragablz:TabablzControl.AddItemCommand" Margin="10">
+                    <Rectangle Width="20" Height="20">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Plus}" />
+                        </Rectangle.OpacityMask>
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </Button>
             </Setter.Value>
         </Setter>
     </Style>
