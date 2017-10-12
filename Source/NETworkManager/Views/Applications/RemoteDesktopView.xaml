@@ -3,20 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ApplicationViews ="clr-namespace:NETworkManager.Views.Applications"
+        xmlns:ViewModel ="clr-namespace:NETworkManager.ViewModels.Applications"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         mc:Ignorable="d">
     <Grid>
-        <dragablz:TabablzControl Style="{StaticResource DefaultTabablzControl}">
-            <TabItem Header="One">
-                <Button HorizontalAlignment="Center" VerticalAlignment="Center">Hello World</Button>
-            </TabItem>
-            <TabItem Header="Two">
-                <Button HorizontalAlignment="Center" VerticalAlignment="Center">How are you doing</Button>
-            </TabItem>
-            <TabItem Header="Three">
-                <Button HorizontalAlignment="Center" VerticalAlignment="Center">Goodbye</Button>
-            </TabItem>
+        <dragablz:TabablzControl ItemsSource="{Binding TabContents}">
+            <dragablz:TabablzControl.Style>
+                <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">
+                    <Setter Property="NewItemFactory" Value="{x:Static ViewModel:RemoteDesktopViewModel.NewItemFactory}" />
+                </Style>
+            </dragablz:TabablzControl.Style>
         </dragablz:TabablzControl>
     </Grid>
 </UserControl>

@@ -1,18 +1,22 @@
-﻿using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
-using System.Collections.ObjectModel;
-using NETworkManager.Models.Settings;
-using System.Collections.Generic;
-using NETworkManager.Models.Network;
-using NETworkManager.Helpers;
+﻿using System.Collections.ObjectModel;
+using NETworkManager.Controls;
+using System;
+using NETworkManager.Views.Applications;
 
 namespace NETworkManager.ViewModels.Applications
 {
     public class RemoteDesktopViewModel : ViewModelBase
     {
+        public ObservableCollection<DragablzTabContent> TabContents = new ObservableCollection<DragablzTabContent>();
+
         public RemoteDesktopViewModel()
         {
+            
+        }
 
+        public static Func<object> NewItemFactory
+        {
+            get { return () => new DragablzTabContent("test", new TracerouteView()); }
         }
     }
 }

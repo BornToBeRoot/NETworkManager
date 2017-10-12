@@ -56,7 +56,7 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <Grid>
-                            <TextBlock Text="{Binding}" VerticalAlignment="Center" Margin="10">
+                            <TextBlock Text="{Binding Header}" VerticalAlignment="Center" Margin="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                         <Setter Property="FontSize" Value="18" />
