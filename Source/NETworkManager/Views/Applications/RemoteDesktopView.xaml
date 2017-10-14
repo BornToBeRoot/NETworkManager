@@ -8,6 +8,9 @@
         mc:Ignorable="d">
     <Grid>
         <dragablz:TabablzControl ItemsSource="{Binding TabContents}">
+            <dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" />
+            </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.Style>
                 <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">
                     <Setter Property="NewItemFactory" Value="{x:Static ViewModel:RemoteDesktopViewModel.NewItemFactory}" />
