@@ -18,7 +18,6 @@
         <Setter Property="FocusVisualStyle" Value="{StaticResource MahAppsFocusVisual}"/>
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
         <Setter Property="Template">
@@ -51,6 +50,7 @@
         <Setter Property="BorderThickness" Value="0,1,0,0" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource CustomHeaderItemTemplate}" />
         <Setter Property="AdjacentHeaderItemOffset" Value="0" />
+        <Setter Property="ContentTemplateSelector" Value="{x:Null}" />
         <Setter Property="HeaderItemTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -111,6 +111,13 @@
                         </Rectangle.Style>
                     </Rectangle>
                 </Button>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <ContentControl Content="{Binding Content}" />
+                </DataTemplate>
             </Setter.Value>
         </Setter>
     </Style>
