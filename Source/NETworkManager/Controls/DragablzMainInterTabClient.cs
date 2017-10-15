@@ -15,7 +15,6 @@ namespace NETworkManager.Controls
         public TabEmptiedResponse TabEmptiedHandler(TabablzControl tabControl, Window window)
         {
             return TabEmptiedResponse.DoNothing;
-            //throw new NotImplementedException();
         }
     }
 }

@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ViewModel ="clr-namespace:NETworkManager.ViewModels.Applications"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
     <Grid>
         <dragablz:TabablzControl ItemsSource="{Binding TabContents}">
