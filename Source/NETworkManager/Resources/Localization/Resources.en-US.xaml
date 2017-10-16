@@ -245,6 +245,10 @@
     <system:String x:Key="String_HostIPAddresses">Host IP-Addresses</system:String>
     <system:String x:Key="String_NoEnabledNetworkAdaptersFound">No enabled network adapters found!</system:String>
     
+    <!-- ToolTip -->
+    <system:String x:Key="String_ToolTip_Settings">Settings</system:String>
+    <system:String x:Key="String_ToolTip_Expand">Expand</system:String>
+    
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
     <system:String x:Key="String_Button_Default">Default</system:String>
