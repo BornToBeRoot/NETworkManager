@@ -11,7 +11,7 @@
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d">
     <UserControl.Resources>
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <Converter:IntToStringConverter x:Key="IntToStringConverter" />
         <Converter:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
@@ -159,12 +159,12 @@
                 <WpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding PingInfo.IPAddress}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding PingInfo.IPAddress}" SortMemberPath="PingInfo.IPAddressInt32" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy},Converter={StaticResource BooleanToVisibilityConverter}}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy},Converter={StaticResource BooleanToVisibilityConverter}}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityConverter}}" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_Vendor}" Binding="{Binding Vendor}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy},Converter={StaticResource BooleanToVisibilityConverter}}" MinWidth="200" />
                 <DataGridTextColumn Header="{DynamicResource String_Bytes}" Binding="{Binding PingInfo.Bytes, Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
-                <DataGridTextColumn Header="{DynamicResource String_Time}" MinWidth="80" >
+                <DataGridTextColumn Header="{DynamicResource String_Time}" SortMemberPath="PingInfo.Time" MinWidth="80">
                     <DataGridTextColumn.Binding>
                         <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
                             <Binding Path="PingInfo.Status" />
