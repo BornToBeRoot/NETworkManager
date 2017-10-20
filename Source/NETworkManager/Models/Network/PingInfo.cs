@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NETworkManager.Helpers;
+using System;
 using System.Net;
 using System.Net.NetworkInformation;
 
@@ -12,6 +13,11 @@ namespace NETworkManager.Models.Network
         public long Time { get; set; }
         public int TTL { get; set; }
         public IPStatus Status { get; set; }
+
+        public int IPAddressInt32
+        {
+            get { return IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(IPAddress) : 0; }
+        }
 
         public PingInfo()
         {
