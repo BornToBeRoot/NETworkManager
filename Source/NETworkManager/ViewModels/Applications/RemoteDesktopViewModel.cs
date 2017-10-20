@@ -1,33 +1,53 @@
 ﻿using System.Collections.ObjectModel;
 using NETworkManager.Controls;
-using System;
 using NETworkManager.Views.Applications;
 using Dragablz;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Settings;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows;
 
 namespace NETworkManager.ViewModels.Applications
 {
     public class RemoteDesktopViewModel : ViewModelBase
     {
+        #region Variables
         private IDialogCoordinator dialogCoordinator;
-        public IInterTabClient InterTabClient { get; set; }
-        public ObservableCollection<DragablzTabContent> TabContents = new ObservableCollection<DragablzTabContent>();
 
+        public IInterTabClient InterTabClient { get; private set; } = new DragablzMainInterTabClient();
+        public ObservableCollection<DragablzTabContent> TabContents { get; private set; } = new ObservableCollection<DragablzTabContent>();
+
+        private int _selectedTabIndex;
+        public int SelectedTabIndex
+        {
+            get { return _selectedTabIndex; }
+            set
+            {
+                if (value == _selectedTabIndex)
+                    return;
+
+                _selectedTabIndex = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Constructor
         public RemoteDesktopViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
-            InterTabClient = new DragablzMainInterTabClient();
+        }
+        #endregion
+
+        #region ICommand & Actions
+        public ICommand NewRDPSessionCommand
+        {
+            get { return new RelayCommand(p => NewRDPSessionAction()); }
         }
 
-        public static Func<object> NewItemFactory
+        private void NewRDPSessionAction()
         {
-            get {
-                return () => new DragablzTabContent("Traceroute", new TracerouteView());
-            }
+            TabContents.Add(new DragablzTabContent("Traceroute", new TracerouteView()));
+            SelectedTabIndex = TabContents.Count - 1;
         }
+        #endregion
     }
 }

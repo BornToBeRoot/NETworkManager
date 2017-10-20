@@ -5,17 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ViewModel ="clr-namespace:NETworkManager.ViewModels.Applications"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
     <Grid>
-        <dragablz:TabablzControl ItemsSource="{Binding TabContents}">
+        <dragablz:TabablzControl ItemsSource="{Binding TabContents}" SelectedIndex="{Binding SelectedTabIndex}">
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" />
             </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.Style>
                 <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">
-                    <Setter Property="NewItemFactory" Value="{x:Static ViewModel:RemoteDesktopViewModel.NewItemFactory}" />
+                    <Setter Property="HeaderSuffixContent" >
+                        <Setter.Value>
+                            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource CleanButton}" Command="{Binding NewRDPSessionCommand}" Margin="10">
+                                <Rectangle Width="20" Height="20">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Plus}" />
+                                    </Rectangle.OpacityMask>
+                                    <Rectangle.Style>
+                                        <Style TargetType="{x:Type Rectangle}">
+                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                            </Button>
+                        </Setter.Value>
+                    </Setter>
                 </Style>
             </dragablz:TabablzControl.Style>
         </dragablz:TabablzControl>
