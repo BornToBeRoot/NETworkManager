@@ -56,7 +56,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Slider Grid.Column="0" Minimum="10" MaxHeight="100" Value="{Binding Opacity}" IsEnabled="{Binding EnableTransparency}" Style="{DynamicResource FlatSlider}" ToolTip="{Binding Value, RelativeSource={RelativeSource Self}}" TickFrequency="1" IsSnapToTickEnabled="True" />
-            <TextBox Grid.Column="1" Width="80" IsEnabled="{Binding EnableTransparency}" Style="{StaticResource DefaultTextBox}" TextAlignment="Center" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Margin="10,0,0,0">
+            <TextBox Grid.Column="1" Width="80" IsEnabled="{Binding EnableTransparency}" Style="{StaticResource DefaultTextBox}" TextAlignment="Center" Margin="10,0,0,0">
                 <TextBox.Text>
                     <Binding Path="Opacity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

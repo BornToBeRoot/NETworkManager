@@ -64,7 +64,8 @@
     <system:String x:Key="String_Header_Subnet">Subnet</system:String>
     <system:String x:Key="String_Header_IPv4Calculator">IPv4-Calculator</system:String>
     <system:String x:Key="String_Header_IPv4Splitter">IPv4-Splitter</system:String>
-
+    <system:String x:Key="String_Header_NewRemoteDesktopConnection">New remote desktop connection</system:String>
+    
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">A powerful tool for managing networks and troubleshoot network problems!</system:String>
@@ -244,6 +245,9 @@
     <system:String x:Key="String_HostLastIPAddress">Host last IP-Address</system:String>
     <system:String x:Key="String_HostIPAddresses">Host IP-Addresses</system:String>
     <system:String x:Key="String_NoEnabledNetworkAdaptersFound">No enabled network adapters found!</system:String>
+    <system:String x:Key="String_Domain">Domain</system:String>
+    <system:String x:Key="String_Username">Username</system:String>
+    <system:String x:Key="String_Password">Password</system:String>
     
     <!-- ToolTip -->
     <system:String x:Key="String_ToolTip_Settings">Settings</system:String>
@@ -274,6 +278,7 @@
     <system:String x:Key="String_Button_Lookup">Lookup</system:String>
     <system:String x:Key="String_Button_AddProfile">Add profile...</system:String>
     <system:String x:Key="String_Button_NetworkConnections">Network Connections...</system:String>
+    <system:String x:Key="String_Button_Connect">Connect</system:String>
     
     <!-- Help -->
     <system:String x:Key="String_Help_ParameterHelp">Displays this dialog.</system:String>
@@ -404,10 +409,4 @@
     <!-- PortStatus -->
     <system:String x:Key="String_PortStatus_Closed">Closed</system:String>
     <system:String x:Key="String_PortStatus_Open">Open</system:String>
-        
-    <!-- Libaries -->
-    <system:String x:Key="String_Libary_ControlzExDescription">Shared Controlz for WPF and ... more.</system:String>
-    <system:String x:Key="String_Libary_MahAppsMetroDescription">A toolkit for creating Metro / Modern UI styled WPF apps.</system:String>
-    <system:String x:Key="String_Libary_MahAppsMetroIconPacksDescription">Some awesome icons for WPF and UWP all together...</system:String>
-    <system:String x:Key="String_Libary_HeijdenDNSDescription">Reusable DNS resolver component</system:String>
 </ResourceDictionary>

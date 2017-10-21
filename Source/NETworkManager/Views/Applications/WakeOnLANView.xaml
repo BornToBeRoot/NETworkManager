@@ -44,7 +44,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_MACAddress}" />
-                <TextBox Grid.Column="2" Grid.Row="0" x:Name="txtMACAddress" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddress}" Style="{StaticResource DefaultTextBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                <TextBox Grid.Column="2" Grid.Row="0" x:Name="txtMACAddress" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddress}" Style="{StaticResource DefaultTextBox}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
                     </TextBox.InputBindings>
@@ -58,7 +58,7 @@
                     </TextBox.Text>
                 </TextBox>
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Broadcast}" Style="{StaticResource CenterTextBlock}" />
-                <TextBox x:Name="txtBroadcast" Grid.Column="2" Grid.Row="2" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding BroadcastHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Broadcast}" Style="{StaticResource DefaultTextBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                <TextBox x:Name="txtBroadcast" Grid.Column="2" Grid.Row="2" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding BroadcastHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Broadcast}" Style="{StaticResource DefaultTextBox}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
                     </TextBox.InputBindings>

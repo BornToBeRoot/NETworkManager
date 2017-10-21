@@ -4,6 +4,7 @@
     <Style x:Key="DefaultTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="ContextMenu" Value="{StaticResource CutCopyPasteContextMenu}" />
+        <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
     </Style>
 
     <!-- Apply the default design to all text boxes -->

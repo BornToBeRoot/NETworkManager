@@ -9,7 +9,7 @@
     <StackPanel>
         <TextBlock Text="{DynamicResource String_Header_DNSLookup}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{DynamicResource String_UseCustomDNSServer}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding UseCustomDNSServer}" Margin="0,0,0,10"/>
-        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNSServer}" Style="{StaticResource DefaultTextBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNSServer}" Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>
                 <Binding Path="CustomDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -25,7 +25,7 @@
         <ComboBox FontSize="14" ItemsSource="{Binding Types}" SelectedItem="{Binding Type}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
         <mah:ToggleSwitch Header="{DynamicResource String_AddDNSSuffixToHostname}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding AddDNSSuffix}" Margin="0,0,0,10"/>
         <mah:ToggleSwitch Header="{DynamicResource String_UseCustomDNSSuffix}" IsEnabled="{Binding AddDNSSuffix}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding UseCustomDNSSuffix}" Margin="0,0,0,10"/>
-        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10">
             <TextBox.Resources>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                     <Setter Property="IsEnabled" Value="False" />

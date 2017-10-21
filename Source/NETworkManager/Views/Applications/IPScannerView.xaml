@@ -40,7 +40,7 @@
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <ComboBox Grid.Column="0" x:Name="cbIPRange" ItemsSource="{Binding IPRangeHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EampleIPScanRange}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="0" x:Name="cbIPRange" ItemsSource="{Binding IPRangeHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EampleIPScanRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="IPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>

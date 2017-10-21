@@ -2,12 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style x:Key="DefaultComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MetroComboBox}">
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
     </Style>
 
     <Style x:Key="EditableComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource DefaultComboBox}">
         <Setter Property="IsEditable" Value="True" />
         <Setter Property="ContextMenu" Value="{StaticResource CutCopyPasteContextMenu}" />
-        <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
     </Style>
     <Style x:Key="HistoryComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource DefaultComboBox}">
         <Setter Property="IsEditable" Value="True" />

@@ -19,7 +19,7 @@ namespace NETworkManager.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -61,6 +61,15 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shared Controlz for WPF and ... more..
+        /// </summary>
+        public static string Libary_ControlEx_Description {
+            get {
+                return ResourceManager.GetString("Libary_ControlEx_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://github.com/ControlzEx/ControlzEx/blob/master/LICENSE.
         /// </summary>
         public static string Libary_ControlzEx_LicenseUrl {
@@ -84,6 +93,51 @@ namespace NETworkManager.Properties {
         public static string Libary_ControlzEx_ProjectUrl {
             get {
                 return ResourceManager.GetString("Libary_ControlzEx_ProjectUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dragable and tearable tab control for WPF..
+        /// </summary>
+        public static string Libary_Dragablz_Description {
+            get {
+                return ResourceManager.GetString("Libary_Dragablz_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/ButchersBoy/Dragablz/blob/master/LICENSE.
+        /// </summary>
+        public static string Libary_Dragablz_LicenseUrl {
+            get {
+                return ResourceManager.GetString("Libary_Dragablz_LicenseUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dragablz.
+        /// </summary>
+        public static string Libary_Dragablz_Name {
+            get {
+                return ResourceManager.GetString("Libary_Dragablz_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/ButchersBoy/Dragablz.
+        /// </summary>
+        public static string Libary_Dragablz_ProjectUrl {
+            get {
+                return ResourceManager.GetString("Libary_Dragablz_ProjectUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reusable DNS resolver component..
+        /// </summary>
+        public static string Libary_HeijdenDNS_Description {
+            get {
+                return ResourceManager.GetString("Libary_HeijdenDNS_Description", resourceCulture);
             }
         }
         
@@ -115,6 +169,15 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A toolkit for creating Metro / Modern UI styled WPF apps..
+        /// </summary>
+        public static string Libary_MahAppsMetro_Description {
+            get {
+                return ResourceManager.GetString("Libary_MahAppsMetro_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://github.com/MahApps/MahApps.Metro/blob/master/LICENSE.
         /// </summary>
         public static string Libary_MahAppsMetro_LicenseUrl {
@@ -133,11 +196,20 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://mahapps.com/.
+        ///   Looks up a localized string similar to https://github.com/mahapps/mahapps.metro.
         /// </summary>
         public static string Libary_MahAppsMetro_ProjectUrl {
             get {
                 return ResourceManager.GetString("Libary_MahAppsMetro_ProjectUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Some awesome icons for WPF and UWP all together....
+        /// </summary>
+        public static string Libary_MahAppsMetroIconPacks_Description {
+            get {
+                return ResourceManager.GetString("Libary_MahAppsMetroIconPacks_Description", resourceCulture);
             }
         }
         
