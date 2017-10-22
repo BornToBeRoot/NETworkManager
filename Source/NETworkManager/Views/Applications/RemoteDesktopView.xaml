@@ -14,7 +14,11 @@
         <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
     </UserControl.Resources>
     <Grid>
-        <dragablz:TabablzControl ItemsSource="{Binding TabContents}" SelectedIndex="{Binding SelectedTabIndex}" Visibility="{Binding HideWindowsFormsHost, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <dragablz:TabablzControl Grid.Column="0" Grid.Row="0" ItemsSource="{Binding TabContents}" SelectedIndex="{Binding SelectedTabIndex}" Visibility="{Binding HideWindowsFormsHost, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" />
             </dragablz:TabablzControl.InterTabController>
@@ -51,5 +55,76 @@
                 </Style>
             </dragablz:TabablzControl.Style>
         </dragablz:TabablzControl>
+        <Border Grid.Column="1" Grid.Row="0" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource GrayBrush8}">
+            <Expander x:Name="expanderProfiles" Header="{DynamicResource String_Header_Profiles}" Style="{StaticResource ProfileExpander}" IsExpanded="{Binding ExpandProfileView}">
+                <Grid Width="250">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ListBox Grid.Column="0" Grid.Row="0" x:Name="listBoxProfiles" FontSize="14" ItemsSource="{Binding PortScannerProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}">
+                        <ListBox.Resources>
+                            <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
+                            <ContextMenu x:Key="ListBoxItemContextMenu">
+                                <!-- Opened="ContextMenu_Opened" MinWidth="150">-->
+                                <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteProfileCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterialLight Kind=Delete}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
+                                <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
+                            </Style>
+                        </ListBox.Resources>
+                        <ListBox.InputBindings>
+                            <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
+                        </ListBox.InputBindings>
+                    </ListBox>
+                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_NoProfilesFoundCreateOne}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding PortScannerProfiles.Count}" Value="0">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <Button x:Name="btnAddProfile" Grid.Column="0" Grid.Row="2" Command="{Binding AddProfileCommand}">
+                        <Button.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Plus}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                            </Grid>
+                        </Button.Content>
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=cbPorts, Path=(Validation.HasError)}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Grid>
+            </Expander>
+        </Border>
     </Grid>
 </UserControl>

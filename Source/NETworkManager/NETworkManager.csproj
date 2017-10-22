@@ -185,6 +185,8 @@
     <Compile Include="Converters\ValidateSubnetCalculatorIPv4SplitterConverter.cs" />
     <Compile Include="Helpers\SingleInstanceHelper.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktopSessionInfo.cs" />
+    <Compile Include="Models\Settings\RemoteDesktopSessionManager.cs" />
+    <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
     <Compile Include="ViewModels\Dialogs\RemoteDesktopSessionViewModel.cs" />
     <Compile Include="Models\Network\DNSLookup.cs" />
     <Compile Include="Models\Network\DNSLookupCompleteArgs.cs" />
