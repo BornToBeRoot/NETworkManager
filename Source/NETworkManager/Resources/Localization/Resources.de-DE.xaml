@@ -64,7 +64,10 @@
     <system:String x:Key="String_Header_Subnet">Subnetz</system:String>
     <system:String x:Key="String_Header_IPv4Calculator">IPv4-Rechner</system:String>
     <system:String x:Key="String_Header_IPv4Splitter">IPv4-Splitter</system:String>
-    <system:String x:Key="String_Header_NewRemoteDesktopConnection">Neue Remotedesktop Verbindung</system:String>
+    <system:String x:Key="String_Header_ConnectRemoteDesktopConnection">Remote Desktop Sitzung verbinden</system:String>
+    <system:String x:Key="String_Header_AddRemoteDesktopConnection">Remote Desktop Sitzung hinzufügen</system:String>
+    <system:String x:Key="String_Header_EditRemoteDesktopConnection">Remote Desktop Sitzung bearbeiten</system:String>
+    <system:String x:Key="String_Header_Sessions">Sitzungen</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -217,6 +220,7 @@
     <system:String x:Key="String_CustomDNSServerIsEmptyCheckYourSettingsUseWindowsOwnDNSServer">Benutzerdefinierte DNS-Server ist leer. Überprüfe deine Einstellungen! (Verwende Windows eigenen DNS-Server...)</system:String>
     <system:String x:Key="String_EnterNameForProfile">Geben Sie einen Namen ein, unter dem das Profil gespeichert werden soll.</system:String>
     <system:String x:Key="String_DeleteProfileMessage">Das ausgewählte Profil wird unwiderruflich gelöscht.</system:String>
+    <system:String x:Key="String_DeleteSessionMessage">Die ausgewählte Sitzung wird unwiderruflich gelöscht.</system:String>
     <system:String x:Key="String_Backup">Sicherung</system:String>
     <system:String x:Key="String_MultipleInstances">Mehrere Instanzen</system:String>
     <system:String x:Key="String_ConnectTheNetworkCardToConfigureIt">Verbinde die Netzwerkkarte mit einem Netzwerk, um diese zu konfigurieren!</system:String>
@@ -232,6 +236,7 @@
     <system:String x:Key="String_Override">überschreiben</system:String>
     <system:String x:Key="String_Add">hinzufügen</system:String>
     <system:String x:Key="String_NoProfilesFoundCreateOne">Keine Profile gefunden! Erstelle eins...</system:String>
+    <system:String x:Key="String_NoSessionsFoundCreateOne">Keine Sitzungen gefunden! Erstelle eine...</system:String>
     <system:String x:Key="String_DNSServer">DNS-Server</system:String>
     <system:String x:Key="String_Questions">Anfragen</system:String>
     <system:String x:Key="String_Answers">Antworten</system:String>
@@ -248,6 +253,8 @@
     <system:String x:Key="String_Domain">Domäne</system:String>
     <system:String x:Key="String_Username">Benutzername</system:String>
     <system:String x:Key="String_Password">Kennwort</system:String>
+    <system:String x:Key="String_Edit">Bearbeiten</system:String>
+    <system:String x:Key="String_Connect">Verbinden</system:String>
     
     <!-- ToolTip -->
     <system:String x:Key="String_ToolTip_Settings">Einstellungen</system:String>
@@ -279,6 +286,8 @@
     <system:String x:Key="String_Button_AddProfile">Profil hinzufügen...</system:String>
     <system:String x:Key="String_Button_NetworkConnections">Netzwerkverbindungen...</system:String>
     <system:String x:Key="String_Button_Connect">Verbinden</system:String>
+    <system:String x:Key="String_Button_AddSessions">Sitzung hinzufügen...</system:String>
+    <system:String x:Key="String_Button_Save">Speichern</system:String>
     
     <!-- Help -->
     <system:String x:Key="String_Help_ParameterHelp">Zeigt diesen Dialog an.</system:String>

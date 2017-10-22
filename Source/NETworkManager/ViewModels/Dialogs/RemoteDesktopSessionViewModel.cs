@@ -1,20 +1,35 @@
-﻿using System;
+﻿using NETworkManager.Models.Settings;
+using System;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels.Network
 {
     public class RemoteDesktopSessionViewModel : ViewModelBase
     {
-        private readonly ICommand _connectCommand;
-        public ICommand ConnectCommand
+        private readonly ICommand _saveCommand;
+        public ICommand SaveCommand
         {
-            get { return _connectCommand; }
+            get { return _saveCommand; }
         }
 
         private readonly ICommand _cancelCommand;
         public ICommand CancelCommand
         {
             get { return _cancelCommand; }
+        }
+
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                if (value == _name)
+                    return;
+
+                _name = value;
+                OnPropertyChanged();
+            }
         }
 
         private string _hostname;
@@ -31,52 +46,19 @@ namespace NETworkManager.ViewModels.Network
             }
         }
 
-        private string _domain;
-        public string Domain
+        public RemoteDesktopSessionViewModel(Action<RemoteDesktopSessionViewModel> saveCommand, Action<RemoteDesktopSessionViewModel> cancelHandler)
         {
-            get { return _domain; }
-            set
-            {
-                if (value == _domain)
-                    return;
-
-                _domain = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _username;
-        public string Username
-        {
-            get { return _username; }
-            set
-            {
-                if (value == _username)
-                    return;
-
-                _username = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _password;
-        public string Password
-        {
-            get { return _password; }
-            set
-            {
-                if (value == _password)
-                    return;
-
-                _password = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public RemoteDesktopSessionViewModel(Action<RemoteDesktopSessionViewModel> connectCommand, Action<RemoteDesktopSessionViewModel> cancelHandler)
-        {
-            _connectCommand = new RelayCommand(p => connectCommand(this));
+            _saveCommand = new RelayCommand(p => saveCommand(this));
             _cancelCommand = new RelayCommand(p => cancelHandler(this));
+        }
+
+        public RemoteDesktopSessionViewModel(Action<RemoteDesktopSessionViewModel> saveCommand, Action<RemoteDesktopSessionViewModel> cancelHandler, RemoteDesktopSessionInfo info)
+        {
+            _saveCommand = new RelayCommand(p => saveCommand(this));
+            _cancelCommand = new RelayCommand(p => cancelHandler(this));
+
+            Name = info.Name;
+            Hostname = info.Hostname;
         }
     }
 }

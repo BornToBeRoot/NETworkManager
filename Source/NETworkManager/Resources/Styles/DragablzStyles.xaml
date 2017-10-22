@@ -47,7 +47,7 @@
 
     <Style x:Key="DefaultTabablzControl" TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MahAppsTabablzControlStyle}" >
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
-        <Setter Property="BorderThickness" Value="0,1,0,0" />
+        <Setter Property="BorderThickness" Value="0,1,0,0" /> 
         <Setter Property="ItemContainerStyle" Value="{StaticResource CustomHeaderItemTemplate}" />
         <Setter Property="AdjacentHeaderItemOffset" Value="0" />
         <Setter Property="ContentTemplateSelector" Value="{x:Null}" />

@@ -62,7 +62,7 @@
         <Setter Property="Controls:ExpanderHelper.HeaderDownStyle" Value="{DynamicResource ExpanderDownHeader}" />
     </Style>
 
-    <Style x:Key="ExpanderRightProfileOpen" BasedOn="{StaticResource ExpanderDownHeaderStyle}" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="RightExpanderOpen" BasedOn="{StaticResource ExpanderDownHeaderStyle}" TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -93,7 +93,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ExpanderRightProfileClosed" BasedOn="{StaticResource ExpanderRightHeaderStyle}" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="RightExpanderClosed" BasedOn="{StaticResource ExpanderRightHeaderStyle}" TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -128,7 +128,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ProfileExpander" TargetType="{x:Type Expander}" BasedOn="{StaticResource MetroExpander}">
+    <Style x:Key="RightExpander" TargetType="{x:Type Expander}" BasedOn="{StaticResource MetroExpander}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="ExpandDirection" Value="Right" />
@@ -136,11 +136,11 @@
         <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource GrayBrush3}" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="14" />
-        <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{DynamicResource ExpanderRightProfileClosed}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{DynamicResource RightExpanderClosed}" />
         <Style.Triggers>
             <Trigger Property="IsExpanded" Value="True">
                 <Setter Property="ExpandDirection" Value="Down" />
-                <Setter Property="Controls:ExpanderHelper.HeaderDownStyle" Value="{DynamicResource ExpanderRightProfileOpen}" />
+                <Setter Property="Controls:ExpanderHelper.HeaderDownStyle" Value="{DynamicResource RightExpanderOpen}" />
             </Trigger>
         </Style.Triggers>
     </Style>

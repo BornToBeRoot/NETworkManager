@@ -188,6 +188,7 @@
     <Compile Include="Models\Settings\RemoteDesktopSessionManager.cs" />
     <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
     <Compile Include="ViewModels\Dialogs\RemoteDesktopSessionViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ConnectRemoteDesktopSessionViewModel.cs" />
     <Compile Include="Models\Network\DNSLookup.cs" />
     <Compile Include="Models\Network\DNSLookupCompleteArgs.cs" />
     <Compile Include="Models\Network\DNSLookupOptions.cs" />
@@ -231,6 +232,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\RemoteDesktopSessionDialog.xaml.cs">
       <DependentUpon>RemoteDesktopSessionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\ConnectRemoteDesktopSessionDialog.xaml.cs">
+      <DependentUpon>ConnectRemoteDesktopSessionDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\UpdateView.xaml.cs">
       <DependentUpon>UpdateView.xaml</DependentUpon>
@@ -350,6 +354,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Dialogs\RemoteDesktopSessionDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\ConnectRemoteDesktopSessionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
