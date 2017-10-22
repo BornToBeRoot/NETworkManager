@@ -1,13 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using NETworkManager.Controls;
-using NETworkManager.Views.Applications;
 using Dragablz;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Input;
-using NETworkManager.Models.Network;
 using NETworkManager.Views.Dialogs;
 using System.Windows;
 using NETworkManager.ViewModels.Network;
+using NETworkManager.Models.RemoteDesktop;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -18,6 +17,20 @@ namespace NETworkManager.ViewModels.Applications
 
         public IInterTabClient InterTabClient { get; private set; }
         public ObservableCollection<DragablzTabContent> TabContents { get; private set; }
+
+        private bool _hideWindowsFormsHost;
+        public bool HideWindowsFormsHost
+        {
+            get { return _hideWindowsFormsHost; }
+            set
+            {
+                if (value == _hideWindowsFormsHost)
+                    return;
+
+                _hideWindowsFormsHost = value;
+                OnPropertyChanged();
+            }
+        }
 
         private int _selectedTabIndex;
         public int SelectedTabIndex
@@ -60,18 +73,31 @@ namespace NETworkManager.ViewModels.Applications
             RemoteDesktopSessionViewModel remoteDesktopSessionViewModel = new RemoteDesktopSessionViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                HideWindowsFormsHost = false;
 
-                TabContents.Add(new DragablzTabContent(instance.Hostname, new TracerouteView()));
-                SelectedTabIndex = TabContents.Count - 1;
+                RemoteDesktopSessionInfo remoteDesktopSessionInfo = new RemoteDesktopSessionInfo
+                {
+                    Hostname = instance.Hostname,
+                    Domain = instance.Domain,
+                    Username = instance.Username,
+                    Password = instance.Password
+                };
+
+                TabContents.Add(new DragablzTabContent(instance.Hostname, new RemoteDesktopControl(remoteDesktopSessionInfo)));
+                SelectedTabIndex = TabContents.Count - 1;                                
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                HideWindowsFormsHost = false;
             });
 
             customDialog.Content = new RemoteDesktopSessionDialog
             {
                 DataContext = remoteDesktopSessionViewModel
             };
+
+            // This will fix airpace problem in winform-wpf
+            HideWindowsFormsHost = true;
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }

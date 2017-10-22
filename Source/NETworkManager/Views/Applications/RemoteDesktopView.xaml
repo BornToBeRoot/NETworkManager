@@ -7,10 +7,14 @@
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:Converter="clr-namespace:NETworkManager.Converters"
         Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
+    <UserControl.Resources>
+        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
-        <dragablz:TabablzControl ItemsSource="{Binding TabContents}" SelectedIndex="{Binding SelectedTabIndex}">
+        <dragablz:TabablzControl ItemsSource="{Binding TabContents}" SelectedIndex="{Binding SelectedTabIndex}" Visibility="{Binding HideWindowsFormsHost, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" />
             </dragablz:TabablzControl.InterTabController>
@@ -18,7 +22,7 @@
                 <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">
                     <Setter Property="HeaderSuffixContent" >
                         <Setter.Value>
-                            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource CleanButton}" Command="{Binding NewRDPSessionCommand}" Margin="10">
+                            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource CleanButton}" Command="{Binding NewRDPSessionCommand}" Focusable="False" Margin="10">
                                 <Rectangle Width="20" Height="20">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Plus}" />
@@ -35,6 +39,13 @@
                                     </Rectangle.Style>
                                 </Rectangle>
                             </Button>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <ContentPresenter Content="{Binding Content}"  />
+                            </DataTemplate>
                         </Setter.Value>
                     </Setter>
                 </Style>

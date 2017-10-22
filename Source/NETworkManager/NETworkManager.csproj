@@ -184,6 +184,7 @@
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
     <Compile Include="Converters\ValidateSubnetCalculatorIPv4SplitterConverter.cs" />
     <Compile Include="Helpers\SingleInstanceHelper.cs" />
+    <Compile Include="Models\RemoteDesktop\RemoteDesktopSessionInfo.cs" />
     <Compile Include="ViewModels\Dialogs\RemoteDesktopSessionViewModel.cs" />
     <Compile Include="Models\Network\DNSLookup.cs" />
     <Compile Include="Models\Network\DNSLookupCompleteArgs.cs" />
@@ -205,6 +206,9 @@
     <Compile Include="ViewModels\Help\HelpCommandLineViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationDNSLookupViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationWakeOnLANViewModel.cs" />
+    <Compile Include="Controls\RemoteDesktopControl.xaml.cs">
+      <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Applications\SubnetCalculatorIPv4SplitterView.xaml.cs">
       <DependentUpon>SubnetCalculatorIPv4SplitterView.xaml</DependentUpon>
     </Compile>
@@ -288,6 +292,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Styles\MetroDialogStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RemoteDesktopControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
