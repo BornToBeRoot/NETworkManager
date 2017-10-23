@@ -20,12 +20,12 @@ namespace NETworkManager.Helpers
             return string.Join("", IPv4AddressHelper.HumanStringToBinaryString(subnetmask.ToString()).Replace(".", "").TrimEnd('0')).Length;
         }
 
-        public static int GetNumberIPv4Addresses(int cidr)
+        public static long GetNumberIPv4Addresses(int cidr)
         {
-            return Convert.ToInt32(Math.Pow(2, 32 - cidr));
+            return Convert.ToInt64(Math.Pow(2, 32 - cidr));
         }
 
-        public static int GetNumberIPv4Addresses(IPAddress subnetmask)
+        public static Int64 GetNumberIPv4Addresses(IPAddress subnetmask)
         {
             return GetNumberIPv4Addresses(ConvertSubnetmaskToCidr(subnetmask));
         }

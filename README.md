@@ -35,8 +35,6 @@ _On Windows 10 systems, SmartScreen may prevent the execution of the_ `NETworkMa
 
 - Windows 7 or higher
 - .NET-Framework 4.6
-- 14 MB free disk space
-- Network card (Ethernet/Wi-Fi)
 
 # Changelog
 
@@ -45,16 +43,6 @@ The changelog can be found [here](https://github.com/BornToBeRoot/NETworkManager
 # Found an issue?
 
 Check the [Issues](https://github.com/BornToBeRoot/NETworkManager/issues) if the problem has already been reported. If not, submit a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new).
-
-**Minimum informations**
-- NETworkManager version 
-- Windows version (Windows 7 SP1, Windows 10 1607, Windows 10 1703)
-- .NET-Framework version
-- How the problem can be reproduced
-
-**Additional informations**
-- Eventlog (when the application crashes)
-- Everything that may be helpful
 
 The more information you can provide me, the quicker i can reproduce and solve the issue.
 
