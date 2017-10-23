@@ -86,8 +86,8 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private int _detailsIPAddresses;
-        public int DetailsIPAddresses
+        private long _detailsIPAddresses;
+        public long DetailsIPAddresses
         {
             get { return _detailsIPAddresses; }
             set
@@ -156,8 +156,8 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private int _detailsHosts;
-        public int DetailsHosts
+        private long _detailsHosts;
+        public long DetailsHosts
         {
             get { return _detailsHosts; }
             set

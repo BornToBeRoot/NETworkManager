@@ -12,12 +12,12 @@ namespace NETworkManager.Models.Network
             IPAddress networkAddress = SubnetHelper.GetIPv4NetworkAddress(ipv4Address, subnetmask);
             IPAddress broadcast = SubnetHelper.GetIPv4Broadcast(ipv4Address, subnetmask);
             int cidr = SubnetmaskHelper.ConvertSubnetmaskToCidr(subnetmask);
-            int totalIPs = SubnetmaskHelper.GetNumberIPv4Addresses(cidr);
+            long totalIPs = SubnetmaskHelper.GetNumberIPv4Addresses(cidr);
 
             // Fix bug when /31 (host first/last can be null)
             IPAddress hostFirstIP = null;
             IPAddress hostLastIP = null;
-            int hostIPs = 0;
+            long hostIPs = 0;
                         
             if (totalIPs == 1) // Fix bug when /32 (show range for 1 IP)
             {
