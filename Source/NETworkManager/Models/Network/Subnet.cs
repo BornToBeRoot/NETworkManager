@@ -14,16 +14,34 @@ namespace NETworkManager.Models.Network
             int cidr = SubnetmaskHelper.ConvertSubnetmaskToCidr(subnetmask);
             int totalIPs = SubnetmaskHelper.GetNumberIPv4Addresses(cidr);
 
+            // Fix bug when /31 (host first/last can be null)
+            IPAddress hostFirstIP = null;
+            IPAddress hostLastIP = null;
+            int hostIPs = 0;
+                        
+            if (totalIPs == 1) // Fix bug when /32 (show range for 1 IP)
+            {
+                hostFirstIP = networkAddress;
+                hostLastIP = broadcast;
+                hostIPs = 0;
+            }
+            else if(totalIPs > 2) // Calculate for /0-/30
+            {
+                hostFirstIP = IPv4AddressHelper.IncrementIPv4Address(networkAddress, 1);
+                hostLastIP = IPv4AddressHelper.DecrementIPv4Address(broadcast, 1);
+                hostIPs = totalIPs - 2;
+            }
+
             return new SubnetInfo
             {
                 NetworkAddress = networkAddress,
                 Broadcast = broadcast,
-                TotalIPs = totalIPs,
+                IPAddresses = totalIPs,
                 Subnetmask = subnetmask,
                 CIDR = cidr,
-                HostFirstIP = IPv4AddressHelper.IncrementIPv4Address(networkAddress, 1),
-                HostLastIP = IPv4AddressHelper.DecrementIPv4Address(broadcast, 1),
-                HostIPs = totalIPs - 2
+                HostFirstIP = hostFirstIP,
+                HostLastIP = hostLastIP,
+                Hosts = hostIPs
             };
         }
 
@@ -44,7 +62,7 @@ namespace NETworkManager.Models.Network
 
             // Get bytes...
             byte[] networkAddressBytes = subnetInfo.NetworkAddress.GetAddressBytes();
-            
+
             // Get int...
             if (BitConverter.IsLittleEndian)
                 Array.Reverse(networkAddressBytes);
@@ -52,7 +70,7 @@ namespace NETworkManager.Models.Network
             int networkAddress = BitConverter.ToInt32(networkAddressBytes, 0);
 
             // Calculate each new subnet...
-            for (int i = 0; i < subnetInfo.TotalIPs; i += newTotalIPs)
+            for (int i = 0; i < subnetInfo.IPAddresses; i += newTotalIPs)
             {
                 byte[] newNetworkAddressBytes = BitConverter.GetBytes(networkAddress + i);
 

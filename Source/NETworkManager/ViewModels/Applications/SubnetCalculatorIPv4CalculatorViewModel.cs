@@ -86,16 +86,16 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private int _detailsTotalIPs;
-        public int DetailsTotalIPs
+        private int _detailsIPAddresses;
+        public int DetailsIPAddresses
         {
-            get { return _detailsTotalIPs; }
+            get { return _detailsIPAddresses; }
             set
             {
-                if (value == _detailsTotalIPs)
+                if (value == _detailsIPAddresses)
                     return;
 
-                _detailsTotalIPs = value;
+                _detailsIPAddresses = value;
                 OnPropertyChanged();
             }
         }
@@ -128,30 +128,44 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private string _detailsHostIPRange;
-        public string DetailsHostIPRange
+        private IPAddress _detailsHostFirstIPAddress;
+        public IPAddress DetailsHostFirstIPAddress
         {
-            get { return _detailsHostIPRange; }
+            get { return _detailsHostFirstIPAddress; }
             set
             {
-                if (value == _detailsHostIPRange)
+                if (value == _detailsHostFirstIPAddress)
                     return;
 
-                _detailsHostIPRange = value;
+                _detailsHostFirstIPAddress = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _detailsHostIPs;
-        public int DetailsHostIPs
+        private IPAddress _detailsHostLastIPAddress;
+        public IPAddress DetailsHostLastIPAddress
         {
-            get { return _detailsHostIPs; }
+            get { return _detailsHostLastIPAddress; }
             set
             {
-                if (value == _detailsHostIPs)
+                if (value == _detailsHostLastIPAddress)
                     return;
 
-                _detailsHostIPs = value;
+                _detailsHostLastIPAddress = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _detailsHosts;
+        public int DetailsHosts
+        {
+            get { return _detailsHosts; }
+            set
+            {
+                if (value == _detailsHosts)
+                    return;
+
+                _detailsHosts = value;
                 OnPropertyChanged();
             }
         }
@@ -198,9 +212,10 @@ namespace NETworkManager.ViewModels.Applications
             DetailsBroadcast = subnetInfo.Broadcast;
             DetailsSubnetmask = subnetInfo.Subnetmask;
             DetailsCIDR = subnetInfo.CIDR;
-            DetailsTotalIPs = subnetInfo.TotalIPs;
-            DetailsHostIPRange = string.Format("{0} - {1}", subnetInfo.HostFirstIP, subnetInfo.HostLastIP);
-            DetailsHostIPs = subnetInfo.HostIPs;
+            DetailsIPAddresses = subnetInfo.IPAddresses;
+            DetailsHostFirstIPAddress = subnetInfo.HostFirstIP;
+            DetailsHostLastIPAddress = subnetInfo.HostLastIP;
+            DetailsHosts = subnetInfo.Hosts;
 
             IsDetailsVisible = true;
 

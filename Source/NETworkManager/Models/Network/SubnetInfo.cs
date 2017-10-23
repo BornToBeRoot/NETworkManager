@@ -6,11 +6,11 @@ namespace NETworkManager.Models.Network
     {
         public IPAddress NetworkAddress { get; set; }
         public IPAddress Broadcast { get; set; }
-        public int TotalIPs { get; set; }
+        public int IPAddresses { get; set; }
         public IPAddress Subnetmask { get; set; }
         public int CIDR { get; set; }
         public IPAddress HostFirstIP { get; set; }
         public IPAddress HostLastIP { get; set; }
-        public int HostIPs { get; set; }
+        public int Hosts { get; set; }
     }
 }

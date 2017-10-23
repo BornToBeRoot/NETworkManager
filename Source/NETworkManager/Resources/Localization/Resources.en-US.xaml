@@ -135,9 +135,7 @@
     <system:String x:Key="String_IPv6">IPv6</system:String>
     <system:String x:Key="String_TimeToWaitBetweenEachPing">Time to wait between each ping</system:String>
     <system:String x:Key="String_ShowTheFollowingApplicationOnStartup">Show the following application on startup:</system:String>
-    <system:String x:Key="String_TotalIPAddresses">Total IP-Addresses</system:String>
-    <system:String x:Key="String_HostAddressRange">Host address range</system:String>
-    <system:String x:Key="String_AvailableIPAddresses">Available IP-Addresses</system:String>
+    <system:String x:Key="String_IPAddresses">IP-Addresses</system:String>
     <system:String x:Key="String_PacketsTransmitted">Packets transmitted</system:String>
     <system:String x:Key="String_ReceivedLost">Received / Lost</system:String>
     <system:String x:Key="String_PacketLoss">Packet loss</system:String>
@@ -240,9 +238,9 @@
     <system:String x:Key="String_Destination">Destination</system:String>
     <system:String x:Key="String_EnterASubnetToCalculateIt">Enter a subnet to calculate it...</system:String>
     <system:String x:Key="String_Subnet">Subnet</system:String>
-    <system:String x:Key="String_HostFirstIPAddress">Host first IP-Address</system:String>
-    <system:String x:Key="String_HostLastIPAddress">Host last IP-Address</system:String>
-    <system:String x:Key="String_HostIPAddresses">Host IP-Addresses</system:String>
+    <system:String x:Key="String_FirstIPAddress">First IP-Address</system:String>
+    <system:String x:Key="String_LastIPAddress">Last IP-Address</system:String>
+    <system:String x:Key="String_Hosts">Hosts</system:String>
     <system:String x:Key="String_NoEnabledNetworkAdaptersFound">No enabled network adapters found!</system:String>
     
     <!-- ToolTip -->
