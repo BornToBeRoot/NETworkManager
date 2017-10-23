@@ -1,13 +1,4 @@
-<!--
-Select one of the categories below and provide as many information as you can.
--->
-
-- [x] Issue
-- [ ] Feature-Request
-- [ ] Question
-
-# Issue
-**Describe what happened and what should happen**:
+**Describe your issue or feature request**:
 
 **Steps to reproduce the issue**:
 
@@ -21,18 +12,9 @@ Select one of the categories below and provide as many information as you can.
 
 **.NET-Framework version**:
 
-<details>
-<summary>Screenshots</summary>
-
-</details>
+**Screenshots**
 
 <details>
 <summary>Eventlog (if application crashes)</summary>
 
 </details>
-
-# Feature-Request
-
-
-# Question
-
