@@ -128,30 +128,30 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private IPAddress _detailsHostFirstIPAddress;
-        public IPAddress DetailsHostFirstIPAddress
+        private IPAddress _detailsFirstIPAddress;
+        public IPAddress DetailsFirstIPAddress
         {
-            get { return _detailsHostFirstIPAddress; }
+            get { return _detailsFirstIPAddress; }
             set
             {
-                if (value == _detailsHostFirstIPAddress)
+                if (value == _detailsFirstIPAddress)
                     return;
 
-                _detailsHostFirstIPAddress = value;
+                _detailsFirstIPAddress = value;
                 OnPropertyChanged();
             }
         }
 
-        private IPAddress _detailsHostLastIPAddress;
-        public IPAddress DetailsHostLastIPAddress
+        private IPAddress _detailsLastIPAddress;
+        public IPAddress DetailsLastIPAddress
         {
-            get { return _detailsHostLastIPAddress; }
+            get { return _detailsLastIPAddress; }
             set
             {
-                if (value == _detailsHostLastIPAddress)
+                if (value == _detailsLastIPAddress)
                     return;
 
-                _detailsHostLastIPAddress = value;
+                _detailsLastIPAddress = value;
                 OnPropertyChanged();
             }
         }
@@ -213,8 +213,8 @@ namespace NETworkManager.ViewModels.Applications
             DetailsSubnetmask = subnetInfo.Subnetmask;
             DetailsCIDR = subnetInfo.CIDR;
             DetailsIPAddresses = subnetInfo.IPAddresses;
-            DetailsHostFirstIPAddress = subnetInfo.HostFirstIP;
-            DetailsHostLastIPAddress = subnetInfo.HostLastIP;
+            DetailsFirstIPAddress = subnetInfo.HostFirstIP;
+            DetailsLastIPAddress = subnetInfo.HostLastIP;
             DetailsHosts = subnetInfo.Hosts;
 
             IsDetailsVisible = true;

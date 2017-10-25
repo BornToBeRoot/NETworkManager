@@ -99,12 +99,12 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{DynamicResource String_NetworkAddress}" Binding="{Binding NetworkAddress}" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_Broadcast}" Binding="{Binding Broadcast}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_TotalIPAddresses}" Binding="{Binding TotalIPs}" MinWidth="80" />
+                <DataGridTextColumn Header="{DynamicResource String_IPAddresses}" Binding="{Binding TotalIPs}" MinWidth="80" />
                 <DataGridTextColumn Header="{DynamicResource String_Subnetmask}" Binding="{Binding Subnetmask}" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_CIDR}" Binding="{Binding CIDR}" MinWidth="80" />
-                <DataGridTextColumn Header="{DynamicResource String_HostFirstIPAddress}" Binding="{Binding HostFirstIP}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_HostLastIPAddress}" Binding="{Binding HostLastIP}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_HostIPAddresses}" Binding="{Binding HostIPs}" MinWidth="80" />
+                <DataGridTextColumn Header="{DynamicResource String_FirstIPAddress}" Binding="{Binding HostFirstIP}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_LastIPAddress}" Binding="{Binding HostLastIP}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_Hosts}" Binding="{Binding HostIPs}" MinWidth="80" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
