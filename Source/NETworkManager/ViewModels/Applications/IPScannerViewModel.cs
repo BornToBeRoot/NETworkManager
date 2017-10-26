@@ -318,11 +318,11 @@ namespace NETworkManager.ViewModels.Applications
             try
             {
                 // Create a list of all ip addresses
-                ipAddresses = await IPScanRangeHelper.ConvertIPRangeToIPAddressArrayAsync(IPRange, cancellationTokenSource.Token);
+                ipAddresses = await IPScanRangeHelper.ConvertIPRangeToIPAddressesAsync(IPRange, cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
             {
-                UserHasCanceled(this, EventArgs.Empty);
+                IpScanner_UserHasCanceled(this, EventArgs.Empty);
                 return;
             }
 
@@ -349,7 +349,7 @@ namespace NETworkManager.ViewModels.Applications
             ipScanner.HostFound += IpScanner_HostFound;
             ipScanner.ScanComplete += IpScanner_ScanComplete;
             ipScanner.ProgressChanged += IpScanner_ProgressChanged;
-            ipScanner.UserHasCanceled += UserHasCanceled;
+            ipScanner.UserHasCanceled += IpScanner_UserHasCanceled;
 
             ipScanner.ScanAsync(ipAddresses, ipScannerOptions, cancellationTokenSource.Token);
         }
@@ -405,7 +405,7 @@ namespace NETworkManager.ViewModels.Applications
             IPAddressesScanned = e.Value;
         }
 
-        private void UserHasCanceled(object sender, EventArgs e)
+        private void IpScanner_UserHasCanceled(object sender, EventArgs e)
         {
             StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
             DisplayStatusMessage = true;

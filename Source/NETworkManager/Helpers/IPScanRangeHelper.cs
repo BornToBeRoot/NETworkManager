@@ -3,20 +3,17 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using NETworkManager.Helpers;
-
 
 namespace NETworkManager.Helpers
 {
     public static class IPScanRangeHelper
     {
-
-        public static Task<IPAddress[]> ConvertIPRangeToIPAddressArrayAsync(string ipRange, CancellationToken cancellationToken)
+        public static Task<IPAddress[]> ConvertIPRangeToIPAddressesAsync(string ipRange, CancellationToken cancellationToken)
         {
-            return Task.Run(() => ConvertIPRangeToIPAddressArray(ipRange, cancellationToken), cancellationToken);
+            return Task.Run(() => ConvertIPRangeToIPAddresses(ipRange, cancellationToken), cancellationToken);
         }
 
-        public static IPAddress[] ConvertIPRangeToIPAddressArray(string ipRange, CancellationToken cancellationToken)
+        public static IPAddress[] ConvertIPRangeToIPAddresses(string ipRange, CancellationToken cancellationToken)
         {
             ConcurrentBag<IPAddress> bag = new ConcurrentBag<IPAddress>();
 
