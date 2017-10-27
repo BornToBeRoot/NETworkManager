@@ -24,60 +24,6 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Subnet}" />
-<<<<<<< HEAD
-        <StackPanel Grid.Row="1" Margin="0,0,0,20">
-            <Grid Margin="0,0,0,10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_Subnet}" />
-                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="cbSubnet" ItemsSource="{Binding SubnetHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnet}" Style="{StaticResource HistoryComboBox}">
-                    <ComboBox.Text>
-                        <Binding Path="Subnet" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
-                            <Binding.ValidationRules>
-                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                <Validator:SubnetValidator ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </ComboBox.Text>
-                </ComboBox>
-                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_NewSubnetmaskOrCIDR}" />
-                <ComboBox Grid.Column="2" Grid.Row="2" x:Name="cbNewSubnetmaskOrCIDR" ItemsSource="{Binding NewSubnetmaskOrCIDRHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnetmaskOrCIDR}" Style="{StaticResource HistoryComboBox}">
-                    <ComboBox.Text>
-                        <Binding Path="NewSubnetmaskOrCIDR" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
-                            <Binding.ValidationRules>
-                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                <Validator:SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </ComboBox.Text>
-                </ComboBox>
-            </Grid>
-            <Button Command="{Binding SplitIPv4SubnetCommand}" HorizontalAlignment="Right" IsDefault="True">
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Calculator}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Calculate}" Margin="10,5" FontSize="14" TextAlignment="Center"/>
-                    </Grid>
-                </Button.Content>
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}" >
-=======
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -120,7 +66,7 @@
                     </ComboBox>
                 </Grid>
                 <Button Command="{Binding SplitIPv4SubnetCommand}" IsDefault="{Binding IsSplitRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsSplitRunning}" HorizontalAlignment="Right">
-                  <Button.Style>
+                    <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Style.Triggers>
                                 <DataTrigger Value="False">
@@ -139,7 +85,8 @@
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </Button.Style>  <Button.Content>
+                    </Button.Style>
+                    <Button.Content>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -175,13 +122,12 @@
                                 </TextBlock.Style>
                             </TextBlock>
                         </Grid>
-                    </Button.Content>                    
+                    </Button.Content>
                 </Button>
             </StackPanel>
             <Controls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
                 <Controls:MetroProgressBar.Style>
                     <Style TargetType="{x:Type  Controls:MetroProgressBar}">
->>>>>>> master
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsSplitRunning}" Value="False">
                                 <Setter Property="Visibility" Value="Collapsed" />
