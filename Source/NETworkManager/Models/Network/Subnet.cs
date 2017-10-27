@@ -1,12 +1,15 @@
 ﻿using NETworkManager.Helpers;
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network
 {
-    public static class Subnet
+    public class Subnet
     {
+        #region Static methods
         public static SubnetInfo CalculateIPv4Subnet(IPAddress ipv4Address, IPAddress subnetmask)
         {
             IPAddress networkAddress = SubnetHelper.GetIPv4NetworkAddress(ipv4Address, subnetmask);
@@ -18,14 +21,14 @@ namespace NETworkManager.Models.Network
             IPAddress hostFirstIP = null;
             IPAddress hostLastIP = null;
             long hostIPs = 0;
-                        
+
             if (totalIPs == 1) // Fix bug when /32 (show range for 1 IP)
             {
                 hostFirstIP = networkAddress;
                 hostLastIP = broadcast;
                 hostIPs = 0;
             }
-            else if(totalIPs > 2) // Calculate for /0-/30
+            else if (totalIPs > 2) // Calculate for /0-/30
             {
                 hostFirstIP = IPv4AddressHelper.IncrementIPv4Address(networkAddress, 1);
                 hostLastIP = IPv4AddressHelper.DecrementIPv4Address(broadcast, 1);
@@ -44,10 +47,17 @@ namespace NETworkManager.Models.Network
                 Hosts = hostIPs
             };
         }
+        #endregion
 
-        public static List<SubnetInfo> SplitIPv4Subnet(IPAddress ipv4Address, IPAddress subnetmask, IPAddress newSubnetmask)
+        #region Methods
+        public static Task<SubnetInfo[]> SplitIPv4SubnetAsync(IPAddress ipv4Address, IPAddress subnetmask, IPAddress newSubnetmask, CancellationToken cancellationToken)
         {
-            List<SubnetInfo> list = new List<SubnetInfo>();
+            return Task.Run(() => SplitIPv4Subnet(ipv4Address, subnetmask, newSubnetmask, cancellationToken), cancellationToken);
+        }
+
+        public static SubnetInfo[] SplitIPv4Subnet(IPAddress ipv4Address, IPAddress subnetmask, IPAddress newSubnetmask, CancellationToken cancellationToken)
+        {
+            ConcurrentBag<SubnetInfo> bag = new ConcurrentBag<SubnetInfo>();
 
             // Calculate the current subnet
             SubnetInfo subnetInfo = CalculateIPv4Subnet(ipv4Address, subnetmask);
@@ -69,18 +79,20 @@ namespace NETworkManager.Models.Network
 
             int networkAddress = BitConverter.ToInt32(networkAddressBytes, 0);
 
-            // Calculate each new subnet...
-            for (int i = 0; i < subnetInfo.IPAddresses; i += newTotalIPs)
+            Parallel.For(0, subnetInfo.IPAddresses / newTotalIPs, new ParallelOptions() { CancellationToken = cancellationToken }, i =>
             {
-                byte[] newNetworkAddressBytes = BitConverter.GetBytes(networkAddress + i);
+                byte[] newNetworkAddressBytes = BitConverter.GetBytes(networkAddress + (int)(newTotalIPs * i));
 
                 if (BitConverter.IsLittleEndian)
                     Array.Reverse(newNetworkAddressBytes);
 
-                list.Add(CalculateIPv4Subnet(new IPAddress(newNetworkAddressBytes), newSubnetmask));
-            }
+                SubnetInfo info = CalculateIPv4Subnet(new IPAddress(newNetworkAddressBytes), newSubnetmask);
 
-            return list;
+                bag.Add(new SubnetInfo(info.NetworkAddress, info.Broadcast, info.IPAddresses, info.Subnetmask, info.CIDR, info.HostFirstIP, info.HostLastIP, info.Hosts));
+            });
+
+            return bag.ToArray();
         }
+        #endregion
     }
 }

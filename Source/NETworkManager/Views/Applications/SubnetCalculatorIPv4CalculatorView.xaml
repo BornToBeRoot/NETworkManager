@@ -110,9 +110,9 @@
                     <TextBlock Grid.Column="0" Grid.Row="8" Text="{DynamicResource String_CIDR}" />
                     <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding DetailsCIDR, StringFormat='/{0}'}" />
                     <TextBlock Grid.Column="0" Grid.Row="10" Text="{DynamicResource String_FirstIPAddress}" />
-                    <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding DetailsHostFirstIPAddress, Converter={StaticResource IPAddressToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding DetailsFirstIPAddress, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="12" Text="{DynamicResource String_LastIPAddress}" />
-                    <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding DetailsHostLastIPAddress, Converter={StaticResource IPAddressToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding DetailsLastIPAddress, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="14" Text="{DynamicResource String_Hosts}" />
                     <TextBox Grid.Column="2" Grid.Row="14" Text="{Binding DetailsHosts}" />
                 </Grid>
