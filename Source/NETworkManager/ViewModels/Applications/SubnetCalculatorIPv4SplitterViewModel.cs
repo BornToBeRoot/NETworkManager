@@ -8,6 +8,8 @@ using System.Collections.ObjectModel;
 using System;
 using System.Threading;
 using System.Windows;
+using System.Windows.Data;
+using System.ComponentModel;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -108,6 +110,7 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
+
         private ObservableCollection<SubnetInfo> _splitResult = new ObservableCollection<SubnetInfo>();
         public ObservableCollection<SubnetInfo> SplitResult
         {
@@ -119,6 +122,12 @@ namespace NETworkManager.ViewModels.Applications
 
                 _splitResult = value;
             }
+        }
+
+        private CollectionViewSource _splitResultsViewSource;
+        public ICollectionView SplitResultView
+        {
+            get { return _splitResultsViewSource.View; }
         }
 
         private bool _displayStatusMessage;
@@ -154,6 +163,13 @@ namespace NETworkManager.ViewModels.Applications
         public SubnetCalculatorIPv4SplitterViewModel()
         {
             LoadSettings();
+
+            _splitResultsViewSource = new CollectionViewSource()
+            {
+                Source = SplitResult
+            };
+
+            _splitResultsViewSource.SortDescriptions.Add(new SortDescription("NetworkAddressInt32", ListSortDirection.Ascending));
 
             _isLoading = false;
         }
@@ -212,8 +228,8 @@ namespace NETworkManager.ViewModels.Applications
 
             try
             {
-                foreach (SubnetInfo subnet in await Models.Network.Subnet.SplitIPv4SubnetAsync(IPAddress.Parse(subnetSplit[0]), IPAddress.Parse(subnetmask), IPAddress.Parse(newSubnetmask), cancellationTokenSource.Token))
-                    SplitResult.Add(subnet);
+                foreach (SubnetInfo subnetInfo in await Models.Network.Subnet.SplitIPv4SubnetAsync(IPAddress.Parse(subnetSplit[0]), IPAddress.Parse(subnetmask), IPAddress.Parse(newSubnetmask), cancellationTokenSource.Token))
+                    SplitResult.Add(subnetInfo);
             }
             catch (OperationCanceledException)
             {

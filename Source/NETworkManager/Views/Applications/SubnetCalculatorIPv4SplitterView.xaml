@@ -138,18 +138,18 @@
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
-        <DataGrid Grid.Row="3" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding SplitResult}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False">
+        <DataGrid Grid.Row="3" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding SplitResultView}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_NetworkAddress}" Binding="{Binding NetworkAddress}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Broadcast}" Binding="{Binding Broadcast}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_NetworkAddress}" Binding="{Binding NetworkAddress}" SortMemberPath="NetworkAddressInt32" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_Broadcast}" Binding="{Binding Broadcast}" SortMemberPath="BroadcastInt32" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_IPAddresses}" Binding="{Binding IPAddresses}" MinWidth="80" />
                 <DataGridTextColumn Header="{DynamicResource String_Subnetmask}" Binding="{Binding Subnetmask}" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_CIDR}" Binding="{Binding CIDR}" MinWidth="80" />
-                <DataGridTextColumn Header="{DynamicResource String_FirstIPAddress}" Binding="{Binding HostFirstIP}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_LastIPAddress}" Binding="{Binding HostLastIP}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_FirstIPAddress}" Binding="{Binding HostFirstIP}" SortMemberPath="HostFirstIPInt32" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_LastIPAddress}" Binding="{Binding HostLastIP}" SortMemberPath="HostLastIPInt32" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_Hosts}" Binding="{Binding Hosts}" MinWidth="80" />
             </DataGrid.Columns>
         </DataGrid>

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using NETworkManager.Helpers;
+using System.Net;
 
 namespace NETworkManager.Models.Network
 {
@@ -12,6 +13,26 @@ namespace NETworkManager.Models.Network
         public IPAddress HostFirstIP { get; set; }
         public IPAddress HostLastIP { get; set; }
         public long Hosts { get; set; }
+        
+        public int NetworkAddressInt32
+        {
+            get { return NetworkAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(NetworkAddress) : 0; }
+        }
+
+        public int BroadcastInt32
+        {
+            get { return Broadcast.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(Broadcast) : 0; }
+        }
+
+        public int HostFirstIPInt32
+        {
+            get { return HostFirstIP.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(HostFirstIP) : 0; }
+        }
+
+        public int HostLastIPInt32
+        {
+            get { return HostLastIP.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(HostLastIP) : 0; }
+        }
 
         public SubnetInfo()
         {
