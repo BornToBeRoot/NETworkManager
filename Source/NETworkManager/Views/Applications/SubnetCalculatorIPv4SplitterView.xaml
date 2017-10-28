@@ -143,13 +143,13 @@
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_NetworkAddress}" Binding="{Binding NetworkAddress}" SortMemberPath="NetworkAddressInt32" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Broadcast}" Binding="{Binding Broadcast}" SortMemberPath="BroadcastInt32" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_NetworkAddress}" Binding="{Binding NetworkAddress, Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="NetworkAddressInt32" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_Broadcast}" Binding="{Binding Broadcast, Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="BroadcastInt32" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_IPAddresses}" Binding="{Binding IPAddresses}" MinWidth="80" />
                 <DataGridTextColumn Header="{DynamicResource String_Subnetmask}" Binding="{Binding Subnetmask}" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_CIDR}" Binding="{Binding CIDR}" MinWidth="80" />
-                <DataGridTextColumn Header="{DynamicResource String_FirstIPAddress}" Binding="{Binding HostFirstIP}" SortMemberPath="HostFirstIPInt32" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_LastIPAddress}" Binding="{Binding HostLastIP}" SortMemberPath="HostLastIPInt32" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_FirstIPAddress}" Binding="{Binding HostFirstIP, Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="HostFirstIPInt32" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_LastIPAddress}" Binding="{Binding HostLastIP, Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="HostLastIPInt32" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_Hosts}" Binding="{Binding Hosts}" MinWidth="80" />
             </DataGrid.Columns>
         </DataGrid>
