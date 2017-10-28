@@ -255,7 +255,8 @@
     <system:String x:Key="String_Connect">Connect</system:String>
     <system:String x:Key="String_Group">Group</system:String>
     <system:String x:Key="String_Default">Default</system:String>
-
+    <system:String x:Key="String_CopyAs">Copy as</system:String>
+    
     <!-- ToolTip -->
     <system:String x:Key="String_ToolTip_Settings">Settings</system:String>
     <system:String x:Key="String_ToolTip_Expand">Expand</system:String>

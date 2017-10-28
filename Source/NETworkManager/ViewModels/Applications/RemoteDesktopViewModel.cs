@@ -111,9 +111,9 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Methods
-        private void ConnectSession(Models.RemoteDesktop.RemoteDesktopSessionInfo remoteDesktopSessionInfo)
+        private void ConnectSession(Models.RemoteDesktop.RemoteDesktopSessionInfo sessionInfo, string Header = null)
         {
-            TabContents.Add(new DragablzTabContent(remoteDesktopSessionInfo.Hostname, new RemoteDesktopControl(remoteDesktopSessionInfo)));
+            TabContents.Add(new DragablzTabContent(string.IsNullOrEmpty(Header) ? sessionInfo.Hostname : Header, new RemoteDesktopControl(sessionInfo)));
             SelectedTabIndex = TabContents.Count - 1;
         }
         #endregion
@@ -209,7 +209,7 @@ namespace NETworkManager.ViewModels.Applications
                 Hostname = SelectedSession.Hostname
             };
 
-            ConnectSession(remoteDesktopSessionInfo);
+            ConnectSession(remoteDesktopSessionInfo, SelectedSession.Name);
         }
 
         public ICommand EditSessionCommand
@@ -230,6 +230,46 @@ namespace NETworkManager.ViewModels.Applications
                 ConfigurationManager.Current.FixAirspace = false;
 
                 RemoteDesktopSessionManager.RemoveSession(SelectedSession);
+
+                RemoteDesktopSessionInfo remoteDesktopSessionInfo = new RemoteDesktopSessionInfo
+                {
+                    Name = instance.Name,
+                    Hostname = instance.Hostname,
+                    Group = instance.Group
+                };
+
+                RemoteDesktopSessionManager.AddSession(remoteDesktopSessionInfo);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ConfigurationManager.Current.FixAirspace = false;
+            }, SelectedSession);
+
+            customDialog.Content = new RemoteDesktopSessionDialog
+            {
+                DataContext = remoteDesktopSessionViewModel
+            };
+
+            ConfigurationManager.Current.FixAirspace = true;
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand CopyAsSessionCommand
+        {
+            get { return new RelayCommand(p => CopyAsSessionAction()); }
+        }
+
+        private async void CopyAsSessionAction()
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_AssRemoteDesktopConnection"] as string
+            };
+
+            RemoteDesktopSessionViewModel remoteDesktopSessionViewModel = new RemoteDesktopSessionViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ConfigurationManager.Current.FixAirspace = false;
 
                 RemoteDesktopSessionInfo remoteDesktopSessionInfo = new RemoteDesktopSessionInfo
                 {

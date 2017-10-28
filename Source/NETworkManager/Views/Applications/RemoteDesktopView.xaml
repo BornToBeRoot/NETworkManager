@@ -75,12 +75,21 @@
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
-                                </MenuItem>
+                                </MenuItem>                              
                                 <MenuItem Header="{DynamicResource String_Edit}" Command="{Binding EditSessionCommand}">
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconModern Kind=Edit}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{DynamicResource String_CopyAs}" Command="{Binding CopyAsSessionCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentDuplicate}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>

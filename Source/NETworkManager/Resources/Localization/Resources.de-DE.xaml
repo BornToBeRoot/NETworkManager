@@ -255,6 +255,7 @@
     <system:String x:Key="String_Connect">Verbinden</system:String>
     <system:String x:Key="String_Group">Gruppe</system:String>
     <system:String x:Key="String_Default">Standard</system:String>
+    <system:String x:Key="String_CopyAs">Kopieren als</system:String>
     
     <!-- ToolTip -->
     <system:String x:Key="String_ToolTip_Settings">Einstellungen</system:String>
