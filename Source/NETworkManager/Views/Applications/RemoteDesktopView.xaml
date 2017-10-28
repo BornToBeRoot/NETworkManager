@@ -3,11 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ViewModel ="clr-namespace:NETworkManager.ViewModels.Applications"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
+        xmlns:ConfigurtationManager="clr-namespace:NETworkManager.Models.Settings"
         Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
     <UserControl.Resources>
@@ -18,7 +18,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <dragablz:TabablzControl Grid.Column="0" Grid.Row="0" ItemsSource="{Binding TabContents}" SelectedIndex="{Binding SelectedTabIndex}" Visibility="{Binding HideWindowsFormsHost, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
+        <dragablz:TabablzControl Grid.Column="0" Grid.Row="0" ItemsSource="{Binding TabContents}" SelectedIndex="{Binding SelectedTabIndex}">
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" />
             </dragablz:TabablzControl.InterTabController>
@@ -48,7 +48,7 @@
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <ContentPresenter Content="{Binding Content}"  />
+                                <ContentPresenter Content="{Binding Content}" Visibility="{Binding Source={x:Static ConfigurtationManager:ConfigurationManager.Current}, Path=FixAirspace, Converter={StaticResource BooleanReverseToVisibilityConverter}}" />                                
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>
@@ -100,7 +100,7 @@
                             </Style>
                         </ListBox.Resources>
                         <ListBox.InputBindings>
-                            <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
+                            <KeyBinding Command="{Binding DeleteSessionCommand}" Key="Delete" />
                         </ListBox.InputBindings>
                     </ListBox>
                     <TextBlock Grid.Column="0" Grid.Row="0" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_NoSessionsFoundCreateOne}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >

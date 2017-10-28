@@ -22,21 +22,7 @@ namespace NETworkManager.ViewModels.Applications
         public ObservableCollection<DragablzTabContent> TabContents { get; private set; }
 
         private bool _isLoading = true;
-
-        private bool _hideWindowsFormsHost;
-        public bool HideWindowsFormsHost
-        {
-            get { return _hideWindowsFormsHost; }
-            set
-            {
-                if (value == _hideWindowsFormsHost)
-                    return;
-
-                _hideWindowsFormsHost = value;
-                OnPropertyChanged();
-            }
-        }
-
+             
         private int _selectedTabIndex;
         public int SelectedTabIndex
         {
@@ -147,7 +133,7 @@ namespace NETworkManager.ViewModels.Applications
             ConnectRemoteDesktopSessionViewModel connectRemoteDesktopSessionViewModel = new ConnectRemoteDesktopSessionViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                HideWindowsFormsHost = false;
+                ConfigurationManager.Current.FixAirspace = false;
 
                 Models.RemoteDesktop.RemoteDesktopSessionInfo remoteDesktopSessionInfo = new Models.RemoteDesktop.RemoteDesktopSessionInfo
                 {
@@ -158,7 +144,7 @@ namespace NETworkManager.ViewModels.Applications
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                HideWindowsFormsHost = false;
+                ConfigurationManager.Current.FixAirspace = false;
             });
 
             customDialog.Content = new ConnectRemoteDesktopSessionDialog
@@ -166,9 +152,7 @@ namespace NETworkManager.ViewModels.Applications
                 DataContext = connectRemoteDesktopSessionViewModel
             };
 
-            // This will fix airpace problem in winform-wpf
-            HideWindowsFormsHost = true;
-
+            ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
@@ -187,7 +171,7 @@ namespace NETworkManager.ViewModels.Applications
             RemoteDesktopSessionViewModel remoteDesktopSessionViewModel = new RemoteDesktopSessionViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                HideWindowsFormsHost = false;
+                ConfigurationManager.Current.FixAirspace = false;
 
                 RemoteDesktopSessionInfo remoteDesktopSessionInfo = new RemoteDesktopSessionInfo
                 {
@@ -199,7 +183,7 @@ namespace NETworkManager.ViewModels.Applications
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                HideWindowsFormsHost = false;
+                ConfigurationManager.Current.FixAirspace = false;
             });
 
             customDialog.Content = new RemoteDesktopSessionDialog
@@ -207,9 +191,7 @@ namespace NETworkManager.ViewModels.Applications
                 DataContext = remoteDesktopSessionViewModel
             };
 
-            // This will fix airpace problem in winform-wpf
-            HideWindowsFormsHost = true;
-
+            ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
@@ -243,7 +225,7 @@ namespace NETworkManager.ViewModels.Applications
             RemoteDesktopSessionViewModel remoteDesktopSessionViewModel = new RemoteDesktopSessionViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                HideWindowsFormsHost = false;
+                ConfigurationManager.Current.FixAirspace = false;
 
                 // Don't delete and add if nothing changed...
                 if ((instance.Name == SelectedSession.Name) && (instance.Hostname == SelectedSession.Hostname))
@@ -261,7 +243,7 @@ namespace NETworkManager.ViewModels.Applications
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                HideWindowsFormsHost = false;
+                ConfigurationManager.Current.FixAirspace = false;
             }, SelectedSession);
 
             customDialog.Content = new RemoteDesktopSessionDialog
@@ -269,9 +251,7 @@ namespace NETworkManager.ViewModels.Applications
                 DataContext = remoteDesktopSessionViewModel
             };
 
-            // This will fix airpace problem in winform-wpf
-            HideWindowsFormsHost = true;
-
+            ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
@@ -289,8 +269,12 @@ namespace NETworkManager.ViewModels.Applications
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
+            ConfigurationManager.Current.FixAirspace = true;
+
             if (MessageDialogResult.Negative == await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_DeleteSessionMessage"] as string, MessageDialogStyle.AffirmativeAndNegative, settings))
                 return;
+
+            ConfigurationManager.Current.FixAirspace = false;
 
             RemoteDesktopSessionManager.RemoveSession(SelectedSession);
         }

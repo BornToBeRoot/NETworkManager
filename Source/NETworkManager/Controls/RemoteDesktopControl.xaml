@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mstsc ="clr-namespace:AxMSTSCLib;assembly=AxMSTSCLib"
+        xmlns:Control="clr-namespace:NETworkManager.Controls"
+        xmlns:ConfigurtationManager="clr-namespace:NETworkManager.Models.Settings"
         mc:Ignorable="d">
     <Grid>
         <WindowsFormsHost MaxWidth="{Binding ElementName=mstsc, Path=DesktopWidth}" MaxHeight="{Binding ElementName=mstsc, Path=DesktopHeight}">
