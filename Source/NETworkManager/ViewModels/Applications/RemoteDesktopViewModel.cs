@@ -9,7 +9,7 @@ using NETworkManager.ViewModels.Network;
 using NETworkManager.Models.Settings;
 using System.ComponentModel;
 using System.Windows.Data;
-using System;
+using System.Collections.Generic;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -22,7 +22,7 @@ namespace NETworkManager.ViewModels.Applications
         public ObservableCollection<DragablzTabContent> TabContents { get; private set; }
 
         private bool _isLoading = true;
-             
+
         private int _selectedTabIndex;
         public int SelectedTabIndex
         {
@@ -42,6 +42,22 @@ namespace NETworkManager.ViewModels.Applications
         public ICollectionView RemoteDesktopSessions
         {
             get { return _remoteDesktopSessions; }
+        }
+
+        public List<string> RemoteDesktopSessionGroups
+        {
+            get
+            {
+                List<string> list = new List<string>();
+
+                foreach (RemoteDesktopSessionInfo info in RemoteDesktopSessionManager.Sessions)
+                {
+                    if (!list.Contains(info.Group))
+                        list.Add(info.Group);
+                }
+
+                return list;
+            }
         }
 
         private RemoteDesktopSessionInfo _selectedSession = new RemoteDesktopSessionInfo();
@@ -186,7 +202,7 @@ namespace NETworkManager.ViewModels.Applications
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            });
+            }, RemoteDesktopSessionGroups);
 
             customDialog.Content = new RemoteDesktopSessionDialog
             {
@@ -243,7 +259,7 @@ namespace NETworkManager.ViewModels.Applications
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            }, SelectedSession);
+            }, RemoteDesktopSessionGroups, SelectedSession);
 
             customDialog.Content = new RemoteDesktopSessionDialog
             {
@@ -283,7 +299,7 @@ namespace NETworkManager.ViewModels.Applications
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            }, SelectedSession);
+            }, RemoteDesktopSessionGroups, SelectedSession);
 
             customDialog.Content = new RemoteDesktopSessionDialog
             {

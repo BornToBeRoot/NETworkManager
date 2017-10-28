@@ -104,9 +104,6 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </ContextMenu>
-                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
-                                <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
-                            </Style>
                         </ListBox.Resources>
                         <ListBox.InputBindings>
                             <KeyBinding Command="{Binding DeleteSessionCommand}" Key="Delete" />
@@ -131,6 +128,12 @@
                                 </GroupStyle.ContainerStyle>
                             </GroupStyle>
                         </ListBox.GroupStyle>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
+                                <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
+                                <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
                     </ListBox>
                     <TextBlock Grid.Column="0" Grid.Row="0" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_NoSessionsFoundCreateOne}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
                         <TextBlock.Style>

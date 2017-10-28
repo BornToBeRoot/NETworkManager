@@ -27,5 +27,11 @@ namespace NETworkManager.Views.Applications
             ContextMenu menu = sender as ContextMenu;
             menu.DataContext = viewModel;
         }
+
+        private void ListBoxItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
+                viewModel.ConnectSessionCommand.Execute(null);
+        }
     }
 }

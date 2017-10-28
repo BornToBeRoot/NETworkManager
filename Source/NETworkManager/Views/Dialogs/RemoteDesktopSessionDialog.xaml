@@ -26,7 +26,7 @@
             <TextBlock Grid.Column="0" Grid.Row="0" DataContext="{DynamicResource String_Name}" Text="{Binding Path=., StringFormat={}{0}:}" />
             <TextBox x:Name="txtName" Grid.Column="1" Grid.Row="0">
                 <TextBox.Text>
-                    <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
+                    <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
@@ -36,7 +36,7 @@
             <TextBlock Grid.Column="0" Grid.Row="2" DataContext="{DynamicResource String_Hostname}" Text="{Binding Path=., StringFormat={}{0}:}" />
             <TextBox x:Name="txtHostname" Grid.Column="1" Grid.Row="2">
                 <TextBox.Text>
-                    <Binding Path="Hostname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
+                    <Binding Path="Hostname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
@@ -44,15 +44,15 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="4" DataContext="{DynamicResource String_Group}" Text="{Binding Path=., StringFormat={}{0}:}" />
-            <TextBox x:Name="txtGroup" Grid.Column="1" Grid.Row="4">
-                <TextBox.Text>
-                    <Binding Path="Group" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
+            <ComboBox x:Name="cbGroup" Grid.Column="1" Grid.Row="4" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}">
+                <ComboBox.Text>
+                    <Binding Path="Group" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
-                </TextBox.Text>
-            </TextBox>
+                </ComboBox.Text>
+            </ComboBox>
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{DynamicResource String_Button_Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
@@ -65,7 +65,7 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtName}" Value="False" />
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtHostname}" Value="False" />
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtGroup}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=cbGroup}" Value="False" />
                                     <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.SessionInfoChanged}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>

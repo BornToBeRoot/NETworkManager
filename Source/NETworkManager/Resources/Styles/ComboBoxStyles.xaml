@@ -5,6 +5,8 @@
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
     </Style>
 
+    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource DefaultComboBox}" />
+
     <Style x:Key="EditableComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource DefaultComboBox}">
         <Setter Property="IsEditable" Value="True" />
         <Setter Property="ContextMenu" Value="{StaticResource CutCopyPasteContextMenu}" />

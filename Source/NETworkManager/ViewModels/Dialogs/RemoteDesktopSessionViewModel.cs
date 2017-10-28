@@ -1,6 +1,9 @@
 ﻿using NETworkManager.Models.Settings;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels.Network
@@ -75,6 +78,12 @@ namespace NETworkManager.ViewModels.Network
             }
         }
 
+        ICollectionView _groups;
+        public ICollectionView Groups
+        {
+            get { return _groups; }
+        }
+
         private RemoteDesktopSessionInfo _sessionInfo;
 
         private bool _sessionInfoChanged;
@@ -91,7 +100,7 @@ namespace NETworkManager.ViewModels.Network
             }
         }
 
-        public RemoteDesktopSessionViewModel(Action<RemoteDesktopSessionViewModel> saveCommand, Action<RemoteDesktopSessionViewModel> cancelHandler, RemoteDesktopSessionInfo sessionInfo = null)
+        public RemoteDesktopSessionViewModel(Action<RemoteDesktopSessionViewModel> saveCommand, Action<RemoteDesktopSessionViewModel> cancelHandler, List<string> groups, RemoteDesktopSessionInfo sessionInfo = null)
         {
             _saveCommand = new RelayCommand(p => saveCommand(this));
             _cancelCommand = new RelayCommand(p => cancelHandler(this));
@@ -101,6 +110,9 @@ namespace NETworkManager.ViewModels.Network
             Name = _sessionInfo.Name;
             Hostname = _sessionInfo.Hostname;
             Group = string.IsNullOrEmpty(_sessionInfo.Group) ? Application.Current.Resources["String_Default"] as string : _sessionInfo.Group;
+
+            _groups = CollectionViewSource.GetDefaultView(groups);
+            _groups.SortDescriptions.Add(new SortDescription());
 
             _isLoading = false;
         }
