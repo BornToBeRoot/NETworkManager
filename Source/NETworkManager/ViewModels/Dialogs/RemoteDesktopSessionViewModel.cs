@@ -1,11 +1,14 @@
 ﻿using NETworkManager.Models.Settings;
 using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels.Network
 {
     public class RemoteDesktopSessionViewModel : ViewModelBase
     {
+        private bool _isLoading = true;
+
         private readonly ICommand _saveCommand;
         public ICommand SaveCommand
         {
@@ -28,6 +31,10 @@ namespace NETworkManager.ViewModels.Network
                     return;
 
                 _name = value;
+
+                if (!_isLoading)
+                    HasSessionInfoChanged();
+
                 OnPropertyChanged();
             }
         }
@@ -42,23 +49,65 @@ namespace NETworkManager.ViewModels.Network
                     return;
 
                 _hostname = value;
+
+                if (!_isLoading)
+                    HasSessionInfoChanged();
+
                 OnPropertyChanged();
             }
         }
 
-        public RemoteDesktopSessionViewModel(Action<RemoteDesktopSessionViewModel> saveCommand, Action<RemoteDesktopSessionViewModel> cancelHandler)
+        private string _group;
+        public string Group
         {
-            _saveCommand = new RelayCommand(p => saveCommand(this));
-            _cancelCommand = new RelayCommand(p => cancelHandler(this));
+            get { return _group; }
+            set
+            {
+                if (value == _group)
+                    return;
+
+                _group = value;
+
+                if (!_isLoading)
+                    HasSessionInfoChanged();
+
+                OnPropertyChanged();
+            }
         }
 
-        public RemoteDesktopSessionViewModel(Action<RemoteDesktopSessionViewModel> saveCommand, Action<RemoteDesktopSessionViewModel> cancelHandler, RemoteDesktopSessionInfo info)
+        private RemoteDesktopSessionInfo _sessionInfo;
+
+        private bool _sessionInfoChanged;
+        public bool SessionInfoChanged
+        {
+            get { return _sessionInfoChanged; }
+            set
+            {
+                if (value == _sessionInfoChanged)
+                    return;
+
+                _sessionInfoChanged = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public RemoteDesktopSessionViewModel(Action<RemoteDesktopSessionViewModel> saveCommand, Action<RemoteDesktopSessionViewModel> cancelHandler, RemoteDesktopSessionInfo sessionInfo = null)
         {
             _saveCommand = new RelayCommand(p => saveCommand(this));
             _cancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            Name = info.Name;
-            Hostname = info.Hostname;
+            _sessionInfo = sessionInfo == null ? new RemoteDesktopSessionInfo() : sessionInfo;
+
+            Name = _sessionInfo.Name;
+            Hostname = _sessionInfo.Hostname;
+            Group = string.IsNullOrEmpty(_sessionInfo.Group) ? Application.Current.Resources["String_Default"] as string : _sessionInfo.Group;
+
+            _isLoading = false;
+        }
+
+        private void HasSessionInfoChanged()
+        {
+            SessionInfoChanged = (_sessionInfo.Name != Name) || (_sessionInfo.Hostname != Hostname) || (_sessionInfo.Group != Group);
         }
     }
 }

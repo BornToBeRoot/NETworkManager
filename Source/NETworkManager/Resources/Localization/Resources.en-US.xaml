@@ -253,7 +253,9 @@
     <system:String x:Key="String_Password">Password</system:String>
     <system:String x:Key="String_Edit">Edit</system:String>
     <system:String x:Key="String_Connect">Connect</system:String>
-    
+    <system:String x:Key="String_Group">Group</system:String>
+    <system:String x:Key="String_Default">Default</system:String>
+
     <!-- ToolTip -->
     <system:String x:Key="String_ToolTip_Settings">Settings</system:String>
     <system:String x:Key="String_ToolTip_Expand">Expand</system:String>

@@ -683,11 +683,15 @@ namespace NETworkManager
                 settings.NegativeButtonText = System.Windows.Application.Current.Resources["String_Button_OK"] as string;
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
+                ConfigurationManager.Current.FixAirspace = true;
+
                 if (await this.ShowMessageAsync(System.Windows.Application.Current.Resources["String_RestartRequired"] as string, System.Windows.Application.Current.Resources["String_RestartRequiredAfterSettingsChanged"] as string, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
                 {
                     RestartApplication();
                     return;
                 }
+
+                ConfigurationManager.Current.FixAirspace = false;
             }
 
             // Change the transparency

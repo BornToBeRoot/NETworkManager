@@ -90,6 +90,7 @@ namespace NETworkManager.ViewModels.Applications
                 RemoteDesktopSessionManager.Load();
 
             _remoteDesktopSessions = CollectionViewSource.GetDefaultView(RemoteDesktopSessionManager.Sessions);
+            _remoteDesktopSessions.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
             _remoteDesktopSessions.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
 
             LoadSettings();
@@ -176,7 +177,8 @@ namespace NETworkManager.ViewModels.Applications
                 RemoteDesktopSessionInfo remoteDesktopSessionInfo = new RemoteDesktopSessionInfo
                 {
                     Name = instance.Name,
-                    Hostname = instance.Hostname
+                    Hostname = instance.Hostname,
+                    Group = instance.Group
                 };
 
                 RemoteDesktopSessionManager.AddSession(remoteDesktopSessionInfo);
@@ -227,16 +229,13 @@ namespace NETworkManager.ViewModels.Applications
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                // Don't delete and add if nothing changed...
-                if ((instance.Name == SelectedSession.Name) && (instance.Hostname == SelectedSession.Hostname))
-                    return;
-
                 RemoteDesktopSessionManager.RemoveSession(SelectedSession);
 
                 RemoteDesktopSessionInfo remoteDesktopSessionInfo = new RemoteDesktopSessionInfo
                 {
                     Name = instance.Name,
-                    Hostname = instance.Hostname
+                    Hostname = instance.Hostname,
+                    Group = instance.Group
                 };
 
                 RemoteDesktopSessionManager.AddSession(remoteDesktopSessionInfo);

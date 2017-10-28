@@ -253,6 +253,8 @@
     <system:String x:Key="String_Password">Kennwort</system:String>
     <system:String x:Key="String_Edit">Bearbeiten</system:String>
     <system:String x:Key="String_Connect">Verbinden</system:String>
+    <system:String x:Key="String_Group">Gruppe</system:String>
+    <system:String x:Key="String_Default">Standard</system:String>
     
     <!-- ToolTip -->
     <system:String x:Key="String_ToolTip_Settings">Einstellungen</system:String>

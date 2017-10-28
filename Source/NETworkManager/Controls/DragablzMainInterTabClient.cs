@@ -1,6 +1,5 @@
 ﻿using Dragablz;
 using System.Windows;
-using NETworkManager.Views.Common;
 
 namespace NETworkManager.Controls
 {

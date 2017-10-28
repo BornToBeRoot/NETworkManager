@@ -10,9 +10,11 @@
             <Grid.Resources>
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource DefaultPasswordBox}" />
+                <!--<Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource DefaultPasswordBox}" />-->
             </Grid.Resources>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
@@ -41,6 +43,16 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
+            <TextBlock Grid.Column="0" Grid.Row="4" DataContext="{DynamicResource String_Group}" Text="{Binding Path=., StringFormat={}{0}:}" />
+            <TextBox x:Name="txtGroup" Grid.Column="1" Grid.Row="4">
+                <TextBox.Text>
+                    <Binding Path="Group" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
+                        <Binding.ValidationRules>
+                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{DynamicResource String_Button_Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
@@ -48,11 +60,13 @@
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
                         <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>
+                        <Style.Triggers>                            
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtName}" Value="False" />
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtHostname}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtGroup}" Value="False" />
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.SessionInfoChanged}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="True" />
