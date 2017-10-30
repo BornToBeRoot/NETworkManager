@@ -20,7 +20,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" HorizontalAlignment="Left" Margin="10">
+        <Grid Grid.Row="0" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -32,7 +32,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
-                    <ColumnDefinition MinWidth="150" Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -153,7 +153,7 @@
                             </Style>
                         </ListBox.Resources>
                         <ListBox.InputBindings>
-                            <KeyBinding Command="{Binding DeleteClientCommand}" Key="Delete" />
+                            <KeyBinding Command="{Binding DeleteSelectedClientCommand}" Key="Delete" />
                         </ListBox.InputBindings>
                     </ListBox>
                     <TextBlock Grid.Column="0" Grid.Row="0" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_NoClientsFoundCreateOne}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
@@ -168,7 +168,7 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                    <Button x:Name="btnAddClient" Grid.Column="0" Grid.Row="2" Command="{Binding AddClientCommand}">
+                    <Button x:Name="btnAddClient" Grid.Column="0" Grid.Row="2" Command="{Binding AddClientCommand}" Style="{StaticResource ImageWithTextButton}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -183,15 +183,6 @@
                                 <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddClient}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
                             </Grid>
                         </Button.Content>
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=cbPorts, Path=(Validation.HasError)}" Value="True">
-                                        <Setter Property="IsEnabled" Value="False" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
                     </Button>
                 </Grid>
             </Expander>

@@ -146,6 +146,34 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
+        private bool _ipScannerProfilesExists;
+        public bool IPScannerProfilesExists
+        {
+            get { return _ipScannerProfilesExists; }
+            set
+            {
+                if (value == _ipScannerProfilesExists)
+                    return;
+
+                _ipScannerProfilesExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _resetIPScannerProfiles;
+        public bool ResetIPScannerProfiles
+        {
+            get { return _resetIPScannerProfiles; }
+            set
+            {
+                if (value == _resetIPScannerProfiles)
+                    return;
+
+                _resetIPScannerProfiles = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _wakeOnLANClientsExists;
         public bool WakeOnLANClientsExists
         {
@@ -315,6 +343,9 @@ namespace NETworkManager.ViewModels.Settings
             if (NetworkInterfaceProfilesExists && (ResetEverything || ResetNetworkInterfaceProfiles))
                 NetworkInterfaceProfileManager.Reset();
 
+            if (IPScannerProfilesExists && (ResetEverything || ResetIPScannerProfiles))
+                IPScannerProfileManager.Reset();
+
             if (WakeOnLANClientsExists && (ResetEverything || ResetWakeOnLANClients))
                 WakeOnLANClientManager.Reset();
 
@@ -372,6 +403,9 @@ namespace NETworkManager.ViewModels.Settings
             if (NetworkInterfaceProfileManager.ProfilesChanged)
                 NetworkInterfaceProfileManager.Save();
 
+            if (IPScannerProfileManager.ProfilesChanged)
+                IPScannerProfileManager.Save();
+
             if (WakeOnLANClientManager.ClientsChanged)
                 WakeOnLANClientManager.Save();
 
@@ -381,6 +415,7 @@ namespace NETworkManager.ViewModels.Settings
             // Check if files exist
             ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
             NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
+            IPScannerProfilesExists = File.Exists(IPScannerProfileManager.GetProfilesFilePath());
             WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
             PortScannerProfilesExists = File.Exists(PortScannerProfileManager.GetProfilesFilePath());
         }

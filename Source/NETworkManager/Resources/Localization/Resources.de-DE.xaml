@@ -221,6 +221,7 @@
     <system:String x:Key="String_AddDNSSuffixToHostname">DNS-Suffix (primär) zum Hostnamen hinzufügen</system:String>
     <system:String x:Key="String_UseCustomDNSSuffix">Verwende benutzerdefinierten DNS-Suffix</system:String>
     <system:String x:Key="String_SettingsSuccessfullyImported">Einstellungen erfolgreich importiert!</system:String>
+    <system:String x:Key="String_IPScannerProfilesReloaded">IP-Scanner Profile neu geladen</system:String>
     <system:String x:Key="String_WakeOnLANClientsReloaded">Wake on LAN Clients neu geladen</system:String>
     <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Netzwerkinterface Profile neu geladen</system:String>
     <system:String x:Key="String_PortScannerProfilesReloaded">Port-Scanner Profile neu geladen</system:String>
@@ -242,6 +243,7 @@
     <system:String x:Key="String_LastIPAddress">Letzte IP-Adresse</system:String>
     <system:String x:Key="String_Hosts">Hosts</system:String>
     <system:String x:Key="String_NoEnabledNetworkAdaptersFound">Keine aktivierten Netzwerkadapter gefunden!</system:String>
+    <system:String x:Key="String_IPScannerProfiles">IP-Scanner Profile</system:String>
     
     <!-- ToolTip -->
     <system:String x:Key="String_ToolTip_Settings">Einstellungen</system:String>

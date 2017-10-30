@@ -386,6 +386,20 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _ipScanner_ExpandProfileView = true;
+        public bool IPScanner_ExpandProfileView
+        {
+            get { return _ipScanner_ExpandProfileView; }
+            set
+            {
+                if (value == _ipScanner_ExpandProfileView)
+
+                    return;
+                _ipScanner_ExpandProfileView = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region NetworkInterface        
