@@ -13,6 +13,8 @@ using System.Diagnostics;
 using System.ComponentModel;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Data;
+using NETworkManager.ViewModels.Dialogs;
+using NETworkManager.Views.Dialogs;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -259,6 +261,22 @@ namespace NETworkManager.ViewModels.Applications
             get { return _ipScannerProfiles; }
         }
 
+        public List<string> IPScannerProfileGroups
+        {
+            get
+            {
+                List<string> list = new List<string>();
+
+                foreach (IPScannerProfileInfo profile in IPScannerProfileManager.Profiles)
+                {
+                    if (!list.Contains(profile.Group))
+                        list.Add(profile.Group);
+                }
+
+                return list;
+            }
+        }
+
         private IPScannerProfileInfo _selectedProfile = new IPScannerProfileInfo();
         public IPScannerProfileInfo SelectedProfile
         {
@@ -305,6 +323,7 @@ namespace NETworkManager.ViewModels.Applications
                 IPScannerProfileManager.Load();
 
             _ipScannerProfiles = CollectionViewSource.GetDefaultView(IPScannerProfileManager.Profiles);
+            _ipScannerProfiles.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
             _ipScannerProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
 
             LoadSettings();
@@ -365,24 +384,112 @@ namespace NETworkManager.ViewModels.Applications
         }
 
         private async void AddProfileAction()
-        {
-            MetroDialogSettings settings = AppearanceManager.MetroDialog;
-
-            settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Add"] as string;
-            settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
-
-            string name = await dialogCoordinator.ShowInputAsync(this, Application.Current.Resources["String_Header_AddProfile"] as string, Application.Current.Resources["String_EnterNameForProfile"] as string, settings);
-
-            if (string.IsNullOrEmpty(name))
-                return;
-
-            IPScannerProfileInfo profile = new IPScannerProfileInfo
+        {            
+            CustomDialog customDialog = new CustomDialog()
             {
-                Name = name,
-                IPRange = IPRange
+                Title = Application.Current.Resources["String_Header_AddProfile"] as string
             };
 
-            IPScannerProfileManager.AddProfile(profile);
+            IPScannerProfileViewModel ipScannerProfileViewModel = new IPScannerProfileViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                IPScannerProfileInfo ipScannerProfileInfo = new IPScannerProfileInfo
+                {
+                    Name = instance.Name,
+                    IPRange = instance.IPRange,
+                    Group = instance.Group
+                };
+
+                IPScannerProfileManager.AddProfile(ipScannerProfileInfo);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, IPScannerProfileGroups, new IPScannerProfileInfo() { IPRange = IPRange });
+
+            customDialog.Content = new IPScannerProfileDialog
+            {
+                DataContext = ipScannerProfileViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        
+             public ICommand EditProfileCommand
+        {
+            get { return new RelayCommand(p => EditProfileAction()); }
+        }
+
+        private async void EditProfileAction()
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_EditProfile"] as string
+            };
+
+            IPScannerProfileViewModel ipScannerProfileViewModel = new IPScannerProfileViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                IPScannerProfileManager.RemoveProfile(SelectedProfile);
+
+                IPScannerProfileInfo ipScannerProfileInfo = new IPScannerProfileInfo
+                {
+                    Name = instance.Name,
+                    IPRange = instance.IPRange,
+                    Group = instance.Group
+                };
+
+                IPScannerProfileManager.AddProfile(ipScannerProfileInfo);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, IPScannerProfileGroups, SelectedProfile);
+
+            customDialog.Content = new IPScannerProfileDialog
+            {
+                DataContext = ipScannerProfileViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand CopyAsProfileCommand
+        {
+            get { return new RelayCommand(p => CopyAsProfileAction()); }
+        }
+
+        private async void CopyAsProfileAction()
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_CopyProfile"] as string
+            };
+
+            IPScannerProfileViewModel ipScannerProfileViewModel = new IPScannerProfileViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                IPScannerProfileInfo ipScannerProfileInfo = new IPScannerProfileInfo
+                {
+                    Name = instance.Name,
+                    IPRange = instance.IPRange,
+                    Group = instance.Group
+                };
+
+                IPScannerProfileManager.AddProfile(ipScannerProfileInfo);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, IPScannerProfileGroups, SelectedProfile);
+
+            customDialog.Content = new IPScannerProfileDialog
+            {
+                DataContext = ipScannerProfileViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand DeleteProfileCommand

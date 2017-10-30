@@ -187,8 +187,9 @@
     <Compile Include="Models\RemoteDesktop\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Models\Settings\RemoteDesktopSessionManager.cs" />
     <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
+    <Compile Include="ViewModels\Dialogs\IPScannerProfileViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\RemoteDesktopSessionViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\ConnectRemoteDesktopSessionViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\RemoteDesktopSessionConnectViewModel.cs" />
     <Compile Include="Models\Network\DNSLookup.cs" />
     <Compile Include="Models\Network\DNSLookupCompleteArgs.cs" />
     <Compile Include="Models\Network\DNSLookupOptions.cs" />
@@ -233,11 +234,14 @@
     <Compile Include="Controls\DragablzTabHostWindow.xaml.cs">
       <DependentUpon>DragablzTabHostWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\IPScannerProfileDialog.xaml.cs">
+      <DependentUpon>IPScannerProfileDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\RemoteDesktopSessionDialog.xaml.cs">
       <DependentUpon>RemoteDesktopSessionDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\ConnectRemoteDesktopSessionDialog.xaml.cs">
-      <DependentUpon>ConnectRemoteDesktopSessionDialog.xaml</DependentUpon>
+    <Compile Include="Views\Dialogs\RemoteDesktopSessionConnectDialog.xaml.cs">
+      <DependentUpon>RemoteDesktopSessionConnectDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\SettingsApplicationRemoteDesktopView.xaml.cs">
       <DependentUpon>SettingsApplicationRemoteDesktopView.xaml</DependentUpon>
@@ -359,11 +363,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Dialogs\IPScannerProfileDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Dialogs\RemoteDesktopSessionDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\ConnectRemoteDesktopSessionDialog.xaml">
+    <Page Include="Views\Dialogs\RemoteDesktopSessionConnectDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

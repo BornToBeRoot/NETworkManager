@@ -55,6 +55,8 @@
     <system:String x:Key="String_Header_SelectAProfile">Select a profile...</system:String>
     <system:String x:Key="String_Header_Profiles">Profiles</system:String>
     <system:String x:Key="String_Header_AddProfile">Add profile</system:String>
+    <system:String x:Key="String_Header_EditProfile">Edit profile</system:String>
+    <system:String x:Key="String_Header_CopyProfile">Copy profile</system:String>
     <system:String x:Key="String_Header_AddClient">Add client</system:String>
     <system:String x:Key="String_Header_Libraries">Libraries</system:String>
     <system:String x:Key="String_Header_License">License</system:String>
@@ -64,9 +66,10 @@
     <system:String x:Key="String_Header_Subnet">Subnet</system:String>
     <system:String x:Key="String_Header_IPv4Calculator">IPv4-Calculator</system:String>
     <system:String x:Key="String_Header_IPv4Splitter">IPv4-Splitter</system:String>
-    <system:String x:Key="String_Header_ConnectRemoteDesktopConnection">Connect remote desktop session</system:String>
-    <system:String x:Key="String_Header_AddRemoteDesktopConnection">Add remote desktop session</system:String>
-    <system:String x:Key="String_Header_EditRemoteDesktopConnection">Edit remote desktop session</system:String>
+    <system:String x:Key="String_Header_Connect">Connect</system:String>
+    <system:String x:Key="String_Header_AddSession">Add session</system:String>
+    <system:String x:Key="String_Header_EditSession">Edit session</system:String>
+    <system:String x:Key="String_Header_CopySession">Copy session</system:String>
     <system:String x:Key="String_Header_Sessions">Sessions</system:String>
     <system:String x:Key="String_Header_RemoteDesktop">Remote Desktop</system:String>
     
@@ -259,6 +262,7 @@
     <system:String x:Key="String_Default">Default</system:String>
     <system:String x:Key="String_CopyAs">Copy as</system:String>
     <system:String x:Key="String_IPScannerProfiles">IP-Scanner profiles</system:String>
+    <system:String x:Key="String_IPRange">IP range</system:String>
     
     <!-- ToolTip -->
     <system:String x:Key="String_ToolTip_Settings">Settings</system:String>

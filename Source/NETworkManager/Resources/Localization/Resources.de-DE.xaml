@@ -55,6 +55,8 @@
     <system:String x:Key="String_Header_SelectAProfile">Profil auswählen...</system:String>
     <system:String x:Key="String_Header_Profiles">Profile</system:String>
     <system:String x:Key="String_Header_AddProfile">Profil hinzufügen</system:String>
+    <system:String x:Key="String_Header_EditProfile">Profil bearbeiten</system:String>
+    <system:String x:Key="String_Header_CopyProfile">Profil kopieren</system:String>
     <system:String x:Key="String_Header_AddClient">Client hinzufügen</system:String>
     <system:String x:Key="String_Header_Libraries">Bibliotheken</system:String>
     <system:String x:Key="String_Header_License">Lizenz</system:String>
@@ -64,9 +66,10 @@
     <system:String x:Key="String_Header_Subnet">Subnetz</system:String>
     <system:String x:Key="String_Header_IPv4Calculator">IPv4-Rechner</system:String>
     <system:String x:Key="String_Header_IPv4Splitter">IPv4-Splitter</system:String>
-    <system:String x:Key="String_Header_ConnectRemoteDesktopConnection">Remote Desktop Sitzung verbinden</system:String>
-    <system:String x:Key="String_Header_AddRemoteDesktopConnection">Remote Desktop Sitzung hinzufügen</system:String>
-    <system:String x:Key="String_Header_EditRemoteDesktopConnection">Remote Desktop Sitzung bearbeiten</system:String>
+    <system:String x:Key="String_Header_Connect">Verbinden</system:String>
+    <system:String x:Key="String_Header_AddSession">Sitzung hinzufügen</system:String>
+    <system:String x:Key="String_Header_EditSession">Sitzung bearbeiten</system:String>
+    <system:String x:Key="String_Header_CopySession">Sitzung kopieren</system:String>
     <system:String x:Key="String_Header_Sessions">Sitzungen</system:String>
     <system:String x:Key="String_Header_RemoteDesktop">Remote Desktop</system:String>
     
@@ -259,7 +262,8 @@
     <system:String x:Key="String_Default">Standard</system:String>
     <system:String x:Key="String_CopyAs">Kopieren als</system:String>
     <system:String x:Key="String_IPScannerProfiles">IP-Scanner Profile</system:String>
-    
+    <system:String x:Key="String_IPRange">IP-Bereich</system:String>
+
     <!-- ToolTip -->
     <system:String x:Key="String_ToolTip_Settings">Einstellungen</system:String>
     <system:String x:Key="String_ToolTip_Expand">Erweitern</system:String>

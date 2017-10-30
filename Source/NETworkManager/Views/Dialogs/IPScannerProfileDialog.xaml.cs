@@ -2,9 +2,9 @@
 
 namespace NETworkManager.Views.Dialogs
 {
-    public partial class ConnectRemoteDesktopSessionDialog : UserControl
+    public partial class IPScannerProfileDialog : UserControl
     {
-        public ConnectRemoteDesktopSessionDialog()
+        public IPScannerProfileDialog()
         {
             InitializeComponent();
         }

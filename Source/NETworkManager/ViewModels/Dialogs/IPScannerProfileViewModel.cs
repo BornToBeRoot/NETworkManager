@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels.Dialogs
 {
-    public class RemoteDesktopSessionViewModel : ViewModelBase
+    public class IPScannerProfileViewModel : ViewModelBase
     {
         private bool _isLoading = true;
 
@@ -36,25 +36,25 @@ namespace NETworkManager.ViewModels.Dialogs
                 _name = value;
 
                 if (!_isLoading)
-                    HasSessionInfoChanged();
+                    HasProfileInfoChanged();
 
                 OnPropertyChanged();
             }
         }
 
-        private string _hostname;
-        public string Hostname
+        private string _ipRange;
+        public string IPRange
         {
-            get { return _hostname; }
+            get { return _ipRange; }
             set
             {
-                if (value == _hostname)
+                if (value == _ipRange)
                     return;
 
-                _hostname = value;
+                _ipRange = value;
 
                 if (!_isLoading)
-                    HasSessionInfoChanged();
+                    HasProfileInfoChanged();
 
                 OnPropertyChanged();
             }
@@ -72,7 +72,7 @@ namespace NETworkManager.ViewModels.Dialogs
                 _group = value;
 
                 if (!_isLoading)
-                    HasSessionInfoChanged();
+                    HasProfileInfoChanged();
 
                 OnPropertyChanged();
             }
@@ -84,32 +84,32 @@ namespace NETworkManager.ViewModels.Dialogs
             get { return _groups; }
         }
 
-        private RemoteDesktopSessionInfo _sessionInfo;
+        private IPScannerProfileInfo _profileInfo;
 
-        private bool _sessionInfoChanged;
-        public bool SessionInfoChanged
+        private bool _profileInfoChanged;
+        public bool ProfileInfoChanged
         {
-            get { return _sessionInfoChanged; }
+            get { return _profileInfoChanged; }
             set
             {
-                if (value == _sessionInfoChanged)
+                if (value == _profileInfoChanged)
                     return;
 
-                _sessionInfoChanged = value;
+                _profileInfoChanged = value;
                 OnPropertyChanged();
             }
         }
 
-        public RemoteDesktopSessionViewModel(Action<RemoteDesktopSessionViewModel> saveCommand, Action<RemoteDesktopSessionViewModel> cancelHandler, List<string> groups, RemoteDesktopSessionInfo sessionInfo = null)
+        public IPScannerProfileViewModel(Action<IPScannerProfileViewModel> saveCommand, Action<IPScannerProfileViewModel> cancelHandler, List<string> groups, IPScannerProfileInfo profileInfo = null)
         {
             _saveCommand = new RelayCommand(p => saveCommand(this));
             _cancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            _sessionInfo = sessionInfo ?? new RemoteDesktopSessionInfo();
+            _profileInfo = profileInfo ?? new IPScannerProfileInfo();
 
-            Name = _sessionInfo.Name;
-            Hostname = _sessionInfo.Hostname;
-            Group = string.IsNullOrEmpty(_sessionInfo.Group) ? Application.Current.Resources["String_Default"] as string : _sessionInfo.Group;
+            Name = _profileInfo.Name;
+            IPRange = _profileInfo.IPRange;
+            Group = string.IsNullOrEmpty(_profileInfo.Group) ? Application.Current.Resources["String_Default"] as string : _profileInfo.Group;
 
             _groups = CollectionViewSource.GetDefaultView(groups);
             _groups.SortDescriptions.Add(new SortDescription());
@@ -117,9 +117,9 @@ namespace NETworkManager.ViewModels.Dialogs
             _isLoading = false;
         }
 
-        private void HasSessionInfoChanged()
+        private void HasProfileInfoChanged()
         {
-            SessionInfoChanged = (_sessionInfo.Name != Name) || (_sessionInfo.Hostname != Hostname) || (_sessionInfo.Group != Group);
+            ProfileInfoChanged = (_profileInfo.Name != Name) || (_profileInfo.IPRange != IPRange) || (_profileInfo.Group != Group);
         }
     }
 }

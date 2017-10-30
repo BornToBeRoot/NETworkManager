@@ -5,7 +5,7 @@ using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Input;
 using NETworkManager.Views.Dialogs;
 using System.Windows;
-using NETworkManager.ViewModels.Network;
+using NETworkManager.ViewModels.Dialogs;
 using NETworkManager.Models.Settings;
 using System.ComponentModel;
 using System.Windows.Data;
@@ -50,10 +50,10 @@ namespace NETworkManager.ViewModels.Applications
             {
                 List<string> list = new List<string>();
 
-                foreach (RemoteDesktopSessionInfo info in RemoteDesktopSessionManager.Sessions)
+                foreach (RemoteDesktopSessionInfo session in RemoteDesktopSessionManager.Sessions)
                 {
-                    if (!list.Contains(info.Group))
-                        list.Add(info.Group);
+                    if (!list.Contains(session.Group))
+                        list.Add(session.Group);
                 }
 
                 return list;
@@ -144,10 +144,10 @@ namespace NETworkManager.ViewModels.Applications
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_ConnectRemoteDesktopConnection"] as string
+                Title = Application.Current.Resources["String_Header_Connect"] as string
             };
 
-            ConnectRemoteDesktopSessionViewModel connectRemoteDesktopSessionViewModel = new ConnectRemoteDesktopSessionViewModel(instance =>
+            RemoteDesktopSessionConnectViewModel connectRemoteDesktopSessionViewModel = new RemoteDesktopSessionConnectViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
@@ -164,7 +164,7 @@ namespace NETworkManager.ViewModels.Applications
                 ConfigurationManager.Current.FixAirspace = false;
             });
 
-            customDialog.Content = new ConnectRemoteDesktopSessionDialog
+            customDialog.Content = new RemoteDesktopSessionConnectDialog
             {
                 DataContext = connectRemoteDesktopSessionViewModel
             };
@@ -182,7 +182,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_AddRemoteDesktopConnection"] as string
+                Title = Application.Current.Resources["String_Header_AddSession"] as string
             };
 
             RemoteDesktopSessionViewModel remoteDesktopSessionViewModel = new RemoteDesktopSessionViewModel(instance =>
@@ -237,7 +237,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_EditRemoteDesktopConnection"] as string
+                Title = Application.Current.Resources["String_Header_EditSession"] as string
             };
 
             RemoteDesktopSessionViewModel remoteDesktopSessionViewModel = new RemoteDesktopSessionViewModel(instance =>
@@ -279,7 +279,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_AssRemoteDesktopConnection"] as string
+                Title = Application.Current.Resources["String_Header_CopySession"] as string
             };
 
             RemoteDesktopSessionViewModel remoteDesktopSessionViewModel = new RemoteDesktopSessionViewModel(instance =>

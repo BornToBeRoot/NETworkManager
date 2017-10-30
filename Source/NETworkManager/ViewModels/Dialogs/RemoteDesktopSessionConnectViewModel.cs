@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace NETworkManager.ViewModels.Network
+namespace NETworkManager.ViewModels.Dialogs
 {
-    public class ConnectRemoteDesktopSessionViewModel : ViewModelBase
+    public class RemoteDesktopSessionConnectViewModel : ViewModelBase
     {
         private readonly ICommand _connectCommand;
         public ICommand ConnectCommand
@@ -31,7 +31,7 @@ namespace NETworkManager.ViewModels.Network
             }
         }
         
-        public ConnectRemoteDesktopSessionViewModel(Action<ConnectRemoteDesktopSessionViewModel> connectCommand, Action<ConnectRemoteDesktopSessionViewModel> cancelHandler)
+        public RemoteDesktopSessionConnectViewModel(Action<RemoteDesktopSessionConnectViewModel> connectCommand, Action<RemoteDesktopSessionConnectViewModel> cancelHandler)
         {
             _connectCommand = new RelayCommand(p => connectCommand(this));
             _cancelCommand = new RelayCommand(p => cancelHandler(this));

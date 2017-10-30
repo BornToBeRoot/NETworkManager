@@ -106,6 +106,7 @@
                             </ContextMenu>
                         </ListBox.Resources>
                         <ListBox.InputBindings>
+                            <KeyBinding Command="{Binding EditSessionCommand}" Key="F2" />
                             <KeyBinding Command="{Binding DeleteSessionCommand}" Key="Delete" />
                         </ListBox.InputBindings>
                         <ListBox.GroupStyle>
