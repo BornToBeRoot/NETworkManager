@@ -7,8 +7,8 @@
         mc:Ignorable="d">
     <StackPanel>
         <TextBlock Text="{DynamicResource String_Header_WakeOnLAN}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Text="{DynamicResource String_DefaultPort}" Style="{StaticResource DefaultTextBlock}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Margin="0,0,0,10" />
-        <TextBox Width="80" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" >
+        <TextBlock Text="{DynamicResource String_DefaultPort}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBox Width="80" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>
                 <Binding Path="DefaultPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>

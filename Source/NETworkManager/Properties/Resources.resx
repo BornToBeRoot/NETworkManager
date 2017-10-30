@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Libary_ControlEx_Description" xml:space="preserve">
+    <value>Shared Controlz for WPF and ... more.</value>
+  </data>
   <data name="Libary_ControlzEx_LicenseUrl" xml:space="preserve">
     <value>https://github.com/ControlzEx/ControlzEx/blob/master/LICENSE</value>
   </data>
@@ -125,6 +128,21 @@
   </data>
   <data name="Libary_ControlzEx_ProjectUrl" xml:space="preserve">
     <value>https://github.com/ControlzEx/ControlzEx</value>
+  </data>
+  <data name="Libary_Dragablz_Description" xml:space="preserve">
+    <value>Dragable and tearable tab control for WPF.</value>
+  </data>
+  <data name="Libary_Dragablz_LicenseUrl" xml:space="preserve">
+    <value>https://github.com/ButchersBoy/Dragablz/blob/master/LICENSE</value>
+  </data>
+  <data name="Libary_Dragablz_Name" xml:space="preserve">
+    <value>Dragablz</value>
+  </data>
+  <data name="Libary_Dragablz_ProjectUrl" xml:space="preserve">
+    <value>https://github.com/ButchersBoy/Dragablz</value>
+  </data>
+  <data name="Libary_HeijdenDNS_Description" xml:space="preserve">
+    <value>Reusable DNS resolver component.</value>
   </data>
   <data name="Libary_HeijdenDNS_LicenseUrl" xml:space="preserve">
     <value>https://www.codeproject.com/info/cpol10.aspx</value>
@@ -135,6 +153,9 @@
   <data name="Libary_HeijdenDNS_ProjectUrl" xml:space="preserve">
     <value>https://www.codeproject.com/Articles/23673/DNS-NET-Resolver-C</value>
   </data>
+  <data name="Libary_MahAppsMetroIconPacks_Description" xml:space="preserve">
+    <value>Some awesome icons for WPF and UWP all together...</value>
+  </data>
   <data name="Libary_MahAppsMetroIconPacks_LicenseUrl" xml:space="preserve">
     <value>https://github.com/MahApps/MahApps.Metro.IconPacks/blob/master/LICENSE</value>
   </data>
@@ -144,6 +165,9 @@
   <data name="Libary_MahAppsMetroIconPacks_ProjectUrl" xml:space="preserve">
     <value>https://github.com/MahApps/MahApps.Metro.IconPacks</value>
   </data>
+  <data name="Libary_MahAppsMetro_Description" xml:space="preserve">
+    <value>A toolkit for creating Metro / Modern UI styled WPF apps.</value>
+  </data>
   <data name="Libary_MahAppsMetro_LicenseUrl" xml:space="preserve">
     <value>https://github.com/MahApps/MahApps.Metro/blob/master/LICENSE</value>
   </data>
@@ -151,7 +175,7 @@
     <value>MahApps.Metro</value>
   </data>
   <data name="Libary_MahAppsMetro_ProjectUrl" xml:space="preserve">
-    <value>http://mahapps.com/</value>
+    <value>https://github.com/mahapps/mahapps.metro</value>
   </data>
   <data name="License_CPOL" xml:space="preserve">
     <value>Code Project Open License</value>

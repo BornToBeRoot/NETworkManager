@@ -235,7 +235,7 @@ namespace NETworkManager
 
             Version = AssemblyManager.Current.AssemblyVersion.ToString();
 
-            LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
+// LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
 
             // Load appearance
             AppearanceManager.Load();
@@ -337,7 +337,8 @@ namespace NETworkManager
         WakeOnLANView wakeOnLANView;
         PingView pingView;
         TracerouteView tracerouteView;
-        DNSLookupView DNSLookupView;
+        DNSLookupView dnsLookupView;
+        RemoteDesktopView remoteDesktopView;
         WikiView wikiView;
 
         private ApplicationViewManager.Name? currentApplicationViewName = null;
@@ -392,10 +393,16 @@ namespace NETworkManager
                     contentControlApplication.Content = tracerouteView;
                     break;
                 case ApplicationViewManager.Name.DNSLookup:
-                    if (DNSLookupView == null)
-                        DNSLookupView = new DNSLookupView();
+                    if (dnsLookupView == null)
+                        dnsLookupView = new DNSLookupView();
 
-                    contentControlApplication.Content = DNSLookupView;
+                    contentControlApplication.Content = dnsLookupView;
+                    break;
+                case ApplicationViewManager.Name.RemoteDesktop:
+                    if (remoteDesktopView == null)
+                        remoteDesktopView = new RemoteDesktopView();
+
+                    contentControlApplication.Content = remoteDesktopView;
                     break;
                 case ApplicationViewManager.Name.Wiki:
                     if (wikiView == null)
@@ -676,11 +683,15 @@ namespace NETworkManager
                 settings.NegativeButtonText = System.Windows.Application.Current.Resources["String_Button_OK"] as string;
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
+                ConfigurationManager.Current.FixAirspace = true;
+
                 if (await this.ShowMessageAsync(System.Windows.Application.Current.Resources["String_RestartRequired"] as string, System.Windows.Application.Current.Resources["String_RestartRequiredAfterSettingsChanged"] as string, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
                 {
                     RestartApplication();
                     return;
                 }
+
+                ConfigurationManager.Current.FixAirspace = false;
             }
 
             // Change the transparency

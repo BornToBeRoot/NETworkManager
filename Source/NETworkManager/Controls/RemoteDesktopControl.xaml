@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="NETworkManager.Controls.RemoteDesktopControl"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mstsc ="clr-namespace:AxMSTSCLib;assembly=AxMSTSCLib"
+        mc:Ignorable="d">
+    <UserControl.Resources>
+        
+    </UserControl.Resources>
+    <Grid>
+        <WindowsFormsHost MaxWidth="{Binding ElementName=rdpClient, Path=DesktopWidth}" MaxHeight="{Binding ElementName=rdpClient, Path=DesktopHeight}" Visibility="{Binding HideRdpClient}">
+            <mstsc:AxMsRdpClient9NotSafeForScripting x:Name="rdpClient" />
+        </WindowsFormsHost>
+    </Grid>
+</UserControl>

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Windows;
 using System.Xml.Serialization;
 
 namespace NETworkManager.Models.Settings

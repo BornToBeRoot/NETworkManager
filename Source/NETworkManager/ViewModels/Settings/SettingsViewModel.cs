@@ -77,6 +77,7 @@ namespace NETworkManager.ViewModels.Settings
         SettingsApplicationPingView _settingsApplicationPingView;
         SettingsApplicationTracerouteView _settingsApplicationTracerouteView;
         SettingsApplicationDNSLookupView _settingsApplicationDNSLookupView;
+        SettingsApplicationRemoteDesktopView _settingsApplicationRemoteDesktopView;
         #endregion
 
         #region Contructor, load settings
@@ -199,6 +200,12 @@ namespace NETworkManager.ViewModels.Settings
                         _settingsApplicationDNSLookupView = new SettingsApplicationDNSLookupView();
 
                     SettingsContent = _settingsApplicationDNSLookupView;
+                    break;
+                case SettingsViewManager.Name.RemoteDesktop:
+                    if (_settingsApplicationRemoteDesktopView == null)
+                        _settingsApplicationRemoteDesktopView = new SettingsApplicationRemoteDesktopView();
+
+                    SettingsContent = _settingsApplicationRemoteDesktopView;
                     break;
             }
         }

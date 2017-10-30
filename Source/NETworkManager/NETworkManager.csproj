@@ -58,14 +58,26 @@
     <ApplicationIcon>Resources\Images\NETworkManager.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AxMSTSCLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>obj\Debug\AxMSTSCLib.dll</HintPath>
+    </Reference>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
+    </Reference>
+    <Reference Include="Dragablz, Version=0.0.3.197, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dragablz.0.0.3.197\lib\net45\Dragablz.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.0-alpha016\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro.IconPacks, Version=1.9.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.IconPacks.1.9.1\lib\net46\MahApps.Metro.IconPacks.dll</HintPath>
+    </Reference>
+    <Reference Include="MSTSCLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>obj\Debug\MSTSCLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -90,6 +102,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -165,10 +178,17 @@
     <Compile Include="3rdParty\Heijden.DNS\Response.cs" />
     <Compile Include="3rdParty\Heijden.DNS\RR.cs" />
     <Compile Include="3rdParty\Heijden.DNS\Structs.cs" />
+    <Compile Include="Controls\DragablzMainInterTabClient.cs" />
+    <Compile Include="Controls\DragablzTabContent.cs" />
     <Compile Include="Converters\TimestampToStringConverter.cs" />
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
     <Compile Include="Converters\ValidateSubnetCalculatorIPv4SplitterConverter.cs" />
     <Compile Include="Helpers\SingleInstanceHelper.cs" />
+    <Compile Include="Models\RemoteDesktop\RemoteDesktopSessionInfo.cs" />
+    <Compile Include="Models\Settings\RemoteDesktopSessionManager.cs" />
+    <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
+    <Compile Include="ViewModels\Dialogs\RemoteDesktopSessionViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ConnectRemoteDesktopSessionViewModel.cs" />
     <Compile Include="Models\Network\DNSLookup.cs" />
     <Compile Include="Models\Network\DNSLookupCompleteArgs.cs" />
     <Compile Include="Models\Network\DNSLookupOptions.cs" />
@@ -187,9 +207,14 @@
     <Compile Include="ViewModels\Applications\DNSLookupViewModel.cs" />
     <Compile Include="ViewModels\Applications\SubnetCalculatorIPv4SplitterViewModel.cs" />
     <Compile Include="ViewModels\Applications\WikiOUILookupViewModel.cs" />
+    <Compile Include="ViewModels\Applications\RemoteDesktopViewModel.cs" />
     <Compile Include="ViewModels\Help\HelpCommandLineViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsApplicationRemoteDesktopViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationDNSLookupViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationWakeOnLANViewModel.cs" />
+    <Compile Include="Controls\RemoteDesktopControl.xaml.cs">
+      <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Applications\SubnetCalculatorIPv4SplitterView.xaml.cs">
       <DependentUpon>SubnetCalculatorIPv4SplitterView.xaml</DependentUpon>
     </Compile>
@@ -201,6 +226,21 @@
     </Compile>
     <Compile Include="Views\Applications\WikiPortLookupView.xaml.cs">
       <DependentUpon>WikiPortLookupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Applications\RemoteDesktopView.xaml.cs">
+      <DependentUpon>RemoteDesktopView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DragablzTabHostWindow.xaml.cs">
+      <DependentUpon>DragablzTabHostWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\RemoteDesktopSessionDialog.xaml.cs">
+      <DependentUpon>RemoteDesktopSessionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\ConnectRemoteDesktopSessionDialog.xaml.cs">
+      <DependentUpon>ConnectRemoteDesktopSessionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsApplicationRemoteDesktopView.xaml.cs">
+      <DependentUpon>SettingsApplicationRemoteDesktopView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\UpdateView.xaml.cs">
       <DependentUpon>UpdateView.xaml</DependentUpon>
@@ -219,7 +259,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Styles\DragablzStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Styles\ExpanderStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\PasswordBoxStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -259,6 +307,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\RemoteDesktopControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Applications\SubnetCalculatorIPv4SplitterView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -272,6 +324,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Applications\WikiPortLookupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Applications\RemoteDesktopView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -298,6 +354,22 @@
     <Page Include="Views\Applications\IPScannerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DragablzTabHostWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\RemoteDesktopSessionDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\ConnectRemoteDesktopSessionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\SettingsApplicationRemoteDesktopView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Settings\UpdateView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -697,7 +769,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>PowerShell.exe -ExecutionPolicy Bypass -NoProfile -File "$(ProjectDir)..\..\Scripts\PreBuildEventCommandLine.ps1" "$(TargetDir)"</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

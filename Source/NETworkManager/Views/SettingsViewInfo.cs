@@ -69,5 +69,16 @@ namespace NETworkManager.Views
             Group = group;
             TranslatedGroup = SettingsViewManager.TranslateGroup(group);
         }
+
+        public SettingsViewInfo(SettingsViewManager.Name name, PackIconFontAwesome packIconFontAwesome, SettingsViewManager.Group group)
+        {
+            Name = name;
+            TranslatedName = SettingsViewManager.TranslateName(name, group);
+            Canvas canvas = new Canvas();
+            canvas.Children.Add(packIconFontAwesome);
+            Icon = canvas;
+            Group = group;
+            TranslatedGroup = SettingsViewManager.TranslateGroup(group);
+        }
     }
 }

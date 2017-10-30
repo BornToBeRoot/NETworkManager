@@ -1093,6 +1093,22 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
         #endregion
+
+        #region RemoteDesktop
+        private bool _remoteDesktop_ExpandSessionView = true;
+        public bool RemoteDesktop_ExpandSessionView
+        {
+            get { return _remoteDesktop_ExpandSessionView; }
+            set
+            {
+                if (value == _remoteDesktop_ExpandSessionView)
+                    return;
+
+                _remoteDesktop_ExpandSessionView = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
         #endregion
 
         #region Constructor

@@ -64,7 +64,12 @@
     <system:String x:Key="String_Header_Subnet">Subnet</system:String>
     <system:String x:Key="String_Header_IPv4Calculator">IPv4-Calculator</system:String>
     <system:String x:Key="String_Header_IPv4Splitter">IPv4-Splitter</system:String>
-
+    <system:String x:Key="String_Header_ConnectRemoteDesktopConnection">Connect remote desktop session</system:String>
+    <system:String x:Key="String_Header_AddRemoteDesktopConnection">Add remote desktop session</system:String>
+    <system:String x:Key="String_Header_EditRemoteDesktopConnection">Edit remote desktop session</system:String>
+    <system:String x:Key="String_Header_Sessions">Sessions</system:String>
+    <system:String x:Key="String_Header_RemoteDesktop">Remote Desktop</system:String>
+    
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">A powerful tool for managing networks and troubleshoot network problems!</system:String>
@@ -213,6 +218,7 @@
     <system:String x:Key="String_CustomDNSServerIsEmptyCheckYourSettingsUseWindowsOwnDNSServer">Custom DNS server is empty. Check your settings! (Use windows own DNS server...)</system:String>
     <system:String x:Key="String_EnterNameForProfile">Enter a name under which you want to save the profile.</system:String>
     <system:String x:Key="String_DeleteProfileMessage">The selected profile will be deleted permanently.</system:String>
+    <system:String x:Key="String_DeleteSessionMessage">The selected session will be deleted permanently.</system:String>
     <system:String x:Key="String_Backup">Backup</system:String>
     <system:String x:Key="String_MultipleInstances">Multiple instances</system:String>
     <system:String x:Key="String_ConnectTheNetworkCardToConfigureIt">Connect the network card to a network to configure it!</system:String>
@@ -229,6 +235,7 @@
     <system:String x:Key="String_Override">override</system:String>
     <system:String x:Key="String_Add">add</system:String>
     <system:String x:Key="String_NoProfilesFoundCreateOne">No profiles found! Create one...</system:String>
+    <system:String x:Key="String_NoSessionsFoundCreateOne">No sessions found! Create one...</system:String>
     <system:String x:Key="String_NoClientsFoundCreateOne">No clients found! Create one...</system:String>
     <system:String x:Key="String_DNSServer">DNS Server</system:String>
     <system:String x:Key="String_Questions">Questions</system:String>
@@ -243,6 +250,14 @@
     <system:String x:Key="String_LastIPAddress">Last IP-Address</system:String>
     <system:String x:Key="String_Hosts">Hosts</system:String>
     <system:String x:Key="String_NoEnabledNetworkAdaptersFound">No enabled network adapters found!</system:String>
+    <system:String x:Key="String_Domain">Domain</system:String>
+    <system:String x:Key="String_Username">Username</system:String>
+    <system:String x:Key="String_Password">Password</system:String>
+    <system:String x:Key="String_Edit">Edit</system:String>
+    <system:String x:Key="String_Connect">Connect</system:String>
+    <system:String x:Key="String_Group">Group</system:String>
+    <system:String x:Key="String_Default">Default</system:String>
+    <system:String x:Key="String_CopyAs">Copy as</system:String>
     <system:String x:Key="String_IPScannerProfiles">IP-Scanner profiles</system:String>
     
     <!-- ToolTip -->
@@ -274,6 +289,9 @@
     <system:String x:Key="String_Button_Lookup">Lookup</system:String>
     <system:String x:Key="String_Button_AddProfile">Add profile...</system:String>
     <system:String x:Key="String_Button_NetworkConnections">Network Connections...</system:String>
+    <system:String x:Key="String_Button_Connect">Connect</system:String>
+    <system:String x:Key="String_Button_AddSessions">Add session...</system:String>
+    <system:String x:Key="String_Button_Save">Save</system:String>
     
     <!-- Help -->
     <system:String x:Key="String_Help_ParameterHelp">Displays this dialog.</system:String>
@@ -347,6 +365,7 @@
     <system:String x:Key="String_ApplicationName_Ping">Ping</system:String>
     <system:String x:Key="String_ApplicationName_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_ApplicationName_DNSLookup">DNS Lookup</system:String>
+    <system:String x:Key="String_ApplicationName_RemoteDesktop">Remote Desktop</system:String>
     <system:String x:Key="String_ApplicationName_Wiki">Wiki</system:String>
     
     <!-- SettingsView.Name -->
@@ -403,10 +422,4 @@
     <!-- PortStatus -->
     <system:String x:Key="String_PortStatus_Closed">Closed</system:String>
     <system:String x:Key="String_PortStatus_Open">Open</system:String>
-        
-    <!-- Libaries -->
-    <system:String x:Key="String_Libary_ControlzExDescription">Shared Controlz for WPF and ... more.</system:String>
-    <system:String x:Key="String_Libary_MahAppsMetroDescription">A toolkit for creating Metro / Modern UI styled WPF apps.</system:String>
-    <system:String x:Key="String_Libary_MahAppsMetroIconPacksDescription">Some awesome icons for WPF and UWP all together...</system:String>
-    <system:String x:Key="String_Libary_HeijdenDNSDescription">Reusable DNS resolver component</system:String>
 </ResourceDictionary>

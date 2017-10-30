@@ -19,7 +19,7 @@
     </UserControl.Resources>
     <StackPanel >
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Import}" />
-        <TextBox x:Name="txtImportLocation" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_LocationOfTheImport}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding ImportBrowseFileCommand}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Margin="0,0,0,10">
+        <TextBox x:Name="txtImportLocation" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_LocationOfTheImport}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding ImportBrowseFileCommand}" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="ImportLocationSelectedPath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>

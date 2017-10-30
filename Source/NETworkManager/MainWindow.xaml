@@ -527,7 +527,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Border x:Name="HeaderBorder" Grid.Row="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,0,1" MouseDown="HeaderBorder_MouseDown">
-                    <TextBlock VerticalAlignment="Center" Height="48"  TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Text="{Binding SelectedApplicationViewInfo.TranslatedName}" Foreground="{DynamicResource GrayBrush3}" Margin="0" />
+                    <TextBlock VerticalAlignment="Center" Height="48" TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Text="{Binding SelectedApplicationViewInfo.TranslatedName}" Foreground="{DynamicResource GrayBrush3}" Margin="0" />
                 </Border>
                 <ContentControl x:Name="contentControlApplication" Grid.Row="1" Focusable="False" />
             </Grid>

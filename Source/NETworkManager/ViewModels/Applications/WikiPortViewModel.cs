@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
 using System.Collections.ObjectModel;
 using NETworkManager.Models.Settings;
 using System.Collections.Generic;
@@ -11,8 +10,6 @@ namespace NETworkManager.ViewModels.Applications
     public class WikiPortLookupViewModel : ViewModelBase
     {
         #region Variables
-        private IDialogCoordinator dialogCoordinator;
-        
         private bool _isLoading = true;
 
         private string _portsOrService;
@@ -102,10 +99,8 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Constructor, Load settings
-        public WikiPortLookupViewModel(IDialogCoordinator instance)
+        public WikiPortLookupViewModel()
         {
-            dialogCoordinator = instance;
-
             LoadSettings();
 
             _isLoading = false;
