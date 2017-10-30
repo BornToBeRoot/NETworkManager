@@ -133,6 +133,48 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
+        private bool _importIPScannerProfilesExists;
+        public bool ImportIPScannerProfilesExists
+        {
+            get { return _importIPScannerProfilesExists; }
+            set
+            {
+                if (value == _importIPScannerProfilesExists)
+                    return;
+
+                _importIPScannerProfilesExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _importIPScannerProfiles;
+        public bool ImportIPScannerProfiles
+        {
+            get { return _importIPScannerProfiles; }
+            set
+            {
+                if (value == _importIPScannerProfiles)
+                    return;
+
+                _importIPScannerProfiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _importOverrideIPScannerProfiles = true;
+        public bool ImportOverrideIPScannerProfiles
+        {
+            get { return _importOverrideIPScannerProfiles; }
+            set
+            {
+                if (value == _importOverrideIPScannerProfiles)
+                    return;
+
+                _importOverrideIPScannerProfiles = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _importWakeOnLANClientsExists;
         public bool ImportWakeOnLANClientsExists
         {
@@ -289,6 +331,34 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
+        private bool _ipScannerProfilesExists;
+        public bool IPScannerProfilesExists
+        {
+            get { return _ipScannerProfilesExists; }
+            set
+            {
+                if (value == _ipScannerProfilesExists)
+                    return;
+
+                _ipScannerProfilesExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _exportIPScannerProfiles;
+        public bool ExportIPScannerProfiles
+        {
+            get { return _exportIPScannerProfiles; }
+            set
+            {
+                if (value == _exportIPScannerProfiles)
+                    return;
+
+                _exportIPScannerProfiles = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _wakeOnLANClientsExists;
         public bool WakeOnLANClientsExists
         {
@@ -385,6 +455,7 @@ namespace NETworkManager.ViewModels.Settings
                 ImportFileIsValid = true;
                 ImportApplicationSettingsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.ApplicationSettings);
                 ImportNetworkInterfaceProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
+                ImportIPScannerProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.IPScannerProfiles);
                 ImportWakeOnLANClientsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients);
                 ImportPortScannerProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.PortScannerProfiles);
             }
@@ -429,6 +500,15 @@ namespace NETworkManager.ViewModels.Settings
                         NetworkInterfaceProfileManager.Load(!ImportOverrideNetworkInterfaceProfiles);
                 }
 
+                if (ImportIPScannerProfilesExists && (ImportEverything || ImportIPScannerProfiles))
+                {
+                    importOptions.Add(ImportExportManager.ImportExportOptions.IPScannerProfiles);
+
+                    // Load ip scanner profiles (option: add)
+                    if (IPScannerProfileManager.Profiles == null)
+                        IPScannerProfileManager.Load(!ImportOverrideIPScannerProfiles);
+                }
+
                 if (ImportWakeOnLANClientsExists && (ImportEverything || ImportWakeOnLANClients))
                 {
                     importOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANClients);
@@ -454,6 +534,9 @@ namespace NETworkManager.ViewModels.Settings
                 if (importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles))
                     NetworkInterfaceProfileManager.Import(ImportEverything || ImportOverrideNetworkInterfaceProfiles);
 
+                if (importOptions.Contains(ImportExportManager.ImportExportOptions.IPScannerProfiles))
+                    IPScannerProfileManager.Import(ImportEverything || ImportOverrideIPScannerProfiles);
+
                 if (importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients))
                     WakeOnLANClientManager.Import(ImportEverything || ImportOverrideWakeOnLANClients);
 
@@ -469,6 +552,9 @@ namespace NETworkManager.ViewModels.Settings
 
                     if (importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles))
                         message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_NetworkInterfaceProfilesReloaded"] as string);
+
+                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.IPScannerProfiles))
+                        message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_IPScannerProfilesReloaded"] as string);
 
                     if (importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients))
                         message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_WakeOnLANClientsReloaded"] as string);
@@ -500,6 +586,9 @@ namespace NETworkManager.ViewModels.Settings
 
             if (NetworkInterfaceProfilesExists && (ExportEverything || ExportNetworkInterfaceProfiles))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
+
+            if (IPScannerProfilesExists && (ExportEverything || ExportIPScannerProfiles))
+                exportOptions.Add(ImportExportManager.ImportExportOptions.IPScannerProfiles);
 
             if (WakeOnLANClientsExists && (ExportEverything || ExportWakeOnLANClients))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANClients);
@@ -536,6 +625,9 @@ namespace NETworkManager.ViewModels.Settings
             if (NetworkInterfaceProfileManager.ProfilesChanged)
                 NetworkInterfaceProfileManager.Save();
 
+            if (IPScannerProfileManager.ProfilesChanged)
+                IPScannerProfileManager.Save();
+
             if (WakeOnLANClientManager.ClientsChanged)
                 WakeOnLANClientManager.Save();
 
@@ -545,6 +637,7 @@ namespace NETworkManager.ViewModels.Settings
             // Check if files exist
             ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
             NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
+            IPScannerProfilesExists = File.Exists(IPScannerProfileManager.GetProfilesFilePath());
             WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
             PortScannerProfilesExists = File.Exists(PortScannerProfileManager.GetProfilesFilePath());
         }

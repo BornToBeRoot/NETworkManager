@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Windows.Controls;
 using NETworkManager.ViewModels.Applications;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.Views.Applications
 {
     public partial class IPScannerView : UserControl
     {
-        IPScannerViewModel viewModel = new IPScannerViewModel();
+        IPScannerViewModel viewModel = new IPScannerViewModel(DialogCoordinator.Instance);
 
         public IPScannerView()
         {
@@ -19,6 +20,12 @@ namespace NETworkManager.Views.Applications
         private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
         {
             viewModel.OnShutdown();
+        }
+
+        private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
+        {
+            ContextMenu menu = sender as ContextMenu;
+            menu.DataContext = viewModel;
         }
     }
 }

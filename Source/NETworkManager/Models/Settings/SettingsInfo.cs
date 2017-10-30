@@ -386,6 +386,20 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _ipScanner_ExpandProfileView = true;
+        public bool IPScanner_ExpandProfileView
+        {
+            get { return _ipScanner_ExpandProfileView; }
+            set
+            {
+                if (value == _ipScanner_ExpandProfileView)
+
+                    return;
+                _ipScanner_ExpandProfileView = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region NetworkInterface        
@@ -801,6 +815,20 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _wakeOnLAN_DefaultPort = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _wakeOnLAN_ExpandClientView = true;
+        public bool WakeOnLAN_ExpandClientView
+        {
+            get { return _wakeOnLAN_ExpandClientView; }
+            set
+            {
+                if (value == _wakeOnLAN_ExpandClientView)
+                    return;
+
+                _wakeOnLAN_ExpandClientView = value;
                 SettingsChanged = true;
             }
         }

@@ -10,12 +10,16 @@ using NETworkManager.Models.Network;
 using NETworkManager.Helpers;
 using System.Windows.Threading;
 using System.Diagnostics;
+using System.ComponentModel;
+using MahApps.Metro.Controls.Dialogs;
+using System.Windows.Data;
 
 namespace NETworkManager.ViewModels.Applications
 {
     public class IPScannerViewModel : ViewModelBase
     {
         #region Variables
+        private IDialogCoordinator dialogCoordinator;
         CancellationTokenSource cancellationTokenSource;
 
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
@@ -246,12 +250,63 @@ namespace NETworkManager.ViewModels.Applications
                 _expandStatistics = value;
                 OnPropertyChanged();
             }
-        }        
+        }
+
+        #region Profiles
+        ICollectionView _ipScannerProfiles;
+        public ICollectionView IPScannerProfiles
+        {
+            get { return _ipScannerProfiles; }
+        }
+
+        private IPScannerProfileInfo _selectedProfile = new IPScannerProfileInfo();
+        public IPScannerProfileInfo SelectedProfile
+        {
+            get { return _selectedProfile; }
+            set
+            {
+                if (value == _selectedProfile)
+                    return;
+
+                if (value != null)
+                    IPRange = value.IPRange;
+
+                _selectedProfile = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _expandProfileView;
+        public bool ExpandProfileView
+        {
+            get { return _expandProfileView; }
+            set
+            {
+                if (value == _expandProfileView)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.PortScanner_ExpandProfileView = value;
+
+                _expandProfileView = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
         #endregion
 
-        #region Constructor, load settings
-        public IPScannerViewModel()
+        #region Constructor, load settings, shutdown
+        public IPScannerViewModel(IDialogCoordinator instance)
         {
+            dialogCoordinator = instance;
+
+            // Load profiles
+            if (IPScannerProfileManager.Profiles == null)
+                IPScannerProfileManager.Load();
+
+            _ipScannerProfiles = CollectionViewSource.GetDefaultView(IPScannerProfileManager.Profiles);
+            _ipScannerProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+
             LoadSettings();
 
             // Detect if settings have changed...
@@ -266,9 +321,21 @@ namespace NETworkManager.ViewModels.Applications
                 IPRangeHistory = new List<string>(SettingsManager.Current.IPScanner_IPRangeHistory);
 
             ExpandStatistics = SettingsManager.Current.IPScanner_ExpandStatistics;
+            ExpandProfileView = SettingsManager.Current.IPScanner_ExpandProfileView;
         }
 
-        private void SettingsManager_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        public void OnShutdown()
+        {
+            // Stop scan
+            if (IsScanRunning)
+                StopScan();
+
+            // Save profiles
+            if (IPScannerProfileManager.ProfilesChanged)
+                IPScannerProfileManager.Save();
+        }
+
+        private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "IPScanner_ResolveHostname")
                 OnPropertyChanged("ResolveHostname");
@@ -290,6 +357,52 @@ namespace NETworkManager.ViewModels.Applications
                 StopScan();
             else
                 StartScan();
+        }
+
+        public ICommand AddProfileCommand
+        {
+            get { return new RelayCommand(p => AddProfileAction()); }
+        }
+
+        private async void AddProfileAction()
+        {
+            MetroDialogSettings settings = AppearanceManager.MetroDialog;
+
+            settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Add"] as string;
+            settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
+
+            string name = await dialogCoordinator.ShowInputAsync(this, Application.Current.Resources["String_Header_AddProfile"] as string, Application.Current.Resources["String_EnterNameForProfile"] as string, settings);
+
+            if (string.IsNullOrEmpty(name))
+                return;
+
+            IPScannerProfileInfo profile = new IPScannerProfileInfo
+            {
+                Name = name,
+                IPRange = IPRange
+            };
+
+            IPScannerProfileManager.AddProfile(profile);
+        }
+
+        public ICommand DeleteProfileCommand
+        {
+            get { return new RelayCommand(p => DeleteProfileAction()); }
+        }
+
+        private async void DeleteProfileAction()
+        {
+            MetroDialogSettings settings = AppearanceManager.MetroDialog;
+
+            settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Delete"] as string;
+            settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
+
+            settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
+
+            if (MessageDialogResult.Negative == await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_DeleteProfileMessage"] as string, MessageDialogStyle.AffirmativeAndNegative, settings))
+                return;
+
+            IPScannerProfileManager.RemoveProfile(SelectedProfile);
         }
         #endregion
 
@@ -361,7 +474,7 @@ namespace NETworkManager.ViewModels.Applications
         }
 
         private void ScanFinished()
-        {            
+        {
             // Stop timer and stopwatch
             stopwatch.Stop();
             dispatcherTimer.Stop();
@@ -373,13 +486,7 @@ namespace NETworkManager.ViewModels.Applications
 
             CancelScan = false;
             IsScanRunning = false;
-        }
-
-        public void OnShutdown()
-        {
-            if (IsScanRunning)
-                StopScan();
-        }
+        }     
         #endregion
 
         #region Events

@@ -1,8 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                    xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
+                    xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
     <Style x:Key="ExpanderDownHeader" BasedOn="{StaticResource ExpanderDownHeaderStyle}" TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
