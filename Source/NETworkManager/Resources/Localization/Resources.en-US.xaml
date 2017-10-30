@@ -68,6 +68,7 @@
     <system:String x:Key="String_Header_AddRemoteDesktopConnection">Add remote desktop session</system:String>
     <system:String x:Key="String_Header_EditRemoteDesktopConnection">Edit remote desktop session</system:String>
     <system:String x:Key="String_Header_Sessions">Sessions</system:String>
+    <system:String x:Key="String_Header_RemoteDesktop">Remote Desktop</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>

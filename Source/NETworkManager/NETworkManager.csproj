@@ -207,6 +207,7 @@
     <Compile Include="ViewModels\Applications\WikiOUILookupViewModel.cs" />
     <Compile Include="ViewModels\Applications\RemoteDesktopViewModel.cs" />
     <Compile Include="ViewModels\Help\HelpCommandLineViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsApplicationRemoteDesktopViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationDNSLookupViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationWakeOnLANViewModel.cs" />
     <Compile Include="Controls\RemoteDesktopControl.xaml.cs">
@@ -235,6 +236,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\ConnectRemoteDesktopSessionDialog.xaml.cs">
       <DependentUpon>ConnectRemoteDesktopSessionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsApplicationRemoteDesktopView.xaml.cs">
+      <DependentUpon>SettingsApplicationRemoteDesktopView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\UpdateView.xaml.cs">
       <DependentUpon>UpdateView.xaml</DependentUpon>
@@ -360,6 +364,10 @@
     <Page Include="Views\Dialogs\ConnectRemoteDesktopSessionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\SettingsApplicationRemoteDesktopView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Settings\UpdateView.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -68,6 +68,7 @@
     <system:String x:Key="String_Header_AddRemoteDesktopConnection">Remote Desktop Sitzung hinzufügen</system:String>
     <system:String x:Key="String_Header_EditRemoteDesktopConnection">Remote Desktop Sitzung bearbeiten</system:String>
     <system:String x:Key="String_Header_Sessions">Sitzungen</system:String>
+    <system:String x:Key="String_Header_RemoteDesktop">Remote Desktop</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
