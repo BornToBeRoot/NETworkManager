@@ -804,6 +804,20 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _wakeOnLAN_ExpandClientView = true;
+        public bool WakeOnLAN_ExpandClientView
+        {
+            get { return _wakeOnLAN_ExpandClientView; }
+            set
+            {
+                if (value == _wakeOnLAN_ExpandClientView)
+                    return;
+
+                _wakeOnLAN_ExpandClientView = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region DNS Lookup

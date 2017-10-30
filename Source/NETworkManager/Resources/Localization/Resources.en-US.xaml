@@ -7,7 +7,7 @@
     <system:String x:Key="String_Header_Settings">Settings</system:String>
     <system:String x:Key="String_Header_Status">Status</system:String>
     <system:String x:Key="String_Header_Clients">Clients</system:String>
-    <system:String x:Key="String_Header_Client">Clients</system:String>
+    <system:String x:Key="String_Header_Client">Client</system:String>
     <system:String x:Key="String_Header_MACAddress">MAC-Address</system:String>
     <system:String x:Key="String_Header_Details">Details</system:String>
     <system:String x:Key="String_Header_Interface">Interface</system:String>
@@ -126,7 +126,7 @@
     <system:String x:Key="String_RestartAsAdministrator">Restart as Administrator</system:String>
     <system:String x:Key="String_RestartAsAdministratorMessage">Administrative rights are required to change this configuration.</system:String>
     <system:String x:Key="String_NetworkAddress">Network address</system:String>
-    <system:String x:Key="String_DeleteClientsMessage">The selected clients will be deleted permanently.</system:String>
+    <system:String x:Key="String_DeleteClientMessage">The selected client will be deleted permanently.</system:String>
     <system:String x:Key="String_Timeout">Timeout</system:String>
     <system:String x:Key="String_Buffer">Buffer</system:String>
     <system:String x:Key="String_Bytes">Bytes</system:String>
@@ -185,7 +185,6 @@
     <system:String x:Key="String_NumberOfErrorsAfterWhichIsCanceled">Number of errors after which is canceled:</system:String>
     <system:String x:Key="String_SearchedApplicationNotFound">Searched application not found!</system:String>
     <system:String x:Key="String_MagicPacketSuccessfulSended">Magic packet successful sended!</system:String>
-    <system:String x:Key="String_MagicPacketSuccessfulSendedToClients">Magic packet successful sended to {0} clients!</system:String>
     <system:String x:Key="String_StartTime">Start time</system:String>
     <system:String x:Key="String_Duration">Duration</system:String>
     <system:String x:Key="String_EndTime">End time</system:String>
@@ -229,6 +228,7 @@
     <system:String x:Key="String_Override">override</system:String>
     <system:String x:Key="String_Add">add</system:String>
     <system:String x:Key="String_NoProfilesFoundCreateOne">No profiles found! Create one...</system:String>
+    <system:String x:Key="String_NoClientsFoundCreateOne">No clients found! Create one...</system:String>
     <system:String x:Key="String_DNSServer">DNS Server</system:String>
     <system:String x:Key="String_Questions">Questions</system:String>
     <system:String x:Key="String_Answers">Answers</system:String>

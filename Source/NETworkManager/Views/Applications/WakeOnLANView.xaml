@@ -15,14 +15,12 @@
     <UserControl.Resources>
         <Converter:SelectedItemsToBoolConverter x:Key="SelectedItemsToBoolConverter" />
     </UserControl.Resources>
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,20">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" HorizontalAlignment="Left" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -86,140 +84,7 @@
                     </TextBox.Text>
                 </TextBox>
             </Grid>
-            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Command="{Binding AddClientCommand}" HorizontalAlignment="Right" Margin="0,0,10,0">
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Plus}"/>
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddClient}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
-                        </Grid>
-                    </Button.Content>
-                    <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource ImageWithTextButton}" >
-                            <Setter Property="IsEnabled" Value="False" />
-                            <Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtMACAddress}" Value="False"/>
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtBroadcast}" Value="False"/>
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtPort}" Value="False"/>
-                                    </MultiDataTrigger.Conditions>
-                                    <Setter Property="IsEnabled" Value="True" />
-                                </MultiDataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
-                <Button HorizontalAlignment="Right" Command="{Binding WakeUpCommand}">
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Power}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_WakeUp}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
-                        </Grid>
-                    </Button.Content>
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}" >
-                            <Setter Property="IsEnabled" Value="False" />
-                            <Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtMACAddress}" Value="False"/>
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtBroadcast}" Value="False"/>
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtPort}" Value="False"/>
-                                    </MultiDataTrigger.Conditions>
-                                    <Setter Property="IsEnabled" Value="True" />
-                                </MultiDataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
-            </StackPanel>
-            <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
-        </Grid>
-        <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Clients}" />
-        <Control:MultiSelectDataGrid Grid.Row="2" Style="{StaticResource MetroDataGrid}" FontSize="14" ItemsSource="{Binding WakeOnLANClients}" CanUserResizeColumns="False" AutoGenerateColumns="False" GridLinesVisibility="Vertical" IsReadOnly="True" SelectionMode="Extended" SelectionUnit="FullRow" SelectedItemsList="{Binding SelectedWakeOnLANClients, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{DynamicResource GrayBrush3}" Margin="0,0,0,10">
-            <Control:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Broadcast}" Binding="{Binding Broadcast}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Port}" Binding="{Binding Port}" MinWidth="80" />
-            </Control:MultiSelectDataGrid.Columns>
-            <Control:MultiSelectDataGrid.Resources>
-                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource MultiSelectDataGridScrollBar}" />
-                <ContextMenu x:Key="ContextMenuDataGridRow" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{DynamicResource String_WakeUp}" Command="{Binding WakeUpSelectedClientsCommand}">
-                        <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Power}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteSelectedClientsCommand}">
-                        <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterialLight Kind=Delete}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </ContextMenu>
-            </Control:MultiSelectDataGrid.Resources>
-            <Control:MultiSelectDataGrid.RowStyle>
-                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
-                    <Setter Property="ContextMenu" Value="{StaticResource ContextMenuDataGridRow}" />
-                </Style>
-            </Control:MultiSelectDataGrid.RowStyle>
-            <Control:MultiSelectDataGrid.InputBindings>
-                <KeyBinding Command="{Binding DeleteSelectedClientsCommand}" Key="Delete" />
-            </Control:MultiSelectDataGrid.InputBindings>
-        </Control:MultiSelectDataGrid>
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Command="{Binding DeleteSelectedClientsCommand}" Margin="0,0,10,0">
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterialLight Kind=Delete}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Delete}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
-                    </Grid>
-                </Button.Content>
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                        <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding SelectedWakeOnLANClients, Converter={StaticResource SelectedItemsToBoolConverter}}" Value="True" >
-                                <Setter Property="IsEnabled"  Value="True" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <Button Command="{Binding WakeUpSelectedClientsCommand}" HorizontalAlignment="Right" >
+            <Button Grid.Row="2" HorizontalAlignment="Right" Command="{Binding WakeUpCommand}">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -235,16 +100,101 @@
                     </Grid>
                 </Button.Content>
                 <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}" >
                         <Setter Property="IsEnabled" Value="False" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding SelectedWakeOnLANClients, Converter={StaticResource SelectedItemsToBoolConverter}}" Value="True" >
-                                <Setter Property="IsEnabled"  Value="True" />
-                            </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtMACAddress}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtBroadcast}" Value="False"/>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtPort}" Value="False"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True" />
+                            </MultiDataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
             </Button>
-        </StackPanel>
+            <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+        </Grid>
+        <Border Grid.Column="1" Grid.Row="0" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource GrayBrush8}">
+            <Expander x:Name="expanderProfiles" Header="{DynamicResource String_Header_Clients}" Style="{StaticResource ProfileExpander}" IsExpanded="{Binding ExpandClientView}">
+                <Grid Width="250">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ListBox Grid.Column="0" Grid.Row="0" x:Name="listBoxProfiles" FontSize="14" ItemsSource="{Binding WakeOnLANClients}" DisplayMemberPath="Hostname" SelectedItem="{Binding SelectedWakeOnLANClient}">
+                        <ListBox.Resources>
+                            <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
+                            <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                                <MenuItem Header="{DynamicResource String_WakeUp}" Command="{Binding WakeUpSelectedClientCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Power}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteSelectedClientCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterialLight Kind=Delete}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
+                                <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
+                            </Style>
+                        </ListBox.Resources>
+                        <ListBox.InputBindings>
+                            <KeyBinding Command="{Binding DeleteClientCommand}" Key="Delete" />
+                        </ListBox.InputBindings>
+                    </ListBox>
+                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_NoClientsFoundCreateOne}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding WakeOnLANClients.Count}" Value="0">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <Button x:Name="btnAddClient" Grid.Column="0" Grid.Row="2" Command="{Binding AddClientCommand}">
+                        <Button.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Plus}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddClient}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                            </Grid>
+                        </Button.Content>
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=cbPorts, Path=(Validation.HasError)}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Grid>
+            </Expander>
+        </Border>
     </Grid>
 </UserControl>

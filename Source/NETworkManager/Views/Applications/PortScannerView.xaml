@@ -24,7 +24,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <Grid Margin="10">
+        <Grid Grid.Column="0" Grid.Row="0" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -243,7 +243,7 @@
                 </StackPanel>
             </Expander>
         </Grid>
-        <Border Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource GrayBrush8}">
+        <Border Grid.Column="1" Grid.Row="0" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource GrayBrush8}">
             <Expander x:Name="expanderProfiles" Header="{DynamicResource String_Header_Profiles}" Style="{StaticResource ProfileExpander}" IsExpanded="{Binding ExpandProfileView}">
                 <Grid Width="250">
                     <Grid.RowDefinitions>
