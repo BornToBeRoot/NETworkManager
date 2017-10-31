@@ -17,6 +17,19 @@ namespace NETworkManager.Models.Settings
             return Path.Combine(SettingsManager.GetSettingsLocation(), ClientsFileName);
         }
 
+        public static List<string> GetClientGroups()
+        {
+            List<string> list = new List<string>();
+
+            foreach (WakeOnLANClientInfo client in Clients)
+            {
+                if (!list.Contains(client.Group))
+                    list.Add(client.Group);
+            }
+
+            return list;
+        }
+
         public static void Load(bool deserialize = true)
         {
             Clients = new ObservableCollection<WakeOnLANClientInfo>();

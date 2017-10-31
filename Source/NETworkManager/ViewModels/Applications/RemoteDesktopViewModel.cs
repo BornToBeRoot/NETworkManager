@@ -43,23 +43,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             get { return _remoteDesktopSessions; }
         }
-
-        public List<string> RemoteDesktopSessionGroups
-        {
-            get
-            {
-                List<string> list = new List<string>();
-
-                foreach (RemoteDesktopSessionInfo session in RemoteDesktopSessionManager.Sessions)
-                {
-                    if (!list.Contains(session.Group))
-                        list.Add(session.Group);
-                }
-
-                return list;
-            }
-        }
-
+               
         private RemoteDesktopSessionInfo _selectedSession = new RemoteDesktopSessionInfo();
         public RemoteDesktopSessionInfo SelectedSession
         {
@@ -202,7 +186,7 @@ namespace NETworkManager.ViewModels.Applications
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            }, RemoteDesktopSessionGroups);
+            }, RemoteDesktopSessionManager.GetSessionGroups());
 
             customDialog.Content = new RemoteDesktopSessionDialog
             {
@@ -259,7 +243,7 @@ namespace NETworkManager.ViewModels.Applications
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            }, RemoteDesktopSessionGroups, SelectedSession);
+            }, RemoteDesktopSessionManager.GetSessionGroups(), SelectedSession);
 
             customDialog.Content = new RemoteDesktopSessionDialog
             {
@@ -299,7 +283,7 @@ namespace NETworkManager.ViewModels.Applications
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            }, RemoteDesktopSessionGroups, SelectedSession);
+            }, RemoteDesktopSessionManager.GetSessionGroups(), SelectedSession);
 
             customDialog.Content = new RemoteDesktopSessionDialog
             {

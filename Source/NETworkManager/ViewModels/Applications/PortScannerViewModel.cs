@@ -283,22 +283,6 @@ namespace NETworkManager.ViewModels.Applications
             get { return _portScannerProfiles; }
         }
 
-        public List<string> PortScannerProfileGroups
-        {
-            get
-            {
-                List<string> list = new List<string>();
-
-                foreach (PortScannerProfileInfo profile in PortScannerProfileManager.Profiles)
-                {
-                    if (!list.Contains(profile.Group))
-                        list.Add(profile.Group);
-                }
-
-                return list;
-            }
-        }
-
         private PortScannerProfileInfo _selectedProfile = new PortScannerProfileInfo();
         public PortScannerProfileInfo SelectedProfile
         {
@@ -422,7 +406,7 @@ namespace NETworkManager.ViewModels.Applications
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, PortScannerProfileGroups, new PortScannerProfileInfo() { HostnameOrIPAddress = HostnameOrIPAddress, Ports = Ports });
+            }, PortScannerProfileManager.GetProfileGroups(), new PortScannerProfileInfo() { HostnameOrIPAddress = HostnameOrIPAddress, Ports = Ports });
 
             customDialog.Content = new PortScannerProfileDialog
             {
@@ -462,7 +446,7 @@ namespace NETworkManager.ViewModels.Applications
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, PortScannerProfileGroups, SelectedProfile);
+            }, PortScannerProfileManager.GetProfileGroups(), SelectedProfile);
 
             customDialog.Content = new PortScannerProfileDialog
             {
@@ -500,7 +484,7 @@ namespace NETworkManager.ViewModels.Applications
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, PortScannerProfileGroups, SelectedProfile);
+            }, PortScannerProfileManager.GetProfileGroups(), SelectedProfile);
 
             customDialog.Content = new PortScannerProfileDialog
             {

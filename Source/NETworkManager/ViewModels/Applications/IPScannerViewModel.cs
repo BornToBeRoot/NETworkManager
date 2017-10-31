@@ -260,23 +260,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             get { return _ipScannerProfiles; }
         }
-
-        public List<string> IPScannerProfileGroups
-        {
-            get
-            {
-                List<string> list = new List<string>();
-
-                foreach (IPScannerProfileInfo profile in IPScannerProfileManager.Profiles)
-                {
-                    if (!list.Contains(profile.Group))
-                        list.Add(profile.Group);
-                }
-
-                return list;
-            }
-        }
-
+               
         private IPScannerProfileInfo _selectedProfile = new IPScannerProfileInfo();
         public IPScannerProfileInfo SelectedProfile
         {
@@ -405,7 +389,7 @@ namespace NETworkManager.ViewModels.Applications
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, IPScannerProfileGroups, new IPScannerProfileInfo() { IPRange = IPRange });
+            }, IPScannerProfileManager.GetProfileGroups(), new IPScannerProfileInfo() { IPRange = IPRange });
 
             customDialog.Content = new IPScannerProfileDialog
             {
@@ -444,7 +428,7 @@ namespace NETworkManager.ViewModels.Applications
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, IPScannerProfileGroups, SelectedProfile);
+            }, IPScannerProfileManager.GetProfileGroups(), SelectedProfile);
 
             customDialog.Content = new IPScannerProfileDialog
             {
@@ -481,7 +465,7 @@ namespace NETworkManager.ViewModels.Applications
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, IPScannerProfileGroups, SelectedProfile);
+            }, IPScannerProfileManager.GetProfileGroups(), SelectedProfile);
 
             customDialog.Content = new IPScannerProfileDialog
             {

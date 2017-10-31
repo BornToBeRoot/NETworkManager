@@ -17,6 +17,19 @@ namespace NETworkManager.Models.Settings
             return Path.Combine(SettingsManager.GetSettingsLocation(), SessionsFileName);
         }
 
+        public static List<string> GetSessionGroups()
+        {
+            List<string> list = new List<string>();
+
+            foreach (RemoteDesktopSessionInfo session in Sessions)
+            {
+                if (!list.Contains(session.Group))
+                    list.Add(session.Group);
+            }
+
+            return list;
+        }
+
         public static void Load(bool deserialize = true)
         {
             Sessions = new ObservableCollection<RemoteDesktopSessionInfo>();

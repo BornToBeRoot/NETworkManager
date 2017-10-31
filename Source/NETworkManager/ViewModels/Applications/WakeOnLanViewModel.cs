@@ -141,22 +141,6 @@ namespace NETworkManager.ViewModels.Applications
             get { return _wakeOnLANClients; }
         }
 
-        public List<string> WakeOnLANClientGroups
-        {
-            get
-            {
-                List<string> list = new List<string>();
-
-                foreach (WakeOnLANClientInfo client in WakeOnLANClientManager.Clients)
-                {
-                    if (!list.Contains(client.Group))
-                        list.Add(client.Group);
-                }
-
-                return list;
-            }
-        }
-
         private WakeOnLANClientInfo _selectedClient;
         public WakeOnLANClientInfo SelectedClient
         {
@@ -166,7 +150,7 @@ namespace NETworkManager.ViewModels.Applications
                 if (value == _selectedClient)
                     return;
 
-                if(value != null)
+                if (value != null)
                 {
                     MACAddress = value.MACAddress;
                     Broadcast = value.Broadcast;
@@ -293,7 +277,7 @@ namespace NETworkManager.ViewModels.Applications
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, WakeOnLANClientGroups, new WakeOnLANClientInfo() { MACAddress = MACAddress, Broadcast = Broadcast, Port = Port });
+            }, WakeOnLANClientManager.GetClientGroups(), new WakeOnLANClientInfo() { MACAddress = MACAddress, Broadcast = Broadcast, Port = Port });
 
             customDialog.Content = new WakeOnLANClientDialog
             {
@@ -334,7 +318,7 @@ namespace NETworkManager.ViewModels.Applications
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, WakeOnLANClientGroups, SelectedClient);
+            }, WakeOnLANClientManager.GetClientGroups(), SelectedClient);
 
             customDialog.Content = new WakeOnLANClientDialog
             {
@@ -373,7 +357,7 @@ namespace NETworkManager.ViewModels.Applications
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, WakeOnLANClientGroups, SelectedClient);
+            }, WakeOnLANClientManager.GetClientGroups(), SelectedClient);
 
             customDialog.Content = new WakeOnLANClientDialog
             {
