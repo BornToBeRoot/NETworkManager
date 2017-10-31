@@ -12,7 +12,6 @@ using System.Linq;
 using NETworkManager.ViewModels;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using System.Windows.Markup;
 using NETworkManager.Views.Applications;
 using NETworkManager.Views.Settings;
 using NETworkManager.Models.Settings;
@@ -21,6 +20,7 @@ using System.Windows.Interop;
 using System.Collections.Generic;
 using NETworkManager.Views;
 using NETworkManager.Helpers;
+using System.Runtime.CompilerServices;
 
 namespace NETworkManager
 {
@@ -29,7 +29,7 @@ namespace NETworkManager
         #region PropertyChangedEventHandler
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string propertyName)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -62,7 +62,7 @@ namespace NETworkManager
                     ClearSearchFilterOnApplicationListMinimize();
 
                 _applicationView_Expand = value;
-                OnPropertyChanged("ApplicationView_Expand");
+                OnPropertyChanged();
             }
         }
 
@@ -79,7 +79,7 @@ namespace NETworkManager
                     ClearSearchFilterOnApplicationListMinimize();
 
                 _isTextBoxSearchFocused = value;
-                OnPropertyChanged("IsTextBoxSearchFocused");
+                OnPropertyChanged();
             }
         }
 
@@ -96,7 +96,7 @@ namespace NETworkManager
                     ClearSearchFilterOnApplicationListMinimize();
 
                 _openApplicationList = value;
-                OnPropertyChanged("OpenApplicationList");
+                OnPropertyChanged();
             }
         }
 
@@ -113,7 +113,7 @@ namespace NETworkManager
                     ClearSearchFilterOnApplicationListMinimize();
 
                 _isMouseOverApplicationList = value;
-                OnPropertyChanged("IsMouseOverApplicationList");
+                OnPropertyChanged();
             }
         }
 
@@ -136,7 +136,7 @@ namespace NETworkManager
                     ChangeApplicationView(value.Name);
 
                 _selectedApplicationViewInfo = value;
-                OnPropertyChanged("SelectedApplicationViewInfo");
+                OnPropertyChanged();
             }
         }
 
@@ -178,7 +178,7 @@ namespace NETworkManager
                 // Show note when there was nothing found
                 SearchNothingFound = filteredCollectionCount == 0;
 
-                OnPropertyChanged("SearchText");
+                OnPropertyChanged();
             }
         }
 
@@ -192,7 +192,7 @@ namespace NETworkManager
                     return;
 
                 _searchNothingFound = value;
-                OnPropertyChanged("SearchNothingFound");
+                OnPropertyChanged();
             }
         }
 
@@ -208,7 +208,7 @@ namespace NETworkManager
                     return;
 
                 _showSettingsView = value;
-                OnPropertyChanged("ShowSettingsView");
+                OnPropertyChanged();
             }
         }
 
@@ -222,7 +222,7 @@ namespace NETworkManager
                     return;
 
                 _version = value;
-                OnPropertyChanged("Version");
+                OnPropertyChanged();
             }
         }
         #endregion
