@@ -138,7 +138,7 @@ namespace NETworkManager.ViewModels.Dialogs
 
         private void HasProfileInfoChanged()
         {
-            ProfileInfoChanged = (_profileInfo.Name != Name) || (_profileInfo.HostnameOrIPAddress != HostnameOrIPAddress) || (_profileInfo.Ports == Ports) || (_profileInfo.Group != Group);
+            ProfileInfoChanged = (_profileInfo.Name != Name) || (_profileInfo.HostnameOrIPAddress != HostnameOrIPAddress) || (_profileInfo.Ports != Ports) || (_profileInfo.Group != Group);
         }
     }
 }
