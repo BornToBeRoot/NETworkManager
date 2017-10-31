@@ -58,6 +58,8 @@
     <system:String x:Key="String_Header_EditProfile">Profil bearbeiten</system:String>
     <system:String x:Key="String_Header_CopyProfile">Profil kopieren</system:String>
     <system:String x:Key="String_Header_AddClient">Client hinzufügen</system:String>
+    <system:String x:Key="String_Header_EditClient">Client bearbeiten</system:String>
+    <system:String x:Key="String_Header_CopyClient">Client kopieren</system:String>
     <system:String x:Key="String_Header_Libraries">Bibliotheken</system:String>
     <system:String x:Key="String_Header_License">Lizenz</system:String>
     <system:String x:Key="String_Header_Search">Suche</system:String>

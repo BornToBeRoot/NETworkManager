@@ -187,6 +187,7 @@
     <Compile Include="Models\RemoteDesktop\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Models\Settings\RemoteDesktopSessionManager.cs" />
     <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
+    <Compile Include="ViewModels\Dialogs\WakeOnLANClientViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\IPScannerProfileViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\RemoteDesktopSessionViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\RemoteDesktopSessionConnectViewModel.cs" />
@@ -233,6 +234,9 @@
     </Compile>
     <Compile Include="Controls\DragablzTabHostWindow.xaml.cs">
       <DependentUpon>DragablzTabHostWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\WakeOnLANClientDialog.xaml.cs">
+      <DependentUpon>WakeOnLANClientDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\IPScannerProfileDialog.xaml.cs">
       <DependentUpon>IPScannerProfileDialog.xaml</DependentUpon>
@@ -360,6 +364,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DragablzTabHostWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\WakeOnLANClientDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

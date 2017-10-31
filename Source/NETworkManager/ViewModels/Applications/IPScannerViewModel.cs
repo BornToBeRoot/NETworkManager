@@ -384,7 +384,7 @@ namespace NETworkManager.ViewModels.Applications
         }
 
         private async void AddProfileAction()
-        {            
+        {
             CustomDialog customDialog = new CustomDialog()
             {
                 Title = Application.Current.Resources["String_Header_AddProfile"] as string
@@ -414,9 +414,8 @@ namespace NETworkManager.ViewModels.Applications
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
-
         
-             public ICommand EditProfileCommand
+        public ICommand EditProfileCommand
         {
             get { return new RelayCommand(p => EditProfileAction()); }
         }
@@ -593,7 +592,7 @@ namespace NETworkManager.ViewModels.Applications
 
             CancelScan = false;
             IsScanRunning = false;
-        }     
+        }
         #endregion
 
         #region Events

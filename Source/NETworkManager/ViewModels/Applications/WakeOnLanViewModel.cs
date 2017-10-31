@@ -10,6 +10,8 @@ using System;
 using NETworkManager.Models.Network;
 using System.ComponentModel;
 using System.Windows.Data;
+using NETworkManager.ViewModels.Dialogs;
+using NETworkManager.Views.Dialogs;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -139,16 +141,39 @@ namespace NETworkManager.ViewModels.Applications
             get { return _wakeOnLANClients; }
         }
 
-        private WakeOnLANClientInfo _selectedWakeOnLANClient;
-        public WakeOnLANClientInfo SelectedWakeOnLANClient
+        public List<string> WakeOnLANClientGroups
         {
-            get { return _selectedWakeOnLANClient; }
+            get
+            {
+                List<string> list = new List<string>();
+
+                foreach (WakeOnLANClientInfo client in WakeOnLANClientManager.Clients)
+                {
+                    if (!list.Contains(client.Group))
+                        list.Add(client.Group);
+                }
+
+                return list;
+            }
+        }
+
+        private WakeOnLANClientInfo _selectedClient;
+        public WakeOnLANClientInfo SelectedClient
+        {
+            get { return _selectedClient; }
             set
             {
-                if (value == _selectedWakeOnLANClient)
+                if (value == _selectedClient)
                     return;
 
-                _selectedWakeOnLANClient = value;
+                if(value != null)
+                {
+                    MACAddress = value.MACAddress;
+                    Broadcast = value.Broadcast;
+                    Port = value.Port;
+                }
+
+                _selectedClient = value;
                 OnPropertyChanged();
             }
         }
@@ -181,6 +206,8 @@ namespace NETworkManager.ViewModels.Applications
                 WakeOnLANClientManager.Load();
 
             _wakeOnLANClients = CollectionViewSource.GetDefaultView(WakeOnLANClientManager.Clients);
+            _wakeOnLANClients.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
+            _wakeOnLANClients.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
 
             LoadSettings();
 
@@ -244,67 +271,124 @@ namespace NETworkManager.ViewModels.Applications
 
         private async void AddClientAction()
         {
-            MetroDialogSettings settings = AppearanceManager.MetroDialog;
-
-            settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Add"] as string;
-            settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
-            settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
-
-            string hostname = await dialogCoordinator.ShowInputAsync(this, Application.Current.Resources["String_Header_AddClient"] as string, Application.Current.Resources["String_EnterHostnameForClient"] as string, settings);
-
-            if (string.IsNullOrEmpty(hostname))
-                return;
-
-            WakeOnLANClientInfo client = new WakeOnLANClientInfo
+            CustomDialog customDialog = new CustomDialog()
             {
-                Hostname = hostname.ToUpper(),
-                MACAddress = MACAddressHelper.GetDefaultFormat(MACAddress),
-                Broadcast = Broadcast,
-                Port = Port
+                Title = Application.Current.Resources["String_Header_AddClient"] as string
             };
 
-            WakeOnLANClientManager.AddClient(client);
-        }
-
-        public ICommand WakeUpSelectedClientCommand
-        {
-            get { return new RelayCommand(p => WakeUpSelectedClientAction()); }
-        }
-
-        public void WakeUpSelectedClientAction()
-        {
-            DisplayStatusMessage = false;
-            StatusMessage = string.Empty;
-
-            try
+            WakeOnLANClientViewModel wakeOnLANClientViewModel = new WakeOnLANClientViewModel(instance =>
             {
-                WakeOnLANInfo info = new WakeOnLANInfo
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                WakeOnLANClientInfo wakeOnLANClientInfo = new WakeOnLANClientInfo
                 {
-                    MagicPacket = MagicPacketHelper.Create(SelectedWakeOnLANClient.MACAddress),
-                    Broadcast = IPAddress.Parse(SelectedWakeOnLANClient.Broadcast),
-                    Port = SelectedWakeOnLANClient.Port
+                    Name = instance.Name,
+                    MACAddress = instance.MACAddress,
+                    Broadcast = instance.Broadcast,
+                    Port = instance.Port,
+                    Group = instance.Group
                 };
 
-                WakeOnLAN.Send(info);
-            }
-            catch (Exception ex)
+                WakeOnLANClientManager.AddClient(wakeOnLANClientInfo);
+            }, instance =>
             {
-                StatusMessage = ex.Message;
-                DisplayStatusMessage = true;
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, WakeOnLANClientGroups, new WakeOnLANClientInfo() { MACAddress = MACAddress, Broadcast = Broadcast, Port = Port });
 
-                return;
-            }
+            customDialog.Content = new WakeOnLANClientDialog
+            {
+                DataContext = wakeOnLANClientViewModel
+            };
 
-            StatusMessage = Application.Current.Resources["String_MagicPacketSuccessfulSended"] as string;
-            DisplayStatusMessage = true;
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand DeleteSelectedClientCommand
+        public ICommand EditClientCommand
         {
-            get { return new RelayCommand(p => DeleteSelectedClientAction()); }
+            get { return new RelayCommand(p => EditClientAction()); }
         }
 
-        private async void DeleteSelectedClientAction()
+        private async void EditClientAction()
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_EditClient"] as string
+            };
+
+            WakeOnLANClientViewModel wakeOnLANClientViewModel = new WakeOnLANClientViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                WakeOnLANClientManager.RemoveClient(SelectedClient);
+
+                WakeOnLANClientInfo wakeOnLANClientInfo = new WakeOnLANClientInfo
+                {
+                    Name = instance.Name,
+                    MACAddress = instance.MACAddress,
+                    Broadcast = instance.Broadcast,
+                    Port = instance.Port,
+                    Group = instance.Group
+                };
+
+                WakeOnLANClientManager.AddClient(wakeOnLANClientInfo);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, WakeOnLANClientGroups, SelectedClient);
+
+            customDialog.Content = new WakeOnLANClientDialog
+            {
+                DataContext = wakeOnLANClientViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand CopyAsClientCommand
+        {
+            get { return new RelayCommand(p => CopyAsProfileAction()); }
+        }
+
+        private async void CopyAsProfileAction()
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_CopyClient"] as string
+            };
+
+            WakeOnLANClientViewModel wakeOnLANClientViewModel = new WakeOnLANClientViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                WakeOnLANClientInfo wakeOnLANClientInfo = new WakeOnLANClientInfo
+                {
+                    Name = instance.Name,
+                    MACAddress = instance.MACAddress,
+                    Broadcast = instance.Broadcast,
+                    Port = instance.Port,
+                    Group = instance.Group
+                };
+
+                WakeOnLANClientManager.AddClient(wakeOnLANClientInfo);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, WakeOnLANClientGroups, SelectedClient);
+
+            customDialog.Content = new WakeOnLANClientDialog
+            {
+                DataContext = wakeOnLANClientViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand DeleteClientCommand
+        {
+            get { return new RelayCommand(p => DeleteClientAction()); }
+        }
+
+        private async void DeleteClientAction()
         {
             MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
@@ -316,7 +400,7 @@ namespace NETworkManager.ViewModels.Applications
             if (MessageDialogResult.Negative == await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_DeleteClientMessage"] as string, MessageDialogStyle.AffirmativeAndNegative, settings))
                 return;
 
-            WakeOnLANClientManager.RemoveClient(SelectedWakeOnLANClient);
+            WakeOnLANClientManager.RemoveClient(SelectedClient);
         }
         #endregion
     }

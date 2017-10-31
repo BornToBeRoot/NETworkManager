@@ -125,20 +125,29 @@
                         <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <ListBox Grid.Column="0" Grid.Row="0" x:Name="listBoxProfiles" FontSize="14" ItemsSource="{Binding WakeOnLANClients}" DisplayMemberPath="Hostname" SelectedItem="{Binding SelectedWakeOnLANClient}">
+                    <ListBox Grid.Column="0" Grid.Row="0" x:Name="listBoxProfiles" FontSize="14" ItemsSource="{Binding WakeOnLANClients}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedClient}">
                         <ListBox.Resources>
                             <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
                             <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                                <MenuItem Header="{DynamicResource String_WakeUp}" Command="{Binding WakeUpSelectedClientCommand}">
+                                <MenuItem Header="{DynamicResource String_Edit}" Command="{Binding EditClientCommand}">
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Power}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconModern Kind=Edit}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteSelectedClientCommand}">
+                                <MenuItem Header="{DynamicResource String_CopyAs}" Command="{Binding CopyAsClientCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentDuplicate}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteClientCommand}">
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                             <Rectangle.OpacityMask>
@@ -153,8 +162,29 @@
                             </Style>
                         </ListBox.Resources>
                         <ListBox.InputBindings>
-                            <KeyBinding Command="{Binding DeleteSelectedClientCommand}" Key="Delete" />
+                            <KeyBinding Command="{Binding EditClientCommand}" Key="F2" />
+                            <KeyBinding Command="{Binding DeleteClientCommand}" Key="Delete" />
                         </ListBox.InputBindings>
+                        <ListBox.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.ContainerStyle>
+                                    <Style TargetType="{x:Type GroupItem}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}" Padding="0">
+                                                        <Expander.Header>
+                                                            <TextBlock Text="{Binding Name}" Style="{StaticResource HeaderTextBlock}" FontSize="18" Margin="0" />
+                                                        </Expander.Header>
+                                                        <ItemsPresenter />
+                                                    </Expander>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </GroupStyle.ContainerStyle>
+                            </GroupStyle>
+                        </ListBox.GroupStyle>
                     </ListBox>
                     <TextBlock Grid.Column="0" Grid.Row="0" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_NoClientsFoundCreateOne}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
                         <TextBlock.Style>
