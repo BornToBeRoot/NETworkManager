@@ -74,6 +74,7 @@
     <system:String x:Key="String_Header_CopySession">Copy session</system:String>
     <system:String x:Key="String_Header_Sessions">Sessions</system:String>
     <system:String x:Key="String_Header_RemoteDesktop">Remote Desktop</system:String>
+    <system:String x:Key="String_Header_Disconnected">Disconnected</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -428,4 +429,53 @@
     <!-- PortStatus -->
     <system:String x:Key="String_PortStatus_Closed">Closed</system:String>
     <system:String x:Key="String_PortStatus_Open">Open</system:String>
+    
+    <!-- Remote desktop disconnect reason -->
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE">Socket closed.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_ByServer">Remote disconnect by server.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_ClientDecompressionError">Decompression error.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_ConnectionTimedOut">Connection timed out.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_DecryptionError">Decryption error.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_DNSLookupFailed">DNS name lookup failure.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_DNSLookupFailed2">DNS lookup failed.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_EncryptionError">Encryption error.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_GetHostByNameFailed">Windows Sockets gethostbyname call failed.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_HostNotFound">Host not found.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_InternalError">Internal error.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_InternalSecurityError">Internal security error.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_InternalSecurityError2">Internal security error.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_InvalidEncryption">The encryption method specified is not valid.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_InvalidIP">Bad IP address specified.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_InvalidServerSecurityInfo">Server security data is not valid.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_InvalidSecurityData">Security data is not valid.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_InvalidIPAddr">The IP address specified is not valid.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_LicensingFailed">License negotiation failed.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_LicensingTimeout">Licensing time-out.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_LocalNotError">Local disconnection.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_NoInfo">No information is available.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_OutOfMemory">Out of memory.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_OutOfMemory2">Out of memory.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_OutOfMemory3">Out of memory.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_RemoteByUser">Remote disconnect by user.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_ServerCertificateUnpackErr">Failed to unpack server certificate.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SocketConnectFailed">Windows Sockets connect failed.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SocketRecvFailed">Windows Sockets recv call failed.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_TimeoutOccurred">Timeout occurred.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_TimerError">Internal timer error.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_WinsockSendFailed">Windows Sockets send call failed.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrAccountDisabled">The account is disabled.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrAccountExpired">The account is expired.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrAccountLockedOut">The account is locked out.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrAccountRestriction">The account is restricted.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrCertExpired">The received certificate is expired.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrDelegationPolicy">The policy does not support delegation of credentials to the target server.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrFreshCredRequiredByServer">The server authentication policy does not allow connection requests using saved credentials. The user must enter new credentials.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrLogonFailure">Login failed.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrNoAuthenticatingAuthority">No authority could be contacted for authentication. The domain name of the authenticating party could be wrong, the domain could be unreachable, or there might have been a trust relationship failure.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrNoSuchUser">The specified user has no account.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrPasswordExpired">The password is expired.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrPasswordMustChange">The user password must be changed before logging on for the first time.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrPolicyNTLMOnly">Delegation of credentials to the target server is not allowed unless mutual authentication has been achieved.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrSmartcardCardBlocked">The smart card is blocked.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrSmartcardWrongPIN">An incorrect PIN was presented to the smart card.</system:String>
 </ResourceDictionary>

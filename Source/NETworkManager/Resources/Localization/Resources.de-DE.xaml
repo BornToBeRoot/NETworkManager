@@ -74,6 +74,7 @@
     <system:String x:Key="String_Header_CopySession">Sitzung kopieren</system:String>
     <system:String x:Key="String_Header_Sessions">Sitzungen</system:String>
     <system:String x:Key="String_Header_RemoteDesktop">Remote Desktop</system:String>
+    <system:String x:Key="String_Header_Disconnected">Getrennt</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -428,4 +429,53 @@
     <!-- PortStatus -->
     <system:String x:Key="String_PortStatus_Closed">Geschlossen</system:String>
     <system:String x:Key="String_PortStatus_Open">Offen</system:String>
+
+    <!-- Remote desktop disconnect reason -->
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE">Socket geschlossen.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_ByServer">Remote-Trennung durch Server.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_ClientDecompressionError">Dekompressionsfehler.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_ConnectionTimedOut">Zeitüberschreitung der Verbindung.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_DecryptionError">Dekodierungsfehler.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_DNSLookupFailed">DNS-Namensauflösung fehlgeschlagen.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_DNSLookupFailed2">DNS-Lookup-Fehler.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_EncryptionError">Verschlüsselungsfehler.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_GetHostByNameFailed">Gethostbyname-Aufruf von Windows Sockets fehlgeschlagen.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_HostNotFound">Host nicht gefunden.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_InternalError">Interner Fehler.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_InternalSecurityError">Interner Sicherheitsfehler.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_InternalSecurityError2">Interner Sicherheitsfehler.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_InvalidEncryption">Die angegebene Verschlüsselungsmethode ist ungültig.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_InvalidIP">Ungültige IP-Adresse angegeben.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_InvalidServerSecurityInfo">Server-Sicherheitsdaten sind ungültig.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_InvalidSecurityData">Sicherheitsdaten sind ungültig.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_InvalidIPAddr">Die angegebene IP-Adresse ist ungültig.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_LicensingFailed">Lizenzaushandlung fehlgeschlagen.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_LicensingTimeout">Lizenz-Timeout.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_LocalNotError">Lokale Trennung.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_NoInfo">Es sind keine Informationen verfügbar.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_OutOfMemory">Nicht genügend Arbeitsspeicher.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_OutOfMemory2">Nicht genügend Arbeitsspeicher.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_OutOfMemory3">Nicht genügend Arbeitsspeicher.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_RemoteByUser">Remote-Trennung durch den Benutzer.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_ServerCertificateUnpackErr">Das Serverzertifikat konnte nicht entpackt werden.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SocketConnectFailed">Windows Sockets-Verbindung ist fehlgeschlagen.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SocketRecvFailed">Der Windows Sockets-Aufruf recv ist fehlgeschlagen.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_TimeoutOccurred">Zeitüberschreitung ist aufgetreten.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_TimerError">Interner Timerfehler.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_WinsockSendFailed">Der Windows Sockets-Aufruf send ist fehlgeschlagen.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrAccountDisabled">Das Konto ist deaktiviert.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrAccountExpired">Das Konto ist abgelaufen.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrAccountLockedOut">Das Konto ist gesperrt.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrAccountRestriction">Das Konto ist eingeschränkt.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrCertExpired">Das empfangene Zertifikat ist abgelaufen.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrDelegationPolicy">Die Richtlinie unterstützt keine Delegierung von Anmeldeinformationen an den Zielserver.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrFreshCredRequiredByServer">Die Serverauthentifizierungsrichtlinie lässt keine Verbindungsanforderungen mit gespeicherten Anmeldeinformationen zu. Der Benutzer muss neue Anmeldeinformationen eingeben.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrLogonFailure">Anmeldung fehlgeschlagen.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrNoAuthenticatingAuthority">Es konnte keine Autorität für die Authentifizierung kontaktiert werden. Der Domänenname des authentifizierenden Teilnehmers könnte falsch sein, die Domäne könnte nicht erreichbar sein, oder ein Vertrauensstellungsfehler ist aufgetreten.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrNoSuchUser">Der angegebene Benutzer hat kein Konto.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrPasswordExpired">Das Passwort ist abgelaufen.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrPasswordMustChange">Das Benutzerpasswort muss geändert werden, bevor Sie sich zum ersten Mal anmelden.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrPolicyNTLMOnly">Die Delegierung von Anmeldeinformationen an den Zielserver ist nur zulässig, wenn eine gegenseitige Authentifizierung erreicht wurde.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrSmartcardCardBlocked">Die Smartcard ist blockiert.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrSmartcardWrongPIN">Eine falsche PIN wurde der Smartcard übergeben.</system:String>
 </ResourceDictionary>

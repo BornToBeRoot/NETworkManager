@@ -4,13 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mstsc ="clr-namespace:AxMSTSCLib;assembly=AxMSTSCLib"
+        xmlns:Converter="clr-namespace:NETworkManager.Converters"
         mc:Ignorable="d">
     <UserControl.Resources>
-        
+        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
+        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
     <Grid>
-        <WindowsFormsHost MaxWidth="{Binding ElementName=rdpClient, Path=DesktopWidth}" MaxHeight="{Binding ElementName=rdpClient, Path=DesktopHeight}" Visibility="{Binding HideRdpClient}">
+        <WindowsFormsHost MaxWidth="{Binding ElementName=rdpClient, Path=DesktopWidth}" MaxHeight="{Binding ElementName=rdpClient, Path=DesktopHeight}" Visibility="{Binding HideRdpClient, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
             <mstsc:AxMsRdpClient9NotSafeForScripting x:Name="rdpClient" />
         </WindowsFormsHost>
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding Disconnected, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="{DynamicResource String_Header_Disconnected}" Style="{StaticResource HeaderTextBlock}" FontSize="18" />
+            <TextBlock Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding DisconnectReason}" Style="{DynamicResource DefaultTextBlock}" />
+        </Grid>
     </Grid>
 </UserControl>
