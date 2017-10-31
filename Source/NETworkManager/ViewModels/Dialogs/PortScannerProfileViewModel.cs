@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels.Dialogs
 {
-    public class WakeOnLANClientViewModel : ViewModelBase
+    public class PortScannerProfileViewModel : ViewModelBase
     {
         private bool _isLoading = true;
 
@@ -42,16 +42,16 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
-        private string _macAddress;
-        public string MACAddress
+        private string _hostnameOrIPAddress;
+        public string HostnameOrIPAddress
         {
-            get { return _macAddress; }
+            get { return _hostnameOrIPAddress; }
             set
             {
-                if (value == _macAddress)
+                if (value == _hostnameOrIPAddress)
                     return;
 
-                _macAddress = value;
+                _hostnameOrIPAddress = value;
 
                 if (!_isLoading)
                     HasProfileInfoChanged();
@@ -60,34 +60,16 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
-        private string _broadcast;
-        public string Broadcast
+        private string _ports;
+        public string Ports
         {
-            get { return _broadcast; }
+            get { return _ports; }
             set
             {
-                if (value == _broadcast)
+                if (value == _ports)
                     return;
 
-                _broadcast = value;
-
-                if (!_isLoading)
-                    HasProfileInfoChanged();
-
-                OnPropertyChanged();
-            }
-        }
-
-        private int _port;
-        public int Port
-        {
-            get { return _port; }
-            set
-            {
-                if (value == _port)
-                    return;
-
-                _port = value;
+                _ports = value;
 
                 if (!_isLoading)
                     HasProfileInfoChanged();
@@ -120,34 +102,33 @@ namespace NETworkManager.ViewModels.Dialogs
             get { return _groups; }
         }
 
-        private WakeOnLANClientInfo _clientInfo;
+        private PortScannerProfileInfo _profileInfo;
 
-        private bool _clientInfoChanged;
-        public bool ClientInfoChanged
+        private bool _profileInfoChanged;
+        public bool ProfileInfoChanged
         {
-            get { return _clientInfoChanged; }
+            get { return _profileInfoChanged; }
             set
             {
-                if (value == _clientInfoChanged)
+                if (value == _profileInfoChanged)
                     return;
 
-                _clientInfoChanged = value;
+                _profileInfoChanged = value;
                 OnPropertyChanged();
             }
         }
 
-        public WakeOnLANClientViewModel(Action<WakeOnLANClientViewModel> saveCommand, Action<WakeOnLANClientViewModel> cancelHandler, List<string> groups, WakeOnLANClientInfo clientInfo = null)
+        public PortScannerProfileViewModel(Action<PortScannerProfileViewModel> saveCommand, Action<PortScannerProfileViewModel> cancelHandler, List<string> groups, PortScannerProfileInfo profileInfo = null)
         {
             _saveCommand = new RelayCommand(p => saveCommand(this));
             _cancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            _clientInfo = clientInfo ?? new WakeOnLANClientInfo();
+            _profileInfo = profileInfo ?? new PortScannerProfileInfo();
 
-            Name = _clientInfo.Name;
-            MACAddress = _clientInfo.MACAddress;
-            Broadcast = _clientInfo.Broadcast;
-            Port = _clientInfo.Port;
-            Group = string.IsNullOrEmpty(_clientInfo.Group) ? Application.Current.Resources["String_Default"] as string : _clientInfo.Group;
+            Name = _profileInfo.Name;
+            HostnameOrIPAddress = _profileInfo.HostnameOrIPAddress;
+            Ports = _profileInfo.Ports;
+            Group = string.IsNullOrEmpty(_profileInfo.Group) ? Application.Current.Resources["String_Default"] as string : _profileInfo.Group;
 
             _groups = CollectionViewSource.GetDefaultView(groups);
             _groups.SortDescriptions.Add(new SortDescription());
@@ -157,7 +138,7 @@ namespace NETworkManager.ViewModels.Dialogs
 
         private void HasProfileInfoChanged()
         {
-            ClientInfoChanged = (_clientInfo.Name != Name) || (_clientInfo.MACAddress != MACAddress) || (_clientInfo.Broadcast != Broadcast) || (_clientInfo.Port != Port) || (_clientInfo.Group != Group);
+            ProfileInfoChanged = (_profileInfo.Name != Name) || (_profileInfo.HostnameOrIPAddress != HostnameOrIPAddress) || (_profileInfo.Ports == Ports) || (_profileInfo.Group != Group);
         }
     }
 }

@@ -14,6 +14,8 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System.Windows.Data;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.ViewModels.Dialogs;
+using NETworkManager.Views.Dialogs;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -281,6 +283,22 @@ namespace NETworkManager.ViewModels.Applications
             get { return _portScannerProfiles; }
         }
 
+        public List<string> PortScannerProfileGroups
+        {
+            get
+            {
+                List<string> list = new List<string>();
+
+                foreach (PortScannerProfileInfo profile in PortScannerProfileManager.Profiles)
+                {
+                    if (!list.Contains(profile.Group))
+                        list.Add(profile.Group);
+                }
+
+                return list;
+            }
+        }
+
         private PortScannerProfileInfo _selectedProfile = new PortScannerProfileInfo();
         public PortScannerProfileInfo SelectedProfile
         {
@@ -291,7 +309,10 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (value != null)
+                {
+                    HostnameOrIPAddress = value.HostnameOrIPAddress;
                     Ports = value.Ports;
+                }
 
                 _selectedProfile = value;
                 OnPropertyChanged();
@@ -327,10 +348,11 @@ namespace NETworkManager.ViewModels.Applications
                 PortScannerProfileManager.Load();
 
             _portScannerProfiles = CollectionViewSource.GetDefaultView(PortScannerProfileManager.Profiles);
+            _portScannerProfiles.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
             _portScannerProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
 
             LoadSettings();
-                        
+
             _isLoading = false;
         }
 
@@ -379,23 +401,113 @@ namespace NETworkManager.ViewModels.Applications
 
         private async void AddProfileAction()
         {
-            MetroDialogSettings settings = AppearanceManager.MetroDialog;
-
-            settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Add"] as string;
-            settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
-
-            string name = await dialogCoordinator.ShowInputAsync(this, Application.Current.Resources["String_Header_AddProfile"] as string, Application.Current.Resources["String_EnterNameForProfile"] as string, settings);
-
-            if (string.IsNullOrEmpty(name))
-                return;
-
-            PortScannerProfileInfo profile = new PortScannerProfileInfo
+            CustomDialog customDialog = new CustomDialog()
             {
-                Name = name,
-                Ports = Ports
+                Title = Application.Current.Resources["String_Header_AddProfile"] as string
             };
 
-            PortScannerProfileManager.AddProfile(profile);
+            PortScannerProfileViewModel portScannerProfileViewModel = new PortScannerProfileViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                PortScannerProfileInfo portScannerProfileInfo = new PortScannerProfileInfo
+                {
+                    Name = instance.Name,
+                    HostnameOrIPAddress = instance.HostnameOrIPAddress,
+                    Ports = instance.Ports,
+                    Group = instance.Group
+                };
+
+                PortScannerProfileManager.AddProfile(portScannerProfileInfo);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, PortScannerProfileGroups, new PortScannerProfileInfo() { HostnameOrIPAddress = HostnameOrIPAddress, Ports = Ports });
+
+            customDialog.Content = new PortScannerProfileDialog
+            {
+                DataContext = portScannerProfileViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand EditProfileCommand
+        {
+            get { return new RelayCommand(p => EditProfileAction()); }
+        }
+
+        private async void EditProfileAction()
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_EditProfile"] as string
+            };
+
+            PortScannerProfileViewModel portScannerProfileViewModel = new PortScannerProfileViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                PortScannerProfileManager.RemoveProfile(SelectedProfile);
+
+                PortScannerProfileInfo portScannerProfileInfo = new PortScannerProfileInfo
+                {
+                    Name = instance.Name,
+                    HostnameOrIPAddress = instance.HostnameOrIPAddress,
+                    Ports = instance.Ports,
+                    Group = instance.Group
+                };
+
+                PortScannerProfileManager.AddProfile(portScannerProfileInfo);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, PortScannerProfileGroups, SelectedProfile);
+
+            customDialog.Content = new PortScannerProfileDialog
+            {
+                DataContext = portScannerProfileViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand CopyAsProfileCommand
+        {
+            get { return new RelayCommand(p => CopyAsProfileAction()); }
+        }
+
+        private async void CopyAsProfileAction()
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_CopyProfile"] as string
+            };
+
+            PortScannerProfileViewModel portScannerProfileViewModel = new PortScannerProfileViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                PortScannerProfileInfo portScannerProfileInfo = new PortScannerProfileInfo
+                {
+                    Name = instance.Name,
+                    HostnameOrIPAddress = instance.HostnameOrIPAddress,
+                    Ports = instance.Ports,
+                    Group = instance.Group
+                };
+
+                PortScannerProfileManager.AddProfile(portScannerProfileInfo);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, PortScannerProfileGroups, SelectedProfile);
+
+            customDialog.Content = new PortScannerProfileDialog
+            {
+                DataContext = portScannerProfileViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand DeleteProfileCommand

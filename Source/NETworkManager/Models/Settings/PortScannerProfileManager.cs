@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows;
 using System.Xml.Serialization;
 
 namespace NETworkManager.Models.Settings
@@ -37,12 +38,12 @@ namespace NETworkManager.Models.Settings
         {
             return new List<PortScannerProfileInfo>
             {
-                new PortScannerProfileInfo("1-1023 (well known)", "1-1023"),
-                new PortScannerProfileInfo("FTP","20; 21"),
-                new PortScannerProfileInfo("LDAP/LDAPS", "389; 636"),
-                new PortScannerProfileInfo("RDP", "3389"),
-                new PortScannerProfileInfo("SSH", "22"),
-                new PortScannerProfileInfo("Webserver", "80; 443"),
+                new PortScannerProfileInfo("1-1023 (well known)",string.Empty, "1-1023", Application.Current.Resources["String_Default"] as string),
+                new PortScannerProfileInfo("FTP",string.Empty,"20; 21", Application.Current.Resources["String_Default"] as string),
+                new PortScannerProfileInfo("LDAP/LDAPS", string.Empty,"389; 636", Application.Current.Resources["String_Default"] as string),
+                new PortScannerProfileInfo("RDP", string.Empty,"3389", Application.Current.Resources["String_Default"] as string),
+                new PortScannerProfileInfo("SSH",string.Empty, "22", Application.Current.Resources["String_Default"] as string),
+                new PortScannerProfileInfo("Webserver", string.Empty, "80; 443", Application.Current.Resources["String_Default"] as string),
             };
         }
 
