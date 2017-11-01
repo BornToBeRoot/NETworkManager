@@ -321,7 +321,14 @@ namespace NETworkManager
                 settings.NegativeButtonText = System.Windows.Application.Current.Resources["String_Button_Cancel"] as string;
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-                if (await this.ShowMessageAsync(System.Windows.Application.Current.Resources["String_Header_Confirm"] as string, System.Windows.Application.Current.Resources["String_ConfirmCloseQuesiton"] as string, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
+                // Fix airspace issues
+                ConfigurationManager.Current.FixAirspace = true;
+
+                MessageDialogResult result = await this.ShowMessageAsync(System.Windows.Application.Current.Resources["String_Header_Confirm"] as string, System.Windows.Application.Current.Resources["String_ConfirmCloseQuesiton"] as string, MessageDialogStyle.AffirmativeAndNegative, settings);
+
+                ConfigurationManager.Current.FixAirspace = false;
+
+                if (result == MessageDialogResult.Affirmative)
                 {
                     _closeApplication = true;
                     Close();
