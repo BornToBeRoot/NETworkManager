@@ -10,6 +10,7 @@ using NETworkManager.Models.Settings;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Collections.Generic;
+using System;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -43,7 +44,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             get { return _remoteDesktopSessions; }
         }
-               
+
         private RemoteDesktopSessionInfo _selectedSession = new RemoteDesktopSessionInfo();
         public RemoteDesktopSessionInfo SelectedSession
         {
@@ -74,6 +75,23 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
+
+        private string _search;
+        public string Search
+        {
+            get { return _search; }
+            set
+            {
+                if (value == _search)
+                    return;
+
+                _search = value;
+
+                RemoteDesktopSessions.Refresh();
+
+                OnPropertyChanged();
+            }
+        }
         #endregion
         #endregion
 
@@ -92,6 +110,17 @@ namespace NETworkManager.ViewModels.Applications
             _remoteDesktopSessions = CollectionViewSource.GetDefaultView(RemoteDesktopSessionManager.Sessions);
             _remoteDesktopSessions.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
             _remoteDesktopSessions.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            _remoteDesktopSessions.Filter = o =>
+            {
+                if (string.IsNullOrEmpty(Search))
+                    return true;
+
+                RemoteDesktopSessionInfo info = o as RemoteDesktopSessionInfo;
+
+                string search = Search.Trim();
+
+                return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
+            };
 
             LoadSettings();
 
@@ -115,6 +144,24 @@ namespace NETworkManager.ViewModels.Applications
         {
             TabContents.Add(new DragablzTabContent(string.IsNullOrEmpty(Header) ? sessionInfo.Hostname : Header, new RemoteDesktopControl(sessionInfo)));
             SelectedTabIndex = TabContents.Count - 1;
+        }
+
+        private void RemoteDesktopSession_Search(object sender, FilterEventArgs e)
+        {
+            if (string.IsNullOrEmpty(Search))
+            {
+                e.Accepted = true;
+                return;
+            }
+
+            RemoteDesktopSessionInfo info = e.Item as RemoteDesktopSessionInfo;
+
+            string search = Search.Trim();
+
+            if (info.Hostname.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0)
+                e.Accepted = true;
+            else
+                e.Accepted = false;
         }
         #endregion
 

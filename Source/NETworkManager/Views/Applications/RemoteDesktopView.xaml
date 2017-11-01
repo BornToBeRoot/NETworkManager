@@ -8,6 +8,8 @@
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
         xmlns:ConfigurtationManager="clr-namespace:NETworkManager.Models.Settings"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
     <UserControl.Resources>
@@ -48,7 +50,7 @@
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <ContentPresenter Content="{Binding Content}" Visibility="{Binding Source={x:Static ConfigurtationManager:ConfigurationManager.Current}, Path=FixAirspace, Converter={StaticResource BooleanReverseToVisibilityConverter}}" />                                
+                                <ContentPresenter Content="{Binding Content}" Visibility="{Binding Source={x:Static ConfigurtationManager:ConfigurationManager.Current}, Path=FixAirspace, Converter={StaticResource BooleanReverseToVisibilityConverter}}" />
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>
@@ -59,11 +61,24 @@
             <Expander Header="{DynamicResource String_Header_Sessions}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandSessionView}">
                 <Grid Width="250">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <ListBox Grid.Column="0" Grid.Row="0" FontSize="14" ItemsSource="{Binding RemoteDesktopSessions}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedSession}">
+                    <TextBox x:Name="txtSearch" Grid.Column="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" FontSize="14" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_Search}" mah:TextBoxHelper.ButtonCommand="{Binding TextBoxSearchCommand}" Controls:TextBoxHelper.ClearTextButton="True">
+                        <TextBox.Style>
+                            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource SearchMetroTextBox}">
+                                <Style.Triggers>
+                                    <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
+                                        <Setter Property="Controls:TextBoxHelper.ButtonContentTemplate" Value="{x:Null}" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                    <ListBox Grid.Row="2" FontSize="14" ItemsSource="{Binding RemoteDesktopSessions}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedSession}">
                         <ListBox.Resources>
                             <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
                             <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -75,7 +90,7 @@
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
-                                </MenuItem>                              
+                                </MenuItem>
                                 <MenuItem Header="{DynamicResource String_Edit}" Command="{Binding EditSessionCommand}">
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
@@ -136,7 +151,7 @@
                             </Style>
                         </ListBox.ItemContainerStyle>
                     </ListBox>
-                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_NoSessionsFoundCreateOne}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
+                    <TextBlock Grid.Row="2" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_NoSessionsFoundCreateOne}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed" />
@@ -148,7 +163,7 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                    <Button x:Name="btnAddProfile" Grid.Column="0" Grid.Row="2" Command="{Binding AddSessionCommand}" Style="{StaticResource ImageWithTextButton}">
+                    <Button x:Name="btnAddProfile" Grid.Row="4" Command="{Binding AddSessionCommand}" Style="{StaticResource ImageWithTextButton}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>

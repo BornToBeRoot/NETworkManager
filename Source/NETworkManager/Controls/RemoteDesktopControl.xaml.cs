@@ -1,5 +1,4 @@
 ﻿using NETworkManager.Models.RemoteDesktop;
-using NETworkManager.ViewModels;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
