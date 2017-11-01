@@ -118,25 +118,25 @@ namespace NETworkManager
             }
         }
 
-        private CollectionViewSource _applicationViewCollectionSource;
-        public ICollectionView ApplicationViewCollection
+        private ICollectionView _applications;
+        public ICollectionView Applications
         {
-            get { return _applicationViewCollectionSource.View; }
+            get { return _applications; }
         }
 
-        private ApplicationViewInfo _selectedApplicationViewInfo;
-        public ApplicationViewInfo SelectedApplicationViewInfo
+        private ApplicationViewInfo _selectedApplication;
+        public ApplicationViewInfo SelectedApplication
         {
-            get { return _selectedApplicationViewInfo; }
+            get { return _selectedApplication; }
             set
             {
-                if (value == _selectedApplicationViewInfo)
+                if (value == _selectedApplication)
                     return;
 
                 if (value != null)
                     ChangeApplicationView(value.Name);
 
-                _selectedApplicationViewInfo = value;
+                _selectedApplication = value;
                 OnPropertyChanged();
             }
         }
@@ -155,13 +155,13 @@ namespace NETworkManager
 
                 _search = value;
 
-                if (SelectedApplicationViewInfo != null)
-                    filterLastViewName = SelectedApplicationViewInfo.Name;
+                if (SelectedApplication != null)
+                    filterLastViewName = SelectedApplication.Name;
 
-                ApplicationViewCollection.Refresh();
+                Applications.Refresh();
 
-                IEnumerable<ApplicationViewInfo> sourceCollection = ApplicationViewCollection.SourceCollection.Cast<ApplicationViewInfo>();
-                IEnumerable<ApplicationViewInfo> filteredCollection = ApplicationViewCollection.Cast<ApplicationViewInfo>();
+                IEnumerable<ApplicationViewInfo> sourceCollection = Applications.SourceCollection.Cast<ApplicationViewInfo>();
+                IEnumerable<ApplicationViewInfo> filteredCollection = Applications.Cast<ApplicationViewInfo>();
 
                 int sourceCollectionCount = sourceCollection.Count();
                 int filteredCollectionCount = filteredCollection.Count();
@@ -170,9 +170,9 @@ namespace NETworkManager
                     filterLastCount = sourceCollectionCount;
 
                 if (filterLastCount > filteredCollectionCount)
-                    SelectedApplicationViewInfo = filteredCollection.FirstOrDefault();
+                    SelectedApplication = filteredCollection.FirstOrDefault();
                 else
-                    SelectedApplicationViewInfo = sourceCollection.FirstOrDefault(x => x.Name == filterLastViewName);
+                    SelectedApplication = sourceCollection.FirstOrDefault(x => x.Name == filterLastViewName);
 
                 filterLastCount = filteredCollectionCount;
 
@@ -269,15 +269,25 @@ namespace NETworkManager
 
         private void LoadApplicationList()
         {
-            _applicationViewCollectionSource = new CollectionViewSource()
+            _applications = CollectionViewSource.GetDefaultView(ApplicationViewManager.List);
+            _applications.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending)); // Always have the same order, even if it is translated
+            _applications.Filter = o =>
             {
-                Source = ApplicationViewManager.List
+                if (string.IsNullOrEmpty(Search))
+                    return true;
+
+                // Search for application name and description without "-" and " "
+                ApplicationViewInfo info = o as ApplicationViewInfo;
+
+                Regex regex = new Regex(@" |-");
+
+                string search = regex.Replace(Search, "");
+
+                // Search by TranslatedName and Name
+                return (regex.Replace(info.TranslatedName, "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0) || (regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
             };
 
-            _applicationViewCollectionSource.Filter += ApplicationView_Search;
-            _applicationViewCollectionSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-
-            SelectedApplicationViewInfo = ApplicationViewCollection.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Application_DefaultApplicationViewName);
+            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Application_DefaultApplicationViewName);
         }
 
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
@@ -418,27 +428,7 @@ namespace NETworkManager
 
         #endregion
 
-        #region ListView Search/Filter       
-        private void ApplicationView_Search(object sender, FilterEventArgs e)
-        {
-            if (string.IsNullOrEmpty(Search))
-            {
-                e.Accepted = true;
-                return;
-            }
-
-            // Search for application name and description without "-" and " "
-            ApplicationViewInfo info = e.Item as ApplicationViewInfo;
-
-            Regex regex = new Regex(@" |-");
-
-            // Try to find the translated application view name first --> it's faster when the language ist different than english and equal when it's english
-            if ((regex.Replace(info.TranslatedName, "").IndexOf(regex.Replace(Search, ""), StringComparison.OrdinalIgnoreCase) >= 0) || (regex.Replace(info.Name.ToString(), "").IndexOf(regex.Replace(Search, ""), StringComparison.OrdinalIgnoreCase) >= 0))
-                e.Accepted = true;
-            else
-                e.Accepted = false;
-        }
-
+        #region ListView Search/Filter              
         private void ClearSearchFilterOnApplicationListMinimize()
         {
             if (ApplicationView_Expand)
@@ -643,7 +633,7 @@ namespace NETworkManager
             }
 
             // Change selected settings view
-            _settingsView.SelectedApplicationName = _isInTray ? ApplicationViewManager.Name.None : SelectedApplicationViewInfo.Name;
+            _settingsView.SelectedApplicationName = _isInTray ? ApplicationViewManager.Name.None : SelectedApplication.Name;
 
             // Show the view (this will hide other content)
             ShowSettingsView = true;
@@ -759,19 +749,6 @@ namespace NETworkManager
                 _closeApplication = true;
                 Close();
             }
-        }
-
-        public ICommand TextBoxSearchCommand
-        {
-            get { return new RelayCommand(p => TextBoxSearchAction()); }
-        }
-
-        private void TextBoxSearchAction()
-        {
-            if (string.IsNullOrEmpty(Search))
-                txtSearch.Focus();
-            else
-                Search = string.Empty;
         }
 
         public ICommand ApplicationListMouseEnterCommand

@@ -67,7 +67,7 @@
                         <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBox x:Name="txtSearch" Grid.Column="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" FontSize="14" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_Search}" mah:TextBoxHelper.ButtonCommand="{Binding TextBoxSearchCommand}" Controls:TextBoxHelper.ClearTextButton="True">
+                    <TextBox x:Name="txtSearch" Grid.Column="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" FontSize="14" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_Search}" Controls:TextBoxHelper.ClearTextButton="True">
                         <TextBox.Style>
                             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource SearchMetroTextBox}">
                                 <Style.Triggers>

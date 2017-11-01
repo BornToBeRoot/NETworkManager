@@ -179,7 +179,7 @@
                                     </Rectangle.Style>
                                 </Rectangle>
                             </Button>
-                            <TextBox x:Name="txtSearch" Grid.Column="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" FontSize="14" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_Search}" mah:TextBoxHelper.ButtonCommand="{Binding TextBoxSearchCommand}" Controls:TextBoxHelper.ClearTextButton="True">
+                            <TextBox x:Name="txtSearch" Grid.Column="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" FontSize="14" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_Search}" Controls:TextBoxHelper.ClearTextButton="True">
                                 <TextBox.Style>
                                     <Style BasedOn="{StaticResource SearchMetroTextBox}" TargetType="{x:Type TextBox}">
                                         <Setter Property="Visibility" Value="Hidden" />
@@ -306,7 +306,7 @@
                         </Grid>
                     </Border>
                     <ScrollViewer Grid.Row="1" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" Style="{StaticResource FadeOutScrollViewer}">
-                        <ListView ItemsSource="{Binding ApplicationViewCollection}" SelectedItem="{Binding SelectedApplicationViewInfo, Mode=TwoWay}" SelectionMode="Single" BorderThickness="0">
+                        <ListView ItemsSource="{Binding Applications}" SelectedItem="{Binding SelectedApplication, Mode=TwoWay}" SelectionMode="Single" BorderThickness="0">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Height="48">
