@@ -76,6 +76,7 @@
     <system:String x:Key="String_Header_RemoteDesktop">Remote Desktop</system:String>
     <system:String x:Key="String_Header_Disconnected">Disconnected</system:String>
     <system:String x:Key="String_Header_LocalDevicesAndResources">Local devices and resources</system:String>
+    <system:String x:Key="String_Header_Display">Display</system:String>
     
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -276,7 +277,8 @@
     <system:String x:Key="String_RedirectPorts">Redirect ports</system:String>
     <system:String x:Key="String_RedirectSmartcards">Redirect smartcards</system:String>
     <system:String x:Key="String_RedirectPrinters">Redirect printers</system:String>
-    
+    <system:String x:Key="String_ScreenResolution">Screen resolution</system:String>
+    <system:String x:Key="String_ColorDepthBit">Color depth (bit)</system:String>
     <!-- ToolTip -->
     <system:String x:Key="String_ToolTip_Settings">Settings</system:String>
     <system:String x:Key="String_ToolTip_Expand">Expand</system:String>

@@ -1094,7 +1094,49 @@ namespace NETworkManager.Models.Settings
         #endregion
         #endregion
 
-        #region RemoteDesktop
+        #region RemoteDesktop  
+        private int _remoteDesktop_DesktopWidth = 1280;
+        public int RemoteDesktop_DesktopWidth
+        {
+            get { return _remoteDesktop_DesktopWidth; }
+            set
+            {
+                if (value == _remoteDesktop_DesktopWidth)
+                    return;
+
+                _remoteDesktop_DesktopWidth = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _remoteDesktop_DesktopHeight = 768;
+        public int RemoteDesktop_DesktopHeight
+        {
+            get { return _remoteDesktop_DesktopHeight; }
+            set
+            {
+                if (value == _remoteDesktop_DesktopHeight)
+                    return;
+
+                _remoteDesktop_DesktopHeight = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _remoteDesktop_ColorDepth = 32;
+        public int RemoteDesktop_ColorDepth
+        {
+            get { return _remoteDesktop_ColorDepth; }
+            set
+            {
+                if (value == _remoteDesktop_ColorDepth)
+                    return;
+
+                _remoteDesktop_ColorDepth = value;
+                SettingsChanged = true;
+            }
+        }
+
         private bool _remoteDesktop_RedirectClipboard = true;
         public bool RemoteDesktop_RedirectClipboard
         {

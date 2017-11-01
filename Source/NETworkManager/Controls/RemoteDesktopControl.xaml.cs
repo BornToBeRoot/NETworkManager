@@ -87,9 +87,9 @@ namespace NETworkManager.Controls
             rdpClient.AdvancedSettings9.RedirectPrinters = info.RedirectPrinters;
 
             // Display
-            rdpClient.ColorDepth = 24;      // 8, 15, 16, 24
-            rdpClient.DesktopHeight = 768;
-            rdpClient.DesktopWidth = 1280;
+            rdpClient.ColorDepth = info.ColorDepth;      // 8, 15, 16, 24
+            rdpClient.DesktopWidth = info.DesktopWidth;
+            rdpClient.DesktopHeight = info.DesktopHeight;
 
             // Events
             rdpClient.OnDisconnected += RdpClient_OnDisconnected; ;

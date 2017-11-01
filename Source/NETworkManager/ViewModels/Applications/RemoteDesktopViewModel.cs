@@ -9,7 +9,6 @@ using NETworkManager.ViewModels.Dialogs;
 using NETworkManager.Models.Settings;
 using System.ComponentModel;
 using System.Windows.Data;
-using System.Collections.Generic;
 using System;
 
 namespace NETworkManager.ViewModels.Applications
@@ -138,6 +137,9 @@ namespace NETworkManager.ViewModels.Applications
         private void ConnectSession(Models.RemoteDesktop.RemoteDesktopSessionInfo sessionInfo, string Header = null)
         {
             // Add global settings...
+            sessionInfo.DesktopWidth = SettingsManager.Current.RemoteDesktop_DesktopWidth;
+            sessionInfo.DesktopHeight = SettingsManager.Current.RemoteDesktop_DesktopHeight;
+            sessionInfo.ColorDepth = SettingsManager.Current.RemoteDesktop_ColorDepth;
             sessionInfo.RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;
             sessionInfo.RedirectDevices = SettingsManager.Current.RemoteDesktop_RedirectDevices;
             sessionInfo.RedirectDrives = SettingsManager.Current.RemoteDesktop_RedirectDrives;

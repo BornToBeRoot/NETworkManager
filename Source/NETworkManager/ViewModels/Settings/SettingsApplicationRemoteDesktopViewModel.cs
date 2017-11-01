@@ -1,4 +1,7 @@
 ﻿using NETworkManager.Models.Settings;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
 
 namespace NETworkManager.ViewModels.Settings
 {
@@ -6,6 +9,77 @@ namespace NETworkManager.ViewModels.Settings
     {
         #region Variables
         private bool _isLoading = true;
+
+        public List<string> ScreenResolutions
+        {
+            get
+            {
+                return new List<string>()
+                {
+                    "640x480",
+                    "800x600",
+                    "1024x768",
+                    "1280x720",
+                    "1280x768",
+                    "1280x800",
+                    "1280x1024",
+                    "1366x768",
+                    "1440x900",
+                    "1400x1050",
+                    "1680x1050",
+                    "1920x1080"
+                };
+            }
+        }
+
+        private string _selectedScreenResolution;
+        public string SelectedScreenResolution
+        {
+            get { return _selectedScreenResolution; }
+            set
+            {
+                if (value == _selectedScreenResolution)
+                    return;
+
+                if (!_isLoading)
+                {
+                    string[] resolution = value.Split('x');
+
+                    SettingsManager.Current.RemoteDesktop_DesktopWidth = int.Parse(resolution[0]);
+                    SettingsManager.Current.RemoteDesktop_DesktopHeight = int.Parse(resolution[1]);
+                }
+
+                _selectedScreenResolution = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<int> ColorDepths
+        {
+            get
+            {
+                return new List<int>()
+                {
+                    15,
+                    16,
+                    24,
+                    32
+                };
+            }
+        }
+
+        private int _selectedColorDepth;
+        public int SelectedColorDepth
+        {
+            get { return _selectedColorDepth; }
+            set
+            { if (value == _selectedColorDepth)
+                    return;
+
+                _selectedColorDepth = value;
+                OnPropertyChanged();
+            }
+        }
 
         private bool _redirectClipboard;
         public bool RedirectClipboard
@@ -120,6 +194,8 @@ namespace NETworkManager.ViewModels.Settings
 
         private void LoadSettings()
         {
+            SelectedScreenResolution = ScreenResolutions.FirstOrDefault(x => x == string.Format("{0}x{1}", SettingsManager.Current.RemoteDesktop_DesktopWidth, SettingsManager.Current.RemoteDesktop_DesktopHeight));
+            SelectedColorDepth = ColorDepths.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_ColorDepth);
             RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;
             RedirectDevices = SettingsManager.Current.RemoteDesktop_RedirectDevices;
             RedirectDrives = SettingsManager.Current.RemoteDesktop_RedirectDrives;

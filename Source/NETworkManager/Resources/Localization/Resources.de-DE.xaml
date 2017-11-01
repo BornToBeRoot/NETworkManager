@@ -76,7 +76,8 @@
     <system:String x:Key="String_Header_RemoteDesktop">Remote Desktop</system:String>
     <system:String x:Key="String_Header_Disconnected">Getrennt</system:String>
     <system:String x:Key="String_Header_LocalDevicesAndResources">Lokale Geräte und Ressourcen</system:String>
-
+    <system:String x:Key="String_Header_Display">Anzeige</system:String>
+    
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Ein leistungsstarkes Tool zum Verwalten von Netzwerken und zur Behebung von Netzwerkproblemen!</system:String>
@@ -276,6 +277,8 @@
     <system:String x:Key="String_RedirectPorts">Ports umleiten</system:String>
     <system:String x:Key="String_RedirectSmartcards">Smartcards umleiten</system:String>
     <system:String x:Key="String_RedirectPrinters">Drucker umleiten</system:String>
+    <system:String x:Key="String_ScreenResolution">Bildschirmauflösung</system:String>
+    <system:String x:Key="String_ColorDepthBit">Farbtiefe (Bit)</system:String>
     
     <!-- ToolTip -->
     <system:String x:Key="String_ToolTip_Settings">Einstellungen</system:String>
