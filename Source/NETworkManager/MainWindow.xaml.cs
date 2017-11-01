@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using NETworkManager.Views;
 using NETworkManager.Helpers;
 using System.Runtime.CompilerServices;
+using System.Windows.Markup;
 
 namespace NETworkManager
 {
@@ -143,16 +144,16 @@ namespace NETworkManager
         ApplicationViewManager.Name filterLastViewName;
         int? filterLastCount;
 
-        private string _searchText;
-        public string SearchText
+        private string _search;
+        public string Search
         {
-            get { return _searchText; }
+            get { return _search; }
             set
             {
-                if (value == _searchText)
+                if (value == _search)
                     return;
 
-                _searchText = value;
+                _search = value;
 
                 if (SelectedApplicationViewInfo != null)
                     filterLastViewName = SelectedApplicationViewInfo.Name;
@@ -235,7 +236,7 @@ namespace NETworkManager
 
             Version = AssemblyManager.Current.AssemblyVersion.ToString();
 
-// LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
+            LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
 
             // Load appearance
             AppearanceManager.Load();
@@ -420,7 +421,7 @@ namespace NETworkManager
         #region ListView Search/Filter       
         private void ApplicationView_Search(object sender, FilterEventArgs e)
         {
-            if (string.IsNullOrEmpty(SearchText))
+            if (string.IsNullOrEmpty(Search))
             {
                 e.Accepted = true;
                 return;
@@ -432,7 +433,7 @@ namespace NETworkManager
             Regex regex = new Regex(@" |-");
 
             // Try to find the translated application view name first --> it's faster when the language ist different than english and equal when it's english
-            if ((regex.Replace(info.TranslatedName, "").IndexOf(regex.Replace(SearchText, ""), StringComparison.OrdinalIgnoreCase) >= 0) || (regex.Replace(info.Name.ToString(), "").IndexOf(regex.Replace(SearchText, ""), StringComparison.OrdinalIgnoreCase) >= 0))
+            if ((regex.Replace(info.TranslatedName, "").IndexOf(regex.Replace(Search, ""), StringComparison.OrdinalIgnoreCase) >= 0) || (regex.Replace(info.Name.ToString(), "").IndexOf(regex.Replace(Search, ""), StringComparison.OrdinalIgnoreCase) >= 0))
                 e.Accepted = true;
             else
                 e.Accepted = false;
@@ -449,7 +450,7 @@ namespace NETworkManager
             if (OpenApplicationList && IsMouseOverApplicationList)
                 return;
 
-            SearchText = string.Empty;
+            Search = string.Empty;
         }
         #endregion
 
@@ -767,10 +768,10 @@ namespace NETworkManager
 
         private void TextBoxSearchAction()
         {
-            if (string.IsNullOrEmpty(SearchText))
+            if (string.IsNullOrEmpty(Search))
                 txtSearch.Focus();
             else
-                SearchText = string.Empty;
+                Search = string.Empty;
         }
 
         public ICommand ApplicationListMouseEnterCommand

@@ -179,7 +179,7 @@
                                     </Rectangle.Style>
                                 </Rectangle>
                             </Button>
-                            <TextBox x:Name="txtSearch" Grid.Column="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" FontSize="14" VerticalAlignment="Center" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_Search}" mah:TextBoxHelper.ButtonCommand="{Binding TextBoxSearchCommand}" Controls:TextBoxHelper.ClearTextButton="True">
+                            <TextBox x:Name="txtSearch" Grid.Column="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" FontSize="14" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_Search}" mah:TextBoxHelper.ButtonCommand="{Binding TextBoxSearchCommand}" Controls:TextBoxHelper.ClearTextButton="True">
                                 <TextBox.Style>
                                     <Style BasedOn="{StaticResource SearchMetroTextBox}" TargetType="{x:Type TextBox}">
                                         <Setter Property="Visibility" Value="Hidden" />
