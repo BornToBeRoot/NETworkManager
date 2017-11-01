@@ -119,6 +119,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 string search = Search.Trim();
 
+                // Search by: Name
                 return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
             };
 

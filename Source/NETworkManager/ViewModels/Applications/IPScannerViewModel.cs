@@ -294,6 +294,23 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
+
+        private string _search;
+        public string Search
+        {
+            get { return _search; }
+            set
+            {
+                if (value == _search)
+                    return;
+
+                _search = value;
+
+                IPScannerProfiles.Refresh();
+
+                OnPropertyChanged();
+            }
+        }
         #endregion
         #endregion
 
@@ -309,6 +326,19 @@ namespace NETworkManager.ViewModels.Applications
             _ipScannerProfiles = CollectionViewSource.GetDefaultView(IPScannerProfileManager.Profiles);
             _ipScannerProfiles.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
             _ipScannerProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            _ipScannerProfiles.Filter = o =>
+            {
+                if (string.IsNullOrEmpty(Search))
+                    return true;
+
+                IPScannerProfileInfo info = o as IPScannerProfileInfo;
+
+                string search = Search.Trim();
+
+                // Search by: Name
+                return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
+            };
+
 
             LoadSettings();
 

@@ -266,6 +266,7 @@
     <system:String x:Key="String_CopyAs">Kopieren als</system:String>
     <system:String x:Key="String_IPScannerProfiles">IP-Scanner Profile</system:String>
     <system:String x:Key="String_IPRange">IP-Bereich</system:String>
+    <system:String x:Key="String_NothingFound">Nichts gefunden!</system:String>
 
     <!-- ToolTip -->
     <system:String x:Key="String_ToolTip_Settings">Einstellungen</system:String>

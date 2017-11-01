@@ -14,6 +14,7 @@
         mc:Ignorable="d">
     <UserControl.Resources>
         <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
+        <Converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -151,13 +152,19 @@
                             </Style>
                         </ListBox.ItemContainerStyle>
                     </ListBox>
-                    <TextBlock Grid.Row="2" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_NoSessionsFoundCreateOne}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
+                    <TextBlock Grid.Row="2" FontSize="18" Foreground="{DynamicResource GrayBrush3}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding RemoteDesktopSessions.Count}" Value="0">
-                                        <Setter Property="Visibility" Value="Visible" />
+                                    <DataTrigger Binding="{Binding RemoteDesktopSessions.Count}" Value="0" >
+                                        <DataTrigger.Setters>
+                                            <Setter Property="Visibility" Value="Visible" />
+                                            <Setter Property="Text" Value="{DynamicResource String_NoSessionsFoundCreateOne}" />
+                                        </DataTrigger.Setters>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                        <Setter Property="Text" Value="{DynamicResource String_NothingFound}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

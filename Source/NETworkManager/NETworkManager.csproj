@@ -180,6 +180,7 @@
     <Compile Include="3rdParty\Heijden.DNS\Structs.cs" />
     <Compile Include="Controls\DragablzMainInterTabClient.cs" />
     <Compile Include="Controls\DragablzTabContent.cs" />
+    <Compile Include="Converters\NullOrEmptyToBoolConverter.cs" />
     <Compile Include="Converters\TimestampToStringConverter.cs" />
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
     <Compile Include="Converters\ValidateSubnetCalculatorIPv4SplitterConverter.cs" />
