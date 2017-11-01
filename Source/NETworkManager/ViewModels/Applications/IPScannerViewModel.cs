@@ -339,7 +339,6 @@ namespace NETworkManager.ViewModels.Applications
                 return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
             };
 
-
             LoadSettings();
 
             // Detect if settings have changed...

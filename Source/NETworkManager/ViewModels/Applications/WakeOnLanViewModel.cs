@@ -178,6 +178,23 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
+
+        private string _search;
+        public string Search
+        {
+            get { return _search; }
+            set
+            {
+                if (value == _search)
+                    return;
+
+                _search = value;
+
+                WakeOnLANClients.Refresh();
+
+                OnPropertyChanged();
+            }
+        }
         #endregion
         #endregion
 
@@ -192,6 +209,18 @@ namespace NETworkManager.ViewModels.Applications
             _wakeOnLANClients = CollectionViewSource.GetDefaultView(WakeOnLANClientManager.Clients);
             _wakeOnLANClients.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
             _wakeOnLANClients.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            _wakeOnLANClients.Filter = o =>
+            {
+                if (string.IsNullOrEmpty(Search))
+                    return true;
+
+                WakeOnLANClientInfo info = o as WakeOnLANClientInfo;
+
+                string search = Search.Trim();
+
+                // Search by: Name
+                return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
+            };
 
             LoadSettings();
 

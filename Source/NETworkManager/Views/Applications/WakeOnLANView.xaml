@@ -5,14 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"   
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:Validator="clr-namespace:NETworkManager.Validators"
              xmlns:Converter="clr-namespace:NETworkManager.Converters"
              xmlns:WpfHelper="clr-namespace:NETworkManager.WpfHelper"
-             xmlns:Control="clr-namespace:NETworkManager.Controls"
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              Dialog:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d">
     <UserControl.Resources>
+        <Converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
         <Converter:SelectedItemsToBoolConverter x:Key="SelectedItemsToBoolConverter" />
     </UserControl.Resources>
     <Grid>
@@ -121,11 +122,24 @@
             <Expander x:Name="expanderProfiles" Header="{DynamicResource String_Header_Clients}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandClientView}">
                 <Grid Width="250">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <ListBox Grid.Column="0" Grid.Row="0" x:Name="listBoxProfiles" FontSize="14" ItemsSource="{Binding WakeOnLANClients}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedClient}">
+                    <TextBox x:Name="txtSearch" Grid.Column="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" FontSize="14" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_Search}" Controls:TextBoxHelper.ClearTextButton="True">
+                        <TextBox.Style>
+                            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource SearchMetroTextBox}">
+                                <Style.Triggers>
+                                    <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
+                                        <Setter Property="Controls:TextBoxHelper.ButtonContentTemplate" Value="{x:Null}" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                    <ListBox Grid.Column="0" Grid.Row="2" x:Name="listBoxProfiles" FontSize="14" ItemsSource="{Binding WakeOnLANClients}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedClient}">
                         <ListBox.Resources>
                             <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
                             <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -186,19 +200,25 @@
                             </GroupStyle>
                         </ListBox.GroupStyle>
                     </ListBox>
-                    <TextBlock Grid.Column="0" Grid.Row="0" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_NoClientsFoundCreateOne}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
+                    <TextBlock Grid.Row="2" FontSize="18" Foreground="{DynamicResource GrayBrush3}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding WakeOnLANClients.Count}" Value="0">
-                                        <Setter Property="Visibility" Value="Visible" />
+                                    <DataTrigger Binding="{Binding WakeOnLANClients.Count}" Value="0" >
+                                        <DataTrigger.Setters>
+                                            <Setter Property="Visibility" Value="Visible" />
+                                            <Setter Property="Text" Value="{DynamicResource String_NoClientsFoundCreateOne}" />
+                                        </DataTrigger.Setters>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                        <Setter Property="Text" Value="{DynamicResource String_NothingFound}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                    <Button x:Name="btnAddClient" Grid.Column="0" Grid.Row="2" Command="{Binding AddClientCommand}" Style="{StaticResource ImageWithTextButton}">
+                    <Button x:Name="btnAddClient" Grid.Column="0" Grid.Row="4" Command="{Binding AddClientCommand}" Style="{StaticResource ImageWithTextButton}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
