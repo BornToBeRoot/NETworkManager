@@ -20,9 +20,9 @@
             </TextBox.Text>
         </TextBox>
         <TextBlock Text="{DynamicResource String_Class}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <ComboBox FontSize="14" ItemsSource="{Binding Classes}" SelectedItem="{Binding Class}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
+        <ComboBox ItemsSource="{Binding Classes}" SelectedItem="{Binding Class}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
         <TextBlock Text="{DynamicResource String_Type}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <ComboBox FontSize="14" ItemsSource="{Binding Types}" SelectedItem="{Binding Type}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
+        <ComboBox ItemsSource="{Binding Types}" SelectedItem="{Binding Type}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
         <mah:ToggleSwitch Header="{DynamicResource String_AddDNSSuffixToHostname}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding AddDNSSuffix}" Margin="0,0,0,10"/>
         <mah:ToggleSwitch Header="{DynamicResource String_UseCustomDNSSuffix}" IsEnabled="{Binding AddDNSSuffix}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding UseCustomDNSSuffix}" Margin="0,0,0,10"/>
         <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10">
@@ -54,7 +54,7 @@
         <mah:ToggleSwitch Header="{DynamicResource String_Recursion}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding Recursion}" Margin="0,0,0,10"/>
         <mah:ToggleSwitch Header="{DynamicResource String_UseResolverCache}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding UseResolverCache}" Margin="0,0,0,10"/>
         <TextBlock Text="{DynamicResource String_Protocol}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <ComboBox FontSize="14" ItemsSource="{Binding TransportTypes}" SelectedItem="{Binding TransportType}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
+        <ComboBox ItemsSource="{Binding TransportTypes}" SelectedItem="{Binding TransportType}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
         <TextBlock Text="{DynamicResource String_Attempts}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Attempts}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
         <TextBlock Text="{DynamicResource String_Timeout}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />

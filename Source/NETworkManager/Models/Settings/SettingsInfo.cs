@@ -1095,6 +1095,90 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region RemoteDesktop
+        private bool _remoteDesktop_RedirectClipboard = true;
+        public bool RemoteDesktop_RedirectClipboard
+        {
+            get { return _remoteDesktop_RedirectClipboard; }
+            set
+            {
+                if (value == _remoteDesktop_RedirectClipboard)
+                    return;
+
+                _remoteDesktop_RedirectClipboard = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _remoteDesktop_RedirectDevices;
+        public bool RemoteDesktop_RedirectDevices
+        {
+            get { return _remoteDesktop_RedirectDevices; }
+            set
+            {
+                if (value == _remoteDesktop_RedirectDevices)
+                    return;
+
+                _remoteDesktop_RedirectDevices = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _remoteDesktop_RedirectDrives;
+        public bool RemoteDesktop_RedirectDrives
+        {
+            get { return _remoteDesktop_RedirectDrives; }
+            set
+            {
+                if (value == _remoteDesktop_RedirectDrives)
+                    return;
+
+                _remoteDesktop_RedirectDrives = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _remoteDesktop_RedirectPorts;
+        public bool RemoteDesktop_RedirectPorts
+        {
+            get { return _remoteDesktop_RedirectPorts; }
+            set
+            {
+                if (value == _remoteDesktop_RedirectPorts)
+                    return;
+
+                _remoteDesktop_RedirectPorts = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _remoteDesktop_RedirectSmartcards;
+        public bool RemoteDesktop_RedirectSmartcards
+        {
+            get { return _remoteDesktop_RedirectSmartcards; }
+            set
+            {
+                if (value == _remoteDesktop_RedirectSmartcards)
+                    return;
+
+                _remoteDesktop_RedirectSmartcards = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _remoteDesktop_RedirectPrinters;
+        public bool RemoteDesktop_RedirectPrinters
+        {
+            get { return _remoteDesktop_RedirectPrinters; }
+            set
+            {
+                if (value == _remoteDesktop_RedirectPrinters)
+                    return;
+
+                _remoteDesktop_RedirectPrinters = value;
+                SettingsChanged = true;
+            }
+        }
+
         private bool _remoteDesktop_ExpandSessionView = true;
         public bool RemoteDesktop_ExpandSessionView
         {

@@ -7,7 +7,12 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d">
     <StackPanel>
-        <TextBlock Text="{DynamicResource String_Header_RemoteDesktop}" Style="{StaticResource HeaderTextBlock}" />
-        
+        <TextBlock Text="{DynamicResource String_Header_LocalDevicesAndResources}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="Redirect clipboard" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectClipboard}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="Redirect devices" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectDevices}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="Redirect drives" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectDrives}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="Redirect ports" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectPorts}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="Redirect smartcards" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectSmartcards}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="Redirect printers" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectPrinters}" Margin="0,0,0,10"/>
     </StackPanel>
 </UserControl>

@@ -77,6 +77,8 @@ namespace NETworkManager.Controls
             // AdvancedSettings
             rdpClient.AdvancedSettings9.AuthenticationLevel = 2;
             rdpClient.AdvancedSettings9.EnableCredSspSupport = true;
+
+            // Devices and resources
             rdpClient.AdvancedSettings9.RedirectClipboard = false;
             rdpClient.AdvancedSettings9.RedirectDevices = false;
             rdpClient.AdvancedSettings9.RedirectDrives = false;

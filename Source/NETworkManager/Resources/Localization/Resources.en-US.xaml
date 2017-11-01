@@ -75,8 +75,9 @@
     <system:String x:Key="String_Header_Sessions">Sessions</system:String>
     <system:String x:Key="String_Header_RemoteDesktop">Remote Desktop</system:String>
     <system:String x:Key="String_Header_Disconnected">Disconnected</system:String>
+    <system:String x:Key="String_Header_LocalDevicesAndResources">Local devices and resources</system:String>
     
-    <!-- Normal strings -->
+    <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">A powerful tool for managing networks and troubleshoot network problems!</system:String>
     <system:String x:Key="String_Settings">Settings</system:String>
