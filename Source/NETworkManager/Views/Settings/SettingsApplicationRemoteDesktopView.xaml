@@ -8,11 +8,11 @@
         mc:Ignorable="d">
     <StackPanel>
         <TextBlock Text="{DynamicResource String_Header_LocalDevicesAndResources}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="Redirect clipboard" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectClipboard}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="Redirect devices" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectDevices}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="Redirect drives" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectDrives}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="Redirect ports" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectPorts}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="Redirect smartcards" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectSmartcards}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="Redirect printers" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectPrinters}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{DynamicResource String_RedirectClipboard}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectClipboard}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{DynamicResource String_RedirectDevices}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectDevices}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{DynamicResource String_RedirectDrives}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectDrives}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{DynamicResource String_RedirectPorts}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectPorts}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{DynamicResource String_RedirectSmartcards}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectSmartCards}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{DynamicResource String_RedirectPrinters}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectPrinters}" Margin="0,0,0,10"/>
     </StackPanel>
 </UserControl>

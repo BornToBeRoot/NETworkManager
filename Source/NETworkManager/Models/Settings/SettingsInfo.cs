@@ -1151,16 +1151,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _remoteDesktop_RedirectSmartcards;
-        public bool RemoteDesktop_RedirectSmartcards
+        private bool _remoteDesktop_RedirectSmartCards;
+        public bool RemoteDesktop_RedirectSmartCards
         {
-            get { return _remoteDesktop_RedirectSmartcards; }
+            get { return _remoteDesktop_RedirectSmartCards; }
             set
             {
-                if (value == _remoteDesktop_RedirectSmartcards)
+                if (value == _remoteDesktop_RedirectSmartCards)
                     return;
 
-                _remoteDesktop_RedirectSmartcards = value;
+                _remoteDesktop_RedirectSmartCards = value;
                 SettingsChanged = true;
             }
         }

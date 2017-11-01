@@ -1,8 +1,4 @@
-﻿using Heijden.DNS;
-using NETworkManager.Models.Settings;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using NETworkManager.Models.Settings;
 
 namespace NETworkManager.ViewModels.Settings
 {
@@ -79,19 +75,19 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-        private bool _redirectSmartcards;
-        public bool RedirectSmartcards
+        private bool _redirectSmartCards;
+        public bool RedirectSmartCards
         {
-            get { return _redirectSmartcards; }
+            get { return _redirectSmartCards; }
             set
             {
-                if (value == _redirectSmartcards)
+                if (value == _redirectSmartCards)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.RemoteDesktop_RedirectSmartcards = value;
+                    SettingsManager.Current.RemoteDesktop_RedirectSmartCards = value;
 
-                _redirectSmartcards = value;
+                _redirectSmartCards = value;
                 OnPropertyChanged();
             }
         }
@@ -128,7 +124,7 @@ namespace NETworkManager.ViewModels.Settings
             RedirectDevices = SettingsManager.Current.RemoteDesktop_RedirectDevices;
             RedirectDrives = SettingsManager.Current.RemoteDesktop_RedirectDrives;
             RedirectPorts = SettingsManager.Current.RemoteDesktop_RedirectPorts;
-            RedirectSmartcards = SettingsManager.Current.RemoteDesktop_RedirectSmartcards;
+            RedirectSmartCards = SettingsManager.Current.RemoteDesktop_RedirectSmartCards;
             RedirectPrinters = SettingsManager.Current.RemoteDesktop_RedirectPrinters;
         }
         #endregion

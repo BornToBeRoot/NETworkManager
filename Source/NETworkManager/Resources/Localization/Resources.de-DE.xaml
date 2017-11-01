@@ -175,6 +175,7 @@
     <system:String x:Key="String_NetworkInterfaceProfiles">Netzwerkinterface Profile</system:String>
     <system:String x:Key="String_PortScannerProfiles">Port-Scanner Profile</system:String>
     <system:String x:Key="String_WakeOnLANClients">Wake on LAN Clients</system:String>
+    <system:String x:Key="String_RemoteDesktopSessions">Remote Desktop Sitzungen</system:String>
     <system:String x:Key="String_SelectedSettingsAreReset">Die ausgewählten Einstellungen werden zurückgesetzt.</system:String>
     <system:String x:Key="String_TheSettingsLocationIsNotAffected">Der Speicherpfad ist hiervon nicht betroffen</system:String>
     <system:String x:Key="String_ApplicationIsRestartedAfterwards">Die Anwendung wird danach neu gestartet</system:String>
@@ -238,6 +239,7 @@
     <system:String x:Key="String_WakeOnLANClientsReloaded">Wake on LAN Clients neu geladen</system:String>
     <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Netzwerkinterface Profile neu geladen</system:String>
     <system:String x:Key="String_PortScannerProfilesReloaded">Port-Scanner Profile neu geladen</system:String>
+    <system:String x:Key="String_RemoteDesktopSessionsReloaded">Remote Desktop Sitzungen neu geladen</system:String>
     <system:String x:Key="String_ComingSoon">Kommt demnächst!</system:String>
     <system:String x:Key="String_Override">überschreiben</system:String>
     <system:String x:Key="String_Add">hinzufügen</system:String>
@@ -268,7 +270,13 @@
     <system:String x:Key="String_IPScannerProfiles">IP-Scanner Profile</system:String>
     <system:String x:Key="String_IPRange">IP-Bereich</system:String>
     <system:String x:Key="String_NothingFound">Nichts gefunden!</system:String>
-
+    <system:String x:Key="String_RedirectClipboard">Zwischenablage umleiten</system:String>
+    <system:String x:Key="String_RedirectDevices">Geräte umleiten</system:String>
+    <system:String x:Key="String_RedirectDrives">Laufwerke umleiten</system:String>
+    <system:String x:Key="String_RedirectPorts">Ports umleiten</system:String>
+    <system:String x:Key="String_RedirectSmartcards">Smartcards umleiten</system:String>
+    <system:String x:Key="String_RedirectPrinters">Drucker umleiten</system:String>
+    
     <!-- ToolTip -->
     <system:String x:Key="String_ToolTip_Settings">Einstellungen</system:String>
     <system:String x:Key="String_ToolTip_Expand">Erweitern</system:String>

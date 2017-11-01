@@ -132,18 +132,19 @@ namespace NETworkManager.ViewModels.Applications
         {
             ExpandSessionView = SettingsManager.Current.RemoteDesktop_ExpandSessionView;
         }
-
-        public void OnShutdown()
-        {
-            if (RemoteDesktopSessionManager.SessionsChanged)
-                RemoteDesktopSessionManager.Save();
-        }
         #endregion
 
         #region Methods
         private void ConnectSession(Models.RemoteDesktop.RemoteDesktopSessionInfo sessionInfo, string Header = null)
         {
-            TabContents.Add(new DragablzTabContent(string.IsNullOrEmpty(Header) ? sessionInfo.Hostname : Header, new RemoteDesktopControl(sessionInfo)));
+            // Add global settings...
+            sessionInfo.RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;
+            sessionInfo.RedirectDevices = SettingsManager.Current.RemoteDesktop_RedirectDevices;
+            sessionInfo.RedirectDrives = SettingsManager.Current.RemoteDesktop_RedirectDrives;
+            sessionInfo.RedirectPorts = SettingsManager.Current.RemoteDesktop_RedirectPorts;
+            sessionInfo.RedirectSmartCards = SettingsManager.Current.RemoteDesktop_RedirectSmartCards;
+
+            TabContents.Add(new DragablzTabContent(Header ?? sessionInfo.Hostname, new RemoteDesktopControl(sessionInfo)));
             SelectedTabIndex = TabContents.Count - 1;
         }
 
@@ -186,7 +187,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 Models.RemoteDesktop.RemoteDesktopSessionInfo remoteDesktopSessionInfo = new Models.RemoteDesktop.RemoteDesktopSessionInfo
                 {
-                    Hostname = instance.Hostname
+                    Hostname = instance.Hostname,
                 };
 
                 ConnectSession(remoteDesktopSessionInfo);

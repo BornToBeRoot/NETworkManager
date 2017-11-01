@@ -258,6 +258,48 @@ namespace NETworkManager.ViewModels.Settings
                 OnPropertyChanged();
             }
         }
+
+        private bool _importRemoteDesktopSessionsExists;
+        public bool ImportRemoteDesktopSessionsExists
+        {
+            get { return _importRemoteDesktopSessionsExists; }
+            set
+            {
+                if (value == _importRemoteDesktopSessionsExists)
+                    return;
+
+                _importRemoteDesktopSessionsExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _importRemoteDesktopSessions;
+        public bool ImportRemoteDesktopSessions
+        {
+            get { return _importRemoteDesktopSessions; }
+            set
+            {
+                if (value == _importRemoteDesktopSessions)
+                    return;
+
+                _importRemoteDesktopSessions = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _importOverrideRemoteDesktopSessions = true;
+        public bool ImportOverrideRemoteDesktopSessions
+        {
+            get { return _importOverrideRemoteDesktopSessions; }
+            set
+            {
+                if (value == _importOverrideRemoteDesktopSessions)
+                    return;
+
+                _importOverrideRemoteDesktopSessions = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Export
@@ -414,6 +456,34 @@ namespace NETworkManager.ViewModels.Settings
                 OnPropertyChanged();
             }
         }
+
+        private bool _remoteDesktopSesionsExists;
+        public bool RemoteDesktopSessionsExists
+        {
+            get { return _remoteDesktopSesionsExists; }
+            set
+            {
+                if (value == _remoteDesktopSesionsExists)
+                    return;
+
+                _remoteDesktopSesionsExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _exportRemoteDesktopSessions;
+        public bool ExportRemoteDesktopSessions
+        {
+            get { return _exportRemoteDesktopSessions; }
+            set
+            {
+                if (value == _exportRemoteDesktopSessions)
+                    return;
+
+                _exportRemoteDesktopSessions = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
         #endregion
 
@@ -458,6 +528,7 @@ namespace NETworkManager.ViewModels.Settings
                 ImportIPScannerProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.IPScannerProfiles);
                 ImportWakeOnLANClientsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients);
                 ImportPortScannerProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.PortScannerProfiles);
+                ImportRemoteDesktopSessionsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.RemoteDesktopSessions);
             }
             catch (ImportFileNotValidException)
             {
@@ -527,6 +598,15 @@ namespace NETworkManager.ViewModels.Settings
                         PortScannerProfileManager.Load(!ImportOverridePortScannerProfiles);
                 }
 
+                if (ImportRemoteDesktopSessionsExists && (ImportEverything || ImportRemoteDesktopSessions))
+                {
+                    importOptions.Add(ImportExportManager.ImportExportOptions.RemoteDesktopSessions);
+
+                    // Load remote desktop sessions (option: add)
+                    if (RemoteDesktopSessionManager.Sessions == null)
+                        RemoteDesktopSessionManager.Load(!ImportOverrideRemoteDesktopSessions);
+                }
+
                 // Import (copy) files from zip archive
                 ImportExportManager.Import(ImportLocationSelectedPath, importOptions);
 
@@ -542,6 +622,9 @@ namespace NETworkManager.ViewModels.Settings
 
                 if (importOptions.Contains(ImportExportManager.ImportExportOptions.PortScannerProfiles))
                     PortScannerProfileManager.Import(ImportEverything || ImportOverridePortScannerProfiles);
+
+                if (importOptions.Contains(ImportExportManager.ImportExportOptions.RemoteDesktopSessions))
+                    RemoteDesktopSessionManager.Import(ImportEverything || ImportOverrideRemoteDesktopSessions);
 
                 // Show the user a message what happened
                 if (!ImportExportManager.ForceRestart)
@@ -561,7 +644,10 @@ namespace NETworkManager.ViewModels.Settings
 
                     if (importOptions.Contains(ImportExportManager.ImportExportOptions.PortScannerProfiles))
                         message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_PortScannerProfilesReloaded"] as string);
-                    
+
+                    if(importOptions.Contains(ImportExportManager.ImportExportOptions.RemoteDesktopSessions))
+                        message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_RemoteDesktopSessionsReloaded"] as string);
+
                     await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, message, MessageDialogStyle.Affirmative, settings);
 
                     return;
@@ -595,6 +681,9 @@ namespace NETworkManager.ViewModels.Settings
 
             if (PortScannerProfilesExists && (ExportEverything || ExportPortScannerProfiles))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.PortScannerProfiles);
+
+            if (RemoteDesktopSessionsExists && (ExportEverything || ExportRemoteDesktopSessions))
+                exportOptions.Add(ImportExportManager.ImportExportOptions.RemoteDesktopSessions);
 
             System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog()
             {
@@ -634,12 +723,16 @@ namespace NETworkManager.ViewModels.Settings
             if (PortScannerProfileManager.ProfilesChanged)
                 PortScannerProfileManager.Save();
 
+            if (RemoteDesktopSessionManager.SessionsChanged)
+                RemoteDesktopSessionManager.Save();
+
             // Check if files exist
             ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
             NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
             IPScannerProfilesExists = File.Exists(IPScannerProfileManager.GetProfilesFilePath());
             WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
             PortScannerProfilesExists = File.Exists(PortScannerProfileManager.GetProfilesFilePath());
+            RemoteDesktopSessionsExists = File.Exists(RemoteDesktopSessionManager.GetSessionsFilePath());
         }
         #endregion
     }

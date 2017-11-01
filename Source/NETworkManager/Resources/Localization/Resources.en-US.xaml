@@ -175,6 +175,7 @@
     <system:String x:Key="String_NetworkInterfaceProfiles">Network interface profiles</system:String>
     <system:String x:Key="String_PortScannerProfiles">Port-Scanner profiles</system:String>
     <system:String x:Key="String_WakeOnLANClients">Wake on LAN clients</system:String>
+    <system:String x:Key="String_RemoteDesktopSessions">Remote Desktop sessions</system:String>
     <system:String x:Key="String_SelectedSettingsAreReset">The selected settings are reset.</system:String>
     <system:String x:Key="String_TheSettingsLocationIsNotAffected">The settings location is not affected</system:String>
     <system:String x:Key="String_ApplicationIsRestartedAfterwards">Application is restarted afterwards</system:String>
@@ -238,6 +239,7 @@
     <system:String x:Key="String_WakeOnLANClientsReloaded">Wake on LAN clients reloaded</system:String>
     <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Network interface profiles reloaded</system:String>
     <system:String x:Key="String_PortScannerProfilesReloaded">Port-Scanner profiles reloaded</system:String>
+    <system:String x:Key="String_RemoteDesktopSessionsReloaded">Remote Desktop sessions reloaded</system:String>
     <system:String x:Key="String_ComingSoon">Coming Soon!</system:String>
     <system:String x:Key="String_Override">override</system:String>
     <system:String x:Key="String_Add">add</system:String>
@@ -268,6 +270,12 @@
     <system:String x:Key="String_IPScannerProfiles">IP-Scanner profiles</system:String>
     <system:String x:Key="String_IPRange">IP range</system:String>
     <system:String x:Key="String_NothingFound">Nothing found!</system:String>
+    <system:String x:Key="String_RedirectClipboard">Redirect clipboard</system:String>
+    <system:String x:Key="String_RedirectDevices">Redirect devices</system:String>
+    <system:String x:Key="String_RedirectDrives">Redirect drives</system:String>
+    <system:String x:Key="String_RedirectPorts">Redirect ports</system:String>
+    <system:String x:Key="String_RedirectSmartcards">Redirect smartcards</system:String>
+    <system:String x:Key="String_RedirectPrinters">Redirect printers</system:String>
     
     <!-- ToolTip -->
     <system:String x:Key="String_ToolTip_Settings">Settings</system:String>

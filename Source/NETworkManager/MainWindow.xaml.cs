@@ -428,7 +428,7 @@ namespace NETworkManager
 
         #endregion
 
-        #region ListView Search/Filter              
+        #region Methods           
         private void ClearSearchFilterOnApplicationListMinimize()
         {
             if (ApplicationView_Expand)

@@ -229,6 +229,34 @@ namespace NETworkManager.ViewModels.Settings
                 OnPropertyChanged();
             }
         }
+
+        private bool _remoteDesktopSessionsExists;
+        public bool RemoteDesktopSessionsExists
+        {
+            get { return _remoteDesktopSessionsExists; }
+            set
+            {
+                if (value == _remoteDesktopSessionsExists)
+                    return;
+
+                _remoteDesktopSessionsExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _resetRemoteDesktopSessions;
+        public bool ResetRemoteDesktopSessions
+        {
+            get { return _resetRemoteDesktopSessions; }
+            set
+            {
+                if (value == _resetRemoteDesktopSessions)
+                    return;
+
+                _resetRemoteDesktopSessions = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, LoadSettings
@@ -352,6 +380,9 @@ namespace NETworkManager.ViewModels.Settings
             if (PortScannerProfilesExists && (ResetEverything || ResetPortScannerProfiles))
                 PortScannerProfileManager.Reset();
 
+            if (RemoteDesktopSessionsExists && (ResetEverything || ResetRemoteDesktopSessions))
+                RemoteDesktopSessionManager.Reset();
+
             // Restart after reset or show a completed message
             if (forceRestart)
             {
@@ -412,12 +443,16 @@ namespace NETworkManager.ViewModels.Settings
             if (PortScannerProfileManager.ProfilesChanged)
                 PortScannerProfileManager.Save();
 
+            if (RemoteDesktopSessionManager.SessionsChanged)
+                RemoteDesktopSessionManager.Save();
+
             // Check if files exist
             ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
             NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
             IPScannerProfilesExists = File.Exists(IPScannerProfileManager.GetProfilesFilePath());
             WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
             PortScannerProfilesExists = File.Exists(PortScannerProfileManager.GetProfilesFilePath());
+            RemoteDesktopSessionsExists = File.Exists(RemoteDesktopSessionManager.GetSessionsFilePath());
         }
         #endregion
     }

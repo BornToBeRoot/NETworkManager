@@ -46,7 +46,7 @@ namespace NETworkManager
             // Get assembly informations   
             AssemblyManager.Load();
 
-            // Load settings
+            // Load application settings (profiles/sessions/clients are loaded when needed)
             SettingsManager.Load();
 
             // Load localization (requires settings to be loaded first)
@@ -92,6 +92,21 @@ namespace NETworkManager
             {
                 if (SettingsManager.Current.SettingsChanged)
                     SettingsManager.Save();
+
+                if (NetworkInterfaceProfileManager.ProfilesChanged)
+                    NetworkInterfaceProfileManager.Save();
+
+                if (IPScannerProfileManager.ProfilesChanged)
+                    IPScannerProfileManager.Save();
+
+                if (WakeOnLANClientManager.ClientsChanged)
+                    WakeOnLANClientManager.Save();
+
+                if (PortScannerProfileManager.ProfilesChanged)
+                    PortScannerProfileManager.Save();
+
+                if (RemoteDesktopSessionManager.SessionsChanged)
+                    RemoteDesktopSessionManager.Save();
             }
         }
     }

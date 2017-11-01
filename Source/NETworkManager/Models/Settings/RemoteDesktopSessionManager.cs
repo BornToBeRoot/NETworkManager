@@ -90,9 +90,14 @@ namespace NETworkManager.Models.Settings
         public static void Reset()
         {
             if (Sessions == null)
-                Sessions = new ObservableCollection<RemoteDesktopSessionInfo>();
+            {
+                Load(false);
+                SessionsChanged = true;
+            }
             else
+            {
                 Sessions.Clear();
+            }
         }
 
         public static void AddSession(RemoteDesktopSessionInfo session)

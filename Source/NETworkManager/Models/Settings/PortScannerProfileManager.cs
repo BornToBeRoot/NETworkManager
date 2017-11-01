@@ -110,9 +110,14 @@ namespace NETworkManager.Models.Settings
         public static void Reset()
         {
             if (Profiles == null)
-                Profiles = new ObservableCollection<PortScannerProfileInfo>();
+            {
+                Load(false);
+                ProfilesChanged = true;
+            }
             else
+            {
                 Profiles.Clear();
+            }
 
             // Add default profiles
             if (Profiles.Count == 0)

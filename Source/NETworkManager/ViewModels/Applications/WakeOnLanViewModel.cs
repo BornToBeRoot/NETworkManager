@@ -232,12 +232,6 @@ namespace NETworkManager.ViewModels.Applications
             Port = SettingsManager.Current.WakeOnLAN_DefaultPort;
             ExpandClientView = SettingsManager.Current.WakeOnLAN_ExpandClientView;
         }
-
-        public void OnShutdown()
-        {
-            if (WakeOnLANClientManager.ClientsChanged)
-                WakeOnLANClientManager.Save();
-        }
         #endregion
 
         #region ICommands & Actions

@@ -37,7 +37,7 @@ namespace NETworkManager.Models.Settings
             if (deserialize)
                 Deserialize().ForEach(profile => AddProfile(profile));
 
-            Profiles.CollectionChanged += Templates_CollectionChanged; ;
+            Profiles.CollectionChanged += Templates_CollectionChanged;
         }
 
         public static void Import(bool overwrite)
@@ -90,9 +90,14 @@ namespace NETworkManager.Models.Settings
         public static void Reset()
         {
             if (Profiles == null)
-                Profiles = new ObservableCollection<IPScannerProfileInfo>();
+            {
+                Load(false);
+                ProfilesChanged = true;
+            }
             else
+            {
                 Profiles.Clear();
+            }
         }
 
         public static void AddProfile(IPScannerProfileInfo profile)

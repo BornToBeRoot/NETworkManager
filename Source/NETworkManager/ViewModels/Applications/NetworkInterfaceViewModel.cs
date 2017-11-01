@@ -693,13 +693,7 @@ namespace NETworkManager.ViewModels.Applications
         private void LoadSettings()
         {
             ExpandProfileView = SettingsManager.Current.NetworkInterface_ExpandProfileView;
-        }
-
-        public void OnShutdown()
-        {
-            if (NetworkInterfaceProfileManager.ProfilesChanged)
-                NetworkInterfaceProfileManager.Save();
-        }
+        }             
         #endregion
 
         #region ICommands & Actions

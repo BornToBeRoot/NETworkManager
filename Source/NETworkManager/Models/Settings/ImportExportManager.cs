@@ -84,7 +84,8 @@ namespace NETworkManager.Models.Settings
             NetworkInterfaceProfiles,
             IPScannerProfiles,
             WakeOnLANClients,
-            PortScannerProfiles
+            PortScannerProfiles,
+            RemoteDesktopSessions
         }
 
         public static ImportExportOptions GetImportExportOption(string fileName)
@@ -105,6 +106,9 @@ namespace NETworkManager.Models.Settings
             if (fileName == PortScannerProfileManager.ProfilesFileName)
                 return ImportExportOptions.PortScannerProfiles;
 
+            if (fileName == RemoteDesktopSessionManager.SessionsFileName)
+                return ImportExportOptions.RemoteDesktopSessions;
+
             return ImportExportOptions.None;
         }
 
@@ -122,6 +126,8 @@ namespace NETworkManager.Models.Settings
                     return WakeOnLANClientManager.ClientsFileName;
                 case ImportExportOptions.PortScannerProfiles:
                     return PortScannerProfileManager.ProfilesFileName;
+                case ImportExportOptions.RemoteDesktopSessions:
+                    return RemoteDesktopSessionManager.SessionsFileName;
             }
 
             return string.Empty;
@@ -141,6 +147,8 @@ namespace NETworkManager.Models.Settings
                     return WakeOnLANClientManager.GetClientsFilePath();
                 case ImportExportOptions.PortScannerProfiles:
                     return PortScannerProfileManager.GetProfilesFilePath();
+                case ImportExportOptions.RemoteDesktopSessions:
+                    return RemoteDesktopSessionManager.GetSessionsFilePath();
             }
 
             return string.Empty;

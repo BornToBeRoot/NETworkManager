@@ -90,9 +90,14 @@ namespace NETworkManager.Models.Settings
         public static void Reset()
         {
             if (Clients == null)
-                Clients = new ObservableCollection<WakeOnLANClientInfo>();
+            {
+                Load(false);
+                ClientsChanged = true;
+            }
             else
+            {
                 Clients.Clear();
+            }
         }
 
         public static void AddClient(WakeOnLANClientInfo client)

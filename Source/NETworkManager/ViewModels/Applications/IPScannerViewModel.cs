@@ -361,10 +361,6 @@ namespace NETworkManager.ViewModels.Applications
             // Stop scan
             if (IsScanRunning)
                 StopScan();
-
-            // Save profiles
-            if (IPScannerProfileManager.ProfilesChanged)
-                IPScannerProfileManager.Save();
         }
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)

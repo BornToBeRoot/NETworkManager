@@ -79,12 +79,12 @@ namespace NETworkManager.Controls
             rdpClient.AdvancedSettings9.EnableCredSspSupport = true;
 
             // Devices and resources
-            rdpClient.AdvancedSettings9.RedirectClipboard = false;
-            rdpClient.AdvancedSettings9.RedirectDevices = false;
-            rdpClient.AdvancedSettings9.RedirectDrives = false;
-            rdpClient.AdvancedSettings9.RedirectPorts = false;
-            rdpClient.AdvancedSettings9.RedirectSmartCards = false;
-            rdpClient.AdvancedSettings9.RedirectPrinters = false;
+            rdpClient.AdvancedSettings9.RedirectClipboard = info.RedirectClipboard;
+            rdpClient.AdvancedSettings9.RedirectDevices = info.RedirectDevices;
+            rdpClient.AdvancedSettings9.RedirectDrives = info.RedirectDrives;
+            rdpClient.AdvancedSettings9.RedirectPorts = info.RedirectPorts;
+            rdpClient.AdvancedSettings9.RedirectSmartCards = info.RedirectSmartCards;
+            rdpClient.AdvancedSettings9.RedirectPrinters = info.RedirectPrinters;
 
             // Display
             rdpClient.ColorDepth = 24;      // 8, 15, 16, 24

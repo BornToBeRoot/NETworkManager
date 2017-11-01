@@ -386,10 +386,6 @@ namespace NETworkManager.ViewModels.Applications
             // Stop scan
             if (IsScanRunning)
                 StopScan();
-
-            // Save profiles
-            if (PortScannerProfileManager.ProfilesChanged)
-                PortScannerProfileManager.Save();
         }
         #endregion
 

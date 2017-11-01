@@ -78,9 +78,14 @@ namespace NETworkManager.Models.Settings
         public static void Reset()
         {
             if (Profiles == null)
-                Profiles = new ObservableCollection<NetworkInterfaceProfileInfo>();
+            {
+                Load(false);
+                ProfilesChanged = true;
+            }
             else
+            {
                 Profiles.Clear();
+            }
         }
 
         public static void AddProfile(NetworkInterfaceProfileInfo profile)
