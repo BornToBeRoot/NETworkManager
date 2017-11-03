@@ -36,7 +36,7 @@ _On Windows 10 systems, SmartScreen may prevent the execution of the_ `NETworkMa
 
 # System requirements
 
-- Windows 7 or higher
+- Windows 7 or later
 - .NET-Framework 4.6
 
 # Changelog
