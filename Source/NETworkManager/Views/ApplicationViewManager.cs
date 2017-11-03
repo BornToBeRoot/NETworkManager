@@ -22,6 +22,7 @@ namespace NETworkManager.Views
                     new ApplicationViewInfo(Name.Traceroute,  new PackIconModern() { Kind = PackIconModernKind.TransitConnection }),
                     new ApplicationViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.Dna }),
                     new ApplicationViewInfo(Name.RemoteDesktop, new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.Desktop}),
+                    new ApplicationViewInfo(Name.ARPTable, new PackIconMaterial() { Kind = PackIconMaterialKind.Matrix}),
                     new ApplicationViewInfo(Name.Wiki, new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.Book })
                 };
             }
@@ -44,6 +45,7 @@ namespace NETworkManager.Views
             DNSLookup,
             PortScanner,
             RemoteDesktop,
+            ARPTable,
             Wiki
         }
     }
