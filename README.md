@@ -2,13 +2,13 @@
 
 NETworkManager is a powerful tool for managing networks and troubleshoot network problems!
 
-![](https://github.com/BornToBeRoot/NETworkManager/blob/master/Documentation/Images/NETworkManager_v1.2.0.0.gif)
+![](https://github.com/BornToBeRoot/NETworkManager/blob/master/Documentation/Images/NETworkManager_v1.3.0.0.gif)
 
 # Download
 
-Latest binary: [Version 1.2.1.0 (BETA)](https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.2.1.0_BETA/NETworkManager_v1.2.1.0_BETA.zip)
+Latest binary: [NETworkMananger_v.1.3.0.0.zip](https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.3.0.0/NETworkManager_v1.3.0.0.zip)
 
-SHA256: `A67F0DE6ED4CCEA0D966A878B69DEA9C8DB12F2F3498DFA261464F076332DF9F`
+SHA256: `978FEDA24B66488D2CDC6BEC733E0BE6BD30EB1F77D18506680DE8E1B74F249A`
 
 The software is portable by default. Simply unpack the ZIP archive and put the files somewhere the windows user has write permissions.
 
@@ -24,7 +24,10 @@ _On Windows 10 systems, SmartScreen may prevent the execution of the_ `NETworkMa
 - Ping
 - DNS Lookup
 - Port-Scanner
+- Remote Desktop
 - Wiki (OUI, Port)
+
+![](https://github.com/BornToBeRoot/NETworkManager/blob/master/Documentation/Images/Remote-Desktop.png)
 
 # Available languages
 
