@@ -594,10 +594,7 @@
         <Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource GrayBrush8}">
             <StatusBar Foreground="{DynamicResource GrayBrush3}">
                 <StatusBarItem>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource GrayBrush3}" FontWeight="Bold" />
-                        <TextBlock Text="BETA" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource AccentColorBrush}" Margin="10,0,0,0" />
-                    </StackPanel>
+                    <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource GrayBrush3}" FontWeight="Bold" />
                 </StatusBarItem>
             </StatusBar>
         </Border>
