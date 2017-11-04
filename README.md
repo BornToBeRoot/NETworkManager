@@ -10,7 +10,7 @@ Latest binary: [NETworkMananger_v.1.3.0.0.zip](https://github.com/BornToBeRoot/N
 
 SHA256: `978FEDA24B66488D2CDC6BEC733E0BE6BD30EB1F77D18506680DE8E1B74F249A`
 
-The software is portable by default. Simply unpack the ZIP archive and put the files somewhere the windows user has write permissions.
+The software is portable by default, simply unpack the ZIP archive and save it in a folder you have write permissions on.
 
 _On Windows 10 systems, SmartScreen may prevent the execution of the_ `NETworkManger.exe` _, because the binary is not digitaly signed. To open it anyway, click in the dialog on "More info" then click the button "Run anyway"._
 
@@ -47,7 +47,7 @@ The changelog can be found [here](https://github.com/BornToBeRoot/NETworkManager
 
 Check the [Issues](https://github.com/BornToBeRoot/NETworkManager/issues) if the problem has already been reported. If not, submit a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new).
 
-The more information you can provide me, the quicker i can reproduce and solve the issue.
+The more information you can provide me, the quicker I can reproduce and solve the issue.
 
 You can also fork the repository, fix the issue by yourself and send me a pull request.
 
