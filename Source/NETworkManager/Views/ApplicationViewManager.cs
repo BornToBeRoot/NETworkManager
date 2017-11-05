@@ -16,12 +16,12 @@ namespace NETworkManager.Views
                     new ApplicationViewInfo(Name.NetworkInterface, new PackIconModern() { Kind = PackIconModernKind.Network }),
                     new ApplicationViewInfo(Name.IPScanner, new PackIconMaterial() { Kind = PackIconMaterialKind.Sitemap }),
                     new ApplicationViewInfo(Name.PortScanner, new PackIconModern() { Kind = PackIconModernKind.NetworkPort}),
-                    new ApplicationViewInfo(Name.SubnetCalculator, new PackIconMaterial() { Kind = PackIconMaterialKind.Calculator }),
-                    new ApplicationViewInfo(Name.WakeOnLAN, new PackIconMaterial() { Kind = PackIconMaterialKind.Power }),
                     new ApplicationViewInfo(Name.Ping, new PackIconMaterial() { Kind = PackIconMaterialKind.LanConnect }),
                     new ApplicationViewInfo(Name.Traceroute,  new PackIconModern() { Kind = PackIconModernKind.TransitConnection }),
                     new ApplicationViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.Dna }),
                     new ApplicationViewInfo(Name.RemoteDesktop, new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.Desktop}),
+                    new ApplicationViewInfo(Name.WakeOnLAN, new PackIconMaterial() { Kind = PackIconMaterialKind.Power }),
+                    new ApplicationViewInfo(Name.SubnetCalculator, new PackIconMaterial() { Kind = PackIconMaterialKind.Calculator }),
                     new ApplicationViewInfo(Name.Wiki, new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.Book })
                 };
             }
@@ -37,13 +37,13 @@ namespace NETworkManager.Views
             None,
             NetworkInterface,
             IPScanner,
-            WakeOnLAN,
-            Traceroute,
-            SubnetCalculator,
-            Ping,
-            DNSLookup,
             PortScanner,
+            Ping,
+            Traceroute,
+            DNSLookup,
             RemoteDesktop,
+            WakeOnLAN,
+            SubnetCalculator,
             Wiki
         }
     }
