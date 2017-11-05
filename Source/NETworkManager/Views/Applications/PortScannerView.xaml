@@ -56,10 +56,10 @@
                             <RowDefinition Height="10" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Column="0" Grid.Row="0" DataContext="{DynamicResource String_Destination}" Text="{Binding Path=., StringFormat={}{0}:}" Style="{StaticResource CenterTextBlock}" />
-                        <ComboBox Grid.Column="2" Grid.Row="0" x:Name="cbHostnameOrIPAddress" ItemsSource="{Binding HostnameOrIPAddressHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameAndOrIPAddress}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}"  Style="{StaticResource HistoryComboBox}">
+                        <TextBlock Grid.Column="0" Grid.Row="0" DataContext="{DynamicResource String_Hostname}" Text="{Binding Path=., StringFormat={}{0}:}" Style="{StaticResource CenterTextBlock}" />
+                        <ComboBox Grid.Column="2" Grid.Row="0" x:Name="cbHostname" ItemsSource="{Binding HostnameHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameAndOrIPAddress}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                             <ComboBox.Text>
-                                <Binding Path="HostnameOrIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="Hostname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
@@ -83,7 +83,7 @@
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                                 <Setter Property="IsEnabled" Value="True" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=cbHostnameOrIPAddress, Path=(Validation.HasError)}" Value="True">
+                                    <DataTrigger Binding="{Binding ElementName=cbHostname, Path=(Validation.HasError)}" Value="True">
                                         <Setter Property="IsEnabled" Value="False" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding ElementName=cbPorts, Path=(Validation.HasError)}" Value="True" >

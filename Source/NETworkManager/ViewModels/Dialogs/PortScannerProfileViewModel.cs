@@ -42,16 +42,16 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
-        private string _hostnameOrIPAddress;
-        public string HostnameOrIPAddress
+        private string _hostname;
+        public string Hostname
         {
-            get { return _hostnameOrIPAddress; }
+            get { return _hostname; }
             set
             {
-                if (value == _hostnameOrIPAddress)
+                if (value == _hostname)
                     return;
 
-                _hostnameOrIPAddress = value;
+                _hostname = value;
 
                 if (!_isLoading)
                     HasProfileInfoChanged();
@@ -101,7 +101,7 @@ namespace NETworkManager.ViewModels.Dialogs
         {
             get { return _groups; }
         }
-
+               
         private PortScannerProfileInfo _profileInfo;
 
         private bool _profileInfoChanged;
@@ -126,7 +126,7 @@ namespace NETworkManager.ViewModels.Dialogs
             _profileInfo = profileInfo ?? new PortScannerProfileInfo();
 
             Name = _profileInfo.Name;
-            HostnameOrIPAddress = _profileInfo.HostnameOrIPAddress;
+            Hostname = _profileInfo.Hostname;
             Ports = _profileInfo.Ports;
             Group = string.IsNullOrEmpty(_profileInfo.Group) ? Application.Current.Resources["String_Default"] as string : _profileInfo.Group;
 
@@ -138,7 +138,7 @@ namespace NETworkManager.ViewModels.Dialogs
 
         private void HasProfileInfoChanged()
         {
-            ProfileInfoChanged = (_profileInfo.Name != Name) || (_profileInfo.HostnameOrIPAddress != HostnameOrIPAddress) || (_profileInfo.Ports != Ports) || (_profileInfo.Group != Group);
+            ProfileInfoChanged = (_profileInfo.Name != Name) || (_profileInfo.Hostname != Hostname) || (_profileInfo.Ports != Ports) || (_profileInfo.Group != Group);
         }
     }
 }

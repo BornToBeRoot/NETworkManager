@@ -279,6 +279,8 @@
     <system:String x:Key="String_RedirectPrinters">Redirect printers</system:String>
     <system:String x:Key="String_ScreenResolution">Screen resolution</system:String>
     <system:String x:Key="String_ColorDepthBit">Color depth (bit)</system:String>
+    <system:String x:Key="String_Tags">Tags</system:String>
+    
     <!-- ToolTip -->
     <system:String x:Key="String_ToolTip_Settings">Settings</system:String>
     <system:String x:Key="String_ToolTip_Expand">Expand</system:String>

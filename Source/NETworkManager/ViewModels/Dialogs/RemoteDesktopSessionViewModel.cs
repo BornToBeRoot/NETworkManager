@@ -84,6 +84,24 @@ namespace NETworkManager.ViewModels.Dialogs
             get { return _groups; }
         }
 
+        private string _tags;
+        public string Tags
+        {
+            get { return _tags; }
+            set
+            {
+                if (value == _tags)
+                    return;
+
+                _tags = value;
+
+                if (!_isLoading)
+                    HasSessionInfoChanged();
+
+                OnPropertyChanged();
+            }
+        }
+
         private RemoteDesktopSessionInfo _sessionInfo;
 
         private bool _sessionInfoChanged;
@@ -110,6 +128,7 @@ namespace NETworkManager.ViewModels.Dialogs
             Name = _sessionInfo.Name;
             Hostname = _sessionInfo.Hostname;
             Group = string.IsNullOrEmpty(_sessionInfo.Group) ? Application.Current.Resources["String_Default"] as string : _sessionInfo.Group;
+            Tags = _sessionInfo.Tags;
 
             _groups = CollectionViewSource.GetDefaultView(groups);
             _groups.SortDescriptions.Add(new SortDescription());
@@ -119,7 +138,7 @@ namespace NETworkManager.ViewModels.Dialogs
 
         private void HasSessionInfoChanged()
         {
-            SessionInfoChanged = (_sessionInfo.Name != Name) || (_sessionInfo.Hostname != Hostname) || (_sessionInfo.Group != Group);
+            SessionInfoChanged = (_sessionInfo.Name != Name) || (_sessionInfo.Hostname != Hostname) || (_sessionInfo.Group != Group) || (_sessionInfo.Tags != Tags);
         }
     }
 }

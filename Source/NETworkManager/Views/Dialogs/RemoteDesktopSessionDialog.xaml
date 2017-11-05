@@ -18,6 +18,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -53,6 +55,16 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
+            <TextBlock Grid.Column="0" Grid.Row="6" DataContext="{DynamicResource String_Tags}" Text="{Binding Path=., StringFormat={}{0}:}" />
+            <TextBox x:Name="txtTags" Grid.Column="1" Grid.Row="6">
+                <TextBox.Text>
+                    <Binding Path="Tags" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{DynamicResource String_Button_Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />

@@ -34,8 +34,8 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="2" DataContext="{DynamicResource String_Destination}" Text="{Binding Path=., StringFormat={}{0}:}" />
-            <TextBox x:Name="txtHostnameOrIPAddress" Grid.Column="1" Grid.Row="2" Text="{Binding HostnameOrIPAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Grid.Column="0" Grid.Row="2" DataContext="{DynamicResource String_Hostname}" Text="{Binding Path=., StringFormat={}{0}:}" />
+            <TextBox x:Name="txtHostname" Grid.Column="1" Grid.Row="2" Text="{Binding Hostname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Grid.Column="0" Grid.Row="4" DataContext="{DynamicResource String_Ports}" Text="{Binding Path=., StringFormat={}{0}:}" />
             <TextBox x:Name="txtPorts" Grid.Column="1" Grid.Row="4">
                 <TextBox.Text>

@@ -279,6 +279,7 @@
     <system:String x:Key="String_RedirectPrinters">Drucker umleiten</system:String>
     <system:String x:Key="String_ScreenResolution">Bildschirmauflösung</system:String>
     <system:String x:Key="String_ColorDepthBit">Farbtiefe (Bit)</system:String>
+    <system:String x:Key="String_Tags">Tags</system:String>
     
     <!-- ToolTip -->
     <system:String x:Key="String_ToolTip_Settings">Einstellungen</system:String>

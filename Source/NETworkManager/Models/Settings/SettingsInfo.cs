@@ -691,16 +691,16 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region PortScanner
-        private List<string> _portScanner_HostnameOrIPAddressHistory = new List<string>();
-        public List<string> PortScanner_HostnameOrIPAddressHistory
+        private List<string> _portScanner_HostnameHistory = new List<string>();
+        public List<string> PortScanner_HostnameHistory
         {
-            get { return _portScanner_HostnameOrIPAddressHistory; }
+            get { return _portScanner_HostnameHistory; }
             set
             {
-                if (value == _portScanner_HostnameOrIPAddressHistory)
+                if (value == _portScanner_HostnameHistory)
                     return;
 
-                _portScanner_HostnameOrIPAddressHistory = value;
+                _portScanner_HostnameHistory = value;
                 SettingsChanged = true;
             }
         }
