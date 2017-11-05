@@ -15,26 +15,51 @@ namespace NETworkManager.Validators
 
             foreach (string ipOrRange in (value as string).Replace(" ", "").Split(';'))
             {
+                // like 192.168.0.1
                 if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressRegex))
                     continue;
 
+                // like 192.168.0.0/24
                 if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressCidrRegex))
                     continue;
 
+                // like 192.168.0.0/255.255.255.0
                 if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressSubnetmaskRegex))
                     continue;
 
+                // like 192.168.0.0 - 192.168.0.100
                 if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressRangeRegex))
                 {
                     string[] range = ipOrRange.Split('-');
 
                     if (IPv4AddressHelper.ConvertToInt32(IPAddress.Parse(range[0])) >= IPv4AddressHelper.ConvertToInt32(IPAddress.Parse(range[1])))
                         isValid = false;
+
+                    continue;
                 }
-                else
+
+                // like 192.168.[50-100].1
+                if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressSpecialRangeRegex))
                 {
-                    isValid = false;
+                    string[] octets = ipOrRange.Split('.');
+
+                    foreach (string octet in octets)
+                    {
+                        // Match [50-100]
+                        if (Regex.IsMatch(octet, RegexHelper.SpecialRangeRegex))
+                        {
+                            // [50-100] --> {"50","100"}
+                            string[] rangeNumber = octet.Substring(1, octet.Length - 2).Split('-');
+
+                            if (int.Parse(rangeNumber[0]) > int.Parse(rangeNumber[1]))
+                                isValid = false;
+                        }
+                    }
+
+                    continue;
                 }
+
+                isValid = false;                
             }
 
             if (isValid)
