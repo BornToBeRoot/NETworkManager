@@ -9,6 +9,8 @@ using NETworkManager.Collections;
 using System.Net.NetworkInformation;
 using System.Windows.Threading;
 using System.Diagnostics;
+using Heijden.DNS;
+using System.Linq;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -47,6 +49,44 @@ namespace NETworkManager.ViewModels.Applications
                     SettingsManager.Current.DNSLookup_HostnameOrIPAddressHistory = value;
 
                 _hostnameOrIPAddressHistory = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<QClass> Classes { get; set; }
+
+        private QClass _class;
+        public QClass Class
+        {
+            get { return _class; }
+            set
+            {
+                if (value == _class)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.DNSLookup_Class = value;
+
+                _class = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<QType> Types { get; set; }
+
+        private QType _type;
+        public QType Type
+        {
+            get { return _type; }
+            set
+            {
+                if (value == _type)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.DNSLookup_Type = value;
+
+                _type = value;
                 OnPropertyChanged();
             }
         }
@@ -265,6 +305,11 @@ namespace NETworkManager.ViewModels.Applications
             if (SettingsManager.Current.DNSLookup_HostnameOrIPAddressHistory != null)
                 HostnameOrIPAddressHistory = new List<string>(SettingsManager.Current.DNSLookup_HostnameOrIPAddressHistory);
 
+            Classes = Enum.GetValues(typeof(QClass)).Cast<QClass>().OrderBy(x => x.ToString()).ToList();
+            Class = Classes.First(x => x == SettingsManager.Current.DNSLookup_Class);
+            Types = Enum.GetValues(typeof(QType)).Cast<QType>().OrderBy(x => x.ToString()).ToList();
+            Type = Types.First(x => x == SettingsManager.Current.DNSLookup_Type);
+
             ExpandStatistics = SettingsManager.Current.DNSLookup_ExpandStatistics;
         }
         #endregion
@@ -325,8 +370,8 @@ namespace NETworkManager.ViewModels.Applications
                 }
             }
 
-            DNSLookupOptions.Class = SettingsManager.Current.DNSLookup_Class;
-            DNSLookupOptions.Type = SettingsManager.Current.DNSLookup_Type;
+            DNSLookupOptions.Class = Class;
+            DNSLookupOptions.Type = Type;
             DNSLookupOptions.Recursion = SettingsManager.Current.DNSLookup_Recursion;
             DNSLookupOptions.UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache;
             DNSLookupOptions.TransportType = SettingsManager.Current.DNSLookup_TransportType;

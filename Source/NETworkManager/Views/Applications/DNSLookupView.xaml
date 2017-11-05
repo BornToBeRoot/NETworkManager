@@ -32,21 +32,37 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <ComboBox Grid.Column="0" x:Name="txtHostnameOrIPAddress" ItemsSource="{Binding HostnameOrIPAddressHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_HostnameOrIPAddress}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
-                    <ComboBox.Text>
-                        <Binding Path="HostnameOrIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </ComboBox.Text>
-                </ComboBox>
+            <StackPanel Grid.Row="0">                
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" DataContext="{DynamicResource String_Destination}" Text="{Binding Path=., StringFormat={}{0}:}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
+                    <ComboBox x:Name="txtHostnameOrIPAddress" Grid.Column="2" Grid.ColumnSpan="5" Grid.Row="0" ItemsSource="{Binding HostnameOrIPAddressHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_HostnameOrIPAddress}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                        <ComboBox.Text>
+                            <Binding Path="HostnameOrIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.Text>
+                    </ComboBox>
+                    <TextBlock Grid.Column="0" Grid.Row="2" DataContext="{DynamicResource String_Class}" Text="{Binding Path=., StringFormat={}{0}:}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
+                    <ComboBox Grid.Column="2" Grid.Row="2" ItemsSource="{Binding Classes}" SelectedItem="{Binding Class}" Width="200" HorizontalAlignment="Left" />
+                    <TextBlock Grid.Column="4" Grid.Row="2" DataContext="{DynamicResource String_Type}" Text="{Binding Path=., StringFormat={}{0}:}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
+                    <ComboBox Grid.Column="6" Grid.Row="2" ItemsSource="{Binding Types}" SelectedItem="{Binding Type}" Width="200" HorizontalAlignment="Left" />
+                </Grid>
                 <Button Grid.Column="2" Command="{Binding LookupCommand}" IsDefault="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" HorizontalAlignment="Right">
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
@@ -83,7 +99,8 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-            </Grid>
+            </StackPanel>
+    
             <Controls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
                 <Controls:MetroProgressBar.Style>
                     <Style TargetType="{x:Type  Controls:MetroProgressBar}">
