@@ -33,7 +33,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="200" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -41,8 +41,10 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_MACAddress}" />
+                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" DataContext="{DynamicResource String_MACAddress}" Text="{Binding Path=., StringFormat={}{0}:}" />
                 <TextBox Grid.Column="2" Grid.Row="0" x:Name="txtMACAddress" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddress}" Style="{StaticResource DefaultTextBox}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
@@ -56,7 +58,7 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Broadcast}" Style="{StaticResource CenterTextBlock}" />
+                <TextBlock Grid.Column="0" Grid.Row="2" DataContext="{DynamicResource String_Broadcast}" Text="{Binding Path=., StringFormat={}{0}:}" Style="{StaticResource CenterTextBlock}" />
                 <TextBox x:Name="txtBroadcast" Grid.Column="2" Grid.Row="2" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding BroadcastHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Broadcast}" Style="{StaticResource DefaultTextBox}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
@@ -70,7 +72,7 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Port}" Style="{StaticResource CenterTextBlock}" />
+                <TextBlock Grid.Column="0" Grid.Row="4" DataContext="{DynamicResource String_Port}" Text="{Binding Path=., StringFormat={}{0}:}" Style="{StaticResource CenterTextBlock}" />
                 <TextBox x:Name="txtPort" Grid.Column="2" Grid.Row="4" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding PortHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort}" Style="{StaticResource DefaultTextBox}" HorizontalAlignment="Left" Width="65" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
@@ -84,39 +86,40 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
+                <Button Grid.Column="2" Grid.Row="6" HorizontalAlignment="Right" Command="{Binding WakeUpCommand}">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Power}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_WakeUp}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                        </Grid>
+                    </Button.Content>
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}" >
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtMACAddress}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtBroadcast}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtPort}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True" />
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </Grid>
-            <Button Grid.Row="2" HorizontalAlignment="Right" Command="{Binding WakeUpCommand}">
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Power}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_WakeUp}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
-                    </Grid>
-                </Button.Content>
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}" >
-                        <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtMACAddress}" Value="False"/>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtBroadcast}" Value="False"/>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtPort}" Value="False"/>
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="IsEnabled" Value="True" />
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+           
+            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <Border Grid.Column="1" Grid.Row="0" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource GrayBrush8}">
             <Expander x:Name="expanderProfiles" Header="{DynamicResource String_Header_Clients}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandClientView}">

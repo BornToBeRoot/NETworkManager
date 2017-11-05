@@ -124,10 +124,10 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private CollectionViewSource _splitResultsViewSource;
+        private ICollectionView _splitResultsView;
         public ICollectionView SplitResultView
         {
-            get { return _splitResultsViewSource.View; }
+            get { return _splitResultsView; }
         }
 
         private bool _displayStatusMessage;
@@ -164,12 +164,9 @@ namespace NETworkManager.ViewModels.Applications
         {
             LoadSettings();
 
-            _splitResultsViewSource = new CollectionViewSource()
-            {
-                Source = SplitResult
-            };
-
-            _splitResultsViewSource.SortDescriptions.Add(new SortDescription("NetworkAddressInt32", ListSortDirection.Ascending));
+            // Result view
+            _splitResultsView = CollectionViewSource.GetDefaultView(SplitResult);
+            _splitResultsView.SortDescriptions.Add(new SortDescription("NetworkAddressInt32", ListSortDirection.Ascending));
 
             _isLoading = false;
         }

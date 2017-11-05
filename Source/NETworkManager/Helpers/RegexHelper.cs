@@ -24,5 +24,11 @@
 
         // Match a subnet like 192.168.178.0/255.255.255.0
         public const string IPv4AddressSubnetmaskRegex = @"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\/(" + SubnetmaskValues + ".0.0.0)|(255." + SubnetmaskValues + ".0.0)|(255.255." + SubnetmaskValues + ".0)|(255.255.255." + SubnetmaskValues + ")$";
+
+        // Match a range like [0-255]
+        public const string SpecialRangeRegex = @"\[(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)-(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\]";
+
+        // Match a IPv4-Address like 192.168.[50-100].1
+        public const string IPv4AddressSpecialRangeRegex = @"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|" + SpecialRangeRegex + @")\.){3}((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|" + SpecialRangeRegex + @")$";
     }
 }

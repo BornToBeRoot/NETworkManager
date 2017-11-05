@@ -20,10 +20,7 @@
             <StackPanel Grid.Column="1" Margin="20,0,0,0">
                 <TextBlock FontSize="32" Grid.Row="0" Text="{DynamicResource String_ProductName}" Style="{StaticResource HeaderTextBlock}" />
                 <TextBlock Text="{DynamicResource String_Slogan}" Style="{DynamicResource WrapTextBlock}" Margin="0,0,0,5" />
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                    <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold" />
-                    <TextBlock Text="BETA" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource AccentColorBrush}" Margin="10,0" />
-                </StackPanel>
+                <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold" Margin="0,0,0,5"/>
                 <TextBlock Text="{Binding CopyrightAndAuthor}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,5"/>
                 <TextBlock Text="{x:Static Resources:Resources.License_GNUGPLv3 }" Style="{StaticResource LinkTextBlock}">
                     <TextBlock.InputBindings>
