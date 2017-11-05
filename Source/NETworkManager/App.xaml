@@ -23,8 +23,7 @@
                 <!-- Control templates (import before styles) -->
                 <ResourceDictionary Source="/Resources/Templates/ValidationErrorTemplates.xaml" />
                 <!-- Styles -->
-                <ResourceDictionary Source="/Resources/Styles/ButtonStyles.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/ComboBoxStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/ButtonStyles.xaml" />                
                 <ResourceDictionary Source="/Resources/Styles/DataGridStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/GroupBoxStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/NumericUpDownStyles.xaml" />
@@ -38,6 +37,7 @@
                 <ResourceDictionary Source="/Resources/Styles/ToolTipStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/WindowStyles.xaml" />
                 <!-- Dependent styles -->
+                <ResourceDictionary Source="/Resources/Styles/ComboBoxStyles.xaml" /> <!-- Requires scrollbar styles-->
                 <ResourceDictionary Source="/Resources/Styles/DragablzStyles.xaml" /> <!-- Requires button and textbox styles -->
                 <ResourceDictionary Source="/Resources/Styles/ExpanderStyles.xaml" /> <!-- Required button styles -->
             </ResourceDictionary.MergedDictionaries>
