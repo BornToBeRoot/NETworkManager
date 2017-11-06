@@ -4,6 +4,9 @@ using NETworkManager.Models.Settings;
 using System.Collections.Generic;
 using NETworkManager.Models.Network;
 using NETworkManager.Helpers;
+using System.ComponentModel;
+using System.Windows.Data;
+using System.Windows;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -83,6 +86,26 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
+        private ICollectionView _portLookupResultView;
+        public ICollectionView PortLookupResultView
+        {
+            get { return _portLookupResultView; }
+        }
+
+        private PortLookupInfo _selectedPortLookupResult;
+        public PortLookupInfo SelectedPortLookupResult
+        {
+            get { return _selectedPortLookupResult; }
+            set
+            {
+                if (value == _selectedPortLookupResult)
+                    return;
+
+                _selectedPortLookupResult = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _noPortsFound;
         public bool NoPortsFound
         {
@@ -101,6 +124,8 @@ namespace NETworkManager.ViewModels.Applications
         #region Constructor, Load settings
         public WikiPortLookupViewModel()
         {
+            _portLookupResultView = CollectionViewSource.GetDefaultView(PortLookupResult);
+
             LoadSettings();
 
             _isLoading = false;
@@ -202,6 +227,46 @@ namespace NETworkManager.ViewModels.Applications
             }
 
             IsPortLookupRunning = false;
+        }
+
+        public ICommand CopySelectedPortCommand
+        {
+            get { return new RelayCommand(p => CopySelectedPortAction()); }
+        }
+
+        private void CopySelectedPortAction()
+        {
+            Clipboard.SetText(SelectedPortLookupResult.Number.ToString());
+        }
+
+        public ICommand CopySelectedProtocolCommand
+        {
+            get { return new RelayCommand(p => CopySelectedProtocolAction()); }
+        }
+
+        private void CopySelectedProtocolAction()
+        {
+            Clipboard.SetText(SelectedPortLookupResult.Protocol.ToString());
+        }
+
+        public ICommand CopySelectedServiceCommand
+        {
+            get { return new RelayCommand(p => CopySelectedServiceAction()); }
+        }
+
+        private void CopySelectedServiceAction()
+        {
+            Clipboard.SetText(SelectedPortLookupResult.Service);
+        }
+
+        public ICommand CopySelectedDescriptionCommand
+        {
+            get { return new RelayCommand(p => CopySelectedDescriptionAction()); }
+        }
+
+        private void CopySelectedDescriptionAction()
+        {
+            Clipboard.SetText(SelectedPortLookupResult.Description);
         }
         #endregion
     }
