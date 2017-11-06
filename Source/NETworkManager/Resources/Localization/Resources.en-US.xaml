@@ -280,6 +280,7 @@
     <system:String x:Key="String_ScreenResolution">Screen resolution</system:String>
     <system:String x:Key="String_ColorDepthBit">Color depth (bit)</system:String>
     <system:String x:Key="String_Tags">Tags</system:String>
+    <system:String x:Key="String_Copy">Copy</system:String>
     
     <!-- ToolTip -->
     <system:String x:Key="String_ToolTip_Settings">Settings</system:String>

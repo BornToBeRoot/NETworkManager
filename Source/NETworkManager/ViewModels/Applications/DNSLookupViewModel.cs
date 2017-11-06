@@ -52,7 +52,7 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
-                
+
         public List<QType> Types { get; set; }
 
         private QType _type;
@@ -96,6 +96,20 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 _lookupResult = value;
+            }
+        }
+
+        private DNSLookupRecordInfo _selectedLookupResult;
+        public DNSLookupRecordInfo SelectedLookupResult
+        {
+            get { return _selectedLookupResult; }
+            set
+            {
+                if (value == _selectedLookupResult)
+                    return;
+                
+                _selectedLookupResult = value;
+                OnPropertyChanged();
             }
         }
 
@@ -303,6 +317,56 @@ namespace NETworkManager.ViewModels.Applications
         {
             if (!IsLookupRunning)
                 StartLookup();
+        }
+
+        public ICommand CopySelectedNameCommand
+        {
+            get { return new RelayCommand(p => CopySelectedNameAction()); }
+        }
+
+        private void CopySelectedNameAction()
+        {
+            Clipboard.SetText(SelectedLookupResult.Name);
+        }
+
+        public ICommand CopySelectedTTLCommand
+        {
+            get { return new RelayCommand(p => CopySelectedTTLAction()); }
+        }
+
+        private void CopySelectedTTLAction()
+        {
+            Clipboard.SetText(SelectedLookupResult.TTL.ToString());
+        }
+
+        public ICommand CopySelectedClassCommand
+        {
+            get { return new RelayCommand(p => CopySelectedClassAction()); }
+        }
+
+        private void CopySelectedClassAction()
+        {
+            Clipboard.SetText(SelectedLookupResult.Class);
+        }
+
+        public ICommand CopySelectedTypeCommand
+        {
+            get { return new RelayCommand(p => CopySelectedTypeAction()); }
+        }
+
+        private void CopySelectedTypeAction()
+        {
+            Clipboard.SetText(SelectedLookupResult.Type);
+        }
+
+        public ICommand CopySelectedResultCommand
+        {
+            get { return new RelayCommand(p => CopySelectedResultAction()); }
+        }
+
+        private void CopySelectedResultAction()
+        {
+            Clipboard.SetText(SelectedLookupResult.Result);
         }
         #endregion
 
