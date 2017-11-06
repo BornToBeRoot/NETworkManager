@@ -101,10 +101,10 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private ICollectionView _ipScanResultsView;
+        private ICollectionView _ipScanResultView;
         public ICollectionView IPScanResultView
         {
-            get { return _ipScanResultsView; }
+            get { return _ipScanResultView; }
         }
 
         private IPScannerHostInfo _selectedIPScanResult;
@@ -340,8 +340,8 @@ namespace NETworkManager.ViewModels.Applications
             dialogCoordinator = instance;
 
             // Result view
-            _ipScanResultsView = CollectionViewSource.GetDefaultView(IPScanResult);
-            _ipScanResultsView.SortDescriptions.Add(new SortDescription("PingInfo.IPAddressInt32", ListSortDirection.Ascending));
+            _ipScanResultView = CollectionViewSource.GetDefaultView(IPScanResult);
+            _ipScanResultView.SortDescriptions.Add(new SortDescription("PingInfo.IPAddressInt32", ListSortDirection.Ascending));
 
             // Load profiles
             if (IPScannerProfileManager.Profiles == null)

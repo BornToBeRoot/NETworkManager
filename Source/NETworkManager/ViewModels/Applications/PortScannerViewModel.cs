@@ -133,6 +133,26 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
+        private ICollectionView _portScanResultView;
+        public ICollectionView PortScanResultView
+        {
+            get { return _portScanResultView; }
+        }
+
+        private PortInfo _selectedScanResult;
+        public PortInfo SelectedScanResult
+        {
+            get { return _selectedScanResult; }
+            set
+            {
+                if (value == _selectedScanResult)
+                    return;
+
+                _selectedScanResult = value;
+                OnPropertyChanged();
+            }
+        }
+
         private int _portsToScan;
         public int PortsToScan
         {
@@ -344,6 +364,9 @@ namespace NETworkManager.ViewModels.Applications
         {
             dialogCoordinator = instance;
 
+            // Result view
+            _portScanResultView = CollectionViewSource.GetDefaultView(PortScanResult);
+            
             // Load profiles
             if (PortScannerProfileManager.Profiles == null)
                 PortScannerProfileManager.Load();
@@ -401,6 +424,76 @@ namespace NETworkManager.ViewModels.Applications
                 StopScan();
             else
                 StartScan();
+        }
+
+        public ICommand CopySelectedIPAddressCommand
+        {
+            get { return new RelayCommand(p => CopySelectedIPAddressAction()); }
+        }
+
+        private void CopySelectedIPAddressAction()
+        {
+            Clipboard.SetText(SelectedScanResult.Host.Item1.ToString());
+        }
+
+        public ICommand CopySelectedHostnameCommand
+        {
+            get { return new RelayCommand(p => CopySelectedHostnameAction()); }
+        }
+
+        private void CopySelectedHostnameAction()
+        {
+            Clipboard.SetText(SelectedScanResult.Host.Item2);
+        }
+
+        public ICommand CopySelectedPortCommand
+        {
+            get { return new RelayCommand(p => CopySelectedPortAction()); }
+        }
+
+        private void CopySelectedPortAction()
+        {
+            Clipboard.SetText(SelectedScanResult.Port.ToString());
+        }
+
+        public ICommand CopySelectedStatusCommand
+        {
+            get { return new RelayCommand(p => CopySelectedStatusAction()); }
+        }
+
+        private void CopySelectedStatusAction()
+        {
+            Clipboard.SetText(Application.Current.Resources["String_PortStatus_" + SelectedScanResult.Status.ToString()] as string);
+        }
+
+        public ICommand CopySelectedProtocolCommand
+        {
+            get { return new RelayCommand(p => CopySelectedProtocolAction()); }
+        }
+
+        private void CopySelectedProtocolAction()
+        {
+            Clipboard.SetText(SelectedScanResult.LookupInfo.Protocol.ToString());
+        }
+
+        public ICommand CopySelectedServiceCommand
+        {
+            get { return new RelayCommand(p => CopySelectedServiceAction()); }
+        }
+
+        private void CopySelectedServiceAction()
+        {
+            Clipboard.SetText(SelectedScanResult.LookupInfo.Service);
+        }
+
+        public ICommand CopySelectedDescriptionCommand
+        {
+            get { return new RelayCommand(p => CopySelectedDescriptionAction()); }
+        }
+
+        private void CopySelectedDescriptionAction()
+        {
+            Clipboard.SetText(SelectedScanResult.LookupInfo.Description);
         }
 
         public ICommand AddProfileCommand
