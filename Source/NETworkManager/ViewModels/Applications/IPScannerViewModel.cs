@@ -327,7 +327,7 @@ namespace NETworkManager.ViewModels.Applications
 
             // Result view
             _ipScanResultsView = CollectionViewSource.GetDefaultView(IPScanResult);
-            _ipScanResultsView.SortDescriptions.Add(new SortDescription("PingInfo.NetworkAddressInt32", ListSortDirection.Ascending));
+            _ipScanResultsView.SortDescriptions.Add(new SortDescription("PingInfo.IPAddressInt32", ListSortDirection.Ascending));
 
             // Load profiles
             if (IPScannerProfileManager.Profiles == null)
