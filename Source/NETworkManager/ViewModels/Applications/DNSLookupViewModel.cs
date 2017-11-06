@@ -22,56 +22,37 @@ namespace NETworkManager.ViewModels.Applications
 
         private bool _isLoading = true;
 
-        private string _hostnameOrIPAddress;
-        public string HostnameOrIPAddress
+        private string _host;
+        public string Host
         {
-            get { return _hostnameOrIPAddress; }
+            get { return _host; }
             set
             {
-                if (value == _hostnameOrIPAddress)
+                if (value == _host)
                     return;
 
-                _hostnameOrIPAddress = value;
+                _host = value;
                 OnPropertyChanged();
             }
         }
 
-        private List<string> _hostnameOrIPAddressHistory = new List<string>();
-        public List<string> HostnameOrIPAddressHistory
+        private List<string> _hostHistory = new List<string>();
+        public List<string> HostHistory
         {
-            get { return _hostnameOrIPAddressHistory; }
+            get { return _hostHistory; }
             set
             {
-                if (value == _hostnameOrIPAddressHistory)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_HostnameOrIPAddressHistory = value;
-
-                _hostnameOrIPAddressHistory = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public List<QClass> Classes { get; set; }
-
-        private QClass _class;
-        public QClass Class
-        {
-            get { return _class; }
-            set
-            {
-                if (value == _class)
+                if (value == _hostHistory)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_Class = value;
+                    SettingsManager.Current.DNSLookup_HostHistory = value;
 
-                _class = value;
+                _hostHistory = value;
                 OnPropertyChanged();
             }
         }
-
+                
         public List<QType> Types { get; set; }
 
         private QType _type;
@@ -302,11 +283,9 @@ namespace NETworkManager.ViewModels.Applications
         #region Load settings
         private void LoadSettings()
         {
-            if (SettingsManager.Current.DNSLookup_HostnameOrIPAddressHistory != null)
-                HostnameOrIPAddressHistory = new List<string>(SettingsManager.Current.DNSLookup_HostnameOrIPAddressHistory);
+            if (SettingsManager.Current.DNSLookup_HostHistory != null)
+                HostHistory = new List<string>(SettingsManager.Current.DNSLookup_HostHistory);
 
-            Classes = Enum.GetValues(typeof(QClass)).Cast<QClass>().OrderBy(x => x.ToString()).ToList();
-            Class = Classes.First(x => x == SettingsManager.Current.DNSLookup_Class);
             Types = Enum.GetValues(typeof(QType)).Cast<QType>().OrderBy(x => x.ToString()).ToList();
             Type = Types.First(x => x == SettingsManager.Current.DNSLookup_Type);
 
@@ -352,7 +331,7 @@ namespace NETworkManager.ViewModels.Applications
             // Reset the latest results
             LookupResult.Clear();
 
-            HostnameOrIPAddressHistory = new List<string>(HistoryListHelper.Modify(HostnameOrIPAddressHistory, HostnameOrIPAddress, SettingsManager.Current.Application_HistoryListEntries));
+            HostHistory = new List<string>(HistoryListHelper.Modify(HostHistory, Host, SettingsManager.Current.Application_HistoryListEntries));
 
             DNSLookupOptions DNSLookupOptions = new DNSLookupOptions();
 
@@ -370,7 +349,7 @@ namespace NETworkManager.ViewModels.Applications
                 }
             }
 
-            DNSLookupOptions.Class = Class;
+            DNSLookupOptions.Class = SettingsManager.Current.DNSLookup_Class;
             DNSLookupOptions.Type = Type;
             DNSLookupOptions.Recursion = SettingsManager.Current.DNSLookup_Recursion;
             DNSLookupOptions.UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache;
@@ -385,11 +364,11 @@ namespace NETworkManager.ViewModels.Applications
             DNSLookup.LookupError += DNSLookup_LookupError;
             DNSLookup.LookupComplete += DNSLookup_LookupComplete;
 
-            string hostnameOrIPAddress = HostnameOrIPAddress;
+            string hostnameOrIPAddress = Host;
             string dnsSuffix = string.Empty;
 
             // Detect hostname (usually they don't contain ".")
-            if (HostnameOrIPAddress.IndexOf(".", StringComparison.OrdinalIgnoreCase) == -1)
+            if (Host.IndexOf(".", StringComparison.OrdinalIgnoreCase) == -1)
             {
                 if (SettingsManager.Current.DNSLookup_AddDNSSuffix)
                 {
@@ -456,7 +435,7 @@ namespace NETworkManager.ViewModels.Applications
 
             if (e.AnswersCount == 0)
             {
-                StatusMessage = string.Format(Application.Current.Resources["String_NoDNSRecordFoundCheckYourInputAndSettings"] as string, HostnameOrIPAddress);
+                StatusMessage = string.Format(Application.Current.Resources["String_NoDNSRecordFoundCheckYourInputAndSettings"] as string, Host);
                 DisplayStatusMessage = true;
             }
 

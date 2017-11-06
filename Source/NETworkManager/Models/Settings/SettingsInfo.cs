@@ -835,16 +835,16 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region DNS Lookup
-        private List<string> _dnsLookup_HostnameOrIPAddressHistory = new List<string>();
-        public List<string> DNSLookup_HostnameOrIPAddressHistory
+        private List<string> _dnsLookup_HostHistory = new List<string>();
+        public List<string> DNSLookup_HostHistory
         {
-            get { return _dnsLookup_HostnameOrIPAddressHistory; }
+            get { return _dnsLookup_HostHistory; }
             set
             {
-                if (value == _dnsLookup_HostnameOrIPAddressHistory)
+                if (value == _dnsLookup_HostHistory)
                     return;
 
-                _dnsLookup_HostnameOrIPAddressHistory = value;
+                _dnsLookup_HostHistory = value;
                 SettingsChanged = true;
             }
         }

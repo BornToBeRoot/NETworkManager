@@ -19,7 +19,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" DataContext="{DynamicResource String_Hostname}" Text="{Binding Path=., StringFormat={}{0}:}" />
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Hostname}" />
             <TextBox x:Name="txtHostname" Grid.Column="1" Grid.Row="0">
                 <TextBox.Text>
                     <Binding Path="Hostname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >

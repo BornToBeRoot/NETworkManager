@@ -49,6 +49,8 @@
         <mah:ToggleSwitch Header="{DynamicResource String_ResolveCNAME}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ResolveCNAME}" Margin="0,0,0,10"/>
         <mah:ToggleSwitch Header="{DynamicResource String_Recursion}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding Recursion}" Margin="0,0,0,10"/>
         <mah:ToggleSwitch Header="{DynamicResource String_UseResolverCache}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding UseResolverCache}" Margin="0,0,0,10"/>
+        <TextBlock Text="{DynamicResource String_Class}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <ComboBox ItemsSource="{Binding Classes}" SelectedItem="{Binding Class}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" />
         <TextBlock Text="{DynamicResource String_Protocol}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding TransportTypes}" SelectedItem="{Binding TransportType}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
         <TextBlock Text="{DynamicResource String_Attempts}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />

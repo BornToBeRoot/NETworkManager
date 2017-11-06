@@ -56,7 +56,7 @@
                             <RowDefinition Height="10" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Column="0" Grid.Row="0" DataContext="{DynamicResource String_Hostname}" Text="{Binding Path=., StringFormat={}{0}:}" Style="{StaticResource CenterTextBlock}" />
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Hostname}" Style="{StaticResource CenterTextBlock}" />
                         <ComboBox Grid.Column="2" Grid.Row="0" x:Name="cbHostname" ItemsSource="{Binding HostnameHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameAndOrIPAddress}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                             <ComboBox.Text>
                                 <Binding Path="Hostname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -66,7 +66,7 @@
                                 </Binding>
                             </ComboBox.Text>
                         </ComboBox>
-                        <TextBlock Grid.Column="0" Grid.Row="2" DataContext="{DynamicResource String_Ports}" Text="{Binding Path=., StringFormat={}{0}:}" Style="{StaticResource CenterTextBlock}" />
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Ports}" Style="{StaticResource CenterTextBlock}" />
                         <ComboBox Grid.Column="2" Grid.Row="2" x:Name="cbPorts" ItemsSource="{Binding PortsHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EamplePortScanRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                             <ComboBox.Text>
                                 <Binding Path="Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">

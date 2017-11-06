@@ -147,6 +147,25 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
+        public List<QClass> Classes { get; set; }
+
+        private QClass _class;
+        public QClass Class
+        {
+            get { return _class; }
+            set
+            {
+                if (value == _class)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.DNSLookup_Class = value;
+
+                _class = value;
+                OnPropertyChanged();
+            }
+        }
+
         public List<TransportType> TransportTypes { get; set; }
 
         private TransportType _transportType;
@@ -212,13 +231,15 @@ namespace NETworkManager.ViewModels.Settings
         private void LoadSettings()
         {
             UseCustomDNSServer = SettingsManager.Current.DNSLookup_UseCustomDNSServer;
-            CustomDNSServer = SettingsManager.Current.DNSLookup_CustomDNSServer;
+            CustomDNSServer = SettingsManager.Current.DNSLookup_CustomDNSServer;            
             AddDNSSuffix = SettingsManager.Current.DNSLookup_AddDNSSuffix;
             UseCustomDNSSuffix = SettingsManager.Current.DNSLookup_UseCustomDNSSuffix;
             CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix;
             ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME;
             Recursion = SettingsManager.Current.DNSLookup_Recursion;
             UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache;
+            Classes = Enum.GetValues(typeof(QClass)).Cast<QClass>().OrderBy(x => x.ToString()).ToList();
+            Class = Classes.First(x => x == SettingsManager.Current.DNSLookup_Class);
             TransportTypes = Enum.GetValues(typeof(TransportType)).Cast<TransportType>().OrderBy(x => x.ToString()).ToList();
             TransportType = TransportTypes.First(x => x == SettingsManager.Current.DNSLookup_TransportType);
             Attempts = SettingsManager.Current.DNSLookup_Attempts;
