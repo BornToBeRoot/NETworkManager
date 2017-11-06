@@ -107,6 +107,20 @@ namespace NETworkManager.ViewModels.Applications
             get { return _ipScanResultsView; }
         }
 
+        private IPScannerHostInfo _selectedIPScanResult;
+        public IPScannerHostInfo SelectedIPScanResult
+        {
+            get { return _selectedIPScanResult; }
+            set
+            {
+                if (value == _selectedIPScanResult)
+                    return;
+
+                _selectedIPScanResult = value;
+                OnPropertyChanged();
+            }
+        }
+
         public bool ResolveHostname
         {
             get { return SettingsManager.Current.IPScanner_ResolveHostname; }
@@ -266,7 +280,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             get { return _ipScannerProfiles; }
         }
-               
+
         private IPScannerProfileInfo _selectedProfile = new IPScannerProfileInfo();
         public IPScannerProfileInfo SelectedProfile
         {
@@ -397,6 +411,86 @@ namespace NETworkManager.ViewModels.Applications
                 StartScan();
         }
 
+        public ICommand CopySelectedIPAddressCommand
+        {
+            get { return new RelayCommand(p => CopySelectedIPAddressAction()); }
+        }
+
+        private void CopySelectedIPAddressAction()
+        {
+            Clipboard.SetText(SelectedIPScanResult.PingInfo.IPAddress.ToString());
+        }
+
+        public ICommand CopySelectedHostnameCommand
+        {
+            get { return new RelayCommand(p => CopySelectedHostnameAction()); }
+        }
+
+        private void CopySelectedHostnameAction()
+        {
+            Clipboard.SetText(SelectedIPScanResult.Hostname);
+        }
+
+        public ICommand CopySelectedMACAddressCommand
+        {
+            get { return new RelayCommand(p => CopySelectedMACAddressAction()); }
+        }
+
+        private void CopySelectedMACAddressAction()
+        {
+            Clipboard.SetText(MACAddressHelper.GetDefaultFormat(SelectedIPScanResult.MACAddress.ToString()));
+        }
+
+        public ICommand CopySelectedVendorCommand
+        {
+            get { return new RelayCommand(p => CopySelectedVendorAction()); }
+        }
+
+        private void CopySelectedVendorAction()
+        {
+            Clipboard.SetText(SelectedIPScanResult.Vendor);
+        }
+
+        public ICommand CopySelectedBytesCommand
+        {
+            get { return new RelayCommand(p => CopySelectedBytesAction()); }
+        }
+
+        private void CopySelectedBytesAction()
+        {
+            Clipboard.SetText(SelectedIPScanResult.PingInfo.Bytes.ToString());
+        }
+
+        public ICommand CopySelectedTimeCommand
+        {
+            get { return new RelayCommand(p => CopySelectedTimeAction()); }
+        }
+
+        private void CopySelectedTimeAction()
+        {
+            Clipboard.SetText(SelectedIPScanResult.PingInfo.Time.ToString());
+        }
+
+        public ICommand CopySelectedTTLCommand
+        {
+            get { return new RelayCommand(p => CopySelectedTTLAction()); }
+        }
+
+        private void CopySelectedTTLAction()
+        {
+            Clipboard.SetText(SelectedIPScanResult.PingInfo.TTL.ToString());
+        }
+
+        public ICommand CopySelectedStatusCommand
+        {
+            get { return new RelayCommand(p => CopySelectedStatusAction()); }
+        }
+
+        private void CopySelectedStatusAction()
+        {          
+            Clipboard.SetText(Application.Current.Resources["String_IPStatus_" + SelectedIPScanResult.PingInfo.Status.ToString()] as string);
+        }        
+
         public ICommand AddProfileCommand
         {
             get { return new RelayCommand(p => AddProfileAction()); }
@@ -433,7 +527,7 @@ namespace NETworkManager.ViewModels.Applications
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
-        
+
         public ICommand EditProfileCommand
         {
             get { return new RelayCommand(p => EditProfileAction()); }
@@ -509,7 +603,7 @@ namespace NETworkManager.ViewModels.Applications
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
-
+                
         public ICommand DeleteProfileCommand
         {
             get { return new RelayCommand(p => DeleteProfileAction()); }
@@ -528,7 +622,7 @@ namespace NETworkManager.ViewModels.Applications
                 return;
 
             IPScannerProfileManager.RemoveProfile(SelectedProfile);
-        }
+        }        
         #endregion
 
         #region Methods
