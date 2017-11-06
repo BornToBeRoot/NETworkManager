@@ -11,6 +11,8 @@ using System.Threading;
 using NETworkManager.Helpers;
 using System.Diagnostics;
 using System.Windows.Threading;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -24,33 +26,33 @@ namespace NETworkManager.ViewModels.Applications
 
         private bool _isLoading = true;
 
-        private string _hostnameOrIPAddress;
-        public string HostnameOrIPAddress
+        private string _hostname;
+        public string Hostname
         {
-            get { return _hostnameOrIPAddress; }
+            get { return _hostname; }
             set
             {
-                if (value == _hostnameOrIPAddress)
+                if (value == _hostname)
                     return;
 
-                _hostnameOrIPAddress = value;
+                _hostname = value;
                 OnPropertyChanged();
             }
         }
 
-        private List<string> _hostnameOrIPAddressHistory = new List<string>();
-        public List<string> HostnameOrIPAddressHistory
+        private List<string> _hostnameHistory = new List<string>();
+        public List<string> HostnameHistory
         {
-            get { return _hostnameOrIPAddressHistory; }
+            get { return _hostnameHistory; }
             set
             {
-                if (value == _hostnameOrIPAddressHistory)
+                if (value == _hostnameHistory)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Traceroute_HostnameOrIPAddressHistory = value;
+                    SettingsManager.Current.Traceroute_HostnameHistory = value;
 
-                _hostnameOrIPAddressHistory = value;
+                _hostnameHistory = value;
                 OnPropertyChanged();
             }
         }
@@ -93,6 +95,26 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 _traceResult = value;
+            }
+        }
+
+        private ICollectionView _traceResultView;
+        public ICollectionView TraceResultView
+        {
+            get { return _traceResultView; }
+        }
+
+        private TracerouteHopInfo _selectedTraceResult;
+        public TracerouteHopInfo SelectedTraceResult
+        {
+            get { return _selectedTraceResult; }
+            set
+            {
+                if (value == _selectedTraceResult)
+                    return;
+
+                _selectedTraceResult = value;
+                OnPropertyChanged();
             }
         }
 
@@ -201,6 +223,8 @@ namespace NETworkManager.ViewModels.Applications
         #region Constructor, load settings
         public TracerouteViewModel()
         {
+            _traceResultView = CollectionViewSource.GetDefaultView(TraceResult);
+
             LoadSettings();
 
             _isLoading = false;
@@ -208,8 +232,8 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LoadSettings()
         {
-            if (SettingsManager.Current.Traceroute_HostnameOrIPAddressHistory != null)
-                HostnameOrIPAddressHistory = new List<string>(SettingsManager.Current.Traceroute_HostnameOrIPAddressHistory);
+            if (SettingsManager.Current.Traceroute_HostnameHistory != null)
+                HostnameHistory = new List<string>(SettingsManager.Current.Traceroute_HostnameHistory);
 
             ExpandStatistics = SettingsManager.Current.Traceroute_ExpandStatistics;
         }
@@ -227,6 +251,66 @@ namespace NETworkManager.ViewModels.Applications
                 StopTrace();
             else
                 StartTrace();
+        }
+
+        public ICommand CopySelectedHopCommand
+        {
+            get { return new RelayCommand(p => CopySelectedHopAction()); }
+        }
+
+        private void CopySelectedHopAction()
+        {
+            Clipboard.SetText(SelectedTraceResult.Hop.ToString());
+        }
+
+        public ICommand CopySelectedTime1Command
+        {
+            get { return new RelayCommand(p => CopySelectedTime1Action()); }
+        }
+
+        private void CopySelectedTime1Action()
+        {
+            Clipboard.SetText(SelectedTraceResult.Time1.ToString());
+        }
+
+        public ICommand CopySelectedTime2Command
+        {
+            get { return new RelayCommand(p => CopySelectedTime2Action()); }
+        }
+
+        private void CopySelectedTime2Action()
+        {
+            Clipboard.SetText(SelectedTraceResult.Time2.ToString());
+        }
+
+        public ICommand CopySelectedTime3Command
+        {
+            get { return new RelayCommand(p => CopySelectedTime3Action()); }
+        }
+
+        private void CopySelectedTime3Action()
+        {
+            Clipboard.SetText(SelectedTraceResult.Time3.ToString());
+        }
+
+        public ICommand CopySelectedIPAddressCommand
+        {
+            get { return new RelayCommand(p => CopySelectedIPAddressAction()); }
+        }
+
+        private void CopySelectedIPAddressAction()
+        {
+            Clipboard.SetText(SelectedTraceResult.IPAddress.ToString());
+        }
+
+        public ICommand CopySelectedHostnameCommand
+        {
+            get { return new RelayCommand(p => CopySelectedHostnameAction()); }
+        }
+
+        private void CopySelectedHostnameAction()
+        {
+            Clipboard.SetText(SelectedTraceResult.Hostname);
         }
         #endregion
 
@@ -254,14 +338,14 @@ namespace NETworkManager.ViewModels.Applications
             Hops = 0;
 
             // Try to parse the string into an IP-Address
-            IPAddress.TryParse(HostnameOrIPAddress, out IPAddress ipAddress);
+            IPAddress.TryParse(Hostname, out IPAddress ipAddress);
 
             try
             {
                 // Try to resolve the hostname
                 if (ipAddress == null)
                 {
-                    IPHostEntry ipHostEntrys = await Dns.GetHostEntryAsync(HostnameOrIPAddress);
+                    IPHostEntry ipHostEntrys = await Dns.GetHostEntryAsync(Hostname);
 
                     foreach (IPAddress ip in ipHostEntrys.AddressList)
                     {
@@ -308,13 +392,13 @@ namespace NETworkManager.ViewModels.Applications
                 traceroute.TraceAsync(ipAddress, tracerouteOptions, cancellationTokenSource.Token);
 
                 // Add the hostname or ip address to the history
-                HostnameOrIPAddressHistory = new List<string>(HistoryListHelper.Modify(HostnameOrIPAddressHistory, HostnameOrIPAddress, SettingsManager.Current.Application_HistoryListEntries));
+                HostnameHistory = new List<string>(HistoryListHelper.Modify(HostnameHistory, Hostname, SettingsManager.Current.Application_HistoryListEntries));
             }
             catch (SocketException) // This will catch DNS resolve errors
             {
                 TracerouteFinished();
 
-                StatusMessage = string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, HostnameOrIPAddress);
+                StatusMessage = string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, Hostname);
                 DisplayStatusMessage = true;
             }
             catch (Exception ex) // This will catch any exception

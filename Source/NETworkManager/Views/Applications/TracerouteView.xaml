@@ -41,9 +41,9 @@
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <ComboBox Grid.Column="0" x:Name="txtHostnameOrIPAddress" ItemsSource="{Binding HostnameOrIPAddressHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_HostnameOrIPAddress}" IsEnabled="{Binding IsTraceRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="0" x:Name="txtHostname" ItemsSource="{Binding HostnameOrIPAddressHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_HostnameOrIPAddress}" IsEnabled="{Binding IsTraceRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
-                        <Binding Path="HostnameOrIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="Hostname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
@@ -55,7 +55,7 @@
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=txtHostnameOrIPAddress}" Value="True" >
+                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=txtHostname}" Value="True" >
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding CancelTrace}" Value="True">
@@ -107,11 +107,81 @@
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Route}" Style="{StaticResource HeaderTextBlock}" />
-        <Control:ScrollingDataGrid Grid.Row="3" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding TraceResult}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False" Margin="0,0,0,20">
-            <Control:ScrollingDataGrid.Resources>
+        <DataGrid Grid.Row="3" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding TraceResultView}" SelectedItem="{Binding SelectedTraceResult}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False" Margin="0,0,0,20">
+            <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollingDataGridScrollBar}" />
-            </Control:ScrollingDataGrid.Resources>
-            <Control:ScrollingDataGrid.Columns>
+                <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                    <MenuItem Header="{DynamicResource String_Copy}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                        <MenuItem Header="{DynamicResource String_Hop}" Command="{Binding CopySelectedHopCommand}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{DynamicResource String_Time1}" Command="{Binding CopySelectedTime1Command}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{DynamicResource String_Time2}" Command="{Binding CopySelectedTime2Command}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{DynamicResource String_Time3}" Command="{Binding CopySelectedTime3Command}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{DynamicResource String_IPAddress}" Command="{Binding CopySelectedIPAddressCommand}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{DynamicResource String_Hostname}" Command="{Binding CopySelectedHostnameCommand}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                </ContextMenu>
+            </DataGrid.Resources>
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                    <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
                 <DataGridTextColumn Header="{DynamicResource String_Hop}" Binding="{Binding Hop}" MinWidth="80" />
                 <DataGridTextColumn Header="{DynamicResource String_Time1}" MinWidth="100">
                     <DataGridTextColumn.Binding>
@@ -139,8 +209,8 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress, Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" MinWidth="150"/>
-            </Control:ScrollingDataGrid.Columns>
-        </Control:ScrollingDataGrid>
+            </DataGrid.Columns>
+        </DataGrid>
         <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource DefaultExpander}">
             <Expander.Header>
                 <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />

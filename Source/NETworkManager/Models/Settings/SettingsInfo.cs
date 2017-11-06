@@ -589,16 +589,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private List<string> _traceroute_HostnameOrIPAddressHistory = new List<string>();
-        public List<string> Traceroute_HostnameOrIPAddressHistory
+        private List<string> _traceroute_HostnameHistory = new List<string>();
+        public List<string> Traceroute_HostnameHistory
         {
-            get { return _traceroute_HostnameOrIPAddressHistory; }
+            get { return _traceroute_HostnameHistory; }
             set
             {
-                if (value == _traceroute_HostnameOrIPAddressHistory)
+                if (value == _traceroute_HostnameHistory)
                     return;
 
-                _traceroute_HostnameOrIPAddressHistory = value;
+                _traceroute_HostnameHistory = value;
                 SettingsChanged = true;
             }
         }
