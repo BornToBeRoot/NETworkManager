@@ -130,6 +130,20 @@ namespace NETworkManager.ViewModels.Applications
             get { return _splitResultsView; }
         }
 
+        private SubnetInfo _selectedSplitResult;
+        public SubnetInfo SelectedSplitResult
+        {
+            get { return _selectedSplitResult; }
+            set
+            {
+                if (value == _selectedSplitResult)
+                    return;
+
+                _selectedSplitResult = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
         {
@@ -193,6 +207,86 @@ namespace NETworkManager.ViewModels.Applications
                 StopSplit();
             else
                 StartSplit();
+        }
+
+        public ICommand CopySelectedNetworkAddressCommand
+        {
+            get { return new RelayCommand(p => CopySelectedNetworkAddressAction()); }
+        }
+
+        private void CopySelectedNetworkAddressAction()
+        {
+            Clipboard.SetText(SelectedSplitResult.NetworkAddress.ToString());
+        }
+
+        public ICommand CopySelectedBroadcastCommand
+        {
+            get { return new RelayCommand(p => CopySelectedBroadcastAction()); }
+        }
+
+        private void CopySelectedBroadcastAction()
+        {
+            Clipboard.SetText(SelectedSplitResult.Broadcast.ToString());
+        }
+
+        public ICommand CopySelectedIPAddressesCommand
+        {
+            get { return new RelayCommand(p => CopySelectedIPAddressesAction()); }
+        }
+
+        private void CopySelectedIPAddressesAction()
+        {
+            Clipboard.SetText(SelectedSplitResult.IPAddresses.ToString());
+        }
+
+        public ICommand CopySelectedSubnetmaskCommand
+        {
+            get { return new RelayCommand(p => CopySelectedSubnetmaskAction()); }
+        }
+
+        private void CopySelectedSubnetmaskAction()
+        {
+            Clipboard.SetText(SelectedSplitResult.Subnetmask.ToString());
+        }
+
+        public ICommand CopySelectedCIDRCommand
+        {
+            get { return new RelayCommand(p => CopySelectedCIDRAction()); }
+        }
+
+        private void CopySelectedCIDRAction()
+        {
+            Clipboard.SetText(SelectedSplitResult.CIDR.ToString());
+        }
+
+        public ICommand CopySelectedFirstIPAddressCommand
+        {
+            get { return new RelayCommand(p => CopySelectedFirstIPAddressAction()); }
+        }
+
+        private void CopySelectedFirstIPAddressAction()
+        {
+            Clipboard.SetText(SelectedSplitResult.HostFirstIP.ToString());
+        }
+
+        public ICommand CopySelectedLastIPAddressCommand
+        {
+            get { return new RelayCommand(p => CopySelectedLastIPAddressAction()); }
+        }
+
+        private void CopySelectedLastIPAddressAction()
+        {
+            Clipboard.SetText(SelectedSplitResult.HostLastIP.ToString());
+        }
+
+        public ICommand CopySelectedHostCommand
+        {
+            get { return new RelayCommand(p => CopySelectedHostAction()); }
+        }
+
+        private void CopySelectedHostAction()
+        {
+            Clipboard.SetText(SelectedSplitResult.Hosts.ToString());
         }
         #endregion
 
