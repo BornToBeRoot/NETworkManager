@@ -1,6 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style x:Key="DefaultComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MetroComboBox}">
+        <Style.Resources>
+            <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
+        </Style.Resources>
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
     </Style>

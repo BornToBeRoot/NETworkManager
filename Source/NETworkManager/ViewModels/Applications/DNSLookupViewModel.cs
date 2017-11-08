@@ -9,6 +9,8 @@ using NETworkManager.Collections;
 using System.Net.NetworkInformation;
 using System.Windows.Threading;
 using System.Diagnostics;
+using Heijden.DNS;
+using System.Linq;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -20,33 +22,52 @@ namespace NETworkManager.ViewModels.Applications
 
         private bool _isLoading = true;
 
-        private string _hostnameOrIPAddress;
-        public string HostnameOrIPAddress
+        private string _host;
+        public string Host
         {
-            get { return _hostnameOrIPAddress; }
+            get { return _host; }
             set
             {
-                if (value == _hostnameOrIPAddress)
+                if (value == _host)
                     return;
 
-                _hostnameOrIPAddress = value;
+                _host = value;
                 OnPropertyChanged();
             }
         }
 
-        private List<string> _hostnameOrIPAddressHistory = new List<string>();
-        public List<string> HostnameOrIPAddressHistory
+        private List<string> _hostHistory = new List<string>();
+        public List<string> HostHistory
         {
-            get { return _hostnameOrIPAddressHistory; }
+            get { return _hostHistory; }
             set
             {
-                if (value == _hostnameOrIPAddressHistory)
+                if (value == _hostHistory)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_HostnameOrIPAddressHistory = value;
+                    SettingsManager.Current.DNSLookup_HostHistory = value;
 
-                _hostnameOrIPAddressHistory = value;
+                _hostHistory = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<QType> Types { get; set; }
+
+        private QType _type;
+        public QType Type
+        {
+            get { return _type; }
+            set
+            {
+                if (value == _type)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.DNSLookup_Type = value;
+
+                _type = value;
                 OnPropertyChanged();
             }
         }
@@ -75,6 +96,20 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 _lookupResult = value;
+            }
+        }
+
+        private DNSLookupRecordInfo _selectedLookupResult;
+        public DNSLookupRecordInfo SelectedLookupResult
+        {
+            get { return _selectedLookupResult; }
+            set
+            {
+                if (value == _selectedLookupResult)
+                    return;
+                
+                _selectedLookupResult = value;
+                OnPropertyChanged();
             }
         }
 
@@ -262,8 +297,11 @@ namespace NETworkManager.ViewModels.Applications
         #region Load settings
         private void LoadSettings()
         {
-            if (SettingsManager.Current.DNSLookup_HostnameOrIPAddressHistory != null)
-                HostnameOrIPAddressHistory = new List<string>(SettingsManager.Current.DNSLookup_HostnameOrIPAddressHistory);
+            if (SettingsManager.Current.DNSLookup_HostHistory != null)
+                HostHistory = new List<string>(SettingsManager.Current.DNSLookup_HostHistory);
+
+            Types = Enum.GetValues(typeof(QType)).Cast<QType>().OrderBy(x => x.ToString()).ToList();
+            Type = Types.First(x => x == SettingsManager.Current.DNSLookup_Type);
 
             ExpandStatistics = SettingsManager.Current.DNSLookup_ExpandStatistics;
         }
@@ -279,6 +317,56 @@ namespace NETworkManager.ViewModels.Applications
         {
             if (!IsLookupRunning)
                 StartLookup();
+        }
+
+        public ICommand CopySelectedNameCommand
+        {
+            get { return new RelayCommand(p => CopySelectedNameAction()); }
+        }
+
+        private void CopySelectedNameAction()
+        {
+            Clipboard.SetText(SelectedLookupResult.Name);
+        }
+
+        public ICommand CopySelectedTTLCommand
+        {
+            get { return new RelayCommand(p => CopySelectedTTLAction()); }
+        }
+
+        private void CopySelectedTTLAction()
+        {
+            Clipboard.SetText(SelectedLookupResult.TTL.ToString());
+        }
+
+        public ICommand CopySelectedClassCommand
+        {
+            get { return new RelayCommand(p => CopySelectedClassAction()); }
+        }
+
+        private void CopySelectedClassAction()
+        {
+            Clipboard.SetText(SelectedLookupResult.Class);
+        }
+
+        public ICommand CopySelectedTypeCommand
+        {
+            get { return new RelayCommand(p => CopySelectedTypeAction()); }
+        }
+
+        private void CopySelectedTypeAction()
+        {
+            Clipboard.SetText(SelectedLookupResult.Type);
+        }
+
+        public ICommand CopySelectedResultCommand
+        {
+            get { return new RelayCommand(p => CopySelectedResultAction()); }
+        }
+
+        private void CopySelectedResultAction()
+        {
+            Clipboard.SetText(SelectedLookupResult.Result);
         }
         #endregion
 
@@ -307,7 +395,7 @@ namespace NETworkManager.ViewModels.Applications
             // Reset the latest results
             LookupResult.Clear();
 
-            HostnameOrIPAddressHistory = new List<string>(HistoryListHelper.Modify(HostnameOrIPAddressHistory, HostnameOrIPAddress, SettingsManager.Current.Application_HistoryListEntries));
+            HostHistory = new List<string>(HistoryListHelper.Modify(HostHistory, Host, SettingsManager.Current.Application_HistoryListEntries));
 
             DNSLookupOptions DNSLookupOptions = new DNSLookupOptions();
 
@@ -326,7 +414,7 @@ namespace NETworkManager.ViewModels.Applications
             }
 
             DNSLookupOptions.Class = SettingsManager.Current.DNSLookup_Class;
-            DNSLookupOptions.Type = SettingsManager.Current.DNSLookup_Type;
+            DNSLookupOptions.Type = Type;
             DNSLookupOptions.Recursion = SettingsManager.Current.DNSLookup_Recursion;
             DNSLookupOptions.UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache;
             DNSLookupOptions.TransportType = SettingsManager.Current.DNSLookup_TransportType;
@@ -340,11 +428,11 @@ namespace NETworkManager.ViewModels.Applications
             DNSLookup.LookupError += DNSLookup_LookupError;
             DNSLookup.LookupComplete += DNSLookup_LookupComplete;
 
-            string hostnameOrIPAddress = HostnameOrIPAddress;
+            string hostnameOrIPAddress = Host;
             string dnsSuffix = string.Empty;
 
             // Detect hostname (usually they don't contain ".")
-            if (HostnameOrIPAddress.IndexOf(".", StringComparison.OrdinalIgnoreCase) == -1)
+            if (Host.IndexOf(".", StringComparison.OrdinalIgnoreCase) == -1)
             {
                 if (SettingsManager.Current.DNSLookup_AddDNSSuffix)
                 {
@@ -411,7 +499,7 @@ namespace NETworkManager.ViewModels.Applications
 
             if (e.AnswersCount == 0)
             {
-                StatusMessage = string.Format(Application.Current.Resources["String_NoDNSRecordFoundCheckYourInputAndSettings"] as string, HostnameOrIPAddress);
+                StatusMessage = string.Format(Application.Current.Resources["String_NoDNSRecordFoundCheckYourInputAndSettings"] as string, Host);
                 DisplayStatusMessage = true;
             }
 

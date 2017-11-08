@@ -69,7 +69,7 @@ namespace NETworkManager.Models.Network
             {
                 foreach (string vendor in vendors)
                 {
-                    if (info.Vendor.IndexOf(vendor, StringComparison.OrdinalIgnoreCase) >= 0)
+                    if (info.Vendor.IndexOf(vendor, StringComparison.OrdinalIgnoreCase) > -1)
                         list.Add(info);
                 }
             }

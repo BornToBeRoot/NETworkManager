@@ -589,16 +589,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private List<string> _traceroute_HostnameOrIPAddressHistory = new List<string>();
-        public List<string> Traceroute_HostnameOrIPAddressHistory
+        private List<string> _traceroute_HostnameHistory = new List<string>();
+        public List<string> Traceroute_HostnameHistory
         {
-            get { return _traceroute_HostnameOrIPAddressHistory; }
+            get { return _traceroute_HostnameHistory; }
             set
             {
-                if (value == _traceroute_HostnameOrIPAddressHistory)
+                if (value == _traceroute_HostnameHistory)
                     return;
 
-                _traceroute_HostnameOrIPAddressHistory = value;
+                _traceroute_HostnameHistory = value;
                 SettingsChanged = true;
             }
         }
@@ -691,16 +691,16 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region PortScanner
-        private List<string> _portScanner_HostnameOrIPAddressHistory = new List<string>();
-        public List<string> PortScanner_HostnameOrIPAddressHistory
+        private List<string> _portScanner_HostnameHistory = new List<string>();
+        public List<string> PortScanner_HostnameHistory
         {
-            get { return _portScanner_HostnameOrIPAddressHistory; }
+            get { return _portScanner_HostnameHistory; }
             set
             {
-                if (value == _portScanner_HostnameOrIPAddressHistory)
+                if (value == _portScanner_HostnameHistory)
                     return;
 
-                _portScanner_HostnameOrIPAddressHistory = value;
+                _portScanner_HostnameHistory = value;
                 SettingsChanged = true;
             }
         }
@@ -835,16 +835,16 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region DNS Lookup
-        private List<string> _dnsLookup_HostnameOrIPAddressHistory = new List<string>();
-        public List<string> DNSLookup_HostnameOrIPAddressHistory
+        private List<string> _dnsLookup_HostHistory = new List<string>();
+        public List<string> DNSLookup_HostHistory
         {
-            get { return _dnsLookup_HostnameOrIPAddressHistory; }
+            get { return _dnsLookup_HostHistory; }
             set
             {
-                if (value == _dnsLookup_HostnameOrIPAddressHistory)
+                if (value == _dnsLookup_HostHistory)
                     return;
 
-                _dnsLookup_HostnameOrIPAddressHistory = value;
+                _dnsLookup_HostHistory = value;
                 SettingsChanged = true;
             }
         }

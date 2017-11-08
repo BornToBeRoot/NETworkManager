@@ -18,12 +18,14 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" DataContext="{DynamicResource String_Name}" Text="{Binding Path=., StringFormat={}{0}:}" />
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Name}" />
             <TextBox x:Name="txtName" Grid.Column="1" Grid.Row="0">
                 <TextBox.Text>
                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -33,7 +35,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="2" DataContext="{DynamicResource String_Hostname}" Text="{Binding Path=., StringFormat={}{0}:}" />
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Hostname}" />
             <TextBox x:Name="txtHostname" Grid.Column="1" Grid.Row="2">
                 <TextBox.Text>
                     <Binding Path="Hostname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -43,7 +45,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="4" DataContext="{DynamicResource String_Group}" Text="{Binding Path=., StringFormat={}{0}:}" />
+            <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Group}" />
             <ComboBox x:Name="cbGroup" Grid.Column="1" Grid.Row="4" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}">
                 <ComboBox.Text>
                     <Binding Path="Group" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -53,6 +55,16 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
+            <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_Tags}" />
+            <TextBox x:Name="txtTags" Grid.Column="1" Grid.Row="6">
+                <TextBox.Text>
+                    <Binding Path="Tags" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{DynamicResource String_Button_Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />

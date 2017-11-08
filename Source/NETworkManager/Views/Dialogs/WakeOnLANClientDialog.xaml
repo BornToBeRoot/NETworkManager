@@ -26,7 +26,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" DataContext="{DynamicResource String_Name}" Text="{Binding Path=., StringFormat={}{0}:}" />
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Name}" />
             <TextBox x:Name="txtName" Grid.Column="1" Grid.Row="0">
                 <TextBox.Text>
                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -36,7 +36,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="2" DataContext="{DynamicResource String_MACAddress}" Text="{Binding Path=., StringFormat={}{0}:}" />
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_MACAddress}" />
             <TextBox x:Name="txtMACAddress" Grid.Column="1" Grid.Row="2">
                 <TextBox.Text>
                     <Binding Path="MACAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -47,7 +47,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="4" DataContext="{DynamicResource String_Broadcast}" Text="{Binding Path=., StringFormat={}{0}:}" />
+            <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Broadcast}" />
             <TextBox x:Name="txtBroadcast" Grid.Column="1" Grid.Row="4">
                 <TextBox.Text>
                     <Binding Path="Broadcast" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -58,7 +58,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="6" DataContext="{DynamicResource String_Port}" Text="{Binding Path=., StringFormat={}{0}:}" />
+            <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_Port}" />
             <TextBox x:Name="txtPort" Grid.Column="1" Grid.Row="6">
                 <TextBox.Text>
                     <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -68,8 +68,8 @@
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
-            </TextBox>            
-            <TextBlock Grid.Column="0" Grid.Row="8" DataContext="{DynamicResource String_Group}" Text="{Binding Path=., StringFormat={}{0}:}" />
+            </TextBox>
+            <TextBlock Grid.Column="0" Grid.Row="8" Text="{DynamicResource String_Group}" />
             <ComboBox x:Name="cbGroup" Grid.Column="1" Grid.Row="8" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}">
                 <ComboBox.Text>
                     <Binding Path="Group" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">

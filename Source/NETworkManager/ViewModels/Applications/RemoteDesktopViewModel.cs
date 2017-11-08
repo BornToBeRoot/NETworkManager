@@ -10,6 +10,7 @@ using NETworkManager.Models.Settings;
 using System.ComponentModel;
 using System.Windows.Data;
 using System;
+using System.Linq;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -20,6 +21,8 @@ namespace NETworkManager.ViewModels.Applications
 
         public IInterTabClient InterTabClient { get; private set; }
         public ObservableCollection<DragablzTabContent> TabContents { get; private set; }
+
+        private const string tagIdentifier = "tag=";
 
         private bool _isLoading = true;
 
@@ -118,8 +121,11 @@ namespace NETworkManager.ViewModels.Applications
 
                 string search = Search.Trim();
 
-                // Search by: Name
-                return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
+                // Search for complete tag or by name
+                if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
+                    return info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).IndexOf(str , StringComparison.OrdinalIgnoreCase) > -1);
+                else
+                    return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
             LoadSettings();
@@ -229,7 +235,8 @@ namespace NETworkManager.ViewModels.Applications
                 {
                     Name = instance.Name,
                     Hostname = instance.Hostname,
-                    Group = instance.Group
+                    Group = instance.Group,
+                    Tags = instance.Tags
                 };
 
                 RemoteDesktopSessionManager.AddSession(remoteDesktopSessionInfo);
@@ -286,7 +293,8 @@ namespace NETworkManager.ViewModels.Applications
                 {
                     Name = instance.Name,
                     Hostname = instance.Hostname,
-                    Group = instance.Group
+                    Group = instance.Group,
+                    Tags = instance.Tags
                 };
 
                 RemoteDesktopSessionManager.AddSession(remoteDesktopSessionInfo);
@@ -326,7 +334,8 @@ namespace NETworkManager.ViewModels.Applications
                 {
                     Name = instance.Name,
                     Hostname = instance.Hostname,
-                    Group = instance.Group
+                    Group = instance.Group,
+                    Tags = instance.Tags
                 };
 
                 RemoteDesktopSessionManager.AddSession(remoteDesktopSessionInfo);

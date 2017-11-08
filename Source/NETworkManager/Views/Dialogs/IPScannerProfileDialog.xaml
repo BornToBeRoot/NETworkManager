@@ -22,7 +22,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" DataContext="{DynamicResource String_Name}" Text="{Binding Path=., StringFormat={}{0}:}" />
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Name}" />
             <TextBox x:Name="txtName" Grid.Column="1" Grid.Row="0">
                 <TextBox.Text>
                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -32,7 +32,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="2" DataContext="{DynamicResource String_IPRange}" Text="{Binding Path=., StringFormat={}{0}:}" />
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_IPRange}" />
             <TextBox x:Name="txtIPRange" Grid.Column="1" Grid.Row="2">
                 <TextBox.Text>
                     <Binding Path="IPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -43,7 +43,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="4" DataContext="{DynamicResource String_Group}" Text="{Binding Path=., StringFormat={}{0}:}" />
+            <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Group}" />
             <ComboBox x:Name="cbGroup" Grid.Column="1" Grid.Row="4" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}">
                 <ComboBox.Text>
                     <Binding Path="Group" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">

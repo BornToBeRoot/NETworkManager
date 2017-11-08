@@ -68,7 +68,7 @@ namespace NETworkManager.Models.Network
             {
                 foreach (string portByService in portsByService)
                 {
-                    if (info.Service.IndexOf(portByService, StringComparison.OrdinalIgnoreCase) >= 0 || info.Description.IndexOf(portByService, StringComparison.OrdinalIgnoreCase) >= 0)
+                    if (info.Service.IndexOf(portByService, StringComparison.OrdinalIgnoreCase) > -1 || info.Description.IndexOf(portByService, StringComparison.OrdinalIgnoreCase) > -1)
                         list.Add(info);
                 }
             }

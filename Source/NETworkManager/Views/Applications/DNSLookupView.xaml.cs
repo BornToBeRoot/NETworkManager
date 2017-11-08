@@ -12,5 +12,11 @@ namespace NETworkManager.Views.Applications
             InitializeComponent();
             DataContext = viewModel;
         }
+
+        private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
+        {
+            ContextMenu menu = sender as ContextMenu;
+            menu.DataContext = viewModel;
+        }
     }
 }

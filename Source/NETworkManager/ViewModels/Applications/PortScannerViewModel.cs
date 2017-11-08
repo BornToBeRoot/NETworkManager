@@ -30,33 +30,33 @@ namespace NETworkManager.ViewModels.Applications
 
         private bool _isLoading = true;
 
-        private string _hostnameOrIPAddress;
-        public string HostnameOrIPAddress
+        private string _hostname;
+        public string Hostname
         {
-            get { return _hostnameOrIPAddress; }
+            get { return _hostname; }
             set
             {
-                if (value == _hostnameOrIPAddress)
+                if (value == _hostname)
                     return;
 
-                _hostnameOrIPAddress = value;
+                _hostname = value;
                 OnPropertyChanged();
             }
         }
 
-        private List<string> _hostnameOrIPAddressHistory = new List<string>();
-        public List<string> HostnameOrIPAddressHistory
+        private List<string> _hostnameHistory = new List<string>();
+        public List<string> HostnameHistory
         {
-            get { return _hostnameOrIPAddressHistory; }
+            get { return _hostnameHistory; }
             set
             {
-                if (value == _hostnameOrIPAddressHistory)
+                if (value == _hostnameHistory)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PortScanner_HostnameOrIPAddressHistory = value;
+                    SettingsManager.Current.PortScanner_HostnameHistory = value;
 
-                _hostnameOrIPAddressHistory = value;
+                _hostnameHistory = value;
                 OnPropertyChanged();
             }
         }
@@ -130,6 +130,26 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 _portScanResult = value;
+            }
+        }
+
+        private ICollectionView _portScanResultView;
+        public ICollectionView PortScanResultView
+        {
+            get { return _portScanResultView; }
+        }
+
+        private PortInfo _selectedScanResult;
+        public PortInfo SelectedScanResult
+        {
+            get { return _selectedScanResult; }
+            set
+            {
+                if (value == _selectedScanResult)
+                    return;
+
+                _selectedScanResult = value;
+                OnPropertyChanged();
             }
         }
 
@@ -294,7 +314,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (value != null)
                 {
-                    HostnameOrIPAddress = value.HostnameOrIPAddress;
+                    Hostname = value.Hostname;
                     Ports = value.Ports;
                 }
 
@@ -344,6 +364,9 @@ namespace NETworkManager.ViewModels.Applications
         {
             dialogCoordinator = instance;
 
+            // Result view
+            _portScanResultView = CollectionViewSource.GetDefaultView(PortScanResult);
+            
             // Load profiles
             if (PortScannerProfileManager.Profiles == null)
                 PortScannerProfileManager.Load();
@@ -361,7 +384,7 @@ namespace NETworkManager.ViewModels.Applications
                 string search = Search.Trim();
 
                 // Search by: Name
-                return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
+                return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
             LoadSettings();
@@ -371,8 +394,8 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LoadSettings()
         {
-            if (SettingsManager.Current.PortScanner_HostnameOrIPAddressHistory != null)
-                HostnameOrIPAddressHistory = new List<string>(SettingsManager.Current.PortScanner_HostnameOrIPAddressHistory);
+            if (SettingsManager.Current.PortScanner_HostnameHistory != null)
+                HostnameHistory = new List<string>(SettingsManager.Current.PortScanner_HostnameHistory);
 
             if (SettingsManager.Current.PortScanner_PortsHistory != null)
                 PortsHistory = new List<string>(SettingsManager.Current.PortScanner_PortsHistory);
@@ -403,6 +426,76 @@ namespace NETworkManager.ViewModels.Applications
                 StartScan();
         }
 
+        public ICommand CopySelectedIPAddressCommand
+        {
+            get { return new RelayCommand(p => CopySelectedIPAddressAction()); }
+        }
+
+        private void CopySelectedIPAddressAction()
+        {
+            Clipboard.SetText(SelectedScanResult.Host.Item1.ToString());
+        }
+
+        public ICommand CopySelectedHostnameCommand
+        {
+            get { return new RelayCommand(p => CopySelectedHostnameAction()); }
+        }
+
+        private void CopySelectedHostnameAction()
+        {
+            Clipboard.SetText(SelectedScanResult.Host.Item2);
+        }
+
+        public ICommand CopySelectedPortCommand
+        {
+            get { return new RelayCommand(p => CopySelectedPortAction()); }
+        }
+
+        private void CopySelectedPortAction()
+        {
+            Clipboard.SetText(SelectedScanResult.Port.ToString());
+        }
+
+        public ICommand CopySelectedStatusCommand
+        {
+            get { return new RelayCommand(p => CopySelectedStatusAction()); }
+        }
+
+        private void CopySelectedStatusAction()
+        {
+            Clipboard.SetText(Application.Current.Resources["String_PortStatus_" + SelectedScanResult.Status.ToString()] as string);
+        }
+
+        public ICommand CopySelectedProtocolCommand
+        {
+            get { return new RelayCommand(p => CopySelectedProtocolAction()); }
+        }
+
+        private void CopySelectedProtocolAction()
+        {
+            Clipboard.SetText(SelectedScanResult.LookupInfo.Protocol.ToString());
+        }
+
+        public ICommand CopySelectedServiceCommand
+        {
+            get { return new RelayCommand(p => CopySelectedServiceAction()); }
+        }
+
+        private void CopySelectedServiceAction()
+        {
+            Clipboard.SetText(SelectedScanResult.LookupInfo.Service);
+        }
+
+        public ICommand CopySelectedDescriptionCommand
+        {
+            get { return new RelayCommand(p => CopySelectedDescriptionAction()); }
+        }
+
+        private void CopySelectedDescriptionAction()
+        {
+            Clipboard.SetText(SelectedScanResult.LookupInfo.Description);
+        }
+
         public ICommand AddProfileCommand
         {
             get { return new RelayCommand(p => AddProfileAction()); }
@@ -422,7 +515,7 @@ namespace NETworkManager.ViewModels.Applications
                 PortScannerProfileInfo portScannerProfileInfo = new PortScannerProfileInfo
                 {
                     Name = instance.Name,
-                    HostnameOrIPAddress = instance.HostnameOrIPAddress,
+                    Hostname = instance.Hostname,
                     Ports = instance.Ports,
                     Group = instance.Group
                 };
@@ -431,7 +524,7 @@ namespace NETworkManager.ViewModels.Applications
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, PortScannerProfileManager.GetProfileGroups(), new PortScannerProfileInfo() { HostnameOrIPAddress = HostnameOrIPAddress, Ports = Ports });
+            }, PortScannerProfileManager.GetProfileGroups(), new PortScannerProfileInfo() { Hostname = Hostname, Ports = Ports });
 
             customDialog.Content = new PortScannerProfileDialog
             {
@@ -462,7 +555,7 @@ namespace NETworkManager.ViewModels.Applications
                 PortScannerProfileInfo portScannerProfileInfo = new PortScannerProfileInfo
                 {
                     Name = instance.Name,
-                    HostnameOrIPAddress = instance.HostnameOrIPAddress,
+                    Hostname = instance.Hostname,
                     Ports = instance.Ports,
                     Group = instance.Group
                 };
@@ -500,7 +593,7 @@ namespace NETworkManager.ViewModels.Applications
                 PortScannerProfileInfo portScannerProfileInfo = new PortScannerProfileInfo
                 {
                     Name = instance.Name,
-                    HostnameOrIPAddress = instance.HostnameOrIPAddress,
+                    Hostname = instance.Hostname,
                     Ports = instance.Ports,
                     Group = instance.Group
                 };
@@ -562,7 +655,7 @@ namespace NETworkManager.ViewModels.Applications
 
             cancellationTokenSource = new CancellationTokenSource();
 
-            string[] hosts = HostnameOrIPAddress.Split(';');
+            string[] hosts = Hostname.Split(';');
 
             List<Tuple<IPAddress, string>> hostData = new List<Tuple<IPAddress, string>>();
 
@@ -650,7 +743,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 PreparingScan = false;
 
-                HostnameOrIPAddressHistory = new List<string>(HistoryListHelper.Modify(HostnameOrIPAddressHistory, HostnameOrIPAddress, SettingsManager.Current.Application_HistoryListEntries));
+                HostnameHistory = new List<string>(HistoryListHelper.Modify(HostnameHistory, Hostname, SettingsManager.Current.Application_HistoryListEntries));
                 PortsHistory = new List<string>(HistoryListHelper.Modify(PortsHistory, Ports, SettingsManager.Current.Application_HistoryListEntries));
 
                 PortScannerOptions portScannerOptions = new PortScannerOptions

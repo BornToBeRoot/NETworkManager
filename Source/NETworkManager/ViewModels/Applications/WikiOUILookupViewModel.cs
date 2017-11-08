@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using NETworkManager.Models.Network;
 using NETworkManager.Helpers;
 using System.Text.RegularExpressions;
+using System.ComponentModel;
+using System.Windows.Data;
+using System.Windows;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -86,6 +89,26 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
+        private ICollectionView _ouiLookupResultView;
+        public ICollectionView OUILookupResultView
+        {
+            get { return _ouiLookupResultView; }
+        }
+
+        private OUIInfo _selectedOUILookup;
+        public OUIInfo SelectedOUILookup
+        {
+            get { return _selectedOUILookup; }
+            set
+            {
+                if (value == _selectedOUILookup)
+                    return;
+
+                _selectedOUILookup = value;
+                OnPropertyChanged();                    
+            }
+        }
+
         private bool _noVendorFound;
         public bool NoVendorFound
         {
@@ -104,6 +127,8 @@ namespace NETworkManager.ViewModels.Applications
         #region Constructor, Load settings
         public WikiOUILookupViewModel()
         {
+            _ouiLookupResultView = CollectionViewSource.GetDefaultView(OUILookupResult);
+
             LoadSettings();
 
             _isLoading = false;
@@ -168,6 +193,26 @@ namespace NETworkManager.ViewModels.Applications
             }
 
             IsOUILookupRunning = false;
+        }
+
+        public ICommand CopySelectedMACAddressCommand
+        {
+            get { return new RelayCommand(p => CopySelectedMACAddressAction()); }
+        }
+
+        private void CopySelectedMACAddressAction()
+        {
+            Clipboard.SetText(SelectedOUILookup.MACAddress);
+        }
+
+        public ICommand CopySelectedVendorCommand
+        {
+            get { return new RelayCommand(p => CopySelectedVendorAction()); }
+        }
+
+        private void CopySelectedVendorAction()
+        {
+            Clipboard.SetText(SelectedOUILookup.Vendor);
         }
         #endregion
     }
