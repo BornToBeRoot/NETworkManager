@@ -17,7 +17,7 @@
         <Converter:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
         <Converter:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
         <Converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
-        <Converter:NullOrEmptyToStringConverter x:Key="NullOrEmptyToStringConverter" />        
+        <Converter:NullOrEmptyToStringConverter x:Key="NullOrEmptyToStringConverter" />
         <Converter:PortStatusToStringConverter x:Key="PortStatusToStringConverter" />
     </UserControl.Resources>
     <Grid>
@@ -265,7 +265,11 @@
                 </DataGrid.Resources>
                 <DataGrid.RowStyle>
                     <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
-                        <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" Value="1" >
+                                <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
                     </Style>
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
