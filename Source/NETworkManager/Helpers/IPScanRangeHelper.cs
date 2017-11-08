@@ -27,7 +27,10 @@ namespace NETworkManager.Helpers
             {
                 // Match 192.168.0.1
                 if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressRegex))
+                {
                     bag.Add(IPAddress.Parse(ipOrRange));
+                    continue;
+                }
 
                 // Match 192.168.0.0/24
                 if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressCidrRegex) || Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressSubnetmaskRegex))
@@ -46,6 +49,8 @@ namespace NETworkManager.Helpers
 
                         parallelOptions.CancellationToken.ThrowIfCancellationRequested();
                     });
+
+                    continue;
                 }
 
                 // Match 192.168.0.0 - 192.168.0.100
@@ -59,6 +64,8 @@ namespace NETworkManager.Helpers
 
                         parallelOptions.CancellationToken.ThrowIfCancellationRequested();
                     });
+
+                    continue;
                 }
 
                 // Convert 192.168.[50-100].1 to 192.168.50.1, 192.168.51.1, 192.168.52.1, etc.
@@ -105,6 +112,8 @@ namespace NETworkManager.Helpers
                             }
                         }
                     }
+
+                    continue;
                 }
             }
 
