@@ -351,12 +351,13 @@ namespace NETworkManager
         NetworkInterfaceView networkInterfaceView;
         IPScannerView ipScannerView;
         PortScannerView portScannerView;
-        SubnetCalculatorView subnetCalculatorView;
-        WakeOnLANView wakeOnLANView;
         PingView pingView;
         TracerouteView tracerouteView;
         DNSLookupView dnsLookupView;
         RemoteDesktopView remoteDesktopView;
+        WakeOnLANView wakeOnLANView;
+        SubnetCalculatorView subnetCalculatorView;
+        ARPTableView arpTableView;
         WikiView wikiView;
 
         private ApplicationViewManager.Name? currentApplicationViewName = null;
@@ -386,18 +387,6 @@ namespace NETworkManager
 
                     contentControlApplication.Content = portScannerView;
                     break;
-                case ApplicationViewManager.Name.SubnetCalculator:
-                    if (subnetCalculatorView == null)
-                        subnetCalculatorView = new SubnetCalculatorView();
-
-                    contentControlApplication.Content = subnetCalculatorView;
-                    break;
-                case ApplicationViewManager.Name.WakeOnLAN:
-                    if (wakeOnLANView == null)
-                        wakeOnLANView = new WakeOnLANView();
-
-                    contentControlApplication.Content = wakeOnLANView;
-                    break;
                 case ApplicationViewManager.Name.Ping:
                     if (pingView == null)
                         pingView = new PingView();
@@ -421,6 +410,24 @@ namespace NETworkManager
                         remoteDesktopView = new RemoteDesktopView();
 
                     contentControlApplication.Content = remoteDesktopView;
+                    break;
+                case ApplicationViewManager.Name.WakeOnLAN:
+                    if (wakeOnLANView == null)
+                        wakeOnLANView = new WakeOnLANView();
+
+                    contentControlApplication.Content = wakeOnLANView;
+                    break;
+                case ApplicationViewManager.Name.SubnetCalculator:
+                    if (subnetCalculatorView == null)
+                        subnetCalculatorView = new SubnetCalculatorView();
+
+                    contentControlApplication.Content = subnetCalculatorView;
+                    break;
+                case ApplicationViewManager.Name.ARPTable:
+                    if (arpTableView == null)
+                        arpTableView = new ARPTableView();
+
+                    contentControlApplication.Content = arpTableView;
                     break;
                 case ApplicationViewManager.Name.Wiki:
                     if (wikiView == null)

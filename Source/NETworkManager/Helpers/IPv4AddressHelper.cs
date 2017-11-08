@@ -7,6 +7,9 @@ namespace NETworkManager.Helpers
 {
     public static class IPv4AddressHelper
     {
+        public const int IPv4MulticastStart = -536870912;
+        public const int IPv4MulticastEnd = -268435457;
+
         /// <summary>
         /// Convert a binary IPv4-Address into a human readable string.
         /// </summary>
@@ -42,7 +45,8 @@ namespace NETworkManager.Helpers
         {
             byte[] bytes = ipAddress.GetAddressBytes();
 
-            Array.Reverse(bytes);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(bytes);
 
             return BitConverter.ToInt32(bytes, 0);
         }
@@ -51,7 +55,8 @@ namespace NETworkManager.Helpers
         {
             byte[] bytes = BitConverter.GetBytes(i);
 
-            Array.Reverse(bytes);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(bytes);
 
             return new IPAddress(bytes);
         }
@@ -64,6 +69,13 @@ namespace NETworkManager.Helpers
         public static IPAddress DecrementIPv4Address(IPAddress ipAddress, int i)
         {
             return ConvertFromInt32(ConvertToInt32(ipAddress) - i);
+        }
+
+        public static bool IsMulticast(IPAddress ipAddress)
+        {
+            int ip = ConvertToInt32(ipAddress);
+
+            return (ip >= IPv4MulticastStart && ip <= IPv4MulticastEnd);
         }
     }
 }

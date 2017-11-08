@@ -77,7 +77,9 @@
     <system:String x:Key="String_Header_Disconnected">Getrennt</system:String>
     <system:String x:Key="String_Header_LocalDevicesAndResources">Lokale Geräte und Ressourcen</system:String>
     <system:String x:Key="String_Header_Display">Anzeige</system:String>
-    
+    <system:String x:Key="String_Header_Filter">Filter</system:String>
+    <system:String x:Key="String_Header_ARPTable">ARP-Table</system:String>
+
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Ein leistungsstarkes Tool zum Verwalten von Netzwerken und zur Behebung von Netzwerkproblemen!</system:String>
@@ -352,6 +354,7 @@
     <system:String x:Key="String_Watermark_ExampleIPv4DNSServer">8.8.8.8</system:String>
     <system:String x:Key="String_Watermark_EamplePortPortRangeOrService">22; 80; https; ldaps; 777 - 999; 8080</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnet">192.168.178.133/22 oder 192.168.178.133/255.255.252.0</system:String>
+    <system:String x:Key="String_Watermark_Filter">Filter...</system:String>
     
     <!-- ShowProgress -->
     <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Konfiguriere Netzwerkinterface</system:String>
