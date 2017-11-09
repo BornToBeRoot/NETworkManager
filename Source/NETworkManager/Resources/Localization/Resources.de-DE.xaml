@@ -78,7 +78,7 @@
     <system:String x:Key="String_Header_LocalDevicesAndResources">Lokale Geräte und Ressourcen</system:String>
     <system:String x:Key="String_Header_Display">Anzeige</system:String>
     <system:String x:Key="String_Header_Filter">Filter</system:String>
-    <system:String x:Key="String_Header_ARPTable">ARP-Table</system:String>
+    <system:String x:Key="String_Header_ARPTable">ARP-Tabelle</system:String>
 
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -316,6 +316,7 @@
     <system:String x:Key="String_Button_Connect">Verbinden</system:String>
     <system:String x:Key="String_Button_AddSessions">Sitzung hinzufügen...</system:String>
     <system:String x:Key="String_Button_Save">Speichern</system:String>
+    <system:String x:Key="String_Button_Refresh">Aktualisieren</system:String>
     
     <!-- Help -->
     <system:String x:Key="String_Help_ParameterHelp">Zeigt diesen Dialog an.</system:String>
@@ -391,7 +392,7 @@
     <system:String x:Key="String_ApplicationName_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_ApplicationName_DNSLookup">DNS Lookup</system:String>
     <system:String x:Key="String_ApplicationName_RemoteDesktop">Remote Desktop</system:String>
-    <system:String x:Key="String_ApplicationName_ARPTable">ARP-Table</system:String>
+    <system:String x:Key="String_ApplicationName_ARPTable">ARP-Tabelle</system:String>
     <system:String x:Key="String_ApplicationName_Wiki">Wiki</system:String>
 
     <!-- SettingsView.Name -->

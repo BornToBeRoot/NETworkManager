@@ -316,6 +316,7 @@
     <system:String x:Key="String_Button_Connect">Connect</system:String>
     <system:String x:Key="String_Button_AddSessions">Add session...</system:String>
     <system:String x:Key="String_Button_Save">Save</system:String>
+    <system:String x:Key="String_Button_Refresh">Refresh</system:String>
     
     <!-- Help -->
     <system:String x:Key="String_Help_ParameterHelp">Displays this dialog.</system:String>

@@ -5,14 +5,17 @@ using NETworkManager.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network
 {
-    public static class ARPTable
+    public class ARPTable
     {
+        #region Variables
         // The max number of physical addresses.
         const int MAXLEN_PHYSADDR = 8;
 
@@ -52,12 +55,23 @@ namespace NETworkManager.Models.Network
         static extern int GetIpNetTable(IntPtr pIpNetTable, [MarshalAs(UnmanagedType.U4)] ref int pdwSize, bool bOrder);
 
         [DllImport("IpHlpApi.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        internal static extern int FreeMibTable(IntPtr plpNetTable);                
+        internal static extern int FreeMibTable(IntPtr plpNetTable);
 
         // The insufficient buffer error.
         const int ERROR_INSUFFICIENT_BUFFER = 122;
+        #endregion
 
-        public static List<ARPTableInfo> GetARPTable()
+        #region Events
+        public event EventHandler UserHasCanceled;
+
+        protected virtual void OnUserHasCanceled()
+        {
+            UserHasCanceled?.Invoke(this, EventArgs.Empty);
+        }
+        #endregion
+
+        #region Methods
+        public static List<ARPTableInfo> GetTable()
         {
             List<ARPTableInfo> list = new List<ARPTableInfo>();
 
@@ -137,5 +151,48 @@ namespace NETworkManager.Models.Network
                 FreeMibTable(buffer);
             }
         }
+
+        public Task DeleteTableAsync()
+        {
+            return Task.Run(() => DeleteTable());
+        }
+
+        public void DeleteTable()
+        {
+            string command = string.Format("netsh interface ip delete arpcache");
+
+            // Start process with elevated rights...
+            ProcessStartInfo processStartInfo = new ProcessStartInfo()
+            {
+                Verb = "runas",
+                FileName = "powershell.exe",
+                Arguments = string.Format("-NoProfile -NoLogo -Command {0}", command)
+            };
+
+            processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+
+            using (Process process = new Process())
+            {
+                process.StartInfo = processStartInfo;
+
+                try
+                {
+                    process.Start();
+                    process.WaitForExit();
+                }
+                catch (Win32Exception win32ex)
+                {
+                    switch (win32ex.NativeErrorCode)
+                    {
+                        case 1223:
+                            OnUserHasCanceled();
+                            break;
+                        default:
+                            throw;
+                    }
+                }
+            }
+        }
+        #endregion
     }
 }

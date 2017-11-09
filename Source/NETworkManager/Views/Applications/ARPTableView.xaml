@@ -3,14 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Validator="clr-namespace:NETworkManager.Validators"
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
-        xmlns:Control="clr-namespace:NETworkManager.Controls"
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d">
     <UserControl.Resources>
+        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Converter:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
@@ -22,9 +20,12 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Filter}" />
-        <TextBox Grid.Row="1" x:Name="txtFilter" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_Filter}" Margin="0,0,0,20" />
+        <StackPanel Grid.Row="1" Margin="0,0,0,20">
+            <TextBox x:Name="txtFilter" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_Filter}" />
+            <TextBlock Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+        </StackPanel>
         <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_ARPTable}" />
-        <DataGrid Grid.Row="3" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding ARPTableView}" SelectedItem="{Binding SelectedARPTableInfo}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True">
+        <DataGrid Grid.Row="3" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding ARPTableView}" SelectedItem="{Binding SelectedARPTableInfo}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True" Margin="0,0,0,10">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
@@ -71,5 +72,39 @@
                 <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" MinWidth="200" />
             </DataGrid.Columns>
         </DataGrid>
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Command="{Binding DeleteCommand}" IsDefault="True" Style="{StaticResource ImageWithTextButton}">
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Delete}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding RefreshCommand}" IsDefault="True" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Refresh}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Refresh}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                    </Grid>
+                </Button.Content>
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -1,15 +1,8 @@
 ﻿using NETworkManager.Models.Network;
-using NETworkManager.Models.Settings;
 using NETworkManager.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
-using NETworkManager.Collections;
-using System.Net.NetworkInformation;
-using System.Windows.Threading;
-using System.Diagnostics;
-using System.Linq;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
@@ -19,7 +12,7 @@ namespace NETworkManager.ViewModels.Applications
     public class ARPTableViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
+        //private bool _isLoading = true;
 
         private string _filter;
         public string Filter
@@ -71,6 +64,34 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
+
+        private bool _displayStatusMessage;
+        public bool DisplayStatusMessage
+        {
+            get { return _displayStatusMessage; }
+            set
+            {
+                if (value == _displayStatusMessage)
+                    return;
+
+                _displayStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _statusMessage;
+        public string StatusMessage
+        {
+            get { return _statusMessage; }
+            set
+            {
+                if (value == _statusMessage)
+                    return;
+
+                _statusMessage = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Contructor, load settings
@@ -91,11 +112,11 @@ namespace NETworkManager.ViewModels.Applications
                 return info.IPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
-            RefreshARPTableAction();
+            Refresh();
 
             LoadSettings();
 
-            _isLoading = false;
+            //_isLoading = false;
         }
 
         private void LoadSettings()
@@ -105,16 +126,42 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region ICommands & Actions
-        public ICommand RefreshARPTableCommand
+        public ICommand RefreshCommand
         {
-            get { return new RelayCommand(p => RefreshARPTableAction()); }
+            get { return new RelayCommand(p => RefreshAction()); }
         }
 
-        private void RefreshARPTableAction()
+        private void RefreshAction()
         {
-            ARPTable.Clear();
+            DisplayStatusMessage = false;
 
-            Models.Network.ARPTable.GetARPTable().ForEach(x => ARPTable.Add(x));
+            Refresh();
+        }
+
+        public ICommand DeleteCommand
+        {
+            get { return new RelayCommand(p => DeleteAction()); }
+        }
+
+        private async void DeleteAction()
+        {
+            DisplayStatusMessage = false;
+
+            try
+            {
+                ARPTable arpTable = new ARPTable();
+
+                arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
+
+                await arpTable.DeleteTableAsync();
+
+                Refresh();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = ex.Message;
+                DisplayStatusMessage = true;
+            }
         }
 
         public ICommand CopySelectedIPAddressCommand
@@ -135,6 +182,23 @@ namespace NETworkManager.ViewModels.Applications
         private void CopySelectedMACAddressAction()
         {
             Clipboard.SetText(MACAddressHelper.GetDefaultFormat(SelectedARPTableInfo.MACAddress.ToString()));
+        }
+        #endregion
+
+        #region Methods
+        private void Refresh()
+        {
+            ARPTable.Clear();
+
+            Models.Network.ARPTable.GetTable().ForEach(x => ARPTable.Add(x));
+        }
+        #endregion
+
+        #region Events
+        private void ArpTable_UserHasCanceled(object sender, EventArgs e)
+        {
+            StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
+            DisplayStatusMessage = true;
         }
         #endregion
     }

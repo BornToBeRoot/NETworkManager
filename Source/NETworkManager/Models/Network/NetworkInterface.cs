@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace NETworkManager.Models.Network
 {

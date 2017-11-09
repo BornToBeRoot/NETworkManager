@@ -798,13 +798,7 @@ namespace NETworkManager.ViewModels.Applications
                 await progressDialogController.CloseAsync();
             }
         }
-
-        private void NetworkInterface_UserHasCanceled(object sender, EventArgs e)
-        {
-            StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
-            DisplayStatusMessage = true;
-        }
-
+                
         public ICommand AddProfileCommand
         {
             get { return new RelayCommand(p => AddProfileAction()); }
@@ -860,6 +854,14 @@ namespace NETworkManager.ViewModels.Applications
                 return;
 
             NetworkInterfaceProfileManager.RemoveProfile(SelectedProfile);
+        }
+        #endregion
+
+        #region Events
+        private void NetworkInterface_UserHasCanceled(object sender, EventArgs e)
+        {
+            StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
+            DisplayStatusMessage = true;
         }
         #endregion
     }

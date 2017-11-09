@@ -102,7 +102,7 @@ namespace NETworkManager.Models.Network
 
                                         if (ipScannerOptions.ResolveMACAddress)
                                         {
-                                            macAddress = ARPTable.GetARPTable().Where(p => p.IPAddress.ToString() == ipAddress.ToString()).FirstOrDefault().MACAddress;
+                                            macAddress = ARPTable.GetTable().Where(p => p.IPAddress.ToString() == ipAddress.ToString()).FirstOrDefault().MACAddress;
 
                                             if (macAddress == null)
                                                 macAddress = NetworkInterface.GetNetworkInterfaces().Where(p => p.IPv4Address.Contains(ipAddress)).FirstOrDefault().PhysicalAddress;
