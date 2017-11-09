@@ -77,6 +77,8 @@
     <system:String x:Key="String_Header_Disconnected">Disconnected</system:String>
     <system:String x:Key="String_Header_LocalDevicesAndResources">Local devices and resources</system:String>
     <system:String x:Key="String_Header_Display">Display</system:String>
+    <system:String x:Key="String_Header_Filter">Filter</system:String>
+    <system:String x:Key="String_Header_ARPTable">ARP-Table</system:String>
     
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -314,6 +316,7 @@
     <system:String x:Key="String_Button_Connect">Connect</system:String>
     <system:String x:Key="String_Button_AddSessions">Add session...</system:String>
     <system:String x:Key="String_Button_Save">Save</system:String>
+    <system:String x:Key="String_Button_Refresh">Refresh</system:String>
     
     <!-- Help -->
     <system:String x:Key="String_Help_ParameterHelp">Displays this dialog.</system:String>
@@ -352,6 +355,7 @@
     <system:String x:Key="String_Watermark_ExampleIPv4DNSServer">8.8.8.8</system:String>
     <system:String x:Key="String_Watermark_EamplePortPortRangeOrService">22; 80; https; ldaps; 777 - 999; 8080</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnet">192.168.178.133/22 or 192.168.178.133/255.255.252.0</system:String>
+    <system:String x:Key="String_Watermark_Filter">Filter...</system:String>
 
     <!-- ShowProgress -->
     <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Configure Network Interface</system:String>
@@ -388,6 +392,7 @@
     <system:String x:Key="String_ApplicationName_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_ApplicationName_DNSLookup">DNS Lookup</system:String>
     <system:String x:Key="String_ApplicationName_RemoteDesktop">Remote Desktop</system:String>
+    <system:String x:Key="String_ApplicationName_ARPTable">ARP-Table</system:String>
     <system:String x:Key="String_ApplicationName_Wiki">Wiki</system:String>
     
     <!-- SettingsView.Name -->

@@ -185,9 +185,11 @@
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
     <Compile Include="Converters\ValidateSubnetCalculatorIPv4SplitterConverter.cs" />
     <Compile Include="Helpers\SingleInstanceHelper.cs" />
+    <Compile Include="Models\Network\ARPTableInfo.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Models\Settings\RemoteDesktopSessionManager.cs" />
     <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
+    <Compile Include="ViewModels\Applications\ARPTableViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\PortScannerProfileViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\WakeOnLANClientViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\IPScannerProfileViewModel.cs" />
@@ -218,6 +220,9 @@
     <Compile Include="ViewModels\Settings\SettingsApplicationWakeOnLANViewModel.cs" />
     <Compile Include="Controls\RemoteDesktopControl.xaml.cs">
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Applications\ARPTableView.xaml.cs">
+      <DependentUpon>ARPTableView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Applications\SubnetCalculatorIPv4SplitterView.xaml.cs">
       <DependentUpon>SubnetCalculatorIPv4SplitterView.xaml</DependentUpon>
@@ -325,6 +330,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RemoteDesktopControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Applications\ARPTableView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -501,7 +510,7 @@
     <Compile Include="Converters\ValidateSettingsExportConverter.cs" />
     <Compile Include="Helpers\HistoryListHelper.cs" />
     <Compile Include="Helpers\HotKeysHelper.cs" />
-    <Compile Include="Helpers\IPNetTableHelper.cs" />
+    <Compile Include="Models\Network\ARPTable.cs" />
     <Compile Include="Helpers\PortRangeHelper.cs" />
     <Compile Include="Helpers\IPScanRangeHelper.cs" />
     <Compile Include="Helpers\IPv4AddressHelper.cs" />
