@@ -41,7 +41,7 @@
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <ComboBox Grid.Column="0" x:Name="txtHostname" ItemsSource="{Binding HostnameOrIPAddressHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_HostnameOrIPAddress}" IsEnabled="{Binding IsTraceRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="0" x:Name="txtHostname" ItemsSource="{Binding HostnameHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_HostnameOrIPAddress}" IsEnabled="{Binding IsTraceRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Hostname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -109,7 +109,7 @@
         <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Route}" Style="{StaticResource HeaderTextBlock}" />
         <DataGrid Grid.Row="3" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding TraceResultView}" SelectedItem="{Binding SelectedTraceResult}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False" Margin="0,0,0,20">
             <DataGrid.Resources>
-                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollingDataGridScrollBar}" />
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{DynamicResource String_Copy}">
                         <MenuItem.Icon>
