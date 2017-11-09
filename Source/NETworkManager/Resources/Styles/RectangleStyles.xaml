@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
+    <Style x:Key="HelpImageRectangle" TargetType="{x:Type Rectangle}">
+        <Style.Resources>
+            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
+        </Style.Resources>
+        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+        <Setter Property="OpacityMask">
+            <Setter.Value>
+                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=HelpCircleOutline}"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
+        <Setter Property="ToolTipService.ShowDuration" Value="600000" />
+    </Style>
+</ResourceDictionary>

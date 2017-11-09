@@ -283,10 +283,12 @@
     <system:String x:Key="String_ColorDepthBit">Farbtiefe (Bit)</system:String>
     <system:String x:Key="String_Tags">Tags</system:String>
     <system:String x:Key="String_Copy">Kopieren</system:String>
-    
-    <!-- ToolTip -->
-    <system:String x:Key="String_ToolTip_Settings">Einstellungen</system:String>
-    <system:String x:Key="String_ToolTip_Expand">Erweitern</system:String>
+    <system:String x:Key="String_Expand">Erweitern</system:String>
+
+    <!-- Help message -->
+    <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>
+    <system:String x:Key="String_HelpMessage_ParameterResetSettings">Setzt alle Einstellungen zurück.</system:String>
+    <system:String x:Key="String_HelpMessage_Tags">Mit Tags können Sie Sitzungen nach Themen/Projekten organisieren. Mehrere Tags können mit ";" getrennt sein. Suche nach Tags mit "tag=xxx".</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
@@ -316,11 +318,7 @@
     <system:String x:Key="String_Button_Connect">Verbinden</system:String>
     <system:String x:Key="String_Button_AddSessions">Sitzung hinzufügen...</system:String>
     <system:String x:Key="String_Button_Save">Speichern</system:String>
-    <system:String x:Key="String_Button_Refresh">Aktualisieren</system:String>
-    
-    <!-- Help -->
-    <system:String x:Key="String_Help_ParameterHelp">Zeigt diesen Dialog an.</system:String>
-    <system:String x:Key="String_Help_ParameterResetSettings">Setzt alle Einstellungen zurück.</system:String>
+    <system:String x:Key="String_Button_Refresh">Aktualisieren</system:String>        
 
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Ausschneiden</system:String>

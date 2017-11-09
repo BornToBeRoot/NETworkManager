@@ -43,9 +43,9 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBox Grid.Column="0" Grid.Row="0" Text="{Binding ParameterHelp}" />
-            <TextBlock Grid.Column="1" Grid.Row="0" Text="{DynamicResource String_Help_ParameterHelp}" />
+            <TextBlock Grid.Column="1" Grid.Row="0" Text="{DynamicResource String_HelpMessage_ParameterHelp}" />
             <TextBox Grid.Column="0" Grid.Row="2" Text="{Binding ParameterResetSettings}" />
-            <TextBlock Grid.Column="1" Grid.Row="2" Text="{DynamicResource String_Help_ParameterResetSettings}" />
+            <TextBlock Grid.Column="1" Grid.Row="2" Text="{DynamicResource String_HelpMessage_ParameterResetSettings}" />
         </Grid>
         </ScrollViewer>
         </Border>

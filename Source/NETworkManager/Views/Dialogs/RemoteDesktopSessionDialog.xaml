@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Validator="clr-namespace:NETworkManager.Validators"
+             xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d">
     <StackPanel Margin="0,0,0,20">
         <Grid Margin="0,20,0,10">
@@ -23,10 +24,13 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Name}" />
-            <TextBox x:Name="txtName" Grid.Column="1" Grid.Row="0">
+            <TextBox x:Name="txtName" Grid.Column="2" Grid.Row="0">
                 <TextBox.Text>
                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -36,7 +40,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Hostname}" />
-            <TextBox x:Name="txtHostname" Grid.Column="1" Grid.Row="2">
+            <TextBox x:Name="txtHostname" Grid.Column="2" Grid.Row="2">
                 <TextBox.Text>
                     <Binding Path="Hostname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -46,7 +50,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Group}" />
-            <ComboBox x:Name="cbGroup" Grid.Column="1" Grid.Row="4" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}">
+            <ComboBox x:Name="cbGroup" Grid.Column="2" Grid.Row="4" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}">
                 <ComboBox.Text>
                     <Binding Path="Group" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -56,7 +60,7 @@
                 </ComboBox.Text>
             </ComboBox>
             <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_Tags}" />
-            <TextBox x:Name="txtTags" Grid.Column="1" Grid.Row="6">
+            <TextBox x:Name="txtTags" Grid.Column="2" Grid.Row="6">
                 <TextBox.Text>
                     <Binding Path="Tags" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -65,6 +69,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
+            <Rectangle Width="24" Height="24" Grid.Column="4" Grid.Row="6" ToolTip="{DynamicResource String_HelpMessage_Tags}" Style="{StaticResource HelpImageRectangle}" />
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{DynamicResource String_Button_Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
@@ -72,7 +77,7 @@
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
                         <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>                            
+                        <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtName}" Value="False" />

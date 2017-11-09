@@ -135,7 +135,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" Padding="8" Width="48" Height="48" Command="{Binding OpenApplicationListCommand}" Focusable="False" ToolTip="{DynamicResource String_ToolTip_Expand}">
+                            <Button Grid.Column="0" Padding="8" Width="48" Height="48" Command="{Binding OpenApplicationListCommand}" Focusable="False" ToolTip="{DynamicResource String_Expand}">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                         <Style.Triggers>
@@ -448,7 +448,7 @@
                         <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_SearchedApplicationNotFound}" Margin="10,0" TextWrapping="Wrap" TextAlignment="Center" />
                     </Grid>
                     <Border Grid.Row="2" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,1,0,0" Background="Transparent">
-                        <Button Height="48" HorizontalContentAlignment="Stretch" Command="{Binding OpenSettingsCommand}" Style="{StaticResource SettingsButton}" Focusable="False" ToolTip="{DynamicResource String_ToolTip_Settings}">
+                        <Button Height="48" HorizontalContentAlignment="Stretch" Command="{Binding OpenSettingsCommand}" Style="{StaticResource SettingsButton}" Focusable="False" ToolTip="{DynamicResource String_Settings}">
                             <Grid HorizontalAlignment="Left">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="48" />

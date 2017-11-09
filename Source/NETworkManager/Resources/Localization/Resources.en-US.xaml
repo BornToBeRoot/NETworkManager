@@ -283,10 +283,12 @@
     <system:String x:Key="String_ColorDepthBit">Color depth (bit)</system:String>
     <system:String x:Key="String_Tags">Tags</system:String>
     <system:String x:Key="String_Copy">Copy</system:String>
-    
-    <!-- ToolTip -->
-    <system:String x:Key="String_ToolTip_Settings">Settings</system:String>
-    <system:String x:Key="String_ToolTip_Expand">Expand</system:String>
+    <system:String x:Key="String_Expand">Expand</system:String>
+
+    <!-- Help message -->
+    <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
+    <system:String x:Key="String_HelpMessage_ParameterResetSettings">Reset all settings.</system:String>
+    <system:String x:Key="String_HelpMessage_Tags">Tags help you organize sessions by topics/projects. Multiple tags can be used with ";" be separated. Search by tags with "tag=xxx".</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
@@ -316,11 +318,7 @@
     <system:String x:Key="String_Button_Connect">Connect</system:String>
     <system:String x:Key="String_Button_AddSessions">Add session...</system:String>
     <system:String x:Key="String_Button_Save">Save</system:String>
-    <system:String x:Key="String_Button_Refresh">Refresh</system:String>
-    
-    <!-- Help -->
-    <system:String x:Key="String_Help_ParameterHelp">Displays this dialog.</system:String>
-    <system:String x:Key="String_Help_ParameterResetSettings">Reset all settings.</system:String>
+    <system:String x:Key="String_Button_Refresh">Refresh</system:String>        
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Cut</system:String>

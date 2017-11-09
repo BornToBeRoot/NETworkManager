@@ -40,8 +40,9 @@
                 <!-- Dependent styles -->
                 <ResourceDictionary Source="/Resources/Styles/ComboBoxStyles.xaml" /> <!-- Requires scrollbar styles-->
                 <ResourceDictionary Source="/Resources/Styles/DragablzStyles.xaml" /> <!-- Requires button and textbox styles -->
-                <ResourceDictionary Source="/Resources/Styles/ExpanderStyles.xaml" /> <!-- Required button styles -->
-            </ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Styles/ExpanderStyles.xaml" /> <!-- Requires button styles -->
+                <ResourceDictionary Source="/Resources/Styles/RectangleStyles.xaml" /> <!-- Requires tooltip styles-->
+             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
