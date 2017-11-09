@@ -11,6 +11,8 @@ using System.Windows.Threading;
 using System.Diagnostics;
 using Heijden.DNS;
 using System.Linq;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -97,6 +99,12 @@ namespace NETworkManager.ViewModels.Applications
 
                 _lookupResult = value;
             }
+        }
+
+        private ICollectionView _lookupResultView;
+        public ICollectionView LookupResultView
+        {
+            get { return _lookupResultView; }
         }
 
         private DNSLookupRecordInfo _selectedLookupResult;
@@ -285,16 +293,16 @@ namespace NETworkManager.ViewModels.Applications
         }
         #endregion
 
-        #region Contructor
+        #region Contructor, load settings
         public DNSLookupViewModel()
         {
+            _lookupResultView = CollectionViewSource.GetDefaultView(LookupResult);
+
             LoadSettings();
 
             _isLoading = false;
         }
-        #endregion
 
-        #region Load settings
         private void LoadSettings()
         {
             if (SettingsManager.Current.DNSLookup_HostHistory != null)
