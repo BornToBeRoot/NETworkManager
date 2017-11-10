@@ -368,9 +368,6 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </ContextMenu>
-                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
-                                <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
-                            </Style>
                         </ListBox.Resources>
                         <ListBox.InputBindings>
                             <KeyBinding Command="{Binding EditProfileCommand}" Key="F2" />
@@ -396,6 +393,11 @@
                                 </GroupStyle.ContainerStyle>
                             </GroupStyle>
                         </ListBox.GroupStyle>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
+                                <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
                     </ListBox>
                     <TextBlock Grid.Row="2" FontSize="18" Foreground="{DynamicResource GrayBrush3}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
                         <TextBlock.Style>

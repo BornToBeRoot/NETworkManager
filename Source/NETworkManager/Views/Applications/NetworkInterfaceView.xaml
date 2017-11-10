@@ -123,12 +123,12 @@
                 <ScrollViewer Grid.Row="3">
                     <ScrollViewer.Style>
                         <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}">
-                        <Setter Property="Visibility" Value="Visible" />
-                        <Style.Triggers>
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Style.Triggers>
                                 <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                            </DataTrigger>
-                        </Style.Triggers>
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
                         </Style>
                     </ScrollViewer.Style>
                     <Grid>
@@ -225,14 +225,14 @@
                 </ScrollViewer>
                 <StackPanel Grid.Row="3" VerticalAlignment="Center">
                     <StackPanel.Style>
-                    <Style TargetType="{x:Type StackPanel}">
-                        <Setter Property="Visibility" Value="Collapsed" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
-                                <Setter Property="Visibility" Value="Visible" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
                     </StackPanel.Style>
                     <TextBlock FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_NoEnabledNetworkAdaptersFound}" TextWrapping="Wrap" TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Margin="0,0,0,10" />
                     <Button Content="{DynamicResource String_Button_NetworkConnections}" Command="{Binding OpenNetworkConnectionsCommand}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Center"/>
@@ -442,7 +442,7 @@
                             </GroupBox>
                         </StackPanel>
                     </ScrollViewer>
-                    <StackPanel Grid.Row="3" HorizontalAlignment="Right" Orientation="Horizontal">                        
+                    <StackPanel Grid.Row="3" HorizontalAlignment="Right" Orientation="Horizontal">
                         <Button Command="{Binding ApplyNetworkInterfaceConfigCommand}">
                             <Button.Content>
                                 <Grid>
@@ -495,7 +495,8 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <TextBox x:Name="txtSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}"/>
-                            <ListBox Grid.Column="0" Grid.Row="2" x:Name="listBoxProfiles"  FontSize="14" ItemsSource="{Binding NetworkInterfaceProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}">                                <ListBox.Resources>
+                            <ListBox Grid.Column="0" Grid.Row="2" x:Name="listBoxProfiles"  FontSize="14" ItemsSource="{Binding NetworkInterfaceProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}">
+                                <ListBox.Resources>
                                     <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
                                     <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                         <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteProfileCommand}">
@@ -507,14 +508,16 @@
                                                 </Rectangle>
                                             </MenuItem.Icon>
                                         </MenuItem>
-                                    </ContextMenu>
-                                    <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
-                                        <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
-                                    </Style>
+                                    </ContextMenu>                                  
                                 </ListBox.Resources>
                                 <ListBox.InputBindings>
                                     <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
                                 </ListBox.InputBindings>
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
+                                        <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
                             </ListBox>
                             <TextBlock Grid.Row="2" FontSize="18" Foreground="{DynamicResource GrayBrush3}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
                                 <TextBlock.Style>

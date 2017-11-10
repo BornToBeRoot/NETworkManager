@@ -79,12 +79,12 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Width="20" Height="20" Margin="10,5,0,5">
                                 <Rectangle.Resources>
-                                    <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Play}" />
+                                    <VisualBrush x:Key="VisualMagnify" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Magnify}" />
                                     <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
                                 </Rectangle.Resources>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
-                                        <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
+                                        <Setter Property="OpacityMask" Value="{StaticResource VisualMagnify}" />
                                         <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
                                     </Style>
                                 </Rectangle.Style>
@@ -110,7 +110,7 @@
         <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Result}" Style="{StaticResource HeaderTextBlock}" />
         <DataGrid Grid.Row="3" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding LookupResultView}" SelectedItem="{Binding SelectedLookupResult}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,20">
             <DataGrid.Resources>
-                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollingDataGridScrollBar}" />
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{DynamicResource String_Copy}">
                         <MenuItem.Icon>
