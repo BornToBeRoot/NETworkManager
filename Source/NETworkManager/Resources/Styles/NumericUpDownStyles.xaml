@@ -5,6 +5,7 @@
         <Setter Property="Width" Value="150" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
     </Style>
 

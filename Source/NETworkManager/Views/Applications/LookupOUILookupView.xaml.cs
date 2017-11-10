@@ -3,11 +3,11 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views.Applications
 {
-    public partial class WikiOUILookupView : UserControl
+    public partial class LookupOUILookupView : UserControl
     {
-        WikiOUILookupViewModel viewModel = new WikiOUILookupViewModel();
+        LookupOUILookupViewModel viewModel = new LookupOUILookupViewModel();
 
-        public WikiOUILookupView()
+        public LookupOUILookupView()
         {
             InitializeComponent();
             DataContext = viewModel;

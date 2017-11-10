@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace NETworkManager.ViewModels.Applications
 {
-    public class WikiOUILookupViewModel : ViewModelBase
+    public class LookupOUILookupViewModel : ViewModelBase
     {
         #region Variables
         private bool _isLoading = true;
@@ -55,7 +55,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Wiki_MACAddressOrVendorHistory = value;
+                    SettingsManager.Current.Lookup_MACAddressOrVendorHistory = value;
 
                 _macAddressOrVendorHistory = value;
                 OnPropertyChanged();
@@ -125,7 +125,7 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Constructor, Load settings
-        public WikiOUILookupViewModel()
+        public LookupOUILookupViewModel()
         {
             _ouiLookupResultView = CollectionViewSource.GetDefaultView(OUILookupResult);
 
@@ -136,8 +136,8 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LoadSettings()
         {
-            if (SettingsManager.Current.Wiki_MACAddressOrVendorHistory != null)
-                MACAddressOrVendorHistory = new List<string>(SettingsManager.Current.Wiki_MACAddressOrVendorHistory);
+            if (SettingsManager.Current.Lookup_MACAddressOrVendorHistory != null)
+                MACAddressOrVendorHistory = new List<string>(SettingsManager.Current.Lookup_MACAddressOrVendorHistory);
         }
         #endregion
 

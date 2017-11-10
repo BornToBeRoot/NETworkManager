@@ -24,11 +24,13 @@
                 <ResourceDictionary Source="/Resources/Templates/ValidationErrorTemplates.xaml" />
                 <!-- Styles -->
                 <ResourceDictionary Source="/Resources/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/CheckBoxStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ContextMenuStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/DataGridStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/GroupBoxStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/NumericUpDownStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/PasswordBoxStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/RadioButtonStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ScrollBarStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ScrollViewerStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/TabControlStyles.xaml" />

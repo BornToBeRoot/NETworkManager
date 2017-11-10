@@ -2,9 +2,9 @@
 
 namespace NETworkManager.Views.Applications
 {
-    public partial class WikiView : UserControl
+    public partial class LookupView : UserControl
     {
-        public WikiView()
+        public LookupView()
         {
             InitializeComponent();
         }

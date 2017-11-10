@@ -391,7 +391,7 @@
     <system:String x:Key="String_ApplicationName_DNSLookup">DNS Lookup</system:String>
     <system:String x:Key="String_ApplicationName_RemoteDesktop">Remote Desktop</system:String>
     <system:String x:Key="String_ApplicationName_ARPTable">ARP-Table</system:String>
-    <system:String x:Key="String_ApplicationName_Wiki">Wiki</system:String>
+    <system:String x:Key="String_ApplicationName_Lookup">Lookup</system:String>
     
     <!-- SettingsView.Name -->
     <system:String x:Key="String_SettingsName_General">General</system:String>

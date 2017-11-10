@@ -23,7 +23,7 @@ namespace NETworkManager.Views
                     new ApplicationViewInfo(Name.WakeOnLAN, new PackIconMaterial() { Kind = PackIconMaterialKind.Power }),
                     new ApplicationViewInfo(Name.SubnetCalculator, new PackIconMaterial() { Kind = PackIconMaterialKind.Calculator }),
                     new ApplicationViewInfo(Name.ARPTable, new PackIconMaterial() { Kind = PackIconMaterialKind.Matrix}),
-                    new ApplicationViewInfo(Name.Wiki, new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.Book })
+                    new ApplicationViewInfo(Name.Lookup, new PackIconMaterial() { Kind = PackIconMaterialKind.Magnify })
                 };
             }
         }
@@ -46,7 +46,7 @@ namespace NETworkManager.Views
             WakeOnLAN,
             SubnetCalculator,
             ARPTable,
-            Wiki
+            Lookup
         }
     }
 }

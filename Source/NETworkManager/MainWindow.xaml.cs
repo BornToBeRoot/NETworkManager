@@ -358,7 +358,7 @@ namespace NETworkManager
         WakeOnLANView wakeOnLANView;
         SubnetCalculatorView subnetCalculatorView;
         ARPTableView arpTableView;
-        WikiView wikiView;
+        LookupView lookupView;
 
         private ApplicationViewManager.Name? currentApplicationViewName = null;
 
@@ -429,11 +429,11 @@ namespace NETworkManager
 
                     contentControlApplication.Content = arpTableView;
                     break;
-                case ApplicationViewManager.Name.Wiki:
-                    if (wikiView == null)
-                        wikiView = new WikiView();
+                case ApplicationViewManager.Name.Lookup:
+                    if (lookupView == null)
+                        lookupView = new LookupView();
 
-                    contentControlApplication.Content = wikiView;
+                    contentControlApplication.Content = lookupView;
                     break;
             }
 

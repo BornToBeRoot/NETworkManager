@@ -660,31 +660,31 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
-        #region Wiki
-        private List<string> _wiki_MACAddressOrVendorHistory = new List<string>();
-        public List<string> Wiki_MACAddressOrVendorHistory
+        #region Lookup
+        private List<string> _lookup_MACAddressOrVendorHistory = new List<string>();
+        public List<string> Lookup_MACAddressOrVendorHistory
         {
-            get { return _wiki_MACAddressOrVendorHistory; }
+            get { return _lookup_MACAddressOrVendorHistory; }
             set
             {
-                if (value == _wiki_MACAddressOrVendorHistory)
+                if (value == _lookup_MACAddressOrVendorHistory)
                     return;
 
-                _wiki_MACAddressOrVendorHistory = value;
+                _lookup_MACAddressOrVendorHistory = value;
                 SettingsChanged = true;
             }
         }
 
-        private List<string> _wiki_PortsHistory = new List<string>();
-        public List<string> Wiki_PortsHistory
+        private List<string> _lookup_PortsHistory = new List<string>();
+        public List<string> Lookup_PortsHistory
         {
-            get { return _wiki_PortsHistory; }
+            get { return _lookup_PortsHistory; }
             set
             {
-                if (value == _wiki_PortsHistory)
+                if (value == _lookup_PortsHistory)
                     return;
 
-                _wiki_PortsHistory = value;
+                _lookup_PortsHistory = value;
                 SettingsChanged = true;
             }
         }

@@ -4,6 +4,7 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
     <Style x:Key="DefaultTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}">
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
         <Setter Property="ContextMenu" Value="{StaticResource CutCopyPasteContextMenu}" />
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
     </Style>
@@ -36,10 +37,11 @@
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
-    <Style x:Key="BrowseFolderTextBox"
-           BasedOn="{StaticResource MetroButtonTextBox}"
-           TargetType="{x:Type TextBox}">
+    <Style x:Key="BrowseFolderTextBox" BasedOn="{StaticResource MetroButtonTextBox}" TargetType="{x:Type TextBox}">
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
+        <Setter Property="ContextMenu" Value="{StaticResource CutCopyPasteContextMenu}" />
+        <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
         <Setter Property="mah:TextBoxHelper.ButtonContentTemplate">
             <Setter.Value>
                 <DataTemplate>

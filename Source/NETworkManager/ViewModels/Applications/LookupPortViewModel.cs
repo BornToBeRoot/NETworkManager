@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace NETworkManager.ViewModels.Applications
 {
-    public class WikiPortLookupViewModel : ViewModelBase
+    public class LookupPortLookupViewModel : ViewModelBase
     {
         #region Variables
         private bool _isLoading = true;
@@ -52,7 +52,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Wiki_PortsHistory = value;
+                    SettingsManager.Current.Lookup_PortsHistory = value;
 
                 _portsHistory = value;
                 OnPropertyChanged();
@@ -122,7 +122,7 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Constructor, Load settings
-        public WikiPortLookupViewModel()
+        public LookupPortLookupViewModel()
         {
             _portLookupResultView = CollectionViewSource.GetDefaultView(PortLookupResult);
 
@@ -133,8 +133,8 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LoadSettings()
         {
-            if (SettingsManager.Current.Wiki_PortsHistory != null)
-                PortsHistory = new List<string>(SettingsManager.Current.Wiki_PortsHistory);
+            if (SettingsManager.Current.Lookup_PortsHistory != null)
+                PortsHistory = new List<string>(SettingsManager.Current.Lookup_PortsHistory);
         }
         #endregion
 

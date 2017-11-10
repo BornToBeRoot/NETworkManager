@@ -47,5 +47,14 @@ namespace NETworkManager.Views
             canvas.Children.Add(packIconFontAwesome);
             Icon = canvas;
         }
+
+        public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconOcticons packIconOcticons)
+        {
+            Name = name;
+            TranslatedName = ApplicationViewManager.TranslateName(name);
+            Canvas canvas = new Canvas();
+            canvas.Children.Add(packIconOcticons);
+            Icon = canvas;
+        }
     }
 }

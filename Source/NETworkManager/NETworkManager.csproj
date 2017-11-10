@@ -212,7 +212,7 @@
     <Compile Include="Validators\OpacityTextboxValidator.cs" />
     <Compile Include="ViewModels\Applications\DNSLookupViewModel.cs" />
     <Compile Include="ViewModels\Applications\SubnetCalculatorIPv4SplitterViewModel.cs" />
-    <Compile Include="ViewModels\Applications\WikiOUILookupViewModel.cs" />
+    <Compile Include="ViewModels\Applications\LookupOUILookupViewModel.cs" />
     <Compile Include="ViewModels\Applications\RemoteDesktopViewModel.cs" />
     <Compile Include="ViewModels\Help\HelpCommandLineViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationRemoteDesktopViewModel.cs" />
@@ -230,11 +230,11 @@
     <Compile Include="Views\Applications\SubnetCalculatorView.xaml.cs">
       <DependentUpon>SubnetCalculatorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\WikiOUILookupView.xaml.cs">
-      <DependentUpon>WikiOUILookupView.xaml</DependentUpon>
+    <Compile Include="Views\Applications\LookupOUILookupView.xaml.cs">
+      <DependentUpon>LookupOUILookupView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\WikiPortLookupView.xaml.cs">
-      <DependentUpon>WikiPortLookupView.xaml</DependentUpon>
+    <Compile Include="Views\Applications\LookupPortLookupView.xaml.cs">
+      <DependentUpon>LookupPortLookupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Applications\RemoteDesktopView.xaml.cs">
       <DependentUpon>RemoteDesktopView.xaml</DependentUpon>
@@ -274,6 +274,14 @@
     </Compile>
     <Compile Include="WpfHelper\ProtocolSettingsLayout.cs" />
     <Page Include="Resources\ContextMenu\ContextMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\RadioButtonStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\CheckBoxStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -349,11 +357,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\WikiOUILookupView.xaml">
+    <Page Include="Views\Applications\LookupOUILookupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\WikiPortLookupView.xaml">
+    <Page Include="Views\Applications\LookupPortLookupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -361,7 +369,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\WikiView.xaml">
+    <Page Include="Views\Applications\LookupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -539,14 +547,14 @@
     <Compile Include="Validators\FileExistsValidator.cs" />
     <Compile Include="Validators\PortRangeValidator.cs" />
     <Compile Include="ViewModels\Applications\PortScannerViewModel.cs" />
-    <Compile Include="ViewModels\Applications\WikiPortViewModel.cs" />
+    <Compile Include="ViewModels\Applications\LookupPortViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationPortScannerViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationIPScannerViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationPingViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsGeneralGeneralViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationTracerouteViewModel.cs" />
-    <Compile Include="Views\Applications\WikiView.xaml.cs">
-      <DependentUpon>WikiView.xaml</DependentUpon>
+    <Compile Include="Views\Applications\LookupView.xaml.cs">
+      <DependentUpon>LookupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ApplicationViewManager.cs" />
     <Compile Include="Views\ApplicationViewInfo.cs" />
