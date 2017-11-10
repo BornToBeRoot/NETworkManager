@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Validator="clr-namespace:NETworkManager.Validators"
              mc:Ignorable="d">
-    <StackPanel Margin="0,0,0,20">
-        <Grid Margin="0,20,0,10">
+    <StackPanel Margin="0,20">
+        <Grid Margin="0,0,0,10">
             <Grid.Resources>
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />

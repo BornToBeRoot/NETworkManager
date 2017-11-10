@@ -190,6 +190,7 @@
     <Compile Include="Models\Settings\RemoteDesktopSessionManager.cs" />
     <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
     <Compile Include="ViewModels\Applications\ARPTableViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\NetworkInterfaceProfileViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\PortScannerProfileViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\WakeOnLANClientViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\IPScannerProfileViewModel.cs" />
@@ -241,6 +242,9 @@
     </Compile>
     <Compile Include="Controls\DragablzTabHostWindow.xaml.cs">
       <DependentUpon>DragablzTabHostWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\NetworkInterfaceProfileDialog.xaml.cs">
+      <DependentUpon>NetworkInterfaceProfileDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\PortScannerProfileDialog.xaml.cs">
       <DependentUpon>PortScannerProfileDialog.xaml</DependentUpon>
@@ -394,6 +398,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DragablzTabHostWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\NetworkInterfaceProfileDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
