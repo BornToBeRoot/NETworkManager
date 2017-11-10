@@ -5,7 +5,6 @@ using System.IO;
 using NETworkManager.Models.Settings;
 using System.Text.RegularExpressions;
 using System;
-using System.Windows;
 using System.Xml;
 
 namespace NETworkManager.Models.Network
@@ -46,7 +45,7 @@ namespace NETworkManager.Models.Network
         {
             List<OUIInfo> list = new List<OUIInfo>();
 
-            string ouiKey = Regex.Replace(macAddress, "-|:", "").Substring(0, 6).ToUpper();
+            string ouiKey = Regex.Replace(macAddress, "[-|:|.]", "").Substring(0, 6).ToUpper();
 
             foreach (OUIInfo info in OUIs[ouiKey])
             {

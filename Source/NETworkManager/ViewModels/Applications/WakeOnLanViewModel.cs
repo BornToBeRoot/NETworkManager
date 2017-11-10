@@ -17,11 +17,13 @@ namespace NETworkManager.ViewModels.Applications
 {
     public class WakeOnLANViewModel : ViewModelBase
     {
+
+
+        #region  Variables 
         private IDialogCoordinator dialogCoordinator;
 
-        private bool _isLoading = true;
-
-        #region  Variables                
+        private bool _isLoading = true;      
+        
         private string _MACAddress;
         public string MACAddress
         {

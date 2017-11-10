@@ -15,7 +15,7 @@ namespace NETworkManager.Helpers
         public static byte[] ConvertStringToByteArray(string macAddress)
         {
             // Regex to replace "-" and ":" in MAC-Address
-            Regex regex = new Regex("-|:");
+            Regex regex = new Regex("[-|:|.]");
             string mac = regex.Replace(macAddress, "");
 
             // Build the byte-array
