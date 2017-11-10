@@ -4,9 +4,14 @@
     <Style x:Key="DefaultToolTip" TargetType="{x:Type ToolTip}" BasedOn="{StaticResource MetroToolTip}">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="MaxWidth" Value="300" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}" />
+    </Style>
+
+    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
+
+    <Style x:Key="HelpToolTip" TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToolTip}">
@@ -20,7 +25,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Rectangle Grid.Column="0" Width="20" Height="20" Fill="{DynamicResource AccentColorBrush}">
+                            <Rectangle Grid.Column="0" Width="20" Height="20" Fill="{DynamicResource GrayBrush3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=InformationVariant}" />
                                 </Rectangle.OpacityMask>
@@ -53,6 +58,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
 </ResourceDictionary>

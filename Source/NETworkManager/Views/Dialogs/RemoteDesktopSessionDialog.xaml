@@ -69,7 +69,11 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <Rectangle Width="24" Height="24" Grid.Column="4" Grid.Row="6" ToolTip="{DynamicResource String_HelpMessage_Tags}" Style="{StaticResource HelpImageRectangle}" />
+            <Rectangle Width="24" Height="24" Grid.Column="4" Grid.Row="6" ToolTip="{DynamicResource String_HelpMessage_Tags}" Style="{StaticResource HelpImageRectangle}">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{DynamicResource String_Button_Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
