@@ -335,17 +335,7 @@
                         <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBox x:Name="txtSearch" Grid.Column="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" FontSize="14" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_Search}" Controls:TextBoxHelper.ClearTextButton="True">
-                        <TextBox.Style>
-                            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource SearchMetroTextBox}">
-                                <Style.Triggers>
-                                    <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
-                                        <Setter Property="Controls:TextBoxHelper.ButtonContentTemplate" Value="{x:Null}" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBox.Style>
-                    </TextBox>
+                    <TextBox x:Name="txtSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
                     <ListBox Grid.Column="0" Grid.Row="2" x:Name="listBoxProfiles" FontSize="14" ItemsSource="{Binding IPScannerProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}">
                         <ListBox.Resources>
                             <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />

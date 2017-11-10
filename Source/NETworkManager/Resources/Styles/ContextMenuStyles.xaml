@@ -1,7 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style TargetType="{x:Type ContextMenu}" BasedOn="{StaticResource MetroContextMenu}">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
         <Style.Resources>
+            <SolidColorBrush x:Key="SubMenuBorderBrush" Color="{DynamicResource Gray8}" />
             <SolidColorBrush x:Key="RightArrowFill" Color="{DynamicResource Gray3}" />
         </Style.Resources>
     </Style>

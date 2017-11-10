@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
+                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
     <Style x:Key="DefaultTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="ContextMenu" Value="{StaticResource CutCopyPasteContextMenu}" />
@@ -9,6 +10,21 @@
 
     <!-- Apply the default design to all text boxes -->
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+
+    <Style x:Key="SearchTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource SearchMetroTextBox}">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="ContextMenu" Value="{StaticResource CutCopyPasteContextMenu}" />
+        <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
+        <Setter Property="mah:TextBoxHelper.Watermark" Value="{DynamicResource String_Watermark_Search}" />
+        <Setter Property="Controls:TextBoxHelper.ClearTextButton" Value="True" />
+        <Style.Triggers>
+            <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
+                <Setter Property="Controls:TextBoxHelper.ButtonContentTemplate" Value="{x:Null}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
     <Style x:Key="TextBlockAsTextBox" TargetType="{x:Type TextBox}" >
         <Setter Property="FontSize" Value="14" />
