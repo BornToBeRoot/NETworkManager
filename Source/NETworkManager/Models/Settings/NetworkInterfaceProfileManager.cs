@@ -18,6 +18,19 @@ namespace NETworkManager.Models.Settings
             return Path.Combine(SettingsManager.GetSettingsLocation(), ProfilesFileName);
         }
 
+        public static List<string> GetProfileGroups()
+        {
+            List<string> list = new List<string>();
+
+            foreach (NetworkInterfaceProfileInfo profile in Profiles)
+            {
+                if (!list.Contains(profile.Group))
+                    list.Add(profile.Group);
+            }
+
+            return list;
+        }
+
         public static void Load(bool deserialize = true)
         {
             Profiles = new ObservableCollection<NetworkInterfaceProfileInfo>();

@@ -417,7 +417,7 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                    <Button x:Name="btnAddProfile" Grid.Column="0" Grid.Row="4" Command="{Binding AddProfileCommand}"  Style="{StaticResource ImageWithTextButton}">
+                    <Button x:Name="btnAddProfile" Grid.Column="0" Grid.Row="4" Command="{Binding AddProfileCommand}" Style="{StaticResource ImageWithTextButton}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>

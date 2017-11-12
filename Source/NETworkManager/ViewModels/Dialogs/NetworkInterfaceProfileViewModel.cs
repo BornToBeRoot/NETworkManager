@@ -80,20 +80,20 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
-        private string _ipv4Address;
-        public string IPv4Address
+        private string _ipAddress;
+        public string IPAddress
         {
-            get { return _ipv4Address; }
+            get { return _ipAddress; }
             set
             {
-                if (value == _ipv4Address)
+                if (value == _ipAddress)
                     return;
 
-                _ipv4Address = value;
-                
+                _ipAddress = value;
+
                 if (!_isLoading)
                     HasProfileInfoChanged();
-                
+
                 OnPropertyChanged();
             }
         }
@@ -205,14 +205,32 @@ namespace NETworkManager.ViewModels.Dialogs
                 OnPropertyChanged();
             }
         }
-        
+
+        private string _group;
+        public string Group
+        {
+            get { return _group; }
+            set
+            {
+                if (value == _group)
+                    return;
+
+                _group = value;
+
+                if (!_isLoading)
+                    HasProfileInfoChanged();
+
+                OnPropertyChanged();
+            }
+        }
+
         ICollectionView _groups;
         public ICollectionView Groups
         {
             get { return _groups; }
         }
 
-        private IPScannerProfileInfo _profileInfo;
+        private NetworkInterfaceProfileInfo _profileInfo;
 
         private bool _profileInfoChanged;
         public bool ProfileInfoChanged
@@ -228,16 +246,22 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
-        public NetworkInterfaceProfileViewModel(Action<NetworkInterfaceProfileViewModel> saveCommand, Action<NetworkInterfaceProfileViewModel> cancelHandler, List<string> groups, IPScannerProfileInfo profileInfo = null)
+        public NetworkInterfaceProfileViewModel(Action<NetworkInterfaceProfileViewModel> saveCommand, Action<NetworkInterfaceProfileViewModel> cancelHandler, List<string> groups, NetworkInterfaceProfileInfo profileInfo = null)
         {
             _saveCommand = new RelayCommand(p => saveCommand(this));
             _cancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            _profileInfo = profileInfo ?? new IPScannerProfileInfo();
+            _profileInfo = profileInfo ?? new NetworkInterfaceProfileInfo();
 
             Name = _profileInfo.Name;
-            SubnetmaskOrCidr = _profileInfo.IPRange;
-            Gateway = string.IsNullOrEmpty(_profileInfo.Group) ? Application.Current.Resources["String_Default"] as string : _profileInfo.Group;
+            EnableStaticIPAddress = _profileInfo.EnableStaticIPAddress;
+            IPAddress = profileInfo.IPAddress;
+            SubnetmaskOrCidr = _profileInfo.Subnetmask;
+            Gateway = _profileInfo.Gateway;
+            EnableStaticDNS = _profileInfo.EnableStaticDNS;
+            PrimaryDNSServer = _profileInfo.PrimaryDNSServer;
+            SecondaryDNSServer = _profileInfo.SecondaryDNSServer;
+            Group = string.IsNullOrEmpty(_profileInfo.Group) ? Application.Current.Resources["String_Default"] as string : _profileInfo.Group;
 
             _groups = CollectionViewSource.GetDefaultView(groups);
             _groups.SortDescriptions.Add(new SortDescription());
@@ -247,7 +271,7 @@ namespace NETworkManager.ViewModels.Dialogs
 
         private void HasProfileInfoChanged()
         {
-            ProfileInfoChanged = (_profileInfo.Name != Name) || (_profileInfo.IPRange != SubnetmaskOrCidr) || (_profileInfo.Group != Gateway);
+            ProfileInfoChanged = (_profileInfo.Name != Name) || (_profileInfo.EnableStaticIPAddress != EnableStaticIPAddress) || (_profileInfo.IPAddress != IPAddress) || (_profileInfo.Subnetmask != SubnetmaskOrCidr) || (_profileInfo.Gateway != Gateway) || (_profileInfo.EnableStaticDNS != EnableStaticDNS) || (_profileInfo.PrimaryDNSServer != PrimaryDNSServer) || (_profileInfo.SecondaryDNSServer != SecondaryDNSServer);
         }
     }
 }

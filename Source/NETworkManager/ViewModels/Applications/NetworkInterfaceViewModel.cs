@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.ComponentModel;
 using System.Diagnostics;
+using NETworkManager.ViewModels.Dialogs;
+using NETworkManager.Views.Dialogs;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -651,6 +653,7 @@ namespace NETworkManager.ViewModels.Applications
                 NetworkInterfaceProfileManager.Load();
 
             _networkInterfaceProfiles = CollectionViewSource.GetDefaultView(NetworkInterfaceProfileManager.Profiles);
+            _networkInterfaceProfiles.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
             _networkInterfaceProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             _networkInterfaceProfiles.Filter = o =>
             {
@@ -693,7 +696,7 @@ namespace NETworkManager.ViewModels.Applications
         private void LoadSettings()
         {
             ExpandProfileView = SettingsManager.Current.NetworkInterface_ExpandProfileView;
-        }             
+        }
         #endregion
 
         #region ICommands & Actions
@@ -798,7 +801,7 @@ namespace NETworkManager.ViewModels.Applications
                 await progressDialogController.CloseAsync();
             }
         }
-                
+
         public ICommand AddProfileCommand
         {
             get { return new RelayCommand(p => AddProfileAction()); }
@@ -806,34 +809,128 @@ namespace NETworkManager.ViewModels.Applications
 
         private async void AddProfileAction()
         {
-            MetroDialogSettings settings = AppearanceManager.MetroDialog;
-
-            settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Add"] as string;
-            settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
-
-            string name = await dialogCoordinator.ShowInputAsync(this, Application.Current.Resources["String_Header_AddProfile"] as string, Application.Current.Resources["String_EnterNameForProfile"] as string, settings);
-
-            if (string.IsNullOrEmpty(name))
-                return;
-
-            string configSubnetmask = ConfigSubnetmaskOrCidr;
-
-            if (ConfigEnableStaticIPAddress && ConfigSubnetmaskOrCidr.StartsWith("/"))
-                configSubnetmask = Subnetmask.GetFromCidr(int.Parse(ConfigSubnetmaskOrCidr.TrimStart('/'))).Subnetmask;
-
-            NetworkInterfaceProfileInfo profile = new NetworkInterfaceProfileInfo
+            CustomDialog customDialog = new CustomDialog()
             {
-                Name = name,
-                EnableStaticIPAddress = ConfigEnableStaticIPAddress,
-                IPAddress = ConfigIPAddress,
-                Gateway = ConfigGateway,
-                Subnetmask = configSubnetmask,
-                EnableStaticDNS = ConfigEnableStaticDNS,
-                PrimaryDNSServer = ConfigPrimaryDNSServer,
-                SecondaryDNSServer = ConfigSecondaryDNSServer
+                Title = Application.Current.Resources["String_Header_AddProfile"] as string
             };
 
-            NetworkInterfaceProfileManager.AddProfile(profile);
+            NetworkInterfaceProfileViewModel networkInterfaceProfileViewModel = new NetworkInterfaceProfileViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                NetworkInterfaceProfileInfo networkInterfaceProfileInfo = new NetworkInterfaceProfileInfo
+                {
+                    Name = instance.Name,
+                    EnableStaticIPAddress = instance.EnableStaticIPAddress,
+                    IPAddress = instance.IPAddress,
+                    Subnetmask = instance.SubnetmaskOrCidr,
+                    Gateway = instance.Gateway,
+                    EnableStaticDNS = instance.EnableStaticDNS,
+                    PrimaryDNSServer = instance.PrimaryDNSServer,
+                    SecondaryDNSServer = instance.SecondaryDNSServer,
+                    Group = instance.Group
+                };
+
+                NetworkInterfaceProfileManager.AddProfile(networkInterfaceProfileInfo);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, NetworkInterfaceProfileManager.GetProfileGroups(), new NetworkInterfaceProfileInfo() { EnableStaticIPAddress = ConfigEnableStaticIPAddress, IPAddress = ConfigIPAddress, Subnetmask = ConfigSubnetmaskOrCidr, Gateway = ConfigGateway, EnableStaticDNS = ConfigEnableStaticDNS, PrimaryDNSServer = ConfigPrimaryDNSServer, SecondaryDNSServer = ConfigSecondaryDNSServer });
+
+            customDialog.Content = new NetworkInterfaceProfileDialog
+            {
+                DataContext = networkInterfaceProfileViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand EditProfileCommand
+        {
+            get { return new RelayCommand(p => EditProfileAction()); }
+        }
+
+        private async void EditProfileAction()
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_EditProfile"] as string
+            };
+
+            NetworkInterfaceProfileViewModel networkInterfaceProfileViewModel = new NetworkInterfaceProfileViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                NetworkInterfaceProfileManager.RemoveProfile(SelectedProfile);
+
+                NetworkInterfaceProfileInfo networkInterfaceProfileInfo = new NetworkInterfaceProfileInfo
+                {
+                    Name = instance.Name,
+                    EnableStaticIPAddress = instance.EnableStaticIPAddress,
+                    IPAddress = instance.IPAddress,
+                    Subnetmask = instance.SubnetmaskOrCidr,
+                    Gateway = instance.Gateway,
+                    EnableStaticDNS = instance.EnableStaticDNS,
+                    PrimaryDNSServer = instance.PrimaryDNSServer,
+                    SecondaryDNSServer = instance.SecondaryDNSServer,
+                    Group = instance.Group
+                };
+
+                NetworkInterfaceProfileManager.AddProfile(networkInterfaceProfileInfo);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, NetworkInterfaceProfileManager.GetProfileGroups(), SelectedProfile);
+
+            customDialog.Content = new NetworkInterfaceProfileDialog
+            {
+                DataContext = networkInterfaceProfileViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand CopyAsProfileCommand
+        {
+            get { return new RelayCommand(p => CopyAsProfileAction()); }
+        }
+
+        private async void CopyAsProfileAction()
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_CopyProfile"] as string
+            };
+
+            NetworkInterfaceProfileViewModel networkInterfaceProfileViewModel = new NetworkInterfaceProfileViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                NetworkInterfaceProfileInfo networkInterfaceProfileInfo = new NetworkInterfaceProfileInfo
+                {
+                    Name = instance.Name,
+                    EnableStaticIPAddress = instance.EnableStaticIPAddress,
+                    IPAddress = instance.IPAddress,
+                    Subnetmask = instance.SubnetmaskOrCidr,
+                    Gateway = instance.Gateway,
+                    EnableStaticDNS = instance.EnableStaticDNS,
+                    PrimaryDNSServer = instance.PrimaryDNSServer,
+                    SecondaryDNSServer = instance.SecondaryDNSServer,
+                    Group = instance.Group
+                };
+
+                NetworkInterfaceProfileManager.AddProfile(networkInterfaceProfileInfo);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, NetworkInterfaceProfileManager.GetProfileGroups(), SelectedProfile);
+
+            customDialog.Content = new NetworkInterfaceProfileDialog
+            {
+                DataContext = networkInterfaceProfileViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand DeleteProfileCommand

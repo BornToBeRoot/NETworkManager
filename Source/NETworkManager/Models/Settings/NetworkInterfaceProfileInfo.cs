@@ -10,10 +10,24 @@
         public bool EnableStaticDNS { get; set; }
         public string PrimaryDNSServer { get; set; }
         public string SecondaryDNSServer { get; set; }
+        public string Group { get; set; }
 
         public NetworkInterfaceProfileInfo()
         {
 
         }        
+
+        public NetworkInterfaceProfileInfo(string name, bool enableStaticIPAddress, string ipAddress, string subnetmask, string gateway, bool enableStaticDNS, string primaryDNSServer, string secondaryDNSServer, string group)
+        {
+            Name = name;
+            EnableStaticIPAddress = enableStaticIPAddress;
+            IPAddress = ipAddress;
+            Subnetmask = subnetmask;
+            Gateway = gateway;
+            EnableStaticDNS = enableStaticDNS;
+            PrimaryDNSServer = primaryDNSServer;
+            SecondaryDNSServer = secondaryDNSServer;
+            Group = group;
+        }
     }
 }

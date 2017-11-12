@@ -498,6 +498,24 @@
                                 <ListBox.Resources>
                                     <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
                                     <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                                        <MenuItem Header="{DynamicResource String_Edit}" Command="{Binding EditProfileCommand}">
+                                            <MenuItem.Icon>
+                                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                                    <Rectangle.OpacityMask>
+                                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconModern Kind=Edit}" />
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem Header="{DynamicResource String_CopyAs}" Command="{Binding CopyAsProfileCommand}">
+                                            <MenuItem.Icon>
+                                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                                    <Rectangle.OpacityMask>
+                                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentDuplicate}" />
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
                                         <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteProfileCommand}">
                                             <MenuItem.Icon>
                                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
@@ -507,11 +525,32 @@
                                                 </Rectangle>
                                             </MenuItem.Icon>
                                         </MenuItem>
-                                    </ContextMenu>                                  
+                                    </ContextMenu>
                                 </ListBox.Resources>
                                 <ListBox.InputBindings>
+                                    <KeyBinding Command="{Binding EditProfileCommand}" Key="F2" />
                                     <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
                                 </ListBox.InputBindings>
+                                <ListBox.GroupStyle>
+                                    <GroupStyle>
+                                        <GroupStyle.ContainerStyle>
+                                            <Style TargetType="{x:Type GroupItem}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}" Padding="0">
+                                                                <Expander.Header>
+                                                                    <TextBlock Text="{Binding Name}" Style="{StaticResource HeaderTextBlock}" FontSize="18" Margin="0" />
+                                                                </Expander.Header>
+                                                                <ItemsPresenter />
+                                                            </Expander>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </GroupStyle.ContainerStyle>
+                                    </GroupStyle>
+                                </ListBox.GroupStyle>
                                 <ListBox.ItemContainerStyle>
                                     <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
                                         <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
@@ -536,7 +575,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <Button x:Name="btnAddProfile" Grid.Column="0" Grid.Row="4" Command="{Binding AddProfileCommand}">
+                            <Button x:Name="btnAddProfile" Grid.Column="0" Grid.Row="4" Command="{Binding AddProfileCommand}" Style="{StaticResource ImageWithTextButton}">
                                 <Button.Content>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -550,29 +589,7 @@
                                         </Rectangle>
                                         <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
                                     </Grid>
-                                </Button.Content>
-                                <Button.Style>
-                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                                        <Style.Triggers>
-                                            <DataTrigger Value="False">
-                                                <DataTrigger.Binding>
-                                                    <MultiBinding Converter="{StaticResource ValidateNetworkInterfaceProfileConverter}">
-                                                        <Binding Path="ConfigEnableDynamicIPAddress" />
-                                                        <Binding Path="ConfigEnableStaticIPAddress" />
-                                                        <Binding ElementName="txtConfigIPAddress" Path="(Validation.HasError)" />
-                                                        <Binding ElementName="cbConfigSubnetmaskOrCidr" Path="(Validation.HasError)" />
-                                                        <Binding ElementName="txtConfigGateway" Path="(Validation.HasError)" />
-                                                        <Binding Path="ConfigEnableDynamicDNS" />
-                                                        <Binding Path="ConfigEnableStaticDNS" />
-                                                        <Binding ElementName="txtConfigPrimaryDNSServer" Path="(Validation.HasError)" />
-                                                        <Binding ElementName="txtConfigSecondaryDNSServer" Path="(Validation.HasError)" />
-                                                    </MultiBinding>
-                                                </DataTrigger.Binding>
-                                                <Setter Property="IsEnabled" Value="False" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
+                                </Button.Content>                               
                             </Button>
                         </Grid>
                     </Expander>

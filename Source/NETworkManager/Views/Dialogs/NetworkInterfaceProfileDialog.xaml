@@ -4,9 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Network="clr-namespace:NETworkManager.Models.Network"
+             xmlns:Converter="clr-namespace:NETworkManager.Converters"
              xmlns:Validator="clr-namespace:NETworkManager.Validators"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <Converter:ValidateNetworkInterfaceProfileConverter x:Key="ValidateNetworkInterfaceProfileConverter" />
+    </UserControl.Resources>
     <StackPanel Margin="0,20">
         <Grid Margin="0,0,0,10">
             <Grid.Resources>
@@ -53,9 +57,9 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_IPv4Address}" />
-            <TextBox x:Name="txtIPv4Address" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}" >
+            <TextBox x:Name="txtIPAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}" >
                 <TextBox.Text>
-                    <Binding Path="IPv4Address" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="IPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                             <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
@@ -106,7 +110,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_PrimaryDNSServer}" />
-            <TextBox x:Name="txtPrimaryDNSServer" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}" >
+            <TextBox x:Name="txtPrimaryDNSServer" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" >
                 <TextBox.Text>
                     <Binding Path="PrimaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -117,7 +121,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_SecondaryDNSServer}" />
-            <TextBox x:Name="txtSecondaryDNSServer" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}" >
+            <TextBox x:Name="txtSecondaryDNSServer" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNSServer}" >
                 <TextBox.Text>
                     <Binding Path="SecondaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -142,19 +146,32 @@
             <Button Content="{DynamicResource String_Button_Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
             <Button Content="{DynamicResource String_Button_Save}" Command="{Binding SaveCommand}" IsDefault="True" Margin="10,0,0,0">
                 <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
-                        <Setter Property="IsEnabled" Value="False" />
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">                        
                         <Style.Triggers>
+                            <DataTrigger Value="False">
+                                <DataTrigger.Binding>
+                                    <MultiBinding Converter="{StaticResource ValidateNetworkInterfaceProfileConverter}">
+                                        <Binding Path="EnableDynamicIPAddress" />
+                                        <Binding Path="EnableStaticIPAddress" />
+                                        <Binding ElementName="txtIPAddress" Path="(Validation.HasError)" />
+                                        <Binding ElementName="cbSubnetmaskOrCidr" Path="(Validation.HasError)" />
+                                        <Binding ElementName="txtGateway" Path="(Validation.HasError)" />
+                                        <Binding Path="EnableDynamicDNS" />
+                                        <Binding Path="EnableStaticDNS" />
+                                        <Binding ElementName="txtPrimaryDNSServer" Path="(Validation.HasError)" />
+                                        <Binding ElementName="txtSecondaryDNSServer" Path="(Validation.HasError)" />
+                                    </MultiBinding>
+                                </DataTrigger.Binding>
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtName}" Value="False" />
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtIPv4Address}" Value="False" />
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=cbSubnetmaskOrCidr}" Value="False" />
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=cbGroup}" Value="False" />
-                                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.ProfileInfoChanged}" Value="True" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtName}" Value="True" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=cbGroup}" Value="True" />
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.ProfileInfoChanged}" Value="False" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="True" />
+                                    <Setter Property="IsEnabled" Value="False" />
                                 </MultiDataTrigger.Setters>
                             </MultiDataTrigger>
                         </Style.Triggers>
