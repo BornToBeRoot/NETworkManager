@@ -66,8 +66,8 @@
     <system:String x:Key="String_Header_Scan">Scan</system:String>
     <system:String x:Key="String_Header_Lookup">Lookup</system:String>
     <system:String x:Key="String_Header_Subnet">Subnet</system:String>
-    <system:String x:Key="String_Header_IPv4Calculator">IPv4-Calculator</system:String>
-    <system:String x:Key="String_Header_IPv4Splitter">IPv4-Splitter</system:String>
+    <system:String x:Key="String_Header_IPv4Calculator">IPv4 Calculator</system:String>
+    <system:String x:Key="String_Header_IPv4Splitter">IPv4 Splitter</system:String>
     <system:String x:Key="String_Header_Connect">Connect</system:String>
     <system:String x:Key="String_Header_AddSession">Add session</system:String>
     <system:String x:Key="String_Header_EditSession">Edit session</system:String>
@@ -78,7 +78,7 @@
     <system:String x:Key="String_Header_LocalDevicesAndResources">Local devices and resources</system:String>
     <system:String x:Key="String_Header_Display">Display</system:String>
     <system:String x:Key="String_Header_Filter">Filter</system:String>
-    <system:String x:Key="String_Header_ARPTable">ARP-Table</system:String>
+    <system:String x:Key="String_Header_ARPTable">ARP Table</system:String>
     
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -381,16 +381,16 @@
     <system:String x:Key="String_ValidateError_EnterValidSubnet">Enter a valid subnet (like 192.168.178.133/26)</system:String>
     
     <!-- ApplicationView.Name -->
-    <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>
+    <system:String x:Key="String_ApplicationName_IPScanner">IP Scanner</system:String>
     <system:String x:Key="String_ApplicationName_NetworkInterface">Network Interface</system:String>
-    <system:String x:Key="String_ApplicationName_PortScanner">Port-Scanner</system:String>
-    <system:String x:Key="String_ApplicationName_SubnetCalculator">Subnet-Calculator</system:String>
+    <system:String x:Key="String_ApplicationName_PortScanner">Port Scanner</system:String>
+    <system:String x:Key="String_ApplicationName_SubnetCalculator">Subnet Calculator</system:String>
     <system:String x:Key="String_ApplicationName_WakeOnLAN">Wake on LAN</system:String>
     <system:String x:Key="String_ApplicationName_Ping">Ping</system:String>
     <system:String x:Key="String_ApplicationName_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_ApplicationName_DNSLookup">DNS Lookup</system:String>
     <system:String x:Key="String_ApplicationName_RemoteDesktop">Remote Desktop</system:String>
-    <system:String x:Key="String_ApplicationName_ARPTable">ARP-Table</system:String>
+    <system:String x:Key="String_ApplicationName_ARPTable">ARP Table</system:String>
     <system:String x:Key="String_ApplicationName_Lookup">Lookup</system:String>
     
     <!-- SettingsView.Name -->
