@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -261,8 +262,10 @@ namespace NETworkManager.ViewModels.Dialogs
             EnableStaticDNS = _profileInfo.EnableStaticDNS;
             PrimaryDNSServer = _profileInfo.PrimaryDNSServer;
             SecondaryDNSServer = _profileInfo.SecondaryDNSServer;
-            Group = string.IsNullOrEmpty(_profileInfo.Group) ? Application.Current.Resources["String_Default"] as string : _profileInfo.Group;
 
+            // Get the group, if not --> get the first group (ascending), fallback --> default group 
+            Group = string.IsNullOrEmpty(_profileInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Application.Current.Resources["String_Default"] as string) : _profileInfo.Group;
+            
             _groups = CollectionViewSource.GetDefaultView(groups);
             _groups.SortDescriptions.Add(new SortDescription());
 
@@ -271,7 +274,7 @@ namespace NETworkManager.ViewModels.Dialogs
 
         private void HasProfileInfoChanged()
         {
-            ProfileInfoChanged = (_profileInfo.Name != Name) || (_profileInfo.EnableStaticIPAddress != EnableStaticIPAddress) || (_profileInfo.IPAddress != IPAddress) || (_profileInfo.Subnetmask != SubnetmaskOrCidr) || (_profileInfo.Gateway != Gateway) || (_profileInfo.EnableStaticDNS != EnableStaticDNS) || (_profileInfo.PrimaryDNSServer != PrimaryDNSServer) || (_profileInfo.SecondaryDNSServer != SecondaryDNSServer);
+            ProfileInfoChanged = (_profileInfo.Name != Name) || (_profileInfo.EnableStaticIPAddress != EnableStaticIPAddress) || (_profileInfo.IPAddress != IPAddress) || (_profileInfo.Subnetmask != SubnetmaskOrCidr) || (_profileInfo.Gateway != Gateway) || (_profileInfo.EnableStaticDNS != EnableStaticDNS) || (_profileInfo.PrimaryDNSServer != PrimaryDNSServer) || (_profileInfo.SecondaryDNSServer != SecondaryDNSServer) || (_profileInfo.Group != Group);
         }
     }
 }

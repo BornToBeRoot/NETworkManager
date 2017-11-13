@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -109,7 +110,9 @@ namespace NETworkManager.ViewModels.Dialogs
 
             Name = _profileInfo.Name;
             IPRange = _profileInfo.IPRange;
-            Group = string.IsNullOrEmpty(_profileInfo.Group) ? Application.Current.Resources["String_Default"] as string : _profileInfo.Group;
+            
+            // Get the group, if not --> get the first group (ascending), fallback --> default group 
+            Group = string.IsNullOrEmpty(_profileInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Application.Current.Resources["String_Default"] as string) : _profileInfo.Group;
 
             _groups = CollectionViewSource.GetDefaultView(groups);
             _groups.SortDescriptions.Add(new SortDescription());

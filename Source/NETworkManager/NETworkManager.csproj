@@ -183,6 +183,7 @@
     <Compile Include="Converters\NullOrEmptyToBoolConverter.cs" />
     <Compile Include="Converters\TimestampToStringConverter.cs" />
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
+    <Compile Include="Converters\ValidateNetworkInterfaceProfileConverter.cs" />
     <Compile Include="Converters\ValidateSubnetCalculatorIPv4SplitterConverter.cs" />
     <Compile Include="Helpers\SingleInstanceHelper.cs" />
     <Compile Include="Models\Network\ARPTableInfo.cs" />
@@ -694,7 +695,7 @@
     <Compile Include="WpfHelper\BindingProxy.cs" />
     <Compile Include="Converters\BooleanReverseConverter.cs" />
     <Compile Include="Converters\NullToFalseConverter.cs" />
-    <Compile Include="Converters\ValidateNetworkInterfaceProfileConverter.cs" />
+    <Compile Include="Converters\ValidateNetworkInterfaceConfigConverter.cs" />
     <Compile Include="Converters\PhysicalAddressToStringConverter.cs" />
     <Compile Include="Converters\IPAddressArrayToStringConverter.cs" />
     <Compile Include="Converters\BitsToHumanReadableSizeConverter.cs" />

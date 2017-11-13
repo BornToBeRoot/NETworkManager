@@ -39,7 +39,7 @@
         </Grid>
         <RadioButton x:Name="radioButtonEnableDynamicIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding EnableDynamicIPAddress}" Content="{DynamicResource String_ObtainAnIPAddressAutomatically}" Margin="0,0,0,10"/>
         <RadioButton x:Name="radioButtonEnableStaticIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding EnableStaticIPAddress}" Content="{DynamicResource String_UseTheFollowingIPAddress}" Margin="0,0,0,10"/>
-        <Grid Margin="0,0,0,10">
+        <Grid IsEnabled="{Binding EnableStaticIPAddress}" Margin="0,0,0,10">
             <Grid.Resources>
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
@@ -83,8 +83,7 @@
                 <TextBox.Text>
                     <Binding Path="Gateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                            <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
@@ -112,8 +111,7 @@
                 <TextBox.Text>
                     <Binding Path="PrimaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                            <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />                            
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
@@ -123,8 +121,7 @@
                 <TextBox.Text>
                     <Binding Path="SecondaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                            <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
@@ -159,20 +156,11 @@
             <Button Content="{DynamicResource String_Button_Save}" Command="{Binding SaveCommand}" IsDefault="True" Margin="10,0,0,0">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">                        
-                        <Style.Triggers>                            
-                            <!--<MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtName}" Value="True" />
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=cbGroup}" Value="True" />
-                                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.ProfileInfoChanged}" Value="False" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>-->
+                        <Style.Triggers>
                             <DataTrigger Value="False">
                                 <DataTrigger.Binding>
                                     <MultiBinding Converter="{StaticResource ValidateNetworkInterfaceProfileConverter}">
+                                        <Binding ElementName="txtName" Path="(Validation.HasError)" />
                                         <Binding Path="EnableDynamicIPAddress" />
                                         <Binding Path="EnableStaticIPAddress" />
                                         <Binding ElementName="txtIPAddress" Path="(Validation.HasError)" />
@@ -182,10 +170,12 @@
                                         <Binding Path="EnableStaticDNS" />
                                         <Binding ElementName="txtPrimaryDNSServer" Path="(Validation.HasError)" />
                                         <Binding ElementName="txtSecondaryDNSServer" Path="(Validation.HasError)" />
+                                        <Binding ElementName="cbGroup" Path="(Validation.HasError)" />
+                                        <Binding Path="ProfileInfoChanged" />
                                     </MultiBinding>
                                 </DataTrigger.Binding>
                                 <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
+                            </DataTrigger>                            
                         </Style.Triggers>
                     </Style>
                 </Button.Style>

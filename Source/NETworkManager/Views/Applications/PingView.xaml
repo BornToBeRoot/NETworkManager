@@ -152,9 +152,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.Resources>
@@ -167,14 +165,14 @@
                 </Grid.Resources>
                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_StartTime}" />
                 <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding StartTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Duration}" />
-                <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Duration, StringFormat={}{0:hh}h {0:mm}m {0:ss}s {0:ff}ms}" />
-                <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_EndTime}" />
-                <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding EndTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource String_Duration}" />
+                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Duration, StringFormat={}{0:hh}h {0:mm}m {0:ss}s {0:ff}ms}" />
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_EndTime}" />
+                <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding EndTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
                 <TextBlock Grid.Column="3" Grid.Row="0" Text="{DynamicResource String_PacketsTransmitted}" />
                 <TextBox Grid.Column="4" Grid.Row="0" Text="{Binding PingsTransmitted}" />
-                <TextBlock Grid.Column="3" Grid.Row="2" Text="{DynamicResource String_ReceivedLost}" VerticalAlignment="Bottom" />
-                <TextBox Grid.Column="4" Grid.Row="2">
+                <TextBlock Grid.Column="3" Grid.Row="1" Text="{DynamicResource String_ReceivedLost}" VerticalAlignment="Bottom" />
+                <TextBox Grid.Column="4" Grid.Row="1">
                     <TextBox.Text>
                         <MultiBinding StringFormat="{}{0} / {1}">
                             <Binding Path="PingsReceived" />
@@ -182,8 +180,8 @@
                         </MultiBinding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBlock Grid.Column="3" Grid.Row="4" Text="{DynamicResource String_PacketLoss}" />
-                <TextBox Grid.Column="4" Grid.Row="4">
+                <TextBlock Grid.Column="3" Grid.Row="2" Text="{DynamicResource String_PacketLoss}" />
+                <TextBox Grid.Column="4" Grid.Row="2">
                     <TextBox.Text>
                         <MultiBinding Converter="{StaticResource PercentConverter}" StringFormat="{}{0} %">
                             <Binding Path="PingsTransmitted" />
@@ -193,10 +191,10 @@
                 </TextBox>
                 <TextBlock Grid.Column="6" Grid.Row="0" Text="{DynamicResource String_AverageTime}" />
                 <TextBox Grid.Column="7" Grid.Row="0" Text="{Binding AverageTime, StringFormat={}{0} ms}" />
-                <TextBlock Grid.Column="6" Grid.Row="2" Text="{DynamicResource String_Minimum}" />
-                <TextBox Grid.Column="7" Grid.Row="2" Text="{Binding MinimumTime, StringFormat={}{0} ms}" />
-                <TextBlock Grid.Column="6" Grid.Row="4" Text="{DynamicResource String_Maximum}" />
-                <TextBox Grid.Column="7" Grid.Row="4" Text="{Binding MaximumTime, StringFormat={}{0} ms}" />
+                <TextBlock Grid.Column="6" Grid.Row="1" Text="{DynamicResource String_Minimum}" />
+                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding MinimumTime, StringFormat={}{0} ms}" />
+                <TextBlock Grid.Column="6" Grid.Row="2" Text="{DynamicResource String_Maximum}" />
+                <TextBox Grid.Column="7" Grid.Row="2" Text="{Binding MaximumTime, StringFormat={}{0} ms}" />
             </Grid>
         </Expander>
     </Grid>

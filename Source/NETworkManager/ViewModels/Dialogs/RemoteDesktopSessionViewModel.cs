@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -127,7 +128,9 @@ namespace NETworkManager.ViewModels.Dialogs
 
             Name = _sessionInfo.Name;
             Hostname = _sessionInfo.Hostname;
-            Group = string.IsNullOrEmpty(_sessionInfo.Group) ? Application.Current.Resources["String_Default"] as string : _sessionInfo.Group;
+
+            // Get the group, if not --> get the first group (ascending), fallback --> default group 
+            Group = string.IsNullOrEmpty(_sessionInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Application.Current.Resources["String_Default"] as string) : _sessionInfo.Group;
             Tags = _sessionInfo.Tags;
 
             _groups = CollectionViewSource.GetDefaultView(groups);

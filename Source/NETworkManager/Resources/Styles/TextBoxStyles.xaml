@@ -27,8 +27,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="TextBlockAsTextBox" TargetType="{x:Type TextBox}" >
-        <Setter Property="FontSize" Value="14" />
+    <Style x:Key="TextBlockAsTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="IsReadOnly" Value="True" />
@@ -37,7 +36,7 @@
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
-    <Style x:Key="BrowseFolderTextBox" BasedOn="{StaticResource MetroButtonTextBox}" TargetType="{x:Type TextBox}">
+    <Style x:Key="BrowseFolderTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroButtonTextBox}">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
         <Setter Property="ContextMenu" Value="{StaticResource CutCopyPasteContextMenu}" />

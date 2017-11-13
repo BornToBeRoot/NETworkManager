@@ -230,9 +230,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.Resources>
@@ -245,10 +243,10 @@
                     </Grid.Resources>
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_StartTime}" />
                     <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding StartTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
-                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Duration}" />
-                    <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Duration, StringFormat={}{0:hh}h {0:mm}m {0:ss}s {0:ff}ms}" />
-                    <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_EndTime}" />
-                    <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding EndTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource String_Duration}" />
+                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Duration, StringFormat={}{0:hh}h {0:mm}m {0:ss}s {0:ff}ms}" />
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_EndTime}" />
+                    <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding EndTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
                     <TextBlock Grid.Column="3" Grid.Row="0" Text="{DynamicResource String_Hops}" />
                     <TextBox Grid.Column="4" Grid.Row="0" Text="{Binding Hops}" />
                 </Grid>
