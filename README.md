@@ -27,8 +27,6 @@ _On Windows 10 systems, SmartScreen may prevent the execution of the_ `NETworkMa
 - Remote Desktop
 - Wiki (OUI, Port)
 
-![](https://github.com/BornToBeRoot/NETworkManager/blob/master/Documentation/Images/Remote-Desktop.png)
-
 # Available languages
 
 - English
@@ -39,9 +37,13 @@ _On Windows 10 systems, SmartScreen may prevent the execution of the_ `NETworkMa
 - Windows 7 or later
 - .NET-Framework 4.6
 
+# Documentation
+
+The documentation can be found [here](Documentation/README.md).
+
 # Changelog
 
-The changelog can be found [here](https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog).
+The changelog can be found [here](Documentation/CHANGELOG.md).
 
 # Found an issue?
 
