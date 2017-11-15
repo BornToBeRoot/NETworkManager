@@ -317,7 +317,7 @@
                                 </MultiBinding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBlock Grid.Column="3" Grid.Row="1" Text="{DynamicResource String_Found}" VerticalAlignment="Bottom" />
+                        <TextBlock Grid.Column="3" Grid.Row="1" Text="{DynamicResource String_Found}" />
                         <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding HostsFound}" />
                     </Grid>
                 </StackPanel>

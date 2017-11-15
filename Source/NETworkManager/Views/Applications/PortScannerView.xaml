@@ -323,7 +323,7 @@
                                 </MultiBinding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBlock Grid.Column="3" Grid.Row="1" Text="{DynamicResource String_Open}" VerticalAlignment="Bottom" />
+                        <TextBlock Grid.Column="3" Grid.Row="1" Text="{DynamicResource String_Open}" />
                         <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding PortsOpen}" />
                     </Grid>
                 </StackPanel>

@@ -60,15 +60,7 @@
                 </ComboBox.Text>
             </ComboBox>
             <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_Tags}" />
-            <TextBox x:Name="txtTags" Grid.Column="2" Grid.Row="6">
-                <TextBox.Text>
-                    <Binding Path="Tags" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
+            <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Tags, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Rectangle Width="24" Height="24" Grid.Column="4" Grid.Row="6" ToolTip="{DynamicResource String_HelpMessage_Tags}" Style="{StaticResource HelpImageRectangle}">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />

@@ -132,9 +132,11 @@
                     </ScrollViewer.Style>
                     <Grid>
                         <Grid.Resources>
-                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
+                                <Setter Property="VerticalAlignment" Value="Center" />
                                 <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
+                                <Setter Property="TextWrapping" Value="NoWrap" />
                             </Style>
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>

@@ -171,7 +171,7 @@
                 <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding EndTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
                 <TextBlock Grid.Column="3" Grid.Row="0" Text="{DynamicResource String_PacketsTransmitted}" />
                 <TextBox Grid.Column="4" Grid.Row="0" Text="{Binding PingsTransmitted}" />
-                <TextBlock Grid.Column="3" Grid.Row="1" Text="{DynamicResource String_ReceivedLost}" VerticalAlignment="Bottom" />
+                <TextBlock Grid.Column="3" Grid.Row="1" Text="{DynamicResource String_ReceivedLost}" />
                 <TextBox Grid.Column="4" Grid.Row="1">
                     <TextBox.Text>
                         <MultiBinding StringFormat="{}{0} / {1}">
