@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NETworkManager.Models.Lookup;
+using System;
 using System.Net;
 
 namespace NETworkManager.Models.Network

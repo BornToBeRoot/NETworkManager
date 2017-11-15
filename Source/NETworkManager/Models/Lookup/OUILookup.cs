@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System;
 using System.Xml;
 
-namespace NETworkManager.Models.Network
+namespace NETworkManager.Models.Lookup
 {
     public static class OUILookup
     {

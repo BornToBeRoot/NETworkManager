@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows;
+using NETworkManager.Models.Lookup;
 
 namespace NETworkManager.ViewModels.Applications
 {

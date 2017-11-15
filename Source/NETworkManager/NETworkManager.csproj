@@ -545,10 +545,10 @@
     <Compile Include="Models\Network\PortInfo.cs" />
     <Compile Include="Models\Network\PortScannedArgs.cs" />
     <Compile Include="Models\Network\PortScannerOptions.cs" />
-    <Compile Include="Models\Network\PortLookupInfo.cs" />
-    <Compile Include="Models\Network\OUIInfo.cs" />
-    <Compile Include="Models\Network\PortLookup.cs" />
-    <Compile Include="Models\Network\OUILookup.cs" />
+    <Compile Include="Models\Lookup\PortLookupInfo.cs" />
+    <Compile Include="Models\Lookup\OUIInfo.cs" />
+    <Compile Include="Models\Lookup\PortLookup.cs" />
+    <Compile Include="Models\Lookup\OUILookup.cs" />
     <Compile Include="Models\Network\PortScanner.cs" />
     <Compile Include="Models\Settings\ImportExportManager.cs" />
     <Compile Include="Models\Settings\ImportFileNotValidException.cs" />

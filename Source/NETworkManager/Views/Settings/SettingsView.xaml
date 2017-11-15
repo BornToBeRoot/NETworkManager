@@ -124,6 +124,10 @@
                 <SettingsViews:UpdateView Margin="10" />
             </TabItem>-->
             <!-- About -->
+            <TabItem Header="Help">
+                <SettingsViews:HelpView Margin="10" />
+            </TabItem>
+            <!-- About -->
             <TabItem Header="{DynamicResource String_Header_About}">
                 <SettingsViews:AboutView Margin="10" />
             </TabItem>

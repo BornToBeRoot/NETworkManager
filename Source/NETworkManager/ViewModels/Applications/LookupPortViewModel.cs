@@ -7,6 +7,7 @@ using NETworkManager.Helpers;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows;
+using NETworkManager.Models.Lookup;
 
 namespace NETworkManager.ViewModels.Applications
 {

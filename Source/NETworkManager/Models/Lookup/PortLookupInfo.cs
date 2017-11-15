@@ -1,4 +1,4 @@
-﻿namespace NETworkManager.Models.Network
+﻿namespace NETworkManager.Models.Lookup
 {
     public class PortLookupInfo
     {

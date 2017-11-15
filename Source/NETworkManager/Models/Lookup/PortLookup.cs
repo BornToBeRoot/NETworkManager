@@ -6,7 +6,7 @@ using NETworkManager.Models.Settings;
 using System;
 using System.Xml;
 
-namespace NETworkManager.Models.Network
+namespace NETworkManager.Models.Lookup
 {
     public static class PortLookup
     {

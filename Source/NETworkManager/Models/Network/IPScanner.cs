@@ -1,4 +1,5 @@
 ﻿using NETworkManager.Helpers;
+using NETworkManager.Models.Lookup;
 using System;
 using System.Linq;
 using System.Net;
