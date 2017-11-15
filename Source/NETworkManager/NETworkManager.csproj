@@ -193,6 +193,7 @@
     <Compile Include="ViewModels\Applications\ARPTableViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\NetworkInterfaceProfileViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\PortScannerProfileViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ConfirmRemoveViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\WakeOnLANClientViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\IPScannerProfileViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\RemoteDesktopSessionViewModel.cs" />
@@ -249,6 +250,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\PortScannerProfileDialog.xaml.cs">
       <DependentUpon>PortScannerProfileDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\ConfirmRemoveDialog.xaml.cs">
+      <DependentUpon>ConfirmRemoveDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\WakeOnLANClientDialog.xaml.cs">
       <DependentUpon>WakeOnLANClientDialog.xaml</DependentUpon>
@@ -407,6 +411,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Dialogs\PortScannerProfileDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\ConfirmRemoveDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

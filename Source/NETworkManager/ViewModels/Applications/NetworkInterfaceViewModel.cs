@@ -940,17 +940,27 @@ namespace NETworkManager.ViewModels.Applications
 
         private async void DeleteProfileAction()
         {
-            MetroDialogSettings settings = AppearanceManager.MetroDialog;
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_DeleteProfile"] as string
+            };
 
-            settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Delete"] as string;
-            settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
+            ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
+                NetworkInterfaceProfileManager.RemoveProfile(SelectedProfile);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, Application.Current.Resources["String_DeleteProfileMessage"] as string);
 
-            if (MessageDialogResult.Negative == await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_DeleteProfileMessage"] as string, MessageDialogStyle.AffirmativeAndNegative, settings))
-                return;
+            customDialog.Content = new ConfirmRemoveDialog
+            {
+                DataContext = confirmRemoveViewModel
+            };
 
-            NetworkInterfaceProfileManager.RemoveProfile(SelectedProfile);
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
         #endregion
 

@@ -57,9 +57,11 @@
     <system:String x:Key="String_Header_AddProfile">Add profile</system:String>
     <system:String x:Key="String_Header_EditProfile">Edit profile</system:String>
     <system:String x:Key="String_Header_CopyProfile">Copy profile</system:String>
+    <system:String x:Key="String_Header_DeleteProfile">Delete profile</system:String>
     <system:String x:Key="String_Header_AddClient">Add client</system:String>
     <system:String x:Key="String_Header_EditClient">Edit client</system:String>
     <system:String x:Key="String_Header_CopyClient">Copy client</system:String>
+    <system:String x:Key="String_Header_DeleteClient">Delete client</system:String>
     <system:String x:Key="String_Header_Libraries">Libraries</system:String>
     <system:String x:Key="String_Header_License">License</system:String>
     <system:String x:Key="String_Header_Search">Search</system:String>
@@ -72,6 +74,7 @@
     <system:String x:Key="String_Header_AddSession">Add session</system:String>
     <system:String x:Key="String_Header_EditSession">Edit session</system:String>
     <system:String x:Key="String_Header_CopySession">Copy session</system:String>
+    <system:String x:Key="String_Header_DeleteSession">Delete session</system:String>
     <system:String x:Key="String_Header_Sessions">Sessions</system:String>
     <system:String x:Key="String_Header_RemoteDesktop">Remote Desktop</system:String>
     <system:String x:Key="String_Header_Disconnected">Disconnected</system:String>

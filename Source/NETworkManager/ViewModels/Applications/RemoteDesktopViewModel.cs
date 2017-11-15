@@ -123,7 +123,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 // Search for complete tag or by name
                 if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
-                    return info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).IndexOf(str , StringComparison.OrdinalIgnoreCase) > -1);
+                    return info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).IndexOf(str, StringComparison.OrdinalIgnoreCase) > -1);
                 else
                     return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
             };
@@ -361,21 +361,30 @@ namespace NETworkManager.ViewModels.Applications
 
         private async void DeleteSessionAction()
         {
-            MetroDialogSettings settings = AppearanceManager.MetroDialog;
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_DeleteSession"] as string
+            };
 
-            settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Delete"] as string;
-            settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
+            ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ConfigurationManager.Current.FixAirspace = false;
 
-            settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
+                RemoteDesktopSessionManager.RemoveSession(SelectedSession);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ConfigurationManager.Current.FixAirspace = false;
+            }, Application.Current.Resources["String_DeleteSessionMessage"] as string);
+
+            customDialog.Content = new ConfirmRemoveDialog
+            {
+                DataContext = confirmRemoveViewModel
+            };
 
             ConfigurationManager.Current.FixAirspace = true;
-
-            if (MessageDialogResult.Negative == await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_DeleteSessionMessage"] as string, MessageDialogStyle.AffirmativeAndNegative, settings))
-                return;
-
-            ConfigurationManager.Current.FixAirspace = false;
-
-            RemoteDesktopSessionManager.RemoveSession(SelectedSession);
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
         #endregion
     }

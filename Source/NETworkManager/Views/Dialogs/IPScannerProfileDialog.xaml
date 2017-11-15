@@ -5,8 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Validator="clr-namespace:NETworkManager.Validators"
              mc:Ignorable="d">
-    <StackPanel Margin="0,20">
-        <Grid Margin="0,0,0,10">
+    <Grid Margin="0,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
             <Grid.Resources>
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />                
@@ -54,13 +59,13 @@
                 </ComboBox.Text>
             </ComboBox>
         </Grid>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{DynamicResource String_Button_Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
             <Button Content="{DynamicResource String_Button_Save}" Command="{Binding SaveCommand}" IsDefault="True" Margin="10,0,0,0">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
                         <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>                            
+                        <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtName}" Value="False" />
@@ -77,5 +82,5 @@
                 </Button.Style>
             </Button>
         </StackPanel>
-    </StackPanel>
+    </Grid>
 </UserControl>

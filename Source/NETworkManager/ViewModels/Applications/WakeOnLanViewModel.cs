@@ -1,7 +1,5 @@
 ﻿using NETworkManager.Helpers;
 using NETworkManager.Models.Settings;
-using System.Collections;
-using System.Collections.Generic;
 using System.Net;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
@@ -16,9 +14,7 @@ using NETworkManager.Views.Dialogs;
 namespace NETworkManager.ViewModels.Applications
 {
     public class WakeOnLANViewModel : ViewModelBase
-    {
-
-
+    {        
         #region  Variables 
         private IDialogCoordinator dialogCoordinator;
 
@@ -200,7 +196,7 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
         #endregion
 
-        #region Constructor, LoadSettings() , OnShutdown()
+        #region Constructor, load settings
         public WakeOnLANViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
@@ -399,17 +395,27 @@ namespace NETworkManager.ViewModels.Applications
 
         private async void DeleteClientAction()
         {
-            MetroDialogSettings settings = AppearanceManager.MetroDialog;
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_DeleteClient"] as string
+            };
 
-            settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Delete"] as string;
-            settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
+            ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
+                WakeOnLANClientManager.RemoveClient(SelectedClient);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, Application.Current.Resources["String_DeleteClientMessage"] as string);
 
-            if (MessageDialogResult.Negative == await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_DeleteClientMessage"] as string, MessageDialogStyle.AffirmativeAndNegative, settings))
-                return;
+            customDialog.Content = new ConfirmRemoveDialog
+            {
+                DataContext = confirmRemoveViewModel
+            };
 
-            WakeOnLANClientManager.RemoveClient(SelectedClient);
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
         #endregion
     }
