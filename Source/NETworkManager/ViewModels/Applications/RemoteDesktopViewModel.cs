@@ -119,6 +119,9 @@ namespace NETworkManager.ViewModels.Applications
 
                 RemoteDesktopSessionInfo info = o as RemoteDesktopSessionInfo;
 
+                if (string.IsNullOrEmpty(info.Tags))
+                    return false;
+
                 string search = Search.Trim();
 
                 // Search for complete tag or by name
