@@ -20,18 +20,7 @@
                             <Storyboard x:Key="Visible State" />
                             <Storyboard x:Key="Normal State" />
                         </Border.Resources>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Grid.Column="0" Width="20" Height="20" Fill="{DynamicResource GrayBrush3}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=InformationVariant}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" Style="{StaticResource WrapTextBlock}" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                        </Grid>
+                        <TextBlock Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" Style="{StaticResource WrapTextBlock}" VerticalAlignment="Center" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="OpenStates">
                                 <VisualStateGroup.Transitions>
