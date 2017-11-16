@@ -43,7 +43,7 @@ The documentation can be found [here](Documentation/README.md).
 
 # Changelog
 
-The changelog can be found [here](Documentation/CHANGELOG.md).
+The changelog can be found [here](https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog).
 
 # Found an issue?
 
