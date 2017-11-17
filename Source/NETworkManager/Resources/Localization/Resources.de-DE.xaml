@@ -321,7 +321,8 @@
     <system:String x:Key="String_Button_Connect">Verbinden</system:String>
     <system:String x:Key="String_Button_AddSessions">Sitzung hinzufügen...</system:String>
     <system:String x:Key="String_Button_Save">Speichern</system:String>
-    <system:String x:Key="String_Button_Refresh">Aktualisieren</system:String>        
+    <system:String x:Key="String_Button_Refresh">Aktualisieren</system:String>
+    <system:String x:Key="String_Button_Reconnect">Wiederverbinden</system:String>
 
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Ausschneiden</system:String>

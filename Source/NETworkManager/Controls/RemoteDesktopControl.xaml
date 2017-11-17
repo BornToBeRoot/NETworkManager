@@ -18,9 +18,12 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{DynamicResource String_Header_Disconnected}" Style="{StaticResource HeaderTextBlock}" FontSize="18" />
             <TextBlock Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding DisconnectReason}" Style="{DynamicResource DefaultTextBlock}" />
+            <Button Grid.Row="4" Content="{DynamicResource String_Button_Reconnect}" Command="{Binding ReconnectCommand}" IsDefault="True" Style="{StaticResource DefaultButton}"/>
         </Grid>
     </Grid>
 </UserControl>

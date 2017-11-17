@@ -1,8 +1,11 @@
 ﻿using NETworkManager.Models.RemoteDesktop;
+using NETworkManager.ViewModels;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System;
 
 namespace NETworkManager.Controls
 {
@@ -92,7 +95,7 @@ namespace NETworkManager.Controls
             rdpClient.DesktopHeight = info.DesktopHeight;
 
             // Events
-            rdpClient.OnDisconnected += RdpClient_OnDisconnected; ;
+            rdpClient.OnDisconnected += RdpClient_OnDisconnected;
 
             rdpClient.Connect();
         }
@@ -105,6 +108,23 @@ namespace NETworkManager.Controls
             Disconnected = true;
         }
 
+        #region ICommands & Actions
+        public ICommand ReconnectCommand
+        {
+            get { return new RelayCommand(p => ReconnectAction()); }
+        }
+
+        private void ReconnectAction()
+        {
+            Disconnected = false;
+
+            HideRdpClient = false;
+
+            rdpClient.Connect();
+        }
+        #endregion
+
+        #region Methods
         // Source: https://msdn.microsoft.com/en-us/library/aa382170(v=vs.85).aspx
         private string GetDisconnectReasonFromResource(string reason)
         {
@@ -213,5 +233,6 @@ namespace NETworkManager.Controls
                     return "reason not found!";
             }
         }
+        #endregion
     }
 }
