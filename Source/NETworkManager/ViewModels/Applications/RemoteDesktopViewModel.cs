@@ -146,6 +146,7 @@ namespace NETworkManager.ViewModels.Applications
         private void ConnectSession(Models.RemoteDesktop.RemoteDesktopSessionInfo sessionInfo, string Header = null)
         {
             // Add global settings...
+            sessionInfo.AdjustScreenAutomatically = SettingsManager.Current.RemoteDesktop_AdjustScreenAutomatically;
             sessionInfo.DesktopWidth = SettingsManager.Current.RemoteDesktop_DesktopWidth;
             sessionInfo.DesktopHeight = SettingsManager.Current.RemoteDesktop_DesktopHeight;
             sessionInfo.ColorDepth = SettingsManager.Current.RemoteDesktop_ColorDepth;

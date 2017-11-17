@@ -10,7 +10,7 @@
         <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
-    <Grid>
+    <Grid SizeChanged="Grid_SizeChanged">
         <WindowsFormsHost MaxWidth="{Binding ElementName=rdpClient, Path=DesktopWidth}" MaxHeight="{Binding ElementName=rdpClient, Path=DesktopHeight}" Visibility="{Binding HideRdpClient, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
             <mstsc:AxMsRdpClient9NotSafeForScripting x:Name="rdpClient" />
         </WindowsFormsHost>

@@ -49,6 +49,7 @@ namespace NETworkManager.Models.Settings
         }
 
         #endregion
+
         #region File paths
         private static string GetIsPortableFilePath()
         {
@@ -61,6 +62,7 @@ namespace NETworkManager.Models.Settings
         }
 
         #endregion
+
         #region IsPortable, SettingsLocation, SettingsLocationNotPortable
         public static bool GetIsPortable()
         {

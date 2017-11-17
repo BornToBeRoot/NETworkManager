@@ -1,7 +1,6 @@
 ﻿using NETworkManager.Models.Settings;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 
 namespace NETworkManager.ViewModels.Settings
 {
@@ -9,6 +8,23 @@ namespace NETworkManager.ViewModels.Settings
     {
         #region Variables
         private bool _isLoading = true;
+
+        private bool _adjustScreenAutomatically;
+        public bool AdjustScreenAutomatically
+        {
+            get { return _adjustScreenAutomatically; }
+            set
+            {
+                if (value == _adjustScreenAutomatically)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_AdjustScreenAutomatically = value;
+
+                _adjustScreenAutomatically = value;
+                OnPropertyChanged();
+            }
+        }
 
         public List<string> ScreenResolutions
         {
@@ -73,7 +89,8 @@ namespace NETworkManager.ViewModels.Settings
         {
             get { return _selectedColorDepth; }
             set
-            { if (value == _selectedColorDepth)
+            {
+                if (value == _selectedColorDepth)
                     return;
 
                 _selectedColorDepth = value;
@@ -194,6 +211,7 @@ namespace NETworkManager.ViewModels.Settings
 
         private void LoadSettings()
         {
+            AdjustScreenAutomatically = SettingsManager.Current.RemoteDesktop_AdjustScreenAutomatically;
             SelectedScreenResolution = ScreenResolutions.FirstOrDefault(x => x == string.Format("{0}x{1}", SettingsManager.Current.RemoteDesktop_DesktopWidth, SettingsManager.Current.RemoteDesktop_DesktopHeight));
             SelectedColorDepth = ColorDepths.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_ColorDepth);
             RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;

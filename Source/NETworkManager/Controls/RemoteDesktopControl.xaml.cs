@@ -234,5 +234,10 @@ namespace NETworkManager.Controls
             }
         }
         #endregion
+
+        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            MessageBox.Show("Fired");
+        }
     }
 }

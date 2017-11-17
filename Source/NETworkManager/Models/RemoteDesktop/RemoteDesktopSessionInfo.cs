@@ -3,6 +3,7 @@
     public class RemoteDesktopSessionInfo
     {
         public string Hostname { get; set; }
+        public bool AdjustScreenAutomatically { get; set; }
         public int DesktopWidth { get; set; }
         public int DesktopHeight { get; set; }
         public int ColorDepth { get; set; }
@@ -18,9 +19,10 @@
 
         }
 
-        public RemoteDesktopSessionInfo(string hostname, int desktopWidth, int desktopHeight, int colorDepth, bool redirectClipboard, bool redirectDevices, bool redirectDrives, bool redirectPorts, bool redirectSmartCards, bool redirectPrinters)
+        public RemoteDesktopSessionInfo(string hostname, bool adjustScreenAutomatically, int desktopWidth, int desktopHeight, int colorDepth, bool redirectClipboard, bool redirectDevices, bool redirectDrives, bool redirectPorts, bool redirectSmartCards, bool redirectPrinters)
         {
             Hostname = hostname;
+            AdjustScreenAutomatically = adjustScreenAutomatically;
             DesktopWidth = desktopWidth;
             DesktopHeight = desktopHeight;
             ColorDepth = colorDepth;

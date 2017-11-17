@@ -4,11 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:Converter="clr-namespace:NETworkManager.Converters"
         mc:Ignorable="d">
+    <UserControl.Resources>
+        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+    </UserControl.Resources>
     <StackPanel>
         <TextBlock Text="{DynamicResource String_Header_Display}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{DynamicResource String_AdjustScreenAutomatically}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding AdjustScreenAutomatically}" Margin="0,0,0,10" />
         <TextBlock Text="{DynamicResource String_ScreenResolution}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <ComboBox ItemsSource="{Binding ScreenResolutions}" SelectedItem="{Binding SelectedScreenResolution}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" />
+        <ComboBox ItemsSource="{Binding ScreenResolutions}" SelectedItem="{Binding SelectedScreenResolution}" Width="250" HorizontalAlignment="Left" IsEnabled="{Binding AdjustScreenAutomatically, Converter={StaticResource BooleanReverseConverter}}" Margin="0,0,0,10" />
         <TextBlock Text="{DynamicResource String_ColorDepthBit}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding ColorDepths}" SelectedItem="{Binding SelectedColorDepth}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,20" />
         <TextBlock Text="{DynamicResource String_Header_LocalDevicesAndResources}" Style="{StaticResource HeaderTextBlock}" />

@@ -1095,6 +1095,20 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region RemoteDesktop  
+        private bool _remoteDesktop_AdjustScreenAutomatically;
+        public bool RemoteDesktop_AdjustScreenAutomatically
+        {
+            get { return _remoteDesktop_AdjustScreenAutomatically; }
+            set
+            {
+                if (value == _remoteDesktop_AdjustScreenAutomatically)
+                    return;
+
+                _remoteDesktop_AdjustScreenAutomatically = value;
+                SettingsChanged = true;
+            }
+        }
+
         private int _remoteDesktop_DesktopWidth = 1280;
         public int RemoteDesktop_DesktopWidth
         {
