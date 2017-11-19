@@ -119,16 +119,19 @@ namespace NETworkManager.ViewModels.Applications
 
                 RemoteDesktopSessionInfo info = o as RemoteDesktopSessionInfo;
 
-                if (string.IsNullOrEmpty(info.Tags))
-                    return false;
-
                 string search = Search.Trim();
 
-                // Search for complete tag or by name
                 if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
-                    return info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).IndexOf(str, StringComparison.OrdinalIgnoreCase) > -1);
+                {
+                    if (string.IsNullOrEmpty(info.Tags))
+                        return false;
+                    else
+                        return info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).IndexOf(str, StringComparison.OrdinalIgnoreCase) > -1);
+                }
                 else
+                {
                     return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+                }                
             };
 
             LoadSettings();
