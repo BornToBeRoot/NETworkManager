@@ -154,12 +154,20 @@ namespace NETworkManager.Controls
             // Events
             rdpClient.OnConnected += RdpClient_OnConnected;
             rdpClient.OnDisconnected += RdpClient_OnDisconnected;
-
+            
             rdpClient.Connect();
         }
 
         private void Reconnect()
         {
+            if (_rdpSessionInfo.AdjustScreenAutomatically)
+            {
+                rdpClient.DesktopWidth = (int)rdpGrid.ActualWidth;
+                rdpClient.DesktopHeight = (int)rdpGrid.ActualHeight;
+            }
+
+            FixWindowsFormsHostSize();
+
             rdpClient.Connect();
         }
 

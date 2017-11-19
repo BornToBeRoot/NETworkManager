@@ -8,8 +8,6 @@
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
         xmlns:ConfigurtationManager="clr-namespace:NETworkManager.Models.Settings"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
     <UserControl.Resources>
@@ -21,7 +19,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <dragablz:TabablzControl Grid.Column="0" Grid.Row="0" ItemsSource="{Binding TabContents}" SelectedIndex="{Binding SelectedTabIndex}">
+        <dragablz:TabablzControl Grid.Column="0" Grid.Row="0" Margin="-0,-2,0,0" ItemsSource="{Binding TabContents}" SelectedIndex="{Binding SelectedTabIndex}">
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" />
             </dragablz:TabablzControl.InterTabController>
@@ -29,23 +27,25 @@
                 <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">
                     <Setter Property="HeaderSuffixContent" >
                         <Setter.Value>
-                            <Button HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource CleanButton}" Command="{Binding ConnectRemoteDesktopSessionCommand}" Focusable="False" Margin="10">
-                                <Rectangle Width="20" Height="20">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Plus}" />
-                                    </Rectangle.OpacityMask>
-                                    <Rectangle.Style>
-                                        <Style TargetType="{x:Type Rectangle}">
-                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Rectangle.Style>
-                                </Rectangle>
-                            </Button>
+                            <Grid HorizontalAlignment="Left" Width="40" Height="40">
+                                <Button Style="{StaticResource CleanButton}" Command="{Binding ConnectRemoteDesktopSessionCommand}" Focusable="False">
+                                    <Rectangle Width="20" Height="20">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Fill" Visual="{IconPacks:PackIconMaterial Kind=Plus}" />
+                                        </Rectangle.OpacityMask>
+                                        <Rectangle.Style>
+                                            <Style TargetType="{x:Type Rectangle}">
+                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                    </Rectangle>
+                                </Button>
+                            </Grid>
                         </Setter.Value>
                     </Setter>
                     <Setter Property="ContentTemplate">
