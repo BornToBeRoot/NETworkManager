@@ -23,9 +23,7 @@ namespace NETworkManager.Helpers
 
             // Convert the MAC-Address into byte and fill it...
             for (int i = 0; i < 12; i += 2)
-            {
                 bytes[i / 2] = Convert.ToByte(mac.Substring(i, 2), 16);
-            }
 
             return bytes;
         }
