@@ -287,7 +287,8 @@
     <system:String x:Key="String_Tags">Tags</system:String>
     <system:String x:Key="String_Copy">Copy</system:String>
     <system:String x:Key="String_Expand">Expand</system:String>
-
+    <system:String x:Key="String_AdjustScreenAutomatically">Adjust screen automatically</system:String>
+    
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Reset all settings.</system:String>

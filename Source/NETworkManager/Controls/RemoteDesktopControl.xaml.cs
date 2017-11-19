@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System;
+using System.Windows.Threading;
 
 namespace NETworkManager.Controls
 {
@@ -23,30 +24,50 @@ namespace NETworkManager.Controls
         #region Variables
         private const string RemoteDesktopDisconnectReasonIdentifier = "String_RemoteDesktopDisconnectReason_";
 
-        private bool _hideRdpClient;
-        public bool HideRdpClient
+        private RemoteDesktopSessionInfo _rdpSessionInfo;
+
+        DispatcherTimer reconnectAdjustScreenTimer = new DispatcherTimer();
+
+        // Fix WindowsFormsHost width
+        private double _rdpClientWidth;
+        public double RDPClientWidth
         {
-            get { return _hideRdpClient; }
+            get { return _rdpClientWidth; }
             set
             {
-                if (value == _hideRdpClient)
+                if (value == _rdpClientWidth)
                     return;
 
-                _hideRdpClient = value;
+                _rdpClientWidth = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _disconnected;
-        public bool Disconnected
+        // Fix WindowsFormsHost height
+        private double _rdpClientHeight;
+        public double RDPClientHeight
         {
-            get { return _disconnected; }
+            get { return _rdpClientHeight; }
             set
             {
-                if (value == _disconnected)
+                if (value == _rdpClientHeight)
                     return;
 
-                _disconnected = value;
+                _rdpClientHeight = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _connected;
+        public bool Connected
+        {
+            get { return _connected; }
+            set
+            {
+                if (value == _connected)
+                    return;
+
+                _connected = value;
                 OnPropertyChanged();
             }
         }
@@ -66,47 +87,23 @@ namespace NETworkManager.Controls
         }
         #endregion
 
+        #region Constructor, load
         public RemoteDesktopControl(RemoteDesktopSessionInfo info)
         {
             InitializeComponent();
             DataContext = this;
 
-            Disconnected = false;
+            _rdpSessionInfo = info;
 
-            HideRdpClient = false;
-
-            rdpClient.Server = info.Hostname;
-
-            // AdvancedSettings
-            rdpClient.AdvancedSettings9.AuthenticationLevel = 2;
-            rdpClient.AdvancedSettings9.EnableCredSspSupport = true;
-
-            // Devices and resources
-            rdpClient.AdvancedSettings9.RedirectClipboard = info.RedirectClipboard;
-            rdpClient.AdvancedSettings9.RedirectDevices = info.RedirectDevices;
-            rdpClient.AdvancedSettings9.RedirectDrives = info.RedirectDrives;
-            rdpClient.AdvancedSettings9.RedirectPorts = info.RedirectPorts;
-            rdpClient.AdvancedSettings9.RedirectSmartCards = info.RedirectSmartCards;
-            rdpClient.AdvancedSettings9.RedirectPrinters = info.RedirectPrinters;
-
-            // Display
-            rdpClient.ColorDepth = info.ColorDepth;      // 8, 15, 16, 24
-            rdpClient.DesktopWidth = info.DesktopWidth;
-            rdpClient.DesktopHeight = info.DesktopHeight;
-
-            // Events
-            rdpClient.OnDisconnected += RdpClient_OnDisconnected;
-
-            rdpClient.Connect();
+            reconnectAdjustScreenTimer.Tick += ReconnectAdjustScreenTimer_Tick;
+            reconnectAdjustScreenTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
         }
 
-        private void RdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            HideRdpClient = true;
-
-            DisconnectReason = GetDisconnectReason(e.discReason);
-            Disconnected = true;
+            Connect();
         }
+        #endregion
 
         #region ICommands & Actions
         public ICommand ReconnectCommand
@@ -116,15 +113,67 @@ namespace NETworkManager.Controls
 
         private void ReconnectAction()
         {
-            Disconnected = false;
-
-            HideRdpClient = false;
-
-            rdpClient.Connect();
+            Reconnect();
         }
         #endregion
 
         #region Methods
+        private void Connect()
+        {
+            rdpClient.Server = _rdpSessionInfo.Hostname;
+
+            // AdvancedSettings
+            rdpClient.AdvancedSettings9.AuthenticationLevel = 2;
+            rdpClient.AdvancedSettings9.EnableCredSspSupport = true;
+
+            // Devices and resources
+            rdpClient.AdvancedSettings9.RedirectClipboard = _rdpSessionInfo.RedirectClipboard;
+            rdpClient.AdvancedSettings9.RedirectDevices = _rdpSessionInfo.RedirectDevices;
+            rdpClient.AdvancedSettings9.RedirectDrives = _rdpSessionInfo.RedirectDrives;
+            rdpClient.AdvancedSettings9.RedirectPorts = _rdpSessionInfo.RedirectPorts;
+            rdpClient.AdvancedSettings9.RedirectSmartCards = _rdpSessionInfo.RedirectSmartCards;
+            rdpClient.AdvancedSettings9.RedirectPrinters = _rdpSessionInfo.RedirectPrinters;
+
+            // Display
+            rdpClient.ColorDepth = _rdpSessionInfo.ColorDepth;      // 8, 15, 16, 24
+
+            if (_rdpSessionInfo.AdjustScreenAutomatically)
+            {
+                rdpClient.DesktopWidth = (int)rdpGrid.ActualWidth;
+                rdpClient.DesktopHeight = (int)rdpGrid.ActualHeight;
+            }
+            else
+            {
+                rdpClient.DesktopWidth = _rdpSessionInfo.DesktopWidth;
+                rdpClient.DesktopHeight = _rdpSessionInfo.DesktopHeight;
+            }
+
+            FixWindowsFormsHostSize();
+
+            // Events
+            rdpClient.OnConnected += RdpClient_OnConnected;
+            rdpClient.OnDisconnected += RdpClient_OnDisconnected;
+
+            rdpClient.Connect();
+        }
+
+        private void Reconnect()
+        {
+            rdpClient.Connect();
+        }
+
+        private void ReconnectAdjustScreen()
+        {
+            rdpClient.Reconnect((uint)rdpGrid.ActualWidth, (uint)rdpGrid.ActualHeight);
+            FixWindowsFormsHostSize();
+        }
+
+        private void FixWindowsFormsHostSize()
+        {
+            RDPClientWidth = rdpClient.DesktopWidth;
+            RDPClientHeight = rdpClient.DesktopHeight;
+        }
+
         // Source: https://msdn.microsoft.com/en-us/library/aa382170(v=vs.85).aspx
         private string GetDisconnectReasonFromResource(string reason)
         {
@@ -234,5 +283,35 @@ namespace NETworkManager.Controls
             }
         }
         #endregion
+
+        #region Events
+        private void RdpClient_OnConnected(object sender, EventArgs e)
+        {
+            Connected = true;
+        }
+
+        private void RdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
+        {
+            Connected = false;
+
+            DisconnectReason = GetDisconnectReason(e.discReason);
+        }
+
+        private void RDPGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            // Prevent with a timer, that the function (rdpClient.Reconnect()) is executed too often
+            if (Connected && _rdpSessionInfo.AdjustScreenAutomatically)
+                reconnectAdjustScreenTimer.Start();
+        }
+
+        private void ReconnectAdjustScreenTimer_Tick(object sender, EventArgs e)
+        {
+            // Stop timer
+            reconnectAdjustScreenTimer.Stop();
+
+            // Reconnect with new resulution
+            ReconnectAdjustScreen();
+        }
+        #endregion       
     }
 }
