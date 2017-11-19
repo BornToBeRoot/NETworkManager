@@ -68,7 +68,7 @@ namespace NETworkManager.Helpers
                     continue;
                 }
 
-                // Convert 192.168.[50-100].1 to 192.168.50.1, 192.168.51.1, 192.168.52.1, etc.
+                // Convert 192.168.[50-100,200].1 to 192.168.50.1, 192.168.51.1, 192.168.52.1, {..}, 192.168.200.1
                 if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressSpecialRangeRegex))
                 {
                     string[] octets = ipOrRange.Split('.');
@@ -83,11 +83,22 @@ namespace NETworkManager.Helpers
                         // Create a range for each octet
                         if (Regex.IsMatch(octets[i], RegexHelper.SpecialRangeRegex))
                         {
-                            string[] rangeNumbers = octets[i].Substring(1, octets[i].Length - 2).Split('-');
-
-                            for (int j = int.Parse(rangeNumbers[0]); j < (int.Parse(rangeNumbers[1]) + 1); j++)
+                            foreach (string numberOrRange in octets[i].Substring(1, octets[i].Length - 2).Split(','))
                             {
-                                innerList.Add(j);
+                                // 50-100
+                                if (numberOrRange.Contains("-"))
+                                {
+                                    string[] rangeNumbers = numberOrRange.Split('-');
+
+                                    for (int j = int.Parse(rangeNumbers[0]); j < (int.Parse(rangeNumbers[1]) + 1); j++)
+                                    {
+                                        innerList.Add(j);
+                                    }
+                                } // 200
+                                else
+                                {
+                                    innerList.Add(int.Parse(numberOrRange));
+                                }
                             }
                         }
                         else

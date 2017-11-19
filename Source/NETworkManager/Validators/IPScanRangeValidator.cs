@@ -48,18 +48,24 @@ namespace NETworkManager.Validators
                         // Match [50-100]
                         if (Regex.IsMatch(octet, RegexHelper.SpecialRangeRegex))
                         {
-                            // [50-100] --> {"50","100"}
-                            string[] rangeNumber = octet.Substring(1, octet.Length - 2).Split('-');
+                            foreach (string numberOrRange in octet.Substring(1, octet.Length - 2).Split(','))
+                            {
+                                if (numberOrRange.Contains("-"))
+                                {
+                                    // 50-100 --> {50, 100}
+                                    string[] rangeNumber = numberOrRange.Split('-');
 
-                            if (int.Parse(rangeNumber[0]) > int.Parse(rangeNumber[1]))
-                                isValid = false;
+                                    if (int.Parse(rangeNumber[0]) > int.Parse(rangeNumber[1]))
+                                        isValid = false;
+                                }
+                            }
                         }
                     }
 
                     continue;
                 }
 
-                isValid = false;                
+                isValid = false;
             }
 
             if (isValid)

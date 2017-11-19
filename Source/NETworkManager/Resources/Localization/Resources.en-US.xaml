@@ -348,7 +348,7 @@
     <system:String x:Key="String_Watermark_ExampleIPv4Address">192.168.178.55</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmask">255.255.255.0</system:String>
     <system:String x:Key="String_Watermark_HostnameOrIPAddress">Hostname or IP-Address...</system:String>
-    <system:String x:Key="String_Watermark_EampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[0-100].1; 192.168.178.150</system:String>
+    <system:String x:Key="String_Watermark_EampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150</system:String>
     <system:String x:Key="String_Watermark_LocationOfTheImport">Location of the import file...</system:String>
     <system:String x:Key="String_Watermark_ExampleMACAddressesOrVendor">01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5; Intel Corp; Asus</system:String>
     <system:String x:Key="String_Watermark_EamplePortScanRange">22; 80; 443; 500 - 999; 8080</system:String>
