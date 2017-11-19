@@ -4,17 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mstsc ="clr-namespace:AxMSTSCLib;assembly=AxMSTSCLib"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        mc:Ignorable="d">
+        xmlns:Converter="clr-namespace:NETworkManager.Converters"             
+        mc:Ignorable="d" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
-    <Grid SizeChanged="Grid_SizeChanged">
-        <WindowsFormsHost MaxWidth="{Binding ElementName=rdpClient, Path=DesktopWidth}" MaxHeight="{Binding ElementName=rdpClient, Path=DesktopHeight}" Visibility="{Binding HideRdpClient, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
+    <Grid x:Name="rdpGrid" SizeChanged="RDPGrid_SizeChanged">
+        <WindowsFormsHost MaxWidth="{Binding RDPClientWidth}" MaxHeight="{Binding RDPClientHeight}" Visibility="{Binding Connected, Converter={StaticResource BooleanToVisibilityConverter}}">
             <mstsc:AxMsRdpClient9NotSafeForScripting x:Name="rdpClient" />
         </WindowsFormsHost>
-        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding Disconnected, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding Connected, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
