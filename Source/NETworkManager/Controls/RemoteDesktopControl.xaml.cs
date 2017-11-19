@@ -101,7 +101,8 @@ namespace NETworkManager.Controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            Connect();
+            if (!Connected)
+                Connect();
         }
         #endregion
 
