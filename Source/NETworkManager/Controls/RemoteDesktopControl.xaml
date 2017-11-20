@@ -14,7 +14,7 @@
         <WindowsFormsHost MaxWidth="{Binding RDPClientWidth, Mode=OneWay}" MaxHeight="{Binding RDPClientHeight, Mode=OneWay}" Visibility="{Binding Connected, Converter={StaticResource BooleanToVisibilityConverter}}">
             <mstsc:AxMsRdpClient9NotSafeForScripting x:Name="rdpClient" />
         </WindowsFormsHost>
-        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding Connected, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding Disconnected, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />

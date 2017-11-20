@@ -72,6 +72,20 @@ namespace NETworkManager.Controls
             }
         }
 
+        private bool _disconnected;
+        public bool Disconnected
+        {
+            get { return _disconnected; }
+            set
+            {
+                if (value == _disconnected)
+                    return;
+
+                _disconnected = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _disconnectReason;
         public string DisconnectReason
         {
@@ -296,12 +310,14 @@ namespace NETworkManager.Controls
         #region Events
         private void RdpClient_OnConnected(object sender, EventArgs e)
         {
+            Disconnected = false;
             Connected = true;
         }
 
         private void RdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
         {
             Connected = false;
+            Disconnected = true;
 
             DisconnectReason = GetDisconnectReason(e.discReason);
         }
