@@ -1,4 +1,4 @@
-# Documentation
+# Dokumentation
 
 * [Netzwerkinterface](NetworkInterface.md)
 * [IP-Scanner](IPScanner.md)
