@@ -10,6 +10,7 @@ using System.Windows.Threading;
 
 namespace NETworkManager.Controls
 {
+       
     public partial class RemoteDesktopControl : UserControl, INotifyPropertyChanged
     {
         #region PropertyChangedEventHandler
@@ -117,7 +118,7 @@ namespace NETworkManager.Controls
         {
             if (!Connected)
                 Connect();
-        }
+        }     
         #endregion
 
         #region ICommands & Actions
@@ -168,7 +169,7 @@ namespace NETworkManager.Controls
             // Events
             rdpClient.OnConnected += RdpClient_OnConnected;
             rdpClient.OnDisconnected += RdpClient_OnDisconnected;
-            
+
             rdpClient.Connect();
         }
 
@@ -183,6 +184,17 @@ namespace NETworkManager.Controls
             FixWindowsFormsHostSize();
 
             rdpClient.Connect();
+        }
+
+        private void Disconnect()
+        {
+            rdpClient.Disconnect();
+        }
+
+        public void OnClose()
+        {
+            if (Connected)
+                Disconnect();
         }
 
         private void ReconnectAdjustScreen()
@@ -336,7 +348,7 @@ namespace NETworkManager.Controls
 
             // Reconnect with new resulution
             ReconnectAdjustScreen();
-        }
-        #endregion       
+        }               
+        #endregion
     }
 }

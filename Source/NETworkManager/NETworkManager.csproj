@@ -179,7 +179,7 @@
     <Compile Include="3rdParty\Heijden.DNS\RR.cs" />
     <Compile Include="3rdParty\Heijden.DNS\Structs.cs" />
     <Compile Include="Controls\DragablzMainInterTabClient.cs" />
-    <Compile Include="Controls\DragablzTabContent.cs" />
+    <Compile Include="Controls\DragablzRemoteDesktopTabItem.cs" />
     <Compile Include="Converters\NullOrEmptyToBoolConverter.cs" />
     <Compile Include="Converters\TimestampToStringConverter.cs" />
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />

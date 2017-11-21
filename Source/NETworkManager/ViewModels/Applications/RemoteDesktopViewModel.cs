@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System;
 using System.Linq;
+using System.Collections.Specialized;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -20,7 +21,7 @@ namespace NETworkManager.ViewModels.Applications
         private IDialogCoordinator dialogCoordinator;
 
         public IInterTabClient InterTabClient { get; private set; }
-        public ObservableCollection<DragablzTabContent> TabContents { get; private set; }
+        public ObservableCollection<DragablzRemoteDesktopTabItem> TabItems { get; private set; }
 
         private const string tagIdentifier = "tag=";
 
@@ -103,7 +104,9 @@ namespace NETworkManager.ViewModels.Applications
             dialogCoordinator = instance;
 
             InterTabClient = new DragablzMainInterTabClient();
-            TabContents = new ObservableCollection<DragablzTabContent>();
+            TabItems = new ObservableCollection<DragablzRemoteDesktopTabItem>();
+
+            TabItems.CollectionChanged += TabItems_CollectionChanged;
 
             // Load sessions
             if (RemoteDesktopSessionManager.Sessions == null)
@@ -131,7 +134,7 @@ namespace NETworkManager.ViewModels.Applications
                 else
                 {
                     return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-                }                
+                }
             };
 
             LoadSettings();
@@ -159,8 +162,8 @@ namespace NETworkManager.ViewModels.Applications
             sessionInfo.RedirectPorts = SettingsManager.Current.RemoteDesktop_RedirectPorts;
             sessionInfo.RedirectSmartCards = SettingsManager.Current.RemoteDesktop_RedirectSmartCards;
 
-            TabContents.Add(new DragablzTabContent(Header ?? sessionInfo.Hostname, new RemoteDesktopControl(sessionInfo)));
-            SelectedTabIndex = TabContents.Count - 1;
+            TabItems.Add(new DragablzRemoteDesktopTabItem(Header ?? sessionInfo.Hostname, new RemoteDesktopControl(sessionInfo)));
+            SelectedTabIndex = TabItems.Count - 1;
         }
 
         private void RemoteDesktopSession_Search(object sender, FilterEventArgs e)
@@ -392,6 +395,17 @@ namespace NETworkManager.ViewModels.Applications
 
             ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+        #endregion
+
+        #region Events
+        private void TabItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                DragablzRemoteDesktopTabItem item = (DragablzRemoteDesktopTabItem)e.OldItems[0];
+                item.Dispose();
+            }
         }
         #endregion
     }
