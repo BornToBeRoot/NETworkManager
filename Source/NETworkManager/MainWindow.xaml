@@ -7,6 +7,8 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:Settings="clr-namespace:NETworkManager.Models.Settings"
+        xmlns:Resources="clr-namespace:NETworkManager.Properties"
         xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"        
         Title="{DynamicResource String_ProductName}" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged">
@@ -24,14 +26,24 @@
     </Controls:MetroWindow.IconTemplate>
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
-            <Button Command="{Binding OpenGithubProjectCommand}">
+            <Button Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.NETworkManager_DocumentationUrl}">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconOcticons Kind=Repo}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Text="{DynamicResource String_Documentation}" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.NETworkManager_ProjectUrl}">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconModern Kind=SocialGithubOctocat}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
-                    <TextBlock Text="Fork me on GitHub!" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <TextBlock Text="{DynamicResource String_ForkMeOnGitHub}" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
         </Controls:WindowCommands>
@@ -594,7 +606,7 @@
         <Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource GrayBrush8}">
             <StatusBar Foreground="{DynamicResource GrayBrush3}">
                 <StatusBarItem>
-                    <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource GrayBrush3}" FontWeight="Bold" />
+                    <TextBlock Text="{Binding Source={x:Static Settings:AssemblyManager.Current}, Path=Version}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource GrayBrush3}" FontWeight="Bold" />
                 </StatusBarItem>
             </StatusBar>
         </Border>

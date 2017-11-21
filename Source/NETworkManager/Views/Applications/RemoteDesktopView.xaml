@@ -7,7 +7,7 @@
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:ConfigurtationManager="clr-namespace:NETworkManager.Models.Settings"
+        xmlns:Settings="clr-namespace:NETworkManager.Models.Settings"
         Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
     <UserControl.Resources>
@@ -51,7 +51,7 @@
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <ContentPresenter Content="{Binding Control}" Visibility="{Binding Source={x:Static ConfigurtationManager:ConfigurationManager.Current}, Path=FixAirspace, Converter={StaticResource BooleanReverseToVisibilityConverter}}" />
+                                <ContentPresenter Content="{Binding Control}" Visibility="{Binding Source={x:Static Settings:ConfigurationManager.Current}, Path=FixAirspace, Converter={StaticResource BooleanReverseToVisibilityConverter}}" />
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>

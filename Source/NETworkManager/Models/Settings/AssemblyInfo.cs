@@ -7,7 +7,7 @@ namespace NETworkManager.Models.Settings
         public string Title { get; set; }
         public string Company { get; set; }
         public string Copyright { get; set; }
-        public Version AssemblyVersion { get; set; }
+        public string Version { get; set; }
 
         public AssemblyInfo()
         {

@@ -268,6 +268,15 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager/blob/master/Documentation/.
+        /// </summary>
+        public static string NETworkManager_DocumentationUrl {
+            get {
+                return ResourceManager.GetString("NETworkManager_DocumentationUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE.
         /// </summary>
         public static string NETworkManager_LicenseUrl {

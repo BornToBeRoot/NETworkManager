@@ -186,6 +186,9 @@
   <data name="License_MIT" xml:space="preserve">
     <value>MIT License</value>
   </data>
+  <data name="NETworkManager_DocumentationUrl" xml:space="preserve">
+    <value>https://github.com/BornToBeRoot/NETworkManager/blob/master/Documentation/</value>
+  </data>
   <data name="NETworkManager_LicenseUrl" xml:space="preserve">
     <value>https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE</value>
   </data>

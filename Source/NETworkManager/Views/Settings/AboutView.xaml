@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Resources="clr-namespace:NETworkManager.Properties"
+        xmlns:Settings="clr-namespace:NETworkManager.Models.Settings"        
         mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -20,7 +21,10 @@
             <StackPanel Grid.Column="1" Margin="20,0,0,0">
                 <TextBlock FontSize="32" Grid.Row="0" Text="{DynamicResource String_ProductName}" Style="{StaticResource HeaderTextBlock}" />
                 <TextBlock Text="{DynamicResource String_Slogan}" Style="{DynamicResource WrapTextBlock}" Margin="0,0,0,5" />
-                <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold" Margin="0,0,0,5"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                    <TextBlock Text="{DynamicResource String_Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold" />
+                    <TextBlock Text="{Binding Source={x:Static Settings:AssemblyManager.Current}, Path=Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold" Margin="5,0,0,0"/>
+                </StackPanel>
                 <TextBlock Text="{Binding CopyrightAndAuthor}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,5"/>
                 <TextBlock Text="{x:Static Resources:Resources.License_GNUGPLv3 }" Style="{StaticResource LinkTextBlock}">
                     <TextBlock.InputBindings>
@@ -94,7 +98,6 @@
                         <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.Libary_HeijdenDNS_LicenseUrl}" MouseAction="LeftClick" />
                     </TextBlock.InputBindings>
                 </TextBlock>
-
                 <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static Resources:Resources.Libary_Dragablz_Name}" Style="{StaticResource LinkTextBlock}">
                     <TextBlock.InputBindings>
                         <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.Libary_Dragablz_ProjectUrl}" MouseAction="LeftClick" />

@@ -212,20 +212,6 @@ namespace NETworkManager
                 OnPropertyChanged();
             }
         }
-
-        private string _version;
-        public string Version
-        {
-            get { return _version; }
-            set
-            {
-                if (value == _version)
-                    return;
-
-                _version = value;
-                OnPropertyChanged();
-            }
-        }
         #endregion
 
         #region Constructor, window load and close events
@@ -233,9 +219,7 @@ namespace NETworkManager
         {
             InitializeComponent();
             DataContext = this;
-
-            Version = AssemblyManager.Current.AssemblyVersion.ToString();
-
+            
             LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
 
             // Load appearance
@@ -608,15 +592,35 @@ namespace NETworkManager
         #endregion
 
         #region ICommands & Actions
-        public ICommand OpenGithubProjectCommand
+        public ICommand OpenWebsiteCommand
         {
-            get { return new RelayCommand(p => OpenGithubProjectAction()); }
+            get { return new RelayCommand(p => OpenWebsiteAction(p)); }
         }
 
-        private void OpenGithubProjectAction()
+        private void OpenWebsiteAction(object url)
         {
-            Process.Start(Properties.Resources.NETworkManager_ProjectUrl);
+            Process.Start((string)url);
         }
+
+        //public ICommand OpenGithubProjectCommand
+        //{
+        //    get { return new RelayCommand(p => OpenGithubProjectAction()); }
+        //}
+
+        //private void OpenGithubProjectAction()
+        //{
+        //    Process.Start(Properties.Resources.NETworkManager_ProjectUrl);
+        //}
+
+        //public ICommand OpenDocumentationCommand
+        //{
+        //    get { return new RelayCommand(p => OpenDocumentationAction()); }
+        //}
+
+        //private void OpenDocumentationAction()
+        //{
+        //    Process.Start(Properties.Resources.NETworkManager_DocumentationUrl);
+        //}
 
         public ICommand OpenApplicationListCommand
         {

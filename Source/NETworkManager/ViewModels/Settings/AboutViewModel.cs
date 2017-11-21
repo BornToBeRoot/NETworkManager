@@ -54,8 +54,6 @@ namespace NETworkManager.ViewModels.Settings
         public AboutViewModel()
         {           
             CopyrightAndAuthor = string.Format("{0} {1}.", AssemblyManager.Current.Copyright, AssemblyManager.Current.Company);
-
-            Version = AssemblyManager.Current.AssemblyVersion.ToString();
         }
         #endregion
 

@@ -288,7 +288,10 @@
     <system:String x:Key="String_Copy">Kopieren</system:String>
     <system:String x:Key="String_Expand">Erweitern</system:String>
     <system:String x:Key="String_AdjustScreenAutomatically">Bildschirm automatisch anpassen</system:String>
-
+    <system:String x:Key="String_ForkMeOnGitHub">Fork me on Github!</system:String>
+    <system:String x:Key="String_Documentation">Dokumentation</system:String>
+    <system:String x:Key="String_Version">Version</system:String>
+    
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Setzt alle Einstellungen zurück.</system:String>
