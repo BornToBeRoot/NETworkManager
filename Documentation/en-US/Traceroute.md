@@ -1,3 +1,0 @@
-# Traceroute
-
-![](Images/Traceroute.png)
