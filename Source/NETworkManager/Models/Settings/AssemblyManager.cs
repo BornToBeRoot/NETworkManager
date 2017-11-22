@@ -20,7 +20,7 @@ namespace NETworkManager.Models.Settings
                 Title = title.Title,
                 Company = company.Company,
                 Copyright = copyright.Copyright,
-                Version = string.Format("{0}.{1}.{2}", name.Version.Major, name.Version.Minor, name.Version.Build)
+                Version = name.Version
             };
         }
     }
