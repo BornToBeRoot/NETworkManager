@@ -141,8 +141,6 @@
     <system:String x:Key="String_AddTemplate">Template hinzufügen</system:String>
     <system:String x:Key="String_EnterHostnameForClient">Geben Sie den Hostnamen ein, um den Client später zu identifizieren.</system:String>
     <system:String x:Key="String_Administrator">Administrator</system:String>
-    <system:String x:Key="String_RestartAsAdministrator">Neustart als Administrator</system:String>
-    <system:String x:Key="String_RestartAsAdministratorMessage">Zum ändern dieser Konfiguration werden administrative Rechte benötigt.</system:String>
     <system:String x:Key="String_NetworkAddress">Netzwerkadresse</system:String>
     <system:String x:Key="String_DeleteClientMessage">Der ausgewählte Client wird unwiderruflich gelöscht.</system:String>
     <system:String x:Key="String_Timeout">Timeout</system:String>
@@ -307,7 +305,6 @@
     <system:String x:Key="String_Button_Add">Hinzufügen</system:String>
     <system:String x:Key="String_Button_Cancel">Abbrechen</system:String>
     <system:String x:Key="String_Button_OK">OK</system:String>
-    <system:String x:Key="String_Button_RestartAsAdministrator">Neustart als Administrator</system:String>
     <system:String x:Key="String_Button_Delete">Löschen</system:String>
     <system:String x:Key="String_Button_Calculate">Berechnen</system:String>
     <system:String x:Key="String_Button_Ping">Ping</system:String>

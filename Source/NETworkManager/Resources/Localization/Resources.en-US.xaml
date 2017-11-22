@@ -42,9 +42,9 @@
     <system:String x:Key="String_Header_AreYouSure">Are you sure?</system:String>
     <system:String x:Key="String_Header_ValidationFailed">Validation failed!</system:String>
     <system:String x:Key="String_Header_Success">Success!</system:String>
-    <system:String x:Key="String_Header_OUILookup">OUI-Lookup</system:String>
-    <system:String x:Key="String_Header_PortScanner">Port-Scanner</system:String>
-    <system:String x:Key="String_Header_PortLookup">Port-Lookup</system:String>
+    <system:String x:Key="String_Header_OUILookup">OUI Lookup</system:String>
+    <system:String x:Key="String_Header_PortScanner">Port Scanner</system:String>
+    <system:String x:Key="String_Header_PortLookup">Port Lookup</system:String>
     <system:String x:Key="String_Header_Port">Port</system:String>
     <system:String x:Key="String_Header_Socket">Socket</system:String>
     <system:String x:Key="String_Header_History">History</system:String>
@@ -90,12 +90,12 @@
     <system:String x:Key="String_RestartRequired">Restart Required</system:String>
     <system:String x:Key="String_RestartRequiredAfterSettingsChanged">Some settings are applied only after restarting the application!</system:String>
     <system:String x:Key="String_WakeUp">Wake Up</system:String>
-    <system:String x:Key="String_MACAddress">MAC-Address</system:String>
+    <system:String x:Key="String_MACAddress">MAC Address</system:String>
     <system:String x:Key="String_Hostname">Hostname</system:String>
     <system:String x:Key="String_Description">Description</system:String>
     <system:String x:Key="String_Broadcast">Broadcast</system:String>
     <system:String x:Key="String_Port">Port</system:String>
-    <system:String x:Key="String_IPAddress">IP-Address</system:String>
+    <system:String x:Key="String_IPAddress">IP Address</system:String>
     <system:String x:Key="String_StartWithWindows">Start with Windows (current user)</system:String>
     <system:String x:Key="String_StartMinimizedInTray">Start minimized in tray</system:String>
     <system:String x:Key="String_AlwaysShowIconInTray">Always show icon in tray</system:String>
@@ -110,7 +110,7 @@
     <system:String x:Key="String_Status">Status</system:String>
     <system:String x:Key="String_PhysicalAddress">Physical Address</system:String>
     <system:String x:Key="String_Speed">Speed</system:String>
-    <system:String x:Key="String_IPv4Address">IPv4-Address</system:String>
+    <system:String x:Key="String_IPv4Address">IPv4 Address</system:String>
     <system:String x:Key="String_Subnetmask">Subnetmask</system:String>
     <system:String x:Key="String_CIDR">CIDR</system:String>
     <system:String x:Key="String_SubnetmaskOrCIDR">Subnetmask or CIDR</system:String>
@@ -120,8 +120,8 @@
     <system:String x:Key="String_DHCPServer">DHCP server</system:String>
     <system:String x:Key="String_DHCPLeaseObtained">DHCP Lease Obtained</system:String>
     <system:String x:Key="String_DHCPLeaseExpires">DHCP Lease Expires</system:String>
-    <system:String x:Key="String_IPv6Address">IPv6-Address</system:String>
-    <system:String x:Key="String_IPv6AddressLinkLocal">Link-local IPv6-Address</system:String>
+    <system:String x:Key="String_IPv6Address">IPv6 Address</system:String>
+    <system:String x:Key="String_IPv6AddressLinkLocal">Link-local IPv6 Address</system:String>
     <system:String x:Key="String_IPv6DefaultGateway">IPv6-Default-Gateway</system:String>
     <system:String x:Key="String_ObtainAnIPAddressAutomatically">Obtain an IP address automatically</system:String>
     <system:String x:Key="String_UseTheFollowingIPAddress">Use the following IP address:</system:String>
@@ -133,16 +133,14 @@
     <system:String x:Key="String_No">No</system:String>
     <system:String x:Key="String_DNSSuffix">DNS Suffix</system:String>
     <system:String x:Key="String_DNSServers">DNS Servers</system:String>
-    <system:String x:Key="String_DynamicIPv4Address">Dynamic IPv4-Address</system:String>
-    <system:String x:Key="String_StaticIPv4Address">Static IPv4-Address</system:String>
-    <system:String x:Key="String_StaticIPv4DNSServer">Static IPv4-DNS-Server</system:String>
-    <system:String x:Key="String_DynamicIPv4DNSServer">Dynamic IPv4-DNS-Server</system:String>
-    <system:String x:Key="String_DefaultGateway">Default-Gateway</system:String>
+    <system:String x:Key="String_DynamicIPv4Address">Dynamic IPv4 Address</system:String>
+    <system:String x:Key="String_StaticIPv4Address">Static IPv4 Address</system:String>
+    <system:String x:Key="String_StaticIPv4DNSServer">Static IPv4 DNS Server</system:String>
+    <system:String x:Key="String_DynamicIPv4DNSServer">Dynamic IPv4 DNS Server</system:String>
+    <system:String x:Key="String_DefaultGateway">Default Gateway</system:String>
     <system:String x:Key="String_AddTemplate">Add template</system:String>
     <system:String x:Key="String_EnterHostnameForClient">Enter the hostname to identify the client later.</system:String>
     <system:String x:Key="String_Administrator">Administrator</system:String>
-    <system:String x:Key="String_RestartAsAdministrator">Restart as Administrator</system:String>
-    <system:String x:Key="String_RestartAsAdministratorMessage">Administrative rights are required to change this configuration.</system:String>
     <system:String x:Key="String_NetworkAddress">Network address</system:String>
     <system:String x:Key="String_DeleteClientMessage">The selected client will be deleted permanently.</system:String>
     <system:String x:Key="String_Timeout">Timeout</system:String>
@@ -153,7 +151,7 @@
     <system:String x:Key="String_IPv6">IPv6</system:String>
     <system:String x:Key="String_TimeToWaitBetweenEachPing">Time to wait between each ping</system:String>
     <system:String x:Key="String_ShowTheFollowingApplicationOnStartup">Show the following application on startup:</system:String>
-    <system:String x:Key="String_IPAddresses">IP-Addresses</system:String>
+    <system:String x:Key="String_IPAddresses">IP addresses</system:String>
     <system:String x:Key="String_PacketsTransmitted">Packets transmitted</system:String>
     <system:String x:Key="String_ReceivedLost">Received / Lost</system:String>
     <system:String x:Key="String_PacketLoss">Packet loss</system:String>
@@ -179,7 +177,7 @@
     <system:String x:Key="String_CanceledByUser">The operation has been canceled by the user!</system:String>
     <system:String x:Key="String_ApplicationSettings">Application settings</system:String>
     <system:String x:Key="String_NetworkInterfaceProfiles">Network interface profiles</system:String>
-    <system:String x:Key="String_PortScannerProfiles">Port-Scanner profiles</system:String>
+    <system:String x:Key="String_PortScannerProfiles">Port Scanner profiles</system:String>
     <system:String x:Key="String_WakeOnLANClients">Wake on LAN clients</system:String>
     <system:String x:Key="String_RemoteDesktopSessions">Remote Desktop sessions</system:String>
     <system:String x:Key="String_SelectedSettingsAreReset">The selected settings are reset.</system:String>
@@ -197,7 +195,7 @@
     <system:String x:Key="String_Protocol">Protocol</system:String>
     <system:String x:Key="String_Service">Service</system:String>
     <system:String x:Key="String_ShowClosedPorts">Show closed ports</system:String>
-    <system:String x:Key="String_HostnameOrIPAddress">Hostname or IP-Address</system:String>
+    <system:String x:Key="String_HostnameOrIPAddress">Hostname or IP address</system:String>
     <system:String x:Key="String_Ports">Ports</system:String>
     <system:String x:Key="String_NumberOfStoredEntries">Number of stored entries:</system:String>
     <system:String x:Key="String_NetworkLocationCannotBeReached">The network address cannot be reached. Check if your computer is connected to the network. For information about network troubleshooting, see Windows Help.</system:String>
@@ -218,7 +216,7 @@
     <system:String x:Key="String_Result">Result</system:String>
     <system:String x:Key="String_NoDNSRecordFoundCheckYourInputAndSettings">No DNS record found for "{0}"! Check your input and the settings.</system:String>
     <system:String x:Key="String_UnkownError">Unkown error!</system:String>
-    <system:String x:Key="String_TimeoutWhenQueryingDNSServer">Timeout when querying the DNS server with the IP-Address "{0}"!</system:String>
+    <system:String x:Key="String_TimeoutWhenQueryingDNSServer">Timeout when querying the DNS server with the IP address "{0}"!</system:String>
     <system:String x:Key="String_ResolveCNAME">Resolve CNAME</system:String>
     <system:String x:Key="String_Host">Host</system:String>
     <system:String x:Key="String_CouldNotResolveHostnameFor">Could not resolve hostname for: "{0}"</system:String>
@@ -241,10 +239,10 @@
     <system:String x:Key="String_AddDNSSuffixToHostname">Add DNS suffix (primary) to hostname</system:String>
     <system:String x:Key="String_UseCustomDNSSuffix">Use custom DNS suffix</system:String>
     <system:String x:Key="String_SettingsSuccessfullyImported">Settings successfully imported!</system:String>
-    <system:String x:Key="String_IPScannerProfilesReloaded">IP-Scanner profiles reloaded</system:String>
+    <system:String x:Key="String_IPScannerProfilesReloaded">IP Scanner profiles reloaded</system:String>
     <system:String x:Key="String_WakeOnLANClientsReloaded">Wake on LAN clients reloaded</system:String>
     <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Network interface profiles reloaded</system:String>
-    <system:String x:Key="String_PortScannerProfilesReloaded">Port-Scanner profiles reloaded</system:String>
+    <system:String x:Key="String_PortScannerProfilesReloaded">Port Scanner profiles reloaded</system:String>
     <system:String x:Key="String_RemoteDesktopSessionsReloaded">Remote Desktop sessions reloaded</system:String>
     <system:String x:Key="String_ComingSoon">Coming Soon!</system:String>
     <system:String x:Key="String_Override">override</system:String>
@@ -261,8 +259,8 @@
     <system:String x:Key="String_Destination">Destination</system:String>
     <system:String x:Key="String_EnterASubnetToCalculateIt">Enter a subnet to calculate it...</system:String>
     <system:String x:Key="String_Subnet">Subnet</system:String>
-    <system:String x:Key="String_FirstIPAddress">First IP-Address</system:String>
-    <system:String x:Key="String_LastIPAddress">Last IP-Address</system:String>
+    <system:String x:Key="String_FirstIPAddress">First IP Address</system:String>
+    <system:String x:Key="String_LastIPAddress">Last IP Address</system:String>
     <system:String x:Key="String_Hosts">Hosts</system:String>
     <system:String x:Key="String_NoEnabledNetworkAdaptersFound">No enabled network adapters found!</system:String>
     <system:String x:Key="String_Domain">Domain</system:String>
@@ -273,7 +271,7 @@
     <system:String x:Key="String_Group">Group</system:String>
     <system:String x:Key="String_Default">Default</system:String>
     <system:String x:Key="String_CopyAs">Copy as</system:String>
-    <system:String x:Key="String_IPScannerProfiles">IP-Scanner profiles</system:String>
+    <system:String x:Key="String_IPScannerProfiles">IP scanner profiles</system:String>
     <system:String x:Key="String_IPRange">IP range</system:String>
     <system:String x:Key="String_NothingFound">Nothing found!</system:String>
     <system:String x:Key="String_RedirectClipboard">Redirect clipboard</system:String>
@@ -307,7 +305,6 @@
     <system:String x:Key="String_Button_Add">Add</system:String>
     <system:String x:Key="String_Button_Cancel">Cancel</system:String>
     <system:String x:Key="String_Button_OK">OK</system:String>
-    <system:String x:Key="String_Button_RestartAsAdministrator">Restart as Administrator</system:String>
     <system:String x:Key="String_Button_Delete">Delete</system:String>
     <system:String x:Key="String_Button_Calculate">Calculate</system:String>
     <system:String x:Key="String_Button_Ping">Ping</system:String>
@@ -350,7 +347,7 @@
     <system:String x:Key="String_Watermark_ExamplePort">7</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Address">192.168.178.55</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmask">255.255.255.0</system:String>
-    <system:String x:Key="String_Watermark_HostnameOrIPAddress">Hostname or IP-Address...</system:String>
+    <system:String x:Key="String_Watermark_HostnameOrIPAddress">Hostname or IP address...</system:String>
     <system:String x:Key="String_Watermark_EampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150</system:String>
     <system:String x:Key="String_Watermark_LocationOfTheImport">Location of the import file...</system:String>
     <system:String x:Key="String_Watermark_ExampleMACAddressesOrVendor">01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5; Intel Corp; Asus</system:String>
@@ -365,18 +362,18 @@
 
     <!-- ShowProgress -->
     <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Configure Network Interface</system:String>
-    <system:String x:Key="String_Progress_SetStaticIPAddress">Set static IP-Address and gateway...</system:String>
-    <system:String x:Key="String_Progress_SetDynamicIPAddress">Set dynamic IP-Address...</system:String>
-    <system:String x:Key="String_Progress_SetStaticDNSServer">Set static DNS-Server...</system:String>
-    <system:String x:Key="String_Progesss_SetDynamicDNSServer">Set dynamic DNS-Server...</system:String>
+    <system:String x:Key="String_Progress_SetStaticIPAddress">Set static IP address and gateway...</system:String>
+    <system:String x:Key="String_Progress_SetDynamicIPAddress">Set dynamic IP address...</system:String>
+    <system:String x:Key="String_Progress_SetStaticDNSServer">Set static DNS server...</system:String>
+    <system:String x:Key="String_Progesss_SetDynamicDNSServer">Set dynamic DNS server...</system:String>
     <system:String x:Key="String_Progress_RenewDHCPLease">Renew DHCP lease...</system:String>
     <system:String x:Key="String_Progress_FixGatewayAfterDHCPEnabled">Fix gateway after DHCP is enabled...</system:String>
     
     <!-- Validate (User Input in GUI) -->
     <system:String x:Key="String_ValidateError_FieldEmpty">Field cannot be empty!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidMACAddress">Enter a valid MAC-Address like 00:F1:23:AB:F2:35!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidMACAddress">Enter a valid MAC address like 00:F1:23:AB:F2:35!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidPort">Enter a valid port (1 - 65535)!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidIPv4Address">Enter a valid IPv4-Address!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidIPv4Address">Enter a valid IPv4 address!</system:String>
     <system:String x:Key="String_ValidateError_FolderDoesNotExist">Folder does not exists!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidSubnetmask">Enter a valid subnetmask (like 255.255.255.0)!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidSubnetmaskOrCIDR">Enter a valid subnetmask or CIDR (like 255.255.255.0 or 24)!</system:String>
@@ -385,7 +382,7 @@
     <system:String x:Key="String_ValidateError_EnterValidPortOrPortRange">Enter a valid port and/or port range (1 - 65535)!</system:String>
     <system:String x:Key="String_ValidateError_OnlyNumbersCanBeEntered">Only numbers can be entered!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidValueBetween10and100">Enter a valid value between 10 and 100!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidIPAddress">Enter a valid IP-Address!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidIPAddress">Enter a valid IP address!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidSubnet">Enter a valid subnet (like 192.168.178.133/26)</system:String>
     
     <!-- ApplicationView.Name -->
