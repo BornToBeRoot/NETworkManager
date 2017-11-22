@@ -324,6 +324,7 @@
     <system:String x:Key="String_Button_Save">Speichern</system:String>
     <system:String x:Key="String_Button_Refresh">Aktualisieren</system:String>
     <system:String x:Key="String_Button_Reconnect">Wiederverbinden</system:String>
+    <system:String x:Key="String_Button_ClearCache">Cache leeren</system:String>
 
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Ausschneiden</system:String>

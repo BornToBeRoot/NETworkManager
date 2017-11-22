@@ -73,7 +73,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Command="{Binding DeleteCommand}" IsDefault="True" Style="{StaticResource ImageWithTextButton}">
+            <Button Command="{Binding ClearCacheCommand}" IsDefault="True" Style="{StaticResource ImageWithTextButton}">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -85,7 +85,7 @@
                                 <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Delete}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_ClearCache}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
                     </Grid>
                 </Button.Content>
             </Button>

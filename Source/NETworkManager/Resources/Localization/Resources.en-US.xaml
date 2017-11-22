@@ -324,6 +324,7 @@
     <system:String x:Key="String_Button_Save">Save</system:String>
     <system:String x:Key="String_Button_Refresh">Refresh</system:String>
     <system:String x:Key="String_Button_Reconnect">Reconnect</system:String>
+    <system:String x:Key="String_Button_ClearCache">Clear cache</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Cut</system:String>
