@@ -2,7 +2,7 @@
 
 NETworkManager is a powerful tool for managing networks and troubleshoot network problems!
 
-![](https://github.com/BornToBeRoot/NETworkManager/blob/master/Documentation/Images/NETworkManager_v1.3.0.0.gif)
+![](NETworkManager_Preview.gif)
 
 # Download
 
