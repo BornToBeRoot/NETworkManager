@@ -2,7 +2,7 @@
 
 NETworkManager is a powerful tool for managing networks and troubleshoot network problems!
 
-![](NETworkManager_Preview.gif)
+![](NETworkManager.gif)
 
 # Download
 
