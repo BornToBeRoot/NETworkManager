@@ -224,6 +224,7 @@ namespace NETworkManager.ViewModels.Applications
         public TracerouteViewModel()
         {
             _traceResultView = CollectionViewSource.GetDefaultView(TraceResult);
+            _traceResultView.SortDescriptions.Add(new SortDescription("Hop", ListSortDirection.Ascending));
 
             LoadSettings();
 
