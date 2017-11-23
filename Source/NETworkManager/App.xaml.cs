@@ -60,11 +60,14 @@ namespace NETworkManager
 
             // Single instance
             _mutex = new Mutex(true, "{" + Guid + "}");
+            bool mutexIsAcquired = _mutex.WaitOne(TimeSpan.Zero, true);
 
-            if (SettingsManager.Current.Window_MultipleInstances || _mutex.WaitOne(TimeSpan.Zero, true))
+            if (SettingsManager.Current.Window_MultipleInstances || mutexIsAcquired)
             {
                 StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
-                _mutex.ReleaseMutex();
+
+                if (mutexIsAcquired)
+                    _mutex.ReleaseMutex();
             }
             else
             {
