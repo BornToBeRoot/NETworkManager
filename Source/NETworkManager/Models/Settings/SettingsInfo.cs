@@ -1249,6 +1249,36 @@ namespace NETworkManager.Models.Settings
             }
         }
         #endregion
+
+        #region HTTP Headers
+        private List<string> _httpHeader_WebsiteUriHistory = new List<string>();
+        public List<string> HTTPHeader_WebsiteUriHistory
+        {
+            get { return _httpHeader_WebsiteUriHistory; }
+            set
+            {
+                if (value == _httpHeader_WebsiteUriHistory)
+                    return;
+
+                _httpHeader_WebsiteUriHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _httpHeader_ExpandStatistics = true;
+        public bool HTTPHeader_ExpandStatistics
+        {
+            get { return _httpHeader_ExpandStatistics; }
+            set
+            {
+                if (value == _httpHeader_ExpandStatistics)
+                    return;
+
+                _httpHeader_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
         #endregion
 
         #region Constructor

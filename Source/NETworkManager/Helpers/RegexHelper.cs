@@ -32,5 +32,8 @@
 
         // Match a IPv4-Address like 192.168.[50-100].1
         public const string IPv4AddressSpecialRangeRegex = @"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|" + SpecialRangeRegex + @")\.){3}((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|" + SpecialRangeRegex + @")$";
+
+        // Test for http|https uris
+        public const string httpAndHttpsUriRegex = @"^http(s)?:\/\/([\w-]+.)+[\w-]+(\/[\w- ./?%&=])?$";
     }
 }
