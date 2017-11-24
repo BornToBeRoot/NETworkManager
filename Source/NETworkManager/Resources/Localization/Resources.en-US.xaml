@@ -82,7 +82,9 @@
     <system:String x:Key="String_Header_Display">Display</system:String>
     <system:String x:Key="String_Header_Filter">Filter</system:String>
     <system:String x:Key="String_Header_ARPTable">ARP Table</system:String>
-    
+    <system:String x:Key="String_Header_Website">Website</system:String>
+    <system:String x:Key="String_Header_Headers">Headers</system:String>
+
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">A powerful tool for managing networks and troubleshoot network problems!</system:String>
@@ -325,6 +327,7 @@
     <system:String x:Key="String_Button_Refresh">Refresh</system:String>
     <system:String x:Key="String_Button_Reconnect">Reconnect</system:String>
     <system:String x:Key="String_Button_ClearCache">Clear cache</system:String>
+    <system:String x:Key="String_Button_Check">Check</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Cut</system:String>
@@ -360,7 +363,8 @@
     <system:String x:Key="String_Watermark_EamplePortPortRangeOrService">22; 80; https; ldaps; 777 - 999; 8080</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnet">192.168.178.133/22 or 192.168.178.133/255.255.252.0</system:String>
     <system:String x:Key="String_Watermark_Filter">Filter...</system:String>
-
+    <system:String x:Key="String_Watermark_ExampleWebsiteUri">http(s)://example.com/index.html</system:String>
+    
     <!-- ShowProgress -->
     <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Configure Network Interface</system:String>
     <system:String x:Key="String_Progress_SetStaticIPAddress">Set static IP address and gateway...</system:String>
@@ -385,6 +389,7 @@
     <system:String x:Key="String_ValidateError_EnterValidValueBetween10and100">Enter a valid value between 10 and 100!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidIPAddress">Enter a valid IP address!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidSubnet">Enter a valid subnet (like 192.168.178.133/26)</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidWebsiteUri">Enter a valid website (like https://example.com/index.html)</system:String> 
     
     <!-- ApplicationView.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP Scanner</system:String>
@@ -396,6 +401,7 @@
     <system:String x:Key="String_ApplicationName_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_ApplicationName_DNSLookup">DNS Lookup</system:String>
     <system:String x:Key="String_ApplicationName_RemoteDesktop">Remote Desktop</system:String>
+    <system:String x:Key="String_ApplicationName_HTTPHeaders">HTTP Headers</system:String>
     <system:String x:Key="String_ApplicationName_ARPTable">ARP Table</system:String>
     <system:String x:Key="String_ApplicationName_Lookup">Lookup</system:String>
     

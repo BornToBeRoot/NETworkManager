@@ -22,6 +22,7 @@ namespace NETworkManager.Views
                     new ApplicationViewInfo(Name.RemoteDesktop, new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.Desktop}),
                     new ApplicationViewInfo(Name.WakeOnLAN, new PackIconMaterial() { Kind = PackIconMaterialKind.Power }),
                     new ApplicationViewInfo(Name.SubnetCalculator, new PackIconMaterial() { Kind = PackIconMaterialKind.Calculator }),
+                    new ApplicationViewInfo(Name.HTTPHeaders, new PackIconModern() {Kind = PackIconModernKind.CodeXml }),
                     new ApplicationViewInfo(Name.ARPTable, new PackIconMaterial() { Kind = PackIconMaterialKind.Matrix}),
                     new ApplicationViewInfo(Name.Lookup, new PackIconMaterial() { Kind = PackIconMaterialKind.Magnify })
                 };
@@ -45,6 +46,7 @@ namespace NETworkManager.Views
             RemoteDesktop,
             WakeOnLAN,
             SubnetCalculator,
+            HTTPHeaders,
             ARPTable,
             Lookup
         }

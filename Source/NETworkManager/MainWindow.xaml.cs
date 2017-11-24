@@ -341,6 +341,7 @@ namespace NETworkManager
         RemoteDesktopView remoteDesktopView;
         WakeOnLANView wakeOnLANView;
         SubnetCalculatorView subnetCalculatorView;
+        HTTPHeadersView httpHeadersView;
         ARPTableView arpTableView;
         LookupView lookupView;
 
@@ -406,6 +407,12 @@ namespace NETworkManager
                         subnetCalculatorView = new SubnetCalculatorView();
 
                     contentControlApplication.Content = subnetCalculatorView;
+                    break;
+                case ApplicationViewManager.Name.HTTPHeaders:
+                    if (httpHeadersView == null)
+                        httpHeadersView = new HTTPHeadersView();
+
+                    contentControlApplication.Content = httpHeadersView;
                     break;
                 case ApplicationViewManager.Name.ARPTable:
                     if (arpTableView == null)

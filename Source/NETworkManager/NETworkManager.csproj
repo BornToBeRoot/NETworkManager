@@ -186,10 +186,13 @@
     <Compile Include="Converters\ValidateNetworkInterfaceProfileConverter.cs" />
     <Compile Include="Converters\ValidateSubnetCalculatorIPv4SplitterConverter.cs" />
     <Compile Include="Helpers\SingleInstanceHelper.cs" />
+    <Compile Include="Models\Network\HTTPHeaders.cs" />
     <Compile Include="Models\Network\ARPTableInfo.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Models\Settings\RemoteDesktopSessionManager.cs" />
     <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
+    <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
+    <Compile Include="ViewModels\Applications\HTTPHeadersViewModel.cs" />
     <Compile Include="ViewModels\Applications\ARPTableViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\NetworkInterfaceProfileViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\PortScannerProfileViewModel.cs" />
@@ -223,6 +226,9 @@
     <Compile Include="ViewModels\Settings\SettingsApplicationWakeOnLANViewModel.cs" />
     <Compile Include="Controls\RemoteDesktopControl.xaml.cs">
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Applications\HTTPHeadersView.xaml.cs">
+      <DependentUpon>HTTPHeadersView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Applications\ARPTableView.xaml.cs">
       <DependentUpon>ARPTableView.xaml</DependentUpon>
@@ -351,6 +357,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RemoteDesktopControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Applications\HTTPHeadersView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
