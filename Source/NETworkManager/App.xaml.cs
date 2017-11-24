@@ -58,16 +58,17 @@ namespace NETworkManager
                 return;
             }
 
-            // Single instance
+            // Create mutex
             _mutex = new Mutex(true, "{" + Guid + "}");
             bool mutexIsAcquired = _mutex.WaitOne(TimeSpan.Zero, true);
+            
+            // Release mutex
+            if (mutexIsAcquired)
+                _mutex.ReleaseMutex();
 
             if (SettingsManager.Current.Window_MultipleInstances || mutexIsAcquired)
             {
-                StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
-
-                if (mutexIsAcquired)
-                    _mutex.ReleaseMutex();
+                StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);                              
             }
             else
             {
