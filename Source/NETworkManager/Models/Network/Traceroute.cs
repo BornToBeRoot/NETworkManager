@@ -48,7 +48,7 @@ namespace NETworkManager.Models.Network
 
                 bool maximumHopsReached = false;
 
-                // Check IP
+                // Get the ttl of the ip
                 using (System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping())
                 {
                     PingReply pingReply;
@@ -71,6 +71,7 @@ namespace NETworkManager.Models.Network
                     }
                 }
 
+                // Async check all hops
                 Parallel.For(1, maximumHops + 1, new ParallelOptions() { CancellationToken = cancellationToken }, i =>
                 {
                     List<Task<Tuple<PingReply, long>>> tasks = new List<Task<Tuple<PingReply, long>>>();
