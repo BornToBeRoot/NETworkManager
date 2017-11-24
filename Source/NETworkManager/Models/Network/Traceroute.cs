@@ -89,8 +89,6 @@ namespace NETworkManager.Models.Network
 
                                 pingReply = ping.Send(ipAddress, traceOptions.Timeout, buffer, new System.Net.NetworkInformation.PingOptions() { Ttl = i, DontFragment = traceOptions.DontFragement });
 
-                                Debug.WriteLine(i.ToString() + "  " + pingReply.Address);
-
                                 stopwatch.Stop();
                             }
 
