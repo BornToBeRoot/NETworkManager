@@ -1,4 +1,4 @@
-﻿using MahApps.Metro.IconPacks;
+using MahApps.Metro.IconPacks;
 using System.Collections.Generic;
 using System.Windows;
 
@@ -19,10 +19,10 @@ namespace NETworkManager.Views
                     new ApplicationViewInfo(Name.Ping, new PackIconMaterial() { Kind = PackIconMaterialKind.LanConnect }),
                     new ApplicationViewInfo(Name.Traceroute,  new PackIconModern() { Kind = PackIconModernKind.TransitConnection }),
                     new ApplicationViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.Dna }),
-                    new ApplicationViewInfo(Name.RemoteDesktop, new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.Desktop}),
-                    new ApplicationViewInfo(Name.WakeOnLAN, new PackIconMaterial() { Kind = PackIconMaterialKind.Power }),
-                    new ApplicationViewInfo(Name.SubnetCalculator, new PackIconMaterial() { Kind = PackIconMaterialKind.Calculator }),
+                    new ApplicationViewInfo(Name.RemoteDesktop, new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.Desktop}),                    
+                    new ApplicationViewInfo(Name.WakeOnLAN, new PackIconMaterial() { Kind = PackIconMaterialKind.Power }),           
                     new ApplicationViewInfo(Name.HTTPHeaders, new PackIconModern() {Kind = PackIconModernKind.CodeXml }),
+                    new ApplicationViewInfo(Name.SubnetCalculator, new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.Calculator }),
                     new ApplicationViewInfo(Name.ARPTable, new PackIconMaterial() { Kind = PackIconMaterialKind.Matrix}),
                     new ApplicationViewInfo(Name.Lookup, new PackIconMaterial() { Kind = PackIconMaterialKind.Magnify })
                 };
@@ -43,10 +43,10 @@ namespace NETworkManager.Views
             Ping,
             Traceroute,
             DNSLookup,
-            RemoteDesktop,
+            RemoteDesktop,            
             WakeOnLAN,
-            SubnetCalculator,
             HTTPHeaders,
+            SubnetCalculator,
             ARPTable,
             Lookup
         }
