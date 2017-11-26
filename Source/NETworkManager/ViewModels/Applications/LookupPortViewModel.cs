@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using NETworkManager.Models.Settings;
 using System.Collections.Generic;
-using NETworkManager.Models.Network;
 using NETworkManager.Helpers;
 using System.ComponentModel;
 using System.Windows.Data;
@@ -60,16 +59,16 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private bool _isPortLookupRunning;
-        public bool IsPortLookupRunning
+        private bool _isLookupRunning;
+        public bool IsLookupRunning
         {
-            get { return _isPortLookupRunning; }
+            get { return _isLookupRunning; }
             set
             {
-                if (value == _isPortLookupRunning)
+                if (value == _isLookupRunning)
                     return;
 
-                _isPortLookupRunning = value;
+                _isLookupRunning = value;
                 OnPropertyChanged();
             }
         }
@@ -152,7 +151,7 @@ namespace NETworkManager.ViewModels.Applications
 
         private async void PortLookupAction()
         {
-            IsPortLookupRunning = true;
+            IsLookupRunning = true;
 
             PortLookupResult.Clear();
 
@@ -227,7 +226,7 @@ namespace NETworkManager.ViewModels.Applications
                 NoPortsFound = false;
             }
 
-            IsPortLookupRunning = false;
+            IsLookupRunning = false;
         }
 
         public ICommand CopySelectedPortCommand

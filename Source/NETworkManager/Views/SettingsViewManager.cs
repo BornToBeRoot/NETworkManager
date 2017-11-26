@@ -1,6 +1,5 @@
 ﻿using MahApps.Metro.IconPacks;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 
 namespace NETworkManager.Views
@@ -24,11 +23,11 @@ namespace NETworkManager.Views
                     new SettingsViewInfo(Name.ImportExport, new PackIconMaterial() { Kind = PackIconMaterialKind.Import}, Group.General),
                     new SettingsViewInfo(Name.IPScanner, new PackIconMaterial() {Kind = PackIconMaterialKind.Sitemap }, Group.Applications),
                     new SettingsViewInfo(Name.PortScanner, new PackIconModern() {Kind = PackIconModernKind.NetworkPort }, Group.Applications),
-                    new SettingsViewInfo(Name.WakeOnLAN, new PackIconMaterial() {Kind = PackIconMaterialKind.Power} , Group.Applications),
                     new SettingsViewInfo(Name.Ping, new PackIconMaterial() { Kind = PackIconMaterialKind.LanConnect }, Group.Applications),
                     new SettingsViewInfo(Name.Traceroute, new PackIconModern() {Kind = PackIconModernKind.TransitConnection}, Group.Applications),
                     new SettingsViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.Dna }, Group.Applications ),
-                    new SettingsViewInfo(Name.RemoteDesktop, new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.Desktop}, Group.Applications)
+                    new SettingsViewInfo(Name.RemoteDesktop, new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.Desktop}, Group.Applications),
+                    new SettingsViewInfo(Name.WakeOnLAN, new PackIconMaterial() {Kind = PackIconMaterialKind.Power} , Group.Applications)
                 };
             }
         }
@@ -45,11 +44,11 @@ namespace NETworkManager.Views
             ImportExport,
             IPScanner,
             PortScanner,
-            WakeOnLAN,
             Ping,
             Traceroute,
             DNSLookup,
-            RemoteDesktop
+            RemoteDesktop,
+            WakeOnLAN
         }
 
         public static string TranslateName(Name name, Group group)

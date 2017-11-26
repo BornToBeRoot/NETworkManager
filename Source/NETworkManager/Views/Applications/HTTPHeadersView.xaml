@@ -77,13 +77,7 @@
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
-                                <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
-                                            <Setter Property="Text" Value="{DynamicResource String_Button_Check}"/>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
+                                <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center" Text="{DynamicResource String_Button_Check}" />
                             </Grid>
                         </Button.Content>
                     </Button>

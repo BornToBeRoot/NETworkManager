@@ -63,16 +63,16 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private bool _isOUILookupRunning;
-        public bool IsOUILookupRunning
+        private bool _isLookupRunning;
+        public bool IsLookupRunning
         {
-            get { return _isOUILookupRunning; }
+            get { return _isLookupRunning; }
             set
             {
-                if (value == _isOUILookupRunning)
+                if (value == _isLookupRunning)
                     return;
 
-                _isOUILookupRunning = value;
+                _isLookupRunning = value;
                 OnPropertyChanged();
             }
         }
@@ -155,7 +155,7 @@ namespace NETworkManager.ViewModels.Applications
 
         private async void OUILookupAction()
         {
-            IsOUILookupRunning = true;
+            IsLookupRunning = true;
 
             OUILookupResult.Clear();
 
@@ -193,7 +193,7 @@ namespace NETworkManager.ViewModels.Applications
                 NoVendorFound = false;
             }
 
-            IsOUILookupRunning = false;
+            IsLookupRunning = false;
         }
 
         public ICommand CopySelectedMACAddressCommand

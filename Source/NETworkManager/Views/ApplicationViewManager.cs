@@ -23,8 +23,8 @@ namespace NETworkManager.Views
                     new ApplicationViewInfo(Name.WakeOnLAN, new PackIconMaterial() { Kind = PackIconMaterialKind.Power }),           
                     new ApplicationViewInfo(Name.HTTPHeaders, new PackIconModern() {Kind = PackIconModernKind.CodeXml }),
                     new ApplicationViewInfo(Name.SubnetCalculator, new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.Calculator }),
-                    new ApplicationViewInfo(Name.ARPTable, new PackIconMaterial() { Kind = PackIconMaterialKind.Matrix}),
-                    new ApplicationViewInfo(Name.Lookup, new PackIconMaterial() { Kind = PackIconMaterialKind.Magnify })
+                    new ApplicationViewInfo(Name.Lookup, new PackIconMaterial() { Kind = PackIconMaterialKind.Magnify }),
+                    new ApplicationViewInfo(Name.ARPTable, new PackIconMaterial() { Kind = PackIconMaterialKind.Matrix})
                 };
             }
         }
@@ -47,8 +47,8 @@ namespace NETworkManager.Views
             WakeOnLAN,
             HTTPHeaders,
             SubnetCalculator,
-            ARPTable,
-            Lookup
+            Lookup,
+            ARPTable            
         }
     }
 }
