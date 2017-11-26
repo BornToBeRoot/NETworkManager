@@ -18,14 +18,15 @@ _On Windows 10 systems, SmartScreen may prevent the execution of the_ `NETworkMa
 
 - Network Interface (Information, Configure)
 - IP-Scanner
-- Wake on LAN
-- Traceroute
-- Subnet-Calculator
-- Ping
-- DNS Lookup
 - Port-Scanner
+- Ping
+- Traceroute
+- DNS Lookup
 - Remote Desktop
+- Wake on LAN
+- Subnet-Calculator
 - Wiki (OUI, Port)
+- ARP Table
 
 # Available languages
 
