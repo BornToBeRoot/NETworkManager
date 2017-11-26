@@ -67,16 +67,16 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private string _headerResult;
-        public string HeaderResult
+        private string _headers;
+        public string Headers
         {
-            get { return _headerResult; }
+            get { return _headers; }
             set
             {
-                if (value == _headerResult)
+                if (value == _headers)
                     return;
 
-                _headerResult = value;
+                _headers = value;
                 OnPropertyChanged();
             }
         }
@@ -151,6 +151,20 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
+        private int _headersCount;
+        public int HeadersCount
+        {
+            get { return _headersCount; }
+            set
+            {
+                if (value == _headersCount)
+                    return;
+
+                _headersCount = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _expandStatistics;
         public bool ExpandStatistics
         {
@@ -213,15 +227,15 @@ namespace NETworkManager.ViewModels.Applications
             dispatcherTimer.Start();
             EndTime = null;
 
-            HeaderResult = null;
+            Headers = null;
+            HeadersCount = 0;
 
             try
             {
                 WebHeaderCollection headers = await HTTPHeaders.GetHeadersAsync(new Uri(WebsiteUri));
 
-                HeaderResult = headers.ToString();
-                //headers.Count;
-
+                Headers = headers.ToString();
+                HeadersCount = headers.Count;
             }
             catch (Exception ex)
             {
