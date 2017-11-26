@@ -48,7 +48,19 @@
                 <Binding Path="AccentSelectedItem" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
             </ListView.SelectedItem>
         </ListView>
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Transparency}" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Transparency}" />
+            <Rectangle Grid.Column="2" Width="24" Height="24" ToolTip="{DynamicResource String_WarnMessage_SettingsGeneralAppearanceTransparency}" Style="{StaticResource WarnImageRectangle}">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource WarnToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </Grid>
         <mah:ToggleSwitch Header="{DynamicResource String_EnableTransparency}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding EnableTransparency}" Margin="0,0,0,10"/>
         <Grid>
             <Grid.ColumnDefinitions>

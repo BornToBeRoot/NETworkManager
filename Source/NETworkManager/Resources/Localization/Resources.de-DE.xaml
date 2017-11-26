@@ -84,7 +84,7 @@
     <system:String x:Key="String_Header_ARPTable">ARP-Tabelle</system:String>
     <system:String x:Key="String_Header_Website">Webseite</system:String>
     <system:String x:Key="String_Header_Headers">Headers</system:String>
-    
+
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Ein leistungsstarkes Tool zum Verwalten von Netzwerken und zur Behebung von Netzwerkproblemen!</system:String>
@@ -175,7 +175,7 @@
     <system:String x:Key="String_ConfirmClose">Schließen bestätigen</system:String>
     <system:String x:Key="String_ConfirmCloseQuesiton">Sind Sie sicher, dass Sie die Anwendung beenden möchten?</system:String>
     <system:String x:Key="String_UntrayBringWindowToFront">Untray / Fenster in den Vordergrund bringen</system:String>
-    <system:String x:Key="String_MaximumNumberOfHopsReached">Maximale Anzahl ({0}) an Hops/Router erreicht! </system:String>
+    <system:String x:Key="String_MaximumNumberOfHopsReached">Maximale Anzahl ({0}) an Hops/Router erreicht!</system:String>
     <system:String x:Key="String_CanceledByUser">Der Vorgang wurde vom Benutzer abgebrochen!</system:String>
     <system:String x:Key="String_ApplicationSettings">Anwendungseinstellungen</system:String>
     <system:String x:Key="String_NetworkInterfaceProfiles">Netzwerkinterface Profile</system:String>
@@ -297,7 +297,10 @@
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Setzt alle Einstellungen zurück.</system:String>
     <system:String x:Key="String_HelpMessage_Tags">Mit Tags können Sie Sitzungen nach Themen/Projekten organisieren. Mehrere Tags können mit ";" getrennt sein. Suche nach Tags mit "tag=xxx".</system:String>
-    
+
+    <!-- Warn message -->
+    <system:String x:Key="String_WarnMessage_SettingsGeneralAppearanceTransparency">Einige Grafikkarten / Treiber haben Probleme bei der Maximierung der Anwendung, wenn die Transparenz aktiviert ist. Die Funktion muss für die Verwendung von "Remote Desktop" deaktiviert sein! Das Aktivieren oder Deaktivieren dieser Funktion erfordert einen Neustart der Anwendung.</system:String>
+
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Wechseln</system:String>
     <system:String x:Key="String_Button_Default">Standard</system:String>
@@ -391,7 +394,7 @@
     <system:String x:Key="String_ValidateError_EnterValidIPAddress">Geben Sie eine gültige IP-Adresse ein!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidSubnet">Geben Sie ein gültiges Subnetz ein (z.B. 192.168.178.133/26)</system:String>
     <system:String x:Key="String_ValidateError_EnterValidWebsiteUri">Geben Sie eine gültige Webseite ein (z.B. https://example.com/index.html)</system:String>
-    
+
     <!-- ApplicationInfo.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>
     <system:String x:Key="String_ApplicationName_NetworkInterface">Netzwerkinterface</system:String>

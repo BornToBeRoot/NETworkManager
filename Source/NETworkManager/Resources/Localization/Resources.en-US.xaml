@@ -298,6 +298,9 @@
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Reset all settings.</system:String>
     <system:String x:Key="String_HelpMessage_Tags">Tags help you organize sessions by topics/projects. Multiple tags can be used with ";" be separated. Search by tags with "tag=xxx".</system:String>
     
+    <!-- Warn message -->
+    <system:String x:Key="String_WarnMessage_SettingsGeneralAppearanceTransparency">Some graphics cards / drivers have problems maximizing the application when transparency is enabled. The function must be disabled for using "Remote Desktop"! Enabling or disabling this feature requires a restart of the application.</system:String>
+    
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
     <system:String x:Key="String_Button_Default">Default</system:String>
