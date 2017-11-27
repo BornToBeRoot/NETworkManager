@@ -144,9 +144,9 @@ namespace NETworkManager.ViewModels.Applications
                     else
                     {
                         ConfigEnableStaticIPAddress = true;
-                        ConfigIPAddress = value.IPv4Address.FirstOrDefault().ToString();
-                        ConfigSubnetmaskOrCidr = value.Subnetmask.FirstOrDefault().ToString();
-                        ConfigGateway = (value.IPv4Gateway == null) ? value.IPv4Gateway.ToString() : string.Empty;
+                        ConfigIPAddress = (value != null) ? value.IPv4Address.FirstOrDefault().ToString() : string.Empty;
+                        ConfigSubnetmaskOrCidr = (value.Subnetmask != null) ? value.Subnetmask.FirstOrDefault().ToString() : string.Empty;
+                        ConfigGateway = (value.IPv4Gateway != null) ? value.IPv4Gateway.FirstOrDefault().ToString() : string.Empty;
                     }
 
                     if (value.DNSAutoconfigurationEnabled)

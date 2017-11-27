@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NETworkManager.Models.Network
 {
@@ -129,22 +130,22 @@ namespace NETworkManager.Models.Network
         public void ConfigureNetworkInterface(NetworkInterfaceConfig config)
         {
             // IP
-            string command = string.Format("netsh interface ipv4 set address name=\"{0}\" ", config.Name);
-            command += config.EnableStaticIPAddress ? string.Format("source=static address={0} mask={1} gateway={2}", config.IPAddress, config.Subnetmask, config.Gateway) : "source=dhcp";
+            string command = @"netsh interface ipv4 set address name='" + config.Name + @"'";
+            command += config.EnableStaticIPAddress ? @" source=static address=" + config.IPAddress + @" mask=" + config.Subnetmask + @" gateway=" + config.Gateway : @" source=dhcp";
 
             // DNS
-            command += string.Format(";netsh interface ipv4 set DNSservers name=\"{0}\" ", config.Name);
-            command += config.EnableStaticDNS ? string.Format("source=static address={0} register=primary validate=no", config.PrimaryDNSServer) : "source=dhcp";
-            command += (config.EnableStaticDNS && !string.IsNullOrEmpty(config.SecondaryDNSServer)) ? string.Format(";netsh interface ipv4 add DNSservers name=\"{0}\" address={1} index=2 validate=no", config.Name, config.SecondaryDNSServer) : "";
+            command += @";netsh interface ipv4 set DNSservers name='" + config.Name + @"'";
+            command += config.EnableStaticDNS ? @" source=static address=" + config.PrimaryDNSServer + @" register=primary validate=no" : @" source=dhcp";
+            command += (config.EnableStaticDNS && !string.IsNullOrEmpty(config.SecondaryDNSServer)) ? @";netsh interface ipv4 add DNSservers name='" + config.Name + @"' address=" + config.SecondaryDNSServer + @" index=2 validate=no" : "";
 
             // Start process with elevated rights...
             ProcessStartInfo processStartInfo = new ProcessStartInfo()
             {
                 Verb = "runas",
                 FileName = "powershell.exe",
-                Arguments = string.Format("-NoProfile -NoLogo -Command {0}", command)
+                Arguments = "-NoProfile -NoLogo -Command " + command
             };
-            
+
             processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
             using (Process process = new Process())
