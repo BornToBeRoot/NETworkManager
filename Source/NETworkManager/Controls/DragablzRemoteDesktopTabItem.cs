@@ -1,8 +1,8 @@
-﻿using System;
+﻿using NETworkManager.ViewModels;
 
 namespace NETworkManager.Controls
 {
-    public class DragablzRemoteDesktopTabItem : IDisposable
+    public class DragablzRemoteDesktopTabItem : ViewModelBase
     {
         public string Header { get; set; }
         public RemoteDesktopControl Control { get; set; }
@@ -11,25 +11,6 @@ namespace NETworkManager.Controls
         {
             Header = header;
             Control = control;
-        }
-
-        private bool _disposed;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-                return;
-
-            if (disposing)
-                Control.OnClose();
-
-            _disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }

@@ -10,15 +10,22 @@
     <Controls:MetroWindow.WindowButtonCommands>
         <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </Controls:MetroWindow.WindowButtonCommands>
-    <Grid Margin="10">
+    <Grid>
         <dragablz:TabablzControl Name="TabsContainer">
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController></dragablz:InterTabController>
             </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.Style>
-                <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">
+                <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">                
                     <!-- If not null, the header suffix will be removed in the main window -->
                     <Setter Property="HeaderSuffixContent" Value="{x:Null}" />
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <ContentPresenter Content="{Binding Control}" />
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
                 </Style>
             </dragablz:TabablzControl.Style>
         </dragablz:TabablzControl>

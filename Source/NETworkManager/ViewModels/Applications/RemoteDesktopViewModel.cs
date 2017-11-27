@@ -106,8 +106,6 @@ namespace NETworkManager.ViewModels.Applications
             InterTabClient = new DragablzMainInterTabClient();
             TabItems = new ObservableCollection<DragablzRemoteDesktopTabItem>();
 
-            TabItems.CollectionChanged += TabItems_CollectionChanged;
-
             // Load sessions
             if (RemoteDesktopSessionManager.Sessions == null)
                 RemoteDesktopSessionManager.Load();
@@ -395,17 +393,6 @@ namespace NETworkManager.ViewModels.Applications
 
             ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-        #endregion
-
-        #region Events
-        private void TabItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.Action == NotifyCollectionChangedAction.Remove)
-            {
-                DragablzRemoteDesktopTabItem item = (DragablzRemoteDesktopTabItem)e.OldItems[0];
-                item.Dispose();
-            }
         }
         #endregion
     }

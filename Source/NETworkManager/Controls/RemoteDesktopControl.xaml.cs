@@ -7,10 +7,11 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System;
 using System.Windows.Threading;
+using System.Diagnostics;
 
 namespace NETworkManager.Controls
 {
-       
+
     public partial class RemoteDesktopControl : UserControl, INotifyPropertyChanged
     {
         #region PropertyChangedEventHandler
@@ -23,6 +24,8 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Variables
+        private bool _initialized = false;
+
         private const string RemoteDesktopDisconnectReasonIdentifier = "String_RemoteDesktopDisconnectReason_";
 
         private RemoteDesktopSessionInfo _rdpSessionInfo;
@@ -112,13 +115,24 @@ namespace NETworkManager.Controls
 
             reconnectAdjustScreenTimer.Tick += ReconnectAdjustScreenTimer_Tick;
             reconnectAdjustScreenTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+
+            Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!Connected)
+            // Connect after the control is drawn and only on the first init
+            if (!_initialized)
+            {
                 Connect();
-        }     
+                _initialized = true;
+            }
+        }
+
+        private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
+        {
+            OnClose();
+        }
         #endregion
 
         #region ICommands & Actions
@@ -348,7 +362,7 @@ namespace NETworkManager.Controls
 
             // Reconnect with new resulution
             ReconnectAdjustScreen();
-        }               
+        }
         #endregion
     }
 }
