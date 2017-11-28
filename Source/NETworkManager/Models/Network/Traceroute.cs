@@ -44,16 +44,18 @@ namespace NETworkManager.Models.Network
             Task.Run(() =>
             {
                 byte[] buffer = new byte[traceOptions.Buffer];
-                int maximumHops = traceOptions.MaximumHops;
 
+                int maximumHops = traceOptions.MaximumHops;                
                 bool maximumHopsReached = false;
+
+                int pingCount = 3;
 
                 // Get the ttl of the ip
                 using (System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping())
                 {
                     PingReply pingReply;
 
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < pingCount; i++)
                     {
                         pingReply = ping.Send(ipAddress, traceOptions.Timeout, buffer, new System.Net.NetworkInformation.PingOptions() { Ttl = 64, DontFragment = traceOptions.DontFragement });
 
@@ -71,59 +73,75 @@ namespace NETworkManager.Models.Network
                     }
                 }
 
+                int threads = (pingCount * maximumHops);
+
+                // Modify the ThreadPool for better performance
+                ThreadPool.GetMinThreads(out int workerThreads, out int completionPortThreads);
+                ThreadPool.SetMinThreads(workerThreads + threads, completionPortThreads + threads);
+
                 // Async check all hops
-                Parallel.For(1, maximumHops + 1, new ParallelOptions() { CancellationToken = cancellationToken }, i =>
+                try
                 {
-                    List<Task<Tuple<PingReply, long>>> tasks = new List<Task<Tuple<PingReply, long>>>();
-
-                    for (int y = 0; y < 3; y++)
+                    ParallelOptions parallelOptions = new ParallelOptions()
                     {
-                        tasks.Add(Task.Run(() =>
+                        CancellationToken = cancellationToken,
+                        MaxDegreeOfParallelism = threads
+                    };
+
+                    Parallel.For(1, maximumHops + 1, parallelOptions, i =>
+                    {
+                        List<Task<Tuple<PingReply, long>>> tasks = new List<Task<Tuple<PingReply, long>>>();
+
+                        for (int y = 0; y < 3; y++)
                         {
-                            Stopwatch stopwatch = new Stopwatch();
-
-                            PingReply pingReply;
-
-                            using (System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping())
+                            tasks.Add(Task.Run(() =>
                             {
-                                stopwatch.Start();
+                                Stopwatch stopwatch = new Stopwatch();
 
-                                pingReply = ping.Send(ipAddress, traceOptions.Timeout, buffer, new System.Net.NetworkInformation.PingOptions() { Ttl = i, DontFragment = traceOptions.DontFragement });
+                                PingReply pingReply;
 
-                                stopwatch.Stop();
-                            }
+                                using (System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping())
+                                {
+                                    stopwatch.Start();
 
-                            return Tuple.Create(pingReply, stopwatch.ElapsedMilliseconds);
-                        }));
-                    }
+                                    pingReply = ping.Send(ipAddress, traceOptions.Timeout, buffer, new System.Net.NetworkInformation.PingOptions() { Ttl = i, DontFragment = traceOptions.DontFragement });
 
-                    Task.WaitAll(tasks.ToArray());
+                                    stopwatch.Stop();
+                                }
 
-                    // Here is a good point to cancel (Don't resolve dns...)
-                    if (cancellationToken.IsCancellationRequested)
-                        return;
+                                return Tuple.Create(pingReply, stopwatch.ElapsedMilliseconds);
+                            }));
+                        }
 
-                    IPAddress ipAddressHop = tasks.FirstOrDefault(x => x.Result.Item1 != null).Result.Item1.Address;
+                        Task.WaitAll(tasks.ToArray());
 
-                    string hostname = string.Empty;
+                        IPAddress ipAddressHop = tasks.FirstOrDefault(x => x.Result.Item1 != null).Result.Item1.Address;
 
-                    try
-                    {
-                        if (ipAddressHop != null)
-                            hostname = Dns.GetHostEntry(ipAddressHop).HostName;
-                    }
-                    catch (SocketException) { } // Couldn't resolve hostname
+                        string hostname = string.Empty;
 
-                    OnHopReceived(new TracerouteHopReceivedArgs(i, tasks[0].Result.Item2, tasks[1].Result.Item2, tasks[2].Result.Item2, ipAddressHop, hostname, tasks[0].Result.Item1.Status, tasks[1].Result.Item1.Status, tasks[2].Result.Item1.Status));
-                });
+                        try
+                        {
+                            if (ipAddressHop != null)
+                                hostname = Dns.GetHostEntry(ipAddressHop).HostName;
+                        }
+                        catch (SocketException) { } // Couldn't resolve hostname
 
-                if (cancellationToken.IsCancellationRequested)
+                        OnHopReceived(new TracerouteHopReceivedArgs(i, tasks[0].Result.Item2, tasks[1].Result.Item2, tasks[2].Result.Item2, ipAddressHop, hostname, tasks[0].Result.Item1.Status, tasks[1].Result.Item1.Status, tasks[2].Result.Item1.Status));
+                    });
+                }
+                catch (OperationCanceledException)
+                {
                     OnUserHasCanceled();
-                else if (maximumHopsReached)
+                    return;
+                }
+
+               if (maximumHopsReached)
                     OnMaximumHopsReached(new MaximumHopsReachedArgs(traceOptions.MaximumHops));
                 else
                     OnTraceComplete();
 
+                // Reset the ThreadPool to default
+                ThreadPool.SetMinThreads(workerThreads, completionPortThreads);
             }, cancellationToken);
         }
         #endregion
