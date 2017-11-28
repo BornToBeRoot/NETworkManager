@@ -6,9 +6,9 @@ NETworkManager is a powerful tool for managing networks and troubleshoot network
 
 # Download
 
-Latest binary: [NETworkMananger_v.1.4.0.0.zip](https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.4.0.0/NETworkManager_v1.4.0.0.zip)
+Latest binary: [NETworkMananger_v.1.4.0.0.zip](https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.4.1.0/NETworkManager_v1.4.1.0.zip)
 
-SHA256: `3E79772EA13D32EE702864BD38787CDC9FAA464F6E34462532FE89CC01913068`
+SHA256: `F90A24DA927A9FEA5EC55A3A25B2926D11B3B46ABD398FD868C8304984EC8AB5`
 
 The software is portable by default, simply unpack the ZIP archive and save it in a folder you have write permissions on.
 
@@ -24,8 +24,9 @@ _On Windows 10 systems, SmartScreen may prevent the execution of the_ `NETworkMa
 - DNS Lookup
 - Remote Desktop
 - Wake on LAN
+- HTTP Headers
 - Subnet-Calculator
-- Wiki (OUI, Port)
+- Lokup (OUI, Port)
 - ARP Table
 
 # Available languages
