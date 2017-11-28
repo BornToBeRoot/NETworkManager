@@ -8,6 +8,7 @@
 * [DNS-Lookup](DNSLookup.md)
 * [Remote Desktop](RemoteDesktop.md)
 * [Wake on LAN](WakeOnLAN.md)
+* [HTTP-Headers](HTTPHeaders.md)
 * [Subnet-Calculator](SubnetCalculator.md)
 * [ARP-Tabelle](ARPTable.md)
 * [Lookup](Lookup.md)
