@@ -2,6 +2,7 @@
 using NETworkManager.Views;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 
 namespace NETworkManager.Models.Settings
@@ -11,9 +12,9 @@ namespace NETworkManager.Models.Settings
         #region Events
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, e);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
 
@@ -337,7 +338,8 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ResolveHostname = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("IPScanner_ResolveHostname"));
+
+                OnPropertyChanged();
 
                 SettingsChanged = true;
             }
@@ -353,7 +355,8 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ResolveMACAddress = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("IPScanner_ResolveMACAddress"));
+
+                OnPropertyChanged();
 
                 SettingsChanged = true;
             }
@@ -575,20 +578,6 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region Traceroute
-        private int _traceroute_Buffer = 32;
-        public int Traceroute_Buffer
-        {
-            get { return _traceroute_Buffer; }
-            set
-            {
-                if (value == _traceroute_Buffer)
-                    return;
-
-                _traceroute_Buffer = value;
-                SettingsChanged = true;
-            }
-        }
-
         private List<string> _traceroute_HostnameHistory = new List<string>();
         public List<string> Traceroute_HostnameHistory
         {
@@ -617,20 +606,6 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _traceroute_ResolveHostnamePreferIPv4 = true;
-        public bool Traceroute_ResolveHostnamePreferIPv4
-        {
-            get { return _traceroute_ResolveHostnamePreferIPv4; }
-            set
-            {
-                if (value == _traceroute_ResolveHostnamePreferIPv4)
-                    return;
-
-                _traceroute_ResolveHostnamePreferIPv4 = value;
-                SettingsChanged = true;
-            }
-        }
-
         private int _traceroute_Timeout = 4000;
         public int Traceroute_Timeout
         {
@@ -641,6 +616,51 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_Timeout = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _traceroute_Buffer = 32;
+        public int Traceroute_Buffer
+        {
+            get { return _traceroute_Buffer; }
+            set
+            {
+                if (value == _traceroute_Buffer)
+                    return;
+
+                _traceroute_Buffer = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _traceroute_ResolveHostname = true;
+        public bool Traceroute_ResolveHostname
+        {
+            get { return _traceroute_ResolveHostname; }
+            set
+            {
+                if (value == _traceroute_ResolveHostname)
+                    return;
+
+                _traceroute_ResolveHostname = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _traceroute_ResolveHostnamePreferIPv4 = true;
+        public bool Traceroute_ResolveHostnamePreferIPv4
+        {
+            get { return _traceroute_ResolveHostnamePreferIPv4; }
+            set
+            {
+                if (value == _traceroute_ResolveHostnamePreferIPv4)
+                    return;
+
+                _traceroute_ResolveHostnamePreferIPv4 = value;
                 SettingsChanged = true;
             }
         }

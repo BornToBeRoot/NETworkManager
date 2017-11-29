@@ -654,9 +654,9 @@ namespace NETworkManager.ViewModels.Applications
             IPScanResult.Clear();
             HostsFound = 0;
 
-            IPAddress[] ipAddresses;
-
             cancellationTokenSource = new CancellationTokenSource();
+
+            IPAddress[] ipAddresses;
 
             try
             {

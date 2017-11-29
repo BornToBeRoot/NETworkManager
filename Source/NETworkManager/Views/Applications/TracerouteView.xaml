@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
+        xmlns:WpfHelper="clr-namespace:NETworkManager.WpfHelper"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
         xmlns:Validator="clr-namespace:NETworkManager.Validators"
-        xmlns:Control="clr-namespace:NETworkManager.Controls"
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d">
@@ -110,6 +110,7 @@
         <DataGrid Grid.Row="3" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding TraceResultView}" SelectedItem="{Binding SelectedTraceResult}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False" Margin="0,0,0,20">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
+                <WpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{DynamicResource String_Copy}">
                         <MenuItem.Icon>
@@ -164,7 +165,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Hostname}" Command="{Binding CopySelectedHostnameCommand}">
+                        <MenuItem Header="{DynamicResource String_Hostname}" Command="{Binding CopySelectedHostnameCommand}" Visibility="{Binding ValidatesOnDataErrors.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -212,7 +213,7 @@
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress, Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" MinWidth="150"/>
+                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityConverter}}" MinWidth="150"/>
             </DataGrid.Columns>
         </DataGrid>
         <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource DefaultExpander}">

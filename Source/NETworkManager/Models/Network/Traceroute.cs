@@ -78,7 +78,7 @@ namespace NETworkManager.Models.Network
 
                     try
                     {
-                        if (ipAddressHop != null)
+                        if (traceOptions.ResolveHostname && ipAddressHop != null)
                             hostname = Dns.GetHostEntry(ipAddressHop).HostName;
                     }
                     catch (SocketException) { } // Couldn't resolve hostname
@@ -86,7 +86,7 @@ namespace NETworkManager.Models.Network
                     OnHopReceived(new TracerouteHopReceivedArgs(i, tasks[0].Result.Item2, tasks[1].Result.Item2, tasks[2].Result.Item2, ipAddressHop, hostname, tasks[0].Result.Item1.Status, tasks[1].Result.Item1.Status, tasks[2].Result.Item1.Status));
 
                     // Check if finished
-                    if (ipAddress == ipAddressHop)
+                    if (ipAddressHop != null && ipAddress.ToString() == ipAddressHop.ToString())
                     {
                         OnTraceComplete();
                         return;

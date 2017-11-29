@@ -58,6 +58,23 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
+        private bool _resolveHostname;
+        public bool ResolveHostname
+        {
+            get { return _resolveHostname; }
+            set
+            {
+                if (value == _resolveHostname)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.Traceroute_ResolveHostname = value;
+
+                _resolveHostname = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _resolveHostnamePreferIPv4;
         public bool ResolveHostnamePreferIPv4
         {
@@ -103,6 +120,7 @@ namespace NETworkManager.ViewModels.Settings
             MaximumHops = SettingsManager.Current.Traceroute_MaximumHops;
             Timeout = SettingsManager.Current.Traceroute_Timeout;
             Buffer = SettingsManager.Current.Traceroute_Buffer;
+            ResolveHostname = SettingsManager.Current.Traceroute_ResolveHostname;
 
             if (SettingsManager.Current.Traceroute_ResolveHostnamePreferIPv4)
                 ResolveHostnamePreferIPv4 = true;

@@ -260,9 +260,9 @@
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding PingInfo.IPAddress}" SortMemberPath="PingInfo.IPAddressInt32" MinWidth="150" />
-                    <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy},Converter={StaticResource BooleanToVisibilityConverter}}" MinWidth="150" />
+                    <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityConverter}}" MinWidth="150" />
                     <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityConverter}}" MinWidth="150" />
-                    <DataGridTextColumn Header="{DynamicResource String_Vendor}" Binding="{Binding Vendor}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy},Converter={StaticResource BooleanToVisibilityConverter}}" MinWidth="200" />
+                    <DataGridTextColumn Header="{DynamicResource String_Vendor}" Binding="{Binding Vendor}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityConverter}}" MinWidth="200" />
                     <DataGridTextColumn Header="{DynamicResource String_Bytes}" Binding="{Binding PingInfo.Bytes, Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
                     <DataGridTextColumn Header="{DynamicResource String_Time}" SortMemberPath="PingInfo.Time" MinWidth="80">
                         <DataGridTextColumn.Binding>

@@ -118,6 +118,11 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
+        public bool ResolveHostname
+        {
+            get { return SettingsManager.Current.Traceroute_ResolveHostname; }
+        }
+
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
         {
@@ -228,7 +233,15 @@ namespace NETworkManager.ViewModels.Applications
 
             LoadSettings();
 
+            SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
+
             _isLoading = false;
+        }
+
+        private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Traceroute_ResolveHostname")
+                OnPropertyChanged("ResolveHostname");
         }
 
         private void LoadSettings()
@@ -338,6 +351,8 @@ namespace NETworkManager.ViewModels.Applications
             TraceResult.Clear();
             Hops = 0;
 
+            cancellationTokenSource = new CancellationTokenSource();
+            
             // Try to parse the string into an IP-Address
             IPAddress.TryParse(Hostname, out IPAddress ipAddress);
 
@@ -372,15 +387,14 @@ namespace NETworkManager.ViewModels.Applications
                         }
                     }
                 }
-
-                cancellationTokenSource = new CancellationTokenSource();
-
+                
                 TracerouteOptions tracerouteOptions = new TracerouteOptions
                 {
                     Timeout = SettingsManager.Current.Traceroute_Timeout,
                     Buffer = SettingsManager.Current.Traceroute_Buffer,
                     MaximumHops = SettingsManager.Current.Traceroute_MaximumHops,
-                    DontFragement = true
+                    DontFragement = true,
+                    ResolveHostname = SettingsManager.Current.Traceroute_ResolveHostname
                 };
 
                 Traceroute traceroute = new Traceroute();
