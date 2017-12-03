@@ -107,7 +107,7 @@ namespace NETworkManager.Models.Network
 
                                             if (macAddress == null)
                                                 macAddress = NetworkInterface.GetNetworkInterfaces().Where(p => p.IPv4Address.Contains(ipAddress)).FirstOrDefault().PhysicalAddress;
-                                            
+
                                             // Vendor lookup
                                             vendor = OUILookup.Lookup(macAddress.ToString()).FirstOrDefault().Vendor;
                                         }
@@ -134,7 +134,11 @@ namespace NETworkManager.Models.Network
                 }
                 catch (OperationCanceledException)  // If user has canceled
                 {
-                    OnUserHasCanceled();
+                    // Check if the scan is already complete...
+                    if (ipAddresses.Length == progressValue)
+                        OnScanComplete();
+                    else
+                        OnUserHasCanceled();
                 }
             });
 
