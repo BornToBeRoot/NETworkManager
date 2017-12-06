@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="NETworkManager.Views.Dialogs.AddARPEntryDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Validator="clr-namespace:NETworkManager.Validators"
+             mc:Ignorable="d">
+    <Grid Margin="0,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.Resources>
+                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />                
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_IPAddress}" />
+            <TextBox x:Name="txtIPAddress" Grid.Column="1" Grid.Row="0">
+                <TextBox.Text>
+                    <Binding Path="IPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_MACAddress}" />
+            <TextBox x:Name="txtMACAddress" Grid.Column="1" Grid.Row="2">
+                <TextBox.Text>
+                    <Binding Path="MACAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <Validator:MACAddressValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>            
+        </Grid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="{DynamicResource String_Button_Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
+            <Button Content="{DynamicResource String_Button_Add}" Command="{Binding AddCommand}" IsDefault="True" Margin="10,0,0,0">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Style.Triggers>                            
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtIPAddress}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtMACAddress}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="True" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

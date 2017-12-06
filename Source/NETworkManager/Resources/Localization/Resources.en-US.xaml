@@ -84,6 +84,7 @@
     <system:String x:Key="String_Header_ARPTable">ARP Table</system:String>
     <system:String x:Key="String_Header_Website">Website</system:String>
     <system:String x:Key="String_Header_Headers">Headers</system:String>
+    <system:String x:Key="String_Header_AddEntry">Add entry</system:String>
 
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -292,7 +293,8 @@
     <system:String x:Key="String_Documentation">Documentation</system:String>
     <system:String x:Key="String_Version">Version</system:String>
     <system:String x:Key="String_Headers">Headers</system:String>
-    
+    <system:String x:Key="String_DeleteEntry">Delete entry</system:String>
+
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Reset all settings.</system:String>
@@ -330,7 +332,9 @@
     <system:String x:Key="String_Button_Save">Save</system:String>
     <system:String x:Key="String_Button_Refresh">Refresh</system:String>
     <system:String x:Key="String_Button_Reconnect">Reconnect</system:String>
-    <system:String x:Key="String_Button_ClearCache">Clear cache</system:String>
+    <system:String x:Key="String_Button_DeleteTable">Delete table</system:String>
+    <system:String x:Key="String_Button_DeleteEntry">Delete entry</system:String>
+    <system:String x:Key="String_Button_AddEntry">Add entry...</system:String>
     <system:String x:Key="String_Button_Check">Check</system:String>
     
     <!-- ContextMenuItem.Header -->

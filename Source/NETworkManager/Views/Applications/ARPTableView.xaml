@@ -6,6 +6,8 @@
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
     <UserControl.Resources>
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -25,7 +27,7 @@
             <TextBlock Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </StackPanel>
         <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_ARPTable}" />
-        <DataGrid Grid.Row="3" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding ARPTableView}" SelectedItem="{Binding SelectedARPTableInfo}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True" Margin="0,0,0,10">
+        <DataGrid x:Name="dataGridArpTable" Grid.Row="3" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding ARPTableView}" SelectedItem="{Binding SelectedARPTableInfo}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True" Margin="0,0,0,10">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
@@ -56,12 +58,21 @@
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
+                    <MenuItem Header="{DynamicResource String_DeleteEntry}" Command="{Binding DeleteEntryCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" Value="1" >
+                        <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1" >
                             <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
                         </DataTrigger>
                     </Style.Triggers>
@@ -73,7 +84,23 @@
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Command="{Binding ClearCacheCommand}" IsDefault="True" Style="{StaticResource ImageWithTextButton}">
+            <Button Command="{Binding AddEntryCommand}" Style="{StaticResource ImageWithTextButton}">
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Plus}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddEntry}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding DeleteEntryCommand}" Margin="10,0,0,0">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -85,11 +112,37 @@
                                 <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_ClearCache}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_DeleteEntry}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                    </Grid>
+                </Button.Content>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=dataGridArpTable, Path=SelectedItems.Count}" Value="1" >
+                                <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Command="{Binding DeleteTableCommand}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_DeleteTable}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button Command="{Binding RefreshCommand}" IsDefault="True" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
+            <Button Command="{Binding RefreshCommand}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>

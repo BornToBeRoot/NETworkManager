@@ -108,7 +108,7 @@
                                                             <Condition Property="IsSelected" Value="False" />
                                                             <Condition Property="IsMouseOver" Value="True" />
                                                         </MultiTrigger.Conditions>
-                                                        <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush8}" />
+                                                        <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush10}" />
                                                     </MultiTrigger>
                                                     <Trigger Property="IsEnabled" Value="False">
                                                         <Setter TargetName="contentPresenter" Property="Opacity" Value=".55" />
@@ -328,7 +328,7 @@
                                                                 <Condition Property="IsSelected" Value="False" />
                                                                 <Condition Property="IsMouseOver" Value="True" />
                                                             </MultiTrigger.Conditions>
-                                                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush8}" />
+                                                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush10}" />
                                                         </MultiTrigger>
                                                         <Trigger Property="IsEnabled" Value="False">
                                                             <Setter TargetName="contentPresenter" Property="Opacity" Value=".55" />

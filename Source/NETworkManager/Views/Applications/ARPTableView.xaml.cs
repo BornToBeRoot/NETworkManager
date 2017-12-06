@@ -1,11 +1,12 @@
 ﻿using System.Windows.Controls;
 using NETworkManager.ViewModels.Applications;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.Views.Applications
 {
     public partial class ARPTableView : UserControl
     {
-        ARPTableViewModel viewModel = new ARPTableViewModel();
+        ARPTableViewModel viewModel = new ARPTableViewModel(DialogCoordinator.Instance);
 
         public ARPTableView()
         {

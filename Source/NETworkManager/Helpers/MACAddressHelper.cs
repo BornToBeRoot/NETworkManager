@@ -45,5 +45,12 @@ namespace NETworkManager.Helpers
         {
             return GetDefaultFormat(macAddress.ToString());
         }
+
+        public static string Format(string macAddress, string separator = "")
+        {
+            macAddress = macAddress.ToUpper().Replace("-", "").Replace(":", "");
+
+            return string.Join(separator, Enumerable.Range(0, 6).Select(i => macAddress.Substring(i * 2, 2)));
+        }
     }
 }

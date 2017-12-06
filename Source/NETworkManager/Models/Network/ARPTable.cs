@@ -1,4 +1,4 @@
-﻿// Source: https://stackoverflow.com/a/1148861/4986782
+﻿// Contains code from: https://stackoverflow.com/a/1148861/4986782
 // Modified by BornToBeRoot
 
 using NETworkManager.Helpers;
@@ -152,15 +152,45 @@ namespace NETworkManager.Models.Network
             }
         }
 
+        // MAC separated with "-"
+        public Task AddEntryAsync(string ipAddress, string macAddress)
+        {
+            return Task.Run(() => AddEntry(ipAddress, macAddress));
+        }
+
+        private void AddEntry(string ipAddress, string macAddress)
+        {
+            string command = string.Format("arp -s {0} {1}", ipAddress, macAddress);
+
+            RunPSWithElevatedRights(command);
+        }
+
+        public Task DeleteEntryAsync(string ipAddress)
+        {
+            return Task.Run(() => DeleteEntry(ipAddress));
+        }
+
+        private void DeleteEntry(string ipAddress)
+        {
+            string command = string.Format("arp -d {0}", ipAddress);
+
+            RunPSWithElevatedRights(command);
+        }
+
         public Task DeleteTableAsync()
         {
             return Task.Run(() => DeleteTable());
         }
 
-        public void DeleteTable()
+        private void DeleteTable()
         {
             string command = string.Format("netsh interface ip delete arpcache");
 
+            RunPSWithElevatedRights(command);
+        }
+
+        private void RunPSWithElevatedRights(string command)
+        {
             // Start process with elevated rights...
             ProcessStartInfo processStartInfo = new ProcessStartInfo()
             {

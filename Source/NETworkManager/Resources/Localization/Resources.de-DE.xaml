@@ -84,7 +84,8 @@
     <system:String x:Key="String_Header_ARPTable">ARP-Tabelle</system:String>
     <system:String x:Key="String_Header_Website">Webseite</system:String>
     <system:String x:Key="String_Header_Headers">Headers</system:String>
-
+    <system:String x:Key="String_Header_AddEntry">Eintrag hinzufügen</system:String>
+    
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Ein leistungsstarkes Tool zum Verwalten von Netzwerken und zur Behebung von Netzwerkproblemen!</system:String>
@@ -292,6 +293,7 @@
     <system:String x:Key="String_Documentation">Dokumentation</system:String>
     <system:String x:Key="String_Version">Version</system:String>
     <system:String x:Key="String_Headers">Headers</system:String>
+    <system:String x:Key="String_DeleteEntry">Eintrag löschen</system:String>
 
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>
@@ -330,7 +332,9 @@
     <system:String x:Key="String_Button_Save">Speichern</system:String>
     <system:String x:Key="String_Button_Refresh">Aktualisieren</system:String>
     <system:String x:Key="String_Button_Reconnect">Wiederverbinden</system:String>
-    <system:String x:Key="String_Button_ClearCache">Cache leeren</system:String>
+    <system:String x:Key="String_Button_DeleteTable">Tabelle löschen</system:String>
+    <system:String x:Key="String_Button_DeleteEntry">Eintrag löschen</system:String>
+    <system:String x:Key="String_Button_AddEntry">Eintrag hinzufügen...</system:String>
     <system:String x:Key="String_Button_Check">Prüfen</system:String>
 
     <!-- ContextMenuItem.Header -->

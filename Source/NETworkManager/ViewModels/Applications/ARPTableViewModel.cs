@@ -6,13 +6,16 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.ViewModels.Dialogs;
+using NETworkManager.Views.Dialogs;
 
 namespace NETworkManager.ViewModels.Applications
 {
     public class ARPTableViewModel : ViewModelBase
     {
         #region Variables
-        //private bool _isLoading = true;
+        private IDialogCoordinator dialogCoordinator;
 
         private string _filter;
         public string Filter
@@ -95,8 +98,10 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Contructor, load settings
-        public ARPTableViewModel()
+        public ARPTableViewModel(IDialogCoordinator instance)
         {
+            dialogCoordinator = instance;
+
             _arpTableView = CollectionViewSource.GetDefaultView(ARPTable);
             _arpTableView.SortDescriptions.Add(new SortDescription("IPAddressInt32", ListSortDirection.Ascending));
             _arpTableView.Filter = o =>
@@ -113,15 +118,6 @@ namespace NETworkManager.ViewModels.Applications
             };
 
             Refresh();
-
-            LoadSettings();
-
-            //_isLoading = false;
-        }
-
-        private void LoadSettings()
-        {
-
         }
         #endregion
 
@@ -138,12 +134,12 @@ namespace NETworkManager.ViewModels.Applications
             Refresh();
         }
 
-        public ICommand ClearCacheCommand
+        public ICommand DeleteTableCommand
         {
-            get { return new RelayCommand(p => ClearCacheAction()); }
+            get { return new RelayCommand(p => DeleteTableAction()); }
         }
 
-        private async void ClearCacheAction()
+        private async void DeleteTableAction()
         {
             DisplayStatusMessage = false;
 
@@ -162,6 +158,78 @@ namespace NETworkManager.ViewModels.Applications
                 StatusMessage = ex.Message;
                 DisplayStatusMessage = true;
             }
+        }
+
+        public ICommand DeleteEntryCommand
+        {
+            get { return new RelayCommand(p => DeleteEntryAction()); }
+        }
+
+        private async void DeleteEntryAction()
+        {
+            DisplayStatusMessage = false;
+
+            try
+            {
+                ARPTable arpTable = new ARPTable();
+
+                arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
+
+                await arpTable.DeleteEntryAsync(SelectedARPTableInfo.IPAddress.ToString());
+
+                Refresh();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = ex.Message;
+                DisplayStatusMessage = true;
+            }
+        }
+
+        public ICommand AddEntryCommand
+        {
+            get { return new RelayCommand(p => AddEntryAction()); }
+        }
+
+        private async void AddEntryAction()
+        {
+            DisplayStatusMessage = false;
+
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_AddEntry"] as string
+            };
+
+            AddARPEntryViewModel addARPEntryViewModel = new AddARPEntryViewModel(async instance =>
+            {
+                await dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ARPTable arpTable = new ARPTable();
+
+                    arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
+
+                    await arpTable.AddEntryAsync(instance.IPAddress, MACAddressHelper.Format(instance.MACAddress, "-"));
+
+                    Refresh();
+                }
+                catch (Exception ex)
+                {
+                    StatusMessage = ex.Message;
+                    DisplayStatusMessage = true;
+                }
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            });
+
+            customDialog.Content = new AddARPEntryDialog
+            {
+                DataContext = addARPEntryViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand CopySelectedIPAddressCommand
