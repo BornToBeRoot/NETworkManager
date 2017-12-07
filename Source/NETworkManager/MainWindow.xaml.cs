@@ -260,6 +260,8 @@ namespace NETworkManager
             foreach (CredentialInfo info in CredentialManager.Credentials)
                 System.Windows.MessageBox.Show(info.Username);
 
+           // CredentialManager.Save();
+
             // - REMOVE THIS IN RELEASE
         }
 

@@ -13,6 +13,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace NETworkManager.Models.Settings
 {
@@ -36,54 +38,81 @@ namespace NETworkManager.Models.Settings
         }
 
         public static void Load(SecureString pasword)
-        {            
-            // Decrypt file
-            if(File.Exists(GetCredentialsFilePath()))
-            {
+        {
+            byte[] xml = null;
 
+            // Decrypt file
+            if (File.Exists(GetCredentialsFilePath()))
+            {
+                byte[] cipherWithSaltAndIv = File.ReadAllBytes(GetCredentialsFilePath());
+
+                xml = Decrypt(cipherWithSaltAndIv, SecureStringHelper.ConvertToString(pasword));
             }
-            
-            // if decryption was successful, save master pw for encryption
+
+            // Save master pw for encryption
             SetMasterPassword(pasword);
 
+            // Init collection
             Credentials = new ObservableCollection<CredentialInfo>();
-            
-            // Deserialize file
 
-
-
-            // REMOVE THIS IN RELEASE
-            // Some demo content...
-            AddCredential(new CredentialInfo(1, "TEST", "Admin", SecureStringHelper.ConvertToSecureString("123456")));
-            AddCredential(new CredentialInfo(1, "TEST", "User1", SecureStringHelper.ConvertToSecureString("asdf")));
-            AddCredential(new CredentialInfo(1, "TEST", "User2", SecureStringHelper.ConvertToSecureString("654654")));
-            // - REMOVE THIS IN RELEASE
-
+            // Check if array is empty...
+            if (xml != null && xml.Length > 0)
+            {
+                foreach (CredentialInfoSerializable info in Deserialize(xml))
+                {
+                    AddCredential(new CredentialInfo(info.Index, info.Name, info.Username, SecureStringHelper.ConvertToSecureString(info.Password)));
+                }
+            }
 
             Credentials.CollectionChanged += Credentials_CollectionChanged;
+        }
+
+        private static List<CredentialInfoSerializable> Deserialize(byte[] xml)
+        {
+            List<CredentialInfoSerializable> list = new List<CredentialInfoSerializable>();
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<CredentialInfoSerializable>));
+
+            using (MemoryStream memoryStream = new MemoryStream(xml))
+            {
+                ((List<CredentialInfoSerializable>)(xmlSerializer.Deserialize(memoryStream))).ForEach(credential => list.Add(credential));
+            }
+
+            return list;
         }
 
         public static void Save()
         {
             // Convert CredentialInfo to CredentialInfoSerializable
+            List<CredentialInfoSerializable> list = new List<CredentialInfoSerializable>();
 
+            foreach (CredentialInfo info in Credentials)
+            {
+                list.Add(new CredentialInfoSerializable(info.Index, info.Name, info.Username, SecureStringHelper.ConvertToString(info.Password)));
+            }
 
-
-            // Serialize as xml
-
-
+            // Serialize as xml (utf-8)
+            byte[] credentials = Serialize(list);
 
             // Encrypt with master pw and save file
+            byte[] encrypted = Encrypt(credentials, SecureStringHelper.ConvertToString(_masterPassword));
 
-
-
-
+            File.WriteAllBytes(GetCredentialsFilePath(), encrypted);
         }
 
+        private static byte[] Serialize(List<CredentialInfoSerializable> list)
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<CredentialInfoSerializable>));
 
-
-
-
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                using (StreamWriter streamWriter = new StreamWriter(memoryStream, Encoding.UTF8))
+                {
+                    xmlSerializer.Serialize(streamWriter, list);
+                    return memoryStream.ToArray();
+                }
+            }
+        }
 
         private static void Credentials_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
@@ -99,31 +128,14 @@ namespace NETworkManager.Models.Settings
         {
             Credentials.Remove(credential);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
         #region Encryption / Decryption
         // Add key lenght as const
 
-        private static string Encrypt(string plain, string password)
+        private static byte[] Encrypt(byte[] text, string password)
         {
             byte[] salt = Generate256BitsOfRandomEntropy();
             byte[] iv = Generate256BitsOfRandomEntropy();
-            byte[] text = Encoding.UTF8.GetBytes(plain);
 
             using (Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, salt))
             {
@@ -151,7 +163,7 @@ namespace NETworkManager.Models.Settings
                                 memoryStream.Close();
                                 cryptoStream.Close();
 
-                                return Convert.ToBase64String(cipher);
+                                return cipher;
                             }
                         }
                     }
@@ -159,9 +171,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private static string Decrypt(string encrypted, string password)
+        private static byte[] Decrypt(byte[] cipherWithSaltAndIv, string password)
         {
-            byte[] cipherWithSaltAndIv = Convert.FromBase64String(encrypted);
             byte[] salt = cipherWithSaltAndIv.Take(32).ToArray(); // 256 bits / 8 bits = 32 bytes
             byte[] iv = cipherWithSaltAndIv.Skip(32).Take(32).ToArray(); // Skip 32 bytes, take 32 Bytes iv
             byte[] cipher = cipherWithSaltAndIv.Skip(64).Take(cipherWithSaltAndIv.Length - 64).ToArray(); // Skip 64 bytes, take cipher bytes (length - 64)
@@ -188,7 +199,7 @@ namespace NETworkManager.Models.Settings
                                 memoryStream.Close();
                                 cryptoStream.Close();
 
-                                return Encoding.UTF8.GetString(text, 0, count);
+                                return text;
                             }
                         }
                     }
