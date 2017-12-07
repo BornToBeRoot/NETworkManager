@@ -120,11 +120,11 @@
                     </ScrollViewer>
                 </Grid>
             </TabItem>
-            
-            <!--<TabItem Header="Help">
-                <SettingsViews:HelpView Margin="10" />
-            </TabItem>-->
-            
+
+            <TabItem Header="Credentials">
+                
+            </TabItem>
+
             <!--<TabItem Header="{DynamicResource String_Header_Update}">
                 <SettingsViews:UpdateView Margin="10" />
             </TabItem>-->

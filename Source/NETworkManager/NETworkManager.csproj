@@ -185,10 +185,14 @@
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
     <Compile Include="Converters\ValidateNetworkInterfaceProfileConverter.cs" />
     <Compile Include="Converters\ValidateSubnetCalculatorIPv4SplitterConverter.cs" />
+    <Compile Include="Helpers\SecureStringHelper.cs" />
     <Compile Include="Helpers\SingleInstanceHelper.cs" />
     <Compile Include="Models\Network\HTTPHeaders.cs" />
     <Compile Include="Models\Network\ARPTableInfo.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktopSessionInfo.cs" />
+    <Compile Include="Models\Settings\CredentialInfoSerializable.cs" />
+    <Compile Include="Models\Settings\CredentialInfo.cs" />
+    <Compile Include="Models\Settings\CredentialManager.cs" />
     <Compile Include="Models\Settings\RemoteDesktopSessionManager.cs" />
     <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />

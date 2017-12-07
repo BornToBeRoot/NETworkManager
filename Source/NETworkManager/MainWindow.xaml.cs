@@ -219,7 +219,7 @@ namespace NETworkManager
         {
             InitializeComponent();
             DataContext = this;
-            
+
             LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
 
             // Load appearance
@@ -249,6 +249,18 @@ namespace NETworkManager
             ApplicationView_Expand = SettingsManager.Current.ApplicationView_Expand;
 
             _isLoading = false;
+
+
+
+            // REMOVE THIS IN RELEASE
+            string test_masterPassword = "TEST";
+
+            CredentialManager.Load(SecureStringHelper.ConvertToSecureString(test_masterPassword));
+
+            foreach (CredentialInfo info in CredentialManager.Credentials)
+                System.Windows.MessageBox.Show(info.Username);
+
+            // - REMOVE THIS IN RELEASE
         }
 
         private void LoadApplicationList()
