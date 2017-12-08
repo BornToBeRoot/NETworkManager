@@ -258,6 +258,9 @@
     <Compile Include="Controls\DragablzTabHostWindow.xaml.cs">
       <DependentUpon>DragablzTabHostWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\CredentialsMasterPasswordDialog.xaml.cs">
+      <DependentUpon>CredentialsMasterPasswordDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\CredentialsSetMasterPasswordDialog.xaml.cs">
       <DependentUpon>CredentialsSetMasterPasswordDialog.xaml</DependentUpon>
     </Compile>
@@ -430,6 +433,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DragablzTabHostWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\CredentialsMasterPasswordDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

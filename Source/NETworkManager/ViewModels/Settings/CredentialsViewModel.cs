@@ -1,14 +1,14 @@
 ﻿using NETworkManager.Models.Settings;
 using System.Windows.Input;
-using System.Diagnostics;
 using System.Windows;
 using System.ComponentModel;
 using System.Windows.Data;
-using NETworkManager.Helpers;
 using System.IO;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels.Dialogs;
 using NETworkManager.Views.Dialogs;
+using System.Security;
+using System;
 
 namespace NETworkManager.ViewModels.Settings
 {
@@ -17,16 +17,30 @@ namespace NETworkManager.ViewModels.Settings
         #region Variables
         private IDialogCoordinator dialogCoordinator;
 
-        private bool _fileExists;
-        public bool FileExists
+        private bool _credentialsFileExists;
+        public bool CredentialsFileExists
         {
-            get { return _fileExists; }
+            get { return _credentialsFileExists; }
             set
             {
-                if (value == _fileExists)
+                if (value == _credentialsFileExists)
                     return;
 
-                _fileExists = value;
+                _credentialsFileExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _credentialsLoaded;
+        public bool CredentialsLoaded
+        {
+            get { return _credentialsLoaded; }
+            set
+            {
+                if (value == _credentialsLoaded)
+                    return;
+
+                _credentialsLoaded = value;
                 OnPropertyChanged();
             }
         }
@@ -57,15 +71,23 @@ namespace NETworkManager.ViewModels.Settings
         {
             dialogCoordinator = instance;
 
-            FileExists = File.Exists(CredentialManager.GetCredentialsFilePath());
+            CheckCredentialsLoaded();
         }
 
-        private void LoadCredentials()
+        private void CheckCredentialsLoaded()
         {
-            CredentialManager.Load(SecureStringHelper.ConvertToSecureString("TEST"));
+            CredentialsFileExists = File.Exists(CredentialManager.GetCredentialsFilePath());
+            CredentialsLoaded = CredentialManager.Loaded;
+        }
+
+        private void Load(SecureString password)
+        {
+            CredentialManager.Load(password);
 
             _credentials = CollectionViewSource.GetDefaultView(CredentialManager.Credentials);
             _credentials.SortDescriptions.Add(new SortDescription("ID", ListSortDirection.Ascending));
+
+            CheckCredentialsLoaded();
         }
         #endregion
 
@@ -86,8 +108,7 @@ namespace NETworkManager.ViewModels.Settings
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                // Set password here... instance.Pasword...
-
+                Load(instance.Password);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);

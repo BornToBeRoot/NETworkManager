@@ -2,18 +2,13 @@
 // and: https://www.vb-paradise.de/index.php/Thread/81625-verschluesseln-und-autentifizieren/#post668740
 
 using NETworkManager.Helpers;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Xml;
 using System.Xml.Serialization;
 
 namespace NETworkManager.Models.Settings
@@ -24,6 +19,12 @@ namespace NETworkManager.Models.Settings
 
         public static ObservableCollection<CredentialInfo> Credentials { get; set; }
         public static bool CredentialsChanged { get; set; }
+
+        private static bool _loaded { get; set; }
+        public static bool Loaded
+        {
+            get { return _loaded; }
+        }
 
         private static SecureString _masterPassword;
 
@@ -65,6 +66,8 @@ namespace NETworkManager.Models.Settings
             }
 
             Credentials.CollectionChanged += Credentials_CollectionChanged;
+
+            _loaded = true;
         }
 
         private static List<CredentialInfoSerializable> Deserialize(byte[] xml)
