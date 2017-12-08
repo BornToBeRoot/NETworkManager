@@ -253,13 +253,15 @@ namespace NETworkManager
 
 
             // REMOVE THIS IN RELEASE
-            string test_masterPassword = "TEST";
+            /*
+            string test_masterPassword = "TExST";
 
             CredentialManager.Load(SecureStringHelper.ConvertToSecureString(test_masterPassword));
 
             foreach (CredentialInfo info in CredentialManager.Credentials)
                 System.Windows.MessageBox.Show(info.Username);
 
+            */
            // CredentialManager.Save();
 
             // - REMOVE THIS IN RELEASE

@@ -27,7 +27,7 @@ namespace NETworkManager.Models.Settings
 
         private static SecureString _masterPassword;
 
-        private static string GetCredentialsFilePath()
+        public static string GetCredentialsFilePath()
         {
             return Path.Combine(SettingsManager.GetSettingsLocation(), CredentialsFileName);
         }
@@ -60,7 +60,7 @@ namespace NETworkManager.Models.Settings
             {
                 foreach (CredentialInfoSerializable info in Deserialize(xml))
                 {
-                    AddCredential(new CredentialInfo(info.Index, info.Name, info.Username, SecureStringHelper.ConvertToSecureString(info.Password)));
+                    AddCredential(new CredentialInfo(info.ID, info.Name, info.Username, SecureStringHelper.ConvertToSecureString(info.Password)));
                 }
             }
 
@@ -88,7 +88,7 @@ namespace NETworkManager.Models.Settings
 
             foreach (CredentialInfo info in Credentials)
             {
-                list.Add(new CredentialInfoSerializable(info.Index, info.Name, info.Username, SecureStringHelper.ConvertToString(info.Password)));
+                list.Add(new CredentialInfoSerializable(info.ID, info.Name, info.Username, SecureStringHelper.ConvertToString(info.Password)));
             }
 
             // Serialize as xml (utf-8)
@@ -128,7 +128,7 @@ namespace NETworkManager.Models.Settings
         {
             Credentials.Remove(credential);
         }
-        
+
         #region Encryption / Decryption
         // Add key lenght as const
 

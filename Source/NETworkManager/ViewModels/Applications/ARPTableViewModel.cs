@@ -200,7 +200,7 @@ namespace NETworkManager.ViewModels.Applications
                 Title = Application.Current.Resources["String_Header_AddEntry"] as string
             };
 
-            AddARPEntryViewModel addARPEntryViewModel = new AddARPEntryViewModel(async instance =>
+            ARPTableAddEntryViewModel arpTableAddEntryViewModel = new ARPTableAddEntryViewModel(async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -224,9 +224,9 @@ namespace NETworkManager.ViewModels.Applications
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             });
 
-            customDialog.Content = new AddARPEntryDialog
+            customDialog.Content = new ARPTableAddEntryDialog
             {
-                DataContext = addARPEntryViewModel
+                DataContext = arpTableAddEntryViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);

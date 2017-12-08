@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels.Dialogs
 {
-    public class AddARPEntryViewModel : ViewModelBase
+    public class ARPTableAddEntryViewModel : ViewModelBase
     {
         private readonly ICommand _addCommand;
         public ICommand AddCommand
@@ -45,9 +45,9 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
-        public AddARPEntryViewModel(Action<AddARPEntryViewModel> saveCommand, Action<AddARPEntryViewModel> cancelHandler)
+        public ARPTableAddEntryViewModel(Action<ARPTableAddEntryViewModel> addCommand, Action<ARPTableAddEntryViewModel> cancelHandler)
         {
-            _addCommand = new RelayCommand(p => saveCommand(this));
+            _addCommand = new RelayCommand(p => addCommand(this));
             _cancelCommand = new RelayCommand(p => cancelHandler(this));
         }        
     }

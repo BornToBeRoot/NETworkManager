@@ -85,7 +85,9 @@
     <system:String x:Key="String_Header_Website">Website</system:String>
     <system:String x:Key="String_Header_Headers">Headers</system:String>
     <system:String x:Key="String_Header_AddEntry">Add entry</system:String>
-
+    <system:String x:Key="String_Header_Credentials">Credentials</system:String>
+    <system:String x:Key="String_Header_SetMasterPassword">Set Master Password</system:String>
+    
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">A powerful tool for managing networks and troubleshoot network problems!</system:String>
@@ -294,6 +296,9 @@
     <system:String x:Key="String_Version">Version</system:String>
     <system:String x:Key="String_Headers">Headers</system:String>
     <system:String x:Key="String_DeleteEntry">Delete entry</system:String>
+    <system:String x:Key="String_ID">ID</system:String>
+    <system:String x:Key="String_Repeat">Repeat</system:String>
+    <system:String x:Key="String_PasswordsDoesNotMatch">Passwords does not match!</system:String>
 
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
@@ -336,6 +341,7 @@
     <system:String x:Key="String_Button_DeleteEntry">Delete entry</system:String>
     <system:String x:Key="String_Button_AddEntry">Add entry...</system:String>
     <system:String x:Key="String_Button_Check">Check</system:String>
+    <system:String x:Key="String_Button_SetMasterPassword">Set Master Password...</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Cut</system:String>

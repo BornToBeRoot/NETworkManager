@@ -2,9 +2,9 @@
 
 namespace NETworkManager.Views.Dialogs
 {
-    public partial class AddARPEntryDialog : UserControl
+    public partial class ARPTableAddEntryDialog : UserControl
     {
-        public AddARPEntryDialog()
+        public ARPTableAddEntryDialog()
         {
             InitializeComponent();
         }
