@@ -8,5 +8,10 @@ namespace NETworkManager.Views.Dialogs
         {
             InitializeComponent();
         }
+
+        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            txtIPAddress.Focus();
+        }
     }
 }

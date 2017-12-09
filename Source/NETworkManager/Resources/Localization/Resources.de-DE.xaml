@@ -88,7 +88,7 @@
     <system:String x:Key="String_Header_Credentials">Anmeldeinformationen</system:String>
     <system:String x:Key="String_Header_MasterPassword">Master Password</system:String>
     <system:String x:Key="String_Header_SetMasterPassword">Masterpasswort setzen</system:String>
-    <system:String x:Key="String_Header_DecryptionFailed">Entschlüsselung fehlgeschlagen!</system:String>
+    <system:String x:Key="String_Header_WrongPassword">Falsches Passwort!</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -272,7 +272,7 @@
     <system:String x:Key="String_NoEnabledNetworkAdaptersFound">Keine aktivierten Netzwerkadapter gefunden!</system:String>
     <system:String x:Key="String_Domain">Domäne</system:String>
     <system:String x:Key="String_Username">Benutzername</system:String>
-    <system:String x:Key="String_Password">Kennwort</system:String>
+    <system:String x:Key="String_Password">Passwort</system:String>
     <system:String x:Key="String_Edit">Bearbeiten</system:String>
     <system:String x:Key="String_Connect">Verbinden</system:String>
     <system:String x:Key="String_Group">Gruppe</system:String>
@@ -300,9 +300,10 @@
     <system:String x:Key="String_DeleteEntry">Eintrag löschen</system:String>
     <system:String x:Key="String_ID">ID</system:String>
     <system:String x:Key="String_Repeat">Wiederholen</system:String>
-    <system:String x:Key="String_PasswordsDoesNotMatch">Kennwörter stimmen nicht überein!</system:String>
-    <system:String x:Key="String_DecryptionFailedMessage">Anmeldeinformationen konnten mit dem angegebenen Kennwort nicht entschlüsselt werden.</system:String>
-    
+    <system:String x:Key="String_PasswordsDoesNotMatch">Passwörter stimmen nicht überein!</system:String>
+    <system:String x:Key="String_WrongPasswordDecryptionFailed">Anmeldeinformationen konnten mit dem angegebenen Passwort nicht entschlüsselt werden.</system:String>
+    <system:String x:Key="String_WrongPassword">Das eingegebene Passwort ist falsch.</system:String>
+
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Setzt alle Einstellungen zurück.</system:String>
@@ -346,6 +347,9 @@
     <system:String x:Key="String_Button_Check">Prüfen</system:String>
     <system:String x:Key="String_Button_SetMasterPassword">Masterpasswort setzen...</system:String>
     <system:String x:Key="String_Button_ChangeMasterPassword">Masterpasswort ändern...</system:String>
+    <system:String x:Key="String_Button_AddDots">Hinzufügen...</system:String>
+    <system:String x:Key="String_Button_EditDots">Bearbeiten...</system:String>
+    <system:String x:Key="String_Button_DeleteDots">Löschen...</system:String>
 
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Ausschneiden</system:String>

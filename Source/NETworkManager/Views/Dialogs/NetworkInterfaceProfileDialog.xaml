@@ -7,7 +7,7 @@
              xmlns:Converter="clr-namespace:NETworkManager.Converters"
              xmlns:Validator="clr-namespace:NETworkManager.Validators"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-             mc:Ignorable="d">
+             mc:Ignorable="d" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <Converter:ValidateNetworkInterfaceProfileConverter x:Key="ValidateNetworkInterfaceProfileConverter" />
     </UserControl.Resources>

@@ -88,7 +88,7 @@
     <system:String x:Key="String_Header_Credentials">Credentials</system:String>
     <system:String x:Key="String_Header_MasterPassword">Master Password</system:String>
     <system:String x:Key="String_Header_SetMasterPassword">Set Master Password</system:String>
-    <system:String x:Key="String_Header_DecryptionFailed">Decryption failed!</system:String>
+    <system:String x:Key="String_Header_WrongPassword">Wrong password!</system:String>
 
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -301,7 +301,8 @@
     <system:String x:Key="String_ID">ID</system:String>
     <system:String x:Key="String_Repeat">Repeat</system:String>
     <system:String x:Key="String_PasswordsDoesNotMatch">Passwords does not match!</system:String>
-    <system:String x:Key="String_DecryptionFailedMessage">Credentials could not be decrypted with the given password.</system:String>
+    <system:String x:Key="String_WrongPasswordDecryptionFailed">Credentials could not be decrypted with the given password.</system:String>
+    <system:String x:Key="String_WrongPassword">The entered password is wrong.</system:String>
     
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
@@ -346,6 +347,9 @@
     <system:String x:Key="String_Button_Check">Check</system:String>
     <system:String x:Key="String_Button_SetMasterPassword">Set Master Password...</system:String>
     <system:String x:Key="String_Button_ChangeMasterPassword">Change Master Password...</system:String>
+    <system:String x:Key="String_Button_AddDots">Add...</system:String>
+    <system:String x:Key="String_Button_EditDots">Edit...</system:String>
+    <system:String x:Key="String_Button_DeleteDots">Delete...</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Cut</system:String>

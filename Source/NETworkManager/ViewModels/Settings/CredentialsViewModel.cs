@@ -91,7 +91,7 @@ namespace NETworkManager.ViewModels.Settings
             }
             catch (System.Security.Cryptography.CryptographicException) // If decryption failed
             {
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_DecryptionFailed"] as string, Application.Current.Resources["String_DecryptionFailedMessage"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_WrongPassword"] as string, Application.Current.Resources["String_WrongPasswordDecryptionFailed"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
 
             CheckCredentialsLoaded();
@@ -209,7 +209,7 @@ namespace NETworkManager.ViewModels.Settings
                 }
                 else
                 {
-                    await dialogCoordinator.ShowMessageAsync(this, "Wrong password!!", "Wrong password message", MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                    await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_WrongPassword"] as string, Application.Current.Resources["String_WrongPassword"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
                 }
             }, instance =>
             {
@@ -222,6 +222,36 @@ namespace NETworkManager.ViewModels.Settings
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand AddCommand
+        {
+            get { return new RelayCommand(p => AddAction()); }
+        }
+
+        private void AddAction()
+        {
+
+        }
+
+        public ICommand EditCommand
+        {
+            get { return new RelayCommand(p => EditAction()); }
+        }
+
+        private void EditAction()
+        {
+
+        }
+
+        public ICommand DeleteCommand
+        {
+            get { return new RelayCommand(p => DeleteAction()); }
+        }
+
+        private void DeleteAction()
+        {
+
         }
         #endregion
     }
