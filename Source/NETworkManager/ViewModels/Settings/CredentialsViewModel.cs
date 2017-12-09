@@ -80,12 +80,19 @@ namespace NETworkManager.ViewModels.Settings
             CredentialsLoaded = CredentialManager.Loaded;
         }
 
-        private void Load(SecureString password)
+        private async void Load(SecureString password)
         {
-            CredentialManager.Load(password);
+            try
+            {
+                CredentialManager.Load(password);
 
-            _credentials = CollectionViewSource.GetDefaultView(CredentialManager.Credentials);
-            _credentials.SortDescriptions.Add(new SortDescription("ID", ListSortDirection.Ascending));
+                _credentials = CollectionViewSource.GetDefaultView(CredentialManager.Credentials);
+                _credentials.SortDescriptions.Add(new SortDescription("ID", ListSortDirection.Ascending));
+            }
+            catch (System.Security.Cryptography.CryptographicException) // If decryption failed
+            {
+                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_DecryptionFailed"] as string, Application.Current.Resources["String_DecryptionFailedMessage"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+            }
 
             CheckCredentialsLoaded();
         }
@@ -108,7 +115,11 @@ namespace NETworkManager.ViewModels.Settings
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
+                // Create new collection of credentials and set the password
                 Load(instance.Password);
+
+                // Save to file
+                CredentialManager.Save();
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -117,6 +128,36 @@ namespace NETworkManager.ViewModels.Settings
             customDialog.Content = new CredentialsSetMasterPasswordDialog
             {
                 DataContext = credentialsSetMasterPasswordViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand LoadCommand
+        {
+            get { return new RelayCommand(p => LoadAction()); }
+        }
+
+        private async void LoadAction()
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_MasterPassword"] as string
+            };
+
+            CredentialsMasterPasswordViewModel credentialsMasterPasswordViewModel = new CredentialsMasterPasswordViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                Load(instance.Password);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            });
+
+            customDialog.Content = new CredentialsMasterPasswordDialog
+            {
+                DataContext = credentialsMasterPasswordViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);

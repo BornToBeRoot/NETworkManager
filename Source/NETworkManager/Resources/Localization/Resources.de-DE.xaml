@@ -86,8 +86,10 @@
     <system:String x:Key="String_Header_Headers">Headers</system:String>
     <system:String x:Key="String_Header_AddEntry">Eintrag hinzufügen</system:String>
     <system:String x:Key="String_Header_Credentials">Anmeldeinformationen</system:String>
+    <system:String x:Key="String_Header_MasterPassword">Master Password</system:String>
     <system:String x:Key="String_Header_SetMasterPassword">Masterpasswort setzen</system:String>
-
+    <system:String x:Key="String_Header_DecryptionFailed">Entschlüsselung fehlgeschlagen!</system:String>
+    
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Ein leistungsstarkes Tool zum Verwalten von Netzwerken und zur Behebung von Netzwerkproblemen!</system:String>
@@ -299,7 +301,8 @@
     <system:String x:Key="String_ID">ID</system:String>
     <system:String x:Key="String_Repeat">Wiederholen</system:String>
     <system:String x:Key="String_PasswordsDoesNotMatch">Kennwörter stimmen nicht überein!</system:String>
-    
+    <system:String x:Key="String_DecryptionFailedMessage">Anmeldeinformationen konnten mit dem angegebenen Kennwort nicht entschlüsselt werden.</system:String>
+
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Setzt alle Einstellungen zurück.</system:String>

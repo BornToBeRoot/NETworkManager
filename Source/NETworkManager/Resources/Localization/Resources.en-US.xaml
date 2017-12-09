@@ -86,8 +86,10 @@
     <system:String x:Key="String_Header_Headers">Headers</system:String>
     <system:String x:Key="String_Header_AddEntry">Add entry</system:String>
     <system:String x:Key="String_Header_Credentials">Credentials</system:String>
+    <system:String x:Key="String_Header_MasterPassword">Master Password</system:String>
     <system:String x:Key="String_Header_SetMasterPassword">Set Master Password</system:String>
-    
+    <system:String x:Key="String_Header_DecryptionFailed">Decryption failed!</system:String>
+
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">A powerful tool for managing networks and troubleshoot network problems!</system:String>
@@ -299,7 +301,8 @@
     <system:String x:Key="String_ID">ID</system:String>
     <system:String x:Key="String_Repeat">Repeat</system:String>
     <system:String x:Key="String_PasswordsDoesNotMatch">Passwords does not match!</system:String>
-
+    <system:String x:Key="String_DecryptionFailedMessage">Credentials could not be decrypted with the given password.</system:String>
+    
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Reset all settings.</system:String>
