@@ -302,7 +302,7 @@
     <system:String x:Key="String_Repeat">Wiederholen</system:String>
     <system:String x:Key="String_PasswordsDoesNotMatch">Kennwörter stimmen nicht überein!</system:String>
     <system:String x:Key="String_DecryptionFailedMessage">Anmeldeinformationen konnten mit dem angegebenen Kennwort nicht entschlüsselt werden.</system:String>
-
+    
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Setzt alle Einstellungen zurück.</system:String>
@@ -345,7 +345,8 @@
     <system:String x:Key="String_Button_AddEntry">Eintrag hinzufügen...</system:String>
     <system:String x:Key="String_Button_Check">Prüfen</system:String>
     <system:String x:Key="String_Button_SetMasterPassword">Masterpasswort setzen...</system:String>
-    
+    <system:String x:Key="String_Button_ChangeMasterPassword">Masterpasswort ändern...</system:String>
+
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Ausschneiden</system:String>
     <system:String x:Key="String_ContextMenu_Copy">Kopieren</system:String>

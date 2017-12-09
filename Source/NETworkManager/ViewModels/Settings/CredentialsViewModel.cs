@@ -162,6 +162,67 @@ namespace NETworkManager.ViewModels.Settings
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
+
+        public ICommand ChangeMasterPasswordCommand
+        {
+            get { return new RelayCommand(p => ChangeMasterPasswordAction()); }
+        }
+
+        private async void ChangeMasterPasswordAction()
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_MasterPassword"] as string
+            };
+
+            CredentialsMasterPasswordViewModel credentialsMasterPasswordViewModel = new CredentialsMasterPasswordViewModel(async instance =>
+            {
+                await dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                if (CredentialManager.VerifyMasterPasword(instance.Password))
+                {
+                    CustomDialog customDialog2 = new CustomDialog()
+                    {
+                        Title = Application.Current.Resources["String_Header_SetMasterPassword"] as string
+                    };
+
+                    CredentialsSetMasterPasswordViewModel credentialsSetMasterPasswordViewModel = new CredentialsSetMasterPasswordViewModel(instance2 =>
+                    {
+                        dialogCoordinator.HideMetroDialogAsync(this, customDialog2);
+
+                        // Set the new master password
+                        CredentialManager.SetMasterPassword(instance2.Password);
+
+                        // Save to file
+                        CredentialManager.Save();
+                    }, instance2 =>
+                    {
+                        dialogCoordinator.HideMetroDialogAsync(this, customDialog2);
+                    });
+
+                    customDialog2.Content = new CredentialsSetMasterPasswordDialog
+                    {
+                        DataContext = credentialsSetMasterPasswordViewModel
+                    };
+
+                    await dialogCoordinator.ShowMetroDialogAsync(this, customDialog2);
+                }
+                else
+                {
+                    await dialogCoordinator.ShowMessageAsync(this, "Wrong password!!", "Wrong password message", MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                }
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            });
+
+            customDialog.Content = new CredentialsMasterPasswordDialog
+            {
+                DataContext = credentialsMasterPasswordViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
         #endregion
     }
 }

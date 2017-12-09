@@ -345,6 +345,7 @@
     <system:String x:Key="String_Button_AddEntry">Add entry...</system:String>
     <system:String x:Key="String_Button_Check">Check</system:String>
     <system:String x:Key="String_Button_SetMasterPassword">Set Master Password...</system:String>
+    <system:String x:Key="String_Button_ChangeMasterPassword">Change Master Password...</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Cut</system:String>

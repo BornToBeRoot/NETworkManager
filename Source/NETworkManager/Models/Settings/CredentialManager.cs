@@ -28,6 +28,11 @@ namespace NETworkManager.Models.Settings
 
         private static SecureString _masterPassword;
 
+        public static bool VerifyMasterPasword(SecureString password)
+        {
+            return SecureStringHelper.ConvertToString(_masterPassword).Equals(SecureStringHelper.ConvertToString(password));
+        }
+
         public static string GetCredentialsFilePath()
         {
             return Path.Combine(SettingsManager.GetSettingsLocation(), CredentialsFileName);
