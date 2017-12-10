@@ -232,7 +232,7 @@ namespace NETworkManager.ViewModels.Settings
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = "Add credential" // Application.Current.Resources["String_Header_SetMasterPassword"] as string
+                Title = Application.Current.Resources["String_Header_AddCredential"] as string
             };
 
             CredentialViewModel credentialViewModel = new CredentialViewModel(instance =>
@@ -248,8 +248,6 @@ namespace NETworkManager.ViewModels.Settings
                 };
 
                 CredentialManager.AddCredential(credentialInfo);
-
-                CredentialManager.Save();
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -268,9 +266,39 @@ namespace NETworkManager.ViewModels.Settings
             get { return new RelayCommand(p => EditAction()); }
         }
 
-        private void EditAction()
+        private async void EditAction()
         {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_EditCredential"] as string
+            };
 
+            CredentialViewModel credentialViewModel = new CredentialViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                CredentialManager.RemoveCredential(SelectedCredential);
+
+                CredentialInfo credentialInfo = new CredentialInfo
+                {
+                    ID = instance.ID,
+                    Name = instance.Name,
+                    Username = instance.Username,
+                    Password = instance.Password
+                };
+
+                CredentialManager.AddCredential(credentialInfo);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, SelectedCredential.ID, SelectedCredential);
+
+            customDialog.Content = new CredentialDialog
+            {
+                DataContext = credentialViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand DeleteCommand
@@ -278,9 +306,29 @@ namespace NETworkManager.ViewModels.Settings
             get { return new RelayCommand(p => DeleteAction()); }
         }
 
-        private void DeleteAction()
+        private async void DeleteAction()
         {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_DeleteCredential"] as string
+            };
 
+            ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                CredentialManager.RemoveCredential(SelectedCredential);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, Application.Current.Resources["String_DeleteCredentialMessage"] as string);
+
+            customDialog.Content = new ConfirmRemoveDialog
+            {
+                DataContext = confirmRemoveViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
         #endregion
     }

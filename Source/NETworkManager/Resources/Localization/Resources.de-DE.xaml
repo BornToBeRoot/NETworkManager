@@ -89,6 +89,9 @@
     <system:String x:Key="String_Header_MasterPassword">Master Password</system:String>
     <system:String x:Key="String_Header_SetMasterPassword">Masterpasswort setzen</system:String>
     <system:String x:Key="String_Header_WrongPassword">Falsches Passwort!</system:String>
+    <system:String x:Key="String_Header_AddCredential">Anmeldeinformation hinzufügen</system:String>
+    <system:String x:Key="String_Header_EditCredential">Anmeldeinformation bearbeiten</system:String>
+    <system:String x:Key="String_Header_DeleteCredential">Anmeldeinformation löschen</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -111,7 +114,7 @@
     <system:String x:Key="String_Show">Anzeigen</system:String>
     <system:String x:Key="String_Close">Schließen</system:String>
     <system:String x:Key="String_SaveSettingsInApplicationFolder">Einstellungen im Anwendungsordner speichern</system:String>
-    <system:String x:Key="String_Delete">Löschen</system:String>
+    <system:String x:Key="String_Delete">Löschen...</system:String>
     <system:String x:Key="String_Name">Name</system:String>
     <system:String x:Key="String_Type">Typ</system:String>
     <system:String x:Key="String_Status">Status</system:String>
@@ -273,11 +276,11 @@
     <system:String x:Key="String_Domain">Domäne</system:String>
     <system:String x:Key="String_Username">Benutzername</system:String>
     <system:String x:Key="String_Password">Passwort</system:String>
-    <system:String x:Key="String_Edit">Bearbeiten</system:String>
+    <system:String x:Key="String_Edit">Bearbeiten...</system:String>
     <system:String x:Key="String_Connect">Verbinden</system:String>
     <system:String x:Key="String_Group">Gruppe</system:String>
     <system:String x:Key="String_Default">Standard</system:String>
-    <system:String x:Key="String_CopyAs">Kopieren als</system:String>
+    <system:String x:Key="String_CopyAs">Kopieren als...</system:String>
     <system:String x:Key="String_IPScannerProfiles">IP-Scanner Profile</system:String>
     <system:String x:Key="String_IPRange">IP-Bereich</system:String>
     <system:String x:Key="String_NothingFound">Nichts gefunden!</system:String>
@@ -290,6 +293,7 @@
     <system:String x:Key="String_ScreenResolution">Bildschirmauflösung</system:String>
     <system:String x:Key="String_ColorDepthBit">Farbtiefe (Bit)</system:String>
     <system:String x:Key="String_Tags">Tags</system:String>
+    <system:String x:Key="String_CopyDots">Kopieren...</system:String>
     <system:String x:Key="String_Copy">Kopieren</system:String>
     <system:String x:Key="String_Expand">Erweitern</system:String>
     <system:String x:Key="String_AdjustScreenAutomatically">Bildschirm automatisch anpassen</system:String>
@@ -297,13 +301,13 @@
     <system:String x:Key="String_Documentation">Dokumentation</system:String>
     <system:String x:Key="String_Version">Version</system:String>
     <system:String x:Key="String_Headers">Headers</system:String>
-    <system:String x:Key="String_DeleteEntry">Eintrag löschen</system:String>
     <system:String x:Key="String_ID">ID</system:String>
     <system:String x:Key="String_Repeat">Wiederholen</system:String>
     <system:String x:Key="String_PasswordsDoesNotMatch">Passwörter stimmen nicht überein!</system:String>
     <system:String x:Key="String_WrongPasswordDecryptionFailed">Anmeldeinformationen konnten mit dem angegebenen Passwort nicht entschlüsselt werden.</system:String>
     <system:String x:Key="String_WrongPassword">Das eingegebene Passwort ist falsch.</system:String>
     <system:String x:Key="String_HiddenPassword">************</system:String>
+    <system:String x:Key="String_DeleteCredentialMessage">Die ausgewählte Anmeldeinformation wird unwiderruflich gelöscht.</system:String>
     
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>

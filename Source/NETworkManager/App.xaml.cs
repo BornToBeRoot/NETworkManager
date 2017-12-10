@@ -97,6 +97,9 @@ namespace NETworkManager
                 if (SettingsManager.Current.SettingsChanged)
                     SettingsManager.Save();
 
+                if (CredentialManager.CredentialsChanged)
+                    CredentialManager.Save();
+
                 if (NetworkInterfaceProfileManager.ProfilesChanged)
                     NetworkInterfaceProfileManager.Save();
 

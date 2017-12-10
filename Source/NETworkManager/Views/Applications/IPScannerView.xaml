@@ -166,7 +166,7 @@
                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                     <WpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                        <MenuItem Header="{DynamicResource String_Copy}">
+                        <MenuItem Header="{DynamicResource String_CopyDots}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
