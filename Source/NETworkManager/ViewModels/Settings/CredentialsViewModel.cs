@@ -8,7 +8,6 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels.Dialogs;
 using NETworkManager.Views.Dialogs;
 using System.Security;
-using System;
 
 namespace NETworkManager.ViewModels.Settings
 {
@@ -71,6 +70,9 @@ namespace NETworkManager.ViewModels.Settings
         {
             dialogCoordinator = instance;
 
+            _credentials = CollectionViewSource.GetDefaultView(CredentialManager.Credentials);
+            _credentials.SortDescriptions.Add(new SortDescription("ID", ListSortDirection.Ascending));
+
             CheckCredentialsLoaded();
         }
 
@@ -84,10 +86,7 @@ namespace NETworkManager.ViewModels.Settings
         {
             try
             {
-                CredentialManager.Load(password);
-
-                _credentials = CollectionViewSource.GetDefaultView(CredentialManager.Credentials);
-                _credentials.SortDescriptions.Add(new SortDescription("ID", ListSortDirection.Ascending));
+                CredentialManager.Load(password);                             
             }
             catch (System.Security.Cryptography.CryptographicException) // If decryption failed
             {
@@ -229,9 +228,39 @@ namespace NETworkManager.ViewModels.Settings
             get { return new RelayCommand(p => AddAction()); }
         }
 
-        private void AddAction()
+        private async void AddAction()
         {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = "Add credential" // Application.Current.Resources["String_Header_SetMasterPassword"] as string
+            };
 
+            CredentialViewModel credentialViewModel = new CredentialViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                CredentialInfo credentialInfo = new CredentialInfo
+                {
+                    ID = instance.ID,
+                    Name = instance.Name,
+                    Username = instance.Username,
+                    Password = instance.Password
+                };
+
+                CredentialManager.AddCredential(credentialInfo);
+
+                CredentialManager.Save();
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, CredentialManager.GetNextID());
+
+            customDialog.Content = new CredentialDialog
+            {
+                DataContext = credentialViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand EditCommand

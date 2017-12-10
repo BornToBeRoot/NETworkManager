@@ -10,6 +10,7 @@ using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Serialization;
+using System;
 
 namespace NETworkManager.Models.Settings
 {
@@ -17,7 +18,7 @@ namespace NETworkManager.Models.Settings
     {
         public const string CredentialsFileName = "Credentials.encrypted";
 
-        public static ObservableCollection<CredentialInfo> Credentials { get; set; }
+        public static ObservableCollection<CredentialInfo> Credentials = new ObservableCollection<CredentialInfo>();
         public static bool CredentialsChanged { get; set; }
 
         private static bool _loaded { get; set; }
@@ -38,11 +39,6 @@ namespace NETworkManager.Models.Settings
             return Path.Combine(SettingsManager.GetSettingsLocation(), CredentialsFileName);
         }
 
-        public static void SetMasterPassword(SecureString masterPasword)
-        {
-            _masterPassword = masterPasword;
-        }
-
         public static void Load(SecureString pasword)
         {
             byte[] xml = null;
@@ -56,10 +52,7 @@ namespace NETworkManager.Models.Settings
             }
 
             // Save master pw for encryption
-            SetMasterPassword(pasword);
-
-            // Init collection
-            Credentials = new ObservableCollection<CredentialInfo>();
+            SetMasterPassword(pasword);                       
 
             // Check if array is empty...
             if (xml != null && xml.Length > 0)
@@ -125,6 +118,16 @@ namespace NETworkManager.Models.Settings
         private static void Credentials_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             CredentialsChanged = true;
+        }
+
+        public static int GetNextID()
+        {
+            return Credentials.Count == 0 ? 0 : Credentials.OrderByDescending(x => x.ID).FirstOrDefault().ID + 1;
+        }
+
+        public static void SetMasterPassword(SecureString masterPasword)
+        {
+            _masterPassword = masterPasword;
         }
 
         public static void AddCredential(CredentialInfo credential)
@@ -226,7 +229,7 @@ namespace NETworkManager.Models.Settings
             }
 
             return randomBytes;
-        }
+        }                
         #endregion
     }
 }

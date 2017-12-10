@@ -303,7 +303,8 @@
     <system:String x:Key="String_PasswordsDoesNotMatch">Passwords does not match!</system:String>
     <system:String x:Key="String_WrongPasswordDecryptionFailed">Credentials could not be decrypted with the given password.</system:String>
     <system:String x:Key="String_WrongPassword">The entered password is wrong.</system:String>
-    
+    <system:String x:Key="String_HiddenPassword">************</system:String>
+
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Reset all settings.</system:String>

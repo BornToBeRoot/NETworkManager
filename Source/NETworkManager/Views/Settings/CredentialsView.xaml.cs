@@ -13,5 +13,10 @@ namespace NETworkManager.Views.Settings
             InitializeComponent();
             DataContext = viewModel;
         }
+
+        private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
     }
 }

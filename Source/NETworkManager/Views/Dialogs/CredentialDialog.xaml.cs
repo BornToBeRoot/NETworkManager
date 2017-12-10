@@ -2,9 +2,9 @@
 
 namespace NETworkManager.Views.Dialogs
 {
-    public partial class CredentialsSetMasterPasswordDialog : UserControl
+    public partial class CredentialDialog : UserControl
     {
-        public CredentialsSetMasterPasswordDialog()
+        public CredentialDialog()
         {
             InitializeComponent();
         }
@@ -12,7 +12,7 @@ namespace NETworkManager.Views.Dialogs
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             // Need to be in loaded event, focusmanger won't work...
-            passwordBoxPassword.Focus();
+            txtName.Focus();
         }
     }
 }

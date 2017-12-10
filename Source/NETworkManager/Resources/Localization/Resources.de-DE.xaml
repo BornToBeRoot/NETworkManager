@@ -303,7 +303,8 @@
     <system:String x:Key="String_PasswordsDoesNotMatch">Passwörter stimmen nicht überein!</system:String>
     <system:String x:Key="String_WrongPasswordDecryptionFailed">Anmeldeinformationen konnten mit dem angegebenen Passwort nicht entschlüsselt werden.</system:String>
     <system:String x:Key="String_WrongPassword">Das eingegebene Passwort ist falsch.</system:String>
-
+    <system:String x:Key="String_HiddenPassword">************</system:String>
+    
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Setzt alle Einstellungen zurück.</system:String>
