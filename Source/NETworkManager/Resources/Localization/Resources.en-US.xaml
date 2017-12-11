@@ -355,6 +355,7 @@
     <system:String x:Key="String_Button_AddDots">Add...</system:String>
     <system:String x:Key="String_Button_EditDots">Edit...</system:String>
     <system:String x:Key="String_Button_DeleteDots">Delete...</system:String>
+    <system:String x:Key="String_Button_DecryptAndLoad">Decrypt and load...</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Cut</system:String>

@@ -8,6 +8,8 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels.Dialogs;
 using NETworkManager.Views.Dialogs;
 using System.Security;
+using System.Diagnostics;
+using NETworkManager.Helpers;
 
 namespace NETworkManager.ViewModels.Settings
 {
@@ -15,6 +17,7 @@ namespace NETworkManager.ViewModels.Settings
     {
         #region Variables
         private IDialogCoordinator dialogCoordinator;
+        private int locked; // If true, user has to enter master password to perform operations like edit/delete
 
         private bool _credentialsFileExists;
         public bool CredentialsFileExists
@@ -86,7 +89,7 @@ namespace NETworkManager.ViewModels.Settings
         {
             try
             {
-                CredentialManager.Load(password);                             
+                CredentialManager.Load(password);
             }
             catch (System.Security.Cryptography.CryptographicException) // If decryption failed
             {
@@ -132,12 +135,12 @@ namespace NETworkManager.ViewModels.Settings
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand LoadCommand
+        public ICommand DecryptAndLoadCommand
         {
-            get { return new RelayCommand(p => LoadAction()); }
+            get { return new RelayCommand(p => DecryptAndLoadAction()); }
         }
 
-        private async void LoadAction()
+        private async void DecryptAndLoadAction()
         {
             CustomDialog customDialog = new CustomDialog()
             {
@@ -288,6 +291,8 @@ namespace NETworkManager.ViewModels.Settings
                 };
 
                 CredentialManager.AddCredential(credentialInfo);
+
+                Debug.WriteLine(SecureStringHelper.ConvertToString(instance.Password));
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);

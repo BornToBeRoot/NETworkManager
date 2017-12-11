@@ -16,19 +16,26 @@ namespace NETworkManager.WpfHelper
 
         public SecureString Password
         {
-            get { return (SecureString)GetValue(PasswordProperty); }
-            set { SetValue(PasswordProperty, value); }
+            get
+            {
+                return (SecureString)GetValue(PasswordProperty);
+            }
+            set
+            {
+                SetValue(PasswordProperty, value);
+            }
         }
 
         public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register("Password", typeof(SecureString), typeof(PasswordBoxBindingBehavior), new PropertyMetadata(null));
-
-
+        
         private void OnPasswordBoxValueChanged(object sender, RoutedEventArgs e)
         {
-            var binding = BindingOperations.GetBindingExpression(this, PasswordProperty);
+            BindingExpression binding = BindingOperations.GetBindingExpression(this, PasswordProperty);
+
             if (binding != null)
             {
                 PropertyInfo property = binding.DataItem.GetType().GetProperty(binding.ParentBinding.Path.Path);
+
                 if (property != null)
                     property.SetValue(binding.DataItem, AssociatedObject.SecurePassword, null);
             }

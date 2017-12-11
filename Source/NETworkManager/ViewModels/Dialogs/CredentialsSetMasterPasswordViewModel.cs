@@ -53,16 +53,16 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
-        private bool _isNotEmpty;
-        public bool IsNotEmpty
+        private bool _passwordIsEmpty;
+        public bool PasswordIsEmpty
         {
-            get { return _isNotEmpty; }
+            get { return _passwordIsEmpty; }
             set
             {
-                if (value == _isNotEmpty)
+                if (value == _passwordIsEmpty)
                     return;
 
-                _isNotEmpty = value;
+                _passwordIsEmpty = value;
                 OnPropertyChanged();
             }
         }
@@ -83,9 +83,9 @@ namespace NETworkManager.ViewModels.Dialogs
 
         private void ValidatePassword()
         {
-            IsNotEmpty = ((Password != null && Password.Length > 0) && (PasswordRepeat != null && PasswordRepeat.Length > 0));
+            PasswordIsEmpty = ((Password == null || Password.Length == 0) || (PasswordRepeat == null || PasswordRepeat.Length == 0));
 
-            PasswordsMatch = IsNotEmpty ? SecureStringHelper.ConvertToString(Password).Equals(SecureStringHelper.ConvertToString(PasswordRepeat)) : false;
+            PasswordsMatch = PasswordIsEmpty ? false : SecureStringHelper.ConvertToString(Password).Equals(SecureStringHelper.ConvertToString(PasswordRepeat));
         }
 
         public CredentialsSetMasterPasswordViewModel(Action<CredentialsSetMasterPasswordViewModel> saveCommand, Action<CredentialsSetMasterPasswordViewModel> cancelHandler)

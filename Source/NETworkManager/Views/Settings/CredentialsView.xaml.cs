@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels.Settings;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace NETworkManager.Views.Settings

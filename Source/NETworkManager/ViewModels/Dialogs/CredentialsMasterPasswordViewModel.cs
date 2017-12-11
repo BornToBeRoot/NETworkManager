@@ -35,29 +35,29 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
-        private bool _isNotEmpty;
-        public bool IsNotEmpty
+        private bool _passwordIsEmpty;
+        public bool PasswordIsEmpty
         {
-            get { return _isNotEmpty; }
+            get { return _passwordIsEmpty; }
             set
             {
-                if (value == _isNotEmpty)
+                if (value == _passwordIsEmpty)
                     return;
 
-                _isNotEmpty = value;
+                _passwordIsEmpty = value;
                 OnPropertyChanged();
             }
-        }
-
-        private void ValidatePassword()
-        {
-            IsNotEmpty = (Password != null && Password.Length > 0);
         }
 
         public CredentialsMasterPasswordViewModel(Action<CredentialsMasterPasswordViewModel> okCommand, Action<CredentialsMasterPasswordViewModel> cancelHandler)
         {
             _okCommand = new RelayCommand(p => okCommand(this));
             _cancelCommand = new RelayCommand(p => cancelHandler(this));
+        }
+
+        private void ValidatePassword()
+        {
+            PasswordIsEmpty = (Password == null || Password.Length == 0);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using NETworkManager.Models.Settings;
+﻿using NETworkManager.Helpers;
+using NETworkManager.Models.Settings;
 using System;
 using System.Security;
 using System.Windows.Input;
@@ -45,6 +46,10 @@ namespace NETworkManager.ViewModels.Dialogs
                     return;
 
                 _name = value;
+
+                if (!_isLoading)
+                    HasCredentialInfoChanged();
+
                 OnPropertyChanged();
             }
         }
@@ -59,6 +64,10 @@ namespace NETworkManager.ViewModels.Dialogs
                     return;
 
                 _username = value;
+
+                if (!_isLoading)
+                    HasCredentialInfoChanged();
+
                 OnPropertyChanged();
             }
         }
@@ -74,29 +83,14 @@ namespace NETworkManager.ViewModels.Dialogs
 
                 _password = value;
 
-                ValidatePassword();
+                if (!_isLoading)
+                {
+                    HasCredentialInfoChanged();
+                    ValidatePassword();
+                }
 
                 OnPropertyChanged();
             }
-        }
-
-        private bool _passwordIsEmpty;
-        public bool PasswordIsEmpty
-        {
-            get { return _passwordIsEmpty; }
-            set
-            {
-                if (value == _passwordIsEmpty)
-                    return;
-
-                _passwordIsEmpty = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private void ValidatePassword()
-        {
-            PasswordIsEmpty = (Password == null || Password.Length == 0);
         }
 
         private CredentialInfo _credentialInfo;
@@ -115,6 +109,20 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
+        private bool _passwordIsEmpty;
+        public bool PasswordIsEmpty
+        {
+            get { return _passwordIsEmpty; }
+            set
+            {
+                if (value == _passwordIsEmpty)
+                    return;
+
+                _passwordIsEmpty = value;
+                OnPropertyChanged();
+            }
+        }
+
         public CredentialViewModel(Action<CredentialViewModel> saveCommand, Action<CredentialViewModel> cancelHandler, int id, CredentialInfo credentialInfo = null)
         {
             _saveCommand = new RelayCommand(p => saveCommand(this));
@@ -129,5 +137,16 @@ namespace NETworkManager.ViewModels.Dialogs
 
             _isLoading = false;
         }
+
+        public void HasCredentialInfoChanged()
+        {
+            CredentialInfoChanged = (_credentialInfo.Name != Name) || (_credentialInfo.Username != Username) || (SecureStringHelper.ConvertToString(_credentialInfo.Password) != SecureStringHelper.ConvertToString(Password));
+        }
+
+        private void ValidatePassword()
+        {
+            PasswordIsEmpty = (Password == null || Password.Length == 0);
+        }
+
     }
 }

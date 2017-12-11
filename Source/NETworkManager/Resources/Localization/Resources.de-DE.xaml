@@ -86,7 +86,7 @@
     <system:String x:Key="String_Header_Headers">Headers</system:String>
     <system:String x:Key="String_Header_AddEntry">Eintrag hinzufügen</system:String>
     <system:String x:Key="String_Header_Credentials">Anmeldeinformationen</system:String>
-    <system:String x:Key="String_Header_MasterPassword">Master Password</system:String>
+    <system:String x:Key="String_Header_MasterPassword">Masterpasswort</system:String>
     <system:String x:Key="String_Header_SetMasterPassword">Masterpasswort setzen</system:String>
     <system:String x:Key="String_Header_WrongPassword">Falsches Passwort!</system:String>
     <system:String x:Key="String_Header_AddCredential">Anmeldeinformation hinzufügen</system:String>
@@ -355,7 +355,8 @@
     <system:String x:Key="String_Button_AddDots">Hinzufügen...</system:String>
     <system:String x:Key="String_Button_EditDots">Bearbeiten...</system:String>
     <system:String x:Key="String_Button_DeleteDots">Löschen...</system:String>
-
+    <system:String x:Key="String_Button_DecryptAndLoad">Entschlüsseln und laden...</system:String>
+    
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Ausschneiden</system:String>
     <system:String x:Key="String_ContextMenu_Copy">Kopieren</system:String>
