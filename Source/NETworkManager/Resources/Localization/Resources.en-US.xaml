@@ -85,7 +85,14 @@
     <system:String x:Key="String_Header_Website">Website</system:String>
     <system:String x:Key="String_Header_Headers">Headers</system:String>
     <system:String x:Key="String_Header_AddEntry">Add entry</system:String>
-
+    <system:String x:Key="String_Header_Credentials">Credentials</system:String>
+    <system:String x:Key="String_Header_MasterPassword">Master Password</system:String>
+    <system:String x:Key="String_Header_SetMasterPassword">Set Master Password</system:String>
+    <system:String x:Key="String_Header_WrongPassword">Wrong password!</system:String>
+    <system:String x:Key="String_Header_AddCredential">Add credential</system:String>
+    <system:String x:Key="String_Header_EditCredential">Edit credential</system:String>
+    <system:String x:Key="String_Header_DeleteCredential">Delete credential</system:String>
+    
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">A powerful tool for managing networks and troubleshoot network problems!</system:String>
@@ -107,7 +114,7 @@
     <system:String x:Key="String_Show">Show</system:String>
     <system:String x:Key="String_Close">Close</system:String>
     <system:String x:Key="String_SaveSettingsInApplicationFolder">Save settings in the application folder</system:String>
-    <system:String x:Key="String_Delete">Delete</system:String>
+    <system:String x:Key="String_Delete">Delete...</system:String>
     <system:String x:Key="String_Name">Name</system:String>
     <system:String x:Key="String_Type">Type</system:String>
     <system:String x:Key="String_Status">Status</system:String>
@@ -269,11 +276,11 @@
     <system:String x:Key="String_Domain">Domain</system:String>
     <system:String x:Key="String_Username">Username</system:String>
     <system:String x:Key="String_Password">Password</system:String>
-    <system:String x:Key="String_Edit">Edit</system:String>
+    <system:String x:Key="String_Edit">Edit...</system:String>
     <system:String x:Key="String_Connect">Connect</system:String>
     <system:String x:Key="String_Group">Group</system:String>
     <system:String x:Key="String_Default">Default</system:String>
-    <system:String x:Key="String_CopyAs">Copy as</system:String>
+    <system:String x:Key="String_CopyAs">Copy as...</system:String>
     <system:String x:Key="String_IPScannerProfiles">IP scanner profiles</system:String>
     <system:String x:Key="String_IPRange">IP range</system:String>
     <system:String x:Key="String_NothingFound">Nothing found!</system:String>
@@ -286,6 +293,7 @@
     <system:String x:Key="String_ScreenResolution">Screen resolution</system:String>
     <system:String x:Key="String_ColorDepthBit">Color depth (bit)</system:String>
     <system:String x:Key="String_Tags">Tags</system:String>
+    <system:String x:Key="String_CopyDots">Copy...</system:String>
     <system:String x:Key="String_Copy">Copy</system:String>
     <system:String x:Key="String_Expand">Expand</system:String>
     <system:String x:Key="String_AdjustScreenAutomatically">Adjust screen automatically</system:String>
@@ -293,8 +301,16 @@
     <system:String x:Key="String_Documentation">Documentation</system:String>
     <system:String x:Key="String_Version">Version</system:String>
     <system:String x:Key="String_Headers">Headers</system:String>
-    <system:String x:Key="String_DeleteEntry">Delete entry</system:String>
-
+    <system:String x:Key="String_ID">ID</system:String>
+    <system:String x:Key="String_Repeat">Repeat</system:String>
+    <system:String x:Key="String_PasswordsDoesNotMatch">Passwords does not match!</system:String>
+    <system:String x:Key="String_WrongPasswordDecryptionFailed">Credentials could not be decrypted with the given password.</system:String>
+    <system:String x:Key="String_WrongPassword">The entered password is wrong.</system:String>
+    <system:String x:Key="String_HiddenPassword">************</system:String>
+    <system:String x:Key="String_DeleteCredentialMessage">The selected credential will be deleted permanently.</system:String>
+    <system:String x:Key="String_DecryptAndLoadCredentialsMessage">Credentials must be decrypted and loaded to manage them.</system:String>
+    <system:String x:Key="String_CredentialsEncryptionDisclaimer">The credentials are stored encrypted with AES-256 (Rijndael) in a file. The key for the encryption results from a master password (Rfc2898DeriveBytes). The application uses a SecureString for passwords. For some functions, passwords must be converted from a SecureString to plain text, or vice versa.</system:String>
+    
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Reset all settings.</system:String>
@@ -336,6 +352,12 @@
     <system:String x:Key="String_Button_DeleteEntry">Delete entry</system:String>
     <system:String x:Key="String_Button_AddEntry">Add entry...</system:String>
     <system:String x:Key="String_Button_Check">Check</system:String>
+    <system:String x:Key="String_Button_SetMasterPassword">Set Master Password...</system:String>
+    <system:String x:Key="String_Button_ChangeMasterPassword">Change Master Password...</system:String>
+    <system:String x:Key="String_Button_AddDots">Add...</system:String>
+    <system:String x:Key="String_Button_EditDots">Edit...</system:String>
+    <system:String x:Key="String_Button_DeleteDots">Delete...</system:String>
+    <system:String x:Key="String_Button_DecryptAndLoad">Decrypt and load...</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Cut</system:String>

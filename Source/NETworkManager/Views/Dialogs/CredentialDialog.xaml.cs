@@ -2,9 +2,9 @@
 
 namespace NETworkManager.Views.Dialogs
 {
-    public partial class IPScannerProfileDialog : UserControl
+    public partial class CredentialDialog : UserControl
     {
-        public IPScannerProfileDialog()
+        public CredentialDialog()
         {
             InitializeComponent();
         }
