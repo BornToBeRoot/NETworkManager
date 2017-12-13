@@ -308,7 +308,9 @@
     <system:String x:Key="String_WrongPassword">Das eingegebene Passwort ist falsch.</system:String>
     <system:String x:Key="String_HiddenPassword">************</system:String>
     <system:String x:Key="String_DeleteCredentialMessage">Die ausgewählte Anmeldeinformation wird unwiderruflich gelöscht.</system:String>
-    
+    <system:String x:Key="String_DecryptAndLoadCredentialsMessage">Anmeldeinformationen müssen entschlüsselt und geladen werden, um sie zu verwalten.</system:String>
+    <system:String x:Key="String_CredentialsEncryptionDisclaimer">Die Anmeldeinformationen werden verschlüsselt mit AES-256 (Rijndael) in einer Datei gespeichert. Der Schlüssel für die Verschlüsselung ergibt sich aus einem Master-Passwort (Rfc2898DeriveBytes). In der Anwendung wird ein SecureString für Passwörter verwendet. Für einige Funktionen müssen Kennwörter von einem SecureString in Klartext konvertiert werden oder umgekehrt.</system:String>
+
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Setzt alle Einstellungen zurück.</system:String>

@@ -10,7 +10,6 @@ using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Serialization;
-using System;
 
 namespace NETworkManager.Models.Settings
 {
@@ -99,6 +98,8 @@ namespace NETworkManager.Models.Settings
             byte[] encrypted = Encrypt(credentials, SecureStringHelper.ConvertToString(_masterPassword));
 
             File.WriteAllBytes(GetCredentialsFilePath(), encrypted);
+
+            CredentialsChanged = false;
         }
 
         private static byte[] Serialize(List<CredentialInfoSerializable> list)
@@ -141,16 +142,17 @@ namespace NETworkManager.Models.Settings
         }
 
         #region Encryption / Decryption
-        // Add key lenght as const
+        private const int KeySize = 256;
+        private const int Iterations = 25000;
 
         private static byte[] Encrypt(byte[] text, string password)
         {
             byte[] salt = Generate256BitsOfRandomEntropy();
             byte[] iv = Generate256BitsOfRandomEntropy();
 
-            using (Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, salt))
+            using (Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, salt, Iterations))
             {
-                byte[] key = rfc2898DeriveBytes.GetBytes(32); // 256 Bits / 8 Bits = 32 Bytes
+                byte[] key = rfc2898DeriveBytes.GetBytes(KeySize / 8); // 256 Bits / 8 Bits = 32 Bytes
 
                 using (RijndaelManaged rijndaelManaged = new RijndaelManaged())
                 {
@@ -184,13 +186,13 @@ namespace NETworkManager.Models.Settings
 
         private static byte[] Decrypt(byte[] cipherWithSaltAndIv, string password)
         {
-            byte[] salt = cipherWithSaltAndIv.Take(32).ToArray(); // 256 bits / 8 bits = 32 bytes
-            byte[] iv = cipherWithSaltAndIv.Skip(32).Take(32).ToArray(); // Skip 32 bytes, take 32 Bytes iv
-            byte[] cipher = cipherWithSaltAndIv.Skip(64).Take(cipherWithSaltAndIv.Length - 64).ToArray(); // Skip 64 bytes, take cipher bytes (length - 64)
+            byte[] salt = cipherWithSaltAndIv.Take(KeySize / 8).ToArray(); // 256 bits / 8 bits = 32 bytes
+            byte[] iv = cipherWithSaltAndIv.Skip(KeySize / 8).Take(KeySize / 8).ToArray(); // Skip 32 bytes, take 32 Bytes iv
+            byte[] cipher = cipherWithSaltAndIv.Skip((KeySize / 8) * 2).Take(cipherWithSaltAndIv.Length - ((KeySize / 8) * 2)).ToArray(); // Skip 64 bytes, take cipher bytes (length - 64)
 
-            using (Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, salt))
+            using (Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, salt, Iterations))
             {
-                byte[] key = rfc2898DeriveBytes.GetBytes(32); // 256 Bits / 8 Bits = 32 Bytes
+                byte[] key = rfc2898DeriveBytes.GetBytes(KeySize / 8); // 256 Bits / 8 Bits = 32 Bytes
 
                 using (RijndaelManaged rijndaelManaged = new RijndaelManaged())
                 {
@@ -220,12 +222,11 @@ namespace NETworkManager.Models.Settings
 
         private static byte[] Generate256BitsOfRandomEntropy()
         {
-            var randomBytes = new byte[32]; // 32 Bytes will give us 256 bits.
+            byte[] randomBytes = new byte[32]; // 32 * 8 = 256 Bits.
 
-            using (RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider())
+            using (RNGCryptoServiceProvider rngCryptoServiceProvider = new RNGCryptoServiceProvider())
             {
-                // Fill the array with cryptographically secure random bytes.
-                rngCsp.GetBytes(randomBytes);
+                rngCryptoServiceProvider.GetBytes(randomBytes);
             }
 
             return randomBytes;
