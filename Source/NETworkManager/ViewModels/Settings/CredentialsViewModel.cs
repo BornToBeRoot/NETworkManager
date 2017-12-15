@@ -10,6 +10,7 @@ using NETworkManager.Views.Dialogs;
 using System.Security;
 using System.Diagnostics;
 using NETworkManager.Helpers;
+using System;
 
 namespace NETworkManager.ViewModels.Settings
 {
@@ -66,6 +67,23 @@ namespace NETworkManager.ViewModels.Settings
                 OnPropertyChanged();
             }
         }
+
+        private string _search;
+        public string Search
+        {
+            get { return _search; }
+            set
+            {
+                if (value == _search)
+                    return;
+
+                _search = value;
+
+                Credentials.Refresh();
+
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor
@@ -75,6 +93,18 @@ namespace NETworkManager.ViewModels.Settings
 
             _credentials = CollectionViewSource.GetDefaultView(CredentialManager.Credentials);
             _credentials.SortDescriptions.Add(new SortDescription("ID", ListSortDirection.Ascending));
+            _credentials.Filter = o =>
+            {
+                if (string.IsNullOrEmpty(Search))
+                    return true;
+
+                CredentialInfo info = o as CredentialInfo;
+
+                string search = Search.Trim();
+
+                // Search by: Name, Username
+                return (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Username.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+            };
 
             CheckCredentialsLoaded();
         }
