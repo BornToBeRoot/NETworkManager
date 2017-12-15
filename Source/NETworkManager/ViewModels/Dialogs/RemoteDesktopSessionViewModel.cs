@@ -61,6 +61,30 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
+        private int? _credentialID = null;
+        public int? CredentialID
+        {
+            get { return _credentialID; }
+            set
+            {
+                if (value == _credentialID)
+                    return;
+
+                _credentialID = value;
+
+                if (!_isLoading)
+                    HasSessionInfoChanged();
+
+                OnPropertyChanged();
+            }
+        }
+
+        ICollectionView _credentials;
+        public ICollectionView Credentials
+        {
+            get { return _credentials; }
+        }
+
         private string _group;
         public string Group
         {
@@ -119,6 +143,20 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
+        private bool _showUnlockCredentialsHint;
+        public bool ShowUnlockCredentialsHint
+        {
+            get { return _showUnlockCredentialsHint; }
+            set
+            {
+                if (value == _showUnlockCredentialsHint)
+                    return;
+
+                _showUnlockCredentialsHint = value;
+                OnPropertyChanged();
+            }
+        }
+
         public RemoteDesktopSessionViewModel(Action<RemoteDesktopSessionViewModel> saveCommand, Action<RemoteDesktopSessionViewModel> cancelHandler, List<string> groups, RemoteDesktopSessionInfo sessionInfo = null)
         {
             _saveCommand = new RelayCommand(p => saveCommand(this));
@@ -128,10 +166,23 @@ namespace NETworkManager.ViewModels.Dialogs
 
             Name = _sessionInfo.Name;
             Hostname = _sessionInfo.Hostname;
+            CredentialID = _sessionInfo.CredentialID;
 
             // Get the group, if not --> get the first group (ascending), fallback --> default group 
             Group = string.IsNullOrEmpty(_sessionInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Application.Current.Resources["String_Default"] as string) : _sessionInfo.Group;
             Tags = _sessionInfo.Tags;
+
+            if (CredentialManager.Loaded)
+            {
+                _credentials = CollectionViewSource.GetDefaultView(CredentialManager.CredentialInfoList);
+            }
+            else // Fake the entry for the user
+            {
+                if (CredentialID != null)
+                    _credentials = CollectionViewSource.GetDefaultView(new List<CredentialInfo>() { new CredentialInfo((int)CredentialID) });
+
+                ShowUnlockCredentialsHint = true;
+            }
 
             _groups = CollectionViewSource.GetDefaultView(groups);
             _groups.SortDescriptions.Add(new SortDescription());
@@ -141,7 +192,19 @@ namespace NETworkManager.ViewModels.Dialogs
 
         private void HasSessionInfoChanged()
         {
-            SessionInfoChanged = (_sessionInfo.Name != Name) || (_sessionInfo.Hostname != Hostname) || (_sessionInfo.Group != Group) || (_sessionInfo.Tags != Tags);
+            SessionInfoChanged = (_sessionInfo.Name != Name) || (_sessionInfo.Hostname != Hostname) || (_sessionInfo.CredentialID != CredentialID) || (_sessionInfo.Group != Group) || (_sessionInfo.Tags != Tags);
         }
+
+        #region ICommand & Actions
+        public ICommand UnselectCredentialCommand
+        {
+            get { return new RelayCommand(p => UnselectCredentialAction()); }
+        }
+
+        private void UnselectCredentialAction()
+        {
+            CredentialID = null;
+        }
+        #endregion
     }
 }

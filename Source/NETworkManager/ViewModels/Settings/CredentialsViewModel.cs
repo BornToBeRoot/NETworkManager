@@ -114,20 +114,6 @@ namespace NETworkManager.ViewModels.Settings
             CredentialsFileExists = File.Exists(CredentialManager.GetCredentialsFilePath());
             CredentialsLoaded = CredentialManager.Loaded;
         }
-
-        private async void Load(SecureString password)
-        {
-            try
-            {
-                CredentialManager.Load(password);
-            }
-            catch (System.Security.Cryptography.CryptographicException) // If decryption failed
-            {
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_WrongPassword"] as string, Application.Current.Resources["String_WrongPasswordDecryptionFailed"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
-            }
-
-            CheckCredentialsLoaded();
-        }
         #endregion
 
         #region Commands & Actions
@@ -148,10 +134,8 @@ namespace NETworkManager.ViewModels.Settings
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 // Create new collection of credentials and set the password
-                Load(instance.Password);
-
-                // Save to file
-                CredentialManager.Save();
+                if (CredentialManager.Load(instance.Password))
+                    CredentialManager.Save();
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -177,11 +161,14 @@ namespace NETworkManager.ViewModels.Settings
                 Title = Application.Current.Resources["String_Header_MasterPassword"] as string
             };
 
-            CredentialsMasterPasswordViewModel credentialsMasterPasswordViewModel = new CredentialsMasterPasswordViewModel(instance =>
+            CredentialsMasterPasswordViewModel credentialsMasterPasswordViewModel = new CredentialsMasterPasswordViewModel(async instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                Load(instance.Password);
+                if (!CredentialManager.Load(instance.Password))
+                    await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_WrongPassword"] as string, Application.Current.Resources["String_WrongPasswordDecryptionFailed"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+
+                CheckCredentialsLoaded();
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);

@@ -28,7 +28,7 @@
                     <Setter Property="HeaderSuffixContent" >
                         <Setter.Value>
                             <Grid HorizontalAlignment="Left" Width="40" Height="40">
-                                <Button Style="{StaticResource CleanButton}" Command="{Binding ConnectRemoteDesktopSessionCommand}" Focusable="False">
+                                <Button Style="{StaticResource CleanButton}" Command="{Binding ConnectNewSessionCommand}" Focusable="False">
                                     <Rectangle Width="20" Height="20">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Fill" Visual="{IconPacks:PackIconMaterial Kind=Plus}" />

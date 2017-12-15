@@ -1,5 +1,4 @@
 ﻿// Contains code from: https://stackoverflow.com/questions/10168240/encrypting-decrypting-a-string-in-c-sharp 
-// and: https://www.vb-paradise.de/index.php/Thread/81625-verschluesseln-und-autentifizieren/#post668740
 
 using NETworkManager.Helpers;
 using System.Collections.Generic;
@@ -17,7 +16,20 @@ namespace NETworkManager.Models.Settings
     {
         public const string CredentialsFileName = "Credentials.encrypted";
 
+        // Collection with ID, Name, Username, Password
         public static ObservableCollection<CredentialInfo> Credentials = new ObservableCollection<CredentialInfo>();
+
+        // List with ID and Name
+        public static IEnumerable<CredentialInfo> CredentialInfoList
+        {
+            get { return Credentials.Select(x => new CredentialInfo(x.ID, x.Name)); }
+        }
+
+        public static CredentialInfo GetCredentialByID(int id)
+        {
+            return Credentials.FirstOrDefault(x => x.ID == id);
+        }
+
         public static bool CredentialsChanged { get; set; }
 
         private static bool _loaded { get; set; }
@@ -38,33 +50,42 @@ namespace NETworkManager.Models.Settings
             return Path.Combine(SettingsManager.GetSettingsLocation(), CredentialsFileName);
         }
 
-        public static void Load(SecureString pasword)
+        public static bool Load(SecureString pasword)
         {
-            byte[] xml = null;
-
-            // Decrypt file
-            if (File.Exists(GetCredentialsFilePath()))
+            try
             {
-                byte[] cipherWithSaltAndIv = File.ReadAllBytes(GetCredentialsFilePath());
+                byte[] xml = null;
 
-                xml = Decrypt(cipherWithSaltAndIv, SecureStringHelper.ConvertToString(pasword));
-            }
-
-            // Save master pw for encryption
-            SetMasterPassword(pasword);                       
-
-            // Check if array is empty...
-            if (xml != null && xml.Length > 0)
-            {
-                foreach (CredentialInfoSerializable info in Deserialize(xml))
+                // Decrypt file
+                if (File.Exists(GetCredentialsFilePath()))
                 {
-                    AddCredential(new CredentialInfo(info.ID, info.Name, info.Username, SecureStringHelper.ConvertToSecureString(info.Password)));
+                    byte[] cipherWithSaltAndIv = File.ReadAllBytes(GetCredentialsFilePath());
+
+                    xml = Decrypt(cipherWithSaltAndIv, SecureStringHelper.ConvertToString(pasword));
                 }
+
+                // Save master pw for encryption
+                SetMasterPassword(pasword);
+
+                // Check if array is empty...
+                if (xml != null && xml.Length > 0)
+                {
+                    foreach (CredentialInfoSerializable info in Deserialize(xml))
+                    {
+                        AddCredential(new CredentialInfo(info.ID, info.Name, info.Username, SecureStringHelper.ConvertToSecureString(info.Password)));
+                    }
+                }
+
+                Credentials.CollectionChanged += Credentials_CollectionChanged;
+
+                _loaded = true;
+
+                return true;
             }
-
-            Credentials.CollectionChanged += Credentials_CollectionChanged;
-
-            _loaded = true;
+            catch(CryptographicException)
+            {
+                return false;
+            }
         }
 
         private static List<CredentialInfoSerializable> Deserialize(byte[] xml)
@@ -140,7 +161,7 @@ namespace NETworkManager.Models.Settings
         {
             Credentials.Remove(credential);
         }
-
+               
         #region Encryption / Decryption
         private const int KeySize = 256;
         private const int Iterations = 25000;
@@ -230,7 +251,7 @@ namespace NETworkManager.Models.Settings
             }
 
             return randomBytes;
-        }                
+        }
         #endregion
     }
 }

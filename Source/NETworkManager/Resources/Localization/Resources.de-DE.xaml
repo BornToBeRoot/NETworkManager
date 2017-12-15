@@ -310,11 +310,13 @@
     <system:String x:Key="String_DeleteCredentialMessage">Die ausgewählte Anmeldeinformation wird unwiderruflich gelöscht.</system:String>
     <system:String x:Key="String_DecryptAndLoadCredentialsMessage">Anmeldeinformationen müssen entschlüsselt und geladen werden, um sie zu verwalten.</system:String>
     <system:String x:Key="String_CredentialsEncryptionDisclaimer">Die Anmeldeinformationen werden verschlüsselt mit AES-256 (Rijndael) in einer Datei gespeichert. Der Schlüssel für die Verschlüsselung ergibt sich aus einem Master-Passwort (Rfc2898DeriveBytes). In der Anwendung wird ein SecureString für Passwörter verwendet. Für einige Funktionen müssen Kennwörter von einem SecureString in Klartext konvertiert werden oder umgekehrt.</system:String>
+    <system:String x:Key="String_Credential">Anmeldeinformation</system:String>
 
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Setzt alle Einstellungen zurück.</system:String>
     <system:String x:Key="String_HelpMessage_Tags">Mit Tags können Sie Sitzungen nach Themen/Projekten organisieren. Mehrere Tags können mit ";" getrennt sein. Suche nach Tags mit "tag=xxx".</system:String>
+    <system:String x:Key="String_HelpMessage_Credentials">Entschlüsseln und laden Sie Ihre Anmeldedaten, um sie auszuwählen.</system:String>
 
     <!-- Warn message -->
     <system:String x:Key="String_WarnMessage_SettingsGeneralAppearanceTransparency">Einige Grafikkarten / Treiber haben Probleme bei der Maximierung der Anwendung, wenn die Transparenz aktiviert ist. Die Funktion muss für die Verwendung von "Remote Desktop" deaktiviert sein! Das Aktivieren oder Deaktivieren dieser Funktion erfordert einen Neustart der Anwendung.</system:String>

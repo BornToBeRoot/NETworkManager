@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System;
 using System.Linq;
 using System.Collections.Specialized;
+using System.Diagnostics;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -184,12 +185,12 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region ICommand & Actions
-        public ICommand ConnectRemoteDesktopSessionCommand
+        public ICommand ConnectNewSessionCommand
         {
-            get { return new RelayCommand(p => ConnectRemoteDesktopSessionAction()); }
+            get { return new RelayCommand(p => ConnectNewSessionAction()); }
         }
 
-        private async void ConnectRemoteDesktopSessionAction()
+        private async void ConnectNewSessionAction()
         {
             CustomDialog customDialog = new CustomDialog()
             {
@@ -243,6 +244,7 @@ namespace NETworkManager.ViewModels.Applications
                 {
                     Name = instance.Name,
                     Hostname = instance.Hostname,
+                    CredentialID = instance.CredentialID,
                     Group = instance.Group,
                     Tags = instance.Tags
                 };
@@ -268,14 +270,73 @@ namespace NETworkManager.ViewModels.Applications
             get { return new RelayCommand(p => ConnectSessionAction()); }
         }
 
-        private void ConnectSessionAction()
+        private async void ConnectSessionAction()
         {
-            Models.RemoteDesktop.RemoteDesktopSessionInfo remoteDesktopSessionInfo = new Models.RemoteDesktop.RemoteDesktopSessionInfo
+            Models.RemoteDesktop.RemoteDesktopSessionInfo sessionInfo = new Models.RemoteDesktop.RemoteDesktopSessionInfo
             {
                 Hostname = SelectedSession.Hostname
             };
 
-            ConnectSession(remoteDesktopSessionInfo, SelectedSession.Name);
+            if (SelectedSession.CredentialID != null)
+            {
+                if (!CredentialManager.Loaded)
+                {
+                    CustomDialog customDialog = new CustomDialog()
+                    {
+                        Title = Application.Current.Resources["String_Header_MasterPassword"] as string
+                    };
+
+                    CredentialsMasterPasswordViewModel credentialsMasterPasswordViewModel = new CredentialsMasterPasswordViewModel(async instance =>
+                    {
+                        await dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                        if (CredentialManager.Load(instance.Password))
+                        {
+                            Debug.WriteLine("RemoteDesktop: connect! (Master pw decrypt...)");
+
+                            CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)SelectedSession.CredentialID);
+
+                            sessionInfo.CustomCredentials = true;
+                            sessionInfo.Username = credentialInfo.Username;
+                            sessionInfo.Password = credentialInfo.Password;
+
+                            ConnectSession(sessionInfo, SelectedSession.Name);
+                        }
+                        else
+                        {
+                            await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_WrongPassword"] as string, Application.Current.Resources["String_WrongPasswordDecryptionFailed"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                        }
+                    }, instance =>
+                    {
+                        dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                    });
+
+                    customDialog.Content = new CredentialsMasterPasswordDialog
+                    {
+                        DataContext = credentialsMasterPasswordViewModel
+                    };
+
+                    await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+                }
+                else
+                {
+                    Debug.WriteLine("RemoteDesktop: connect! (Credentials already decrypted/loaded)");
+
+                    CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)SelectedSession.CredentialID);
+
+                    sessionInfo.CustomCredentials = true;
+                    sessionInfo.Username = credentialInfo.Username;
+                    sessionInfo.Password = credentialInfo.Password;
+ 
+                    ConnectSession(sessionInfo, SelectedSession.Name);
+                }
+            }
+            else
+            {
+                Debug.WriteLine("RemoteDesktop: connect! (Without creds)");
+
+                ConnectSession(sessionInfo, SelectedSession.Name);
+            }
         }
 
         public ICommand EditSessionCommand
@@ -301,6 +362,7 @@ namespace NETworkManager.ViewModels.Applications
                 {
                     Name = instance.Name,
                     Hostname = instance.Hostname,
+                    CredentialID = instance.CredentialID,
                     Group = instance.Group,
                     Tags = instance.Tags
                 };

@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System;
 using System.Windows.Threading;
-using System.Diagnostics;
+using NETworkManager.Helpers;
 
 namespace NETworkManager.Controls
 {
@@ -151,6 +151,12 @@ namespace NETworkManager.Controls
         private void Connect()
         {
             rdpClient.Server = _rdpSessionInfo.Hostname;
+
+            if(_rdpSessionInfo.CustomCredentials)
+            {
+                rdpClient.UserName = _rdpSessionInfo.Username;
+                rdpClient.AdvancedSettings9.ClearTextPassword = SecureStringHelper.ConvertToString(_rdpSessionInfo.Password);
+            }
 
             // AdvancedSettings
             rdpClient.AdvancedSettings9.AuthenticationLevel = 2;

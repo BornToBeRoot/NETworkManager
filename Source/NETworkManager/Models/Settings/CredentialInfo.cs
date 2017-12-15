@@ -14,6 +14,17 @@ namespace NETworkManager.Models.Settings
 
         }
 
+        public CredentialInfo(int id)
+        {
+            ID = id;
+        }
+
+        public CredentialInfo(int id, string name)
+        {
+            ID = id;
+            Name = name;
+        }
+
         public CredentialInfo(int id, string name, string username, SecureString password)
         {
             ID = id;
