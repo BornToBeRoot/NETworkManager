@@ -7,10 +7,10 @@ using System.IO;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels.Dialogs;
 using NETworkManager.Views.Dialogs;
-using System.Security;
 using System.Diagnostics;
 using NETworkManager.Helpers;
 using System;
+using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels.Settings
 {
@@ -18,7 +18,6 @@ namespace NETworkManager.ViewModels.Settings
     {
         #region Variables
         private IDialogCoordinator dialogCoordinator;
-        private int locked; // If true, user has to enter master password to perform operations like edit/delete
 
         private bool _credentialsFileExists;
         public bool CredentialsFileExists
@@ -189,25 +188,25 @@ namespace NETworkManager.ViewModels.Settings
 
         private async void ChangeMasterPasswordAction()
         {
-            CustomDialog customDialog = new CustomDialog()
+            CustomDialog customDialogMasterPassword = new CustomDialog()
             {
                 Title = Application.Current.Resources["String_Header_MasterPassword"] as string
             };
 
             CredentialsMasterPasswordViewModel credentialsMasterPasswordViewModel = new CredentialsMasterPasswordViewModel(async instance =>
             {
-                await dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await dialogCoordinator.HideMetroDialogAsync(this, customDialogMasterPassword);
 
                 if (CredentialManager.VerifyMasterPasword(instance.Password))
                 {
-                    CustomDialog customDialog2 = new CustomDialog()
+                    CustomDialog customDialogSetMasterPassword = new CustomDialog()
                     {
                         Title = Application.Current.Resources["String_Header_SetMasterPassword"] as string
                     };
 
                     CredentialsSetMasterPasswordViewModel credentialsSetMasterPasswordViewModel = new CredentialsSetMasterPasswordViewModel(instance2 =>
                     {
-                        dialogCoordinator.HideMetroDialogAsync(this, customDialog2);
+                        dialogCoordinator.HideMetroDialogAsync(this, customDialogSetMasterPassword);
 
                         // Set the new master password
                         CredentialManager.SetMasterPassword(instance2.Password);
@@ -216,15 +215,15 @@ namespace NETworkManager.ViewModels.Settings
                         CredentialManager.Save();
                     }, instance2 =>
                     {
-                        dialogCoordinator.HideMetroDialogAsync(this, customDialog2);
+                        dialogCoordinator.HideMetroDialogAsync(this, customDialogSetMasterPassword);
                     });
 
-                    customDialog2.Content = new CredentialsSetMasterPasswordDialog
+                    customDialogSetMasterPassword.Content = new CredentialsSetMasterPasswordDialog
                     {
                         DataContext = credentialsSetMasterPasswordViewModel
                     };
 
-                    await dialogCoordinator.ShowMetroDialogAsync(this, customDialog2);
+                    await dialogCoordinator.ShowMetroDialogAsync(this, customDialogSetMasterPassword);
                 }
                 else
                 {
@@ -232,15 +231,15 @@ namespace NETworkManager.ViewModels.Settings
                 }
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                dialogCoordinator.HideMetroDialogAsync(this, customDialogMasterPassword);
             });
 
-            customDialog.Content = new CredentialsMasterPasswordDialog
+            customDialogMasterPassword.Content = new CredentialsMasterPasswordDialog
             {
                 DataContext = credentialsMasterPasswordViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialogMasterPassword);
         }
 
         public ICommand AddCommand

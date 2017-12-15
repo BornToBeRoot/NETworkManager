@@ -11,8 +11,6 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System;
 using System.Linq;
-using System.Collections.Specialized;
-using System.Diagnostics;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -277,7 +275,7 @@ namespace NETworkManager.ViewModels.Applications
                 Hostname = SelectedSession.Hostname
             };
 
-            if (SelectedSession.CredentialID != null)
+            if (SelectedSession.CredentialID != null) // Credentials need to be unlocked first
             {
                 if (!CredentialManager.Loaded)
                 {
@@ -292,8 +290,6 @@ namespace NETworkManager.ViewModels.Applications
 
                         if (CredentialManager.Load(instance.Password))
                         {
-                            Debug.WriteLine("RemoteDesktop: connect! (Master pw decrypt...)");
-
                             CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)SelectedSession.CredentialID);
 
                             sessionInfo.CustomCredentials = true;
@@ -318,10 +314,8 @@ namespace NETworkManager.ViewModels.Applications
 
                     await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
                 }
-                else
+                else // Connect already unlocked
                 {
-                    Debug.WriteLine("RemoteDesktop: connect! (Credentials already decrypted/loaded)");
-
                     CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)SelectedSession.CredentialID);
 
                     sessionInfo.CustomCredentials = true;
@@ -331,10 +325,8 @@ namespace NETworkManager.ViewModels.Applications
                     ConnectSession(sessionInfo, SelectedSession.Name);
                 }
             }
-            else
+            else // Connect without credentials
             {
-                Debug.WriteLine("RemoteDesktop: connect! (Without creds)");
-
                 ConnectSession(sessionInfo, SelectedSession.Name);
             }
         }
