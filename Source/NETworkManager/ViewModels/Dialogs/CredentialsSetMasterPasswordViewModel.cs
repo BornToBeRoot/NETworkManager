@@ -83,7 +83,7 @@ namespace NETworkManager.ViewModels.Dialogs
 
         private void ValidatePassword()
         {
-            PasswordIsEmpty = ((Password == null || Password.Length == 0) && (PasswordRepeat == null || PasswordRepeat.Length == 0));
+            PasswordIsEmpty = ((Password == null || Password.Length == 0) || (PasswordRepeat == null || PasswordRepeat.Length == 0));
 
             PasswordsMatch = PasswordIsEmpty ? false : SecureStringHelper.ConvertToString(Password).Equals(SecureStringHelper.ConvertToString(PasswordRepeat));
         }
