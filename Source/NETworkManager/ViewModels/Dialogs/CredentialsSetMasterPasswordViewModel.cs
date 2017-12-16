@@ -53,7 +53,7 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
-        private bool _passwordIsEmpty;
+        private bool _passwordIsEmpty = true;
         public bool PasswordIsEmpty
         {
             get { return _passwordIsEmpty; }
@@ -67,7 +67,7 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
-        private bool _passwordsMatch;
+        private bool _passwordsMatch = false;
         public bool PasswordsMatch
         {
             get { return _passwordsMatch; }
@@ -83,7 +83,7 @@ namespace NETworkManager.ViewModels.Dialogs
 
         private void ValidatePassword()
         {
-            PasswordIsEmpty = ((Password == null || Password.Length == 0) || (PasswordRepeat == null || PasswordRepeat.Length == 0));
+            PasswordIsEmpty = ((Password == null || Password.Length == 0) && (PasswordRepeat == null || PasswordRepeat.Length == 0));
 
             PasswordsMatch = PasswordIsEmpty ? false : SecureStringHelper.ConvertToString(Password).Equals(SecureStringHelper.ConvertToString(PasswordRepeat));
         }
