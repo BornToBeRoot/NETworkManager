@@ -135,6 +135,8 @@ namespace NETworkManager.ViewModels.Settings
                 // Create new collection of credentials and set the password
                 if (CredentialManager.Load(instance.Password))
                     CredentialManager.Save();
+
+                CheckCredentialsLoaded();
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
