@@ -411,6 +411,18 @@ namespace NETworkManager.ViewModels.Applications
                 StartScan();
         }
 
+        public ICommand ScanProfileCommand
+        {
+            get { return new RelayCommand(p => ScanProfileAction()); }
+        }
+
+        private void ScanProfileAction()
+        {
+            IPRange = SelectedProfile.IPRange;
+
+            StartScan();
+        }
+
         public ICommand CopySelectedIPAddressCommand
         {
             get { return new RelayCommand(p => CopySelectedIPAddressAction()); }

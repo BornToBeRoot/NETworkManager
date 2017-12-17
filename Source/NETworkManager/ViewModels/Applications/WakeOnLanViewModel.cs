@@ -14,12 +14,12 @@ using NETworkManager.Views.Dialogs;
 namespace NETworkManager.ViewModels.Applications
 {
     public class WakeOnLANViewModel : ViewModelBase
-    {        
+    {
         #region  Variables 
         private IDialogCoordinator dialogCoordinator;
 
-        private bool _isLoading = true;      
-        
+        private bool _isLoading = true;
+
         private string _MACAddress;
         public string MACAddress
         {
@@ -245,28 +245,31 @@ namespace NETworkManager.ViewModels.Applications
 
         private void WakeUpAction()
         {
-            DisplayStatusMessage = false;
-            StatusMessage = string.Empty;
-
-            try
+            WakeOnLANInfo info = new WakeOnLANInfo
             {
-                WakeOnLANInfo info = new WakeOnLANInfo
-                {
-                    MagicPacket = MagicPacketHelper.Create(MACAddress),
-                    Broadcast = IPAddress.Parse(Broadcast),
-                    Port = Port
-                };
+                MagicPacket = MagicPacketHelper.Create(MACAddress),
+                Broadcast = IPAddress.Parse(Broadcast),
+                Port = Port
+            };
 
-                WakeOnLAN.Send(info);
+            WakeUp(info);
+        }
 
-                StatusMessage = Application.Current.Resources["String_MagicPacketSuccessfulSended"] as string;
-                DisplayStatusMessage = true;
-            }
-            catch (Exception ex)
+        public ICommand WakeUpClientCommand
+        {
+            get { return new RelayCommand(p => WakeUpClientAction()); }
+        }
+
+        private void WakeUpClientAction()
+        {
+            WakeOnLANInfo info = new WakeOnLANInfo
             {
-                StatusMessage = ex.Message;
-                DisplayStatusMessage = true;
-            }
+                MagicPacket = MagicPacketHelper.Create(SelectedClient.MACAddress),
+                Broadcast = IPAddress.Parse(SelectedClient.Broadcast),
+                Port = SelectedClient.Port
+            };
+
+            WakeUp(info);
         }
 
         public ICommand AddClientCommand
@@ -416,6 +419,27 @@ namespace NETworkManager.ViewModels.Applications
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+        #endregion
+
+        #region Methods
+        private void WakeUp(WakeOnLANInfo info)
+        {
+            DisplayStatusMessage = false;
+            StatusMessage = string.Empty;
+
+            try
+            {
+                WakeOnLAN.Send(info);
+
+                StatusMessage = Application.Current.Resources["String_MagicPacketSuccessfulSended"] as string;
+                DisplayStatusMessage = true;
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = ex.Message;
+                DisplayStatusMessage = true;
+            }
         }
         #endregion
     }

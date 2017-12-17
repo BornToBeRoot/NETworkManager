@@ -311,7 +311,9 @@
     <system:String x:Key="String_DecryptAndLoadCredentialsMessage">Credentials must be decrypted and loaded to manage them.</system:String>
     <system:String x:Key="String_CredentialsEncryptionDisclaimer">The credentials are stored encrypted with AES-256 (Rijndael) in a file. The key for the encryption results from a master password (Rfc2898DeriveBytes). The application uses a SecureString for passwords. For some functions, passwords must be converted from a SecureString to plain text, or vice versa.</system:String>
     <system:String x:Key="String_Credential">Credential</system:String>
-                   
+    <system:String x:Key="String_Scan">Scan</system:String>
+    <system:String x:Key="String_Apply">Apply</system:String>
+    
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Reset all settings.</system:String>
