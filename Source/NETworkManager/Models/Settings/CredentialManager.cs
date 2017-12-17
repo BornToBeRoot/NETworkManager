@@ -82,7 +82,7 @@ namespace NETworkManager.Models.Settings
 
                 return true;
             }
-            catch(CryptographicException)
+            catch (CryptographicException)
             {
                 return false;
             }
@@ -118,6 +118,7 @@ namespace NETworkManager.Models.Settings
             // Encrypt with master pw and save file
             byte[] encrypted = Encrypt(credentials, SecureStringHelper.ConvertToString(_masterPassword));
 
+            // Check if the path exists, create if not
             File.WriteAllBytes(GetCredentialsFilePath(), encrypted);
 
             CredentialsChanged = false;
@@ -161,7 +162,7 @@ namespace NETworkManager.Models.Settings
         {
             Credentials.Remove(credential);
         }
-               
+
         #region Encryption / Decryption
         private const int KeySize = 256;
         private const int Iterations = 25000;

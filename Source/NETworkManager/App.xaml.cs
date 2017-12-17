@@ -94,8 +94,8 @@ namespace NETworkManager
             // Save settings, when the application is normally closed
             if (!_singleInstanceClose && !ImportExportManager.ForceRestart && !CommandLineManager.Current.Help)
             {
-                if (SettingsManager.Current.SettingsChanged)
-                    SettingsManager.Save();
+                if (SettingsManager.Current.SettingsChanged) // This will also create the "Settings" folder, if it does not exist
+                    SettingsManager.Save(); 
 
                 if (CredentialManager.CredentialsChanged)
                     CredentialManager.Save();
