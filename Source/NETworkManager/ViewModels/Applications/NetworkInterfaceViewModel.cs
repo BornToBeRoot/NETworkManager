@@ -702,11 +702,16 @@ namespace NETworkManager.ViewModels.Applications
         #region ICommands & Actions
         public ICommand ReloadNetworkInterfacesCommand
         {
-            get { return new RelayCommand(p => ReloadNetworkInterfacesAction()); }
+            get { return new RelayCommand(p => ReloadNetworkInterfacesAction(), ReloadNetworkInterfaces_CanExecute); }
+        }
+
+        private bool ReloadNetworkInterfaces_CanExecute(object obj)
+        {
+            return !IsNetworkInterfaceLoading;
         }
 
         private async void ReloadNetworkInterfacesAction()
-        {
+        {            
             IsNetworkInterfaceLoading = true;
             await Task.Delay(2000); // Make the user happy, let him see a reload animation
 

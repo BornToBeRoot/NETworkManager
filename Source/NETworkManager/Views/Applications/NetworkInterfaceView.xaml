@@ -11,6 +11,9 @@
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
+    <UserControl.InputBindings>
+        <KeyBinding Key="F5" Command="{Binding ReloadNetworkInterfacesCommand}" />
+    </UserControl.InputBindings>
     <UserControl.Resources>
         <Converter:BitsToHumanReadableSizeConverter x:Key="BitsToHumanReadableSizeConverter" />
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
