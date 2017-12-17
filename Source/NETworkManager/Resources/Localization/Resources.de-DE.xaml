@@ -313,6 +313,7 @@
     <system:String x:Key="String_Credential">Anmeldeinformation</system:String>
     <system:String x:Key="String_Scan">Scannen</system:String>
     <system:String x:Key="String_Apply">Anwenden</system:String>
+    <system:String x:Key="String_DeleteEntry">Eintrag löschen</system:String>
     
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>

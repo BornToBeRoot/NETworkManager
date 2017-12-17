@@ -102,6 +102,9 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 _isScanRunning = value;
+
+                CheckCanScanProfile();
+
                 OnPropertyChanged();
             }
         }
@@ -312,13 +315,16 @@ namespace NETworkManager.ViewModels.Applications
                 if (value == _selectedProfile)
                     return;
 
+                _selectedProfile = value;
+
                 if (value != null)
                 {
                     Hostname = value.Hostname;
                     Ports = value.Ports;
+
+                    CheckCanScanProfile();
                 }
 
-                _selectedProfile = value;
                 OnPropertyChanged();
             }
         }
@@ -353,6 +359,20 @@ namespace NETworkManager.ViewModels.Applications
 
                 PortScannerProfiles.Refresh();
 
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _canScanProfile;
+        public bool CanScanProfile
+        {
+            get { return _canScanProfile; }
+            set
+            {
+                if (value == _canScanProfile)
+                    return;
+
+                _canScanProfile = value;
                 OnPropertyChanged();
             }
         }
@@ -424,6 +444,19 @@ namespace NETworkManager.ViewModels.Applications
                 StopScan();
             else
                 StartScan();
+        }
+
+        public ICommand ScanProfileCommand
+        {
+            get { return new RelayCommand(p => ScanProfileAction()); }
+        }
+
+        private void ScanProfileAction()
+        {
+            Hostname = SelectedProfile.Hostname;
+            Ports = SelectedProfile.Ports;
+
+            StartScan();
         }
 
         public ICommand CopySelectedIPAddressCommand
@@ -800,6 +833,11 @@ namespace NETworkManager.ViewModels.Applications
 
             CancelScan = false;
             IsScanRunning = false;
+        }
+
+        private void CheckCanScanProfile()
+        {
+            CanScanProfile = !IsScanRunning && !string.IsNullOrEmpty(SelectedProfile.Hostname) && !string.IsNullOrEmpty(SelectedProfile.Ports);
         }
         #endregion
 
