@@ -5,7 +5,6 @@ using NETworkManager.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
@@ -152,6 +151,25 @@ namespace NETworkManager.Models.Network
             }
         }
 
+        private void RunPSCommand(string command)
+        {
+            try
+            {
+                PowerShellHelper.RunPSCommand(command, true);
+            }
+            catch (Win32Exception win32ex)
+            {
+                switch (win32ex.NativeErrorCode)
+                {
+                    case 1223:
+                        OnUserHasCanceled();
+                        break;
+                    default:
+                        throw;
+                }
+            }
+        }
+
         // MAC separated with "-"
         public Task AddEntryAsync(string ipAddress, string macAddress)
         {
@@ -162,7 +180,7 @@ namespace NETworkManager.Models.Network
         {
             string command = string.Format("arp -s {0} {1}", ipAddress, macAddress);
 
-            RunPSWithElevatedRights(command);
+            RunPSCommand(command);
         }
 
         public Task DeleteEntryAsync(string ipAddress)
@@ -174,7 +192,7 @@ namespace NETworkManager.Models.Network
         {
             string command = string.Format("arp -d {0}", ipAddress);
 
-            RunPSWithElevatedRights(command);
+            RunPSCommand(command);
         }
 
         public Task DeleteTableAsync()
@@ -186,42 +204,7 @@ namespace NETworkManager.Models.Network
         {
             string command = string.Format("netsh interface ip delete arpcache");
 
-            RunPSWithElevatedRights(command);
-        }
-
-        private void RunPSWithElevatedRights(string command)
-        {
-            // Start process with elevated rights...
-            ProcessStartInfo processStartInfo = new ProcessStartInfo()
-            {
-                Verb = "runas",
-                FileName = "powershell.exe",
-                Arguments = string.Format("-NoProfile -NoLogo -Command {0}", command)
-            };
-
-            processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-
-            using (Process process = new Process())
-            {
-                process.StartInfo = processStartInfo;
-
-                try
-                {
-                    process.Start();
-                    process.WaitForExit();
-                }
-                catch (Win32Exception win32ex)
-                {
-                    switch (win32ex.NativeErrorCode)
-                    {
-                        case 1223:
-                            OnUserHasCanceled();
-                            break;
-                        default:
-                            throw;
-                    }
-                }
-            }
+            RunPSCommand(command);
         }
         #endregion
     }

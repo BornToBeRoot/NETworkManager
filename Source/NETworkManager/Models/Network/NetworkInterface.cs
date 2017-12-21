@@ -1,12 +1,11 @@
 ﻿using Microsoft.Win32;
+using NETworkManager.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace NETworkManager.Models.Network
 {
@@ -138,35 +137,19 @@ namespace NETworkManager.Models.Network
             command += config.EnableStaticDNS ? @" source=static address=" + config.PrimaryDNSServer + @" register=primary validate=no" : @" source=dhcp";
             command += (config.EnableStaticDNS && !string.IsNullOrEmpty(config.SecondaryDNSServer)) ? @";netsh interface ipv4 add DNSservers name='" + config.Name + @"' address=" + config.SecondaryDNSServer + @" index=2 validate=no" : "";
 
-            // Start process with elevated rights...
-            ProcessStartInfo processStartInfo = new ProcessStartInfo()
+            try
             {
-                Verb = "runas",
-                FileName = "powershell.exe",
-                Arguments = "-NoProfile -NoLogo -Command " + command
-            };
-
-            processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-
-            using (Process process = new Process())
+                PowerShellHelper.RunPSCommand(command, true);
+            }
+            catch (Win32Exception win32ex)
             {
-                process.StartInfo = processStartInfo;
-
-                try
+                switch (win32ex.NativeErrorCode)
                 {
-                    process.Start();
-                    process.WaitForExit();
-                }
-                catch (Win32Exception win32ex)
-                {
-                    switch (win32ex.NativeErrorCode)
-                    {
-                        case 1223:
-                            OnUserHasCanceled();
-                            break;
-                        default:
-                            throw;
-                    }
+                    case 1223:
+                        OnUserHasCanceled();
+                        break;
+                    default:
+                        throw;
                 }
             }
         }
