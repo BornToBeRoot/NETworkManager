@@ -92,7 +92,8 @@
     <system:String x:Key="String_Header_AddCredential">Anmeldeinformation hinzufügen</system:String>
     <system:String x:Key="String_Header_EditCredential">Anmeldeinformation bearbeiten</system:String>
     <system:String x:Key="String_Header_DeleteCredential">Anmeldeinformation löschen</system:String>
-    
+    <system:String x:Key="String_Header_ConfigureNetworkInterface">Konfiguriere Netzwerkinterface</system:String>
+
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Ein leistungsstarkes Tool zum Verwalten von Netzwerken und zur Behebung von Netzwerkproblemen!</system:String>
@@ -320,6 +321,7 @@
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Setzt alle Einstellungen zurück.</system:String>
     <system:String x:Key="String_HelpMessage_Tags">Mit Tags können Sie Sitzungen nach Themen/Projekten organisieren. Mehrere Tags können mit ";" getrennt sein. Suche nach Tags mit "tag=xxx".</system:String>
     <system:String x:Key="String_HelpMessage_Credentials">Entschlüsseln und laden Sie Ihre Anmeldedaten, um sie auszuwählen.</system:String>
+    <system:String x:Key="String_HelpMessage_PasswordNotDisplayedCanBeOverwritten">Das Passwort wird bei der Bearbeitung nicht angezeigt, kann jedoch überschrieben werden.</system:String>
 
     <!-- Warn message -->
     <system:String x:Key="String_WarnMessage_SettingsGeneralAppearanceTransparency">Einige Grafikkarten / Treiber haben Probleme bei der Maximierung der Anwendung, wenn die Transparenz aktiviert ist. Die Funktion muss für die Verwendung von "Remote Desktop" deaktiviert sein! Das Aktivieren oder Deaktivieren dieser Funktion erfordert einen Neustart der Anwendung.</system:String>
@@ -401,7 +403,6 @@
     <system:String x:Key="String_Watermark_ExampleWebsiteUri">http(s)://example.com/index.html</system:String>
 
     <!-- ShowProgress -->
-    <system:String x:Key="String_ProgessHeader_ConfigureNetworkInterface">Konfiguriere Netzwerkinterface</system:String>
     <system:String x:Key="String_Progress_SetStaticIPAddress">Setze statische IP-Adresse und Gateway...</system:String>
     <system:String x:Key="String_Progress_SetDynamicIPAddress">Setze dynamische IP-Adresse...</system:String>
     <system:String x:Key="String_Progress_SetStaticDNSServer">Setze statische DNS-Server...</system:String>

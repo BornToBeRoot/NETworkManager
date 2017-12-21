@@ -755,7 +755,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             DisplayStatusMessage = false;
 
-            progressDialogController = await dialogCoordinator.ShowProgressAsync(this, Application.Current.Resources["String_ProgessHeader_ConfigureNetworkInterface"] as string, string.Empty);
+            progressDialogController = await dialogCoordinator.ShowProgressAsync(this, Application.Current.Resources["String_Header_ConfigureNetworkInterface"] as string, string.Empty);
             progressDialogController.SetIndeterminate();
 
             string subnetmask = ConfigSubnetmaskOrCidr;
@@ -817,7 +817,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             DisplayStatusMessage = false;
 
-            progressDialogController = await dialogCoordinator.ShowProgressAsync(this, Application.Current.Resources["String_ProgessHeader_ConfigureNetworkInterface"] as string, string.Empty);
+            progressDialogController = await dialogCoordinator.ShowProgressAsync(this, Application.Current.Resources["String_Header_ConfigureNetworkInterface"] as string, string.Empty);
             progressDialogController.SetIndeterminate();
 
             string subnetmask = SelectedProfile.Subnetmask;

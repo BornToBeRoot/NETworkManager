@@ -123,6 +123,20 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
+        private bool _passwordShowHelp;
+        public bool PasswordShowHelp
+        {
+            get { return _passwordShowHelp; }
+            set
+            {
+                if (value == _passwordShowHelp)
+                    return;
+
+                _passwordShowHelp = value;
+                OnPropertyChanged();
+            }
+        }
+
         public CredentialViewModel(Action<CredentialViewModel> saveCommand, Action<CredentialViewModel> cancelHandler, int id, CredentialInfo credentialInfo = null)
         {
             _saveCommand = new RelayCommand(p => saveCommand(this));
@@ -134,6 +148,8 @@ namespace NETworkManager.ViewModels.Dialogs
             Name = _credentialInfo.Name;
             Username = _credentialInfo.Username;
             Password = _credentialInfo.Password;
+
+            _passwordShowHelp = credentialInfo != null;
 
             _isLoading = false;
         }
