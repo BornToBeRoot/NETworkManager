@@ -69,12 +69,7 @@ namespace NETworkManager.Models.Settings
 
                 // Check if array is empty...
                 if (xml != null && xml.Length > 0)
-                {
-                    foreach (CredentialInfoSerializable info in Deserialize(xml))
-                    {
-                        AddCredential(new CredentialInfo(info.ID, info.Name, info.Username, SecureStringHelper.ConvertToSecureString(info.Password)));
-                    }
-                }
+                    DeserializeFromByteArray(xml);
 
                 Credentials.CollectionChanged += Credentials_CollectionChanged;
 
@@ -88,32 +83,20 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private static List<CredentialInfoSerializable> Deserialize(byte[] xml)
+        private static void DeserializeFromByteArray(byte[] xml)
         {
-            List<CredentialInfoSerializable> list = new List<CredentialInfoSerializable>();
-
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<CredentialInfoSerializable>));
 
             using (MemoryStream memoryStream = new MemoryStream(xml))
             {
-                ((List<CredentialInfoSerializable>)(xmlSerializer.Deserialize(memoryStream))).ForEach(credential => list.Add(credential));
+                ((List<CredentialInfoSerializable>)(xmlSerializer.Deserialize(memoryStream))).ForEach(credential => AddCredential(new CredentialInfo(credential.ID, credential.Name, credential.Username, SecureStringHelper.ConvertToSecureString(credential.Password))));
             }
-
-            return list;
         }
 
         public static void Save()
-        {
-            // Convert CredentialInfo to CredentialInfoSerializable
-            List<CredentialInfoSerializable> list = new List<CredentialInfoSerializable>();
-
-            foreach (CredentialInfo info in Credentials)
-            {
-                list.Add(new CredentialInfoSerializable(info.ID, info.Name, info.Username, SecureStringHelper.ConvertToString(info.Password)));
-            }
-
+        {            
             // Serialize as xml (utf-8)
-            byte[] credentials = Serialize(list);
+            byte[] credentials = SerializeToByteArray();
 
             // Encrypt with master pw and save file
             byte[] encrypted = Encrypt(credentials, SecureStringHelper.ConvertToString(_masterPassword));
@@ -124,8 +107,16 @@ namespace NETworkManager.Models.Settings
             CredentialsChanged = false;
         }
 
-        private static byte[] Serialize(List<CredentialInfoSerializable> list)
+        private static byte[] SerializeToByteArray()
         {
+            // Convert CredentialInfo to CredentialInfoSerializable
+            List<CredentialInfoSerializable> list = new List<CredentialInfoSerializable>();
+
+            foreach (CredentialInfo info in Credentials)
+            {
+                list.Add(new CredentialInfoSerializable(info.ID, info.Name, info.Username, SecureStringHelper.ConvertToString(info.Password)));
+            }
+
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<CredentialInfoSerializable>));
 
             using (MemoryStream memoryStream = new MemoryStream())

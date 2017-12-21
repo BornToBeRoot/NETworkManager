@@ -36,7 +36,7 @@ namespace NETworkManager.Models.Settings
             Profiles = new ObservableCollection<NetworkInterfaceProfileInfo>();
 
             if (deserialize)
-                Deserialize().ForEach(profile => AddProfile(profile));
+                DeserializeFromFile();
 
             Profiles.CollectionChanged += Profiles_CollectionChanged;
         }
@@ -46,24 +46,20 @@ namespace NETworkManager.Models.Settings
             if (overwrite)
                 Profiles.Clear();
 
-            Deserialize().ForEach(profile => AddProfile(profile));
+            DeserializeFromFile();
         }
 
-        private static List<NetworkInterfaceProfileInfo> Deserialize()
+        private static void DeserializeFromFile()
         {
-            List<NetworkInterfaceProfileInfo> list = new List<NetworkInterfaceProfileInfo>();
-
             if (File.Exists(GetProfilesFilePath()))
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<NetworkInterfaceProfileInfo>));
 
                 using (FileStream fileStream = new FileStream(GetProfilesFilePath(), FileMode.Open))
                 {
-                    ((List<NetworkInterfaceProfileInfo>)(xmlSerializer.Deserialize(fileStream))).ForEach(profile => Profiles.Add(profile));
+                    ((List<NetworkInterfaceProfileInfo>)(xmlSerializer.Deserialize(fileStream))).ForEach(profile => AddProfile(profile));
                 }
             }
-
-            return list;
         }
 
         private static void Profiles_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -73,12 +69,12 @@ namespace NETworkManager.Models.Settings
 
         public static void Save()
         {
-            Serialize();
+            SerializeToFile();
 
             ProfilesChanged = false;
         }
 
-        private static void Serialize()
+        private static void SerializeToFile()
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<NetworkInterfaceProfileInfo>));
 

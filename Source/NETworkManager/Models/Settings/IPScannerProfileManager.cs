@@ -35,7 +35,7 @@ namespace NETworkManager.Models.Settings
             Profiles = new ObservableCollection<IPScannerProfileInfo>();
 
             if (deserialize)
-                Deserialize().ForEach(profile => AddProfile(profile));
+                DeserializeFromFile();
 
             Profiles.CollectionChanged += Templates_CollectionChanged;
         }
@@ -45,24 +45,20 @@ namespace NETworkManager.Models.Settings
             if (overwrite)
                 Profiles.Clear();
 
-            Deserialize().ForEach(profile => AddProfile(profile));
+            DeserializeFromFile();
         }
 
-        private static List<IPScannerProfileInfo> Deserialize()
+        private static void DeserializeFromFile()
         {
-            List<IPScannerProfileInfo> list = new List<IPScannerProfileInfo>();
-
             if (File.Exists(GetProfilesFilePath()))
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<IPScannerProfileInfo>));
 
                 using (FileStream fileStream = new FileStream(GetProfilesFilePath(), FileMode.Open))
                 {
-                    ((List<IPScannerProfileInfo>)(xmlSerializer.Deserialize(fileStream))).ForEach(profile => list.Add(profile));
+                    ((List<IPScannerProfileInfo>)(xmlSerializer.Deserialize(fileStream))).ForEach(profile => AddProfile(profile));
                 }
             }
-
-            return list;
         }
 
         private static void Templates_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -72,12 +68,12 @@ namespace NETworkManager.Models.Settings
 
         public static void Save()
         {
-            Serialize();
+            SerializeToFile();
 
             ProfilesChanged = false;
         }
 
-        private static void Serialize()
+        private static void SerializeToFile()
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<IPScannerProfileInfo>));
 

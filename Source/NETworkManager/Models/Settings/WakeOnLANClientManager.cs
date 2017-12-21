@@ -35,7 +35,7 @@ namespace NETworkManager.Models.Settings
             Clients = new ObservableCollection<WakeOnLANClientInfo>();
 
             if (deserialize)
-                Deserialize().ForEach(client => AddClient(client));
+                DeserializeFromFile();
 
             Clients.CollectionChanged += WakeOnLANClients_CollectionChanged;
         }
@@ -45,24 +45,20 @@ namespace NETworkManager.Models.Settings
             if (overwrite)
                 Clients.Clear();
 
-            Deserialize().ForEach(client => AddClient(client));
+            DeserializeFromFile();
         }
 
-        private static List<WakeOnLANClientInfo> Deserialize()
+        private static void DeserializeFromFile()
         {
-            List<WakeOnLANClientInfo> list = new List<WakeOnLANClientInfo>();
-
             if (File.Exists(GetClientsFilePath()))
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<WakeOnLANClientInfo>));
 
                 using (FileStream fileStream = new FileStream(GetClientsFilePath(), FileMode.Open))
                 {
-                    ((List<WakeOnLANClientInfo>)(xmlSerializer.Deserialize(fileStream))).ForEach(client => list.Add(client));
+                    ((List<WakeOnLANClientInfo>)(xmlSerializer.Deserialize(fileStream))).ForEach(client => AddClient(client));
                 }
             }
-
-            return list;
         }
 
         private static void WakeOnLANClients_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -72,12 +68,12 @@ namespace NETworkManager.Models.Settings
 
         public static void Save()
         {
-            Serialize();
+            SerializeToFile();
 
             ClientsChanged = false;
         }
 
-        private static void Serialize()
+        private static void SerializeToFile()
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<WakeOnLANClientInfo>));
 

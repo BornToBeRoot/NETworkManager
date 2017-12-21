@@ -37,7 +37,7 @@ namespace NETworkManager.Models.Settings
 
             if (deserialize)
             {
-                Deserialize().ForEach(profile => AddProfile(profile));
+                DeserializeFromFile().ForEach(profile => AddProfile(profile));
 
                 // Add default profiles
                 if (Profiles.Count == 0)
@@ -65,10 +65,10 @@ namespace NETworkManager.Models.Settings
             if (overwrite)
                 Profiles.Clear();
 
-            Deserialize().ForEach(profile => AddProfile(profile));
+            DeserializeFromFile().ForEach(profile => AddProfile(profile));
         }
 
-        private static List<PortScannerProfileInfo> Deserialize()
+        private static List<PortScannerProfileInfo> DeserializeFromFile()
         {
             List<PortScannerProfileInfo> list = new List<PortScannerProfileInfo>();
 
@@ -92,12 +92,12 @@ namespace NETworkManager.Models.Settings
 
         public static void Save()
         {
-            Serialize();
+            SerializeToFile();
 
             ProfilesChanged = false;
         }
 
-        private static void Serialize()
+        private static void SerializeToFile()
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<PortScannerProfileInfo>));
 

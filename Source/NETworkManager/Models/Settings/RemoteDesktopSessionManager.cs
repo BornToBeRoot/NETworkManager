@@ -35,7 +35,7 @@ namespace NETworkManager.Models.Settings
             Sessions = new ObservableCollection<RemoteDesktopSessionInfo>();
 
             if (deserialize)
-                Deserialize().ForEach(session => AddSession(session));
+                DeserializeFromFile();
 
             Sessions.CollectionChanged += Sessions_CollectionChanged; ;
         }
@@ -45,24 +45,20 @@ namespace NETworkManager.Models.Settings
             if (overwrite)
                 Sessions.Clear();
 
-            Deserialize().ForEach(session => AddSession(session));
+            DeserializeFromFile();
         }
 
-        private static List<RemoteDesktopSessionInfo> Deserialize()
+        private static void DeserializeFromFile()
         {
-            List<RemoteDesktopSessionInfo> list = new List<RemoteDesktopSessionInfo>();
-
             if (File.Exists(GetSessionsFilePath()))
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<RemoteDesktopSessionInfo>));
 
                 using (FileStream fileStream = new FileStream(GetSessionsFilePath(), FileMode.Open))
                 {
-                    ((List<RemoteDesktopSessionInfo>)(xmlSerializer.Deserialize(fileStream))).ForEach(session => list.Add(session));
+                    ((List<RemoteDesktopSessionInfo>)(xmlSerializer.Deserialize(fileStream))).ForEach(session => AddSession(session));
                 }
             }
-
-            return list;
         }
 
         private static void Sessions_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -72,12 +68,12 @@ namespace NETworkManager.Models.Settings
 
         public static void Save()
         {
-            Serialize();
+            SerializeToFile();
 
             SessionsChanged = false;
         }
 
-        private static void Serialize()
+        private static void SerializeToFile()
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<RemoteDesktopSessionInfo>));
 
