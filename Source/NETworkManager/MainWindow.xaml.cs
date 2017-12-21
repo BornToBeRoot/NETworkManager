@@ -220,23 +220,22 @@ namespace NETworkManager
             InitializeComponent();
             DataContext = this;
 
+            // Language Meta
             LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
 
             // Load appearance
             AppearanceManager.Load();
 
+            // Transparency
             if (SettingsManager.Current.Appearance_EnableTransparency)
             {
                 AllowsTransparency = true;
                 Opacity = SettingsManager.Current.Appearance_Opacity;
             }
 
-            // Autostart & Window start
+            // NotifyIcon for Autostart
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray || SettingsManager.Current.TrayIcon_AlwaysShowIcon)
                 InitNotifyIcon();
-
-            if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
-                HideWindowToTray();
 
             // Set windows title if admin
             if (ConfigurationManager.Current.IsAdmin)
@@ -249,22 +248,15 @@ namespace NETworkManager
             ApplicationView_Expand = SettingsManager.Current.ApplicationView_Expand;
 
             _isLoading = false;
+        }
 
+        // Hide window after it shows up... not nice, but otherwise the hotkeys do not work
+        protected override void OnContentRendered(EventArgs e)
+        {
+            base.OnContentRendered(e);
 
-
-            // REMOVE THIS IN RELEASE
-            /*
-            string test_masterPassword = "TExST";
-
-            CredentialManager.Load(SecureStringHelper.ConvertToSecureString(test_masterPassword));
-
-            foreach (CredentialInfo info in CredentialManager.Credentials)
-                System.Windows.MessageBox.Show(info.Username);
-
-            */
-           // CredentialManager.Save();
-
-            // - REMOVE THIS IN RELEASE
+            if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
+                HideWindowToTray();
         }
 
         private void LoadApplicationList()
@@ -447,9 +439,6 @@ namespace NETworkManager
             currentApplicationViewName = name;
         }
 
-        #endregion
-
-        #region Methods           
         private void ClearSearchFilterOnApplicationListMinimize()
         {
             if (ApplicationView_Expand)
@@ -468,6 +457,7 @@ namespace NETworkManager
         #region Handle WndProc messages (Single instance, handle HotKeys)
         private HwndSource hwndSoure;
 
+        // This is called after MainWindow() and before OnContentRendered() --> to register hotkeys...
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
@@ -624,26 +614,6 @@ namespace NETworkManager
         {
             Process.Start((string)url);
         }
-
-        //public ICommand OpenGithubProjectCommand
-        //{
-        //    get { return new RelayCommand(p => OpenGithubProjectAction()); }
-        //}
-
-        //private void OpenGithubProjectAction()
-        //{
-        //    Process.Start(Properties.Resources.NETworkManager_ProjectUrl);
-        //}
-
-        //public ICommand OpenDocumentationCommand
-        //{
-        //    get { return new RelayCommand(p => OpenDocumentationAction()); }
-        //}
-
-        //private void OpenDocumentationAction()
-        //{
-        //    Process.Start(Properties.Resources.NETworkManager_DocumentationUrl);
-        //}
 
         public ICommand OpenApplicationListCommand
         {
@@ -854,6 +824,6 @@ namespace NETworkManager
             if (e.ChangedButton == MouseButton.Left)
                 DragMove();
         }
-        #endregion
+        #endregion       
     }
 }
