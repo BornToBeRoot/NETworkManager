@@ -11,6 +11,7 @@
         mc:Ignorable="d">
     <UserControl.Resources>
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Converter:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <Converter:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
@@ -57,6 +58,15 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
+                        <MenuItem Header="{DynamicResource String_Multicast}" Command="{Binding CopySelectedMulticastCommand}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </MenuItem>
                     <MenuItem Header="{DynamicResource String_DeleteEntry}" Command="{Binding DeleteEntryCommand}">
                         <MenuItem.Icon>
@@ -81,6 +91,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress}" SortMemberPath="IPAddressInt32" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" MinWidth="200" />
+                <DataGridTextColumn Header="{DynamicResource String_Multicast}" Binding="{Binding IsMulticast, Converter={StaticResource BooleanToStringConverter}}" MinWidth="100" />
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">

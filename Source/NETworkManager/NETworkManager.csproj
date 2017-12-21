@@ -772,7 +772,7 @@
     <Compile Include="Views\Applications\NetworkInterfaceView.xaml.cs">
       <DependentUpon>NetworkInterfaceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\TrueFalseToStringConverter.cs" />
+    <Compile Include="Converters\BooleanToStringConverter.cs" />
     <Compile Include="Converters\AccentToStringConverter.cs" />
     <Compile Include="Converters\AppThemeToStringConverter.cs" />
     <Compile Include="Views\Applications\IPScannerView.xaml.cs">

@@ -8,6 +8,7 @@ namespace NETworkManager.Models.Network
     {
         public IPAddress IPAddress { get; set; }
         public PhysicalAddress MACAddress { get; set; }
+        public bool IsMulticast { get; set; }
 
         public int IPAddressInt32
         {
@@ -19,10 +20,11 @@ namespace NETworkManager.Models.Network
 
         }
 
-        public ARPTableInfo(IPAddress ipAddress, PhysicalAddress macAddress)
+        public ARPTableInfo(IPAddress ipAddress, PhysicalAddress macAddress, bool isMulticast)
         {
             IPAddress = ipAddress;
             MACAddress = macAddress;
+            IsMulticast = isMulticast;
         }
     }
 }

@@ -24,7 +24,7 @@
         <Converter:NullToFalseConverter x:Key="NullToFalseConverter" />
         <Converter:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
         <Converter:ValidateNetworkInterfaceConfigConverter x:Key="ValidateNetworkInterfaceConfigConverter" />
-        <Converter:TrueFalseToStringConverter x:Key="TrueFalseToStringConverter" />
+        <Converter:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <Converter:SelectedItemsToBoolConverter x:Key="SelectedItemsToBoolConverter" />
         <Style x:Key="ReloadAnimation" TargetType="Rectangle">
             <Setter Property="Height" Value="24" />
@@ -220,7 +220,7 @@
                         <TextBlock Grid.Column="0" Grid.Row="8" Text="{DynamicResource String_IPv4DefaultGateway}" />
                         <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding DetailsIPv4Gateway, Converter={StaticResource IPAddressArrayToStringConverter}}" />
                         <TextBlock Grid.Column="0" Grid.Row="9" Text="{DynamicResource String_DHCPEnabled}"  />
-                        <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding DetailsIPv4DhcpEnabled, Converter={StaticResource TrueFalseToStringConverter}}" />
+                        <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding DetailsIPv4DhcpEnabled, Converter={StaticResource BooleanToStringConverter}}" />
                         <TextBlock Grid.Column="0" Grid.Row="10" Text="{DynamicResource String_DHCPServer}"  />
                         <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding DetailsIPv4DhcpServer, Converter={StaticResource IPAddressArrayToStringConverter}}" />
                         <TextBlock Grid.Column="0" Grid.Row="11" Text="{DynamicResource String_DHCPLeaseObtained}"  />
@@ -234,7 +234,7 @@
                         <TextBlock Grid.Column="0" Grid.Row="15" Text="{DynamicResource String_IPv6DefaultGateway}" />
                         <TextBox Grid.Column="2" Grid.Row="15" Text="{Binding DetailsIPv6Gateway , Converter={StaticResource IPAddressArrayToStringConverter}}" />
                         <TextBlock Grid.Column="0" Grid.Row="16" Text="{DynamicResource String_DNSAutoconfiguration}" />
-                        <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding DetailsDNSAutoconfigurationEnabled, Converter={StaticResource TrueFalseToStringConverter}}" />
+                        <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding DetailsDNSAutoconfigurationEnabled, Converter={StaticResource BooleanToStringConverter}}" />
                         <TextBlock Grid.Column="0" Grid.Row="17" Text="{DynamicResource String_DNSSuffix}" />
                         <TextBox Grid.Column="2" Grid.Row="17" Text="{Binding DetailsDNSSuffix}" />
                         <TextBlock Grid.Column="0" Grid.Row="18" Text="{DynamicResource String_DNSServers}" />

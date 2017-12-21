@@ -139,8 +139,8 @@ namespace NETworkManager.Models.Network
                     PhysicalAddress macAddress = new PhysicalAddress(new byte[] { row.mac0, row.mac1, row.mac2, row.mac3, row.mac4, row.mac5 });
 
                     // Filter 0.0.0.0.0.0, 255.255.255.255.255.255
-                    if (!macAddress.Equals(virtualMAC) && !macAddress.Equals(broadcastMAC)) //&& !(ipAddress.IsIPv6Multicast || IPv4AddressHelper.IsMulticast(ipAddress)))
-                        list.Add(new ARPTableInfo(ipAddress, macAddress));
+                    if (!macAddress.Equals(virtualMAC) && !macAddress.Equals(broadcastMAC))
+                        list.Add(new ARPTableInfo(ipAddress, macAddress, (ipAddress.IsIPv6Multicast || IPv4AddressHelper.IsMulticast(ipAddress))));
                 }
 
                 return list;

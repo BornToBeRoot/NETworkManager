@@ -315,6 +315,7 @@
     <system:String x:Key="String_Scan">Scan</system:String>
     <system:String x:Key="String_Apply">Apply</system:String>
     <system:String x:Key="String_DeleteEntry">Delete entry</system:String>
+    <system:String x:Key="String_Multicast">Multicast</system:String>
 
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>

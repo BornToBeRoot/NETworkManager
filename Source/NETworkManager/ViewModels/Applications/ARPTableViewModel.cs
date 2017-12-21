@@ -251,6 +251,16 @@ namespace NETworkManager.ViewModels.Applications
         {
             Clipboard.SetText(MACAddressHelper.GetDefaultFormat(SelectedARPTableInfo.MACAddress.ToString()));
         }
+
+        public ICommand CopySelectedMulticastCommand
+        {
+            get { return new RelayCommand(p => CopySelectedMulticastAction()); }
+        }
+
+        private void CopySelectedMulticastAction()
+        {
+            Clipboard.SetText(SelectedARPTableInfo.IsMulticast ? Application.Current.Resources["String_Yes"] as string : Application.Current.Resources["String_No"] as string);
+        }
         #endregion
 
         #region Methods
