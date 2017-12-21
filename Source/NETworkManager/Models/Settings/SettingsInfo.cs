@@ -1171,6 +1171,34 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private bool _remoteDesktop_EnableCredSspSupport = true;
+        public bool RemoteDesktop_EnableCredSspSupport
+        {
+            get { return _remoteDesktop_EnableCredSspSupport; }
+            set
+            {
+                if (value == _remoteDesktop_EnableCredSspSupport)
+                    return;
+
+                _remoteDesktop_EnableCredSspSupport = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private uint _remoteDesktop_AuthenticationLevel = 2;
+        public uint RemoteDesktop_AuthenticationLevel
+        {
+            get { return _remoteDesktop_AuthenticationLevel; }
+            set
+            {
+                if (value == _remoteDesktop_AuthenticationLevel)
+                    return;
+
+                _remoteDesktop_AuthenticationLevel = value;
+                SettingsChanged = true;
+            }
+        }
+
         private bool _remoteDesktop_RedirectClipboard = true;
         public bool RemoteDesktop_RedirectClipboard
         {

@@ -1,6 +1,9 @@
-﻿using NETworkManager.Models.Settings;
+﻿using NETworkManager.Helpers;
+using NETworkManager.Models.Settings;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace NETworkManager.ViewModels.Settings
 {
@@ -93,9 +96,52 @@ namespace NETworkManager.ViewModels.Settings
                 if (value == _selectedColorDepth)
                     return;
 
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_ColorDepth = value;
+
                 _selectedColorDepth = value;
                 OnPropertyChanged();
             }
+        }
+
+        private bool _enableCredSspSupport;
+        public bool EnableCredSspSupport
+        {
+            get { return _enableCredSspSupport; }
+            set
+            {
+                if (value == _enableCredSspSupport)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_EnableCredSspSupport = value;
+
+                _enableCredSspSupport = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private uint _authenticationLevel;
+        public uint AuthenticationLevel
+        {
+            get { return _authenticationLevel; }
+            set
+            {
+                if (value == _selectedColorDepth)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_AuthenticationLevel = value;
+
+                _authenticationLevel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // String must be formatted ...
+        public string RDPAuthenticationLevelHelpMessage
+        {
+            get { return LocalizationManager.GetStringByKey("String_HelpMessage_RDPAuthenticationLevel"); }
         }
 
         private bool _redirectClipboard;
@@ -214,6 +260,8 @@ namespace NETworkManager.ViewModels.Settings
             AdjustScreenAutomatically = SettingsManager.Current.RemoteDesktop_AdjustScreenAutomatically;
             SelectedScreenResolution = ScreenResolutions.FirstOrDefault(x => x == string.Format("{0}x{1}", SettingsManager.Current.RemoteDesktop_DesktopWidth, SettingsManager.Current.RemoteDesktop_DesktopHeight));
             SelectedColorDepth = ColorDepths.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_ColorDepth);
+            EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport;
+            AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;
             RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;
             RedirectDevices = SettingsManager.Current.RemoteDesktop_RedirectDevices;
             RedirectDrives = SettingsManager.Current.RemoteDesktop_RedirectDrives;

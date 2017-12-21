@@ -159,8 +159,8 @@ namespace NETworkManager.Controls
             }
 
             // AdvancedSettings
-            rdpClient.AdvancedSettings9.AuthenticationLevel = 2;
-            rdpClient.AdvancedSettings9.EnableCredSspSupport = true;
+            rdpClient.AdvancedSettings9.AuthenticationLevel = _rdpSessionInfo.AuthenticationLevel;
+            rdpClient.AdvancedSettings9.EnableCredSspSupport = _rdpSessionInfo.EnableCredSspSupport;
 
             // Devices and resources
             rdpClient.AdvancedSettings9.RedirectClipboard = _rdpSessionInfo.RedirectClipboard;

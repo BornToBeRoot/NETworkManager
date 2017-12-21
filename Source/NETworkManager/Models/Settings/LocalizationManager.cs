@@ -76,5 +76,10 @@ namespace NETworkManager.Models.Settings
             // Set the culture code
             Culture = new CultureInfo(info.Code);
         }
+
+        public static string GetStringByKey(string key)
+        {
+            return (Application.Current.Resources[key] as string).Replace(@"\n", Environment.NewLine);
+        }
     }
 }

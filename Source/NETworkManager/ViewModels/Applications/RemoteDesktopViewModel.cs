@@ -153,6 +153,8 @@ namespace NETworkManager.ViewModels.Applications
             sessionInfo.DesktopWidth = SettingsManager.Current.RemoteDesktop_DesktopWidth;
             sessionInfo.DesktopHeight = SettingsManager.Current.RemoteDesktop_DesktopHeight;
             sessionInfo.ColorDepth = SettingsManager.Current.RemoteDesktop_ColorDepth;
+            sessionInfo.EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport;
+            sessionInfo.AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;
             sessionInfo.RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;
             sessionInfo.RedirectDevices = SettingsManager.Current.RemoteDesktop_RedirectDevices;
             sessionInfo.RedirectDrives = SettingsManager.Current.RemoteDesktop_RedirectDrives;

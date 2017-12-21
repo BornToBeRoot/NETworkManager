@@ -93,7 +93,8 @@
     <system:String x:Key="String_Header_EditCredential">Edit credential</system:String>
     <system:String x:Key="String_Header_DeleteCredential">Delete credential</system:String>
     <system:String x:Key="String_Header_ConfigureNetworkInterface">Configure Network Interface</system:String>
-
+    <system:String x:Key="String_Header_Authentication">Authentication</system:String>
+    
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">A powerful tool for managing networks and troubleshoot network problems!</system:String>
@@ -208,7 +209,7 @@
     <system:String x:Key="String_ShowClosedPorts">Show closed ports</system:String>
     <system:String x:Key="String_HostnameOrIPAddress">Hostname or IP address</system:String>
     <system:String x:Key="String_Ports">Ports</system:String>
-    <system:String x:Key="String_NumberOfStoredEntries">Number of stored entries:</system:String>
+    <system:String x:Key="String_NumberOfStoredEntries">Number of stored entries</system:String>
     <system:String x:Key="String_NetworkLocationCannotBeReached">The network address cannot be reached. Check if your computer is connected to the network. For information about network troubleshooting, see Windows Help.</system:String>
     <system:String x:Key="String_NumberOfErrorsAfterWhichIsCanceled">Number of errors after which is canceled:</system:String>
     <system:String x:Key="String_SearchedApplicationNotFound">Searched application not found!</system:String>
@@ -316,6 +317,8 @@
     <system:String x:Key="String_Apply">Apply</system:String>
     <system:String x:Key="String_DeleteEntry">Delete entry</system:String>
     <system:String x:Key="String_Multicast">Multicast</system:String>
+    <system:String x:Key="String_CredentialSecuritySupportProvider">Enable Credential Security Support Provider</system:String>
+    <system:String x:Key="String_AuthenticationLevel">Authentication level</system:String>
 
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
@@ -323,6 +326,7 @@
     <system:String x:Key="String_HelpMessage_Tags">Tags help you organize sessions by topics/projects. Multiple tags can be used with ";" be separated. Search by tags with "tag=xxx".</system:String>
     <system:String x:Key="String_HelpMessage_Credentials">Decrypt and load your credentials to select them.</system:String>
     <system:String x:Key="String_HelpMessage_PasswordNotDisplayedCanBeOverwritten">The password is not displayed when editing, but can be overwritten.</system:String>
+    <system:String x:Key="String_HelpMessage_RDPAuthenticationLevel">[0] If server authentication fails, connect to the computer without warning.\n[1] If server authentication fails, do not establish a connection.\n[2] If server authentication fails, show a warning and allow me to connect or refuse the connection.\n[3] No authentication requirement is specified.</system:String>
     
     <!-- Warn message -->
     <system:String x:Key="String_WarnMessage_SettingsGeneralAppearanceTransparency">Some graphics cards / drivers have problems maximizing the application when transparency is enabled. The function must be disabled for using "Remote Desktop"! Enabling or disabling this feature requires a restart of the application.</system:String>

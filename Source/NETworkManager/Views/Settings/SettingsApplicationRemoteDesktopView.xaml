@@ -16,12 +16,23 @@
         <ComboBox ItemsSource="{Binding ScreenResolutions}" SelectedItem="{Binding SelectedScreenResolution}" Width="250" HorizontalAlignment="Left" IsEnabled="{Binding AdjustScreenAutomatically, Converter={StaticResource BooleanReverseConverter}}" Margin="0,0,0,10" />
         <TextBlock Text="{DynamicResource String_ColorDepthBit}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding ColorDepths}" SelectedItem="{Binding SelectedColorDepth}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,20" />
+        <TextBlock Text="{DynamicResource String_Header_Authentication}" Style="{StaticResource HeaderTextBlock}" />        
+        <mah:ToggleSwitch Header="{DynamicResource String_CredentialSecuritySupportProvider}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding EnableCredSspSupport}" Margin="0,0,0,10" />
+        <TextBlock Text="{DynamicResource String_AuthenticationLevel}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+            <mah:NumericUpDown Value="{Binding AuthenticationLevel}" Maximum="3" Minimum="0" Interval="1" />
+            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="4" ToolTip="{Binding RDPAuthenticationLevelHelpMessage}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
         <TextBlock Text="{DynamicResource String_Header_LocalDevicesAndResources}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{DynamicResource String_RedirectClipboard}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectClipboard}" Margin="0,0,0,10" />
         <mah:ToggleSwitch Header="{DynamicResource String_RedirectDevices}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectDevices}" Margin="0,0,0,10" />
         <mah:ToggleSwitch Header="{DynamicResource String_RedirectDrives}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectDrives}" Margin="0,0,0,10" />
         <mah:ToggleSwitch Header="{DynamicResource String_RedirectPorts}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectPorts}" Margin="0,0,0,10" />
         <mah:ToggleSwitch Header="{DynamicResource String_RedirectSmartcards}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectSmartCards}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{DynamicResource String_RedirectPrinters}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectPrinters}" />
+        <mah:ToggleSwitch Header="{DynamicResource String_RedirectPrinters}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectPrinters}" />        
     </StackPanel>
 </UserControl>
