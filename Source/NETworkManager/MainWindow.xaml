@@ -460,7 +460,35 @@
                         <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_SearchedApplicationNotFound}" Margin="10,0" TextWrapping="Wrap" TextAlignment="Center" />
                     </Grid>
                     <Border Grid.Row="2" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,1,0,0" Background="Transparent">
-                        <Button Height="48" HorizontalContentAlignment="Stretch" Command="{Binding OpenSettingsCommand}" Style="{StaticResource SettingsButton}" Focusable="False" ToolTip="{DynamicResource String_Settings}">
+                        <Button Height="48" HorizontalContentAlignment="Stretch" Command="{Binding OpenSettingsCommand}" Focusable="False">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource SettingsButton}">
+                                    <Setter Property="ToolTip" Value="{DynamicResource String_Settings}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationView_Expand}" Value="True">
+                                            <Setter Property="ToolTip" Value="{x:Null}" />
+                                        </DataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.OpenApplicationList}" Value="True" />
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsTextBoxSearchFocused}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.Setters>
+                                                <Setter Property="ToolTip" Value="{x:Null}" />
+                                            </MultiDataTrigger.Setters>
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.OpenApplicationList}" Value="True" />
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsMouseOverApplicationList}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.Setters>
+                                                <Setter Property="ToolTip" Value="{x:Null}" />
+                                            </MultiDataTrigger.Setters>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
                             <Grid HorizontalAlignment="Left">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="48" />
