@@ -17,16 +17,16 @@ namespace NETworkManager.ViewModels.Applications
         #region Variables
         private IDialogCoordinator dialogCoordinator;
 
-        private string _filter;
-        public string Filter
+        private string _search;
+        public string Search
         {
-            get { return _filter; }
+            get { return _search; }
             set
             {
-                if (value == _filter)
+                if (value == _search)
                     return;
 
-                _filter = value;
+                _search = value;
 
                 ARPTableView.Refresh();
 
@@ -106,12 +106,12 @@ namespace NETworkManager.ViewModels.Applications
             _arpTableView.SortDescriptions.Add(new SortDescription("IPAddressInt32", ListSortDirection.Ascending));
             _arpTableView.Filter = o =>
             {
-                if (string.IsNullOrEmpty(Filter))
+                if (string.IsNullOrEmpty(Search))
                     return true;
 
                 ARPTableInfo info = o as ARPTableInfo;
 
-                string filter = Filter.Replace(" ", "").Replace("-", "").Replace(":", "");
+                string filter = Search.Replace(" ", "").Replace("-", "").Replace(":", "");
 
                 // Search by IPAddress and MACAddress
                 return info.IPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1;

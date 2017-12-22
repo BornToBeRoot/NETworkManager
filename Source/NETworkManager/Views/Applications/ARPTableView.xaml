@@ -17,18 +17,14 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10" />
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Filter}" />
-        <StackPanel Grid.Row="1" Margin="0,0,0,20">
-            <TextBox x:Name="txtFilter" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_Filter}" />
-            <TextBlock Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
-        </StackPanel>
-        <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_ARPTable}" />
-        <DataGrid x:Name="dataGridArpTable" Grid.Row="3" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding ARPTableView}" SelectedItem="{Binding SelectedARPTableInfo}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True" Margin="0,0,0,10">
+        <TextBox x:Name="txtSearch" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+        <DataGrid x:Name="dataGridArpTable" Grid.Row="2" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding ARPTableView}" SelectedItem="{Binding SelectedARPTableInfo}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
@@ -94,7 +90,8 @@
                 <DataGridTextColumn Header="{DynamicResource String_Multicast}" Binding="{Binding IsMulticast, Converter={StaticResource BooleanToStringConverter}}" MinWidth="100" />
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+        <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Command="{Binding AddEntryCommand}" Style="{StaticResource ImageWithTextButton}">
                 <Button.Content>
                     <Grid>
