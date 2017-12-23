@@ -394,18 +394,28 @@
     <system:String x:Key="String_Watermark_ExampleIPv4Address">192.168.178.55</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmask">255.255.255.0</system:String>
     <system:String x:Key="String_Watermark_HostnameOrIPAddress">Hostname or IP address...</system:String>
-    <system:String x:Key="String_Watermark_EampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150</system:String>
     <system:String x:Key="String_Watermark_LocationOfTheImport">Location of the import file...</system:String>
     <system:String x:Key="String_Watermark_ExampleMACAddressesOrVendor">01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5; Intel Corp; Asus</system:String>
-    <system:String x:Key="String_Watermark_EamplePortScanRange">22; 80; 443; 500 - 999; 8080</system:String>
+    <system:String x:Key="String_Watermark_ExamplePortScanRange">22; 80; 443; 500 - 999; 8080</system:String>
     <system:String x:Key="String_Watermark_ExampleHostnameAndOrIPAddress">192.168.178.1; fritz.box</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmaskOrCIDR">/24 or 255.255.255.0</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Gateway">192.168.178.1</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4DNSServer">8.8.8.8</system:String>
-    <system:String x:Key="String_Watermark_EamplePortPortRangeOrService">22; 80; https; ldaps; 777 - 999; 8080</system:String>
+    <system:String x:Key="String_Watermark_ExamplePortPortRangeOrService">22; 80; https; ldaps; 777 - 999; 8080</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnet">192.168.178.133/22 or 192.168.178.133/255.255.252.0</system:String>
     <system:String x:Key="String_Watermark_Filter">Filter...</system:String>
     <system:String x:Key="String_Watermark_ExampleWebsiteUri">http(s)://example.com/index.html</system:String>
+    <system:String x:Key="String_Watermark_ExampleSubnetWithCIDR">192.168.100.0/24</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPScannerProfileName">Switche (Home)</system:String>
+    <system:String x:Key="String_Watermark_ExampleGroupSwitche">Switche</system:String>
+    <system:String x:Key="String_Watermark_ExampleGroupServers">Servers</system:String>
+    <system:String x:Key="String_Watermark_ExampleNetworkInterfaceProfileName">Switche (static)</system:String>
+    <system:String x:Key="String_Watermark_ExamplePortScannerProfileName">Webserver</system:String>
+    <system:String x:Key="String_Watermark_ExampleWebserverPorts">80; 443; 8080; 8443</system:String>
+    <system:String x:Key="String_Watermark_ExampleTags">server; dmz</system:String>
+    <system:String x:Key="String_Watermark_ExampleUsername">Admin</system:String>
+    <system:String x:Key="String_Watermark_ExampleCredentialName">Windows-Testuser</system:String>
     
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Set static IP address and gateway...</system:String>

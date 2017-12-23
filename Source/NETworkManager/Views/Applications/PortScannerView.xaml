@@ -67,7 +67,7 @@
                             </ComboBox.Text>
                         </ComboBox>
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Ports}" Style="{StaticResource CenterTextBlock}" />
-                        <ComboBox Grid.Column="2" Grid.Row="2" x:Name="cbPorts" ItemsSource="{Binding PortsHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EamplePortScanRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                        <ComboBox Grid.Column="2" Grid.Row="2" x:Name="cbPorts" ItemsSource="{Binding PortsHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePortScanRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                             <ComboBox.Text>
                                 <Binding Path="Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>

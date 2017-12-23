@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Validator="clr-namespace:NETworkManager.Validators"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
              mc:Ignorable="d" Loaded="UserControl_Loaded">
     <Grid Margin="0,20">
         <Grid.RowDefinitions>
@@ -29,7 +30,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Name}" />
-            <TextBox x:Name="txtName" Grid.Column="2" Grid.Row="0">
+            <TextBox x:Name="txtName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPScannerProfileName}">
                 <TextBox.Text>
                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -39,7 +40,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_IPRange}" />
-            <TextBox x:Name="txtIPRange" Grid.Column="2" Grid.Row="2">
+            <TextBox x:Name="txtIPRange" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnetWithCIDR}">
                 <TextBox.Text>
                     <Binding Path="IPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -50,7 +51,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Group}" />
-            <ComboBox x:Name="cbGroup" Grid.Column="2" Grid.Row="4" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}">
+            <ComboBox x:Name="cbGroup" Grid.Column="2" Grid.Row="4" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleGroupSwitche}">
                 <ComboBox.Text>
                     <Binding Path="Group" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

@@ -326,7 +326,7 @@
     <system:String x:Key="String_HelpMessage_Tags">Mit Tags können Sie Sitzungen nach Themen/Projekten organisieren. Mehrere Tags können mit ";" getrennt sein. Suche nach Tags mit "tag=xxx".</system:String>
     <system:String x:Key="String_HelpMessage_Credentials">Entschlüsseln und laden Sie Ihre Anmeldedaten, um sie auszuwählen.</system:String>
     <system:String x:Key="String_HelpMessage_PasswordNotDisplayedCanBeOverwritten">Das Passwort wird bei der Bearbeitung nicht angezeigt, kann jedoch überschrieben werden.</system:String>
-    <system:String x:Key="String_HelpMessage_RDPAuthenticationLevel">[0] Wenn die Serverauthentifizierung fehlschlägt, wird ohne Warnung eine Verbindung zum Computer hergestellt.\n[1] Wenn die Serverauthentifizierung fehlschlägt, wird keine Verbindung hergestellt.\n[2] Wenn die Server-Authentifizierung fehlschlägt, wird eine Warnung und ein Dialog angezeigt um die Verbindung herzustellen oder abzulehnen.\n[3] Es ist keine Authentifizierungsanforderung angegeben.</system:String>
+    <system:String x:Key="String_HelpMessage_RDPAuthenticationLevel">[0] Wenn die Serverauthentifizierung fehlschlägt, wird ohne Warnung eine Verbindung zum Computer hergestellt.\n[1] Wenn die Serverauthentifizierung fehlschlägt, wird keine Verbindung hergestellt.\n[2] Wenn die Server-Authentifizierung fehlschlägt, wird eine Warnung und ein Dialog angezeigt, um die Verbindung herzustellen oder abzulehnen.\n[3] Es ist keine Authentifizierungsanforderung angegeben.</system:String>
     
     <!-- Warn message -->
     <system:String x:Key="String_WarnMessage_SettingsGeneralAppearanceTransparency">Einige Grafikkarten / Treiber haben Probleme bei der Maximierung der Anwendung, wenn die Transparenz aktiviert ist. Die Funktion muss für die Verwendung von "Remote Desktop" deaktiviert sein! Das Aktivieren oder Deaktivieren dieser Funktion erfordert einen Neustart der Anwendung.</system:String>
@@ -394,19 +394,29 @@
     <system:String x:Key="String_Watermark_ExampleIPv4Address">192.168.178.55</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmask">255.255.255.0</system:String>
     <system:String x:Key="String_Watermark_HostnameOrIPAddress">Hostname oder IP-Adresse...</system:String>
-    <system:String x:Key="String_Watermark_EampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150</system:String>
     <system:String x:Key="String_Watermark_LocationOfTheImport">Speicherort der Importdatei...</system:String>
     <system:String x:Key="String_Watermark_ExampleMACAddressesOrVendor">01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5; Intel Corp; Asus</system:String>
-    <system:String x:Key="String_Watermark_EamplePortScanRange">22; 80; 443; 500 - 999; 8080</system:String>
+    <system:String x:Key="String_Watermark_ExamplePortScanRange">22; 80; 443; 500 - 999; 8080</system:String>
     <system:String x:Key="String_Watermark_ExampleHostnameAndOrIPAddress">192.168.178.1; fritz.box; localhost</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmaskOrCIDR">/24 oder 255.255.255.0</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Gateway">192.168.178.1</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4DNSServer">8.8.8.8</system:String>
-    <system:String x:Key="String_Watermark_EamplePortPortRangeOrService">22; 80; https; ldaps; 777 - 999; 8080</system:String>
+    <system:String x:Key="String_Watermark_ExamplePortPortRangeOrService">22; 80; https; ldaps; 777 - 999; 8080</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnet">192.168.178.133/22 oder 192.168.178.133/255.255.252.0</system:String>
     <system:String x:Key="String_Watermark_Filter">Filter...</system:String>
     <system:String x:Key="String_Watermark_ExampleWebsiteUri">http(s)://example.com/index.html</system:String>
-
+    <system:String x:Key="String_Watermark_ExampleSubnetWithCIDR">192.168.100.0/24</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPScannerProfileName">Switche (Zuhause)</system:String>
+    <system:String x:Key="String_Watermark_ExampleGroupSwitche">Switche</system:String>
+    <system:String x:Key="String_Watermark_ExampleGroupServers">Server</system:String>
+    <system:String x:Key="String_Watermark_ExampleNetworkInterfaceProfileName">Switche (statisch)</system:String>
+    <system:String x:Key="String_Watermark_ExamplePortScannerProfileName">Webserver</system:String>
+    <system:String x:Key="String_Watermark_ExampleWebserverPorts">80; 443; 8080; 8443</system:String>
+    <system:String x:Key="String_Watermark_ExampleTags">server; dmz</system:String>
+    <system:String x:Key="String_Watermark_ExampleUsername">Admin</system:String>
+    <system:String x:Key="String_Watermark_ExampleCredentialName">Windows-Testbenutzer</system:String>
+    
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Setze statische IP-Adresse und Gateway...</system:String>
     <system:String x:Key="String_Progress_SetDynamicIPAddress">Setze dynamische IP-Adresse...</system:String>

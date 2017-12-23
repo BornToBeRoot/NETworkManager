@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Validator="clr-namespace:NETworkManager.Validators"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
              mc:Ignorable="d" Loaded="UserControl_Loaded">
     <Grid Margin="0,20">
         <Grid.RowDefinitions>
@@ -33,7 +34,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Name}" />
-            <TextBox x:Name="txtName" Grid.Column="2" Grid.Row="0">
+            <TextBox x:Name="txtName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
                 <TextBox.Text>
                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -43,7 +44,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_MACAddress}" />
-            <TextBox x:Name="txtMACAddress" Grid.Column="2" Grid.Row="2">
+            <TextBox x:Name="txtMACAddress" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddress}">
                 <TextBox.Text>
                     <Binding Path="MACAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -54,7 +55,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Broadcast}" />
-            <TextBox x:Name="txtBroadcast" Grid.Column="2" Grid.Row="4">
+            <TextBox x:Name="txtBroadcast" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Broadcast}">
                 <TextBox.Text>
                     <Binding Path="Broadcast" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -65,7 +66,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_Port}" />
-            <TextBox x:Name="txtPort" Grid.Column="2" Grid.Row="6">
+            <TextBox x:Name="txtPort" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort}">
                 <TextBox.Text>
                     <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -76,7 +77,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="8" Text="{DynamicResource String_Group}" />
-            <ComboBox x:Name="cbGroup" Grid.Column="2" Grid.Row="8" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}">
+            <ComboBox x:Name="cbGroup" Grid.Column="2" Grid.Row="8" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleGroupServers}">
                 <ComboBox.Text>
                     <Binding Path="Group" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
