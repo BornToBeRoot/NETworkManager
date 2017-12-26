@@ -14,10 +14,14 @@ namespace NETworkManager.Views.Settings
             get { return _selectedApplicationName; }
             set
             {
-                viewModel.SelectedApplicationName = value;
-
                 if (value == _selectedApplicationName)
                     return;
+                                
+                // Set the view based on the name (in viewmodel)
+                viewModel.SelectedApplicationName = value;
+
+                // Scroll into view
+                listBoxSettings.ScrollIntoView(viewModel.SelectedSettingsView);
 
                 _selectedApplicationName = value;
             }

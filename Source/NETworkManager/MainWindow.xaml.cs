@@ -279,7 +279,11 @@ namespace NETworkManager
                 return (regex.Replace(info.TranslatedName, "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1) || (regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
             };
 
+            // Get application from settings
             SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Application_DefaultApplicationViewName);
+
+            // Scroll into view
+            listViewApplication.ScrollIntoView(SelectedApplication);
         }
 
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
@@ -451,6 +455,9 @@ namespace NETworkManager
                 return;
 
             Search = string.Empty;
+
+            // Scroll into view
+            listViewApplication.ScrollIntoView(SelectedApplication);
         }
         #endregion
 

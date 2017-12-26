@@ -314,7 +314,7 @@
                         </Grid>
                     </Border>
                     <ScrollViewer Grid.Row="1" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" Style="{StaticResource FadeOutScrollViewer}">
-                        <ListView ItemsSource="{Binding Applications}" SelectedItem="{Binding SelectedApplication, Mode=TwoWay}" SelectionMode="Single" BorderThickness="0">
+                        <ListView x:Name="listViewApplication" ItemsSource="{Binding Applications}" SelectedItem="{Binding SelectedApplication, Mode=TwoWay}" SelectionMode="Single" BorderThickness="0">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Height="48">
@@ -433,10 +433,8 @@
                             </ListView.ItemContainerStyle>
                             <!-- BUGFIX This has to be set, to enable mouse wheel scrolling -->
                             <ListBox.Template>
-                                <ControlTemplate TargetType="ItemsControl">
-                                    <Border>
-                                        <ItemsPresenter />
-                                    </Border>
+                                <ControlTemplate>
+                                    <ItemsPresenter />
                                 </ControlTemplate>
                             </ListBox.Template>
                             <ListBox.ItemsPanel>
