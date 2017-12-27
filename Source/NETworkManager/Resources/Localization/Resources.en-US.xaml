@@ -319,7 +319,9 @@
     <system:String x:Key="String_Multicast">Multicast</system:String>
     <system:String x:Key="String_CredentialSecuritySupportProvider">Enable Credential Security Support Provider</system:String>
     <system:String x:Key="String_AuthenticationLevel">Authentication level</system:String>
-
+    <system:String x:Key="String_RemainingTime">Remaining time</system:String>
+    <system:String x:Key="String_UserInterfaceLocked">User interface locked!</system:String>
+    
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Reset all settings.</system:String>

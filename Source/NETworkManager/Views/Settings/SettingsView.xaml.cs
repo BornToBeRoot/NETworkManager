@@ -8,6 +8,7 @@ namespace NETworkManager.Views.Settings
     /// </summary>
     public partial class SettingsView : UserControl
     {
+        // Selected appliction name in tab settings
         private ApplicationViewManager.Name _selectedApplicationName;
         public ApplicationViewManager.Name SelectedApplicationName
         {
