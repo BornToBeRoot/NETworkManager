@@ -15,10 +15,15 @@ namespace NETworkManager.Views.Settings
             DataContext = viewModel;
         }
 
-        private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
+        private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
             ContextMenu menu = sender as ContextMenu;
             menu.DataContext = viewModel;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            viewModel.CheckCredentialsLoaded();
         }
     }
 }
