@@ -18,6 +18,8 @@ namespace NETworkManager.ViewModels.Settings
     {
         #region Variables
         private IDialogCoordinator dialogCoordinator;
+        DispatcherTimer _dispatcherTimer;
+        TimeSpan _timeSpan;
 
         private bool _credentialsFileExists;
         public bool CredentialsFileExists
@@ -43,6 +45,35 @@ namespace NETworkManager.ViewModels.Settings
                     return;
 
                 _credentialsLoaded = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // Indicates that the UI is locked
+        private bool _locked = false;
+        public bool Locked
+        {
+            get { return _locked; }
+            set
+            {
+                if (value == _locked)
+                    return;
+
+                _locked = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DateTime _timeRemaining;
+        public DateTime TimeRemaining
+        {
+            get { return _timeRemaining; }
+            set
+            {
+                if (value == _timeRemaining)
+                    return;
+
+                _timeRemaining = value;
                 OnPropertyChanged();
             }
         }
@@ -106,6 +137,23 @@ namespace NETworkManager.ViewModels.Settings
             };
 
             CheckCredentialsLoaded();
+
+            // Set up dispatcher timer
+            _dispatcherTimer = new DispatcherTimer();
+            _dispatcherTimer.Tick += _dispatcherTimer_Tick;
+            _dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+        }
+
+        private void _dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            if (_timeSpan == TimeSpan.Zero)
+            {
+                _dispatcherTimer.Stop();
+
+                Locked = true;
+            }
+
+            _timeSpan = _timeSpan.Add(TimeSpan.FromSeconds(-1));
         }
 
         private void CheckCredentialsLoaded()
@@ -170,6 +218,8 @@ namespace NETworkManager.ViewModels.Settings
                     await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_WrongPassword"] as string, Application.Current.Resources["String_WrongPasswordDecryptionFailed"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
 
                 CheckCredentialsLoaded();
+
+                TimerLockUIStart();
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -352,6 +402,15 @@ namespace NETworkManager.ViewModels.Settings
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+        #endregion
+
+        #region Methods
+        private void TimerLockUIStart()
+        {
+            _timeSpan = TimeSpan.FromSeconds(10);
+
+            _dispatcherTimer.Start();
         }
         #endregion
     }
