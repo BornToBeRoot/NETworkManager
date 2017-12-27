@@ -17,6 +17,7 @@ namespace NETworkManager.ViewModels.Settings
         #region Variables
         private IDialogCoordinator dialogCoordinator;
         DispatcherTimer _dispatcherTimer;
+        const int _lockTime = 120; // Seconds remaining until the ui is locked
 
         private bool _credentialsFileExists;
         public bool CredentialsFileExists
@@ -425,7 +426,7 @@ namespace NETworkManager.ViewModels.Settings
         {
             Locked = false;
 
-            TimeRemaining = TimeSpan.FromSeconds(10);
+            TimeRemaining = TimeSpan.FromSeconds(_lockTime);
 
             _dispatcherTimer.Start();
         }
