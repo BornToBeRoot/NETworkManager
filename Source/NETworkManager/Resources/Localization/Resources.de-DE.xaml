@@ -94,7 +94,8 @@
     <system:String x:Key="String_Header_DeleteCredential">Anmeldeinformation löschen</system:String>
     <system:String x:Key="String_Header_ConfigureNetworkInterface">Konfiguriere Netzwerkinterface</system:String>
     <system:String x:Key="String_Header_Authentication">Authentifizierung</system:String>
-    
+    <system:String x:Key="String_Header_CredentialNotFound">Anmeldeinformation nicht gefunden!</system:String>
+
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Ein leistungsstarkes Tool zum Verwalten von Netzwerken und zur Behebung von Netzwerkproblemen!</system:String>
@@ -321,7 +322,8 @@
     <system:String x:Key="String_AuthenticationLevel">Authentifizierungsebene</system:String>
     <system:String x:Key="String_RemainingTime">Verbleibende Zeit</system:String>
     <system:String x:Key="String_UserInterfaceLocked">Benutzeroberfläche gesperrt!</system:String>
-    
+    <system:String x:Key="String_CredentialNotFoundMessage">Die Anmeldeinformation wurde gelöscht. Bearbeiten Sie die Sitzung und wählen Sie eine andere Anmeldeinformation oder löschen die vorhandene.</system:String>
+
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Setzt alle Einstellungen zurück.</system:String>

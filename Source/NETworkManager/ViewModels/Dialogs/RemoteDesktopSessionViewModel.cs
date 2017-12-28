@@ -173,16 +173,13 @@ namespace NETworkManager.ViewModels.Dialogs
             Tags = _sessionInfo.Tags;
 
             if (CredentialManager.Loaded)
-            {
                 _credentials = CollectionViewSource.GetDefaultView(CredentialManager.CredentialInfoList);
-            }
-            else // Fake the entry for the user
-            {
-                if (CredentialID != null)
-                    _credentials = CollectionViewSource.GetDefaultView(new List<CredentialInfo>() { new CredentialInfo((int)CredentialID) });
-
+            else
                 ShowUnlockCredentialsHint = true;
-            }
+
+            // Fake the entry for the user (if credentials are not loaded or credential was deleted) --> example [12]
+            if (CredentialID != null && (!CredentialManager.Loaded || CredentialManager.GetCredentialByID((int)CredentialID) == null))
+                _credentials = CollectionViewSource.GetDefaultView(new List<CredentialInfo>() { new CredentialInfo((int)CredentialID) });
 
             _groups = CollectionViewSource.GetDefaultView(groups);
             _groups.SortDescriptions.Add(new SortDescription());

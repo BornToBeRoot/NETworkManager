@@ -143,46 +143,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             ExpandSessionView = SettingsManager.Current.RemoteDesktop_ExpandSessionView;
         }
-        #endregion
-
-        #region Methods
-        private void ConnectSession(Models.RemoteDesktop.RemoteDesktopSessionInfo sessionInfo, string Header = null)
-        {
-            // Add global settings...
-            sessionInfo.AdjustScreenAutomatically = SettingsManager.Current.RemoteDesktop_AdjustScreenAutomatically;
-            sessionInfo.DesktopWidth = SettingsManager.Current.RemoteDesktop_DesktopWidth;
-            sessionInfo.DesktopHeight = SettingsManager.Current.RemoteDesktop_DesktopHeight;
-            sessionInfo.ColorDepth = SettingsManager.Current.RemoteDesktop_ColorDepth;
-            sessionInfo.EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport;
-            sessionInfo.AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;
-            sessionInfo.RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;
-            sessionInfo.RedirectDevices = SettingsManager.Current.RemoteDesktop_RedirectDevices;
-            sessionInfo.RedirectDrives = SettingsManager.Current.RemoteDesktop_RedirectDrives;
-            sessionInfo.RedirectPorts = SettingsManager.Current.RemoteDesktop_RedirectPorts;
-            sessionInfo.RedirectSmartCards = SettingsManager.Current.RemoteDesktop_RedirectSmartCards;
-
-            TabItems.Add(new DragablzRemoteDesktopTabItem(Header ?? sessionInfo.Hostname, new RemoteDesktopControl(sessionInfo)));
-            SelectedTabIndex = TabItems.Count - 1;
-        }
-
-        private void RemoteDesktopSession_Search(object sender, FilterEventArgs e)
-        {
-            if (string.IsNullOrEmpty(Search))
-            {
-                e.Accepted = true;
-                return;
-            }
-
-            RemoteDesktopSessionInfo info = e.Item as RemoteDesktopSessionInfo;
-
-            string search = Search.Trim();
-
-            if (info.Hostname.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0)
-                e.Accepted = true;
-            else
-                e.Accepted = false;
-        }
-        #endregion
+        #endregion              
 
         #region ICommand & Actions
         public ICommand ConnectNewSessionCommand
@@ -294,6 +255,13 @@ namespace NETworkManager.ViewModels.Applications
                         {
                             CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)SelectedSession.CredentialID);
 
+                            if (credentialInfo == null)
+                            {
+                                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_CredentialNotFound"] as string, Application.Current.Resources["String_CredentialNotFoundMessage"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+
+                                return;
+                            }
+
                             sessionInfo.CustomCredentials = true;
                             sessionInfo.Username = credentialInfo.Username;
                             sessionInfo.Password = credentialInfo.Password;
@@ -319,6 +287,13 @@ namespace NETworkManager.ViewModels.Applications
                 else // Connect already unlocked
                 {
                     CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)SelectedSession.CredentialID);
+
+                    if(credentialInfo == null)
+                    {                     
+                        await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_CredentialNotFound"] as string, Application.Current.Resources["String_CredentialNotFoundMessage"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+
+                        return;
+                    }
 
                     sessionInfo.CustomCredentials = true;
                     sessionInfo.Username = credentialInfo.Username;
@@ -449,6 +424,45 @@ namespace NETworkManager.ViewModels.Applications
 
             ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+        #endregion
+
+        #region Methods
+        private void ConnectSession(Models.RemoteDesktop.RemoteDesktopSessionInfo sessionInfo, string Header = null)
+        {
+            // Add global settings...
+            sessionInfo.AdjustScreenAutomatically = SettingsManager.Current.RemoteDesktop_AdjustScreenAutomatically;
+            sessionInfo.DesktopWidth = SettingsManager.Current.RemoteDesktop_DesktopWidth;
+            sessionInfo.DesktopHeight = SettingsManager.Current.RemoteDesktop_DesktopHeight;
+            sessionInfo.ColorDepth = SettingsManager.Current.RemoteDesktop_ColorDepth;
+            sessionInfo.EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport;
+            sessionInfo.AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;
+            sessionInfo.RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;
+            sessionInfo.RedirectDevices = SettingsManager.Current.RemoteDesktop_RedirectDevices;
+            sessionInfo.RedirectDrives = SettingsManager.Current.RemoteDesktop_RedirectDrives;
+            sessionInfo.RedirectPorts = SettingsManager.Current.RemoteDesktop_RedirectPorts;
+            sessionInfo.RedirectSmartCards = SettingsManager.Current.RemoteDesktop_RedirectSmartCards;
+
+            TabItems.Add(new DragablzRemoteDesktopTabItem(Header ?? sessionInfo.Hostname, new RemoteDesktopControl(sessionInfo)));
+            SelectedTabIndex = TabItems.Count - 1;
+        }
+
+        private void RemoteDesktopSession_Search(object sender, FilterEventArgs e)
+        {
+            if (string.IsNullOrEmpty(Search))
+            {
+                e.Accepted = true;
+                return;
+            }
+
+            RemoteDesktopSessionInfo info = e.Item as RemoteDesktopSessionInfo;
+
+            string search = Search.Trim();
+
+            if (info.Hostname.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0)
+                e.Accepted = true;
+            else
+                e.Accepted = false;
         }
         #endregion
     }

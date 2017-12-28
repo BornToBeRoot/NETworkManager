@@ -94,6 +94,7 @@
     <system:String x:Key="String_Header_DeleteCredential">Delete credential</system:String>
     <system:String x:Key="String_Header_ConfigureNetworkInterface">Configure Network Interface</system:String>
     <system:String x:Key="String_Header_Authentication">Authentication</system:String>
+    <system:String x:Key="String_Header_CredentialNotFound">Credential not found!</system:String>
     
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -321,6 +322,7 @@
     <system:String x:Key="String_AuthenticationLevel">Authentication level</system:String>
     <system:String x:Key="String_RemainingTime">Remaining time</system:String>
     <system:String x:Key="String_UserInterfaceLocked">User interface locked!</system:String>
+    <system:String x:Key="String_CredentialNotFoundMessage">Edit the session and select a different credential or delete the existing one</system:String>
     
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
