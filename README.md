@@ -1,8 +1,8 @@
-# Welcome
-
-NETworkManager is a powerful tool for managing networks and troubleshoot network problems!
-
-![](NETworkManager.gif)
+<div align="center">  
+  <h1>NETworkManager</h1>
+  <p>NETworkManager is a powerful tool for managing networks and troubleshoot network problems!</p>
+  <img alt="NETworkManager" width="200" heigth="200" src="NETworkManager.gif" />
+ </div>
 
 # Download
 
