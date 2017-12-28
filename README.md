@@ -1,10 +1,10 @@
 <div align="center">  
   <h1>NETworkManager</h1>
-  <p>NETworkManager is a powerful tool for managing networks and troubleshoot network problems!</p>
-  <img alt="NETworkManager" width="200" heigth="200" src="NETworkManager.gif" />
- </div>
+  <p>A powerful tool for managing networks and troubleshoot network problems!</p>
+  <img alt="NETworkManager" src="NETworkManager.gif" />
+</div>
 
-# Download
+<h2>Download</h2>
 
 Latest binary: [NETworkMananger_v.1.4.1.0.zip](https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.4.1.0/NETworkManager_v1.4.1.0.zip)
 
