@@ -1,7 +1,8 @@
 <div align="center">  
   <img alt="NETworkManager" src="NETworkManager.png" />
   <h1>NETworkManager</h1>  
-  <p>
+  <p>A powerful tool for managing networks and troubleshoot network problems!</p>
+  <p>   
   <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
       <img alt="All releases" src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg" />
     </a>
@@ -12,7 +13,6 @@
       <img alt="GitHub forks" src="https://img.shields.io/github/forks/BornToBeroot/NETworkManager.svg" />
     </a>  
   </p>
-  <p>A powerful tool for managing networks and troubleshoot network problems!</p>
 </div>
 
 <h2>Download</h2>
