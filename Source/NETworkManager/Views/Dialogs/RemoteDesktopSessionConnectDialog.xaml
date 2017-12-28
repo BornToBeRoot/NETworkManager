@@ -4,11 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Validator="clr-namespace:NETworkManager.Validators"
-             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:WpfHelper="clr-namespace:NETworkManager.WpfHelper"
+             xmlns:Converter="clr-namespace:NETworkManager.Converters"
+             xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid Margin="0,20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="10" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -16,28 +24,111 @@
             <Grid.Resources>
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource DefaultPasswordBox}" />
             </Grid.Resources>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>            
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Hostname}" />
             <TextBox x:Name="txtHostname" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
                 <TextBox.Text>
-                    <Binding Path="Hostname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
+                    <Binding Path="Hostname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_UseCredentials}" />
+            <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OffLabel="" OnLabel="" IsChecked="{Binding UseCredential}" />
+            <StackPanel Grid.Column="2" Grid.Row="4" Orientation="Horizontal" Visibility="{Binding UseCredential, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <RadioButton Content="{DynamicResource String_Credentials}" />
+                <RadioButton Content="{DynamicResource String_Custom}" IsChecked="{Binding CustomCredentials}" Margin="10,0,0,0"/>
+            </StackPanel>
         </Grid>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+        <Grid Grid.Row="1" Visibility="{Binding UseCredential, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,10,0,0">
+            <Grid Visibility="{Binding CustomCredentials, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid.Resources>
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                    <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource DefaultPasswordBox}" />
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>             
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Username}" />
+                <TextBox x:Name="txtUsername" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleUsername}">
+                    <TextBox.Text>
+                        <Binding Path="Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
+                            <Binding.ValidationRules>
+                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Password}" />
+                <PasswordBox x:Name="passwordBoxPassword" Grid.Column="2" Grid.Row="2" Style="{StaticResource DefaultPasswordBox}" >
+                    <Interactivity:Interaction.Behaviors>
+                        <WpfHelper:PasswordBoxBindingBehavior Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </Interactivity:Interaction.Behaviors>
+                </PasswordBox>
+            </Grid>
+            <Grid Visibility="{Binding CustomCredentials, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
+                <Grid.Resources>
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>                
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Credential}" />
+                <ComboBox x:Name="cbCredentialID" Grid.Column="2" Grid.Row="0" SelectedValuePath="ID" SelectedValue="{Binding CredentialID}" Style="{StaticResource DefaultComboBox}" ItemsSource="{Binding Credentials}">
+                    <ComboBox.InputBindings>
+                        <KeyBinding Command="{Binding UnselectCredentialCommand}" Key="Delete"/>
+                    </ComboBox.InputBindings>
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}[{0}] {1}">
+                                            <Binding Path="ID" />
+                                            <Binding Path="Name" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <!--<Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="4" ToolTip="{DynamicResource String_HelpMessage_Credentials}" Visibility="{Binding ShowUnlockCredentialsHint, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                    <Rectangle.Resources>
+                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                    </Rectangle.Resources>
+                </Rectangle>-->
+            </Grid>
+        </Grid>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{DynamicResource String_Button_Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
             <Button Content="{DynamicResource String_Button_Connect}" Command="{Binding ConnectCommand}" IsDefault="True" Margin="10,0,0,0">
                 <Button.Style>
