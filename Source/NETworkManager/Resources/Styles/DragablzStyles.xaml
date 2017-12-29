@@ -75,7 +75,7 @@
                             <Button Style="{StaticResource CleanButton}" Command="dragablz:TabablzControl.CloseItemCommand" Margin="0,0,10,0">
                                 <Rectangle Width="16" Height="16">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=WindowClose}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=WindowClose}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -100,7 +100,7 @@
                     <Button Style="{StaticResource CleanButton}" Command="dragablz:TabablzControl.AddItemCommand" Focusable="False">
                         <Rectangle Width="20" Height="20">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Fill" Visual="{IconPacks:PackIconMaterial Kind=Plus}" />
+                                <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
                             </Rectangle.OpacityMask>
                             <Rectangle.Style>
                                 <Style TargetType="{x:Type Rectangle}">

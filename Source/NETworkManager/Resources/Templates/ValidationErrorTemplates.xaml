@@ -42,7 +42,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Grid.Column="0" Width="20" Height="20" Fill="{DynamicResource GrayBrush3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=InformationVariant}" />                                        
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=InformationVariant}" />                                        
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                                 <TextBlock Grid.Column="1" Text="{Binding Path=/ErrorContent}" Foreground="{DynamicResource BlackColorBrush}" FontSize="14" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,0,0,0"/>

@@ -45,7 +45,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Calculator}" />
+                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Calculator}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Calculate}" Margin="10,5" FontSize="14" TextAlignment="Center"/>

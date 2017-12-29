@@ -8,7 +8,7 @@
         <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=HelpCircleOutline}"/>
+                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=HelpCircleOutline}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
@@ -22,7 +22,7 @@
         <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconModern Kind=Warning}"/>
+                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Warning}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="ToolTipService.InitialShowDelay" Value="0" />

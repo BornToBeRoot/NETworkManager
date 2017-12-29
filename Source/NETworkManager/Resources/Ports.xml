@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Service Name and Transport Protocol Port Number Registry
-Generated 09/03/2017 22:50:23-->
+Generated 12/29/2017 20:38:04-->
 <Ports>
   <Port>
     <Number>0</Number>
@@ -1157,13 +1157,13 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>90</Number>
     <Protocol>tcp</Protocol>
-    <Name>DNSix</Name>
+    <Name>dnsix</Name>
     <Description>DNSIX Securit Attribute Token Map</Description>
   </Port>
   <Port>
     <Number>90</Number>
     <Protocol>udp</Protocol>
-    <Name>DNSix</Name>
+    <Name>dnsix</Name>
     <Description>DNSIX Securit Attribute Token Map</Description>
   </Port>
   <Port>
@@ -4925,6 +4925,12 @@ Generated 09/03/2017 22:50:23-->
   </Port>
   <Port>
     <Number>465</Number>
+    <Protocol>tcp</Protocol>
+    <Name>submissions</Name>
+    <Description>Message Submission over TLS protocol</Description>
+  </Port>
+  <Port>
+    <Number>465</Number>
     <Protocol>udp</Protocol>
     <Name>igmpv3lite</Name>
     <Description>IGMP over UDP for SSM</Description>
@@ -6050,13 +6056,13 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>558</Number>
     <Protocol>tcp</Protocol>
-    <Name>sDNSkmp</Name>
+    <Name>sdnskmp</Name>
     <Description>SDNSKMP</Description>
   </Port>
   <Port>
     <Number>558</Number>
     <Protocol>udp</Protocol>
-    <Name>sDNSkmp</Name>
+    <Name>sdnskmp</Name>
     <Description>SDNSKMP</Description>
   </Port>
   <Port>
@@ -8831,7 +8837,7 @@ Generated 09/03/2017 22:50:23-->
     <Number>993</Number>
     <Protocol>tcp</Protocol>
     <Name>imaps</Name>
-    <Description>imap4 protocol over TLS/SSL</Description>
+    <Description>IMAP over TLS protocol</Description>
   </Port>
   <Port>
     <Number>993</Number>
@@ -8855,7 +8861,7 @@ Generated 09/03/2017 22:50:23-->
     <Number>995</Number>
     <Protocol>tcp</Protocol>
     <Name>pop3s</Name>
-    <Description>pop3 protocol over TLS/SSL (was spop3)</Description>
+    <Description>POP3 over TLS protocol</Description>
   </Port>
   <Port>
     <Number>995</Number>
@@ -11461,13 +11467,13 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>1227</Number>
     <Protocol>tcp</Protocol>
-    <Name>DNS2go</Name>
+    <Name>dns2go</Name>
     <Description>DNS2Go</Description>
   </Port>
   <Port>
     <Number>1227</Number>
     <Protocol>udp</Protocol>
-    <Name>DNS2go</Name>
+    <Name>dns2go</Name>
     <Description>DNS2Go</Description>
   </Port>
   <Port>
@@ -12793,13 +12799,13 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>1337</Number>
     <Protocol>tcp</Protocol>
-    <Name>menandmice-DNS</Name>
+    <Name>menandmice-dns</Name>
     <Description>menandmice DNS</Description>
   </Port>
   <Port>
     <Number>1337</Number>
     <Protocol>udp</Protocol>
-    <Name>menandmice-DNS</Name>
+    <Name>menandmice-dns</Name>
     <Description>menandmice DNS</Description>
   </Port>
   <Port>
@@ -19327,13 +19333,13 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>1870</Number>
     <Protocol>tcp</Protocol>
-    <Name>sunscalar-DNS</Name>
+    <Name>sunscalar-dns</Name>
     <Description>SunSCALAR DNS Service</Description>
   </Port>
   <Port>
     <Number>1870</Number>
     <Protocol>udp</Protocol>
-    <Name>sunscalar-DNS</Name>
+    <Name>sunscalar-dns</Name>
     <Description>SunSCALAR DNS Service</Description>
   </Port>
   <Port>
@@ -22981,13 +22987,13 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>2164</Number>
     <Protocol>tcp</Protocol>
-    <Name>dDNS-v3</Name>
+    <Name>ddns-v3</Name>
     <Description>Dynamic DNS Version 3</Description>
   </Port>
   <Port>
     <Number>2164</Number>
     <Protocol>udp</Protocol>
-    <Name>dDNS-v3</Name>
+    <Name>ddns-v3</Name>
     <Description>Dynamic DNS Version 3</Description>
   </Port>
   <Port>
@@ -43259,13 +43265,13 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>3849</Number>
     <Protocol>tcp</Protocol>
-    <Name>spw-DNSpreload</Name>
+    <Name>spw-dnspreload</Name>
     <Description>SPACEWAY DNS Preload</Description>
   </Port>
   <Port>
     <Number>3849</Number>
     <Protocol>udp</Protocol>
-    <Name>spw-DNSpreload</Name>
+    <Name>spw-dnspreload</Name>
     <Description>SPACEWAY DNS Prelaod</Description>
   </Port>
   <Port>
@@ -46573,6 +46579,18 @@ Generated 09/03/2017 22:50:23-->
     <Protocol>udp</Protocol>
     <Name>assuria-slm</Name>
     <Description>Assuria Log Manager</Description>
+  </Port>
+  <Port>
+    <Number>4120</Number>
+    <Protocol>tcp</Protocol>
+    <Name>minirem</Name>
+    <Description>MiniRem Remote Telemetry and Control</Description>
+  </Port>
+  <Port>
+    <Number>4120</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>4121</Number>
@@ -53933,37 +53951,37 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>5352</Number>
     <Protocol>tcp</Protocol>
-    <Name>DNS-llq</Name>
+    <Name>dns-llq</Name>
     <Description>DNS Long-Lived Queries</Description>
   </Port>
   <Port>
     <Number>5352</Number>
     <Protocol>udp</Protocol>
-    <Name>DNS-llq</Name>
+    <Name>dns-llq</Name>
     <Description>DNS Long-Lived Queries</Description>
   </Port>
   <Port>
     <Number>5353</Number>
     <Protocol>tcp</Protocol>
-    <Name>mDNS</Name>
+    <Name>mdns</Name>
     <Description>Multicast DNS</Description>
   </Port>
   <Port>
     <Number>5353</Number>
     <Protocol>udp</Protocol>
-    <Name>mDNS</Name>
+    <Name>mdns</Name>
     <Description>Multicast DNS</Description>
   </Port>
   <Port>
     <Number>5354</Number>
     <Protocol>tcp</Protocol>
-    <Name>mDNSresponder</Name>
+    <Name>mdnsresponder</Name>
     <Description>Multicast DNS Responder IPC</Description>
   </Port>
   <Port>
     <Number>5354</Number>
     <Protocol>udp</Protocol>
-    <Name>mDNSresponder</Name>
+    <Name>mdnsresponder</Name>
     <Description>Multicast DNS Responder IPC</Description>
   </Port>
   <Port>
@@ -55449,6 +55467,18 @@ Generated 09/03/2017 22:50:23-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>5666</Number>
+    <Protocol>tcp</Protocol>
+    <Name>nrpe</Name>
+    <Description>Nagios Remote Plugin Executor</Description>
+  </Port>
+  <Port>
+    <Number>5666</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>5670</Number>
     <Protocol>tcp</Protocol>
     <Name>filemq</Name>
@@ -55619,8 +55649,8 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>5683</Number>
     <Protocol>tcp</Protocol>
-    <Name>record</Name>
-    <Description>Reserved</Description>
+    <Name>coap</Name>
+    <Description>Constrained Application Protocol (CoAP)</Description>
   </Port>
   <Port>
     <Number>5683</Number>
@@ -55631,8 +55661,8 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>5684</Number>
     <Protocol>tcp</Protocol>
-    <Name>record</Name>
-    <Description>Reserved</Description>
+    <Name>coaps</Name>
+    <Description>Constrained Application Protocol (CoAP)</Description>
   </Port>
   <Port>
     <Number>5684</Number>
@@ -65401,8 +65431,8 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>8953</Number>
     <Protocol>tcp</Protocol>
-    <Name>ub-DNS-control</Name>
-    <Description>unbound DNS nameserver control</Description>
+    <Name>ub-dns-control</Name>
+    <Description>unbound dns nameserver control</Description>
   </Port>
   <Port>
     <Number>8953</Number>
@@ -65745,6 +65775,18 @@ Generated 09/03/2017 22:50:23-->
     <Protocol>udp</Protocol>
     <Name>glrpc</Name>
     <Description>Groove GLRPC</Description>
+  </Port>
+  <Port>
+    <Number>9081</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>9081</Number>
+    <Protocol>udp</Protocol>
+    <Name>cisco-aqos</Name>
+    <Description>Required for Adaptive Quality of Service</Description>
   </Port>
   <Port>
     <Number>9082</Number>
@@ -67555,13 +67597,13 @@ Generated 09/03/2017 22:50:23-->
   <Port>
     <Number>9966</Number>
     <Protocol>tcp</Protocol>
-    <Name>oDNSp</Name>
+    <Name>odnsp</Name>
     <Description>OKI Data Network Setting Protocol</Description>
   </Port>
   <Port>
     <Number>9966</Number>
     <Protocol>udp</Protocol>
-    <Name>oDNSp</Name>
+    <Name>odnsp</Name>
     <Description>OKI Data Network Setting Protocol</Description>
   </Port>
   <Port>
@@ -71233,6 +71275,18 @@ Generated 09/03/2017 22:50:23-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>21212</Number>
+    <Protocol>tcp</Protocol>
+    <Name>trinket-agent</Name>
+    <Description>Distributed artificial intelligence</Description>
+  </Port>
+  <Port>
+    <Number>21212</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>21221</Number>
     <Protocol>tcp</Protocol>
     <Name>aigairserver</Name>
@@ -73261,6 +73315,18 @@ Generated 09/03/2017 22:50:23-->
     <Description>traceroute use</Description>
   </Port>
   <Port>
+    <Number>33435</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>33435</Number>
+    <Protocol>udp</Protocol>
+    <Name>mtrace</Name>
+    <Description>IP Multicast Traceroute</Description>
+  </Port>
+  <Port>
     <Number>33656</Number>
     <Protocol>tcp</Protocol>
     <Name>snip-slave</Name>
@@ -74747,5 +74813,17 @@ Generated 09/03/2017 22:50:23-->
     <Protocol>udp</Protocol>
     <Name>nusdp-disc</Name>
     <Description>Nuance Unity Service Discovery Protocol</Description>
+  </Port>
+  <Port>
+    <Number>49150</Number>
+    <Protocol>tcp</Protocol>
+    <Name>inspider</Name>
+    <Description>InSpider System</Description>
+  </Port>
+  <Port>
+    <Number>49150</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
 </Ports>

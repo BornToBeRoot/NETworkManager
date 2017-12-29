@@ -103,8 +103,8 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Width="20" Height="20" Margin="10,5,0,5">
                                     <Rectangle.Resources>
-                                        <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Play}"/>
-                                        <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
+                                        <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:Material Kind=Play}"/>
+                                        <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
                                     </Rectangle.Resources>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -193,7 +193,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -201,7 +201,7 @@
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
@@ -210,7 +210,7 @@
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
@@ -219,7 +219,7 @@
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
@@ -228,7 +228,7 @@
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
@@ -237,7 +237,7 @@
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
@@ -246,7 +246,7 @@
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
@@ -255,7 +255,7 @@
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
@@ -348,7 +348,7 @@
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Play}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Play}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
@@ -357,7 +357,7 @@
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconModern Kind=Edit}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
@@ -366,7 +366,7 @@
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentDuplicate}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentDuplicate}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
@@ -375,7 +375,7 @@
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
@@ -439,7 +439,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Plus}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                                 <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center"/>

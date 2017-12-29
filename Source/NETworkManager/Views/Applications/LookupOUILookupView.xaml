@@ -69,7 +69,7 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Magnify}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Magnify}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center" Text="{DynamicResource String_Button_Lookup}" />
@@ -89,7 +89,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -97,7 +97,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -106,7 +106,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>

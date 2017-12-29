@@ -19,7 +19,7 @@
         <DataTemplate>
             <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}">
                 <Rectangle.OpacityMask>
-                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Sitemap}" />
+                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Sitemap}" />
                 </Rectangle.OpacityMask>
             </Rectangle>
         </DataTemplate>
@@ -30,7 +30,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconOcticons Kind=Repo}" />
+                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Octicons Kind=Repo}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                     <TextBlock Text="{DynamicResource String_Documentation}" VerticalAlignment="Center" Margin="5,0,0,0" />
@@ -40,7 +40,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconModern Kind=SocialGithubOctocat}" />
+                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=SocialGithubOctocat}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                     <TextBlock Text="{DynamicResource String_ForkMeOnGitHub}" VerticalAlignment="Center" Margin="5,0,0,0" />
@@ -55,7 +55,7 @@
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=OpenInNew}" />
+                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=OpenInNew}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>
@@ -64,7 +64,7 @@
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconOcticons Kind=Settings}" />
+                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Octicons Kind=Settings}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>
@@ -74,7 +74,7 @@
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource CleanWindowCloseButtonBackgroundBrush}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=WindowClose}" />
+                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=WindowClose}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>
@@ -177,7 +177,7 @@
                                 </Button.Style>
                                 <Rectangle Width="24" Height="24">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconFontAwesome Kind=Bars}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:FontAwesome Kind=BarsSolid}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -277,7 +277,7 @@
                                 </ToggleButton.Style>
                                 <Rectangle Width="16" Height="16">
                                     <Rectangle.Resources>
-                                        <VisualBrush x:Key="VisualPin" Visual="{IconPacks:PackIconModern Kind=Pin}" />
+                                        <VisualBrush x:Key="VisualPin" Visual="{IconPacks:Modern Kind=Pin}" />
                                     </Rectangle.Resources>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -452,7 +452,7 @@
                         </Grid.RowDefinitions>
                         <Rectangle Grid.Row="0" Width="24" Height="24" Fill="{DynamicResource GrayBrush3}" Margin="10">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=FilterRemoveOutline}" />
+                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=FilterRemoveOutline}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_SearchedApplicationNotFound}" Margin="10,0" TextWrapping="Wrap" TextAlignment="Center" />
@@ -494,7 +494,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Grid.Column="0" Width="24" Height="24">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconModern Kind=Settings}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Settings}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -596,7 +596,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Grid.Column="0" Width="24" Height="24">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterialLight Kind=ArrowLeftCircle}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:MaterialLight Kind=ArrowLeftCircle}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">

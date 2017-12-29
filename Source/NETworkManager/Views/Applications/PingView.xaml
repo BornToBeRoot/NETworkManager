@@ -70,8 +70,8 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Width="20" Height="20" Margin="10,5,0,5">
                                 <Rectangle.Resources>
-                                    <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Play}" />
-                                    <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
+                                    <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:Material Kind=Play}" />
+                                    <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
                                 </Rectangle.Resources>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">

@@ -16,7 +16,7 @@
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCut}" />
+                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCut}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
@@ -35,7 +35,7 @@
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
@@ -54,7 +54,7 @@
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentPaste}" />
+                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentPaste}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
@@ -76,7 +76,7 @@
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>

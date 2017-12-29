@@ -29,13 +29,22 @@ namespace NETworkManager.Views
             canvas.Children.Add(packIconModern);
             Icon = canvas;
         }
-
+                
         public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconMaterial packIconMaterial)
         {
             Name = name;
             TranslatedName = ApplicationViewManager.TranslateName(name);
             Canvas canvas = new Canvas();
             canvas.Children.Add(packIconMaterial);
+            Icon = canvas;
+        }
+
+        public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconMaterialLight packIconMaterialLight)
+        {
+            Name = name;
+            TranslatedName = ApplicationViewManager.TranslateName(name);
+            Canvas canvas = new Canvas();
+            canvas.Children.Add(packIconMaterialLight);
             Icon = canvas;
         }
 

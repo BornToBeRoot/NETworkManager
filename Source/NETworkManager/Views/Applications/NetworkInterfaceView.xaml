@@ -68,8 +68,8 @@
                                     <StackPanel Orientation="Horizontal">
                                         <Rectangle Width="24" Height="24">
                                             <Rectangle.Resources>
-                                                <VisualBrush x:Key="VisualUp" Stretch="Uniform" Visual="{IconPacks:PackIconModern Kind=Network}"/>
-                                                <VisualBrush x:Key="VisualDown" Stretch="Uniform" Visual="{IconPacks:PackIconModern Kind=NetworkDisconnect}" />
+                                                <VisualBrush x:Key="VisualUp" Stretch="Uniform" Visual="{IconPacks:Modern Kind=Network}"/>
+                                                <VisualBrush x:Key="VisualDown" Stretch="Uniform" Visual="{IconPacks:Modern Kind=NetworkDisconnect}" />
                                             </Rectangle.Resources>
                                             <Rectangle.Style>
                                                 <Style TargetType="{x:Type Rectangle}">
@@ -126,7 +126,7 @@
                         <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=cbNetworkInterfaceProfiles, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Refresh}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Refresh}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ReloadAnimation}">
@@ -288,8 +288,8 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Rectangle Width="24" Height="24">
                                                 <Rectangle.Resources>
-                                                    <VisualBrush x:Key="VisualUp" Stretch="Uniform" Visual="{IconPacks:PackIconModern Kind=Network}"/>
-                                                    <VisualBrush x:Key="VisualDown" Stretch="Uniform" Visual="{IconPacks:PackIconModern Kind=NetworkDisconnect}" />
+                                                    <VisualBrush x:Key="VisualUp" Stretch="Uniform" Visual="{IconPacks:Modern Kind=Network}"/>
+                                                    <VisualBrush x:Key="VisualDown" Stretch="Uniform" Visual="{IconPacks:Modern Kind=NetworkDisconnect}" />
                                                 </Rectangle.Resources>
                                                 <Rectangle.Style>
                                                     <Style TargetType="{x:Type Rectangle}">
@@ -346,7 +346,7 @@
                             <Button Grid.Column="1" Grid.Row="0" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=cbNetworkInterfaceProfiles, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
                                 <Rectangle Width="24" Height="24">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Refresh}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Refresh}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ReloadAnimation}">
@@ -502,7 +502,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentSave}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentSave}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                     <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Apply}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
@@ -553,7 +553,7 @@
                                             <MenuItem.Icon>
                                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                                     <Rectangle.OpacityMask>
-                                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentSave}" />
+                                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentSave}" />
                                                     </Rectangle.OpacityMask>
                                                 </Rectangle>
                                             </MenuItem.Icon>
@@ -562,7 +562,7 @@
                                             <MenuItem.Icon>
                                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                                     <Rectangle.OpacityMask>
-                                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconModern Kind=Edit}" />
+                                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
                                                     </Rectangle.OpacityMask>
                                                 </Rectangle>
                                             </MenuItem.Icon>
@@ -571,7 +571,7 @@
                                             <MenuItem.Icon>
                                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                                     <Rectangle.OpacityMask>
-                                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentDuplicate}" />
+                                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentDuplicate}" />
                                                     </Rectangle.OpacityMask>
                                                 </Rectangle>
                                             </MenuItem.Icon>
@@ -580,7 +580,7 @@
                                             <MenuItem.Icon>
                                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                                     <Rectangle.OpacityMask>
-                                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
+                                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
                                                     </Rectangle.OpacityMask>
                                                 </Rectangle>
                                             </MenuItem.Icon>
@@ -644,7 +644,7 @@
                                         </Grid.ColumnDefinitions>
                                         <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Plus}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                         <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center"/>

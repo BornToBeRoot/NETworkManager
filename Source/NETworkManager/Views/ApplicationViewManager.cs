@@ -19,12 +19,12 @@ namespace NETworkManager.Views
                     new ApplicationViewInfo(Name.Ping, new PackIconMaterial() { Kind = PackIconMaterialKind.LanConnect }),
                     new ApplicationViewInfo(Name.Traceroute,  new PackIconModern() { Kind = PackIconModernKind.TransitConnection }),
                     new ApplicationViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.Dna }),
-                    new ApplicationViewInfo(Name.RemoteDesktop, new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.Desktop}),                    
+                    new ApplicationViewInfo(Name.RemoteDesktop, new PackIconOcticons() { Kind = PackIconOcticonsKind.DeviceDesktop}),                    
                     new ApplicationViewInfo(Name.WakeOnLAN, new PackIconMaterial() { Kind = PackIconMaterialKind.Power }),           
                     new ApplicationViewInfo(Name.HTTPHeaders, new PackIconModern() {Kind = PackIconModernKind.CodeXml }),
-                    new ApplicationViewInfo(Name.SubnetCalculator, new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.Calculator }),
+                    new ApplicationViewInfo(Name.SubnetCalculator, new PackIconModern() { Kind = PackIconModernKind.Calculator }),
                     new ApplicationViewInfo(Name.Lookup, new PackIconMaterial() { Kind = PackIconMaterialKind.Magnify }),
-                    new ApplicationViewInfo(Name.ARPTable, new PackIconMaterial() { Kind = PackIconMaterialKind.Matrix})
+                    new ApplicationViewInfo(Name.ARPTable, new PackIconMaterialLight() { Kind = PackIconMaterialLightKind.Table})
                 };
             }
         }

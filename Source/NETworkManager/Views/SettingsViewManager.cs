@@ -26,7 +26,7 @@ namespace NETworkManager.Views
                     new SettingsViewInfo(Name.Ping, new PackIconMaterial() { Kind = PackIconMaterialKind.LanConnect }, Group.Applications),
                     new SettingsViewInfo(Name.Traceroute, new PackIconModern() {Kind = PackIconModernKind.TransitConnection}, Group.Applications),
                     new SettingsViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.Dna }, Group.Applications ),
-                    new SettingsViewInfo(Name.RemoteDesktop, new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.Desktop}, Group.Applications),
+                    new SettingsViewInfo(Name.RemoteDesktop, new PackIconOcticons() { Kind = PackIconOcticonsKind.DeviceDesktop}, Group.Applications),
                     new SettingsViewInfo(Name.WakeOnLAN, new PackIconMaterial() {Kind = PackIconMaterialKind.Power} , Group.Applications)
                 };
             }

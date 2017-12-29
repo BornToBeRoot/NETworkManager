@@ -32,7 +32,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -40,7 +40,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -49,7 +49,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -58,7 +58,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -68,7 +68,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -101,7 +101,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Plus}" />
+                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddEntry}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
@@ -117,7 +117,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
+                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_DeleteEntry}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
@@ -143,7 +143,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Close}" />
+                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_DeleteTable}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
@@ -159,7 +159,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:PackIconMaterial Kind=Refresh}" />
+                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Refresh}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Refresh}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
