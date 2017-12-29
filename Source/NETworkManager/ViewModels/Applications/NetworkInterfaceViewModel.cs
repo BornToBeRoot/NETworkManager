@@ -654,6 +654,7 @@ namespace NETworkManager.ViewModels.Applications
 
             _networkInterfaceProfiles = CollectionViewSource.GetDefaultView(NetworkInterfaceProfileManager.Profiles);
             _networkInterfaceProfiles.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
+            _networkInterfaceProfiles.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
             _networkInterfaceProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             _networkInterfaceProfiles.Filter = o =>
             {
@@ -711,7 +712,7 @@ namespace NETworkManager.ViewModels.Applications
         }
 
         private async void ReloadNetworkInterfacesAction()
-        {            
+        {
             IsNetworkInterfaceLoading = true;
 
             await Task.Delay(2000); // Make the user happy, let him see a reload animation
@@ -821,7 +822,7 @@ namespace NETworkManager.ViewModels.Applications
             progressDialogController.SetIndeterminate();
 
             string subnetmask = SelectedProfile.Subnetmask;
-            
+
             // CIDR to subnetmask
             if (SelectedProfile.EnableStaticIPAddress && subnetmask.StartsWith("/"))
                 subnetmask = Subnetmask.GetFromCidr(int.Parse(subnetmask.TrimStart('/'))).Subnetmask;

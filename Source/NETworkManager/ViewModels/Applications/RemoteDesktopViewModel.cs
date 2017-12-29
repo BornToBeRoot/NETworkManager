@@ -111,6 +111,7 @@ namespace NETworkManager.ViewModels.Applications
 
             _remoteDesktopSessions = CollectionViewSource.GetDefaultView(RemoteDesktopSessionManager.Sessions);
             _remoteDesktopSessions.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
+            _remoteDesktopSessions.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
             _remoteDesktopSessions.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             _remoteDesktopSessions.Filter = o =>
             {

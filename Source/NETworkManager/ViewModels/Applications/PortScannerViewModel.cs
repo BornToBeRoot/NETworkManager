@@ -393,6 +393,7 @@ namespace NETworkManager.ViewModels.Applications
 
             _portScannerProfiles = CollectionViewSource.GetDefaultView(PortScannerProfileManager.Profiles);
             _portScannerProfiles.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
+            _portScannerProfiles.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
             _portScannerProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             _portScannerProfiles.Filter = o =>
             {

@@ -206,6 +206,7 @@ namespace NETworkManager.ViewModels.Applications
 
             _wakeOnLANClients = CollectionViewSource.GetDefaultView(WakeOnLANClientManager.Clients);
             _wakeOnLANClients.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
+            _wakeOnLANClients.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
             _wakeOnLANClients.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             _wakeOnLANClients.Filter = o =>
             {

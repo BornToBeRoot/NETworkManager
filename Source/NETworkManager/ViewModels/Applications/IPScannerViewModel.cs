@@ -349,6 +349,7 @@ namespace NETworkManager.ViewModels.Applications
 
             _ipScannerProfiles = CollectionViewSource.GetDefaultView(IPScannerProfileManager.Profiles);
             _ipScannerProfiles.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
+            _ipScannerProfiles.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
             _ipScannerProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             _ipScannerProfiles.Filter = o =>
             {
