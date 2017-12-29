@@ -12,6 +12,7 @@
     <UserControl.Resources>
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
+        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
     </UserControl.Resources>
     <Grid Margin="0,20">
         <Grid.RowDefinitions>
@@ -36,7 +37,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>            
+            </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Hostname}" />
             <TextBox x:Name="txtHostname" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
                 <TextBox.Text>
@@ -48,13 +49,13 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_UseCredentials}" />
-            <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OffLabel="" OnLabel="" IsChecked="{Binding UseCredential}" />
-            <StackPanel Grid.Column="2" Grid.Row="4" Orientation="Horizontal" Visibility="{Binding UseCredential, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <RadioButton Content="{DynamicResource String_Credentials}" />
+            <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OffLabel="" OnLabel="" IsChecked="{Binding UseCredentials}" />
+            <StackPanel Grid.Column="2" Grid.Row="4" Orientation="Horizontal" Visibility="{Binding UseCredentials, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <RadioButton Content="{DynamicResource String_Credentials}" IsEnabled="{Binding CredentialsLocked, Converter={StaticResource BooleanReverseConverter}}" />
                 <RadioButton Content="{DynamicResource String_Custom}" IsChecked="{Binding CustomCredentials}" Margin="10,0,0,0"/>
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="1" Visibility="{Binding UseCredential, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,10,0,0">
+        <Grid Grid.Row="1" Visibility="{Binding UseCredentials, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,10,0,0">
             <Grid Visibility="{Binding CustomCredentials, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Grid.Resources>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
@@ -70,7 +71,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>             
+                </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Username}" />
                 <TextBox x:Name="txtUsername" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleUsername}">
                     <TextBox.Text>
@@ -100,7 +101,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>                
+                </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Credential}" />
                 <ComboBox x:Name="cbCredentialID" Grid.Column="2" Grid.Row="0" SelectedValuePath="ID" SelectedValue="{Binding CredentialID}" Style="{StaticResource DefaultComboBox}" ItemsSource="{Binding Credentials}">
                     <ComboBox.InputBindings>
@@ -133,11 +134,21 @@
             <Button Content="{DynamicResource String_Button_Connect}" Command="{Binding ConnectCommand}" IsDefault="True" Margin="10,0,0,0">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
-                        <Setter Property="IsEnabled" Value="False" />
+                        <Setter Property="IsEnabled" Value="True" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=txtHostname}" Value="False" >
-                                <Setter Property="IsEnabled" Value="True" />
+                            <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=txtHostname}" Value="True" >
+                                <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding UseCredentials}" Value="True" />
+                                    <Condition Binding="{Binding CustomCredentials}" Value="False" />
+                                    <Condition Binding="{Binding CredentialID}" Value="{x:Null}" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>

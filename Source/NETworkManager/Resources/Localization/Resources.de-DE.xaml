@@ -326,6 +326,7 @@
     <system:String x:Key="String_Credentials">Anmeldeinformationen</system:String>
     <system:String x:Key="String_Custom">Eigene</system:String>
     <system:String x:Key="String_UseCredentials">Anmeldeinformationen verwenden</system:String>
+    <system:String x:Key="String_ConnectAs">Verbinden als...</system:String>
 
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>

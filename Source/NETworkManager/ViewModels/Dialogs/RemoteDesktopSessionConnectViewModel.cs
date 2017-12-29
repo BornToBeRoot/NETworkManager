@@ -1,5 +1,8 @@
-﻿using System;
+﻿using NETworkManager.Models.Settings;
+using System;
+using System.ComponentModel;
 using System.Security;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels.Dialogs
@@ -32,16 +35,16 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
-        private bool _useCredential;
-        public bool UseCredential
+        private bool _useCredentials;
+        public bool UseCredentials
         {
-            get { return _useCredential; }
+            get { return _useCredentials; }
             set
             {
-                if (value == _useCredential)
+                if (value == _useCredentials)
                     return;
 
-                _useCredential = value;
+                _useCredentials = value;
                 OnPropertyChanged();
             }
         }
@@ -88,10 +91,61 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
+        private int? _credentialID = null;
+        public int? CredentialID
+        {
+            get { return _credentialID; }
+            set
+            {
+                if (value == _credentialID)
+                    return;
+
+                _credentialID = value;
+                OnPropertyChanged();
+            }
+        }
+
+        ICollectionView _credentials;
+        public ICollectionView Credentials
+        {
+            get { return _credentials; }
+        }
+
+        private bool _credentialsLocked;
+        public bool CredentialsLocked
+        {
+            get { return _credentialsLocked; }
+            set
+            {
+                if (value == _credentialsLocked)
+                    return;
+
+                _credentialsLocked = value;
+                OnPropertyChanged();
+            }
+        }
+
         public RemoteDesktopSessionConnectViewModel(Action<RemoteDesktopSessionConnectViewModel> connectCommand, Action<RemoteDesktopSessionConnectViewModel> cancelHandler)
         {
             _connectCommand = new RelayCommand(p => connectCommand(this));
             _cancelCommand = new RelayCommand(p => cancelHandler(this));
+
+            if (CredentialManager.Loaded)
+                _credentials = CollectionViewSource.GetDefaultView(CredentialManager.CredentialInfoList);
+            else
+                CredentialsLocked = true;
         }
+
+        #region ICommand & Actions
+        public ICommand UnselectCredentialCommand
+        {
+            get { return new RelayCommand(p => UnselectCredentialAction()); }
+        }
+
+        private void UnselectCredentialAction()
+        {
+            CredentialID = null;
+        }
+        #endregion
     }
 }

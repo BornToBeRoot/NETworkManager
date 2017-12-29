@@ -326,6 +326,7 @@
     <system:String x:Key="String_Credentials">Credentials</system:String>
     <system:String x:Key="String_Custom">Custom</system:String>
     <system:String x:Key="String_UseCredentials">Use credentials</system:String>
+    <system:String x:Key="String_ConnectAs">Connect as...</system:String>
     
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
