@@ -165,8 +165,26 @@ namespace NETworkManager.ViewModels.Applications
 
                 Models.RemoteDesktop.RemoteDesktopSessionInfo remoteDesktopSessionInfo = new Models.RemoteDesktop.RemoteDesktopSessionInfo
                 {
-                    Hostname = instance.Hostname,
+                    Hostname = instance.Hostname
                 };
+
+                if(instance.UseCredentials)
+                {
+                    remoteDesktopSessionInfo.CustomCredentials = true;
+                    
+                    if(instance.CustomCredentials)
+                    {
+                        remoteDesktopSessionInfo.Username = instance.Username;
+                        remoteDesktopSessionInfo.Password = instance.Password;
+                    }
+                    else
+                    {
+                        CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)instance.CredentialID);
+                        
+                        remoteDesktopSessionInfo.Username = credentialInfo.Username;
+                        remoteDesktopSessionInfo.Password = credentialInfo.Password;
+                    }
+                }
 
                 ConnectSession(remoteDesktopSessionInfo);
             }, instance =>
@@ -306,6 +324,68 @@ namespace NETworkManager.ViewModels.Applications
             {
                 ConnectSession(sessionInfo, SelectedSession.Name);
             }
+        }
+
+        public ICommand ConnectSessionAsCommand
+        {
+            get { return new RelayCommand(p => ConnectSessionAsAction()); }
+        }
+
+        private async void ConnectSessionAsAction()
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_Connect"] as string
+            };
+
+            RemoteDesktopSessionConnectViewModel connectRemoteDesktopSessionViewModel = new RemoteDesktopSessionConnectViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ConfigurationManager.Current.FixAirspace = false;
+
+                Models.RemoteDesktop.RemoteDesktopSessionInfo remoteDesktopSessionInfo = new Models.RemoteDesktop.RemoteDesktopSessionInfo
+                {
+                    Hostname = instance.Hostname
+                };
+
+                if (instance.UseCredentials)
+                {
+                    remoteDesktopSessionInfo.CustomCredentials = true;
+
+                    if (instance.CustomCredentials)
+                    {
+                        remoteDesktopSessionInfo.Username = instance.Username;
+                        remoteDesktopSessionInfo.Password = instance.Password;
+                    }
+                    else
+                    {
+                        CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)instance.CredentialID);
+
+                        remoteDesktopSessionInfo.Username = credentialInfo.Username;
+                        remoteDesktopSessionInfo.Password = credentialInfo.Password;
+                    }
+                }
+
+                ConnectSession(remoteDesktopSessionInfo);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ConfigurationManager.Current.FixAirspace = false;
+            });
+
+            // Set the hostname
+            connectRemoteDesktopSessionViewModel.Hostname = SelectedSession.Hostname;
+
+            // Request credentials
+            connectRemoteDesktopSessionViewModel.UseCredentials = true;
+
+            customDialog.Content = new RemoteDesktopSessionConnectDialog
+            {
+                DataContext = connectRemoteDesktopSessionViewModel
+            };
+
+            ConfigurationManager.Current.FixAirspace = true;
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand EditSessionCommand
