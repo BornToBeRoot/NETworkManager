@@ -9,7 +9,6 @@ using System.Collections.ObjectModel;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels.Dialogs;
 using NETworkManager.Views.Dialogs;
-using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels.Applications
 {

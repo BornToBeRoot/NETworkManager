@@ -95,7 +95,8 @@
     <system:String x:Key="String_Header_ConfigureNetworkInterface">Konfiguriere Netzwerkinterface</system:String>
     <system:String x:Key="String_Header_Authentication">Authentifizierung</system:String>
     <system:String x:Key="String_Header_CredentialNotFound">Anmeldeinformation nicht gefunden!</system:String>
-
+    <system:String x:Key="String_Header_ConnectAs">Verbinden als</system:String>
+    
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Ein leistungsstarkes Tool zum Verwalten von Netzwerken und zur Behebung von Netzwerkproblemen!</system:String>
@@ -424,7 +425,8 @@
     <system:String x:Key="String_Watermark_ExampleTags">server; dmz</system:String>
     <system:String x:Key="String_Watermark_ExampleUsername">Admin</system:String>
     <system:String x:Key="String_Watermark_ExampleCredentialName">Windows-Testbenutzer</system:String>
-    
+    <system:String x:Key="String_Watermark_ExampleRemoteDesktopSessionName">Webserver</system:String>
+
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Setze statische IP-Adresse und Gateway...</system:String>
     <system:String x:Key="String_Progress_SetDynamicIPAddress">Setze dynamische IP-Adresse...</system:String>

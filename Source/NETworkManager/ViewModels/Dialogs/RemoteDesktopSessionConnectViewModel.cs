@@ -21,6 +21,34 @@ namespace NETworkManager.ViewModels.Dialogs
             get { return _cancelCommand; }
         }
 
+        private bool _connectAs;
+        public bool ConnectAs
+        {
+            get { return _connectAs; }
+            set
+            {
+                if (value == _connectAs)
+                    return;
+
+                _connectAs = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                if (value == _name)
+                    return;
+
+                _name = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _hostname;
         public string Hostname
         {

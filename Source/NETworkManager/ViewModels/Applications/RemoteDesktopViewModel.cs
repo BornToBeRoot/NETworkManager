@@ -336,7 +336,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_Connect"] as string
+                Title = Application.Current.Resources["String_Header_ConnectAs"] as string
             };
 
             RemoteDesktopSessionConnectViewModel connectRemoteDesktopSessionViewModel = new RemoteDesktopSessionConnectViewModel(instance =>
@@ -367,14 +367,16 @@ namespace NETworkManager.ViewModels.Applications
                     }
                 }
 
-                ConnectSession(remoteDesktopSessionInfo);
+                ConnectSession(remoteDesktopSessionInfo, instance.Name);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
             });
 
-            // Set the hostname
+            // Set name, hostname
+            connectRemoteDesktopSessionViewModel.ConnectAs = true;
+            connectRemoteDesktopSessionViewModel.Name = SelectedSession.Name;
             connectRemoteDesktopSessionViewModel.Hostname = SelectedSession.Hostname;
 
             // Request credentials

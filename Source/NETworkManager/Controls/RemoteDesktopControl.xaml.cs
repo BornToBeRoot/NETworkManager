@@ -152,7 +152,7 @@ namespace NETworkManager.Controls
         {
             rdpClient.Server = _rdpSessionInfo.Hostname;
 
-            if(_rdpSessionInfo.CustomCredentials)
+            if (_rdpSessionInfo.CustomCredentials)
             {
                 rdpClient.UserName = _rdpSessionInfo.Username;
                 rdpClient.AdvancedSettings9.ClearTextPassword = SecureStringHelper.ConvertToString(_rdpSessionInfo.Password);
@@ -192,7 +192,7 @@ namespace NETworkManager.Controls
 
             rdpClient.Connect();
         }
-
+               
         private void Reconnect()
         {
             if (_rdpSessionInfo.AdjustScreenAutomatically)
@@ -345,7 +345,7 @@ namespace NETworkManager.Controls
             Disconnected = false;
             Connected = true;
         }
-
+        
         private void RdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
         {
             Connected = false;

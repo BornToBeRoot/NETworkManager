@@ -77,7 +77,7 @@
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:FontAwesome Kind=Desktop}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Octicons Kind=DeviceDesktop}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
@@ -86,7 +86,7 @@
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:FontAwesome Kind=Desktop}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Octicons Kind=DeviceDesktop}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>

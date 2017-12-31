@@ -33,13 +33,24 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Hostname}" />
-            <TextBox x:Name="txtHostname" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Name}" Visibility="{Binding ConnectAs, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,0,0,10" />
+            <TextBox x:Name="txtName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleRemoteDesktopSessionName}" Visibility="{Binding ConnectAs, Converter={StaticResource BooleanToVisibilityConverter}}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}" Margin="0,0,0,10">
+                <TextBox.Text>
+                    <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource String_Hostname}" />
+            <TextBox x:Name="txtHostname" Grid.Column="2" Grid.Row="1" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}">
                 <TextBox.Text>
                     <Binding Path="Hostname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -48,9 +59,9 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_UseCredentials}" />
-            <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OffLabel="" OnLabel="" IsChecked="{Binding UseCredentials}" />
-            <StackPanel Grid.Column="2" Grid.Row="4" Orientation="Horizontal" Visibility="{Binding UseCredentials, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock Grid.Column="0" Grid.Row="3" Text="{DynamicResource String_UseCredentials}" />
+            <mah:ToggleSwitch Grid.Column="2" Grid.Row="3" OffLabel="" OnLabel="" IsChecked="{Binding UseCredentials}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}" />
+            <StackPanel Grid.Column="2" Grid.Row="5" Orientation="Horizontal" Visibility="{Binding UseCredentials, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <RadioButton Content="{DynamicResource String_Credentials}" IsEnabled="{Binding CredentialsLocked, Converter={StaticResource BooleanReverseConverter}}" />
                 <RadioButton Content="{DynamicResource String_Custom}" IsChecked="{Binding CustomCredentials}" Margin="10,0,0,0"/>
             </StackPanel>
