@@ -287,8 +287,6 @@ namespace NETworkManager.ViewModels.Applications
 
             (await Models.Network.ARPTable.GetTableAsync()).ForEach(x => ARPTable.Add(x));
 
-            await Task.Delay(2000);
-
             IsRefreshing = false;
         }
         #endregion
