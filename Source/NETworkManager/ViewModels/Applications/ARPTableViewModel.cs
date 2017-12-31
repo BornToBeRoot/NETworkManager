@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels.Dialogs;
 using NETworkManager.Views.Dialogs;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -64,6 +65,20 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 _selectedARPTableInfo = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isRefreshing;
+        public bool IsRefreshing
+        {
+            get { return _isRefreshing; }
+            set
+            {
+                if (value == _isRefreshing)
+                    return;
+
+                _isRefreshing = value;
                 OnPropertyChanged();
             }
         }
@@ -264,11 +279,17 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Methods
-        private void Refresh()
+        private async void Refresh()
         {
+            IsRefreshing = true;
+
             ARPTable.Clear();
 
-            Models.Network.ARPTable.GetTable().ForEach(x => ARPTable.Add(x));
+            (await Models.Network.ARPTable.GetTableAsync()).ForEach(x => ARPTable.Add(x));
+
+            await Task.Delay(2000);
+
+            IsRefreshing = false;
         }
         #endregion
 

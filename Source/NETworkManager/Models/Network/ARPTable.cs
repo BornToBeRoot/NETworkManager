@@ -70,6 +70,11 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Methods
+        public static Task<List<ARPTableInfo>> GetTableAsync()
+        {
+            return Task.Run(() => GetTable());
+        }
+
         public static List<ARPTableInfo> GetTable()
         {
             List<ARPTableInfo> list = new List<ARPTableInfo>();
