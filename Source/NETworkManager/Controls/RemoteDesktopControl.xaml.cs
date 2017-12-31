@@ -192,7 +192,7 @@ namespace NETworkManager.Controls
 
             rdpClient.Connect();
         }
-               
+
         private void Reconnect()
         {
             if (_rdpSessionInfo.AdjustScreenAutomatically)
@@ -232,7 +232,14 @@ namespace NETworkManager.Controls
         // Source: https://msdn.microsoft.com/en-us/library/aa382170(v=vs.85).aspx
         private string GetDisconnectReasonFromResource(string reason)
         {
-            return Application.Current.Resources[RemoteDesktopDisconnectReasonIdentifier + reason] as string;
+            try
+            {
+                return Application.Current.Resources[RemoteDesktopDisconnectReasonIdentifier + reason] as string;
+            }
+            catch (NullReferenceException ex) // This happens when the application gets closed and the resources have already been released
+            {
+                return ex.Message; // The user should never see that message
+            }
         }
 
         private string GetDisconnectReason(int reason)
@@ -345,7 +352,7 @@ namespace NETworkManager.Controls
             Disconnected = false;
             Connected = true;
         }
-        
+
         private void RdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
         {
             Connected = false;
