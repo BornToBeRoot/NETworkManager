@@ -25,6 +25,7 @@ The software is portable by default, simply unpack the ZIP archive and save it i
 
 _On Windows 10 systems, SmartScreen may prevent the execution of the_ `NETworkManger.exe` _, because the binary is not digitaly signed. To open it anyway, click in the dialog on "More info" then click the button "Run anyway"._
 
+<h2>Preview</h2>
 <img alt="NETworkManager" src="NETworkManager.gif" />
 
 <h2>Features</h2>
