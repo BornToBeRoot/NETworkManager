@@ -17,7 +17,7 @@
 
 <h2>Download</h2>
 
-<div align="center" style="font-size:18px;">
+<div align="center" margin="0 0 0 20">
 <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.4.2.0/NETworkManager_v1.4.2.0.zip">Version 1.4.2.0</a>
 </div>
 
