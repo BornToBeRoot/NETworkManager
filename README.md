@@ -17,9 +17,7 @@
 
 <h2>Download</h2>
 
-<div align="center" margin="0 0 0 20">
-<a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.4.2.0/NETworkManager_v1.4.2.0.zip">Version 1.4.2.0</a>
-</div>
+:package: [Version 1.4.2.0](https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.4.2.0/NETworkManager_v1.4.2.0.zip)
 
 SHA256: `10FF4C0DF4812CC3B661ACC1614B3B3496298F98A9AC2F8696DCF9D2AB5C3A19`
 
