@@ -17,9 +17,9 @@
 
 <h2>Download</h2>
 
-Latest binary: [NETworkManager - Version 1.4.1](https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.4.1.0/NETworkManager_v1.4.1.0.zip)
+Latest binary: [Version 1.4.2.0](https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.4.2.0/NETworkManager_v1.4.2.0.zip)
 
-SHA256: `F90A24DA927A9FEA5EC55A3A25B2926D11B3B46ABD398FD868C8304984EC8AB5`
+SHA256: `10FF4C0DF4812CC3B661ACC1614B3B3496298F98A9AC2F8696DCF9D2AB5C3A19`
 
 The software is portable by default, simply unpack the ZIP archive and save it in a folder you have write permissions on.
 
