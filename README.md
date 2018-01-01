@@ -58,7 +58,7 @@ The documentation can be found [here](Documentation/README.md).
 
 <h2>Changelog</h2>
 
-The changelog can be found [here](https://github.com/BornToBeRoot/NETworkManager/w<h2>Suggestions?</h2>iki/Changelog).
+The changelog can be found [here](https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog).
 
 <h2>Found an issue?</h2>
 
