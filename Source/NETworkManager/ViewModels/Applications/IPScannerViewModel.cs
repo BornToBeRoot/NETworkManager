@@ -308,7 +308,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PortScanner_ExpandProfileView = value;
+                    SettingsManager.Current.IPScanner_ExpandProfileView = value;
 
                 _expandProfileView = value;
                 OnPropertyChanged();
