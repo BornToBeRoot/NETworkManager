@@ -75,7 +75,7 @@ You have an idea how the NETworkManager can be improved? Great!
 
 Let me know it by submitting a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new) with your feature request. I will check whether it is useful and feasible.
 
-You can also help developing! Create a feature request first. Then fork the repository, do your changes and send me a pull request with the reference to the feature request. 
+You can also help developing! Fork the repository, do your changes and send me a pull request. 
 
 <h2>License</h2>
 
