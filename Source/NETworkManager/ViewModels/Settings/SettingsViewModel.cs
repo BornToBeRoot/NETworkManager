@@ -11,21 +11,6 @@ namespace NETworkManager.ViewModels.Settings
     public class SettingsViewModel : ViewModelBase
     {
         #region Variables
-        private ApplicationViewManager.Name _selectedApplicationName;
-        public ApplicationViewManager.Name SelectedApplicationName
-        {
-            get { return _selectedApplicationName; }
-            set
-            {
-                ChangeSelectedSettingsView(value.ToString());
-
-                if (value == _selectedApplicationName)
-                    return;
-
-                _selectedApplicationName = value;
-            }
-        }
-
         private CollectionViewSource _settingsViewsSource;
         public ICollectionView SettingsViews
         {
@@ -81,9 +66,11 @@ namespace NETworkManager.ViewModels.Settings
         #endregion
 
         #region Contructor, load settings
-        public SettingsViewModel()
+        public SettingsViewModel(ApplicationViewManager.Name applicationName)
         {
             LoadSettings();
+
+            ChangeSettingsView(applicationName);
         }
 
         private void LoadSettings()
@@ -99,10 +86,10 @@ namespace NETworkManager.ViewModels.Settings
         #endregion
 
         #region Methods
-        private void ChangeSelectedSettingsView(string applicationName)
-        {
-            if (Enum.GetNames(typeof(SettingsViewManager.Name)).Contains(applicationName))
-                SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name.ToString() == applicationName);
+        public void ChangeSettingsView(ApplicationViewManager.Name applicationName)
+        {            
+            if (Enum.GetNames(typeof(SettingsViewManager.Name)).Contains(applicationName.ToString()) && ApplicationViewManager.Name.None.ToString() != applicationName.ToString())
+                SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name.ToString() == applicationName.ToString());
             else
                 SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name == SettingsViewManager.Name.General);
         }

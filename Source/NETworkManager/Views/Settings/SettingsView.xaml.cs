@@ -1,5 +1,6 @@
 ﻿using NETworkManager.ViewModels.Settings;
 using System.Windows.Controls;
+using System;
 
 namespace NETworkManager.Views.Settings
 {
@@ -8,37 +9,27 @@ namespace NETworkManager.Views.Settings
     /// </summary>
     public partial class SettingsView : UserControl
     {
-        // Selected appliction name in tab settings
-        private ApplicationViewManager.Name _selectedApplicationName;
-        public ApplicationViewManager.Name SelectedApplicationName
-        {
-            get { return _selectedApplicationName; }
-            set
-            {
-                if (value == _selectedApplicationName)
-                    return;
-                                
-                // Set the view based on the name (in viewmodel)
-                viewModel.SelectedApplicationName = value;
+        private SettingsViewModel viewModel;
 
-                // Scroll into view
-                listBoxSettings.ScrollIntoView(viewModel.SelectedSettingsView);
-
-                _selectedApplicationName = value;
-            }
-        }
-
-        private SettingsViewModel viewModel = new SettingsViewModel();
-
-        public SettingsView()
+        public SettingsView(ApplicationViewManager.Name applicationName)
         {
             InitializeComponent();
+            viewModel = new SettingsViewModel(applicationName);
+
             DataContext = viewModel;
         }
 
         private void ScrollViewer_ManipulationBoundaryFeedback(object sender, System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
         {
             e.Handled = true;
+        }
+
+        public void ChangeSettingsView(ApplicationViewManager.Name name)
+        {
+            viewModel.ChangeSettingsView(name);
+
+            // Scroll into view
+            listBoxSettings.ScrollIntoView(viewModel.SelectedSettingsView);
         }
     }
 }

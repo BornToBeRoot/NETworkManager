@@ -646,16 +646,17 @@ namespace NETworkManager
             // Save current language code
             if (string.IsNullOrEmpty(_cultureCode))
                 _cultureCode = SettingsManager.Current.Localization_CultureCode;
-
+                        
             // Init settings view
             if (_settingsView == null)
             {
-                _settingsView = new SettingsView();
+                _settingsView = new SettingsView(SelectedApplication.Name);
                 contentControlSettings.Content = _settingsView;
             }
-
-            // Change selected settings view
-            _settingsView.SelectedApplicationName = _isInTray ? ApplicationViewManager.Name.None : SelectedApplication.Name;
+            else // Change view
+            {
+                _settingsView.ChangeSettingsView(SelectedApplication.Name);
+            }
 
             // Show the view (this will hide other content)
             ShowSettingsView = true;
