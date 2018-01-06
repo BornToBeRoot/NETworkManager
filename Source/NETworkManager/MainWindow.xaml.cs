@@ -311,6 +311,10 @@ namespace NETworkManager
             {
                 e.Cancel = true;
 
+                // If the window is minimized, bring it to front
+                if (WindowState == WindowState.Minimized)
+                    BringWindowToFront();
+
                 MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
                 settings.AffirmativeButtonText = System.Windows.Application.Current.Resources["String_Button_Close"] as string;
