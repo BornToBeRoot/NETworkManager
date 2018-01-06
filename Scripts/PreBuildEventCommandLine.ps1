@@ -16,7 +16,7 @@ if(-not($OutPath.StartsWith('"')))
 # Test if files are already there...
 if((Test-Path -Path "$OutPath\MSTSCLib.dll") -and (Test-Path -Path "$OutPath\AxMSTSCLib.dll"))
 {
-    Write-Host "MSTSCLib.dll and AxMSTSCLib.dll already created!"
+    Write-Host "MSTSCLib.dll and AxMSTSCLib.dll already there!"
     return
 }
 
@@ -29,12 +29,16 @@ if([String]::IsNullOrEmpty($ProgramFiles_Path))
 }
 
 # Get aximp from sdk
-$files = (Get-ChildItem -Path "$ProgramFiles_Path\Microsoft SDKs\Windows" -Recurse -Filter "aximp.exe" -File)
+$AximpPath = ((Get-ChildItem -Path "$ProgramFiles_Path\Microsoft SDKs\Windows" -Recurse -Filter "aximp.exe" -File) | Sort-Object FullName | Select-Object -First 1).FullName
 
-if($files.Count -eq 0)
+if([String]::IsNullOrEmpty($AximpPath))
 {
     Write-Host "Aximp.exe not found on this system!"
-    exit 2
+    return
+}
+else 
+{
+    Write-Host "Using aximp.exe form: $AximpPath"    
 }
 
 # Change location
@@ -42,5 +46,5 @@ Write-Host "Change location to: $OutPath"
 Set-Location -Path $OutPath 
 
 # Create MSTSCLib.dll and AxMSTSCLib.dll
-Write-Host "Creating MSTSCLib.dll and AxMSTSCLib.dll ..."
-Start-Process -FilePath $files[$files.Length -1].FullName -ArgumentList "$($Env:windir)\system32\mstscax.dll" -Wait -NoNewWindow
+Write-Host "Build MSTSCLib.dll and AxMSTSCLib.dll ..."
+Start-Process -FilePath $AximpPath -ArgumentList "$($Env:windir)\system32\mstscax.dll" -Wait -NoNewWindow
