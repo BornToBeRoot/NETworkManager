@@ -57,16 +57,17 @@ namespace NETworkManager.Models.Network
 
             Task.Run(() =>
             {
-                foreach (Tuple<IPAddress, string> host in hostData)
-                {
-                    try
-                    {
-                        ParallelOptions parallelOptions = new ParallelOptions()
-                        {
-                            CancellationToken = cancellationToken,
-                            MaxDegreeOfParallelism = portScannerOptions.Threads
-                        };
 
+                try
+                {
+                    ParallelOptions parallelOptions = new ParallelOptions()
+                    {
+                        CancellationToken = cancellationToken,
+                        MaxDegreeOfParallelism = portScannerOptions.Threads
+                    };
+
+                    foreach (Tuple<IPAddress, string> host in hostData)
+                    {
                         // foreach ip, Parallel.ForEach port...
                         Parallel.ForEach(ports, parallelOptions, port =>
                         {
@@ -99,20 +100,22 @@ namespace NETworkManager.Models.Network
                             // Increase the progress                        
                             Interlocked.Increment(ref progressValue);
                             OnProgressChanged();
-                        });                                                
-                    }
-                    catch (OperationCanceledException) // If user has canceled
-                    {
-                        OnUserHasCanceled();
-                        break;
+                        });
                     }
                 }
+                catch (OperationCanceledException) // If user has canceled
+                {
+                    OnUserHasCanceled();
+                }
+                finally
+                {
+                    // Reset the ThreadPool to defaul
+                    ThreadPool.GetMinThreads(out workerThreads, out completionPortThreads);
+                    ThreadPool.SetMinThreads(workerThreads - portScannerOptions.Threads, completionPortThreads - portScannerOptions.Threads);
 
-                OnScanComplete();
-            });                        
-
-            // Reset the ThreadPool to defaul
-            ThreadPool.SetMinThreads(workerThreads, completionPortThreads);
+                    OnScanComplete();
+                }
+            });
         }
         #endregion
     }

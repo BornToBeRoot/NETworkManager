@@ -1,6 +1,7 @@
 ﻿using NETworkManager.Helpers;
 using NETworkManager.Models.Lookup;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -140,10 +141,13 @@ namespace NETworkManager.Models.Network
                     else
                         OnUserHasCanceled();
                 }
+                finally
+                {
+                    // Reset the ThreadPool to default
+                    ThreadPool.GetMinThreads(out workerThreads, out completionPortThreads);
+                    ThreadPool.SetMinThreads(workerThreads - ipScannerOptions.Threads, completionPortThreads - ipScannerOptions.Threads);
+                }
             });
-
-            // Reset the ThreadPool to default
-            ThreadPool.SetMinThreads(workerThreads, completionPortThreads);
         }
         #endregion
     }
