@@ -847,6 +847,8 @@ namespace NETworkManager.ViewModels.Applications
         {
             StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
             DisplayStatusMessage = true;
+
+            ScanFinished();
         }
 
         private void PortScanner_ProgressChanged(object sender, ProgressChangedArgs e)

@@ -102,18 +102,22 @@ namespace NETworkManager.Models.Network
                             OnProgressChanged();
                         });
                     }
+
+                    OnScanComplete();
                 }
                 catch (OperationCanceledException) // If user has canceled
                 {
-                    OnUserHasCanceled();
+                    // Check if the scan is already complete...
+                    if ((ports.Length * hostData.Count) == progressValue)
+                        OnScanComplete();
+                    else
+                        OnUserHasCanceled();
                 }
                 finally
                 {
                     // Reset the ThreadPool to defaul
                     ThreadPool.GetMinThreads(out workerThreads, out completionPortThreads);
                     ThreadPool.SetMinThreads(workerThreads - portScannerOptions.Threads, completionPortThreads - portScannerOptions.Threads);
-
-                    OnScanComplete();
                 }
             });
         }
