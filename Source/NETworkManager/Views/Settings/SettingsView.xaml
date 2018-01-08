@@ -10,12 +10,18 @@
             <TabItem Header="{DynamicResource String_Header_Settings}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="250" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,1,0">
-                        <ScrollViewer ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" Style="{StaticResource FadeOutScrollViewer}">
-                            <ListBox x:Name="listBoxSettings" ItemsSource="{Binding SettingsViews}" SelectedItem="{Binding SelectedSettingsView}" Margin="10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBox x:Name="txtSearch" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+                            <ScrollViewer Grid.Row="1" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" Style="{StaticResource FadeOutScrollViewer}">
+                            <ListBox x:Name="listBoxSettings" ItemsSource="{Binding SettingsViews}" SelectedItem="{Binding SelectedSettingsView}" Margin="10,0,10,10">
                                 <ListBox.GroupStyle>
                                     <GroupStyle>
                                         <GroupStyle.ContainerStyle>
@@ -114,6 +120,7 @@
                                 <!-- /BUGFIX-->
                             </ListBox>
                         </ScrollViewer>
+                        </Grid>
                     </Border>
                     <ScrollViewer Grid.Column="1" Style="{StaticResource DefaulScrollViewer}" Margin="10">
                         <ContentControl Content="{Binding SettingsContent}" />

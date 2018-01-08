@@ -5,6 +5,7 @@ using NETworkManager.Views.Settings;
 using System.ComponentModel;
 using System.Windows.Data;
 using System;
+using System.Text.RegularExpressions;
 
 namespace NETworkManager.ViewModels.Settings
 {
@@ -15,6 +16,23 @@ namespace NETworkManager.ViewModels.Settings
         public ICollectionView SettingsViews
         {
             get { return _settingsViewsSource.View; }
+        }
+
+        private string _search;
+        public string Search
+        {
+            get { return _search; }
+            set
+            {
+                if (value == _search)
+                    return;
+
+                _search = value;
+
+                SettingsViews.Refresh();
+
+                OnPropertyChanged();
+            }
         }
 
         private UserControl _settingsContent;
@@ -81,13 +99,30 @@ namespace NETworkManager.ViewModels.Settings
                 Source = SettingsViewManager.List
             };
 
-            _settingsViewsSource.GroupDescriptions.Add(new PropertyGroupDescription("TranslatedGroup"));
+            SettingsViews.GroupDescriptions.Add(new PropertyGroupDescription("TranslatedGroup"));
+            SettingsViews.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+
+            SettingsViews.Filter = o =>
+            {
+                if (string.IsNullOrEmpty(Search))
+                    return true;
+
+                // Settings view without "-" and " "
+                SettingsViewInfo info = o as SettingsViewInfo;
+
+                Regex regex = new Regex(@" |-");
+
+                string search = regex.Replace(Search, "");
+
+                // Search by TranslatedName and Name
+                return (regex.Replace(info.TranslatedName, "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1) || (regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+            };
         }
         #endregion
 
         #region Methods
         public void ChangeSettingsView(ApplicationViewManager.Name applicationName)
-        {            
+        {
             if (Enum.GetNames(typeof(SettingsViewManager.Name)).Contains(applicationName.ToString()) && ApplicationViewManager.Name.None.ToString() != applicationName.ToString())
                 SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name.ToString() == applicationName.ToString());
             else
@@ -155,7 +190,7 @@ namespace NETworkManager.ViewModels.Settings
                 case SettingsViewManager.Name.IPScanner:
                     if (_settingsApplicationIPScannerView == null)
                         _settingsApplicationIPScannerView = new SettingsApplicationIPScannerView();
-                                        
+
                     SettingsContent = _settingsApplicationIPScannerView;
                     break;
                 case SettingsViewManager.Name.PortScanner:
