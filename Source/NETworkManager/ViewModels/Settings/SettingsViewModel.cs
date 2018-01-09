@@ -31,6 +31,23 @@ namespace NETworkManager.ViewModels.Settings
 
                 SettingsViews.Refresh();
 
+                // Show note when there was nothing found
+                SearchNothingFound = SettingsViews.Cast<SettingsViewInfo>().Count() == 0;
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _searchNothingFound;
+        public bool SearchNothingFound
+        {
+            get { return _searchNothingFound; }
+            set
+            {
+                if (value == _searchNothingFound)
+                    return;
+
+                _searchNothingFound = value;
                 OnPropertyChanged();
             }
         }
