@@ -329,7 +329,10 @@
     <system:String x:Key="String_Custom">Eigene</system:String>
     <system:String x:Key="String_UseCredentials">Anmeldeinformationen verwenden</system:String>
     <system:String x:Key="String_ConnectAs">Verbinden als...</system:String>
-
+    <system:String x:Key="String_URL">URL</system:String>
+    <system:String x:Key="String_MACAddressOrVendor">MAC-Adresse oder Hersteller</system:String>
+    <system:String x:Key="String_PortOrService">Port oder Dienst</system:String>
+    
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Setzt alle Einstellungen zurück.</system:String>
@@ -403,7 +406,7 @@
     <system:String x:Key="String_Watermark_ExamplePort">7</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Address">192.168.178.55</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmask">255.255.255.0</system:String>
-    <system:String x:Key="String_Watermark_HostnameOrIPAddress">Hostname oder IP-Adresse...</system:String>
+    <system:String x:Key="String_Watermark_ExampleHostnameOrIPAddress">fritz.box or 192.168.178.1</system:String>
     <system:String x:Key="String_Watermark_ExampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150</system:String>
     <system:String x:Key="String_Watermark_LocationOfTheImport">Speicherort der Importdatei...</system:String>
     <system:String x:Key="String_Watermark_ExampleMACAddressesOrVendor">01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5; Intel Corp; Asus</system:String>
@@ -427,7 +430,8 @@
     <system:String x:Key="String_Watermark_ExampleUsername">Admin</system:String>
     <system:String x:Key="String_Watermark_ExampleCredentialName">Windows-Testbenutzer</system:String>
     <system:String x:Key="String_Watermark_ExampleRemoteDesktopSessionName">Webserver</system:String>
-
+    <system:String x:Key="String_Watermark_ExampleSuffix">fritz.box</system:String>
+    
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Setze statische IP-Adresse und Gateway...</system:String>
     <system:String x:Key="String_Progress_SetDynamicIPAddress">Setze dynamische IP-Adresse...</system:String>

@@ -95,7 +95,8 @@
     <system:String x:Key="String_Header_ConfigureNetworkInterface">Configure Network Interface</system:String>
     <system:String x:Key="String_Header_Authentication">Authentication</system:String>
     <system:String x:Key="String_Header_CredentialNotFound">Credential not found!</system:String>
-    
+    <system:String x:Key="String_Header_ConnectAs">Connect as</system:String>
+
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">A powerful tool for managing networks and troubleshoot network problems!</system:String>
@@ -328,6 +329,9 @@
     <system:String x:Key="String_Custom">Custom</system:String>
     <system:String x:Key="String_UseCredentials">Use credentials</system:String>
     <system:String x:Key="String_ConnectAs">Connect as...</system:String>
+    <system:String x:Key="String_URL">URL</system:String>
+    <system:String x:Key="String_MACAddressOrVendor">MAC address or vendor</system:String>
+    <system:String x:Key="String_PortOrService">Port or service</system:String>
     
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
@@ -402,7 +406,7 @@
     <system:String x:Key="String_Watermark_ExamplePort">7</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Address">192.168.178.55</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmask">255.255.255.0</system:String>
-    <system:String x:Key="String_Watermark_HostnameOrIPAddress">Hostname or IP address...</system:String>
+    <system:String x:Key="String_Watermark_ExampleHostnameOrIPAddress">SERVER-01 or 172.16.0.100</system:String>
     <system:String x:Key="String_Watermark_ExampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150</system:String>
     <system:String x:Key="String_Watermark_LocationOfTheImport">Location of the import file...</system:String>
     <system:String x:Key="String_Watermark_ExampleMACAddressesOrVendor">01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5; Intel Corp; Asus</system:String>
@@ -426,7 +430,7 @@
     <system:String x:Key="String_Watermark_ExampleUsername">Admin</system:String>
     <system:String x:Key="String_Watermark_ExampleCredentialName">Windows-Testuser</system:String>
     <system:String x:Key="String_Watermark_ExampleRemoteDesktopSessionName">Webserver</system:String>
-    <system:String x:Key="String_Header_ConnectAs">Connect as</system:String>
+    <system:String x:Key="String_Watermark_ExampleSuffix">fritz.box</system:String>
     
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Set static IP address and gateway...</system:String>

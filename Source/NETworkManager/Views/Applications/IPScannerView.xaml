@@ -44,11 +44,14 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <ComboBox Grid.Column="0" x:Name="cbIPRange" ItemsSource="{Binding IPRangeHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPScanRange}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                    <TextBlock Grid.Column="0" Text="{DynamicResource String_IPRange}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
+                    <ComboBox Grid.Column="2" x:Name="cbIPRange" ItemsSource="{Binding IPRangeHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPScanRange}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                         <ComboBox.Text>
                             <Binding Path="IPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
@@ -58,7 +61,7 @@
                             </Binding>
                         </ComboBox.Text>
                     </ComboBox>
-                    <Button Grid.Column="2" Command="{Binding ScanCommand}" IsDefault="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsScanRunning}">
+                    <Button Grid.Column="4" Command="{Binding ScanCommand}" IsDefault="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsScanRunning}">
                         <Button.Resources>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                                 <Setter Property="IsEnabled" Value="True" />

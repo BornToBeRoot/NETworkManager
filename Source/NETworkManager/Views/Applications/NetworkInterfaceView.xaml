@@ -62,7 +62,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <ComboBox Grid.Column="0" x:Name="cbNetworkInterfaceProfiles" Grid.Row="1" FontSize="14" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
+                        <ComboBox Grid.Column="0" x:Name="cbNetworkInterfaceProfiles" Grid.Row="1" BorderThickness="1" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -282,7 +282,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <ComboBox Grid.Column="0" Grid.Row="0" FontSize="14" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
+                            <ComboBox Grid.Column="0" Grid.Row="0" BorderThickness="1" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">

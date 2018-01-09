@@ -30,12 +30,13 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0">
-                <Grid Margin="0,0,0,10">
+                <Grid Grid.Row="0" Margin="0,0,0,10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -43,7 +44,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_Subnet}" />
-                    <ComboBox Grid.Column="2" Grid.Row="0" x:Name="cbSubnet" ItemsSource="{Binding SubnetHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnet}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Style="{StaticResource HistoryComboBox}">
+                    <ComboBox Grid.Column="2" Grid.Row="0" x:Name="cbSubnet" Height="{Binding ElementName=cbNewSubnetmaskOrCIDR, Path=ActualHeight}" ItemsSource="{Binding SubnetHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnet}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Style="{StaticResource HistoryComboBox}">
                         <ComboBox.Text>
                             <Binding Path="Subnet" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                                 <Binding.ValidationRules>
@@ -54,7 +55,7 @@
                         </ComboBox.Text>
                     </ComboBox>
                     <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_NewSubnetmaskOrCIDR}" />
-                    <ComboBox Grid.Column="2" Grid.Row="2" x:Name="cbNewSubnetmaskOrCIDR" ItemsSource="{Binding NewSubnetmaskOrCIDRHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnetmaskOrCIDR}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Style="{StaticResource HistoryComboBox}">
+                    <ComboBox x:Name="cbNewSubnetmaskOrCIDR" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding NewSubnetmaskOrCIDRHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnetmaskOrCIDR}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Style="{StaticResource HistoryComboBox}">
                         <ComboBox.Text>
                             <Binding Path="NewSubnetmaskOrCIDR" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                                 <Binding.ValidationRules>
@@ -64,8 +65,7 @@
                             </Binding>
                         </ComboBox.Text>
                     </ComboBox>
-                </Grid>
-                <Button Command="{Binding SplitIPv4SubnetCommand}" IsDefault="{Binding IsSplitRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsSplitRunning}" HorizontalAlignment="Right">
+                <Button Grid.Column="4" Grid.Row="4" Command="{Binding SplitIPv4SubnetCommand}" IsDefault="{Binding IsSplitRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsSplitRunning}" HorizontalAlignment="Right">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Style.Triggers>
@@ -124,7 +124,7 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-            </StackPanel>
+            </Grid>                         
             <Controls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
                 <Controls:MetroProgressBar.Style>
                     <Style TargetType="{x:Type  Controls:MetroProgressBar}">
