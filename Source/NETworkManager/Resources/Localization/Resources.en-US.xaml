@@ -214,6 +214,7 @@
     <system:String x:Key="String_NetworkLocationCannotBeReached">The network address cannot be reached. Check if your computer is connected to the network. For information about network troubleshooting, see Windows Help.</system:String>
     <system:String x:Key="String_NumberOfErrorsAfterWhichIsCanceled">Number of errors after which is canceled:</system:String>
     <system:String x:Key="String_SearchedApplicationNotFound">Searched application not found!</system:String>
+    <system:String x:Key="String_SearchedSettingNotFound">Searched setting not found!</system:String>
     <system:String x:Key="String_MagicPacketSuccessfulSended">Magic packet successful sended!</system:String>
     <system:String x:Key="String_StartTime">Start time</system:String>
     <system:String x:Key="String_Duration">Duration</system:String>

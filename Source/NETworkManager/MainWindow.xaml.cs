@@ -262,8 +262,9 @@ namespace NETworkManager
         private void LoadApplicationList()
         {
             _applications = CollectionViewSource.GetDefaultView(ApplicationViewManager.List);
-            _applications.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending)); // Always have the same order, even if it is translated
-            _applications.Filter = o =>
+
+            Applications.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending)); // Always have the same order, even if it is translated
+            Applications.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
                     return true;

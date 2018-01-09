@@ -4,116 +4,136 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:SettingsViews ="clr-namespace:NETworkManager.Views.Settings"
+        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d">
     <Grid>
         <TabControl Style="{StaticResource DefaultTabControl}">
             <TabItem Header="{DynamicResource String_Header_Settings}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="250" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,1,0">
-                        <ScrollViewer ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" Style="{StaticResource FadeOutScrollViewer}">
-                            <ListBox x:Name="listBoxSettings" ItemsSource="{Binding SettingsViews}" SelectedItem="{Binding SelectedSettingsView}" Margin="10">
-                                <ListBox.GroupStyle>
-                                    <GroupStyle>
-                                        <GroupStyle.ContainerStyle>
-                                            <Style TargetType="{x:Type GroupItem}">
-                                                <Setter Property="Template">
-                                                    <Setter.Value>
-                                                        <ControlTemplate>
-                                                            <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}" Padding="0">
-                                                                <Expander.Header>
-                                                                    <TextBlock Text="{Binding Name}" Style="{StaticResource HeaderTextBlock}" FontSize="18" Margin="0" Foreground="{DynamicResource GrayBrush3}"/>
-                                                                </Expander.Header>
-                                                                <ItemsPresenter />
-                                                            </Expander>
-                                                        </ControlTemplate>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </GroupStyle.ContainerStyle>
-                                    </GroupStyle>
-                                </ListBox.GroupStyle>
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Rectangle Grid.Column="0" Width="20" Height="20" Margin="10,0">
-                                                <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform" Visual="{Binding Icon}" />
-                                                </Rectangle.OpacityMask>
-                                                <Rectangle.Style>
-                                                    <Style TargetType="{x:Type Rectangle}">
-                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Path=IsMouseOver,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="True" >
-                                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Path=IsSelected,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="True" >
-                                                                <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Rectangle.Style>
-                                            </Rectangle>
-                                            <TextBlock Grid.Column="1" Text="{Binding TranslatedName}" >
-                                                <TextBlock.Style>
-                                                    <Style TargetType="{x:Type TextBlock}">
-                                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
-                                                        <Setter Property="Margin" Value="0,0,10,0" />
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="FontSize" Value="14" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Path=IsMouseOver,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="True" >
-                                                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Path=IsSelected,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="True" >
-                                                                <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                                <ListBox.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ListBoxItem}">
-                                        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                                    <Border Background="Transparent" BorderThickness="0">
-                                                        <Grid MinHeight="30">
-                                                            <ContentPresenter />
-                                                        </Grid>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ListBox.ItemContainerStyle>
-                                <!-- BUGFIX This has to be set, to enable mouse wheel scrolling -->
-                                <ListBox.Template>
-                                    <ControlTemplate TargetType="ItemsControl">
-                                        <Border>
-                                            <ItemsPresenter />
-                                        </Border>
-                                    </ControlTemplate>
-                                </ListBox.Template>
-                                <ListBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel />
-                                    </ItemsPanelTemplate>
-                                </ListBox.ItemsPanel>
-                                <!-- /BUGFIX-->
-                            </ListBox>
-                        </ScrollViewer>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBox x:Name="txtSearch" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+                            <ScrollViewer Grid.Row="1" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" Style="{StaticResource FadeOutScrollViewer}">
+                                <ListBox x:Name="listBoxSettings" ItemsSource="{Binding SettingsViews}" SelectedItem="{Binding SelectedSettingsView}" Margin="10,0,10,10">
+                                    <ListBox.GroupStyle>
+                                        <GroupStyle>
+                                            <GroupStyle.ContainerStyle>
+                                                <Style TargetType="{x:Type GroupItem}">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate>
+                                                                <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}" Padding="0">
+                                                                    <Expander.Header>
+                                                                        <TextBlock Text="{Binding Name}" Style="{StaticResource HeaderTextBlock}" FontSize="18" Margin="0" Foreground="{DynamicResource GrayBrush3}"/>
+                                                                    </Expander.Header>
+                                                                    <ItemsPresenter />
+                                                                </Expander>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </GroupStyle.ContainerStyle>
+                                        </GroupStyle>
+                                    </ListBox.GroupStyle>
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Rectangle Grid.Column="0" Width="20" Height="20" Margin="10,0">
+                                                    <Rectangle.OpacityMask>
+                                                        <VisualBrush Stretch="Uniform" Visual="{Binding Icon}" />
+                                                    </Rectangle.OpacityMask>
+                                                    <Rectangle.Style>
+                                                        <Style TargetType="{x:Type Rectangle}">
+                                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Path=IsMouseOver,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="True" >
+                                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Path=IsSelected,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="True" >
+                                                                    <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Rectangle.Style>
+                                                </Rectangle>
+                                                <TextBlock Grid.Column="1" Text="{Binding TranslatedName}" >
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                                            <Setter Property="Margin" Value="0,0,10,0" />
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="FontSize" Value="14" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Path=IsMouseOver,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="True" >
+                                                                    <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Path=IsSelected,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="True" >
+                                                                    <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListBoxItem}">
+                                            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                        <Border Background="Transparent" BorderThickness="0">
+                                                            <Grid MinHeight="30">
+                                                                <ContentPresenter />
+                                                            </Grid>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                    <!-- BUGFIX This has to be set, to enable mouse wheel scrolling -->
+                                    <ListBox.Template>
+                                        <ControlTemplate TargetType="ItemsControl">
+                                            <Border>
+                                                <ItemsPresenter />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </ListBox.Template>
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel />
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                    <!-- /BUGFIX-->
+                                </ListBox>
+                            </ScrollViewer>
+                            <Grid Grid.Row="1" MaxWidth="{Binding ElementName=ApplicationViewGrid, Path=MinWidth}" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding SearchNothingFound, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Rectangle Grid.Row="0" Width="24" Height="24" Fill="{DynamicResource GrayBrush3}" Margin="10">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=FilterRemoveOutline}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_SearchedSettingNotFound}" Margin="10,0" TextWrapping="Wrap" TextAlignment="Center" />
+                            </Grid>
+                        </Grid>
                     </Border>
                     <ScrollViewer Grid.Column="1" Style="{StaticResource DefaulScrollViewer}" Margin="10">
                         <ContentControl Content="{Binding SettingsContent}" />
