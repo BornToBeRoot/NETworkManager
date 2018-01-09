@@ -451,7 +451,8 @@
     <system:String x:Key="String_ValidateError_EnterValidValueBetween10and100">Enter a valid value between 10 and 100!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidIPAddress">Enter a valid IP address!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidSubnet">Enter a valid subnet (like 192.168.178.133/26)</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidWebsiteUri">Enter a valid website (like https://example.com/index.html)</system:String> 
+    <system:String x:Key="String_ValidateError_EnterValidWebsiteUri">Enter a valid website (like https://example.com/index.html)</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidHosts">Enter valid hosts (multiple hosts can not end with ";")!</system:String>
     
     <!-- ApplicationView.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP Scanner</system:String>

@@ -452,6 +452,7 @@
     <system:String x:Key="String_ValidateError_EnterValidIPAddress">Geben Sie eine gültige IP-Adresse ein!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidSubnet">Geben Sie ein gültiges Subnetz ein (z.B. 192.168.178.133/26)</system:String>
     <system:String x:Key="String_ValidateError_EnterValidWebsiteUri">Geben Sie eine gültige Webseite ein (z.B. https://example.com/index.html)</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidHosts">Geben Sie gültige Hosts ein (mehrere Hosts dürfen nicht mit ";" enden)!</system:String>
 
     <!-- ApplicationInfo.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>

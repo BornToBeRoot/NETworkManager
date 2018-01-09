@@ -62,6 +62,7 @@
                                 <Binding Path="Hostname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                        <Validator:MultipleHostsValidator ValidatesOnTargetUpdated="True" />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </ComboBox.Text>
