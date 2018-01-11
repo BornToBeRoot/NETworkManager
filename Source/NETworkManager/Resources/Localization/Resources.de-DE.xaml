@@ -431,6 +431,7 @@
     <system:String x:Key="String_Watermark_ExampleCredentialName">Windows-Testbenutzer</system:String>
     <system:String x:Key="String_Watermark_ExampleRemoteDesktopSessionName">Webserver</system:String>
     <system:String x:Key="String_Watermark_ExampleSuffix">fritz.box</system:String>
+    <system:String x:Key="String_Watermark_NotChanged">(nicht geändert)</system:String>
     
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Setze statische IP-Adresse und Gateway...</system:String>

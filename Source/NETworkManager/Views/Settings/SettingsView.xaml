@@ -121,7 +121,7 @@
                                     <!-- /BUGFIX-->
                                 </ListBox>
                             </ScrollViewer>
-                            <Grid Grid.Row="1" MaxWidth="{Binding ElementName=ApplicationViewGrid, Path=MinWidth}" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding SearchNothingFound, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding SearchNothingFound, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
