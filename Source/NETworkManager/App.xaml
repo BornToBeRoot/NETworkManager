@@ -29,7 +29,6 @@
                 <ResourceDictionary Source="/Resources/Styles/DataGridStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/GroupBoxStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/NumericUpDownStyles.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/PasswordBoxStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/RadioButtonStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ScrollBarStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ScrollViewerStyles.xaml" />
@@ -40,11 +39,12 @@
                 <ResourceDictionary Source="/Resources/Styles/ToolTipStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/WindowStyles.xaml" />
                 <!-- Dependent styles -->
-                <ResourceDictionary Source="/Resources/Styles/ComboBoxStyles.xaml" /> <!-- Requires scrollbar styles-->
+                <ResourceDictionary Source="/Resources/Styles/ComboBoxStyles.xaml" /> <!-- Requires scrollbar styles -->
                 <ResourceDictionary Source="/Resources/Styles/DragablzStyles.xaml" /> <!-- Requires button and textbox styles -->
                 <ResourceDictionary Source="/Resources/Styles/ExpanderStyles.xaml" /> <!-- Requires button styles -->
-                <ResourceDictionary Source="/Resources/Styles/RectangleStyles.xaml" /> <!-- Requires tooltip styles-->
-             </ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Styles/RectangleStyles.xaml" /> <!-- Requires tooltip styles -->
+                <ResourceDictionary Source="/Resources/Styles/PasswordBoxStyles.xaml" /> <!-- Requires tooltip styles -->
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

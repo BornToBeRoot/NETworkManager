@@ -332,6 +332,7 @@
     <system:String x:Key="String_URL">URL</system:String>
     <system:String x:Key="String_MACAddressOrVendor">MAC-Adresse oder Hersteller</system:String>
     <system:String x:Key="String_PortOrService">Port oder Dienst</system:String>
+    <system:String x:Key="String_CapsLockIsEnabled">Feststelltaste ist aktiviert!</system:String>
     
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>

@@ -332,6 +332,7 @@
     <system:String x:Key="String_URL">URL</system:String>
     <system:String x:Key="String_MACAddressOrVendor">MAC address or vendor</system:String>
     <system:String x:Key="String_PortOrService">Port or service</system:String>
+    <system:String x:Key="String_CapsLockIsEnabled">Caps lock is enabled!</system:String>
     
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
