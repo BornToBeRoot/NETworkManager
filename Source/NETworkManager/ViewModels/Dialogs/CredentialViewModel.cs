@@ -123,16 +123,16 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
-        private bool _passwordShowHelp;
-        public bool PasswordShowHelp
+        private bool _isBeingEdited;
+        public bool IsBeingEdited
         {
-            get { return _passwordShowHelp; }
+            get { return _isBeingEdited; }
             set
             {
-                if (value == _passwordShowHelp)
+                if (value == _isBeingEdited)
                     return;
 
-                _passwordShowHelp = value;
+                _isBeingEdited = value;
                 OnPropertyChanged();
             }
         }
@@ -149,7 +149,7 @@ namespace NETworkManager.ViewModels.Dialogs
             Username = _credentialInfo.Username;
             Password = _credentialInfo.Password;
 
-            _passwordShowHelp = credentialInfo != null;
+            _isBeingEdited = credentialInfo != null;
 
             _isLoading = false;
         }
