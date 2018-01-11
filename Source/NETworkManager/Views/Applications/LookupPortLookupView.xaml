@@ -30,11 +30,14 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <ComboBox Grid.Column="0" x:Name="txtPortsOrService" ItemsSource="{Binding PortsHistory}" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding PortsOrServiceHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePortPortRangeOrService}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="0" Text="{DynamicResource String_PortOrService}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
+                <ComboBox Grid.Column="2" x:Name="txtPortsOrService" ItemsSource="{Binding PortsHistory}" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding PortsOrServiceHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePortPortRangeOrService}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.InputBindings>
                         <KeyBinding Command="{Binding PortLookupCommand}" Key="Return" />
                     </ComboBox.InputBindings>
@@ -46,7 +49,7 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <Button Grid.Column="2" Command="{Binding PortLookupCommand}" HorizontalAlignment="Right">
+                <Button Grid.Column="4" Command="{Binding PortLookupCommand}" HorizontalAlignment="Right">
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />

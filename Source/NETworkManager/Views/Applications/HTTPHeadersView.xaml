@@ -32,11 +32,14 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <ComboBox Grid.Column="0" x:Name="cbWebsiteUri" ItemsSource="{Binding WebsiteUriHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleWebsiteUri}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsCheckRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                    <TextBlock Grid.Column="0" Text="{DynamicResource String_URL}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
+                    <ComboBox Grid.Column="2" x:Name="cbWebsiteUri" ItemsSource="{Binding WebsiteUriHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleWebsiteUri}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsCheckRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                         <ComboBox.Text>
                             <Binding Path="WebsiteUri" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
@@ -46,7 +49,7 @@
                             </Binding>
                         </ComboBox.Text>
                     </ComboBox>
-                    <Button Grid.Column="2" Command="{Binding CheckCommand}" IsDefault="{Binding IsCheckRunning, Converter={StaticResource BooleanReverseConverter}}">
+                    <Button Grid.Column="4" Command="{Binding CheckCommand}" IsDefault="{Binding IsCheckRunning, Converter={StaticResource BooleanReverseConverter}}">
                         <Button.Resources>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                                 <Setter Property="IsEnabled" Value="True" />

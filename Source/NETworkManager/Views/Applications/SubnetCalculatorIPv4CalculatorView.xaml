@@ -22,11 +22,14 @@
         <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Subnet}" />
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <ComboBox Grid.Column="0" x:Name="cbSubnet" ItemsSource="{Binding SubnetHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnet}" Style="{StaticResource HistoryComboBox}" >
+            <TextBlock Grid.Column="0" Text="{DynamicResource String_Subnet}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
+            <ComboBox Grid.Column="2" x:Name="cbSubnet" ItemsSource="{Binding SubnetHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnet}" Style="{StaticResource HistoryComboBox}" >
                 <ComboBox.Text>
                     <Binding Path="Subnet" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                         <Binding.ValidationRules>
@@ -36,7 +39,7 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <Button Grid.Column="2" Command="{Binding CalculateIPv4SubnetCommand}" HorizontalAlignment="Right" IsDefault="True">
+            <Button Grid.Column="4" Command="{Binding CalculateIPv4SubnetCommand}" HorizontalAlignment="Right" IsDefault="True">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>

@@ -6,6 +6,7 @@
         <Setter Property="FontSize" Value="14" />
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
         <Setter Property="ContextMenu" Value="{StaticResource CutCopyPasteContextMenu}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
     </Style>
 
@@ -15,7 +16,7 @@
     <Style x:Key="SearchTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource SearchMetroTextBox}">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="ContextMenu" Value="{StaticResource CutCopyPasteContextMenu}" />
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
         <Setter Property="mah:TextBoxHelper.Watermark" Value="{DynamicResource String_Watermark_Search}" />
