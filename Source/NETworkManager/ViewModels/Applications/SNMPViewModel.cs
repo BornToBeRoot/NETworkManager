@@ -1,7 +1,11 @@
 ﻿using NETworkManager.Models.Network;
 using NETworkManager.Helpers;
 using System;
+using System.Windows;
 using System.Windows.Input;
+using System.ComponentModel;
+using System.Windows.Data;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using NETworkManager.Models.Settings;
 using System.Net;
@@ -10,7 +14,7 @@ using System.Diagnostics;
 
 namespace NETworkManager.ViewModels.Applications
 {
-    public class HTTPHeadersViewModel : ViewModelBase
+    public class SNMPViewModel : ViewModelBase
     {
         #region Variables
         private bool _isLoading = true;
@@ -181,7 +185,7 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Contructor, load settings
-        public HTTPHeadersViewModel()
+        public SNMPViewModel()
         {            
             LoadSettings();
 
@@ -190,10 +194,10 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LoadSettings()
         {
-            if (SettingsManager.Current.HTTPHeader_WebsiteUriHistory != null)
+          /*  if (SettingsManager.Current.HTTPHeader_WebsiteUriHistory != null)
                 WebsiteUriHistory = new List<string>(SettingsManager.Current.HTTPHeader_WebsiteUriHistory);
 
-            ExpandStatistics = SettingsManager.Current.HTTPHeader_ExpandStatistics;
+            ExpandStatistics = SettingsManager.Current.HTTPHeader_ExpandStatistics;*/
         }
         #endregion
 

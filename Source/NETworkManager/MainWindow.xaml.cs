@@ -356,6 +356,7 @@ namespace NETworkManager
         TracerouteView tracerouteView;
         DNSLookupView dnsLookupView;
         RemoteDesktopView remoteDesktopView;
+        SNMPView snmpView;
         WakeOnLANView wakeOnLANView;
         SubnetCalculatorView subnetCalculatorView;
         HTTPHeadersView httpHeadersView;
@@ -412,6 +413,12 @@ namespace NETworkManager
                         remoteDesktopView = new RemoteDesktopView();
 
                     contentControlApplication.Content = remoteDesktopView;
+                    break;
+                case ApplicationViewManager.Name.SNMP:
+                    if (snmpView == null)
+                        snmpView = new SNMPView();
+
+                    contentControlApplication.Content = snmpView;
                     break;
                 case ApplicationViewManager.Name.WakeOnLAN:
                     if (wakeOnLANView == null)
