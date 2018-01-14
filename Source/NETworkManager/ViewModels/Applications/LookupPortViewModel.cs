@@ -52,7 +52,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Lookup_PortsHistory = value;
+                    SettingsManager.Current.Lookup_Port_PortsHistory = value;
 
                 _portsHistory = value;
                 OnPropertyChanged();
@@ -133,8 +133,8 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LoadSettings()
         {
-            if (SettingsManager.Current.Lookup_PortsHistory != null)
-                PortsHistory = new List<string>(SettingsManager.Current.Lookup_PortsHistory);
+            if (SettingsManager.Current.Lookup_Port_PortsHistory != null)
+                PortsHistory = new List<string>(SettingsManager.Current.Lookup_Port_PortsHistory);
         }
         #endregion
 

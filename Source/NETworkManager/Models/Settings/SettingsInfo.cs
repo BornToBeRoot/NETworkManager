@@ -681,30 +681,30 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region Lookup
-        private List<string> _lookup_MACAddressOrVendorHistory = new List<string>();
-        public List<string> Lookup_MACAddressOrVendorHistory
+        private List<string> _lookup_OUI_MACAddressOrVendorHistory = new List<string>();
+        public List<string> Lookup_OUI_MACAddressOrVendorHistory
         {
-            get { return _lookup_MACAddressOrVendorHistory; }
+            get { return _lookup_OUI_MACAddressOrVendorHistory; }
             set
             {
-                if (value == _lookup_MACAddressOrVendorHistory)
+                if (value == _lookup_OUI_MACAddressOrVendorHistory)
                     return;
 
-                _lookup_MACAddressOrVendorHistory = value;
+                _lookup_OUI_MACAddressOrVendorHistory = value;
                 SettingsChanged = true;
             }
         }
 
-        private List<string> _lookup_PortsHistory = new List<string>();
-        public List<string> Lookup_PortsHistory
+        private List<string> _lookup_Port_PortsHistory = new List<string>();
+        public List<string> Lookup_Port_PortsHistory
         {
-            get { return _lookup_PortsHistory; }
+            get { return _lookup_Port_PortsHistory; }
             set
             {
-                if (value == _lookup_PortsHistory)
+                if (value == _lookup_Port_PortsHistory)
                     return;
 
-                _lookup_PortsHistory = value;
+                _lookup_Port_PortsHistory = value;
                 SettingsChanged = true;
             }
         }
@@ -1323,6 +1323,50 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeader_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
+        #region SNMP
+        private List<string> _snmp_v1_HostnameHistory = new List<string>();
+        public List<string> SNMP_v1_HostnameHistory
+        {
+            get { return _snmp_v1_HostnameHistory; }
+            set
+            {
+                if (value == _snmp_v1_HostnameHistory)
+                    return;
+
+                _snmp_v1_HostnameHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private List<string> _snmp_v1_OIDHistory = new List<string>();
+        public List<string> SNMP_v1_OIDHistory
+        {
+            get { return _snmp_v1_OIDHistory; }
+            set
+            {
+                if (value == _snmp_v1_OIDHistory)
+                    return;
+
+                _snmp_v1_OIDHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _snmp_v1_ExpandStatistics = true;
+        public bool SNMP_v1_ExpandStatistics
+        {
+            get { return _snmp_v1_ExpandStatistics; }
+            set
+            {
+                if (value == _snmp_v1_ExpandStatistics)
+                    return;
+
+                _snmp_v1_ExpandStatistics = value;
                 SettingsChanged = true;
             }
         }

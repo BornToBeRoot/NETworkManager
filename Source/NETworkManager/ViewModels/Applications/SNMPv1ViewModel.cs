@@ -11,10 +11,12 @@ using NETworkManager.Models.Settings;
 using System.Net;
 using System.Windows.Threading;
 using System.Diagnostics;
+using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib;
 
 namespace NETworkManager.ViewModels.Applications
 {
-    public class SNMPViewModel : ViewModelBase
+    public class SNMPv1ViewModel : ViewModelBase
     {
         #region Variables
         private bool _isLoading = true;
@@ -22,61 +24,92 @@ namespace NETworkManager.ViewModels.Applications
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         Stopwatch stopwatch = new Stopwatch();
 
-        private string _websiteUri;
-        public string WebsiteUri
+        private string _hostname;
+        public string Hostname
         {
-            get { return _websiteUri; }
+            get { return _hostname; }
             set
             {
-                if (value == _websiteUri)
+                if (value == _hostname)
                     return;
 
-                _websiteUri = value;
+                _hostname = value;
                 OnPropertyChanged();
             }
         }
 
-        private List<string> _websiteUriHistory = new List<string>();
-        public List<string> WebsiteUriHistory
+        private List<string> _hostnameHistory = new List<string>();
+        public List<string> HostnameHistory
         {
-            get { return _websiteUriHistory; }
+            get { return _hostnameHistory; }
             set
             {
-                if (value == _websiteUriHistory)
+                if (value == _hostnameHistory)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.HTTPHeader_WebsiteUriHistory = value;
+                    SettingsManager.Current.SNMP_v1_HostnameHistory = value;
 
-                _websiteUriHistory = value;
+                _hostnameHistory = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _isCheckRunning;
-        public bool IsCheckRunning
+        private string _oid;
+        public string OID
         {
-            get { return _isCheckRunning; }
+            get { return _oid; }
             set
             {
-                if (value == _isCheckRunning)
+                if (value == _oid)
                     return;
 
-                _isCheckRunning = value;
+                _oid = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _headers;
-        public string Headers
+        private List<string> _oidHistory = new List<string>();
+        public List<string> OIDHistory
         {
-            get { return _headers; }
+            get { return _oidHistory; }
             set
             {
-                if (value == _headers)
+                if (value == _oidHistory)
                     return;
 
-                _headers = value;
+                if (!_isLoading)
+                    SettingsManager.Current.SNMP_v1_OIDHistory = value;
+
+                _oidHistory = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _community;
+        public string Community
+        {
+            get { return _community; }
+            set
+            {
+                if (value == _community)
+                    return;
+
+                _community = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isQueryRunning;
+        public bool IsQueryRunning
+        {
+            get { return _isQueryRunning; }
+            set
+            {
+                if (value == _isQueryRunning)
+                    return;
+
+                _isQueryRunning = value;
                 OnPropertyChanged();
             }
         }
@@ -151,20 +184,6 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private int _headersCount;
-        public int HeadersCount
-        {
-            get { return _headersCount; }
-            set
-            {
-                if (value == _headersCount)
-                    return;
-
-                _headersCount = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _expandStatistics;
         public bool ExpandStatistics
         {
@@ -175,18 +194,17 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.HTTPHeader_ExpandStatistics = value;
+                    SettingsManager.Current.SNMP_v1_ExpandStatistics = value;
 
                 _expandStatistics = value;
                 OnPropertyChanged();
             }
         }
-
         #endregion
 
         #region Contructor, load settings
-        public SNMPViewModel()
-        {            
+        public SNMPv1ViewModel()
+        {
             LoadSettings();
 
             _isLoading = false;
@@ -194,30 +212,33 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LoadSettings()
         {
-          /*  if (SettingsManager.Current.HTTPHeader_WebsiteUriHistory != null)
-                WebsiteUriHistory = new List<string>(SettingsManager.Current.HTTPHeader_WebsiteUriHistory);
+            if (SettingsManager.Current.SNMP_v1_HostnameHistory != null)
+                HostnameHistory = new List<string>(SettingsManager.Current.SNMP_v1_HostnameHistory);
 
-            ExpandStatistics = SettingsManager.Current.HTTPHeader_ExpandStatistics;*/
+            if (SettingsManager.Current.SNMP_v1_OIDHistory != null)
+                OIDHistory = new List<string>(SettingsManager.Current.SNMP_v1_OIDHistory);
+
+            ExpandStatistics = SettingsManager.Current.SNMP_v1_ExpandStatistics;
         }
         #endregion
 
         #region ICommands & Actions
-        public ICommand CheckCommand
+        public ICommand QueryCommand
         {
-            get { return new RelayCommand(p => CheckAction()); }
+            get { return new RelayCommand(p => QueryAction()); }
         }
 
-        private void CheckAction()
+        private void QueryAction()
         {
-            Check();
+            Query();
         }
         #endregion
 
         #region Methods
-        private async void Check()
+        private void Query()
         {
             DisplayStatusMessage = false;
-            IsCheckRunning = true;
+            IsQueryRunning = true;
 
             // Measure time
             StartTime = DateTime.Now;
@@ -227,15 +248,15 @@ namespace NETworkManager.ViewModels.Applications
             dispatcherTimer.Start();
             EndTime = null;
 
-            Headers = null;
-            HeadersCount = 0;
-
             try
             {
-                WebHeaderCollection headers = await HTTPHeaders.GetHeadersAsync(new Uri(WebsiteUri));
+                /* TEST
+                IPAddress ip = Dns.GetHostAddresses(Hostname)[0];
 
-                Headers = headers.ToString();
-                HeadersCount = headers.Count;
+                foreach (Variable test in Messenger.Get(VersionCode.V1, new IPEndPoint(ip, 161), new OctetString(Community), new List<Variable> { new Variable(new ObjectIdentifier(OID)) }, 60000))
+                    MessageBox.Show(test.Data.ToString());
+
+                */
             }
             catch (Exception ex)
             {
@@ -243,7 +264,8 @@ namespace NETworkManager.ViewModels.Applications
                 DisplayStatusMessage = true;
             }
 
-            WebsiteUriHistory = new List<string>(HistoryListHelper.Modify(WebsiteUriHistory, WebsiteUri, SettingsManager.Current.Application_HistoryListEntries));
+            HostnameHistory = new List<string>(HistoryListHelper.Modify(HostnameHistory, Hostname, SettingsManager.Current.Application_HistoryListEntries));
+            OIDHistory = new List<string>(HistoryListHelper.Modify(OIDHistory, OID, SettingsManager.Current.Application_HistoryListEntries));
 
             // Stop timer and stopwatch
             stopwatch.Stop();
@@ -254,7 +276,7 @@ namespace NETworkManager.ViewModels.Applications
 
             stopwatch.Reset();
 
-            IsCheckRunning = false;
+            IsQueryRunning = false;
         }
         #endregion
 

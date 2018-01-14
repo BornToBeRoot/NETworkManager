@@ -79,6 +79,9 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>obj\Debug\MSTSCLib.dll</HintPath>
     </Reference>
+    <Reference Include="SharpSnmpLib, Version=10.0.3.0, Culture=neutral, PublicKeyToken=4c00852d3788e005, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lextm.SharpSnmpLib.10.0.3\lib\net452\SharpSnmpLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -198,7 +201,7 @@
     <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Validators\MultipleHostsValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
-    <Compile Include="ViewModels\Applications\SNMPViewModel.cs" />
+    <Compile Include="ViewModels\Applications\SNMPv1ViewModel.cs" />
     <Compile Include="ViewModels\Applications\HTTPHeadersViewModel.cs" />
     <Compile Include="ViewModels\Applications\ARPTableViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\CredentialsMasterPasswordViewModel.cs" />
@@ -238,6 +241,9 @@
     <Compile Include="ViewModels\Settings\SettingsApplicationWakeOnLANViewModel.cs" />
     <Compile Include="Controls\RemoteDesktopControl.xaml.cs">
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Applications\SNMPv1View.xaml.cs">
+      <DependentUpon>SNMPv1View.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Applications\SNMPView.xaml.cs">
       <DependentUpon>SNMPView.xaml</DependentUpon>
@@ -388,6 +394,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RemoteDesktopControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Applications\SNMPv1View.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

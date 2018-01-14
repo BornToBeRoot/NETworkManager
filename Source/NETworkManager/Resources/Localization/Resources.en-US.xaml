@@ -42,9 +42,8 @@
     <system:String x:Key="String_Header_AreYouSure">Are you sure?</system:String>
     <system:String x:Key="String_Header_ValidationFailed">Validation failed!</system:String>
     <system:String x:Key="String_Header_Success">Success!</system:String>
-    <system:String x:Key="String_Header_OUILookup">OUI Lookup</system:String>
+    <system:String x:Key="String_Header_OUI">OUI</system:String>
     <system:String x:Key="String_Header_PortScanner">Port Scanner</system:String>
-    <system:String x:Key="String_Header_PortLookup">Port Lookup</system:String>
     <system:String x:Key="String_Header_Port">Port</system:String>
     <system:String x:Key="String_Header_Socket">Socket</system:String>
     <system:String x:Key="String_Header_History">History</system:String>
@@ -96,7 +95,8 @@
     <system:String x:Key="String_Header_Authentication">Authentication</system:String>
     <system:String x:Key="String_Header_CredentialNotFound">Credential not found!</system:String>
     <system:String x:Key="String_Header_ConnectAs">Connect as</system:String>
-
+    <system:String x:Key="String_Header_Query">Query</system:String>
+    
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">A powerful tool for managing networks and troubleshoot network problems!</system:String>
@@ -333,6 +333,8 @@
     <system:String x:Key="String_MACAddressOrVendor">MAC address or vendor</system:String>
     <system:String x:Key="String_PortOrService">Port or service</system:String>
     <system:String x:Key="String_CapsLockIsEnabled">Caps lock is enabled!</system:String>
+    <system:String x:Key="String_OID">OID</system:String>
+    <system:String x:Key="String_Community">Community</system:String>
     
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
@@ -384,6 +386,7 @@
     <system:String x:Key="String_Button_EditDots">Edit...</system:String>
     <system:String x:Key="String_Button_DeleteDots">Delete...</system:String>
     <system:String x:Key="String_Button_DecryptAndLoad">Decrypt and load...</system:String>
+    <system:String x:Key="String_Button_Query">Query</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Cut</system:String>
@@ -433,6 +436,8 @@
     <system:String x:Key="String_Watermark_ExampleRemoteDesktopSessionName">Webserver</system:String>
     <system:String x:Key="String_Watermark_ExampleSuffix">fritz.box</system:String>
     <system:String x:Key="String_Watermark_NotChanged">(not changed)</system:String>
+    <system:String x:Key="String_Watermark_ExampleSNMPOID">1.3.6.1.2.1.1</system:String>
+    <system:String x:Key="String_Watermark_ExampleSNMPCommunity">Public</system:String>
     
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Set static IP address and gateway...</system:String>
