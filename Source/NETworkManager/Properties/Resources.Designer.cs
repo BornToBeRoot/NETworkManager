@@ -241,6 +241,42 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sharp SNMP Library- Open Source SNMP for .NET and Mono.
+        /// </summary>
+        public static string Libary_SharpSNMPLib_Description {
+            get {
+                return ResourceManager.GetString("Libary_SharpSNMPLib_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/lextm/sharpsnmplib/blob/master/LICENSE.
+        /// </summary>
+        public static string Libary_SharpSNMPLib_LicenseUrl {
+            get {
+                return ResourceManager.GetString("Libary_SharpSNMPLib_LicenseUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #SNMP Libary.
+        /// </summary>
+        public static string Libary_SharpSNMPLib_Name {
+            get {
+                return ResourceManager.GetString("Libary_SharpSNMPLib_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/lextm/sharpsnmplib.
+        /// </summary>
+        public static string Libary_SharpSNMPLib_ProjectUrl {
+            get {
+                return ResourceManager.GetString("Libary_SharpSNMPLib_ProjectUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Code Project Open License.
         /// </summary>
         public static string License_CPOL {

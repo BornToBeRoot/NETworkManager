@@ -193,6 +193,10 @@
     <Compile Include="Helpers\SingleInstanceHelper.cs" />
     <Compile Include="Models\Network\HTTPHeaders.cs" />
     <Compile Include="Models\Network\ARPTableInfo.cs" />
+    <Compile Include="Models\Network\SNMPOptions.cs" />
+    <Compile Include="Models\Network\SNMPReceivedInfo.cs" />
+    <Compile Include="Models\Network\SNMPReceivedArgs.cs" />
+    <Compile Include="Models\Network\SNMP.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Models\Settings\CredentialInfoSerializable.cs" />
     <Compile Include="Models\Settings\CredentialInfo.cs" />
@@ -236,6 +240,7 @@
     <Compile Include="ViewModels\Applications\RemoteDesktopViewModel.cs" />
     <Compile Include="ViewModels\Help\HelpCommandLineViewModel.cs" />
     <Compile Include="ViewModels\Settings\CredentialsViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsApplicationSNMPViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationRemoteDesktopViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationDNSLookupViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationWakeOnLANViewModel.cs" />
@@ -307,6 +312,9 @@
     </Compile>
     <Compile Include="Views\Settings\CredentialsView.xaml.cs">
       <DependentUpon>CredentialsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsApplicationSNMPView.xaml.cs">
+      <DependentUpon>SettingsApplicationSNMPView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\SettingsApplicationRemoteDesktopView.xaml.cs">
       <DependentUpon>SettingsApplicationRemoteDesktopView.xaml</DependentUpon>
@@ -506,6 +514,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Settings\CredentialsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings\SettingsApplicationSNMPView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

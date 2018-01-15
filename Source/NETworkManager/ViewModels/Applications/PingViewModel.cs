@@ -430,8 +430,6 @@ namespace NETworkManager.ViewModels.Applications
         {
             PingInfo pingInfo = PingInfo.Parse(e);
 
-            
-
             // Add the result to the collection
             PingResult.Add(pingInfo);
 

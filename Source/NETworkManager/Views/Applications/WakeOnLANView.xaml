@@ -73,7 +73,7 @@
                     </TextBox.Text>
                 </TextBox>
                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Port}" Style="{StaticResource CenterTextBlock}" />
-                <TextBox x:Name="txtPort" Grid.Column="2" Grid.Row="4" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding PortHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort}" HorizontalAlignment="Left" Width="65" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                <TextBox x:Name="txtPort" Grid.Column="2" Grid.Row="4" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding PortHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort7}" HorizontalAlignment="Left" Width="65" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
                     </TextBox.InputBindings>

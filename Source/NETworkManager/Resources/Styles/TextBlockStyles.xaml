@@ -11,6 +11,11 @@
         <Setter Property="Margin" Value="0,0,0,10" />
     </Style>
 
+    <Style x:Key="BoldTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+
+
     <Style x:Key="WrapTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>

@@ -1,4 +1,5 @@
 ﻿using Heijden.DNS;
+using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Views;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -1329,6 +1330,77 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region SNMP
+        private bool _snmp_Walk = true;
+        public bool SNMP_Walk
+        {
+            get { return _snmp_Walk; }
+            set
+            {
+                if (value == _snmp_Walk)
+                    return;
+
+                _snmp_Walk = value;
+                SettingsChanged = true;                
+            }
+        }
+
+        private WalkMode _snmp_WalkMode = WalkMode.WithinSubtree;
+        public WalkMode SNMP_WalkMode
+        {
+            get { return _snmp_WalkMode; }
+            set
+            {
+                if (value == _snmp_WalkMode)
+                    return;
+
+                _snmp_WalkMode = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _snmp_Timeout = 60000;
+        public int SNMP_Timeout
+        {
+            get { return _snmp_Timeout; }
+            set
+            {
+                if (value == _snmp_Timeout)
+                    return;
+
+                _snmp_Timeout = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _snmp_port = 161;
+        public int SNMP_Port
+        {
+            get
+            { return _snmp_port; }
+            set
+            {
+                if (value == _snmp_port)
+                    return;
+
+                _snmp_port = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _snmp_ResolveHostnamePreferIPv4 = true;
+        public bool SNMP_ResolveHostnamePreferIPv4
+        {
+            get { return _snmp_ResolveHostnamePreferIPv4; }
+            set
+            {
+                if (value == _snmp_ResolveHostnamePreferIPv4)
+                    return;
+
+                _snmp_ResolveHostnamePreferIPv4 = value;
+                SettingsChanged = true;
+            }
+        }
+
         private List<string> _snmp_v1_HostnameHistory = new List<string>();
         public List<string> SNMP_v1_HostnameHistory
         {

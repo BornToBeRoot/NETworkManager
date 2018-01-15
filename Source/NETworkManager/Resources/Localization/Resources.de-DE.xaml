@@ -96,7 +96,8 @@
     <system:String x:Key="String_Header_CredentialNotFound">Anmeldeinformation nicht gefunden!</system:String>
     <system:String x:Key="String_Header_ConnectAs">Verbinden als</system:String>
     <system:String x:Key="String_Header_Query">Abfrage</system:String>
-
+    <system:String x:Key="String_Header_SNMP">SNMP</system:String>
+    
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Ein leistungsstarkes Tool zum Verwalten von Netzwerken und zur Behebung von Netzwerkproblemen!</system:String>
@@ -335,6 +336,10 @@
     <system:String x:Key="String_CapsLockIsEnabled">Feststelltaste ist aktiviert!</system:String>
     <system:String x:Key="String_OID">OID</system:String>
     <system:String x:Key="String_Community">Community</system:String>
+    <system:String x:Key="String_Data">Data</system:String>
+    <system:String x:Key="String_Walk">Walk</system:String>
+    <system:String x:Key="String_WalkMode">Walk Modus</system:String>
+    <system:String x:Key="String_License">Lizenz</system:String>
     
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>
@@ -407,7 +412,8 @@
     <system:String x:Key="String_Watermark_ExampleMACAddress">00:F1:21:AB:0B:35</system:String>
     <system:String x:Key="String_Watermark_ExampleHostname">SERVER-01</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Broadcast">192.168.178.255</system:String>
-    <system:String x:Key="String_Watermark_ExamplePort">7</system:String>
+    <system:String x:Key="String_Watermark_ExamplePort7">7</system:String>
+    <system:String x:Key="String_Watermark_ExamplePort161">161</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Address">192.168.178.55</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmask">255.255.255.0</system:String>
     <system:String x:Key="String_Watermark_ExampleHostnameOrIPAddress">fritz.box or 192.168.178.1</system:String>

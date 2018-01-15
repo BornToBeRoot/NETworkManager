@@ -96,6 +96,7 @@
     <system:String x:Key="String_Header_CredentialNotFound">Credential not found!</system:String>
     <system:String x:Key="String_Header_ConnectAs">Connect as</system:String>
     <system:String x:Key="String_Header_Query">Query</system:String>
+    <system:String x:Key="String_Header_SNMP">SNMP</system:String>
     
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -335,6 +336,10 @@
     <system:String x:Key="String_CapsLockIsEnabled">Caps lock is enabled!</system:String>
     <system:String x:Key="String_OID">OID</system:String>
     <system:String x:Key="String_Community">Community</system:String>
+    <system:String x:Key="String_Data">Data</system:String>
+    <system:String x:Key="String_Walk">Walk</system:String>
+    <system:String x:Key="String_WalkMode">Walk mode</system:String>
+    <system:String x:Key="String_License">Lincense</system:String>
     
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
@@ -407,7 +412,8 @@
     <system:String x:Key="String_Watermark_ExampleMACAddress">00:F1:21:AB:0B:35</system:String>
     <system:String x:Key="String_Watermark_ExampleHostname">SERVER-01</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Broadcast">192.168.178.255</system:String>
-    <system:String x:Key="String_Watermark_ExamplePort">7</system:String>
+    <system:String x:Key="String_Watermark_ExamplePort7">7</system:String>
+    <system:String x:Key="String_Watermark_ExamplePort161">161</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Address">192.168.178.55</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmask">255.255.255.0</system:String>
     <system:String x:Key="String_Watermark_ExampleHostnameOrIPAddress">SERVER-01 or 172.16.0.100</system:String>

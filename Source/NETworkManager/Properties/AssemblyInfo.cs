@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BornToBeRoot")]
 [assembly: AssemblyProduct("NETworkManager")]
-[assembly: AssemblyCopyright("Copyright ©  2016-2017")]
+[assembly: AssemblyCopyright("Copyright ©  2016-2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

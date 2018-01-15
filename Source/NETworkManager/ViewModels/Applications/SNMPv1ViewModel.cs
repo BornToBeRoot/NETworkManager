@@ -13,16 +13,20 @@ using System.Windows.Threading;
 using System.Diagnostics;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib;
+using System.Net.Sockets;
+using System.Threading;
 
 namespace NETworkManager.ViewModels.Applications
 {
     public class SNMPv1ViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
+        CancellationTokenSource cancellationTokenSource;
 
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         Stopwatch stopwatch = new Stopwatch();
+
+        private bool _isLoading = true;
 
         private string _hostname;
         public string Hostname
@@ -110,6 +114,53 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 _isQueryRunning = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _cancelQuery;
+        public bool CancelQuery
+        {
+            get { return _cancelQuery; }
+            set
+            {
+                if (value == _cancelQuery)
+                    return;
+
+                _cancelQuery = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<SNMPReceivedInfo> _queryResult = new ObservableCollection<SNMPReceivedInfo>();
+        public ObservableCollection<SNMPReceivedInfo> QueryResult
+        {
+            get { return _queryResult; }
+            set
+            {
+                if (value == _queryResult)
+                    return;
+
+                _queryResult = value;
+            }
+        }
+
+        private ICollectionView _queryResultView;
+        public ICollectionView QueryResultView
+        {
+            get { return _queryResultView; }
+        }
+
+        private SNMPReceivedInfo _selectedQueryResult;
+        public SNMPReceivedInfo SelectedQueryResult
+        {
+            get { return _selectedQueryResult; }
+            set
+            {
+                if (value == _selectedQueryResult)
+                    return;
+
+                _selectedQueryResult = value;
                 OnPropertyChanged();
             }
         }
@@ -205,6 +256,10 @@ namespace NETworkManager.ViewModels.Applications
         #region Contructor, load settings
         public SNMPv1ViewModel()
         {
+            // Result view
+            _queryResultView = CollectionViewSource.GetDefaultView(QueryResult);
+            _queryResultView.SortDescriptions.Add(new SortDescription("OID", ListSortDirection.Ascending));
+
             LoadSettings();
 
             _isLoading = false;
@@ -232,10 +287,31 @@ namespace NETworkManager.ViewModels.Applications
         {
             Query();
         }
+
+        public ICommand CopySelectedOIDCommand
+        {
+            get { return new RelayCommand(p => CopySelectedOIDAction()); }
+        }
+
+        private void CopySelectedOIDAction()
+        {
+            Clipboard.SetText(SelectedQueryResult.OID);
+        }
+
+        public ICommand CopySelectedDataCommand
+        {
+            get { return new RelayCommand(p => CopySelectedDataAction()); }
+        }
+
+        private void CopySelectedDataAction()
+        {
+            Clipboard.SetText(SelectedQueryResult.Data);
+        }
+
         #endregion
 
         #region Methods
-        private void Query()
+        private async void Query()
         {
             DisplayStatusMessage = false;
             IsQueryRunning = true;
@@ -248,24 +324,82 @@ namespace NETworkManager.ViewModels.Applications
             dispatcherTimer.Start();
             EndTime = null;
 
+            QueryResult.Clear();
+
+            // Try to parse the string into an IP-Address
+            IPAddress.TryParse(Hostname, out IPAddress ipAddress);
+
             try
             {
-                /* TEST
-                IPAddress ip = Dns.GetHostAddresses(Hostname)[0];
+                // Try to resolve the hostname
+                if (ipAddress == null)
+                {
+                    IPHostEntry ipHostEntrys = await Dns.GetHostEntryAsync(Hostname);
 
-                foreach (Variable test in Messenger.Get(VersionCode.V1, new IPEndPoint(ip, 161), new OctetString(Community), new List<Variable> { new Variable(new ObjectIdentifier(OID)) }, 60000))
-                    MessageBox.Show(test.Data.ToString());
+                    foreach (IPAddress ipAddr in ipHostEntrys.AddressList)
+                    {
+                        if (ipAddr.AddressFamily == AddressFamily.InterNetwork && SettingsManager.Current.SNMP_ResolveHostnamePreferIPv4)
+                        {
+                            ipAddress = ipAddr;
+                            continue;
+                        }
+                        else if (ipAddr.AddressFamily == AddressFamily.InterNetworkV6 && !SettingsManager.Current.SNMP_ResolveHostnamePreferIPv4)
+                        {
+                            ipAddress = ipAddr;
+                            continue;
+                        }
+                    }
 
-                */
+                    // Fallback --> If we could not resolve our prefered ip protocol for the hostname
+                    if (ipAddress == null)
+                    {
+                        foreach (IPAddress ipAddr in ipHostEntrys.AddressList)
+                        {
+                            ipAddress = ipAddr;
+                            continue;
+                        }
+                    }
+                }
             }
-            catch (Exception ex)
+            catch (SocketException) // This will catch DNS resolve errors
             {
-                StatusMessage = ex.Message;
+                QueryFinished();
+
+                StatusMessage = string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, Hostname);
                 DisplayStatusMessage = true;
+
+                return;
             }
 
+            cancellationTokenSource = new CancellationTokenSource();
+
+            // SNMP...
+            SNMPOptions snmpOptions = new SNMPOptions()
+            {
+                Walk = SettingsManager.Current.SNMP_Walk,
+                WalkMode = SettingsManager.Current.SNMP_WalkMode,
+                Port = SettingsManager.Current.SNMP_Port,
+                Timeout = SettingsManager.Current.SNMP_Timeout
+            };
+
+            SNMP snmp = new SNMP();
+
+            snmp.Received += Snmp_Received;
+            snmp.Timeout += Snmp_Timeout;
+            snmp.Error += Snmp_Error;
+            snmp.UserHasCanceled += Snmp_UserHasCanceled;
+            snmp.Complete += Snmp_Complete;
+
+            snmp.QueryAsync(VersionCode.V1, ipAddress, Community, OID, snmpOptions, cancellationTokenSource.Token);
+
+            // Add to history...
             HostnameHistory = new List<string>(HistoryListHelper.Modify(HostnameHistory, Hostname, SettingsManager.Current.Application_HistoryListEntries));
             OIDHistory = new List<string>(HistoryListHelper.Modify(OIDHistory, OID, SettingsManager.Current.Application_HistoryListEntries));
+        }
+
+        private void QueryFinished()
+        {
+            IsQueryRunning = false;
 
             // Stop timer and stopwatch
             stopwatch.Stop();
@@ -275,12 +409,49 @@ namespace NETworkManager.ViewModels.Applications
             EndTime = DateTime.Now;
 
             stopwatch.Reset();
-
-            IsQueryRunning = false;
         }
         #endregion
 
         #region Events
+        private void Snmp_Received(object sender, SNMPReceivedArgs e)
+        {
+            SNMPReceivedInfo snmpReceivedInfo = SNMPReceivedInfo.Parse(e);
+
+            Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
+            {
+                QueryResult.Add(snmpReceivedInfo);
+            }));
+        }
+
+        private void Snmp_Timeout(object sender, EventArgs e)
+        {
+            StatusMessage = "Timeout"; //Application.Current.Resources["String_CanceledByUser"] as string;
+            DisplayStatusMessage = true;
+
+            QueryFinished();
+        }
+
+        private void Snmp_Error(object sender, EventArgs e)
+        {
+            StatusMessage =  "Error" ;//Application.Current.Resources["String_CanceledByUser"] as string;
+            DisplayStatusMessage = true;
+
+            QueryFinished();
+        }
+
+        private void Snmp_UserHasCanceled(object sender, EventArgs e)
+        {
+            StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
+            DisplayStatusMessage = true;
+
+            QueryFinished();
+        }
+
+        private void Snmp_Complete(object sender, EventArgs e)
+        {
+            QueryFinished();
+        }
+
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             Duration = stopwatch.Elapsed;

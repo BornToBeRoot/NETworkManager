@@ -4,11 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Validator="clr-namespace:NETworkManager.Validators"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
         mc:Ignorable="d">
     <StackPanel>
         <TextBlock Text="{DynamicResource String_Header_WakeOnLAN}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{DynamicResource String_DefaultPort}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox Width="80" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}">
+        <TextBox Width="80" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort7}">
             <TextBox.Text>
                 <Binding Path="DefaultPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
