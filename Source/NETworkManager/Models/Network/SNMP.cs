@@ -3,7 +3,6 @@ using Lextm.SharpSnmpLib.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 namespace NETworkManager.Models.Network
 {
@@ -51,27 +50,39 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Methods
-        public void Queryv1v2cAsync(SNMPVersion version, IPAddress ipAddress, string community, string oid, SNMPOptions options, CancellationToken cancellationToken)
+        public void Getv1v2cAsync(SNMPVersion version, IPAddress ipAddress, string community, string oid, SNMPOptions options)
         {
             Task.Run(() =>
             {
-                // Version
-                VersionCode versionCode = version == SNMPVersion.v1 ? VersionCode.V1 : VersionCode.V2;
-
-                // host with ip:port
-                IPEndPoint ipEndpoint = new IPEndPoint(ipAddress, options.Port);
-
-                // List for results - snmp walk
-                IList<Variable> list = new List<Variable>();
-
                 try
                 {
-                    if (options.Walk)
-                        Messenger.Walk(versionCode, ipEndpoint, new OctetString(community), new ObjectIdentifier(oid), list, options.Timeout, options.WalkMode);
-                    else
-                        list = Messenger.Get(versionCode, ipEndpoint, new OctetString(community), new List<Variable> { new Variable(new ObjectIdentifier(oid)) }, options.Timeout);
+                    foreach (Variable result in Messenger.Get(version == SNMPVersion.v1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(community), new List<Variable> { new Variable(new ObjectIdentifier(oid)) }, options.Timeout))
+                        OnReceived(new SNMPReceivedArgs(result.Id.ToString(), result.Data.ToString()));
 
-                    foreach (Variable result in list)
+                    OnComplete();
+                }
+                catch (Lextm.SharpSnmpLib.Messaging.TimeoutException)
+                {
+                    OnTimeout();
+                }
+                catch (ErrorException)
+                {
+                    OnError();
+                }
+            });
+        }
+
+        public void Walkv1v2cAsync(SNMPVersion version, IPAddress ipAddress, string community, string oid, SNMPOptions options, WalkMode walkMode)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    IList<Variable> results = new List<Variable>();
+
+                    Messenger.Walk(version == SNMPVersion.v1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(community), new ObjectIdentifier(oid), results, options.Timeout, walkMode);
+
+                    foreach (Variable result in results)
                         OnReceived(new SNMPReceivedArgs(result.Id.ToString(), result.Data.ToString()));
 
                     OnComplete();

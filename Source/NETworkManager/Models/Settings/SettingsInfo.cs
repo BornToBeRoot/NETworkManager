@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
+using static NETworkManager.Models.Network.SNMP;
 
 namespace NETworkManager.Models.Settings
 {
@@ -1330,21 +1331,7 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region SNMP
-        private bool _snmp_Walk = true;
-        public bool SNMP_Walk
-        {
-            get { return _snmp_Walk; }
-            set
-            {
-                if (value == _snmp_Walk)
-                    return;
-
-                _snmp_Walk = value;
-                SettingsChanged = true;                
-            }
-        }
-
-        private WalkMode _snmp_WalkMode = WalkMode.WithinSubtree;
+               private WalkMode _snmp_WalkMode = WalkMode.WithinSubtree;
         public WalkMode SNMP_WalkMode
         {
             get { return _snmp_WalkMode; }
@@ -1425,6 +1412,34 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_v1v2c_OIDHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _snmp_v1v2c_Walk = true;
+        public bool SNMP_v1v2c_Walk
+        {
+            get { return _snmp_v1v2c_Walk; }
+            set
+            {
+                if (value == _snmp_v1v2c_Walk)
+                    return;
+
+                _snmp_v1v2c_Walk = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private SNMPVersion _snmp_v1v2c_Version = SNMPVersion.v2c;
+        public SNMPVersion SNMP_v1v2c_Version
+        {
+            get { return _snmp_v1v2c_Version; }
+            set
+            {
+                if (value == _snmp_v1v2c_Version)
+                    return;
+
+                _snmp_v1v2c_Version = value;
                 SettingsChanged = true;
             }
         }

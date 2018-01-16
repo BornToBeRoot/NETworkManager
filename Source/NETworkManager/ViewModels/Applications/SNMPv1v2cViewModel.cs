@@ -9,7 +9,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -21,8 +20,6 @@ namespace NETworkManager.ViewModels.Applications
     public class SNMPv1v2cViewModel : ViewModelBase
     {
         #region Variables
-        CancellationTokenSource cancellationTokenSource;
-
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         Stopwatch stopwatch = new Stopwatch();
 
@@ -70,7 +67,27 @@ namespace NETworkManager.ViewModels.Applications
                 if (value == _version)
                     return;
 
+                if (!_isLoading)
+                    SettingsManager.Current.SNMP_v1v2c_Version = value;
+
                 _version = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _walk;
+        public bool Walk
+        {
+            get { return _walk; }
+            set
+            {
+                if (value == _walk)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.SNMP_v1v2c_Walk = value;
+
+                _walk = value;
                 OnPropertyChanged();
             }
         }
@@ -277,8 +294,7 @@ namespace NETworkManager.ViewModels.Applications
             _queryResultView.SortDescriptions.Add(new SortDescription("OID", ListSortDirection.Ascending));
 
             // Version v1 and v2c (default v2c)
-            Versions = new List<SNMP.SNMPVersion>() { SNMP.SNMPVersion.v1, SNMP.SNMPVersion.v2c };
-            Version = Versions.FirstOrDefault(x => x == SNMP.SNMPVersion.v2c);
+            Versions = new List<SNMPVersion>() { SNMPVersion.v1, SNMPVersion.v2c };
 
             LoadSettings();
 
@@ -293,6 +309,8 @@ namespace NETworkManager.ViewModels.Applications
             if (SettingsManager.Current.SNMP_v1v2c_OIDHistory != null)
                 OIDHistory = new List<string>(SettingsManager.Current.SNMP_v1v2c_OIDHistory);
 
+            Version = Versions.FirstOrDefault(x => x == SettingsManager.Current.SNMP_v1v2c_Version);
+            Walk = SettingsManager.Current.SNMP_v1v2c_Walk;
             ExpandStatistics = SettingsManager.Current.SNMP_v1v2c_ExpandStatistics;
         }
         #endregion
@@ -392,13 +410,9 @@ namespace NETworkManager.ViewModels.Applications
                 return;
             }
 
-            cancellationTokenSource = new CancellationTokenSource();
-
             // SNMP...
             SNMPOptions snmpOptions = new SNMPOptions()
             {
-                Walk = SettingsManager.Current.SNMP_Walk,
-                WalkMode = SettingsManager.Current.SNMP_WalkMode,
                 Port = SettingsManager.Current.SNMP_Port,
                 Timeout = SettingsManager.Current.SNMP_Timeout
             };
@@ -411,7 +425,10 @@ namespace NETworkManager.ViewModels.Applications
             snmp.UserHasCanceled += Snmp_UserHasCanceled;
             snmp.Complete += Snmp_Complete;
 
-            snmp.Queryv1v2cAsync(Version, ipAddress, Community, OID, snmpOptions, cancellationTokenSource.Token);
+            if (Walk)
+                snmp.Walkv1v2cAsync(Version, ipAddress, Community, OID, snmpOptions, SettingsManager.Current.SNMP_WalkMode);
+            else
+                snmp.Getv1v2cAsync(Version, ipAddress, Community, OID, snmpOptions);
 
             // Add to history...
             HostnameHistory = new List<string>(HistoryListHelper.Modify(HostnameHistory, Hostname, SettingsManager.Current.Application_HistoryListEntries));

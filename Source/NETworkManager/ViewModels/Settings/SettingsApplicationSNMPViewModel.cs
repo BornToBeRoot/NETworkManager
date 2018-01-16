@@ -9,24 +9,7 @@ namespace NETworkManager.ViewModels.Settings
     {
         #region Variables
         private bool _isLoading = true;
-
-        private bool _walk;
-        public bool Walk
-        {
-            get { return _walk; }
-            set
-            {
-                if (value == _walk)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.SNMP_Walk = value;
-
-                _walk = value;
-                OnPropertyChanged();
-            }
-        }
-
+                
         public List<WalkMode> WalkModes { get; set; }
 
         private WalkMode _walkMode;
@@ -122,7 +105,6 @@ namespace NETworkManager.ViewModels.Settings
 
         private void LoadSettings()
         {
-            Walk = SettingsManager.Current.SNMP_Walk;
             WalkModes = System.Enum.GetValues(typeof(WalkMode)).Cast<WalkMode>().OrderBy(x => x.ToString()).ToList();
             WalkMode = WalkModes.First(x => x == SettingsManager.Current.SNMP_WalkMode);
             Timeout = SettingsManager.Current.SNMP_Timeout;

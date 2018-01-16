@@ -34,12 +34,16 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="3*" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="1*" />
-                   <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -57,6 +61,10 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
+                <TextBlock Grid.Column="4" Grid.Row="0" Text="{DynamicResource String_Version}" Style="{StaticResource CenterTextBlock}" />
+                <ComboBox Grid.Column="6" Grid.Row="0" ItemsSource="{Binding Versions}" IsEnabled="{Binding IsQueryRunning, Converter={StaticResource BooleanReverseConverter}}" SelectedItem="{Binding Version}" />
+                <TextBlock Grid.Column="8" Grid.Row="0" Text="{DynamicResource String_Walk}" Style="{StaticResource CenterTextBlock}" />
+                <mah:ToggleSwitch Grid.Column="10" Grid.Row="0" VerticalAlignment="Center" OnLabel="" OffLabel="" IsChecked="{Binding Walk}" />
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_OID}" Style="{StaticResource CenterTextBlock}" />
                 <ComboBox Grid.Column="2" Grid.Row="2" x:Name="cbOID" Height="{Binding ElementName=txtCommunity, Path=ActualHeight}" ItemsSource="{Binding OIDHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSNMPOID}" IsEnabled="{Binding IsQueryRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
@@ -67,10 +75,8 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <TextBlock Grid.Column="4" Grid.Row="0" Text="{DynamicResource String_Version}" Style="{StaticResource CenterTextBlock}" />
-                <ComboBox Grid.Column="6" Grid.Row="0" ItemsSource="{Binding Versions}" IsEnabled="{Binding IsQueryRunning, Converter={StaticResource BooleanReverseConverter}}" SelectedItem="{Binding Version}" />
                 <TextBlock Grid.Column="4" Grid.Row="2" Text="{DynamicResource String_Community}" Style="{StaticResource CenterTextBlock}" />
-                <TextBox Grid.Column="6" Grid.Row="2" Name="txtCommunity" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSNMPCommunity}" IsEnabled="{Binding IsQueryRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultTextBox}">
+                <TextBox Grid.Column="6" Grid.Row="2" Grid.ColumnSpan="5" Name="txtCommunity" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSNMPCommunity}" IsEnabled="{Binding IsQueryRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultTextBox}">
                     <TextBox.Text>
                         <Binding Path="Community" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -79,7 +85,7 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <Button Grid.Column="8" Grid.Row="4" Command="{Binding QueryCommand}" IsDefault="{Binding IsQueryRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsQueryRunning}" HorizontalAlignment="Right">
+                <Button Grid.Column="12" Grid.Row="4" Command="{Binding QueryCommand}" IsDefault="{Binding IsQueryRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsQueryRunning}" HorizontalAlignment="Right">
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
@@ -222,7 +228,7 @@
                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_EndTime}" />
                     <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding EndTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
                     <TextBlock Grid.Column="3" Grid.Row="0" Text="{DynamicResource String_Responses}" />
-                    <TextBox Grid.Column="4" Grid.Row="0" Text="{Binding Responses, Converter={StaticResource IntToStringConverter}}" />                    
+                    <TextBox Grid.Column="4" Grid.Row="0" Text="{Binding Responses, Converter={StaticResource IntToStringConverter}}" />
                 </Grid>
             </StackPanel>
         </Expander>

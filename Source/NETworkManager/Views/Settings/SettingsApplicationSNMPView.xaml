@@ -8,7 +8,6 @@
         mc:Ignorable="d">
     <StackPanel>
         <TextBlock Text="{DynamicResource String_Header_SNMP}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{DynamicResource String_Walk}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding Walk}" Margin="0,0,0,10"/>
         <TextBlock Text="{DynamicResource String_WalkMode}" IsEnabled="{Binding Walk}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding WalkModes}" SelectedItem="{Binding WalkMode}" IsEnabled="{Binding Walk}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" />
         <TextBlock Text="{DynamicResource String_Timeout}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
