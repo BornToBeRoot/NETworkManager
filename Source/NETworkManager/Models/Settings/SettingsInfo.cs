@@ -1401,44 +1401,44 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private List<string> _snmp_v1_HostnameHistory = new List<string>();
-        public List<string> SNMP_v1_HostnameHistory
+        private List<string> _snmp_v1v2c_HostnameHistory = new List<string>();
+        public List<string> SNMP_v1v2c_HostnameHistory
         {
-            get { return _snmp_v1_HostnameHistory; }
+            get { return _snmp_v1v2c_HostnameHistory; }
             set
             {
-                if (value == _snmp_v1_HostnameHistory)
+                if (value == _snmp_v1v2c_HostnameHistory)
                     return;
 
-                _snmp_v1_HostnameHistory = value;
+                _snmp_v1v2c_HostnameHistory = value;
                 SettingsChanged = true;
             }
         }
 
-        private List<string> _snmp_v1_OIDHistory = new List<string>();
-        public List<string> SNMP_v1_OIDHistory
+        private List<string> _snmp_v1v2c_OIDHistory = new List<string>();
+        public List<string> SNMP_v1v2c_OIDHistory
         {
-            get { return _snmp_v1_OIDHistory; }
+            get { return _snmp_v1v2c_OIDHistory; }
             set
             {
-                if (value == _snmp_v1_OIDHistory)
+                if (value == _snmp_v1v2c_OIDHistory)
                     return;
 
-                _snmp_v1_OIDHistory = value;
+                _snmp_v1v2c_OIDHistory = value;
                 SettingsChanged = true;
             }
         }
 
-        private bool _snmp_v1_ExpandStatistics = true;
-        public bool SNMP_v1_ExpandStatistics
+        private bool _snmp_v1v2c_ExpandStatistics = true;
+        public bool SNMP_v1v2c_ExpandStatistics
         {
-            get { return _snmp_v1_ExpandStatistics; }
+            get { return _snmp_v1v2c_ExpandStatistics; }
             set
             {
-                if (value == _snmp_v1_ExpandStatistics)
+                if (value == _snmp_v1v2c_ExpandStatistics)
                     return;
 
-                _snmp_v1_ExpandStatistics = value;
+                _snmp_v1v2c_ExpandStatistics = value;
                 SettingsChanged = true;
             }
         }

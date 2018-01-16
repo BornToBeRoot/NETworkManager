@@ -205,7 +205,7 @@
     <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Validators\MultipleHostsValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
-    <Compile Include="ViewModels\Applications\SNMPv1ViewModel.cs" />
+    <Compile Include="ViewModels\Applications\SNMPv1v2cViewModel.cs" />
     <Compile Include="ViewModels\Applications\HTTPHeadersViewModel.cs" />
     <Compile Include="ViewModels\Applications\ARPTableViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\CredentialsMasterPasswordViewModel.cs" />
@@ -247,8 +247,8 @@
     <Compile Include="Controls\RemoteDesktopControl.xaml.cs">
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\SNMPv1View.xaml.cs">
-      <DependentUpon>SNMPv1View.xaml</DependentUpon>
+    <Compile Include="Views\Applications\SNMPv1v2cView.xaml.cs">
+      <DependentUpon>SNMPv1v2cView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Applications\SNMPView.xaml.cs">
       <DependentUpon>SNMPView.xaml</DependentUpon>
@@ -405,7 +405,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\SNMPv1View.xaml">
+    <Page Include="Views\Applications\SNMPv1v2cView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

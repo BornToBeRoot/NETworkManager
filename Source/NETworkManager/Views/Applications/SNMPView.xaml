@@ -16,13 +16,10 @@
         <Converter:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
-        <TabItem Header="v1">
-            <ApplicationViews:SNMPv1View Margin="10" />
+        <TabItem Header="{DynamicResource String_Header_v1v2c}">
+            <ApplicationViews:SNMPv1v2cView Margin="10" />
         </TabItem>
-        <TabItem Header="v2c">
-            <!-- <ApplicationViews:SNMPv2cView Margin="10" /> -->
-        </TabItem>
-        <TabItem Header="v3">
+        <TabItem Header="{DynamicResource String_Header_v3}">
             <!--            <ApplicationViews:SNMPv3View Margin="10" /> -->
         </TabItem>
     </TabControl>

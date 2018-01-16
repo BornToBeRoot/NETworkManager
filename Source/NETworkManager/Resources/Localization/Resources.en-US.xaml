@@ -97,6 +97,8 @@
     <system:String x:Key="String_Header_ConnectAs">Connect as</system:String>
     <system:String x:Key="String_Header_Query">Query</system:String>
     <system:String x:Key="String_Header_SNMP">SNMP</system:String>
+    <system:String x:Key="String_Header_v1v2c">v1/v2c</system:String>
+    <system:String x:Key="String_Header_v3">v3</system:String>
     
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -340,7 +342,10 @@
     <system:String x:Key="String_Walk">Walk</system:String>
     <system:String x:Key="String_WalkMode">Walk mode</system:String>
     <system:String x:Key="String_License">Lincense</system:String>
-    
+    <system:String x:Key="String_TimeoutOnSNMPQuery">Timeout on SNMP query.</system:String>
+    <system:String x:Key="String_Responses">Responses</system:String>
+    <system:String x:Key="String_ErrorInResponse">Error in response!</system:String>
+
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Reset all settings.</system:String>

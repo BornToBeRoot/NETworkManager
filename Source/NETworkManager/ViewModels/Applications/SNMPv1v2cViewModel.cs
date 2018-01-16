@@ -1,24 +1,24 @@
-﻿using NETworkManager.Models.Network;
-using NETworkManager.Helpers;
-using System;
-using System.Windows;
-using System.Windows.Input;
-using System.ComponentModel;
-using System.Windows.Data;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
+﻿using NETworkManager.Helpers;
+using NETworkManager.Models.Network;
 using NETworkManager.Models.Settings;
-using System.Net;
-using System.Windows.Threading;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
-using Lextm.SharpSnmpLib.Messaging;
-using Lextm.SharpSnmpLib;
+using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
+using static NETworkManager.Models.Network.SNMP;
 
 namespace NETworkManager.ViewModels.Applications
 {
-    public class SNMPv1ViewModel : ViewModelBase
+    public class SNMPv1v2cViewModel : ViewModelBase
     {
         #region Variables
         CancellationTokenSource cancellationTokenSource;
@@ -52,9 +52,25 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.SNMP_v1_HostnameHistory = value;
+                    SettingsManager.Current.SNMP_v1v2c_HostnameHistory = value;
 
                 _hostnameHistory = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<SNMPVersion> Versions { get; set; }
+
+        private SNMPVersion _version;
+        public SNMPVersion Version
+        {
+            get { return _version; }
+            set
+            {
+                if (value == _version)
+                    return;
+
+                _version = value;
                 OnPropertyChanged();
             }
         }
@@ -83,7 +99,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.SNMP_v1_OIDHistory = value;
+                    SettingsManager.Current.SNMP_v1v2c_OIDHistory = value;
 
                 _oidHistory = value;
                 OnPropertyChanged();
@@ -114,20 +130,6 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 _isQueryRunning = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _cancelQuery;
-        public bool CancelQuery
-        {
-            get { return _cancelQuery; }
-            set
-            {
-                if (value == _cancelQuery)
-                    return;
-
-                _cancelQuery = value;
                 OnPropertyChanged();
             }
         }
@@ -235,6 +237,20 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
+        private int _responses;
+        public int Responses
+        {
+            get { return _responses; }
+            set
+            {
+                if (value == _responses)
+                    return;
+
+                _responses = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _expandStatistics;
         public bool ExpandStatistics
         {
@@ -245,7 +261,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.SNMP_v1_ExpandStatistics = value;
+                    SettingsManager.Current.SNMP_v1v2c_ExpandStatistics = value;
 
                 _expandStatistics = value;
                 OnPropertyChanged();
@@ -254,11 +270,15 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Contructor, load settings
-        public SNMPv1ViewModel()
+        public SNMPv1v2cViewModel()
         {
             // Result view
             _queryResultView = CollectionViewSource.GetDefaultView(QueryResult);
             _queryResultView.SortDescriptions.Add(new SortDescription("OID", ListSortDirection.Ascending));
+
+            // Version v1 and v2c (default v2c)
+            Versions = new List<SNMP.SNMPVersion>() { SNMP.SNMPVersion.v1, SNMP.SNMPVersion.v2c };
+            Version = Versions.FirstOrDefault(x => x == SNMP.SNMPVersion.v2c);
 
             LoadSettings();
 
@@ -267,13 +287,13 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LoadSettings()
         {
-            if (SettingsManager.Current.SNMP_v1_HostnameHistory != null)
-                HostnameHistory = new List<string>(SettingsManager.Current.SNMP_v1_HostnameHistory);
+            if (SettingsManager.Current.SNMP_v1v2c_HostnameHistory != null)
+                HostnameHistory = new List<string>(SettingsManager.Current.SNMP_v1v2c_HostnameHistory);
 
-            if (SettingsManager.Current.SNMP_v1_OIDHistory != null)
-                OIDHistory = new List<string>(SettingsManager.Current.SNMP_v1_OIDHistory);
+            if (SettingsManager.Current.SNMP_v1v2c_OIDHistory != null)
+                OIDHistory = new List<string>(SettingsManager.Current.SNMP_v1v2c_OIDHistory);
 
-            ExpandStatistics = SettingsManager.Current.SNMP_v1_ExpandStatistics;
+            ExpandStatistics = SettingsManager.Current.SNMP_v1v2c_ExpandStatistics;
         }
         #endregion
 
@@ -325,6 +345,7 @@ namespace NETworkManager.ViewModels.Applications
             EndTime = null;
 
             QueryResult.Clear();
+            Responses = 0;
 
             // Try to parse the string into an IP-Address
             IPAddress.TryParse(Hostname, out IPAddress ipAddress);
@@ -390,7 +411,7 @@ namespace NETworkManager.ViewModels.Applications
             snmp.UserHasCanceled += Snmp_UserHasCanceled;
             snmp.Complete += Snmp_Complete;
 
-            snmp.QueryAsync(VersionCode.V1, ipAddress, Community, OID, snmpOptions, cancellationTokenSource.Token);
+            snmp.Queryv1v2cAsync(Version, ipAddress, Community, OID, snmpOptions, cancellationTokenSource.Token);
 
             // Add to history...
             HostnameHistory = new List<string>(HistoryListHelper.Modify(HostnameHistory, Hostname, SettingsManager.Current.Application_HistoryListEntries));
@@ -421,11 +442,13 @@ namespace NETworkManager.ViewModels.Applications
             {
                 QueryResult.Add(snmpReceivedInfo);
             }));
+
+            Responses++;
         }
 
         private void Snmp_Timeout(object sender, EventArgs e)
         {
-            StatusMessage = "Timeout"; //Application.Current.Resources["String_CanceledByUser"] as string;
+            StatusMessage = Application.Current.Resources["String_TimeoutOnSNMPQuery"] as string;
             DisplayStatusMessage = true;
 
             QueryFinished();
@@ -433,7 +456,7 @@ namespace NETworkManager.ViewModels.Applications
 
         private void Snmp_Error(object sender, EventArgs e)
         {
-            StatusMessage =  "Error" ;//Application.Current.Resources["String_CanceledByUser"] as string;
+            StatusMessage = Application.Current.Resources["String_ErrorInResponse"] as string;
             DisplayStatusMessage = true;
 
             QueryFinished();

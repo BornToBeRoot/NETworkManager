@@ -1,14 +1,8 @@
 ﻿using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Messaging;
-using NETworkManager.Helpers;
-using NETworkManager.Models.Lookup;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 namespace NETworkManager.Models.Network
@@ -57,25 +51,28 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Methods
-        public void QueryAsync(VersionCode version, IPAddress ipAddress, string community, string oid, SNMPOptions options, CancellationToken cancellationToken)
+        public void Queryv1v2cAsync(SNMPVersion version, IPAddress ipAddress, string community, string oid, SNMPOptions options, CancellationToken cancellationToken)
         {
             Task.Run(() =>
             {
+                // Version
+                VersionCode versionCode = version == SNMPVersion.v1 ? VersionCode.V1 : VersionCode.V2;
+
+                // host with ip:port
                 IPEndPoint ipEndpoint = new IPEndPoint(ipAddress, options.Port);
 
+                // List for results - snmp walk
                 IList<Variable> list = new List<Variable>();
 
                 try
                 {
                     if (options.Walk)
-                        Messenger.Walk(version, ipEndpoint, new OctetString(community), new ObjectIdentifier(oid), list, options.Timeout, options.WalkMode);
+                        Messenger.Walk(versionCode, ipEndpoint, new OctetString(community), new ObjectIdentifier(oid), list, options.Timeout, options.WalkMode);
                     else
-                        list = Messenger.Get(version, ipEndpoint, new OctetString(community), new List<Variable> { new Variable(new ObjectIdentifier(oid)) }, options.Timeout);
+                        list = Messenger.Get(versionCode, ipEndpoint, new OctetString(community), new List<Variable> { new Variable(new ObjectIdentifier(oid)) }, options.Timeout);
 
                     foreach (Variable result in list)
-                    {
                         OnReceived(new SNMPReceivedArgs(result.Id.ToString(), result.Data.ToString()));
-                    }
 
                     OnComplete();
                 }
@@ -88,6 +85,15 @@ namespace NETworkManager.Models.Network
                     OnError();
                 }
             });
+        }
+        #endregion
+
+        #region Enum
+        public enum SNMPVersion
+        {
+            v1,
+            v2c,
+            v3
         }
         #endregion
     }
