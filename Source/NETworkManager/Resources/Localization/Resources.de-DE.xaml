@@ -345,6 +345,9 @@
     <system:String x:Key="String_TimeoutOnSNMPQuery">Zeitüberschreitung bei SNMP-Abfrage.</system:String>
     <system:String x:Key="String_Responses">Antworten</system:String>
     <system:String x:Key="String_ErrorInResponse">Fehler in Antwort!</system:String>
+    <system:String x:Key="String_Security">Sicherheit</system:String>
+    <system:String x:Key="String_Auth">Auth</system:String>
+    <system:String x:Key="String_Priv">Priv</system:String>
     
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>

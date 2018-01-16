@@ -1457,6 +1457,76 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private List<string> _snmp_v3_HostnameHistory = new List<string>();
+        public List<string> SNMP_v3_HostnameHistory
+        {
+            get { return _snmp_v3_HostnameHistory; }
+            set
+            {
+                if (value == _snmp_v3_HostnameHistory)
+                    return;
+
+                _snmp_v3_HostnameHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private List<string> _snmp_v3_OIDHistory = new List<string>();
+        public List<string> SNMP_v3_OIDHistory
+        {
+            get { return _snmp_v3_OIDHistory; }
+            set
+            {
+                if (value == _snmp_v3_OIDHistory)
+                    return;
+
+                _snmp_v3_OIDHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _snmp_v3_Walk = true;
+        public bool SNMP_v3_Walk
+        {
+            get { return _snmp_v3_Walk; }
+            set
+            {
+                if (value == _snmp_v3_Walk)
+                    return;
+
+                _snmp_v3_Walk = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private SNMPv3Security _snmp_v3_Security = SNMPv3Security.AuthPriv;
+        public SNMPv3Security SNMP_v3_Security
+        {
+            get { return _snmp_v3_Security; }
+            set
+            {
+                if (value == _snmp_v3_Security)
+                    return;
+
+                _snmp_v3_Security = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _snmp_v3_ExpandStatistics = true;
+        public bool SNMP_v3_ExpandStatistics
+        {
+            get { return _snmp_v3_ExpandStatistics; }
+            set
+            {
+                if (value == _snmp_v3_ExpandStatistics)
+                    return;
+
+                _snmp_v3_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
         #endregion
 

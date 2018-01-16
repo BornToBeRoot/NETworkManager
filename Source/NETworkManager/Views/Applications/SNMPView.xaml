@@ -20,7 +20,7 @@
             <ApplicationViews:SNMPv1v2cView Margin="10" />
         </TabItem>
         <TabItem Header="{DynamicResource String_Header_v3}">
-            <!--            <ApplicationViews:SNMPv3View Margin="10" /> -->
+            <ApplicationViews:SNMPv3View Margin="10" />
         </TabItem>
     </TabControl>
 </UserControl>

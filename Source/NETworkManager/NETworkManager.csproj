@@ -205,6 +205,7 @@
     <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Validators\MultipleHostsValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
+    <Compile Include="ViewModels\Applications\SNMPv3ViewModel.cs" />
     <Compile Include="ViewModels\Applications\SNMPv1v2cViewModel.cs" />
     <Compile Include="ViewModels\Applications\HTTPHeadersViewModel.cs" />
     <Compile Include="ViewModels\Applications\ARPTableViewModel.cs" />
@@ -246,6 +247,9 @@
     <Compile Include="ViewModels\Settings\SettingsApplicationWakeOnLANViewModel.cs" />
     <Compile Include="Controls\RemoteDesktopControl.xaml.cs">
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Applications\SNMPv3View.xaml.cs">
+      <DependentUpon>SNMPv3View.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Applications\SNMPv1v2cView.xaml.cs">
       <DependentUpon>SNMPv1v2cView.xaml</DependentUpon>
@@ -402,6 +406,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RemoteDesktopControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Applications\SNMPv3View.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

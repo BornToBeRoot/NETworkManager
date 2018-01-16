@@ -345,7 +345,10 @@
     <system:String x:Key="String_TimeoutOnSNMPQuery">Timeout on SNMP query.</system:String>
     <system:String x:Key="String_Responses">Responses</system:String>
     <system:String x:Key="String_ErrorInResponse">Error in response!</system:String>
-
+    <system:String x:Key="String_Security">Security</system:String>
+    <system:String x:Key="String_Auth">Auth</system:String>
+    <system:String x:Key="String_Priv">Priv</system:String>
+    
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Reset all settings.</system:String>

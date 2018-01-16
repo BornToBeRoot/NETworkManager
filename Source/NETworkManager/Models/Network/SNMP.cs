@@ -106,6 +106,13 @@ namespace NETworkManager.Models.Network
             v2c,
             v3
         }
+
+        public enum SNMPv3Security
+        {
+            noAuthNoPriv,
+            AuthNoPriv,
+            AuthPriv
+        }
         #endregion
     }
 }
