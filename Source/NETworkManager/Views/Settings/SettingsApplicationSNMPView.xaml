@@ -8,8 +8,8 @@
         mc:Ignorable="d">
     <StackPanel>
         <TextBlock Text="{DynamicResource String_Header_SNMP}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Text="{DynamicResource String_WalkMode}" IsEnabled="{Binding Walk}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
-        <ComboBox ItemsSource="{Binding WalkModes}" SelectedItem="{Binding WalkMode}" IsEnabled="{Binding Walk}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" />
+        <TextBlock Text="{DynamicResource String_WalkMode}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
+        <ComboBox ItemsSource="{Binding WalkModes}" SelectedItem="{Binding WalkMode}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" />
         <TextBlock Text="{DynamicResource String_Timeout}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Timeout}" Maximum="100000" Minimum="1000" Interval="1000" Margin="0,0,0,10" />
         <TextBlock Text="{DynamicResource String_Port}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />

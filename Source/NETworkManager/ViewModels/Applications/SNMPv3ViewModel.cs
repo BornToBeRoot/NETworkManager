@@ -123,16 +123,16 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private string _community;
-        public string Community
+        private string _username;
+        public string Username
         {
-            get { return _community; }
+            get { return _username; }
             set
             {
-                if (value == _community)
+                if (value == _username)
                     return;
 
-                _community = value;
+                _username = value;
                 OnPropertyChanged();
             }
         }

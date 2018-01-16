@@ -452,6 +452,7 @@
     <system:String x:Key="String_Watermark_NotChanged">(not changed)</system:String>
     <system:String x:Key="String_Watermark_ExampleSNMPOID">1.3.6.1.2.1.1</system:String>
     <system:String x:Key="String_Watermark_ExampleSNMPCommunity">Public</system:String>
+    <system:String x:Key="String_Watermark_ExampleSNMPUsername">snmp-user</system:String>
     
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Set static IP address and gateway...</system:String>
