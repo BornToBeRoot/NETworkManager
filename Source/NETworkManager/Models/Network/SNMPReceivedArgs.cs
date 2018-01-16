@@ -1,4 +1,6 @@
-﻿namespace NETworkManager.Models.Network
+﻿using Lextm.SharpSnmpLib;
+
+namespace NETworkManager.Models.Network
 {
     public class SNMPReceivedArgs : System.EventArgs
     {
@@ -10,10 +12,10 @@
 
         }
 
-        public SNMPReceivedArgs(string oid, string data)
+        public SNMPReceivedArgs(ObjectIdentifier oid, ISnmpData data)
         {
-            OID = oid;
-            Data = data;
+            OID = oid.ToString();
+            Data = data.ToString();
         }
     }
 }

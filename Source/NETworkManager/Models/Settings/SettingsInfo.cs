@@ -1514,6 +1514,34 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private SNMPv3AuthenticationProvider _snmp_v3_AuthenticationProvider = SNMPv3AuthenticationProvider.SHA1;
+        public SNMPv3AuthenticationProvider SNMP_v3_AuthenticationProvider
+        {
+            get { return _snmp_v3_AuthenticationProvider; }
+            set
+            {
+                if (value == _snmp_v3_AuthenticationProvider)
+                    return;
+
+                _snmp_v3_AuthenticationProvider = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private SNMPv3PrivacyProvider _snmp_v3_PrivacyProvider = SNMPv3PrivacyProvider.AES;
+        public SNMPv3PrivacyProvider SNMP_v3_PrivacyProvider
+        {
+            get { return _snmp_v3_PrivacyProvider; }
+            set
+            {
+                if (value == _snmp_v3_PrivacyProvider)
+                    return;
+
+                _snmp_v3_PrivacyProvider = value;
+                SettingsChanged = true;
+            }
+        }
+
         private bool _snmp_v3_ExpandStatistics = true;
         public bool SNMP_v3_ExpandStatistics
         {

@@ -1,9 +1,12 @@
 ﻿using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib.Security;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using System.Windows;
+
 namespace NETworkManager.Models.Network
 {
     public class SNMP
@@ -57,7 +60,7 @@ namespace NETworkManager.Models.Network
                 try
                 {
                     foreach (Variable result in Messenger.Get(version == SNMPVersion.v1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(community), new List<Variable> { new Variable(new ObjectIdentifier(oid)) }, options.Timeout))
-                        OnReceived(new SNMPReceivedArgs(result.Id.ToString(), result.Data.ToString()));
+                        OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
 
                     OnComplete();
                 }
@@ -83,7 +86,7 @@ namespace NETworkManager.Models.Network
                     Messenger.Walk(version == SNMPVersion.v1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(community), new ObjectIdentifier(oid), results, options.Timeout, walkMode);
 
                     foreach (Variable result in results)
-                        OnReceived(new SNMPReceivedArgs(result.Id.ToString(), result.Data.ToString()));
+                        OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
 
                     OnComplete();
                 }
@@ -96,6 +99,47 @@ namespace NETworkManager.Models.Network
                     OnError();
                 }
             });
+        }
+
+        public void Walkv3Async(IPAddress ipAddress, string oid, SNMPv3Security security, string username, SNMPv3AuthenticationProvider authProvider, string auth, SNMPv3PrivacyProvider privProvider, string priv, SNMPOptions options, WalkMode walkMode)
+        {
+            Task.Run(() =>
+            {
+                IPEndPoint ipEndpoint = new IPEndPoint(ipAddress, options.Port);
+
+                // Discovery
+                Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
+                ReportMessage report = discovery.GetResponse(options.Timeout, ipEndpoint);
+
+                IPrivacyProvider privacy = GetPrivacy(authProvider, auth, privProvider, priv);
+
+                var results = new List<Variable>();
+                
+                Messenger.BulkWalk(VersionCode.V3, ipEndpoint, new OctetString(username), new ObjectIdentifier(oid), results, options.Timeout, 10, walkMode, privacy, report);
+
+                foreach (Variable result in results)
+                    OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
+
+                OnComplete();
+            });
+        }
+
+        private IPrivacyProvider GetPrivacy(SNMPv3AuthenticationProvider authProvider, string auth, SNMPv3PrivacyProvider privProvider, string priv)
+        {
+            IAuthenticationProvider authenticationProvider;
+
+            // Authentication provider
+            if (authProvider == SNMPv3AuthenticationProvider.MD5)
+                authenticationProvider = new MD5AuthenticationProvider(new OctetString(auth));
+            else
+                authenticationProvider = new SHA1AuthenticationProvider(new OctetString(auth));
+                       
+            
+
+            if (privProvider == SNMPv3PrivacyProvider.DES)
+                return new DESPrivacyProvider(new OctetString(priv), authenticationProvider);
+            else
+                return new AESPrivacyProvider(new OctetString(priv), authenticationProvider);
         }
         #endregion
 
@@ -112,6 +156,18 @@ namespace NETworkManager.Models.Network
             noAuthNoPriv,
             AuthNoPriv,
             AuthPriv
+        }
+
+        public enum SNMPv3AuthenticationProvider
+        {
+            MD5,
+            SHA1
+        }
+
+        public enum SNMPv3PrivacyProvider
+        {
+            DES,
+            AES
         }
         #endregion
     }

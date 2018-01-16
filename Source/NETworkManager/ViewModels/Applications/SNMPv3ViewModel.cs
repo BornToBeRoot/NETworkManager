@@ -137,20 +137,25 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private string _priv;
-        public string Priv
+        public List<SNMPv3AuthenticationProvider> AuthenticationProviders { get; set; }
+
+        private SNMPv3AuthenticationProvider _authenticationProvider;
+        public SNMPv3AuthenticationProvider AuthenticationProvider
         {
-            get { return _priv; }
+            get { return _authenticationProvider; }
             set
             {
-                if (value == _priv)
+                if (value == _authenticationProvider)
                     return;
 
-                _priv = value;
+                if (!_isLoading)
+                    SettingsManager.Current.SNMP_v3_AuthenticationProvider = value;
+
+                _authenticationProvider = value;
                 OnPropertyChanged();
             }
         }
-
+        
         private string _auth;
         public string Auth
         {
@@ -161,6 +166,39 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 _auth = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<SNMPv3PrivacyProvider> PrivacyProviders { get; set; }
+
+        private SNMPv3PrivacyProvider _privacyProvider;
+        public SNMPv3PrivacyProvider PrivacyProvider
+        {
+            get { return _privacyProvider; }
+            set
+            {
+                if (value == _privacyProvider)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.SNMP_v3_PrivacyProvider = value;
+
+                _privacyProvider = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _priv;
+        public string Priv
+        {
+            get { return _priv; }
+            set
+            {
+                if (value == _priv)
+                    return;
+
+                _priv = value;
                 OnPropertyChanged();
             }
         }
@@ -324,6 +362,10 @@ namespace NETworkManager.ViewModels.Applications
             // Version v1 and v2c (default v2c)
             Securitys = new List<SNMPv3Security>() { SNMPv3Security.noAuthNoPriv, SNMPv3Security.AuthNoPriv, SNMPv3Security.AuthPriv };
 
+            // Auth / Priv
+            AuthenticationProviders = new List<SNMPv3AuthenticationProvider>() { SNMPv3AuthenticationProvider.MD5, SNMPv3AuthenticationProvider.SHA1 };
+            PrivacyProviders = new List<SNMPv3PrivacyProvider>() { SNMPv3PrivacyProvider.DES, SNMPv3PrivacyProvider.AES };
+
             LoadSettings();
 
             _isLoading = false;
@@ -338,6 +380,8 @@ namespace NETworkManager.ViewModels.Applications
                 OIDHistory = new List<string>(SettingsManager.Current.SNMP_v3_OIDHistory);
 
             Security = Securitys.FirstOrDefault(x => x == SettingsManager.Current.SNMP_v3_Security);
+            AuthenticationProvider = AuthenticationProviders.FirstOrDefault(x => x == SettingsManager.Current.SNMP_v3_AuthenticationProvider);
+            PrivacyProvider = PrivacyProviders.FirstOrDefault(x => x == SettingsManager.Current.SNMP_v3_PrivacyProvider);
             Walk = SettingsManager.Current.SNMP_v3_Walk;
             ExpandStatistics = SettingsManager.Current.SNMP_v3_ExpandStatistics;
         }
@@ -453,10 +497,10 @@ namespace NETworkManager.ViewModels.Applications
             snmp.UserHasCanceled += Snmp_UserHasCanceled;
             snmp.Complete += Snmp_Complete;
 
-            //if (Walk)
-            //    snmp.Walkv1v2cAsync(Version, ipAddress, Community, OID, snmpOptions, SettingsManager.Current.SNMP_WalkMode);
-            //else
-            //    snmp.Getv1v2cAsync(Version, ipAddress, Community, OID, snmpOptions);
+            if (Walk)
+                snmp.Walkv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, snmpOptions, SettingsManager.Current.SNMP_WalkMode);
+            // else
+            //     snmp.Getv1v2cAsync(Version, ipAddress, Community, OID, snmpOptions);
 
             // Add to history...
             HostnameHistory = new List<string>(HistoryListHelper.Modify(HostnameHistory, Hostname, SettingsManager.Current.Application_HistoryListEntries));
