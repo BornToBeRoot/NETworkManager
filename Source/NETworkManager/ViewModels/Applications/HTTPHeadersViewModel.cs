@@ -1,11 +1,7 @@
 ﻿using NETworkManager.Models.Network;
 using NETworkManager.Helpers;
 using System;
-using System.Windows;
 using System.Windows.Input;
-using System.ComponentModel;
-using System.Windows.Data;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using NETworkManager.Models.Settings;
 using System.Net;

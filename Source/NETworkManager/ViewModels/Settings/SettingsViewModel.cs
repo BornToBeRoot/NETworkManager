@@ -98,6 +98,7 @@ namespace NETworkManager.ViewModels.Settings
         SettingsApplicationTracerouteView _settingsApplicationTracerouteView;
         SettingsApplicationDNSLookupView _settingsApplicationDNSLookupView;
         SettingsApplicationRemoteDesktopView _settingsApplicationRemoteDesktopView;
+        SettingsApplicationSNMPView _settingsApplicationSNMPView;
         #endregion
 
         #region Contructor, load settings
@@ -216,12 +217,7 @@ namespace NETworkManager.ViewModels.Settings
 
                     SettingsContent = _settingsApplicationPortScannerView;
                     break;
-                case SettingsViewManager.Name.WakeOnLAN:
-                    if (_settingsApplicationWakeOnLANView == null)
-                        _settingsApplicationWakeOnLANView = new SettingsApplicationWakeOnLANView();
-
-                    SettingsContent = _settingsApplicationWakeOnLANView;
-                    break;
+               
                 case SettingsViewManager.Name.Ping:
                     if (_settingsApplicationPingView == null)
                         _settingsApplicationPingView = new SettingsApplicationPingView();
@@ -245,6 +241,18 @@ namespace NETworkManager.ViewModels.Settings
                         _settingsApplicationRemoteDesktopView = new SettingsApplicationRemoteDesktopView();
 
                     SettingsContent = _settingsApplicationRemoteDesktopView;
+                    break;
+                case SettingsViewManager.Name.SNMP:
+                    if (_settingsApplicationSNMPView == null)
+                        _settingsApplicationSNMPView = new SettingsApplicationSNMPView();
+
+                    SettingsContent = _settingsApplicationSNMPView;
+                    break;
+                case SettingsViewManager.Name.WakeOnLAN:
+                    if (_settingsApplicationWakeOnLANView == null)
+                        _settingsApplicationWakeOnLANView = new SettingsApplicationWakeOnLANView();
+
+                    SettingsContent = _settingsApplicationWakeOnLANView;
                     break;
             }
         }

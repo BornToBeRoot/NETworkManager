@@ -177,6 +177,18 @@
   <data name="Libary_MahAppsMetro_ProjectUrl" xml:space="preserve">
     <value>https://github.com/mahapps/mahapps.metro</value>
   </data>
+  <data name="Libary_SharpSNMPLib_Description" xml:space="preserve">
+    <value>Sharp SNMP Library- Open Source SNMP for .NET and Mono</value>
+  </data>
+  <data name="Libary_SharpSNMPLib_LicenseUrl" xml:space="preserve">
+    <value>https://github.com/lextm/sharpsnmplib/blob/master/LICENSE</value>
+  </data>
+  <data name="Libary_SharpSNMPLib_Name" xml:space="preserve">
+    <value>#SNMP Libary</value>
+  </data>
+  <data name="Libary_SharpSNMPLib_ProjectUrl" xml:space="preserve">
+    <value>https://github.com/lextm/sharpsnmplib</value>
+  </data>
   <data name="License_CPOL" xml:space="preserve">
     <value>Code Project Open License</value>
   </data>

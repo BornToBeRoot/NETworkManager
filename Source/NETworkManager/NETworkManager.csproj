@@ -79,6 +79,9 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>obj\Debug\MSTSCLib.dll</HintPath>
     </Reference>
+    <Reference Include="SharpSnmpLib, Version=10.0.3.0, Culture=neutral, PublicKeyToken=4c00852d3788e005, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lextm.SharpSnmpLib.10.0.3\lib\net452\SharpSnmpLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -190,6 +193,10 @@
     <Compile Include="Helpers\SingleInstanceHelper.cs" />
     <Compile Include="Models\Network\HTTPHeaders.cs" />
     <Compile Include="Models\Network\ARPTableInfo.cs" />
+    <Compile Include="Models\Network\SNMPOptions.cs" />
+    <Compile Include="Models\Network\SNMPReceivedInfo.cs" />
+    <Compile Include="Models\Network\SNMPReceivedArgs.cs" />
+    <Compile Include="Models\Network\SNMP.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Models\Settings\CredentialInfoSerializable.cs" />
     <Compile Include="Models\Settings\CredentialInfo.cs" />
@@ -198,6 +205,8 @@
     <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Validators\MultipleHostsValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
+    <Compile Include="ViewModels\Applications\SNMPv3ViewModel.cs" />
+    <Compile Include="ViewModels\Applications\SNMPv1v2cViewModel.cs" />
     <Compile Include="ViewModels\Applications\HTTPHeadersViewModel.cs" />
     <Compile Include="ViewModels\Applications\ARPTableViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\CredentialsMasterPasswordViewModel.cs" />
@@ -232,11 +241,21 @@
     <Compile Include="ViewModels\Applications\RemoteDesktopViewModel.cs" />
     <Compile Include="ViewModels\Help\HelpCommandLineViewModel.cs" />
     <Compile Include="ViewModels\Settings\CredentialsViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsApplicationSNMPViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationRemoteDesktopViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationDNSLookupViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationWakeOnLANViewModel.cs" />
     <Compile Include="Controls\RemoteDesktopControl.xaml.cs">
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Applications\SNMPv3View.xaml.cs">
+      <DependentUpon>SNMPv3View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Applications\SNMPv1v2cView.xaml.cs">
+      <DependentUpon>SNMPv1v2cView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Applications\SNMPView.xaml.cs">
+      <DependentUpon>SNMPView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Applications\HTTPHeadersView.xaml.cs">
       <DependentUpon>HTTPHeadersView.xaml</DependentUpon>
@@ -297,6 +316,9 @@
     </Compile>
     <Compile Include="Views\Settings\CredentialsView.xaml.cs">
       <DependentUpon>CredentialsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsApplicationSNMPView.xaml.cs">
+      <DependentUpon>SettingsApplicationSNMPView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\SettingsApplicationRemoteDesktopView.xaml.cs">
       <DependentUpon>SettingsApplicationRemoteDesktopView.xaml</DependentUpon>
@@ -384,6 +406,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RemoteDesktopControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Applications\SNMPv3View.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Applications\SNMPv1v2cView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Applications\SNMPView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -488,6 +522,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Settings\CredentialsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings\SettingsApplicationSNMPView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

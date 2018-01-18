@@ -6,10 +6,10 @@
         xmlns:ApplicationViews ="clr-namespace:NETworkManager.Views.Applications"
         mc:Ignorable="d">
     <TabControl Style="{StaticResource DefaultTabControl}">
-        <TabItem Header="{DynamicResource String_Header_OUILookup}">
+        <TabItem Header="{DynamicResource String_Header_OUI}">
             <ApplicationViews:LookupOUILookupView Margin="10" />
         </TabItem>
-        <TabItem Header="{DynamicResource String_Header_PortLookup}">
+        <TabItem Header="{DynamicResource String_Header_Port}">
             <ApplicationViews:LookupPortLookupView Margin="10" />
         </TabItem>
     </TabControl>

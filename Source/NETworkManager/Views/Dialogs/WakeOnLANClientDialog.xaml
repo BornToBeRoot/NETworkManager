@@ -66,7 +66,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_Port}" />
-            <TextBox x:Name="txtPort" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort}">
+            <TextBox x:Name="txtPort" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort7}">
                 <TextBox.Text>
                     <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

@@ -42,9 +42,8 @@
     <system:String x:Key="String_Header_AreYouSure">Are you sure?</system:String>
     <system:String x:Key="String_Header_ValidationFailed">Validation failed!</system:String>
     <system:String x:Key="String_Header_Success">Success!</system:String>
-    <system:String x:Key="String_Header_OUILookup">OUI Lookup</system:String>
+    <system:String x:Key="String_Header_OUI">OUI</system:String>
     <system:String x:Key="String_Header_PortScanner">Port Scanner</system:String>
-    <system:String x:Key="String_Header_PortLookup">Port Lookup</system:String>
     <system:String x:Key="String_Header_Port">Port</system:String>
     <system:String x:Key="String_Header_Socket">Socket</system:String>
     <system:String x:Key="String_Header_History">History</system:String>
@@ -96,7 +95,11 @@
     <system:String x:Key="String_Header_Authentication">Authentication</system:String>
     <system:String x:Key="String_Header_CredentialNotFound">Credential not found!</system:String>
     <system:String x:Key="String_Header_ConnectAs">Connect as</system:String>
-
+    <system:String x:Key="String_Header_Query">Query</system:String>
+    <system:String x:Key="String_Header_SNMP">SNMP</system:String>
+    <system:String x:Key="String_Header_v1v2c">v1/v2c</system:String>
+    <system:String x:Key="String_Header_v3">v3</system:String>
+    
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">A powerful tool for managing networks and troubleshoot network problems!</system:String>
@@ -333,6 +336,18 @@
     <system:String x:Key="String_MACAddressOrVendor">MAC address or vendor</system:String>
     <system:String x:Key="String_PortOrService">Port or service</system:String>
     <system:String x:Key="String_CapsLockIsEnabled">Caps lock is enabled!</system:String>
+    <system:String x:Key="String_OID">OID</system:String>
+    <system:String x:Key="String_Community">Community</system:String>
+    <system:String x:Key="String_Data">Data</system:String>
+    <system:String x:Key="String_Walk">Walk</system:String>
+    <system:String x:Key="String_WalkMode">Walk mode</system:String>
+    <system:String x:Key="String_License">Lincense</system:String>
+    <system:String x:Key="String_TimeoutOnSNMPQuery">Timeout on SNMP query.</system:String>
+    <system:String x:Key="String_Responses">Responses</system:String>
+    <system:String x:Key="String_ErrorInResponse">Error in response!</system:String>
+    <system:String x:Key="String_Security">Security</system:String>
+    <system:String x:Key="String_Auth">Auth</system:String>
+    <system:String x:Key="String_Priv">Priv</system:String>
     
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
@@ -384,6 +399,7 @@
     <system:String x:Key="String_Button_EditDots">Edit...</system:String>
     <system:String x:Key="String_Button_DeleteDots">Delete...</system:String>
     <system:String x:Key="String_Button_DecryptAndLoad">Decrypt and load...</system:String>
+    <system:String x:Key="String_Button_Query">Query</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Cut</system:String>
@@ -404,7 +420,8 @@
     <system:String x:Key="String_Watermark_ExampleMACAddress">00:F1:21:AB:0B:35</system:String>
     <system:String x:Key="String_Watermark_ExampleHostname">SERVER-01</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Broadcast">192.168.178.255</system:String>
-    <system:String x:Key="String_Watermark_ExamplePort">7</system:String>
+    <system:String x:Key="String_Watermark_ExamplePort7">7</system:String>
+    <system:String x:Key="String_Watermark_ExamplePort161">161</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Address">192.168.178.55</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmask">255.255.255.0</system:String>
     <system:String x:Key="String_Watermark_ExampleHostnameOrIPAddress">SERVER-01 or 172.16.0.100</system:String>
@@ -433,6 +450,9 @@
     <system:String x:Key="String_Watermark_ExampleRemoteDesktopSessionName">Webserver</system:String>
     <system:String x:Key="String_Watermark_ExampleSuffix">fritz.box</system:String>
     <system:String x:Key="String_Watermark_NotChanged">(not changed)</system:String>
+    <system:String x:Key="String_Watermark_ExampleSNMPOID">1.3.6.1.2.1.1</system:String>
+    <system:String x:Key="String_Watermark_ExampleSNMPCommunity">Public</system:String>
+    <system:String x:Key="String_Watermark_ExampleSNMPUsername">snmp-user</system:String>
     
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Set static IP address and gateway...</system:String>
@@ -470,6 +490,7 @@
     <system:String x:Key="String_ApplicationName_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_ApplicationName_DNSLookup">DNS Lookup</system:String>
     <system:String x:Key="String_ApplicationName_RemoteDesktop">Remote Desktop</system:String>
+    <system:String x:Key="String_ApplicationName_SNMP">SNMP</system:String>
     <system:String x:Key="String_ApplicationName_HTTPHeaders">HTTP Headers</system:String>
     <system:String x:Key="String_ApplicationName_ARPTable">ARP Table</system:String>
     <system:String x:Key="String_ApplicationName_Lookup">Lookup</system:String>

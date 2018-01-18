@@ -13,6 +13,7 @@ namespace NETworkManager.Views
             {
                 return new List<SettingsViewInfo>
                 {
+                    // General
                     new SettingsViewInfo(Name.General, new PackIconModern() { Kind = PackIconModernKind.Box }, Group.General),
                     new SettingsViewInfo(Name.Window, new PackIconMaterial() {Kind = PackIconMaterialKind.Application }, Group.General),
                     new SettingsViewInfo(Name.Appearance, new PackIconMaterial() { Kind = PackIconMaterialKind.AutoFix }, Group.General),
@@ -21,12 +22,15 @@ namespace NETworkManager.Views
                     new SettingsViewInfo(Name.Autostart, new PackIconMaterial() { Kind = PackIconMaterialKind.Power }, Group.General),
                     new SettingsViewInfo(Name.Settings, new PackIconOcticons() { Kind = PackIconOcticonsKind.Settings }, Group.General),
                     new SettingsViewInfo(Name.ImportExport, new PackIconMaterial() { Kind = PackIconMaterialKind.Import}, Group.General),
+
+                    // Applications
                     new SettingsViewInfo(Name.IPScanner, new PackIconMaterial() {Kind = PackIconMaterialKind.Sitemap }, Group.Applications),
                     new SettingsViewInfo(Name.PortScanner, new PackIconModern() {Kind = PackIconModernKind.NetworkPort }, Group.Applications),
                     new SettingsViewInfo(Name.Ping, new PackIconMaterial() { Kind = PackIconMaterialKind.LanConnect }, Group.Applications),
                     new SettingsViewInfo(Name.Traceroute, new PackIconModern() {Kind = PackIconModernKind.TransitConnection}, Group.Applications),
                     new SettingsViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.Dna }, Group.Applications ),
                     new SettingsViewInfo(Name.RemoteDesktop, new PackIconOcticons() { Kind = PackIconOcticonsKind.DeviceDesktop}, Group.Applications),
+                    new SettingsViewInfo(Name.SNMP,new PackIconMaterial() {Kind = PackIconMaterialKind.Switch }, Group.Applications),
                     new SettingsViewInfo(Name.WakeOnLAN, new PackIconMaterial() {Kind = PackIconMaterialKind.Power} , Group.Applications)
                 };
             }
@@ -48,12 +52,13 @@ namespace NETworkManager.Views
             Traceroute,
             DNSLookup,
             RemoteDesktop,
+            SNMP,
             WakeOnLAN
         }
 
         public static string TranslateName(Name name, Group group)
         {
-            switch(group)
+            switch (group)
             {
                 case Group.General:
                     return Application.Current.Resources["String_SettingsName_" + name] as string;
