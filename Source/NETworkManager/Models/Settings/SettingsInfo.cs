@@ -1500,7 +1500,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private SNMPv3Security _snmp_v3_Security = SNMPv3Security.AuthPriv;
+        private SNMPv3Security _snmp_v3_Security = SNMPv3Security.authPriv;
         public SNMPv3Security SNMP_v3_Security
         {
             get { return _snmp_v3_Security; }

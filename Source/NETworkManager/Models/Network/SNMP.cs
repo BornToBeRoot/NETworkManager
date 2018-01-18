@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace NETworkManager.Models.Network
 {
@@ -101,40 +100,114 @@ namespace NETworkManager.Models.Network
             });
         }
 
+        public void Getv3Async(IPAddress ipAddress, string oid, SNMPv3Security security, string username, SNMPv3AuthenticationProvider authProvider, string auth, SNMPv3PrivacyProvider privProvider, string priv, SNMPOptions options)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    IPEndPoint ipEndpoint = new IPEndPoint(ipAddress, options.Port);
+
+                    // Discovery
+                    Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
+                    ReportMessage report = discovery.GetResponse(options.Timeout, ipEndpoint);
+
+                    IPrivacyProvider privacy;
+
+                    if (security == SNMPv3Security.authPriv)
+                        privacy = GetPrivacy(authProvider, auth, privProvider, priv);
+                    else if (security == SNMPv3Security.authNoPriv)
+                        privacy = GetPrivacy(authProvider, auth);
+                    else // noAuthNoPriv
+                        privacy = GetPrivacy();
+
+                    GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(username), new List<Variable> { new Variable(new ObjectIdentifier(oid)) }, privacy, Messenger.MaxMessageSize, report);
+                    Variable result = request.GetResponse(options.Timeout, ipEndpoint).Pdu().Variables[0];
+
+                    OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
+
+                    OnComplete();
+                }
+                catch (Lextm.SharpSnmpLib.Messaging.TimeoutException)
+                {
+                    OnTimeout();
+                }
+                catch (ErrorException)
+                {
+                    OnError();
+                }
+            });
+        }
+
         public void Walkv3Async(IPAddress ipAddress, string oid, SNMPv3Security security, string username, SNMPv3AuthenticationProvider authProvider, string auth, SNMPv3PrivacyProvider privProvider, string priv, SNMPOptions options, WalkMode walkMode)
         {
             Task.Run(() =>
             {
-                IPEndPoint ipEndpoint = new IPEndPoint(ipAddress, options.Port);
+                try
+                {
+                    IPEndPoint ipEndpoint = new IPEndPoint(ipAddress, options.Port);
 
-                // Discovery
-                Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
-                ReportMessage report = discovery.GetResponse(options.Timeout, ipEndpoint);
+                    // Discovery
+                    Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
+                    ReportMessage report = discovery.GetResponse(options.Timeout, ipEndpoint);
 
-                IPrivacyProvider privacy = GetPrivacy(authProvider, auth, privProvider, priv);
+                    IPrivacyProvider privacy;
 
-                var results = new List<Variable>();
-                
-                Messenger.BulkWalk(VersionCode.V3, ipEndpoint, new OctetString(username), new ObjectIdentifier(oid), results, options.Timeout, 10, walkMode, privacy, report);
+                    if (security == SNMPv3Security.authPriv)
+                        privacy = GetPrivacy(authProvider, auth, privProvider, priv);
+                    else if (security == SNMPv3Security.authNoPriv)
+                        privacy = GetPrivacy(authProvider, auth);
+                    else // noAuthNoPriv
+                        privacy = GetPrivacy();
 
-                foreach (Variable result in results)
-                    OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
+                    List<Variable> results = new List<Variable>();
 
-                OnComplete();
+                    Messenger.BulkWalk(VersionCode.V3, ipEndpoint, new OctetString(username), new ObjectIdentifier(oid), results, options.Timeout, 10, walkMode, privacy, report);
+
+                    foreach (Variable result in results)
+                        OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
+
+                    OnComplete();
+                }
+                catch (Lextm.SharpSnmpLib.Messaging.TimeoutException)
+                {
+                    OnTimeout();
+                }
+                catch (ErrorException)
+                {
+                    OnError();
+                }
             });
         }
 
-        private IPrivacyProvider GetPrivacy(SNMPv3AuthenticationProvider authProvider, string auth, SNMPv3PrivacyProvider privProvider, string priv)
+        // noAuthNoPriv
+        private IPrivacyProvider GetPrivacy()
+        {
+            return new DefaultPrivacyProvider(DefaultAuthenticationProvider.Instance);
+        }
+
+        // authNoPriv
+        private IPrivacyProvider GetPrivacy(SNMPv3AuthenticationProvider authProvider, string auth)
         {
             IAuthenticationProvider authenticationProvider;
 
-            // Authentication provider
             if (authProvider == SNMPv3AuthenticationProvider.MD5)
                 authenticationProvider = new MD5AuthenticationProvider(new OctetString(auth));
             else
                 authenticationProvider = new SHA1AuthenticationProvider(new OctetString(auth));
-                       
-            
+
+            return new DefaultPrivacyProvider(authenticationProvider);
+        }
+
+        // authPriv
+        private IPrivacyProvider GetPrivacy(SNMPv3AuthenticationProvider authProvider, string auth, SNMPv3PrivacyProvider privProvider, string priv)
+        {
+            IAuthenticationProvider authenticationProvider;
+
+            if (authProvider == SNMPv3AuthenticationProvider.MD5)
+                authenticationProvider = new MD5AuthenticationProvider(new OctetString(auth));
+            else
+                authenticationProvider = new SHA1AuthenticationProvider(new OctetString(auth));
 
             if (privProvider == SNMPv3PrivacyProvider.DES)
                 return new DESPrivacyProvider(new OctetString(priv), authenticationProvider);
@@ -154,8 +227,8 @@ namespace NETworkManager.Models.Network
         public enum SNMPv3Security
         {
             noAuthNoPriv,
-            AuthNoPriv,
-            AuthPriv
+            authNoPriv,
+            authPriv
         }
 
         public enum SNMPv3AuthenticationProvider

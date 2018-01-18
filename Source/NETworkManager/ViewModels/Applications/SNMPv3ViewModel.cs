@@ -360,7 +360,7 @@ namespace NETworkManager.ViewModels.Applications
             _queryResultView.SortDescriptions.Add(new SortDescription("OID", ListSortDirection.Ascending));
 
             // Version v1 and v2c (default v2c)
-            Securitys = new List<SNMPv3Security>() { SNMPv3Security.noAuthNoPriv, SNMPv3Security.AuthNoPriv, SNMPv3Security.AuthPriv };
+            Securitys = new List<SNMPv3Security>() { SNMPv3Security.noAuthNoPriv, SNMPv3Security.authNoPriv, SNMPv3Security.authPriv };
 
             // Auth / Priv
             AuthenticationProviders = new List<SNMPv3AuthenticationProvider>() { SNMPv3AuthenticationProvider.MD5, SNMPv3AuthenticationProvider.SHA1 };
@@ -499,8 +499,8 @@ namespace NETworkManager.ViewModels.Applications
 
             if (Walk)
                 snmp.Walkv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, snmpOptions, SettingsManager.Current.SNMP_WalkMode);
-            // else
-            //     snmp.Getv1v2cAsync(Version, ipAddress, Community, OID, snmpOptions);
+             else
+                snmp.Getv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, snmpOptions);
 
             // Add to history...
             HostnameHistory = new List<string>(HistoryListHelper.Modify(HostnameHistory, Hostname, SettingsManager.Current.Application_HistoryListEntries));
