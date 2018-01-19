@@ -369,7 +369,7 @@
                         <StackPanel>
                             <RadioButton x:Name="radioButtonConfigEnableDynamicIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding ConfigEnableDynamicIPAddress}" Content="{DynamicResource String_ObtainAnIPAddressAutomatically}" Margin="0,0,0,10"/>
                             <RadioButton x:Name="radioButtonConfigEnableStaticIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding ConfigEnableStaticIPAddress}" Content="{DynamicResource String_UseTheFollowingIPAddress}" Margin="0,0,0,10"/>
-                            <GroupBox Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigEnableStaticIPAddress}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="20,0,0,10">
+                            <GroupBox Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigEnableStaticIPAddress}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="25,0,0,10">
                                 <Grid>
                                     <Grid.Resources>
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
@@ -445,7 +445,7 @@
                             </GroupBox>
                             <RadioButton x:Name="radioButtonConfigEnableDynamicDNS" GroupName="DNSServerConfig" Content="{DynamicResource String_ObtainDNSServerAddressAutomatically}" IsChecked="{Binding ConfigEnableDynamicDNS}" FontSize="14"  Margin="0,0,0,10" IsEnabled="{Binding ConfigEnableDynamicIPAddress}" />
                             <RadioButton x:Name="radioButtonConfigEnableStaticDNS" GroupName="DNSServerConfig" Content="{DynamicResource String_UseTheFollowingDNSServerAddresses}" IsChecked="{Binding ConfigEnableStaticDNS}" FontSize="14" Margin="0,0,0,10"/>
-                            <GroupBox Grid.Row="10" Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigEnableStaticDNS}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="20,0,0,0">
+                            <GroupBox Grid.Row="10" Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigEnableStaticDNS}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="25,0,0,0">
                                 <Grid>
                                     <Grid.Resources>
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">

@@ -203,6 +203,7 @@
     <Compile Include="Models\Settings\CredentialManager.cs" />
     <Compile Include="Models\Settings\RemoteDesktopSessionManager.cs" />
     <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
+    <Compile Include="Validators\Int32Validator.cs" />
     <Compile Include="Validators\MultipleHostsValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="ViewModels\Applications\SNMPv3ViewModel.cs" />

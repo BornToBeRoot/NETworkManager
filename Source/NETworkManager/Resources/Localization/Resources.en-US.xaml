@@ -298,7 +298,7 @@
     <system:String x:Key="String_RedirectPorts">Redirect ports</system:String>
     <system:String x:Key="String_RedirectSmartcards">Redirect smartcards</system:String>
     <system:String x:Key="String_RedirectPrinters">Redirect printers</system:String>
-    <system:String x:Key="String_ScreenResolution">Screen resolution</system:String>
+    <system:String x:Key="String_SelectAScreenResolution">Select a screen resolution</system:String>
     <system:String x:Key="String_ColorDepthBit">Color depth (bit)</system:String>
     <system:String x:Key="String_Tags">Tags</system:String>
     <system:String x:Key="String_CopyDots">Copy...</system:String>
@@ -348,6 +348,11 @@
     <system:String x:Key="String_Security">Security</system:String>
     <system:String x:Key="String_Auth">Auth</system:String>
     <system:String x:Key="String_Priv">Priv</system:String>
+    <system:String x:Key="String_FixedScreenSize">Fixed screen size:</system:String>
+    <system:String x:Key="String_UseCurrentViewSize">Use the current view size as the screen size</system:String>
+    <system:String x:Key="String_CustomScreenSize">Custom screen size:</system:String>
+    <system:String x:Key="String_Width">Width</system:String>
+    <system:String x:Key="String_Height">Height</system:String>
     
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
@@ -479,6 +484,7 @@
     <system:String x:Key="String_ValidateError_EnterValidSubnet">Enter a valid subnet (like 192.168.178.133/26)</system:String>
     <system:String x:Key="String_ValidateError_EnterValidWebsiteUri">Enter a valid website (like https://example.com/index.html)</system:String>
     <system:String x:Key="String_ValidateError_EnterValidHosts">Enter valid hosts (multiple hosts can not end with ";")!</system:String>
+    <system:String x:Key="String_ValidateError_EnterValidNumber">Enter a valid number!</system:String>
     
     <!-- ApplicationView.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP Scanner</system:String>

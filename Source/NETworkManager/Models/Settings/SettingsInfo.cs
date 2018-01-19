@@ -1131,30 +1131,100 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _remoteDesktop_DesktopWidth = 1280;
-        public int RemoteDesktop_DesktopWidth
+        private bool _remoteDesktop_UseCurrentViewSize;
+        public bool RemoteDesktop_UseCurrentViewSize
         {
-            get { return _remoteDesktop_DesktopWidth; }
+            get { return _remoteDesktop_UseCurrentViewSize; }
             set
             {
-                if (value == _remoteDesktop_DesktopWidth)
+                if (value == _remoteDesktop_UseCurrentViewSize)
                     return;
 
-                _remoteDesktop_DesktopWidth = value;
+                _remoteDesktop_UseCurrentViewSize = value;
                 SettingsChanged = true;
             }
         }
 
-        private int _remoteDesktop_DesktopHeight = 768;
-        public int RemoteDesktop_DesktopHeight
+        private bool _remoteDesktop_UseFixedScreenSize = true;
+        public bool RemoteDesktop_UseFixedScreenSize
         {
-            get { return _remoteDesktop_DesktopHeight; }
+            get { return _remoteDesktop_UseFixedScreenSize; }
             set
             {
-                if (value == _remoteDesktop_DesktopHeight)
+                if (value == _remoteDesktop_UseFixedScreenSize)
                     return;
 
-                _remoteDesktop_DesktopHeight = value;
+                _remoteDesktop_UseFixedScreenSize = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _remoteDesktop_ScreenWidth = 1280;
+        public int RemoteDesktop_ScreenWidth
+        {
+            get { return _remoteDesktop_ScreenWidth; }
+            set
+            {
+                if (value == _remoteDesktop_ScreenWidth)
+                    return;
+
+                _remoteDesktop_ScreenWidth = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _remoteDesktop_ScreenHeight = 768;
+        public int RemoteDesktop_ScreenHeight
+        {
+            get { return _remoteDesktop_ScreenHeight; }
+            set
+            {
+                if (value == _remoteDesktop_ScreenHeight)
+                    return;
+
+                _remoteDesktop_ScreenHeight = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _remoteDesktop_UseCustomScreenSize;
+        public bool RemoteDesktop_UseCustomScreenSize
+        {
+            get { return _remoteDesktop_UseCustomScreenSize; }
+            set
+            {
+                if (value == _remoteDesktop_UseCustomScreenSize)
+                    return;
+
+                _remoteDesktop_UseCustomScreenSize = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _remoteDesktop_CustomScreenWidth;
+        public int RemoteDesktop_CustomScreenWidth
+        {
+            get { return _remoteDesktop_CustomScreenWidth; }
+            set
+            {
+                if (value == _remoteDesktop_CustomScreenWidth)
+                    return;
+
+                _remoteDesktop_CustomScreenWidth = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _remoteDesktop_CustomScreenHeight;
+        public int RemoteDesktop_CustomScreenHeight
+        {
+            get { return _remoteDesktop_CustomScreenHeight; }
+            set
+            {
+                if (value == _remoteDesktop_CustomScreenHeight)
+                    return;
+
+                _remoteDesktop_CustomScreenHeight = value;
                 SettingsChanged = true;
             }
         }
@@ -1331,7 +1401,7 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region SNMP
-               private WalkMode _snmp_WalkMode = WalkMode.WithinSubtree;
+        private WalkMode _snmp_WalkMode = WalkMode.WithinSubtree;
         public WalkMode SNMP_WalkMode
         {
             get { return _snmp_WalkMode; }

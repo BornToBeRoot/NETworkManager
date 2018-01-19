@@ -9,6 +9,7 @@ namespace NETworkManager.Models.RemoteDesktop
         public string Username { get; set; }
         public SecureString Password { get; set; }
         public bool AdjustScreenAutomatically { get; set; }
+        public bool UseCurrentViewSize { get; set; }
         public int DesktopWidth { get; set; }
         public int DesktopHeight { get; set; }
         public int ColorDepth { get; set; }

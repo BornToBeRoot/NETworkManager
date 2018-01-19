@@ -99,7 +99,7 @@
     <system:String x:Key="String_Header_SNMP">SNMP</system:String>
     <system:String x:Key="String_Header_v1v2c">v1/v2c</system:String>
     <system:String x:Key="String_Header_v3">v3</system:String>
-    
+
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Ein leistungsstarkes Tool zum Verwalten von Netzwerken und zur Behebung von Netzwerkproblemen!</system:String>
@@ -298,7 +298,7 @@
     <system:String x:Key="String_RedirectPorts">Ports umleiten</system:String>
     <system:String x:Key="String_RedirectSmartcards">Smartcards umleiten</system:String>
     <system:String x:Key="String_RedirectPrinters">Drucker umleiten</system:String>
-    <system:String x:Key="String_ScreenResolution">Bildschirmauflösung</system:String>
+    <system:String x:Key="String_SelectAScreenResolution">Wählen Sie eine Bildschirmauflösung</system:String>
     <system:String x:Key="String_ColorDepthBit">Farbtiefe (Bit)</system:String>
     <system:String x:Key="String_Tags">Tags</system:String>
     <system:String x:Key="String_CopyDots">Kopieren...</system:String>
@@ -348,6 +348,11 @@
     <system:String x:Key="String_Security">Sicherheit</system:String>
     <system:String x:Key="String_Auth">Auth</system:String>
     <system:String x:Key="String_Priv">Priv</system:String>
+    <system:String x:Key="String_FixedScreenSize">Feste Bildschirmgröße:</system:String>
+    <system:String x:Key="String_UseCurrentViewSize">Verwende die aktuelle Ansichtsgröße als Bildschirmgröße</system:String>
+    <system:String x:Key="String_CustomScreenSize">Benutzerdefinierte Bildschirmgröße:</system:String>
+    <system:String x:Key="String_Width">Breite</system:String>
+    <system:String x:Key="String_Height">Höhe</system:String>
     
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>
@@ -356,7 +361,7 @@
     <system:String x:Key="String_HelpMessage_Credentials">Entschlüsseln und laden Sie Ihre Anmeldedaten, um sie auszuwählen.</system:String>
     <system:String x:Key="String_HelpMessage_PasswordNotDisplayedCanBeOverwritten">Das Passwort wird bei der Bearbeitung nicht angezeigt, kann jedoch überschrieben werden.</system:String>
     <system:String x:Key="String_HelpMessage_RDPAuthenticationLevel">[0] Wenn die Serverauthentifizierung fehlschlägt, wird ohne Warnung eine Verbindung zum Computer hergestellt.\n[1] Wenn die Serverauthentifizierung fehlschlägt, wird keine Verbindung hergestellt.\n[2] Wenn die Server-Authentifizierung fehlschlägt, wird eine Warnung und ein Dialog angezeigt, um die Verbindung herzustellen oder abzulehnen.\n[3] Es ist keine Authentifizierungsanforderung angegeben.</system:String>
-    
+
     <!-- Warn message -->
     <system:String x:Key="String_WarnMessage_SettingsGeneralAppearanceTransparency">Einige Grafikkarten / Treiber haben Probleme bei der Maximierung der Anwendung, wenn die Transparenz aktiviert ist. Die Funktion muss für die Verwendung von "Remote Desktop" deaktiviert sein! Das Aktivieren oder Deaktivieren dieser Funktion erfordert einen Neustart der Anwendung.</system:String>
 
@@ -400,7 +405,7 @@
     <system:String x:Key="String_Button_DeleteDots">Löschen...</system:String>
     <system:String x:Key="String_Button_DecryptAndLoad">Entschlüsseln und laden...</system:String>
     <system:String x:Key="String_Button_Query">Abfragen</system:String>
-    
+
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Ausschneiden</system:String>
     <system:String x:Key="String_ContextMenu_Copy">Kopieren</system:String>
@@ -453,7 +458,7 @@
     <system:String x:Key="String_Watermark_ExampleSNMPOID">1.3.6.1.2.1.1</system:String>
     <system:String x:Key="String_Watermark_ExampleSNMPCommunity">Public</system:String>
     <system:String x:Key="String_Watermark_ExampleSNMPUsername">snmp-user</system:String>
-    
+
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Setze statische IP-Adresse und Gateway...</system:String>
     <system:String x:Key="String_Progress_SetDynamicIPAddress">Setze dynamische IP-Adresse...</system:String>
@@ -479,7 +484,8 @@
     <system:String x:Key="String_ValidateError_EnterValidSubnet">Geben Sie ein gültiges Subnetz ein (z.B. 192.168.178.133/26)</system:String>
     <system:String x:Key="String_ValidateError_EnterValidWebsiteUri">Geben Sie eine gültige Webseite ein (z.B. https://example.com/index.html)</system:String>
     <system:String x:Key="String_ValidateError_EnterValidHosts">Geben Sie gültige Hosts ein (mehrere Hosts dürfen nicht mit ";" enden)!</system:String>
-
+    <system:String x:Key="String_ValidateError_EnterValidNumber">Geben Sie eine gültige Zahl ein!</system:String>
+    
     <!-- ApplicationInfo.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>
     <system:String x:Key="String_ApplicationName_NetworkInterface">Netzwerkinterface</system:String>

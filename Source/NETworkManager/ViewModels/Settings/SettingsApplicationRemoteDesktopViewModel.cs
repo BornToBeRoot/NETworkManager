@@ -29,6 +29,40 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
+        private bool _useCurrentViewSize;
+        public bool UseCurrentViewSize
+        {
+            get { return _useCurrentViewSize; }
+            set
+            {
+                if (value == _useCurrentViewSize)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_UseCurrentViewSize = value;
+
+                _useCurrentViewSize = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _useFixedScreenSize;
+        public bool UseFixedScreenSize
+        {
+            get { return _useFixedScreenSize; }
+            set
+            {
+                if (value == _useFixedScreenSize)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_UseFixedScreenSize = value;
+
+                _useFixedScreenSize = value;
+                OnPropertyChanged();
+            }
+        }
+
         public List<string> ScreenResolutions
         {
             get
@@ -64,11 +98,62 @@ namespace NETworkManager.ViewModels.Settings
                 {
                     string[] resolution = value.Split('x');
 
-                    SettingsManager.Current.RemoteDesktop_DesktopWidth = int.Parse(resolution[0]);
-                    SettingsManager.Current.RemoteDesktop_DesktopHeight = int.Parse(resolution[1]);
+                    SettingsManager.Current.RemoteDesktop_ScreenWidth = int.Parse(resolution[0]);
+                    SettingsManager.Current.RemoteDesktop_ScreenHeight = int.Parse(resolution[1]);
                 }
 
                 _selectedScreenResolution = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _useCustomScreenSize;
+        public bool UseCustomScreenSize
+        {
+            get { return _useCustomScreenSize; }
+            set
+            {
+                if (value == _useCustomScreenSize)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_UseCustomScreenSize = value;
+
+                _useCustomScreenSize = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _customScreenWidth;
+        public string CustomScreenWidth
+        {
+            get { return _customScreenWidth; }
+            set
+            {
+                if (value == _customScreenWidth)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_CustomScreenWidth = int.Parse(value);
+
+                _customScreenWidth = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _customScreenHeight;
+        public string CustomScreenHeight
+        {
+            get { return _customScreenHeight; }
+            set
+            {
+                if (value == _customScreenHeight)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_CustomScreenHeight = int.Parse(value);
+
+                _customScreenHeight = value;
                 OnPropertyChanged();
             }
         }
@@ -258,7 +343,12 @@ namespace NETworkManager.ViewModels.Settings
         private void LoadSettings()
         {
             AdjustScreenAutomatically = SettingsManager.Current.RemoteDesktop_AdjustScreenAutomatically;
-            SelectedScreenResolution = ScreenResolutions.FirstOrDefault(x => x == string.Format("{0}x{1}", SettingsManager.Current.RemoteDesktop_DesktopWidth, SettingsManager.Current.RemoteDesktop_DesktopHeight));
+            UseCurrentViewSize = SettingsManager.Current.RemoteDesktop_UseCurrentViewSize;
+            UseFixedScreenSize = SettingsManager.Current.RemoteDesktop_UseFixedScreenSize;
+            SelectedScreenResolution = ScreenResolutions.FirstOrDefault(x => x == string.Format("{0}x{1}", SettingsManager.Current.RemoteDesktop_ScreenWidth, SettingsManager.Current.RemoteDesktop_ScreenHeight));
+            UseCustomScreenSize = SettingsManager.Current.RemoteDesktop_UseCustomScreenSize;
+            CustomScreenWidth = SettingsManager.Current.RemoteDesktop_CustomScreenWidth.ToString();
+            CustomScreenHeight = SettingsManager.Current.RemoteDesktop_CustomScreenHeight.ToString();
             SelectedColorDepth = ColorDepths.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_ColorDepth);
             EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport;
             AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;

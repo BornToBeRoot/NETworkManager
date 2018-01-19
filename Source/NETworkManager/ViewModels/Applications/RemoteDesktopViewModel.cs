@@ -515,8 +515,19 @@ namespace NETworkManager.ViewModels.Applications
         {
             // Add global settings...
             sessionInfo.AdjustScreenAutomatically = SettingsManager.Current.RemoteDesktop_AdjustScreenAutomatically;
-            sessionInfo.DesktopWidth = SettingsManager.Current.RemoteDesktop_DesktopWidth;
-            sessionInfo.DesktopHeight = SettingsManager.Current.RemoteDesktop_DesktopHeight;
+            sessionInfo.UseCurrentViewSize = SettingsManager.Current.RemoteDesktop_UseCurrentViewSize;
+
+            if (SettingsManager.Current.RemoteDesktop_UseCustomScreenSize)
+            {
+                sessionInfo.DesktopWidth = SettingsManager.Current.RemoteDesktop_CustomScreenWidth;
+                sessionInfo.DesktopHeight = SettingsManager.Current.RemoteDesktop_CustomScreenHeight;
+            }
+            else
+            {
+                sessionInfo.DesktopWidth = SettingsManager.Current.RemoteDesktop_ScreenWidth;
+                sessionInfo.DesktopHeight = SettingsManager.Current.RemoteDesktop_ScreenHeight;
+            }
+
             sessionInfo.ColorDepth = SettingsManager.Current.RemoteDesktop_ColorDepth;
             sessionInfo.EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport;
             sessionInfo.AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;

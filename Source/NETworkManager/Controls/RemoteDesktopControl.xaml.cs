@@ -173,7 +173,7 @@ namespace NETworkManager.Controls
             // Display
             rdpClient.ColorDepth = _rdpSessionInfo.ColorDepth;      // 8, 15, 16, 24
 
-            if (_rdpSessionInfo.AdjustScreenAutomatically)
+            if (_rdpSessionInfo.AdjustScreenAutomatically || _rdpSessionInfo.UseCurrentViewSize)
             {
                 rdpClient.DesktopWidth = (int)rdpGrid.ActualWidth;
                 rdpClient.DesktopHeight = (int)rdpGrid.ActualHeight;
