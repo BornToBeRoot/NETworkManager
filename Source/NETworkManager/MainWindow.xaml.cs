@@ -22,6 +22,7 @@ using NETworkManager.Views;
 using NETworkManager.Helpers;
 using System.Runtime.CompilerServices;
 using System.Windows.Markup;
+using NETworkManager.Models.Update;
 
 namespace NETworkManager
 {
@@ -257,6 +258,17 @@ namespace NETworkManager
 
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
                 HideWindowToTray();
+            
+            Updater updater = new Updater();
+
+            updater.UpdateAvailable += Updater_UpdateAvailable;
+
+            updater.CheckViaGithub();
+        }
+
+        private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
+        {
+            System.Windows.MessageBox.Show(string.Format("Update auf Version {0} verfügbar!", e.Version));
         }
 
         private void LoadApplicationList()
@@ -654,7 +666,7 @@ namespace NETworkManager
             // Save current language code
             if (string.IsNullOrEmpty(_cultureCode))
                 _cultureCode = SettingsManager.Current.Localization_CultureCode;
-                        
+
             // Init settings view
             if (_settingsView == null)
             {
