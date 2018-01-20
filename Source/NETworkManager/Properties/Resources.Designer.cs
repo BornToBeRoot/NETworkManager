@@ -241,6 +241,42 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A GitHub API client library for .NET.
+        /// </summary>
+        public static string Libary_Octokit_Description {
+            get {
+                return ResourceManager.GetString("Libary_Octokit_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/octokit/octokit.net/blob/master/LICENSE.txt.
+        /// </summary>
+        public static string Libary_Octokit_LicenseURL {
+            get {
+                return ResourceManager.GetString("Libary_Octokit_LicenseURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Octokit.
+        /// </summary>
+        public static string Libary_Octokit_Name {
+            get {
+                return ResourceManager.GetString("Libary_Octokit_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/octokit/octokit.net.
+        /// </summary>
+        public static string Libary_Octokit_ProjectURL {
+            get {
+                return ResourceManager.GetString("Libary_Octokit_ProjectURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sharp SNMP Library- Open Source SNMP for .NET and Mono.
         /// </summary>
         public static string Libary_SharpSNMPLib_Description {
@@ -313,11 +349,47 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to NETworkManager.
+        /// </summary>
+        public static string NETworkManager_GitHub_Repo {
+            get {
+                return ResourceManager.GetString("NETworkManager_GitHub_Repo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BornToBeRoot.
+        /// </summary>
+        public static string NETworkManager_GitHub_User {
+            get {
+                return ResourceManager.GetString("NETworkManager_GitHub_User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager/releases/latest.
+        /// </summary>
+        public static string NETworkManager_LatestReleaseURL {
+            get {
+                return ResourceManager.GetString("NETworkManager_LatestReleaseURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE.
         /// </summary>
         public static string NETworkManager_LicenseUrl {
             get {
                 return ResourceManager.GetString("NETworkManager_LicenseUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NETworkManager.
+        /// </summary>
+        public static string NETworkManager_ProjectName {
+            get {
+                return ResourceManager.GetString("NETworkManager_ProjectName", resourceCulture);
             }
         }
         

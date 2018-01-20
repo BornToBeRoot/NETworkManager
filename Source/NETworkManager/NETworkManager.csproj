@@ -15,6 +15,7 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -27,7 +28,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -254,6 +254,7 @@
     <Compile Include="Controls\RemoteDesktopControl.xaml.cs">
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\Settings\SettingsGeneralUpdateViewModel.cs" />
     <Compile Include="Views\Applications\SNMPv3View.xaml.cs">
       <DependentUpon>SNMPv3View.xaml</DependentUpon>
     </Compile>
@@ -328,6 +329,9 @@
     </Compile>
     <Compile Include="Views\Settings\SettingsApplicationRemoteDesktopView.xaml.cs">
       <DependentUpon>SettingsApplicationRemoteDesktopView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsGeneralUpdateView.xaml.cs">
+      <DependentUpon>SettingsGeneralUpdateView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\UpdateView.xaml.cs">
       <DependentUpon>UpdateView.xaml</DependentUpon>
@@ -536,6 +540,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Settings\SettingsApplicationRemoteDesktopView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings\SettingsGeneralUpdateView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

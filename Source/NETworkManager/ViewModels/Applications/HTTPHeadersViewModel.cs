@@ -239,7 +239,7 @@ namespace NETworkManager.ViewModels.Applications
                 DisplayStatusMessage = true;
             }
 
-            WebsiteUriHistory = new List<string>(HistoryListHelper.Modify(WebsiteUriHistory, WebsiteUri, SettingsManager.Current.Application_HistoryListEntries));
+            WebsiteUriHistory = new List<string>(HistoryListHelper.Modify(WebsiteUriHistory, WebsiteUri, SettingsManager.Current.General_HistoryListEntries));
 
             // Stop timer and stopwatch
             stopwatch.Stop();

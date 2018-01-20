@@ -21,6 +21,7 @@ namespace NETworkManager.Views
                     new SettingsViewInfo(Name.HotKeys, new PackIconOcticons() { Kind = PackIconOcticonsKind.Keyboard }, Group.General),
                     new SettingsViewInfo(Name.Autostart, new PackIconMaterial() { Kind = PackIconMaterialKind.Power }, Group.General),
                     new SettingsViewInfo(Name.Settings, new PackIconOcticons() { Kind = PackIconOcticonsKind.Settings }, Group.General),
+                    new SettingsViewInfo(Name.Update, new PackIconMaterial() {Kind = PackIconMaterialKind.Download }, Group.General),
                     new SettingsViewInfo(Name.ImportExport, new PackIconMaterial() { Kind = PackIconMaterialKind.Import}, Group.General),
 
                     // Applications
@@ -38,13 +39,14 @@ namespace NETworkManager.Views
 
         public enum Name
         {
-            Window,
             General,
+            Window,
             Appearance,
             Language,
             HotKeys,
             Autostart,
             Settings,
+            Update,
             ImportExport,
             IPScanner,
             PortScanner,

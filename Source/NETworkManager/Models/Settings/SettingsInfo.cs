@@ -25,6 +25,35 @@ namespace NETworkManager.Models.Settings
         public bool SettingsChanged { get; set; }
 
         #region General 
+        // General        
+        private ApplicationViewManager.Name _general_DefaultApplicationViewName = ApplicationViewManager.Name.NetworkInterface;
+        public ApplicationViewManager.Name General_DefaultApplicationViewName
+        {
+            get { return _general_DefaultApplicationViewName; }
+            set
+            {
+                if (value == _general_DefaultApplicationViewName)
+                    return;
+
+                _general_DefaultApplicationViewName = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _general_HistoryListEntries = 5;
+        public int General_HistoryListEntries
+        {
+            get { return _general_HistoryListEntries; }
+            set
+            {
+                if (value == _general_HistoryListEntries)
+                    return;
+
+                _general_HistoryListEntries = value;
+                SettingsChanged = true;
+            }
+        }
+
         // Window
         private bool _window_ConfirmClose;
         public bool Window_ConfirmClose
@@ -78,35 +107,6 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _window_MinimizeToTrayInsteadOfTaskbar = value;
-                SettingsChanged = true;
-            }
-        }
-
-        // Applications        
-        private ApplicationViewManager.Name _application_DefaultApplicationViewName = ApplicationViewManager.Name.NetworkInterface;
-        public ApplicationViewManager.Name Application_DefaultApplicationViewName
-        {
-            get { return _application_DefaultApplicationViewName; }
-            set
-            {
-                if (value == _application_DefaultApplicationViewName)
-                    return;
-
-                _application_DefaultApplicationViewName = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private int _application_HistoryListEntries = 5;
-        public int Application_HistoryListEntries
-        {
-            get { return _application_HistoryListEntries; }
-            set
-            {
-                if (value == _application_HistoryListEntries)
-                    return;
-
-                _application_HistoryListEntries = value;
                 SettingsChanged = true;
             }
         }
@@ -256,6 +256,23 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        // Update
+        private bool _update_CheckForUpdatesAtStartup = true;
+        public bool Update_CheckForUpdatesAtStartup
+        {
+            get { return _update_CheckForUpdatesAtStartup; }
+            set
+            {
+                if (value == _update_CheckForUpdatesAtStartup)
+                    return;
+
+                _update_CheckForUpdatesAtStartup = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
+        #region Others
         // Application view       
         private bool _applicationView_Expand;
         public bool ApplicationView_Expand

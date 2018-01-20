@@ -431,8 +431,8 @@ namespace NETworkManager.ViewModels.Applications
                 snmp.Getv1v2cAsync(Version, ipAddress, Community, OID, snmpOptions);
 
             // Add to history...
-            HostnameHistory = new List<string>(HistoryListHelper.Modify(HostnameHistory, Hostname, SettingsManager.Current.Application_HistoryListEntries));
-            OIDHistory = new List<string>(HistoryListHelper.Modify(OIDHistory, OID, SettingsManager.Current.Application_HistoryListEntries));
+            HostnameHistory = new List<string>(HistoryListHelper.Modify(HostnameHistory, Hostname, SettingsManager.Current.General_HistoryListEntries));
+            OIDHistory = new List<string>(HistoryListHelper.Modify(OIDHistory, OID, SettingsManager.Current.General_HistoryListEntries));
         }
 
         private void QueryFinished()

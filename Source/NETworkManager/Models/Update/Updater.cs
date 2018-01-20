@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Octokit;
 using NETworkManager.Models.Settings;
+using NETworkManager.Properties;
 
 namespace NETworkManager.Models.Update
 {
@@ -24,13 +25,13 @@ namespace NETworkManager.Models.Update
         #endregion
 
         #region Methods
-        public void CheckViaGithub()
+        public void Check()
         {
             Task.Run(() =>
             {
-                GitHubClient client = new GitHubClient(new ProductHeaderValue("NETworkManager"));
+                GitHubClient client = new GitHubClient(new ProductHeaderValue(Resources.NETworkManager_ProjectName));
 
-                Task<Release> latestRelease = client.Repository.Release.GetLatest("BornToBeRoot", "NETworkManager");
+                Task<Release> latestRelease = client.Repository.Release.GetLatest(Resources.NETworkManager_GitHub_User, Resources.NETworkManager_GitHub_Repo);
 
                 Version latestVersion = new Version(latestRelease.Result.TagName.TrimStart('v'));
 
