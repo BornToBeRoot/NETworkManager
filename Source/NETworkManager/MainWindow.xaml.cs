@@ -575,7 +575,7 @@ namespace NETworkManager
 
         private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
         {
-            UpdateText = string.Format(System.Windows.Application.Current.Resources["String_VersionAvailable"] as string, e.Version);
+            UpdateText = string.Format(System.Windows.Application.Current.Resources["String_VersionxxAvailable"] as string, e.Version);
             UpdateAvailable = true;
         }
         #endregion

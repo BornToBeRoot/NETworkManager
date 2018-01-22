@@ -333,9 +333,6 @@
     <Compile Include="Views\Settings\SettingsGeneralUpdateView.xaml.cs">
       <DependentUpon>SettingsGeneralUpdateView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\UpdateView.xaml.cs">
-      <DependentUpon>UpdateView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Settings\SettingsApplicationDNSLookupView.xaml.cs">
       <DependentUpon>SettingsApplicationDNSLookupView.xaml</DependentUpon>
     </Compile>
@@ -544,10 +541,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Settings\SettingsGeneralUpdateView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Settings\UpdateView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

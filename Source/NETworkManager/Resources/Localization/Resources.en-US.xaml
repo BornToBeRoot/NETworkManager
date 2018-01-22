@@ -341,7 +341,7 @@
     <system:String x:Key="String_Data">Data</system:String>
     <system:String x:Key="String_Walk">Walk</system:String>
     <system:String x:Key="String_WalkMode">Walk mode</system:String>
-    <system:String x:Key="String_License">Lincense</system:String>
+    <system:String x:Key="String_License">License</system:String>
     <system:String x:Key="String_TimeoutOnSNMPQuery">Timeout on SNMP query.</system:String>
     <system:String x:Key="String_Responses">Responses</system:String>
     <system:String x:Key="String_ErrorInResponse">Error in response!</system:String>
@@ -353,9 +353,10 @@
     <system:String x:Key="String_CustomScreenSize">Custom screen size:</system:String>
     <system:String x:Key="String_Width">Width</system:String>
     <system:String x:Key="String_Height">Height</system:String>
-    <system:String x:Key="String_VersionAvailable">Version {0} available!</system:String>
+    <system:String x:Key="String_VersionxxAvailable">Version {0} available!</system:String>
     <system:String x:Key="String_CheckForUpdatesAtStartup">Check for updates at startup</system:String>
-
+    <system:String x:Key="NoUpdateAvailable">No update available!</system:String>
+    
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Reset all settings.</system:String>
@@ -408,6 +409,7 @@
     <system:String x:Key="String_Button_DecryptAndLoad">Decrypt and load...</system:String>
     <system:String x:Key="String_Button_Query">Query</system:String>
     <system:String x:Key="String_Button_Open">Open</system:String>
+    <system:String x:Key="String_Button_CheckForUpdaptes">Check for updates</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Cut</system:String>

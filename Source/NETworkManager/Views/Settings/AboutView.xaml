@@ -4,10 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Resources="clr-namespace:NETworkManager.Properties"
-        xmlns:Settings="clr-namespace:NETworkManager.Models.Settings"        
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:Converter="clr-namespace:NETworkManager.Converters"
         mc:Ignorable="d">
+    <UserControl.Resources>
+        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -30,8 +38,50 @@
                 </TextBlock>
             </StackPanel>
         </Grid>
-        <TextBlock Grid.Row="1" Text="{DynamicResource String_Header_Libraries}" Style="{StaticResource HeaderTextBlock}"/>
-        <ScrollViewer Grid.Row="2" Style="{StaticResource DefaulScrollViewer}" Margin="0,0,0,20">
+        <TextBlock Grid.Row="1" Text="{DynamicResource String_Header_Update}" Style="{StaticResource HeaderTextBlock}"/>
+        <Grid Grid.Row="2" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" x:Name="btnCheckForUpdates" HorizontalAlignment="Left" Command="{Binding CheckForUpdatesCommand}" IsEnabled="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultButton}" Content="{DynamicResource String_Button_CheckForUpdaptes}" />
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <StackPanel.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.NETworkManager_LatestReleaseURL}" />
+                </StackPanel.InputBindings>
+                <StackPanel.Style>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Setter Property="TextBlock.Foreground" Value="{DynamicResource AccentColorBrush}" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="TextBlock.Foreground" Value="{DynamicResource BlackColorBrush}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <Rectangle Width="16" Height="20">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=OpenInNew}"/>
+                    </Rectangle.OpacityMask>
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type StackPanel}}, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Fill" Value="{DynamicResource BlackColorBrush}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
+                <TextBlock Text="{Binding UpdateText}" VerticalAlignment="Center" FontSize="14" Margin="10,0,0,0" />
+            </StackPanel>
+            <Controls:ProgressRing Grid.Column="2" Visibility="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanToVisibilityConverter}}" Height="{Binding ElementName=btnCheckForUpdates, Path=ActualHeight}" Width="{Binding ElementName=btnCheckForUpdates, Path=ActualHeight}" HorizontalAlignment="Left" IsActive="True" />
+            <TextBlock Grid.Column="2" Text="{DynamicResource NoUpdateAvailable}" Visibility="{Binding NoUpdateAvailable, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource CenterTextBlock}" Margin="10,0,0,0" />
+        </Grid>
+        <TextBlock Grid.Row="3" Text="{DynamicResource String_Header_Libraries}" Style="{StaticResource HeaderTextBlock}"/>
+        <ScrollViewer Grid.Row="4" Style="{StaticResource DefaulScrollViewer}" Margin="0,0,0,20">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
