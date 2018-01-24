@@ -219,7 +219,7 @@ namespace NETworkManager.ViewModels.Applications
 
             IsDetailsVisible = true;
 
-            SubnetHistory = new List<string>(HistoryListHelper.Modify(SubnetHistory, Subnet, SettingsManager.Current.Application_HistoryListEntries));
+            SubnetHistory = new List<string>(HistoryListHelper.Modify(SubnetHistory, Subnet, SettingsManager.Current.General_HistoryListEntries));
         }
         #endregion
     }

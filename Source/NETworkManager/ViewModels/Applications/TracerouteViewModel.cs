@@ -407,7 +407,7 @@ namespace NETworkManager.ViewModels.Applications
                 traceroute.TraceAsync(ipAddress, tracerouteOptions, cancellationTokenSource.Token);
 
                 // Add the hostname or ip address to the history
-                HostnameHistory = new List<string>(HistoryListHelper.Modify(HostnameHistory, Hostname, SettingsManager.Current.Application_HistoryListEntries));
+                HostnameHistory = new List<string>(HistoryListHelper.Modify(HostnameHistory, Hostname, SettingsManager.Current.General_HistoryListEntries));
             }
             catch (SocketException) // This will catch DNS resolve errors
             {

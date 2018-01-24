@@ -189,7 +189,7 @@ namespace NETworkManager.ViewModels.Applications
             }
             else
             {
-                MACAddressOrVendorHistory = new List<string>(HistoryListHelper.Modify(MACAddressOrVendorHistory, MACAddressOrVendor, SettingsManager.Current.Application_HistoryListEntries));
+                MACAddressOrVendorHistory = new List<string>(HistoryListHelper.Modify(MACAddressOrVendorHistory, MACAddressOrVendor, SettingsManager.Current.General_HistoryListEntries));
                 NoVendorFound = false;
             }
 

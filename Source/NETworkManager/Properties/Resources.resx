@@ -177,6 +177,18 @@
   <data name="Libary_MahAppsMetro_ProjectUrl" xml:space="preserve">
     <value>https://github.com/mahapps/mahapps.metro</value>
   </data>
+  <data name="Libary_Octokit_Description" xml:space="preserve">
+    <value>A GitHub API client library for .NET</value>
+  </data>
+  <data name="Libary_Octokit_LicenseURL" xml:space="preserve">
+    <value>https://github.com/octokit/octokit.net/blob/master/LICENSE.txt</value>
+  </data>
+  <data name="Libary_Octokit_Name" xml:space="preserve">
+    <value>Octokit</value>
+  </data>
+  <data name="Libary_Octokit_ProjectURL" xml:space="preserve">
+    <value>https://github.com/octokit/octokit.net</value>
+  </data>
   <data name="Libary_SharpSNMPLib_Description" xml:space="preserve">
     <value>Sharp SNMP Library- Open Source SNMP for .NET and Mono</value>
   </data>
@@ -201,8 +213,20 @@
   <data name="NETworkManager_DocumentationUrl" xml:space="preserve">
     <value>https://github.com/BornToBeRoot/NETworkManager/blob/master/Documentation/</value>
   </data>
+  <data name="NETworkManager_GitHub_Repo" xml:space="preserve">
+    <value>NETworkManager</value>
+  </data>
+  <data name="NETworkManager_GitHub_User" xml:space="preserve">
+    <value>BornToBeRoot</value>
+  </data>
+  <data name="NETworkManager_LatestReleaseURL" xml:space="preserve">
+    <value>https://github.com/BornToBeRoot/NETworkManager/releases/latest</value>
+  </data>
   <data name="NETworkManager_LicenseUrl" xml:space="preserve">
     <value>https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE</value>
+  </data>
+  <data name="NETworkManager_ProjectName" xml:space="preserve">
+    <value>NETworkManager</value>
   </data>
   <data name="NETworkManager_ProjectUrl" xml:space="preserve">
     <value>https://github.com/BornToBeRoot/NETworkManager</value>

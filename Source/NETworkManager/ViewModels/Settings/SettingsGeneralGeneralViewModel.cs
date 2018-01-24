@@ -22,7 +22,7 @@ namespace NETworkManager.ViewModels.Settings
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Application_DefaultApplicationViewName = value.Name;
+                    SettingsManager.Current.General_DefaultApplicationViewName = value.Name;
 
                 _defaultApplicationViewSelectedItem = value;
                 OnPropertyChanged();
@@ -39,7 +39,7 @@ namespace NETworkManager.ViewModels.Settings
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Application_HistoryListEntries = value;
+                    SettingsManager.Current.General_HistoryListEntries = value;
 
                 _historyListEntries = value;
                 OnPropertyChanged();
@@ -59,8 +59,8 @@ namespace NETworkManager.ViewModels.Settings
         {
             ApplicationViewCollection = new ObservableCollection<ApplicationViewInfo>(ApplicationViewManager.List.OrderBy(x => x.Name));
 
-            DefaultApplicationViewSelectedItem = ApplicationViewCollection.FirstOrDefault(x => x.Name == SettingsManager.Current.Application_DefaultApplicationViewName);
-            HistoryListEntries = SettingsManager.Current.Application_HistoryListEntries;
+            DefaultApplicationViewSelectedItem = ApplicationViewCollection.FirstOrDefault(x => x.Name == SettingsManager.Current.General_DefaultApplicationViewName);
+            HistoryListEntries = SettingsManager.Current.General_HistoryListEntries;
         }
         #endregion
     }

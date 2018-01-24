@@ -222,7 +222,7 @@ namespace NETworkManager.ViewModels.Applications
             }
             else
             {
-                PortsHistory = new List<string>(HistoryListHelper.Modify(PortsHistory, PortsOrService, SettingsManager.Current.Application_HistoryListEntries));
+                PortsHistory = new List<string>(HistoryListHelper.Modify(PortsHistory, PortsOrService, SettingsManager.Current.General_HistoryListEntries));
                 NoPortsFound = false;
             }
 

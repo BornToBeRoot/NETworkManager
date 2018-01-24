@@ -143,9 +143,6 @@
             <TabItem Header="{DynamicResource String_Header_Credentials}">
                 <SettingsViews:CredentialsView Margin="10" />
             </TabItem>
-            <!--<TabItem Header="{DynamicResource String_Header_Update}">
-                <SettingsViews:UpdateView Margin="10" />
-            </TabItem>-->
             <!-- About -->
             <TabItem Header="{DynamicResource String_Header_About}">
                 <SettingsViews:AboutView Margin="10" />

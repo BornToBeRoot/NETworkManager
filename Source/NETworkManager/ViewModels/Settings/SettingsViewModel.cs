@@ -90,6 +90,7 @@ namespace NETworkManager.ViewModels.Settings
         SettingsGeneralHotKeysView _settingsGeneralHotKeysView;
         SettingsGeneralAutostartView _settingsGeneralAutostartView;
         SettingsGeneralSettingsView _settingsGeneralSettingsView;
+        SettingsGeneralUpdateView _settingsGeneralUpdateView;
         SettingsGeneralImportExportView _settingsGeneralImportExportView;
         SettingsApplicationIPScannerView _settingsApplicationIPScannerView;
         SettingsApplicationPortScannerView _settingsApplicationPortScannerView;
@@ -195,6 +196,12 @@ namespace NETworkManager.ViewModels.Settings
                     _settingsGeneralSettingsView.SaveAndCheckSettings();
 
                     SettingsContent = _settingsGeneralSettingsView;
+                    break;
+                case SettingsViewManager.Name.Update:
+                    if (_settingsGeneralUpdateView == null)
+                        _settingsGeneralUpdateView = new SettingsGeneralUpdateView();
+
+                    SettingsContent = _settingsGeneralUpdateView;
                     break;
                 case SettingsViewManager.Name.ImportExport:
                     if (_settingsGeneralImportExportView == null)

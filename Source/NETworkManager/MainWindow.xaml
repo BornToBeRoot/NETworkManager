@@ -11,7 +11,7 @@
         xmlns:Resources="clr-namespace:NETworkManager.Properties"
         xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-        Title="{DynamicResource String_ProductName}" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged">
+        Title="{x:Static Resources:Resources.NETworkManager_ProjectName}" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged">
     <Controls:MetroWindow.WindowButtonCommands>
         <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </Controls:MetroWindow.WindowButtonCommands>
@@ -632,7 +632,36 @@
         <Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource GrayBrush8}">
             <StatusBar Foreground="{DynamicResource GrayBrush3}">
                 <StatusBarItem>
-                    <TextBlock Text="{Binding Source={x:Static Settings:AssemblyManager.Current}, Path=Version}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource GrayBrush3}" FontWeight="Bold" />
+                    <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource GrayBrush3}" FontWeight="Bold" />
+                </StatusBarItem>
+                <Separator Background="{DynamicResource GrayBrush8}" Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="10,0" />
+                <StatusBarItem Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <StatusBarItem.InputBindings>
+                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.NETworkManager_LatestReleaseURL}" />
+                    </StatusBarItem.InputBindings>
+                    <StatusBarItem.Style>
+                        <Style TargetType="{x:Type StatusBarItem}" BasedOn="{StaticResource MetroStatusBarItem}">
+                            <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StatusBarItem.Style>
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="16" Height="20">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=OpenInNew}"/>
+                            </Rectangle.OpacityMask>
+                            <Rectangle.Style>
+                                <Style TargetType="{x:Type Rectangle}">
+                                    <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type StatusBarItem}}, Path=Foreground}" />
+                                </Style>
+                            </Rectangle.Style>
+                        </Rectangle>
+                        <TextBlock Text="{Binding UpdateText}" VerticalAlignment="Center" FontSize="14" Margin="10,0,0,0" />
+                    </StackPanel>
                 </StatusBarItem>
             </StatusBar>
         </Border>

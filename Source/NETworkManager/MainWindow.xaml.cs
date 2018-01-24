@@ -22,6 +22,7 @@ using NETworkManager.Views;
 using NETworkManager.Helpers;
 using System.Runtime.CompilerServices;
 using System.Windows.Markup;
+using NETworkManager.Models.Update;
 
 namespace NETworkManager
 {
@@ -212,6 +213,48 @@ namespace NETworkManager
                 OnPropertyChanged();
             }
         }
+
+        private string _version;
+        public string Version
+        {
+            get { return _version; }
+            set
+            {
+                if (value == _version)
+                    return;
+
+                _version = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _updateAvailable;
+        public bool UpdateAvailable
+        {
+            get { return _updateAvailable; }
+            set
+            {
+                if (value == _updateAvailable)
+                    return;
+
+                _updateAvailable = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _updateText;
+        public string UpdateText
+        {
+            get { return _updateText; }
+            set
+            {
+                if (value == _updateText)
+                    return;
+
+                _updateText = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, window load and close events
@@ -241,6 +284,9 @@ namespace NETworkManager
             if (ConfigurationManager.Current.IsAdmin)
                 Title = string.Format("[{0}] {1}", System.Windows.Application.Current.Resources["String_Administrator"] as string, Title);
 
+            // Set the version text
+            Version = string.Format("Version {0}", AssemblyManager.Current.Version);
+
             // Load application list, filter, sort
             LoadApplicationList();
 
@@ -255,8 +301,13 @@ namespace NETworkManager
         {
             base.OnContentRendered(e);
 
+            // Hide to tray...
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
                 HideWindowToTray();
+
+            // Chech for updates...
+            if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
+                CheckForUpdates();
         }
 
         private void LoadApplicationList()
@@ -281,7 +332,7 @@ namespace NETworkManager
             };
 
             // Get application from settings
-            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Application_DefaultApplicationViewName);
+            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.General_DefaultApplicationViewName);
 
             // Scroll into view
             listViewApplication.ScrollIntoView(SelectedApplication);
@@ -512,6 +563,23 @@ namespace NETworkManager
         }
         #endregion
 
+        #region Update check
+        private void CheckForUpdates()
+        {
+            Updater updater = new Updater();
+
+            updater.UpdateAvailable += Updater_UpdateAvailable;
+
+            updater.Check();
+        }
+
+        private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
+        {
+            UpdateText = string.Format(System.Windows.Application.Current.Resources["String_VersionxxAvailable"] as string, e.Version);
+            UpdateAvailable = true;
+        }
+        #endregion
+
         #region HotKeys (Register / Unregister)
         [DllImport("user32.dll")]
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
@@ -654,7 +722,7 @@ namespace NETworkManager
             // Save current language code
             if (string.IsNullOrEmpty(_cultureCode))
                 _cultureCode = SettingsManager.Current.Localization_CultureCode;
-                        
+
             // Init settings view
             if (_settingsView == null)
             {

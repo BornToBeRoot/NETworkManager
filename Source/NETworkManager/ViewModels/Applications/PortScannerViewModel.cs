@@ -787,8 +787,8 @@ namespace NETworkManager.ViewModels.Applications
 
                 PreparingScan = false;
 
-                HostnameHistory = new List<string>(HistoryListHelper.Modify(HostnameHistory, Hostname, SettingsManager.Current.Application_HistoryListEntries));
-                PortsHistory = new List<string>(HistoryListHelper.Modify(PortsHistory, Ports, SettingsManager.Current.Application_HistoryListEntries));
+                HostnameHistory = new List<string>(HistoryListHelper.Modify(HostnameHistory, Hostname, SettingsManager.Current.General_HistoryListEntries));
+                PortsHistory = new List<string>(HistoryListHelper.Modify(PortsHistory, Ports, SettingsManager.Current.General_HistoryListEntries));
 
                 PortScannerOptions portScannerOptions = new PortScannerOptions
                 {

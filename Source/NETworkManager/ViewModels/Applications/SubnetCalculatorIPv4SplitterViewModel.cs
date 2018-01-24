@@ -312,8 +312,8 @@ namespace NETworkManager.ViewModels.Applications
                 newSubnetmask = Subnetmask.GetFromCidr(int.Parse(newSubnetmask)).Subnetmask;
 
             // Add history
-            SubnetHistory = new List<string>(HistoryListHelper.Modify(SubnetHistory, Subnet, SettingsManager.Current.Application_HistoryListEntries));
-            NewSubnetmaskOrCIDRHistory = new List<string>(HistoryListHelper.Modify(NewSubnetmaskOrCIDRHistory, NewSubnetmaskOrCIDR, SettingsManager.Current.Application_HistoryListEntries));
+            SubnetHistory = new List<string>(HistoryListHelper.Modify(SubnetHistory, Subnet, SettingsManager.Current.General_HistoryListEntries));
+            NewSubnetmaskOrCIDRHistory = new List<string>(HistoryListHelper.Modify(NewSubnetmaskOrCIDRHistory, NewSubnetmaskOrCIDR, SettingsManager.Current.General_HistoryListEntries));
 
             cancellationTokenSource = new CancellationTokenSource();
 
