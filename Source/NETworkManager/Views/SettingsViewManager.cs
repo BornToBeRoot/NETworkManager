@@ -32,7 +32,8 @@ namespace NETworkManager.Views
                     new SettingsViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.Dna }, Group.Applications ),
                     new SettingsViewInfo(Name.RemoteDesktop, new PackIconOcticons() { Kind = PackIconOcticonsKind.DeviceDesktop}, Group.Applications),
                     new SettingsViewInfo(Name.SNMP,new PackIconMaterial() {Kind = PackIconMaterialKind.Switch }, Group.Applications),
-                    new SettingsViewInfo(Name.WakeOnLAN, new PackIconMaterial() {Kind = PackIconMaterialKind.Power} , Group.Applications)
+                    new SettingsViewInfo(Name.WakeOnLAN, new PackIconMaterial() {Kind = PackIconMaterialKind.Power} , Group.Applications),
+                    new SettingsViewInfo(Name.HTTPHeaders, new PackIconMaterial() {Kind = PackIconMaterialKind.Web}, Group.Applications)
                 };
             }
         }
@@ -55,7 +56,8 @@ namespace NETworkManager.Views
             DNSLookup,
             RemoteDesktop,
             SNMP,
-            WakeOnLAN
+            WakeOnLAN,
+            HTTPHeaders
         }
 
         public static string TranslateName(Name name, Group group)

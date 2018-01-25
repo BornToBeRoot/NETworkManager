@@ -42,7 +42,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.HTTPHeader_WebsiteUriHistory = value;
+                    SettingsManager.Current.HTTPHeaders_WebsiteUriHistory = value;
 
                 _websiteUriHistory = value;
                 OnPropertyChanged();
@@ -171,7 +171,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.HTTPHeader_ExpandStatistics = value;
+                    SettingsManager.Current.HTTPHeaders_ExpandStatistics = value;
 
                 _expandStatistics = value;
                 OnPropertyChanged();
@@ -190,10 +190,10 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LoadSettings()
         {
-            if (SettingsManager.Current.HTTPHeader_WebsiteUriHistory != null)
-                WebsiteUriHistory = new List<string>(SettingsManager.Current.HTTPHeader_WebsiteUriHistory);
+            if (SettingsManager.Current.HTTPHeaders_WebsiteUriHistory != null)
+                WebsiteUriHistory = new List<string>(SettingsManager.Current.HTTPHeaders_WebsiteUriHistory);
 
-            ExpandStatistics = SettingsManager.Current.HTTPHeader_ExpandStatistics;
+            ExpandStatistics = SettingsManager.Current.HTTPHeaders_ExpandStatistics;
         }
         #endregion
 
@@ -228,7 +228,12 @@ namespace NETworkManager.ViewModels.Applications
 
             try
             {
-                WebHeaderCollection headers = await HTTPHeaders.GetHeadersAsync(new Uri(WebsiteUri));
+                HTTPHeadersOptions options = new HTTPHeadersOptions()
+                {
+                    Timeout = SettingsManager.Current.HTTPHeaders_Timeout
+                };
+
+                WebHeaderCollection headers = await HTTPHeaders.GetHeadersAsync(new Uri(WebsiteUri), options);
 
                 Headers = headers.ToString();
                 HeadersCount = headers.Count;

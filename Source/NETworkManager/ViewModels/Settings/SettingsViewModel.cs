@@ -94,12 +94,13 @@ namespace NETworkManager.ViewModels.Settings
         SettingsGeneralImportExportView _settingsGeneralImportExportView;
         SettingsApplicationIPScannerView _settingsApplicationIPScannerView;
         SettingsApplicationPortScannerView _settingsApplicationPortScannerView;
-        SettingsApplicationWakeOnLANView _settingsApplicationWakeOnLANView;
         SettingsApplicationPingView _settingsApplicationPingView;
         SettingsApplicationTracerouteView _settingsApplicationTracerouteView;
         SettingsApplicationDNSLookupView _settingsApplicationDNSLookupView;
         SettingsApplicationRemoteDesktopView _settingsApplicationRemoteDesktopView;
         SettingsApplicationSNMPView _settingsApplicationSNMPView;
+        SettingsApplicationWakeOnLANView _settingsApplicationWakeOnLANView;
+        SettingsApplicationHTTPHeadersView _settingsApplicationHTTPHeadersView;
         #endregion
 
         #region Contructor, load settings
@@ -260,6 +261,12 @@ namespace NETworkManager.ViewModels.Settings
                         _settingsApplicationWakeOnLANView = new SettingsApplicationWakeOnLANView();
 
                     SettingsContent = _settingsApplicationWakeOnLANView;
+                    break;
+                case SettingsViewManager.Name.HTTPHeaders:
+                    if (_settingsApplicationHTTPHeadersView == null)
+                        _settingsApplicationHTTPHeadersView = new SettingsApplicationHTTPHeadersView();
+
+                    SettingsContent = _settingsApplicationHTTPHeadersView;
                     break;
             }
         }

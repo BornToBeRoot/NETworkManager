@@ -99,7 +99,8 @@
     <system:String x:Key="String_Header_SNMP">SNMP</system:String>
     <system:String x:Key="String_Header_v1v2c">v1/v2c</system:String>
     <system:String x:Key="String_Header_v3">v3</system:String>
-
+    <system:String x:Key="String_Header_HTTPHeaders">HTTP-Headers</system:String>
+    
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Ein leistungsstarkes Tool zum Verwalten von Netzwerken und zur Behebung von Netzwerkproblemen!</system:String>

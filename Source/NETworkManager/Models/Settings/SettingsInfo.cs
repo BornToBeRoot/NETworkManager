@@ -1388,30 +1388,44 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region HTTP Headers
-        private List<string> _httpHeader_WebsiteUriHistory = new List<string>();
-        public List<string> HTTPHeader_WebsiteUriHistory
+        private List<string> _httpHeaders_WebsiteUriHistory = new List<string>();
+        public List<string> HTTPHeaders_WebsiteUriHistory
         {
-            get { return _httpHeader_WebsiteUriHistory; }
+            get { return _httpHeaders_WebsiteUriHistory; }
             set
             {
-                if (value == _httpHeader_WebsiteUriHistory)
+                if (value == _httpHeaders_WebsiteUriHistory)
                     return;
 
-                _httpHeader_WebsiteUriHistory = value;
+                _httpHeaders_WebsiteUriHistory = value;
                 SettingsChanged = true;
             }
         }
 
-        private bool _httpHeader_ExpandStatistics = true;
-        public bool HTTPHeader_ExpandStatistics
+        private int _httpHeaders_Timeout = 10000;
+        public int HTTPHeaders_Timeout
         {
-            get { return _httpHeader_ExpandStatistics; }
+            get { return _httpHeaders_Timeout; }
             set
             {
-                if (value == _httpHeader_ExpandStatistics)
+                if (value == _httpHeaders_Timeout)
                     return;
 
-                _httpHeader_ExpandStatistics = value;
+                _httpHeaders_Timeout = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _httpHeaders_ExpandStatistics = true;
+        public bool HTTPHeaders_ExpandStatistics
+        {
+            get { return _httpHeaders_ExpandStatistics; }
+            set
+            {
+                if (value == _httpHeaders_ExpandStatistics)
+                    return;
+
+                _httpHeaders_ExpandStatistics = value;
                 SettingsChanged = true;
             }
         }

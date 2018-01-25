@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="NETworkManager.Views.Settings.SettingsApplicationHTTPHeadersView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        mc:Ignorable="d">
+    <StackPanel>
+        <TextBlock Text="{DynamicResource String_Header_HTTPHeaders}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{DynamicResource String_Timeout}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding Timeout}" Maximum="100000" Minimum="1000" Interval="1000" Margin="0,0,0,10" />
+    </StackPanel>
+</UserControl>

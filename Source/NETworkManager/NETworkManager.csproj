@@ -194,6 +194,7 @@
     <Compile Include="Helpers\PowerShellHelper.cs" />
     <Compile Include="Helpers\SecureStringHelper.cs" />
     <Compile Include="Helpers\SingleInstanceHelper.cs" />
+    <Compile Include="Models\Network\HTTPHeadersOptions.cs" />
     <Compile Include="Models\Network\HTTPHeaders.cs" />
     <Compile Include="Models\Network\ARPTableInfo.cs" />
     <Compile Include="Models\Network\SNMPOptions.cs" />
@@ -248,6 +249,7 @@
     <Compile Include="ViewModels\Applications\RemoteDesktopViewModel.cs" />
     <Compile Include="ViewModels\Help\HelpCommandLineViewModel.cs" />
     <Compile Include="ViewModels\Settings\CredentialsViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsApplicationHTTPHeadersViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationSNMPViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationRemoteDesktopViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationDNSLookupViewModel.cs" />
@@ -324,6 +326,9 @@
     </Compile>
     <Compile Include="Views\Settings\CredentialsView.xaml.cs">
       <DependentUpon>CredentialsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsApplicationHTTPHeadersView.xaml.cs">
+      <DependentUpon>SettingsApplicationHTTPHeadersView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\SettingsApplicationSNMPView.xaml.cs">
       <DependentUpon>SettingsApplicationSNMPView.xaml</DependentUpon>
@@ -530,6 +535,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Settings\CredentialsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings\SettingsApplicationHTTPHeadersView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
