@@ -8,185 +8,223 @@
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
         xmlns:Settings="clr-namespace:NETworkManager.Models.Settings"
+        xmlns:Resources="clr-namespace:NETworkManager.Properties"
         Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
     <UserControl.Resources>
         <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
+        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
     </UserControl.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-        <dragablz:TabablzControl Grid.Column="0" Grid.Row="0" Margin="-0,-2,0,0" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
-            <dragablz:TabablzControl.InterTabController>
-                <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" />
-            </dragablz:TabablzControl.InterTabController>
-            <dragablz:TabablzControl.Style>
-                <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">
-                    <Setter Property="HeaderSuffixContent" >
-                        <Setter.Value>
-                            <Grid HorizontalAlignment="Left" Width="40" Height="40">
-                                <Button Style="{StaticResource CleanButton}" Command="{Binding ConnectNewSessionCommand}" Focusable="False">
-                                    <Rectangle Width="20" Height="20">
+        <Grid Visibility="{Binding IsRDP8dot1Available, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <dragablz:TabablzControl Grid.Column="0" Grid.Row="0" Margin="-0,-2,0,0" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
+                <dragablz:TabablzControl.InterTabController>
+                    <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" />
+                </dragablz:TabablzControl.InterTabController>
+                <dragablz:TabablzControl.Style>
+                    <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">
+                        <Setter Property="HeaderSuffixContent" >
+                            <Setter.Value>
+                                <Grid HorizontalAlignment="Left" Width="40" Height="40">
+                                    <Button Style="{StaticResource CleanButton}" Command="{Binding ConnectNewSessionCommand}" Focusable="False">
+                                        <Rectangle Width="20" Height="20">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
+                                            </Rectangle.OpacityMask>
+                                            <Rectangle.Style>
+                                                <Style TargetType="{x:Type Rectangle}">
+                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Rectangle.Style>
+                                        </Rectangle>
+                                    </Button>
+                                </Grid>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <ContentPresenter Content="{Binding Control}" Visibility="{Binding Source={x:Static Settings:ConfigurationManager.Current}, Path=FixAirspace, Converter={StaticResource BooleanReverseToVisibilityConverter}}" />
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dragablz:TabablzControl.Style>
+            </dragablz:TabablzControl>
+            <Border Grid.Column="1" Grid.Row="0" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource GrayBrush8}">
+                <Expander Header="{DynamicResource String_Header_Sessions}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandSessionView}">
+                    <Grid Width="250">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBox x:Name="txtSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}"/>
+                        <ListBox Grid.Row="2" FontSize="14" ItemsSource="{Binding RemoteDesktopSessions}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedSession}">
+                            <ListBox.Resources>
+                                <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
+                                <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                                    <MenuItem Header="{DynamicResource String_Connect}" Command="{Binding ConnectSessionCommand}">
+                                        <MenuItem.Icon>
+                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Octicons Kind=DeviceDesktop}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="{DynamicResource String_ConnectAs}" Command="{Binding ConnectSessionAsCommand}">
+                                        <MenuItem.Icon>
+                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Octicons Kind=DeviceDesktop}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="{DynamicResource String_Edit}" Command="{Binding EditSessionCommand}">
+                                        <MenuItem.Icon>
+                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="{DynamicResource String_CopyAs}" Command="{Binding CopyAsSessionCommand}">
+                                        <MenuItem.Icon>
+                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentDuplicate}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteSessionCommand}">
+                                        <MenuItem.Icon>
+                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </ListBox.Resources>
+                            <ListBox.InputBindings>
+                                <KeyBinding Command="{Binding EditSessionCommand}" Key="F2" />
+                                <KeyBinding Command="{Binding DeleteSessionCommand}" Key="Delete" />
+                            </ListBox.InputBindings>
+                            <ListBox.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.ContainerStyle>
+                                        <Style TargetType="{x:Type GroupItem}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}" Padding="0">
+                                                            <Expander.Header>
+                                                                <TextBlock Text="{Binding Name}" Style="{StaticResource HeaderTextBlock}" FontSize="18" Margin="0" />
+                                                            </Expander.Header>
+                                                            <ItemsPresenter />
+                                                        </Expander>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </GroupStyle.ContainerStyle>
+                                </GroupStyle>
+                            </ListBox.GroupStyle>
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
+                                    <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
+                                    <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick" />
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                        </ListBox>
+                        <TextBlock Grid.Row="2" FontSize="18" Foreground="{DynamicResource GrayBrush3}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RemoteDesktopSessions.Count}" Value="0" >
+                                            <DataTrigger.Setters>
+                                                <Setter Property="Visibility" Value="Visible" />
+                                                <Setter Property="Text" Value="{DynamicResource String_NoSessionsFoundCreateOne}" />
+                                            </DataTrigger.Setters>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                            <Setter Property="Text" Value="{DynamicResource String_NothingFound}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <Button x:Name="btnAddProfile" Grid.Row="4" Command="{Binding AddSessionCommand}" Style="{StaticResource ImageWithTextButton}">
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}" />
                                         </Rectangle.OpacityMask>
-                                        <Rectangle.Style>
-                                            <Style TargetType="{x:Type Rectangle}">
-                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Rectangle.Style>
                                     </Rectangle>
-                                </Button>
-                            </Grid>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate>
-                                <ContentPresenter Content="{Binding Control}" Visibility="{Binding Source={x:Static Settings:ConfigurationManager.Current}, Path=FixAirspace, Converter={StaticResource BooleanReverseToVisibilityConverter}}" />
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </dragablz:TabablzControl.Style>
-        </dragablz:TabablzControl>
-        <Border Grid.Column="1" Grid.Row="0" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource GrayBrush8}">
-            <Expander Header="{DynamicResource String_Header_Sessions}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandSessionView}">
-                <Grid Width="250">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <TextBox x:Name="txtSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}"/>
-                    <ListBox Grid.Row="2" FontSize="14" ItemsSource="{Binding RemoteDesktopSessions}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedSession}">
-                        <ListBox.Resources>
-                            <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
-                            <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                                <MenuItem Header="{DynamicResource String_Connect}" Command="{Binding ConnectSessionCommand}">
-                                    <MenuItem.Icon>
-                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Octicons Kind=DeviceDesktop}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="{DynamicResource String_ConnectAs}" Command="{Binding ConnectSessionAsCommand}">
-                                    <MenuItem.Icon>
-                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Octicons Kind=DeviceDesktop}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="{DynamicResource String_Edit}" Command="{Binding EditSessionCommand}">
-                                    <MenuItem.Icon>
-                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="{DynamicResource String_CopyAs}" Command="{Binding CopyAsSessionCommand}">
-                                    <MenuItem.Icon>
-                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentDuplicate}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteSessionCommand}">
-                                    <MenuItem.Icon>
-                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </ContextMenu>
-                        </ListBox.Resources>
-                        <ListBox.InputBindings>
-                            <KeyBinding Command="{Binding EditSessionCommand}" Key="F2" />
-                            <KeyBinding Command="{Binding DeleteSessionCommand}" Key="Delete" />
-                        </ListBox.InputBindings>
-                        <ListBox.GroupStyle>
-                            <GroupStyle>
-                                <GroupStyle.ContainerStyle>
-                                    <Style TargetType="{x:Type GroupItem}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate>
-                                                    <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}" Padding="0">
-                                                        <Expander.Header>
-                                                            <TextBlock Text="{Binding Name}" Style="{StaticResource HeaderTextBlock}" FontSize="18" Margin="0" />
-                                                        </Expander.Header>
-                                                        <ItemsPresenter />
-                                                    </Expander>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </GroupStyle.ContainerStyle>
-                            </GroupStyle>
-                        </ListBox.GroupStyle>
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
-                                <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
-                                <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick" />
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                    </ListBox>
-                    <TextBlock Grid.Row="2" FontSize="18" Foreground="{DynamicResource GrayBrush3}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding RemoteDesktopSessions.Count}" Value="0" >
-                                        <DataTrigger.Setters>
-                                            <Setter Property="Visibility" Value="Visible" />
-                                            <Setter Property="Text" Value="{DynamicResource String_NoSessionsFoundCreateOne}" />
-                                        </DataTrigger.Setters>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
-                                        <Setter Property="Text" Value="{DynamicResource String_NothingFound}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                    <Button x:Name="btnAddProfile" Grid.Row="4" Command="{Binding AddSessionCommand}" Style="{StaticResource ImageWithTextButton}">
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddSessions}" FontSize="14" Margin="10,5" TextAlignment="Center" Grid.ColumnSpan="2"/>
-                            </Grid>
-                        </Button.Content>
-                    </Button>
-                </Grid>
-            </Expander>
-        </Border>
+                                    <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddSessions}" FontSize="14" Margin="10,5" TextAlignment="Center" Grid.ColumnSpan="2"/>
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
+                </Expander>
+            </Border>
+        </Grid>
+        <StackPanel VerticalAlignment="Center" Visibility="{Binding IsRDP8dot1Available, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Margin="10">
+            <TextBlock FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_InstallRDP8dot1Message}" TextWrapping="Wrap" TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Margin="0,0,0,10" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.WikiPage_InstallRDP81onWindows61_Url}" />
+                </StackPanel.InputBindings>
+                <StackPanel.Style>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Setter Property="TextBlock.Foreground" Value="{DynamicResource AccentColorBrush}" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="TextBlock.Foreground" Value="{DynamicResource BlackColorBrush}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <Rectangle Width="16" Height="20">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=OpenInNew}"/>
+                    </Rectangle.OpacityMask>
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type StackPanel}}, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Fill" Value="{DynamicResource BlackColorBrush}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
+                <TextBlock Text="{x:Static Resources:Resources.WikiPage_InstallRDP81onWindows61_Title}" VerticalAlignment="Center" FontSize="14" Margin="10,0,0,0" />
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

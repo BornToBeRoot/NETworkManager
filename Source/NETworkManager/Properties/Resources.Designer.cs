@@ -340,7 +340,7 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager/blob/master/Documentation/.
+        ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager/wiki.
         /// </summary>
         public static string NETworkManager_DocumentationUrl {
             get {
@@ -399,6 +399,24 @@ namespace NETworkManager.Properties {
         public static string NETworkManager_ProjectUrl {
             get {
                 return ResourceManager.GetString("NETworkManager_ProjectUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How to install RDP 8.1 on Windows 7/Server 2008 R2?.
+        /// </summary>
+        public static string WikiPage_InstallRDP81onWindows61_Title {
+            get {
+                return ResourceManager.GetString("WikiPage_InstallRDP81onWindows61_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager/wiki/Install_RDP8.1_on_Windows6.1.
+        /// </summary>
+        public static string WikiPage_InstallRDP81onWindows61_Url {
+            get {
+                return ResourceManager.GetString("WikiPage_InstallRDP81onWindows61_Url", resourceCulture);
             }
         }
     }

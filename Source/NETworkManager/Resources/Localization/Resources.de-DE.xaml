@@ -355,7 +355,8 @@
     <system:String x:Key="String_Height">Höhe</system:String>
     <system:String x:Key="String_VersionxxAvailable">Version {0} verfügbar!</system:String>
     <system:String x:Key="String_CheckForUpdatesAtStartup">Beim Start auf Updates prüfen</system:String>
-    <system:String x:Key="NoUpdateAvailable">Kein Update verfügbar!</system:String>
+    <system:String x:Key="String_NoUpdateAvailable">Kein Update verfügbar!</system:String>
+    <system:String x:Key="String_InstallRDP8dot1Message">Sie müssen das Remotedesktopprotokoll (RDP) Version 8.1 auf Ihrem System installieren, um die Remotedesktopfunktionalität zu verwenden.</system:String>
     
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>
@@ -409,7 +410,7 @@
     <system:String x:Key="String_Button_DecryptAndLoad">Entschlüsseln und laden...</system:String>
     <system:String x:Key="String_Button_Query">Abfragen</system:String>
     <system:String x:Key="String_Button_Open">Öffnen</system:String>
-    <system:String x:Key="String_Button_CheckForUpdaptes">Auf Updates prüfen</system:String>    
+    <system:String x:Key="String_Button_CheckForUpdaptes">Auf Updates prüfen</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Ausschneiden</system:String>

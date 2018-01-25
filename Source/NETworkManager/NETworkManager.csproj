@@ -200,6 +200,7 @@
     <Compile Include="Models\Network\SNMPReceivedInfo.cs" />
     <Compile Include="Models\Network\SNMPReceivedArgs.cs" />
     <Compile Include="Models\Network\SNMP.cs" />
+    <Compile Include="Models\RemoteDesktop\RemoteDesktop.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Models\Settings\CredentialInfoSerializable.cs" />
     <Compile Include="Models\Settings\CredentialInfo.cs" />

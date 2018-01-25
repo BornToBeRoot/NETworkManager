@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System;
 using System.Linq;
+using System.Diagnostics;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -26,6 +27,20 @@ namespace NETworkManager.ViewModels.Applications
 
         private bool _isLoading = true;
 
+        private bool _isRDP8dot1Available;
+        public bool IsRDP8dot1Available
+        {
+            get { return _isRDP8dot1Available; }
+            set
+            {
+                if (value == _isRDP8dot1Available)
+                    return;
+
+                _isRDP8dot1Available = value;
+                OnPropertyChanged();
+            }
+        }
+
         private int _selectedTabIndex;
         public int SelectedTabIndex
         {
@@ -39,7 +54,6 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
-
         #region Sessions
         ICollectionView _remoteDesktopSessions;
         public ICollectionView RemoteDesktopSessions
@@ -102,40 +116,46 @@ namespace NETworkManager.ViewModels.Applications
         {
             dialogCoordinator = instance;
 
-            InterTabClient = new DragablzMainInterTabClient();
-            TabItems = new ObservableCollection<DragablzRemoteDesktopTabItem>();
-
-            // Load sessions
-            if (RemoteDesktopSessionManager.Sessions == null)
-                RemoteDesktopSessionManager.Load();
-
-            _remoteDesktopSessions = CollectionViewSource.GetDefaultView(RemoteDesktopSessionManager.Sessions);
-            _remoteDesktopSessions.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
-            _remoteDesktopSessions.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
-            _remoteDesktopSessions.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            _remoteDesktopSessions.Filter = o =>
+            // Check if RDP 8.1 is available
+            IsRDP8dot1Available = Models.RemoteDesktop.RemoteDesktop.IsRDP8dot1Available();
+            
+            if (IsRDP8dot1Available)
             {
-                if (string.IsNullOrEmpty(Search))
-                    return true;
+                InterTabClient = new DragablzMainInterTabClient();
+                TabItems = new ObservableCollection<DragablzRemoteDesktopTabItem>();
 
-                RemoteDesktopSessionInfo info = o as RemoteDesktopSessionInfo;
+                // Load sessions
+                if (RemoteDesktopSessionManager.Sessions == null)
+                    RemoteDesktopSessionManager.Load();
 
-                string search = Search.Trim();
-
-                if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
+                _remoteDesktopSessions = CollectionViewSource.GetDefaultView(RemoteDesktopSessionManager.Sessions);
+                _remoteDesktopSessions.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
+                _remoteDesktopSessions.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
+                _remoteDesktopSessions.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                _remoteDesktopSessions.Filter = o =>
                 {
-                    if (string.IsNullOrEmpty(info.Tags))
-                        return false;
+                    if (string.IsNullOrEmpty(Search))
+                        return true;
+
+                    RemoteDesktopSessionInfo info = o as RemoteDesktopSessionInfo;
+
+                    string search = Search.Trim();
+
+                    if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (string.IsNullOrEmpty(info.Tags))
+                            return false;
+                        else
+                            return info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).IndexOf(str, StringComparison.OrdinalIgnoreCase) > -1);
+                    }
                     else
-                        return info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).IndexOf(str, StringComparison.OrdinalIgnoreCase) > -1);
-                }
-                else
-                {
-                    return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-                }
-            };
+                    {
+                        return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+                    }
+                };
 
-            LoadSettings();
+                LoadSettings();
+            }
 
             _isLoading = false;
         }
@@ -507,6 +527,16 @@ namespace NETworkManager.ViewModels.Applications
 
             ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand OpenWebsiteCommand
+        {
+            get { return new RelayCommand(p => OpenWebsiteAction(p)); }
+        }
+
+        private void OpenWebsiteAction(object url)
+        {
+            Process.Start((string)url);
         }
         #endregion
 

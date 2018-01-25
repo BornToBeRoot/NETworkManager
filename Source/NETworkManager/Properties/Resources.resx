@@ -211,7 +211,7 @@
     <value>MIT License</value>
   </data>
   <data name="NETworkManager_DocumentationUrl" xml:space="preserve">
-    <value>https://github.com/BornToBeRoot/NETworkManager/blob/master/Documentation/</value>
+    <value>https://github.com/BornToBeRoot/NETworkManager/wiki</value>
   </data>
   <data name="NETworkManager_GitHub_Repo" xml:space="preserve">
     <value>NETworkManager</value>
@@ -230,5 +230,11 @@
   </data>
   <data name="NETworkManager_ProjectUrl" xml:space="preserve">
     <value>https://github.com/BornToBeRoot/NETworkManager</value>
+  </data>
+  <data name="WikiPage_InstallRDP81onWindows61_Title" xml:space="preserve">
+    <value>How to install RDP 8.1 on Windows 7/Server 2008 R2?</value>
+  </data>
+  <data name="WikiPage_InstallRDP81onWindows61_Url" xml:space="preserve">
+    <value>https://github.com/BornToBeRoot/NETworkManager/wiki/Install_RDP8.1_on_Windows6.1</value>
   </data>
 </root>

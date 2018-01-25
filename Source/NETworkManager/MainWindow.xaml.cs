@@ -23,6 +23,7 @@ using NETworkManager.Helpers;
 using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using NETworkManager.Models.Update;
+using NETworkManager.Models.RemoteDesktop;
 
 namespace NETworkManager
 {
@@ -307,7 +308,7 @@ namespace NETworkManager
 
             // Chech for updates...
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
-                CheckForUpdates();
+                CheckForUpdates();                        
         }
 
         private void LoadApplicationList()
