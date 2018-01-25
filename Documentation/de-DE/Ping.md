@@ -1,3 +1,0 @@
-# Ping
-
-![](Images/Ping.png)

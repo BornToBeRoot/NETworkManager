@@ -56,7 +56,7 @@ _On Windows 10 systems, SmartScreen may prevent the execution of the_ `NETworkMa
 
 <h2>Documentation</h2>
 
-The documentation can be found [here](Documentation/README.md).
+The documentation can be found [here](https://github.com/BornToBeRoot/NETworkManager/wiki/).
 
 <h2>Changelog</h2>
 
