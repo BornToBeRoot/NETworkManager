@@ -6,7 +6,11 @@ namespace NETworkManager.Models.Documentation
     public static class DocumentationManager
     {
         public const string DocumentationBaseURL = @"https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/";
-        public const string DocumentationURL = DocumentationBaseURL + "README.md";
+
+        public static string DocumentationURL
+        {
+            get { return string.Format("{0}{1}/README.md", DocumentationBaseURL, Settings.LocalizationManager.Current.Code); }
+        }
 
         public static List<DocumentationInfo> List
         {

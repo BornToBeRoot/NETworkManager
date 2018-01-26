@@ -118,7 +118,7 @@ namespace NETworkManager.ViewModels.Applications
             dialogCoordinator = instance;
 
             // Check if RDP 8.1 is available
-            IsRDP8dot1Available = false; //= Models.RemoteDesktop.RemoteDesktop.IsRDP8dot1Available();
+            IsRDP8dot1Available = Models.RemoteDesktop.RemoteDesktop.IsRDP8dot1Available();
             
             if (IsRDP8dot1Available)
             {
