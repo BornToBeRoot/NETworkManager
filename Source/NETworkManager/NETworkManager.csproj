@@ -194,6 +194,8 @@
     <Compile Include="Helpers\PowerShellHelper.cs" />
     <Compile Include="Helpers\SecureStringHelper.cs" />
     <Compile Include="Helpers\SingleInstanceHelper.cs" />
+    <Compile Include="Models\Documentation\DocumentationInfo.cs" />
+    <Compile Include="Models\Documentation\DocumentationManager.cs" />
     <Compile Include="Models\Network\HTTPHeadersOptions.cs" />
     <Compile Include="Models\Network\HTTPHeaders.cs" />
     <Compile Include="Models\Network\ARPTableInfo.cs" />

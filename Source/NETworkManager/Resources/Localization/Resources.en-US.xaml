@@ -359,6 +359,9 @@
     <system:String x:Key="String_NoUpdateAvailable">No update available!</system:String>
     <system:String x:Key="String_InstallRDP8dot1Message">You must install the Remote Desktop Protocol (RDP) version 8.1 on your system to use the Remote Desktop functionality!</system:String>
     
+    <!-- Documentation title -->
+    <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2?</system:String>
+    
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Reset all settings.</system:String>

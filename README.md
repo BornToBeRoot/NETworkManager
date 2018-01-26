@@ -52,11 +52,11 @@ _On Windows 10 systems, SmartScreen may prevent the execution of the_ `NETworkMa
 
 - Windows 7 or later
 - .NET-Framework 4.6
-- RDP 8.1 ([How to install RDP 8.1 on Windows 7/Server 2008 R2?](https://github.com/BornToBeRoot/NETworkManager/wiki/Install_RDP8.1_on_Windows6.1))
+- RDP 8.1 ([How to install RDP 8.1 on Windows 7/Server 2008 R2?](Documentation/en-US/Help/00001_Install_RDP_8dot1_on_Windows6dot1.md))
 
 <h2>Documentation</h2>
 
-The documentation can be found [here](https://github.com/BornToBeRoot/NETworkManager/wiki/).
+The documentation can be found [here](Documentation/README.md).
 
 <h2>Changelog</h2>
 

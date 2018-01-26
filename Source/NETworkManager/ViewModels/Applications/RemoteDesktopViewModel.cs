@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System;
 using System.Linq;
 using System.Diagnostics;
+using NETworkManager.Models.Documentation;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -117,7 +118,7 @@ namespace NETworkManager.ViewModels.Applications
             dialogCoordinator = instance;
 
             // Check if RDP 8.1 is available
-            IsRDP8dot1Available = Models.RemoteDesktop.RemoteDesktop.IsRDP8dot1Available();
+            IsRDP8dot1Available = false; //= Models.RemoteDesktop.RemoteDesktop.IsRDP8dot1Available();
             
             if (IsRDP8dot1Available)
             {
@@ -529,14 +530,14 @@ namespace NETworkManager.ViewModels.Applications
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand OpenWebsiteCommand
+        public ICommand OpenDocumentationCommand
         {
-            get { return new RelayCommand(p => OpenWebsiteAction(p)); }
+            get { return new RelayCommand(p => OpenDocumentationAction(p)); }
         }
 
-        private void OpenWebsiteAction(object url)
+        private void OpenDocumentationAction(object id)
         {
-            Process.Start((string)url);
+            Process.Start(DocumentationManager.GetLocalizedURLbyID(int.Parse((string)id)));
         }
         #endregion
 

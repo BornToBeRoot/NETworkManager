@@ -8,6 +8,7 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Settings="clr-namespace:NETworkManager.Models.Settings"
+        xmlns:Documentation="clr-namespace:NETworkManager.Models.Documentation"
         xmlns:Resources="clr-namespace:NETworkManager.Properties"
         xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
@@ -26,7 +27,7 @@
     </Controls:MetroWindow.IconTemplate>
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
-            <Button Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.NETworkManager_DocumentationUrl}">
+            <Button Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Documentation:DocumentationManager.DocumentationURL}">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
