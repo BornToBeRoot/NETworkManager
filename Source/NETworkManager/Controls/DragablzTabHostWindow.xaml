@@ -22,7 +22,7 @@
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <ContentPresenter Content="{Binding Control}" />
+                                <ContentPresenter Content="{Binding View}" />
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>

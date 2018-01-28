@@ -497,16 +497,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private List<string> _ping_HostnameOrIPAddressHistory = new List<string>();
-        public List<string> Ping_HostnameOrIPAddressHistory
+        private List<string> _ping_HostHistory = new List<string>();
+        public List<string> Ping_HostHistory
         {
-            get { return _ping_HostnameOrIPAddressHistory; }
+            get { return _ping_HostHistory; }
             set
             {
-                if (value == _ping_HostnameOrIPAddressHistory)
+                if (value == _ping_HostHistory)
                     return;
 
-                _ping_HostnameOrIPAddressHistory = value;
+                _ping_HostHistory = value;
                 SettingsChanged = true;
             }
         }

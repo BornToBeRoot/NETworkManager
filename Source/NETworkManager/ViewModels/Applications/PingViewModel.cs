@@ -21,38 +21,41 @@ namespace NETworkManager.ViewModels.Applications
         #region Variables
         CancellationTokenSource cancellationTokenSource;
 
+        private readonly Action<Tuple<int, string>> ChangeTabTitle;
+        private int _tabId;
+
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         Stopwatch stopwatch = new Stopwatch();
-
+                
         private bool _isLoading = true;
 
-        private string _hostnameOrIPAddress;
-        public string HostnameOrIPAddress
+        private string _host;
+        public string Host
         {
-            get { return _hostnameOrIPAddress; }
+            get { return _host; }
             set
             {
-                if (value == _hostnameOrIPAddress)
+                if (value == _host)
                     return;
 
-                _hostnameOrIPAddress = value;
+                _host = value;
                 OnPropertyChanged();
             }
         }
 
-        private List<string> _hostnameOrIPAddressHistory = new List<string>();
-        public List<string> HostnameOrIPAddressHistory
+        private List<string> _hostHistory = new List<string>();
+        public List<string> HostHistory
         {
-            get { return _hostnameOrIPAddressHistory; }
+            get { return _hostHistory; }
             set
             {
-                if (value == _hostnameOrIPAddressHistory)
+                if (value == _hostHistory)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Ping_HostnameOrIPAddressHistory = value;
+                    SettingsManager.Current.Ping_HostHistory = value;
 
-                _hostnameOrIPAddressHistory = value;
+                _hostHistory = value;
                 OnPropertyChanged();
             }
         }
@@ -270,9 +273,12 @@ namespace NETworkManager.ViewModels.Applications
         }
         #endregion
 
-        #region Contructor
-        public PingViewModel()
-        {         
+        #region Contructor    
+        public PingViewModel(int tabId, Action<Tuple<int, string>> changeTabTitle)
+        {
+            _tabId = tabId;
+            ChangeTabTitle = changeTabTitle;
+
             LoadSettings();
 
             _isLoading = false;
@@ -282,8 +288,8 @@ namespace NETworkManager.ViewModels.Applications
         #region Load settings
         private void LoadSettings()
         {
-            if (SettingsManager.Current.Ping_HostnameOrIPAddressHistory != null)
-                HostnameOrIPAddressHistory = new List<string>(SettingsManager.Current.Ping_HostnameOrIPAddressHistory);
+            if (SettingsManager.Current.Ping_HostHistory != null)
+                HostHistory = new List<string>(SettingsManager.Current.Ping_HostHistory);
 
             ExpandStatistics = SettingsManager.Current.Ping_ExpandStatistics;
         }
@@ -328,14 +334,14 @@ namespace NETworkManager.ViewModels.Applications
             MaximumTime = 0;
 
             // Try to parse the string into an IP-Address
-            IPAddress.TryParse(HostnameOrIPAddress, out IPAddress ipAddress);
+            IPAddress.TryParse(Host, out IPAddress ipAddress);
 
             try
             {
                 // Try to resolve the hostname
                 if (ipAddress == null)
                 {
-                    IPHostEntry ipHostEntrys = await Dns.GetHostEntryAsync(HostnameOrIPAddress);
+                    IPHostEntry ipHostEntrys = await Dns.GetHostEntryAsync(Host);
 
                     foreach (IPAddress ip in ipHostEntrys.AddressList)
                     {
@@ -366,14 +372,17 @@ namespace NETworkManager.ViewModels.Applications
             {
                 PingFinished();
 
-                StatusMessage = string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, HostnameOrIPAddress);
+                StatusMessage = string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, Host);
                 DisplayStatusMessage = true;
 
                 return;
             }
 
+            // Change the tab title
+            ChangeTabTitle.BeginInvoke(Tuple.Create(_tabId, Host), null, null);
+
             // Add the hostname or ip address to the history
-            HostnameOrIPAddressHistory = new List<string>(HistoryListHelper.Modify(HostnameOrIPAddressHistory, HostnameOrIPAddress, SettingsManager.Current.General_HistoryListEntries));
+            HostHistory = new List<string>(HistoryListHelper.Modify(HostHistory, Host, SettingsManager.Current.General_HistoryListEntries));
 
             cancellationTokenSource = new CancellationTokenSource();
 
@@ -484,11 +493,11 @@ namespace NETworkManager.ViewModels.Applications
                     errorMessage = e.InnerException.Message;
                     break;
             }
-                        
+
             PingFinished();
 
             StatusMessage = errorMessage;
-            DisplayStatusMessage = true;            
+            DisplayStatusMessage = true;
         }
 
         private void Ping_UserHasCanceled(object sender, EventArgs e)

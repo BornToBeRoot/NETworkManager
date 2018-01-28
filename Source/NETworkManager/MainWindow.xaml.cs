@@ -404,7 +404,7 @@ namespace NETworkManager
         NetworkInterfaceView networkInterfaceView;
         IPScannerView ipScannerView;
         PortScannerView portScannerView;
-        PingView pingView;
+        PingHostView pingHostView;
         TracerouteView tracerouteView;
         DNSLookupView dnsLookupView;
         RemoteDesktopView remoteDesktopView;
@@ -443,10 +443,10 @@ namespace NETworkManager
                     contentControlApplication.Content = portScannerView;
                     break;
                 case ApplicationViewManager.Name.Ping:
-                    if (pingView == null)
-                        pingView = new PingView();
+                    if (pingHostView == null)
+                        pingHostView = new PingHostView();
 
-                    contentControlApplication.Content = pingView;
+                    contentControlApplication.Content = pingHostView;
                     break;
                 case ApplicationViewManager.Name.Traceroute:
                     if (tracerouteView == null)

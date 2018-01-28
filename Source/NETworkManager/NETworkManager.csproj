@@ -185,6 +185,7 @@
     <Compile Include="3rdParty\Heijden.DNS\RR.cs" />
     <Compile Include="3rdParty\Heijden.DNS\Structs.cs" />
     <Compile Include="Controls\DragablzMainInterTabClient.cs" />
+    <Compile Include="Controls\DragablzPingTabItem.cs" />
     <Compile Include="Controls\DragablzRemoteDesktopTabItem.cs" />
     <Compile Include="Converters\NullOrEmptyToBoolConverter.cs" />
     <Compile Include="Converters\TimestampToStringConverter.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="Validators\Int32Validator.cs" />
     <Compile Include="Validators\MultipleHostsValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
+    <Compile Include="ViewModels\Applications\PingHostViewModel.cs" />
     <Compile Include="ViewModels\Applications\SNMPv3ViewModel.cs" />
     <Compile Include="ViewModels\Applications\SNMPv1v2cViewModel.cs" />
     <Compile Include="ViewModels\Applications\HTTPHeadersViewModel.cs" />
@@ -260,6 +262,9 @@
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Settings\SettingsGeneralUpdateViewModel.cs" />
+    <Compile Include="Views\Applications\PingHostView.xaml.cs">
+      <DependentUpon>PingHostView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Applications\SNMPv3View.xaml.cs">
       <DependentUpon>SNMPv3View.xaml</DependentUpon>
     </Compile>
@@ -421,6 +426,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RemoteDesktopControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Applications\PingHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

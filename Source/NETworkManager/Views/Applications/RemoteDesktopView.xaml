@@ -54,7 +54,7 @@
                         <Setter Property="ContentTemplate">
                             <Setter.Value>
                                 <DataTemplate>
-                                    <ContentPresenter Content="{Binding Control}" Visibility="{Binding Source={x:Static Settings:ConfigurationManager.Current}, Path=FixAirspace, Converter={StaticResource BooleanReverseToVisibilityConverter}}" />
+                                    <ContentPresenter Content="{Binding View}" Visibility="{Binding Source={x:Static Settings:ConfigurationManager.Current}, Path=FixAirspace, Converter={StaticResource BooleanReverseToVisibilityConverter}}" />
                                 </DataTemplate>
                             </Setter.Value>
                         </Setter>
