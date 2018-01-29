@@ -4,7 +4,7 @@ By default, Windows 7 and Server 2008 R2 only supports the Remote Desktop Protoc
 
 **1) Download the KB's for your system from Microsoft and apply them in the following order:**
 
-_There are different download package for the different systems (Windows 7 x86 & x64, Server 2008 R2 x64)._
+_There are different download packages for the different systems (Windows 7 x86 & x64, Server 2008 R2 x64)._
 
 https://support.microsoft.com/en-us/help/2830477/update-for-remoteapp-and-desktop-connections-feature-is-available-for
 
