@@ -23,6 +23,7 @@ namespace NETworkManager.Models.Documentation
             }
         }
 
+        // Get localized documentation url (if available), else return the english webpage
         public static string GetLocalizedURLbyID(int id)
         {
             DocumentationInfo info = List.FirstOrDefault(x => x.Identifier == id);
@@ -33,6 +34,7 @@ namespace NETworkManager.Models.Documentation
                 return string.Format("{0}en-US{1}", DocumentationBaseURL, info.Path);
         }
 
+        // Generate a list with culture codes
         private static List<Settings.LocalizationInfo> GetLocalizationInfoList(params string[] codes)
         {
             List<Settings.LocalizationInfo> list = new List<Settings.LocalizationInfo>();
