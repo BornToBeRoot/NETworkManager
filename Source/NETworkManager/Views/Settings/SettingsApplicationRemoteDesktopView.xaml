@@ -15,14 +15,14 @@
         <RadioButton x:Name="rbAdjustScreenAutomatically" Content="{DynamicResource String_AdjustScreenAutomatically}" IsChecked="{Binding AdjustScreenAutomatically}" Margin="0,0,0,10" />
         <RadioButton x:Name="rbUseCurrentViewSize" Content="{DynamicResource String_UseCurrentViewSize}" IsChecked="{Binding UseCurrentViewSize}" Margin="0,0,0,10" />
         <RadioButton x:Name="rbFixedScreenSize" Content="{DynamicResource String_FixedScreenSize}" IsChecked="{Binding UseFixedScreenSize}" Margin="0,0,0,10" />
-        <GroupBox Style="{StaticResource WithoutHeaderGroupBox}" Width="270" HorizontalAlignment="Left" IsEnabled="{Binding UseFixedScreenSize}" Margin="25,0,0,10">
+        <GroupBox x:Name="gbFixedScreenSize" Style="{StaticResource WithoutHeaderGroupBox}" MinWidth="270" HorizontalAlignment="Left" IsEnabled="{Binding UseFixedScreenSize}" Margin="25,0,0,10">
             <StackPanel>
                 <TextBlock Text="{DynamicResource String_SelectAScreenResolution}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
                 <ComboBox ItemsSource="{Binding ScreenResolutions}" SelectedItem="{Binding SelectedScreenResolution}" Width="250" HorizontalAlignment="Left" />
             </StackPanel>
         </GroupBox>
         <RadioButton x:Name="rbCustomScreenSize" Content="{DynamicResource String_CustomScreenSize}" IsChecked="{Binding UseCustomScreenSize}" Margin="0,0,0,10" />
-        <GroupBox Style="{StaticResource WithoutHeaderGroupBox}" Width="270" HorizontalAlignment="Left" IsEnabled="{Binding UseCustomScreenSize}" Margin="25,0,0,10">
+        <GroupBox Style="{StaticResource WithoutHeaderGroupBox}" Width="{Binding ElementName=gbFixedScreenSize, Path=ActualWidth}" HorizontalAlignment="Left" IsEnabled="{Binding UseCustomScreenSize}" Margin="25,0,0,10">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
