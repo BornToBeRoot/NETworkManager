@@ -529,7 +529,9 @@
     <!-- AppTheme.Name -->
     <system:String x:Key="String_AppTheme_BaseLight">Light</system:String>
     <system:String x:Key="String_AppTheme_BaseDark">Dark</system:String>
-
+    <system:String x:Key="String_AppTheme_Black">Black</system:String>
+    <system:String x:Key="String_AppTheme_White">White</system:String>
+    
     <!-- Accent.Name -->
     <system:String x:Key="String_Accent_Red">Red</system:String>
     <system:String x:Key="String_Accent_Green">Green</system:String>
@@ -554,6 +556,7 @@
     <system:String x:Key="String_Accent_Mauve">Mauve</system:String>
     <system:String x:Key="String_Accent_Taupe">Taupe</system:String>
     <system:String x:Key="String_Accent_Sienna">Sienna</system:String>
+    <system:String x:Key="String_Accent_Black">Black</system:String>
     
     <!-- IPStatus -->
     <system:String x:Key="String_IPStatus_Success">Success</system:String>

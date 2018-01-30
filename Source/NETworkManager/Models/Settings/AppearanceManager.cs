@@ -1,12 +1,18 @@
 ﻿using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
 using System;
+using System.IO;
 using System.Windows;
 
 namespace NETworkManager.Models.Settings
 {
     public static class AppearanceManager
     {
+        private static string ThemesFilePath = Path.Combine(ConfigurationManager.Current.ExecutionPath, "Themes");
+
+        private const string CostomThemeFileExtension = @".Theme.xaml";
+        private const string CostomAccentFileExtension = @".Accent.xaml";
+
         public static MetroDialogSettings MetroDialog = new MetroDialogSettings();
 
         /// <summary>
@@ -14,6 +20,20 @@ namespace NETworkManager.Models.Settings
         /// </summary>
         public static void Load()
         {
+            // Add custom themes
+            foreach (string file in Directory.GetFiles(ThemesFilePath))
+            {
+                string fileName = Path.GetFileName(file);
+
+                // Theme
+                if (fileName.EndsWith(CostomThemeFileExtension))
+                    ThemeManager.AddAppTheme(fileName.Substring(0, fileName.Length - CostomThemeFileExtension.Length), new Uri(file));
+
+                // Accent
+                if (fileName.EndsWith(CostomAccentFileExtension))
+                    ThemeManager.AddAccent(fileName.Substring(0, fileName.Length - CostomAccentFileExtension.Length), new Uri(file));
+            }
+
             // Change the AppTheme if it is not empty and different from the currently loaded
             string appThemeName = SettingsManager.Current.Appearance_AppTheme;
 
@@ -38,7 +58,11 @@ namespace NETworkManager.Models.Settings
         /// <param name="name">Name of the AppTheme</param>
         public static void ChangeAppTheme(string name)
         {
-            ThemeManager.ChangeAppTheme(Application.Current, name);
+            AppTheme theme = ThemeManager.GetAppTheme(name);
+
+            // If user has renamed / removed a custom theme --> fallback default
+            if (theme != null)
+                ThemeManager.ChangeAppTheme(Application.Current, name);
         }
 
         /// <summary>
@@ -50,7 +74,9 @@ namespace NETworkManager.Models.Settings
             Tuple<AppTheme, Accent> appStyle = ThemeManager.DetectAppStyle(Application.Current);
             Accent accent = ThemeManager.GetAccent(name);
 
-            ThemeManager.ChangeAppStyle(Application.Current, accent, appStyle.Item1);
+            // If user has renamed / removed a custom theme --> fallback default
+            if (accent != null)
+                ThemeManager.ChangeAppStyle(Application.Current, accent, appStyle.Item1);
         }
     }
 }
