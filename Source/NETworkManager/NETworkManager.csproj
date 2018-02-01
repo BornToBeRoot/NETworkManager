@@ -216,6 +216,7 @@
     <Compile Include="Validators\Int32Validator.cs" />
     <Compile Include="Validators\MultipleHostsValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
+    <Compile Include="Validators\SubnetCalculatorSubnetValidator.cs" />
     <Compile Include="ViewModels\Applications\PingHostViewModel.cs" />
     <Compile Include="ViewModels\Applications\SNMPv3ViewModel.cs" />
     <Compile Include="ViewModels\Applications\SNMPv1v2cViewModel.cs" />

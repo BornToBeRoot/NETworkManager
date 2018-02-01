@@ -10,6 +10,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Data;
 using System.ComponentModel;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -17,6 +18,7 @@ namespace NETworkManager.ViewModels.Applications
     {
         #region Variables
         CancellationTokenSource cancellationTokenSource;
+        private IDialogCoordinator dialogCoordinator;
 
         private bool _isLoading = true;
 
@@ -174,13 +176,15 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Constructor, load settings
-        public SubnetCalculatorIPv4SplitterViewModel()
+        public SubnetCalculatorIPv4SplitterViewModel(IDialogCoordinator instance)
         {
-            LoadSettings();
+            dialogCoordinator = instance;
 
             // Result view
             _splitResultsView = CollectionViewSource.GetDefaultView(SplitResult);
             _splitResultsView.SortDescriptions.Add(new SortDescription("NetworkAddressInt32", ListSortDirection.Ascending));
+
+            LoadSettings();
 
             _isLoading = false;
         }
@@ -299,17 +303,33 @@ namespace NETworkManager.ViewModels.Applications
             SplitResult.Clear();
 
             string[] subnetSplit = Subnet.Trim().Split('/');
+            string newSubnetmaskOrCidr = NewSubnetmaskOrCIDR.TrimStart('/');
 
-            string subnetmask = subnetSplit[1];
+            // Validate the user input and display warning
+            double cidr = subnetSplit[1].Length < 3 ? double.Parse(subnetSplit[1]) : SubnetmaskHelper.ConvertSubnetmaskToCidr(subnetSplit[1]);
+            double newCidr = newSubnetmaskOrCidr.Length < 3 ? double.Parse(newSubnetmaskOrCidr) : SubnetmaskHelper.ConvertSubnetmaskToCidr(newSubnetmaskOrCidr);
+
+            if (65535 < (Math.Pow(2, (32 - cidr)) / Math.Pow(2, (32 - newCidr))))
+            {
+                MetroDialogSettings settings = AppearanceManager.MetroDialog;
+
+                settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Continue"] as string;
+                settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
+
+                settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
+
+                if (await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_TheProcessCanTakeUpSomeTimeAndResources"] as string, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+                {
+                    CancelSplit = false;
+                    IsSplitRunning = false;
+
+                    return;
+                }
+            }
 
             // Convert CIDR to subnetmask
-            if (subnetmask.Length < 3)
-                subnetmask = Subnetmask.GetFromCidr(int.Parse(subnetSplit[1])).Subnetmask;
-
-            string newSubnetmask = NewSubnetmaskOrCIDR.TrimStart('/');
-
-            if (newSubnetmask.Length < 3)
-                newSubnetmask = Subnetmask.GetFromCidr(int.Parse(newSubnetmask)).Subnetmask;
+            string subnetmask = Subnetmask.GetFromCidr((int)cidr).Subnetmask;
+            string newSubnetmask = Subnetmask.GetFromCidr((int)newCidr).Subnetmask;
 
             // Add history
             SubnetHistory = new List<string>(HistoryListHelper.Modify(SubnetHistory, Subnet, SettingsManager.Current.General_HistoryListEntries));
