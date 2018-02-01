@@ -32,7 +32,7 @@ namespace NETworkManager.Models.Update
                 GitHubClient client = new GitHubClient(new ProductHeaderValue(Resources.NETworkManager_ProjectName));
 
                 Task<Release> latestRelease = client.Repository.Release.GetLatest(Resources.NETworkManager_GitHub_User, Resources.NETworkManager_GitHub_Repo);
-
+                
                 Version latestVersion = new Version(latestRelease.Result.TagName.TrimStart('v'));
 
                 // Compare versions (tag=v1.4.2.0, version=1.4.2.0)
