@@ -2,9 +2,9 @@
 
 namespace NETworkManager.Views.Applications
 {
-    public partial class LookupView : UserControl
+    public partial class LookupHostView : UserControl
     {
-        public LookupView()
+        public LookupHostView()
         {
             InitializeComponent();
         }

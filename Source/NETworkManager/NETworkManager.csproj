@@ -284,8 +284,8 @@
     <Compile Include="Views\Applications\SubnetCalculatorIPv4SplitterView.xaml.cs">
       <DependentUpon>SubnetCalculatorIPv4SplitterView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\SubnetCalculatorView.xaml.cs">
-      <DependentUpon>SubnetCalculatorView.xaml</DependentUpon>
+    <Compile Include="Views\Applications\SubnetCalculatorHostView.xaml.cs">
+      <DependentUpon>SubnetCalculatorHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Applications\LookupOUILookupView.xaml.cs">
       <DependentUpon>LookupOUILookupView.xaml</DependentUpon>
@@ -473,7 +473,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\SubnetCalculatorView.xaml">
+    <Page Include="Views\Applications\SubnetCalculatorHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -489,7 +489,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\LookupView.xaml">
+    <Page Include="Views\Applications\LookupHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -709,8 +709,8 @@
     <Compile Include="ViewModels\Settings\SettingsApplicationPingViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsGeneralGeneralViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationTracerouteViewModel.cs" />
-    <Compile Include="Views\Applications\LookupView.xaml.cs">
-      <DependentUpon>LookupView.xaml</DependentUpon>
+    <Compile Include="Views\Applications\LookupHostView.xaml.cs">
+      <DependentUpon>LookupHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ApplicationViewManager.cs" />
     <Compile Include="Views\ApplicationViewInfo.cs" />

@@ -410,10 +410,10 @@ namespace NETworkManager
         RemoteDesktopView remoteDesktopView;
         SNMPView snmpView;
         WakeOnLANView wakeOnLANView;
-        SubnetCalculatorView subnetCalculatorView;
+        SubnetCalculatorHostView subnetCalculatorHostView;
         HTTPHeadersView httpHeadersView;
         ARPTableView arpTableView;
-        LookupView lookupView;
+        LookupHostView lookupHostView;
 
         private ApplicationViewManager.Name? currentApplicationViewName = null;
 
@@ -479,10 +479,10 @@ namespace NETworkManager
                     contentControlApplication.Content = wakeOnLANView;
                     break;
                 case ApplicationViewManager.Name.SubnetCalculator:
-                    if (subnetCalculatorView == null)
-                        subnetCalculatorView = new SubnetCalculatorView();
+                    if (subnetCalculatorHostView == null)
+                        subnetCalculatorHostView = new SubnetCalculatorHostView();
 
-                    contentControlApplication.Content = subnetCalculatorView;
+                    contentControlApplication.Content = subnetCalculatorHostView;
                     break;
                 case ApplicationViewManager.Name.HTTPHeaders:
                     if (httpHeadersView == null)
@@ -497,10 +497,10 @@ namespace NETworkManager
                     contentControlApplication.Content = arpTableView;
                     break;
                 case ApplicationViewManager.Name.Lookup:
-                    if (lookupView == null)
-                        lookupView = new LookupView();
+                    if (lookupHostView == null)
+                        lookupHostView = new LookupHostView();
 
-                    contentControlApplication.Content = lookupView;
+                    contentControlApplication.Content = lookupHostView;
                     break;
             }
 
