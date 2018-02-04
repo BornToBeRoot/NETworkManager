@@ -7,56 +7,44 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows;
 using NETworkManager.Models.Lookup;
+using System.Linq;
 
 namespace NETworkManager.ViewModels.Applications
 {
     public class LookupPortLookupViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
-
-        private string _portsOrService;
-        public string PortsOrService
+        private string _portOrService;
+        public string PortOrService
         {
-            get { return _portsOrService; }
+            get { return _portOrService; }
             set
             {
-                if (value == _portsOrService)
+                if (value == _portOrService)
                     return;
 
-                _portsOrService = value;
+                _portOrService = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _portsOrServiceHasError;
-        public bool PortsOrServiceHasError
+        private bool _portOrServiceHasError;
+        public bool PortOrServiceHasError
         {
-            get { return _portsOrServiceHasError; }
+            get { return _portOrServiceHasError; }
             set
             {
-                if (value == _portsOrServiceHasError)
+                if (value == _portOrServiceHasError)
                     return;
-                _portsOrServiceHasError = value;
+                _portOrServiceHasError = value;
                 OnPropertyChanged();
             }
         }
 
-        private List<string> _portsHistory = new List<string>();
-        public List<string> PortsHistory
+        private ICollectionView _portsOrServicesHistoryView;
+        public ICollectionView PortsOrServicesHistoryView
         {
-            get { return _portsHistory; }
-            set
-            {
-                if (value == _portsHistory)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Lookup_Port_PortsHistory = value;
-
-                _portsHistory = value;
-                OnPropertyChanged();
-            }
+            get { return _portsOrServicesHistoryView; }
         }
 
         private bool _isLookupRunning;
@@ -124,17 +112,8 @@ namespace NETworkManager.ViewModels.Applications
         #region Constructor, Load settings
         public LookupPortLookupViewModel()
         {
+            _portsOrServicesHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_Port_PortsHistory);
             _portLookupResultView = CollectionViewSource.GetDefaultView(PortLookupResult);
-
-            LoadSettings();
-
-            _isLoading = false;
-        }
-
-        private void LoadSettings()
-        {
-            if (SettingsManager.Current.Lookup_Port_PortsHistory != null)
-                PortsHistory = new List<string>(SettingsManager.Current.Lookup_Port_PortsHistory);
         }
         #endregion
 
@@ -146,7 +125,7 @@ namespace NETworkManager.ViewModels.Applications
 
         private bool PortLookup_CanExecute(object parameter)
         {
-            return !PortsOrServiceHasError;
+            return !PortOrServiceHasError;
         }
 
         private async void PortLookupAction()
@@ -157,7 +136,7 @@ namespace NETworkManager.ViewModels.Applications
 
             List<string> portsByService = new List<string>();
 
-            foreach (string portOrService in PortsOrService.Split(';'))
+            foreach (string portOrService in PortOrService.Split(';'))
             {
                 string portOrService1 = portOrService.Trim();
 
@@ -222,7 +201,7 @@ namespace NETworkManager.ViewModels.Applications
             }
             else
             {
-                PortsHistory = new List<string>(HistoryListHelper.Modify(PortsHistory, PortsOrService, SettingsManager.Current.General_HistoryListEntries));
+                AddPortOrServiceToHistory(PortOrService);
                 NoPortsFound = false;
             }
 
@@ -264,9 +243,26 @@ namespace NETworkManager.ViewModels.Applications
             get { return new RelayCommand(p => CopySelectedDescriptionAction()); }
         }
 
+        public string PortOrService1 { get => _portOrService; set => _portOrService = value; }
+
         private void CopySelectedDescriptionAction()
         {
             Clipboard.SetText(SelectedPortLookupResult.Description);
+        }
+        #endregion
+
+        #region  Methods
+        private void AddPortOrServiceToHistory(string portOrService)
+        {
+            // Create the new list
+            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.Lookup_Port_PortsHistory.ToList(), portOrService, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.Lookup_Port_PortsHistory.Clear();
+            OnPropertyChanged(nameof(PortOrService)); // Raise property changed again, after the collection has been cleared
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.Lookup_Port_PortsHistory.Add(x));
         }
         #endregion
     }

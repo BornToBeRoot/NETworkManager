@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Windows.Threading;
 using System.ComponentModel;
 using System.Windows.Data;
+using System.Linq;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -26,35 +27,24 @@ namespace NETworkManager.ViewModels.Applications
 
         private bool _isLoading = true;
 
-        private string _hostname;
-        public string Hostname
+        private string _host;
+        public string Host
         {
-            get { return _hostname; }
+            get { return _host; }
             set
             {
-                if (value == _hostname)
+                if (value == _host)
                     return;
 
-                _hostname = value;
+                _host = value;
                 OnPropertyChanged();
             }
         }
 
-        private List<string> _hostnameHistory = new List<string>();
-        public List<string> HostnameHistory
+        private ICollectionView _hostHistoryView;
+        public ICollectionView HostHistoryView
         {
-            get { return _hostnameHistory; }
-            set
-            {
-                if (value == _hostnameHistory)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Traceroute_HostnameHistory = value;
-
-                _hostnameHistory = value;
-                OnPropertyChanged();
-            }
+            get { return _hostHistoryView; }
         }
 
         private bool _isTraceRunning;
@@ -228,8 +218,12 @@ namespace NETworkManager.ViewModels.Applications
         #region Constructor, load settings
         public TracerouteViewModel()
         {
+            // Set collection view
+            _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Traceroute_HostHistory);
+
+            // Result view
             _traceResultView = CollectionViewSource.GetDefaultView(TraceResult);
-            _traceResultView.SortDescriptions.Add(new SortDescription("Hop", ListSortDirection.Ascending));
+            _traceResultView.SortDescriptions.Add(new SortDescription(nameof(Hops), ListSortDirection.Ascending));
 
             LoadSettings();
 
@@ -240,15 +234,12 @@ namespace NETworkManager.ViewModels.Applications
 
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "Traceroute_ResolveHostname")
-                OnPropertyChanged("ResolveHostname");
+            if (e.PropertyName == nameof(SettingsInfo.Traceroute_ResolveHostname))
+                OnPropertyChanged(nameof(ResolveHostname));
         }
 
         private void LoadSettings()
         {
-            if (SettingsManager.Current.Traceroute_HostnameHistory != null)
-                HostnameHistory = new List<string>(SettingsManager.Current.Traceroute_HostnameHistory);
-
             ExpandStatistics = SettingsManager.Current.Traceroute_ExpandStatistics;
         }
         #endregion
@@ -354,14 +345,14 @@ namespace NETworkManager.ViewModels.Applications
             cancellationTokenSource = new CancellationTokenSource();
             
             // Try to parse the string into an IP-Address
-            IPAddress.TryParse(Hostname, out IPAddress ipAddress);
+            IPAddress.TryParse(Host, out IPAddress ipAddress);
 
             try
             {
                 // Try to resolve the hostname
                 if (ipAddress == null)
                 {
-                    IPHostEntry ipHostEntrys = await Dns.GetHostEntryAsync(Hostname);
+                    IPHostEntry ipHostEntrys = await Dns.GetHostEntryAsync(Host);
 
                     foreach (IPAddress ip in ipHostEntrys.AddressList)
                     {
@@ -406,14 +397,14 @@ namespace NETworkManager.ViewModels.Applications
 
                 traceroute.TraceAsync(ipAddress, tracerouteOptions, cancellationTokenSource.Token);
 
-                // Add the hostname or ip address to the history
-                HostnameHistory = new List<string>(HistoryListHelper.Modify(HostnameHistory, Hostname, SettingsManager.Current.General_HistoryListEntries));
+                // Add the host to history
+                AddHostToHistory(Host);
             }
             catch (SocketException) // This will catch DNS resolve errors
             {
                 TracerouteFinished();
 
-                StatusMessage = string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, Hostname);
+                StatusMessage = string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, Host);
                 DisplayStatusMessage = true;
             }
             catch (Exception ex) // This will catch any exception
@@ -438,6 +429,19 @@ namespace NETworkManager.ViewModels.Applications
 
             CancelTrace = false;
             IsTraceRunning = false;
+        }
+
+        private void AddHostToHistory(string host)
+        {
+            // Create the new list
+            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.Traceroute_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.Traceroute_HostHistory.Clear();
+            OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.Traceroute_HostHistory.Add(x));
         }
 
         public void OnShutdown()

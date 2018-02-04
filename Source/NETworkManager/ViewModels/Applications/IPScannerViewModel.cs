@@ -15,6 +15,7 @@ using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Data;
 using NETworkManager.ViewModels.Dialogs;
 using NETworkManager.Views.Dialogs;
+using System.Linq;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -43,21 +44,10 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private List<string> _ipRangeHistory = new List<string>();
-        public List<string> IPRangeHistory
+        private ICollectionView _ipRangeHistoryView;
+        public ICollectionView IPRangeHistoryView
         {
-            get { return _ipRangeHistory; }
-            set
-            {
-                if (value == _ipRangeHistory)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.IPScanner_IPRangeHistory = value;
-
-                _ipRangeHistory = value;
-                OnPropertyChanged();
-            }
+            get { return _ipRangeHistoryView; }
         }
 
         private bool _isScanRunning;
@@ -339,18 +329,21 @@ namespace NETworkManager.ViewModels.Applications
         {
             dialogCoordinator = instance;
 
+            // Set collection view
+            _ipRangeHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_IPRangeHistory);
+
             // Result view
             _ipScanResultView = CollectionViewSource.GetDefaultView(IPScanResult);
-            _ipScanResultView.SortDescriptions.Add(new SortDescription("PingInfo.IPAddressInt32", ListSortDirection.Ascending));
+            _ipScanResultView.SortDescriptions.Add(new SortDescription(nameof(PingInfo.IPAddressInt32), ListSortDirection.Ascending));
 
             // Load profiles
             if (IPScannerProfileManager.Profiles == null)
                 IPScannerProfileManager.Load();
 
             _ipScannerProfiles = CollectionViewSource.GetDefaultView(IPScannerProfileManager.Profiles);
-            _ipScannerProfiles.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
-            _ipScannerProfiles.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
-            _ipScannerProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            _ipScannerProfiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(IPScannerProfileInfo.Group)));
+            _ipScannerProfiles.SortDescriptions.Add(new SortDescription(nameof(IPScannerProfileInfo.Group), ListSortDirection.Ascending));
+            _ipScannerProfiles.SortDescriptions.Add(new SortDescription(nameof(IPScannerProfileInfo.Name), ListSortDirection.Ascending));
             _ipScannerProfiles.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
@@ -374,9 +367,6 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LoadSettings()
         {
-            if (SettingsManager.Current.IPScanner_IPRangeHistory != null)
-                IPRangeHistory = new List<string>(SettingsManager.Current.IPScanner_IPRangeHistory);
-
             ExpandStatistics = SettingsManager.Current.IPScanner_ExpandStatistics;
             ExpandProfileView = SettingsManager.Current.IPScanner_ExpandProfileView;
         }
@@ -390,11 +380,11 @@ namespace NETworkManager.ViewModels.Applications
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "IPScanner_ResolveHostname")
-                OnPropertyChanged("ResolveHostname");
+            if (e.PropertyName == nameof(SettingsInfo.IPScanner_ResolveMACAddress))
+                OnPropertyChanged(nameof(ResolveMACAddress));
 
-            if (e.PropertyName == "IPScanner_ResolveMACAddress")
-                OnPropertyChanged("ResolveMACAddress");
+            if (e.PropertyName == nameof(SettingsInfo.IPScanner_ResolveHostname))
+                OnPropertyChanged(nameof(ResolveHostname));
         }
         #endregion
 
@@ -688,7 +678,7 @@ namespace NETworkManager.ViewModels.Applications
             PreparingScan = false;
 
             // Add the range to the history
-            IPRangeHistory = new List<string>(HistoryListHelper.Modify(IPRangeHistory, IPRange, SettingsManager.Current.General_HistoryListEntries));
+            AddIPRangeToHistory(IPRange);
 
             IPScannerOptions ipScannerOptions = new IPScannerOptions
             {
@@ -729,6 +719,19 @@ namespace NETworkManager.ViewModels.Applications
 
             CancelScan = false;
             IsScanRunning = false;
+        }
+
+        private void AddIPRangeToHistory(string ipRange)
+        {
+            // Create the new list
+            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.IPScanner_IPRangeHistory.ToList(), ipRange, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.IPScanner_IPRangeHistory.Clear();
+            OnPropertyChanged(nameof(IPRange)); // Raise property changed again, after the collection has been cleared
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.IPScanner_IPRangeHistory.Add(x));
         }
         #endregion
 

@@ -2,6 +2,7 @@
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Views;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
@@ -333,8 +334,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private List<string> _ipScanner_IPRangeHistory = new List<string>();
-        public List<string> IPScanner_IPRangeHistory
+        private ObservableCollection<string> _ipScanner_IPRangeHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> IPScanner_IPRangeHistory
         {
             get { return _ipScanner_IPRangeHistory; }
             set
@@ -497,8 +498,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private List<string> _ping_HostHistory = new List<string>();
-        public List<string> Ping_HostHistory
+        private ObservableCollection<string> _ping_HostHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> Ping_HostHistory
         {
             get { return _ping_HostHistory; }
             set
@@ -597,16 +598,16 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region Traceroute
-        private List<string> _traceroute_HostnameHistory = new List<string>();
-        public List<string> Traceroute_HostnameHistory
+        private ObservableCollection<string> _traceroute_HostHistory;
+        public ObservableCollection<string> Traceroute_HostHistory
         {
-            get { return _traceroute_HostnameHistory; }
+            get { return _traceroute_HostHistory; }
             set
             {
-                if (value == _traceroute_HostnameHistory)
+                if (value == _traceroute_HostHistory)
                     return;
 
-                _traceroute_HostnameHistory = value;
+                _traceroute_HostHistory = value;
                 SettingsChanged = true;
             }
         }
@@ -700,8 +701,8 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region Lookup
-        private List<string> _lookup_OUI_MACAddressOrVendorHistory = new List<string>();
-        public List<string> Lookup_OUI_MACAddressOrVendorHistory
+        private ObservableCollection<string> _lookup_OUI_MACAddressOrVendorHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> Lookup_OUI_MACAddressOrVendorHistory
         {
             get { return _lookup_OUI_MACAddressOrVendorHistory; }
             set
@@ -714,8 +715,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private List<string> _lookup_Port_PortsHistory = new List<string>();
-        public List<string> Lookup_Port_PortsHistory
+        private ObservableCollection<string> _lookup_Port_PortsHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> Lookup_Port_PortsHistory
         {
             get { return _lookup_Port_PortsHistory; }
             set
@@ -730,30 +731,30 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region PortScanner
-        private List<string> _portScanner_HostnameHistory = new List<string>();
-        public List<string> PortScanner_HostnameHistory
+        private ObservableCollection<string> _portScanner_HostHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PortScanner_HostHistory
         {
-            get { return _portScanner_HostnameHistory; }
+            get { return _portScanner_HostHistory; }
             set
             {
-                if (value == _portScanner_HostnameHistory)
+                if (value == _portScanner_HostHistory)
                     return;
 
-                _portScanner_HostnameHistory = value;
+                _portScanner_HostHistory = value;
                 SettingsChanged = true;
             }
         }
 
-        private List<string> _portScanner_PortsHistory = new List<string>();
-        public List<string> PortScanner_PortsHistory
+        private ObservableCollection<string> _portScanner_PortHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PortScanner_PortHistory
         {
-            get { return _portScanner_PortsHistory; }
+            get { return _portScanner_PortHistory; }
             set
             {
-                if (value == _portScanner_PortsHistory)
+                if (value == _portScanner_PortHistory)
                     return;
 
-                _portScanner_PortsHistory = value;
+                _portScanner_PortHistory = value;
                 SettingsChanged = true;
             }
         }
@@ -874,8 +875,8 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region DNS Lookup
-        private List<string> _dnsLookup_HostHistory = new List<string>();
-        public List<string> DNSLookup_HostHistory
+        private ObservableCollection<string> _dnsLookup_HostHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> DNSLookup_HostHistory
         {
             get { return _dnsLookup_HostHistory; }
             set
@@ -1087,8 +1088,8 @@ namespace NETworkManager.Models.Settings
 
         #region Subnet Calculator
         #region IPv4 Calculator
-        private List<string> _subnetCalculator_IPv4Calculator_SubnetHistory = new List<string>();
-        public List<string> SubnetCalculator_IPv4Calculator_SubnetHistory
+        private ObservableCollection<string> _subnetCalculator_IPv4Calculator_SubnetHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> SubnetCalculator_IPv4Calculator_SubnetHistory
         {
             get { return _subnetCalculator_IPv4Calculator_SubnetHistory; }
             set
@@ -1388,8 +1389,8 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region HTTP Headers
-        private List<string> _httpHeaders_WebsiteUriHistory = new List<string>();
-        public List<string> HTTPHeaders_WebsiteUriHistory
+        private ObservableCollection<string> _httpHeaders_WebsiteUriHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> HTTPHeaders_WebsiteUriHistory
         {
             get { return _httpHeaders_WebsiteUriHistory; }
             set
@@ -1489,22 +1490,22 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private List<string> _snmp_v1v2c_HostnameHistory = new List<string>();
-        public List<string> SNMP_v1v2c_HostnameHistory
+        private ObservableCollection<string> _snmp_v1v2c_HostHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> SNMP_v1v2c_HostHistory
         {
-            get { return _snmp_v1v2c_HostnameHistory; }
+            get { return _snmp_v1v2c_HostHistory; }
             set
             {
-                if (value == _snmp_v1v2c_HostnameHistory)
+                if (value == _snmp_v1v2c_HostHistory)
                     return;
 
-                _snmp_v1v2c_HostnameHistory = value;
+                _snmp_v1v2c_HostHistory = value;
                 SettingsChanged = true;
             }
         }
 
-        private List<string> _snmp_v1v2c_OIDHistory = new List<string>();
-        public List<string> SNMP_v1v2c_OIDHistory
+        private ObservableCollection<string> _snmp_v1v2c_OIDHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> SNMP_v1v2c_OIDHistory
         {
             get { return _snmp_v1v2c_OIDHistory; }
             set
@@ -1559,22 +1560,22 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private List<string> _snmp_v3_HostnameHistory = new List<string>();
-        public List<string> SNMP_v3_HostnameHistory
+        private ObservableCollection<string> _snmp_v3_HostHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> SNMP_v3_HostHistory
         {
-            get { return _snmp_v3_HostnameHistory; }
+            get { return _snmp_v3_HostHistory; }
             set
             {
-                if (value == _snmp_v3_HostnameHistory)
+                if (value == _snmp_v3_HostHistory)
                     return;
 
-                _snmp_v3_HostnameHistory = value;
+                _snmp_v3_HostHistory = value;
                 SettingsChanged = true;
             }
         }
 
-        private List<string> _snmp_v3_OIDHistory = new List<string>();
-        public List<string> SNMP_v3_OIDHistory
+        private ObservableCollection<string> _snmp_v3_OIDHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> SNMP_v3_OIDHistory
         {
             get { return _snmp_v3_OIDHistory; }
             set

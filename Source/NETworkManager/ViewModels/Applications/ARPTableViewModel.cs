@@ -117,7 +117,7 @@ namespace NETworkManager.ViewModels.Applications
             dialogCoordinator = instance;
 
             _arpTableView = CollectionViewSource.GetDefaultView(ARPTable);
-            _arpTableView.SortDescriptions.Add(new SortDescription("IPAddressInt32", ListSortDirection.Ascending));
+            _arpTableView.SortDescriptions.Add(new SortDescription(nameof(ARPTableInfo.IPAddressInt32), ListSortDirection.Ascending));
             _arpTableView.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))

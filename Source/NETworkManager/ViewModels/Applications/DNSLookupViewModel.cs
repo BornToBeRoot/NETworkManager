@@ -38,21 +38,10 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private List<string> _hostHistory = new List<string>();
-        public List<string> HostHistory
+        private ICollectionView _hostHistoryView;
+        public ICollectionView HostHistoryView
         {
-            get { return _hostHistory; }
-            set
-            {
-                if (value == _hostHistory)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_HostHistory = value;
-
-                _hostHistory = value;
-                OnPropertyChanged();
-            }
+            get { return _hostHistoryView; }
         }
 
         public List<QType> Types { get; set; }
@@ -115,7 +104,7 @@ namespace NETworkManager.ViewModels.Applications
             {
                 if (value == _selectedLookupResult)
                     return;
-                
+
                 _selectedLookupResult = value;
                 OnPropertyChanged();
             }
@@ -296,6 +285,7 @@ namespace NETworkManager.ViewModels.Applications
         #region Contructor, load settings
         public DNSLookupViewModel()
         {
+            _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_HostHistory);
             _lookupResultView = CollectionViewSource.GetDefaultView(LookupResult);
 
             LoadSettings();
@@ -305,9 +295,6 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LoadSettings()
         {
-            if (SettingsManager.Current.DNSLookup_HostHistory != null)
-                HostHistory = new List<string>(SettingsManager.Current.DNSLookup_HostHistory);
-
             Types = Enum.GetValues(typeof(QType)).Cast<QType>().OrderBy(x => x.ToString()).ToList();
             Type = Types.First(x => x == SettingsManager.Current.DNSLookup_Type);
 
@@ -403,7 +390,7 @@ namespace NETworkManager.ViewModels.Applications
             // Reset the latest results
             LookupResult.Clear();
 
-            HostHistory = new List<string>(HistoryListHelper.Modify(HostHistory, Host, SettingsManager.Current.General_HistoryListEntries));
+            AddHostToHistory(Host);
 
             DNSLookupOptions DNSLookupOptions = new DNSLookupOptions();
 
@@ -470,6 +457,20 @@ namespace NETworkManager.ViewModels.Applications
             stopwatch.Reset();
 
             IsLookupRunning = false;
+        }
+
+        // Modify history list
+        private void AddHostToHistory(string host)
+        {
+            // Create the new list
+            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.DNSLookup_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.DNSLookup_HostHistory.Clear();
+            OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.DNSLookup_HostHistory.Add(x));
         }
         #endregion
 

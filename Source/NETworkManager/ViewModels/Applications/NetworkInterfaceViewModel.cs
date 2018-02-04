@@ -653,9 +653,9 @@ namespace NETworkManager.ViewModels.Applications
                 NetworkInterfaceProfileManager.Load();
 
             _networkInterfaceProfiles = CollectionViewSource.GetDefaultView(NetworkInterfaceProfileManager.Profiles);
-            _networkInterfaceProfiles.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
-            _networkInterfaceProfiles.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
-            _networkInterfaceProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            _networkInterfaceProfiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(NetworkInterfaceProfileInfo.Group)));
+            _networkInterfaceProfiles.SortDescriptions.Add(new SortDescription(nameof(NetworkInterfaceProfileInfo.Group), ListSortDirection.Ascending));
+            _networkInterfaceProfiles.SortDescriptions.Add(new SortDescription(nameof(NetworkInterfaceProfileInfo.Name), ListSortDirection.Ascending));
             _networkInterfaceProfiles.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))

@@ -38,7 +38,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{DynamicResource String_MACAddressOrVendor}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="txtMACAddressOrVendor" ItemsSource="{Binding MACAddressOrVendorHistory}" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressOrVendorHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddressesOrVendor}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" x:Name="txtMACAddressOrVendor" ItemsSource="{Binding MACAddressOrVendorHistoryView}" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressOrVendorHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddressesOrVendor}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.InputBindings>
                         <KeyBinding Command="{Binding OUILookupCommand}" Key="Return" />
                     </ComboBox.InputBindings>

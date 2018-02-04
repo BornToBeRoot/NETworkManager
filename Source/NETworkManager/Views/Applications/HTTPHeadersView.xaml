@@ -39,7 +39,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="{DynamicResource String_URL}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                    <ComboBox Grid.Column="2" x:Name="cbWebsiteUri" ItemsSource="{Binding WebsiteUriHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleWebsiteUri}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsCheckRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                    <ComboBox Grid.Column="2" x:Name="cbWebsiteUri" ItemsSource="{Binding WebsiteUriHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleWebsiteUri}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsCheckRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                         <ComboBox.Text>
                             <Binding Path="WebsiteUri" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>

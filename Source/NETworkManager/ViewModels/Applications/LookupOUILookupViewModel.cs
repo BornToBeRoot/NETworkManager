@@ -1,23 +1,20 @@
 ﻿using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
 using System.Collections.ObjectModel;
 using NETworkManager.Models.Settings;
 using System.Collections.Generic;
-using NETworkManager.Models.Network;
 using NETworkManager.Helpers;
 using System.Text.RegularExpressions;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows;
 using NETworkManager.Models.Lookup;
+using System.Linq;
 
 namespace NETworkManager.ViewModels.Applications
 {
     public class LookupOUILookupViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
-
         private string _macOrVendorAddress;
         public string MACAddressOrVendor
         {
@@ -46,21 +43,10 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private List<string> _macAddressOrVendorHistory = new List<string>();
-        public List<string> MACAddressOrVendorHistory
+        private ICollectionView _macAddressOrVendorHistoryView;
+        public ICollectionView MACAddressOrVendorHistoryView
         {
-            get { return _macAddressOrVendorHistory; }
-            set
-            {
-                if (value == _macAddressOrVendorHistory)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory = value;
-
-                _macAddressOrVendorHistory = value;
-                OnPropertyChanged();
-            }
+            get { return _macAddressOrVendorHistoryView; }
         }
 
         private bool _isLookupRunning;
@@ -106,7 +92,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 _selectedOUILookup = value;
-                OnPropertyChanged();                    
+                OnPropertyChanged();
             }
         }
 
@@ -128,17 +114,9 @@ namespace NETworkManager.ViewModels.Applications
         #region Constructor, Load settings
         public LookupOUILookupViewModel()
         {
+            // Set collection view
+            _macAddressOrVendorHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory);
             _ouiLookupResultView = CollectionViewSource.GetDefaultView(OUILookupResult);
-
-            LoadSettings();
-
-            _isLoading = false;
-        }
-
-        private void LoadSettings()
-        {
-            if (SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory != null)
-                MACAddressOrVendorHistory = new List<string>(SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory);
         }
         #endregion
 
@@ -189,7 +167,7 @@ namespace NETworkManager.ViewModels.Applications
             }
             else
             {
-                MACAddressOrVendorHistory = new List<string>(HistoryListHelper.Modify(MACAddressOrVendorHistory, MACAddressOrVendor, SettingsManager.Current.General_HistoryListEntries));
+                AddMACAddressOrVendorToHistory(MACAddressOrVendor);
                 NoVendorFound = false;
             }
 
@@ -214,6 +192,21 @@ namespace NETworkManager.ViewModels.Applications
         private void CopySelectedVendorAction()
         {
             Clipboard.SetText(SelectedOUILookup.Vendor);
+        }
+        #endregion
+
+        #region Methods
+        private void AddMACAddressOrVendorToHistory(string macAddressOrVendor)
+        {
+            // Create the new list
+            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory.ToList(), macAddressOrVendor, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory.Clear();
+            OnPropertyChanged(nameof(MACAddressOrVendor)); // Raise property changed again, after the collection has been cleared
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory.Add(x));
         }
         #endregion
     }

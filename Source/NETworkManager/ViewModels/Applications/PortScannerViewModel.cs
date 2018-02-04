@@ -16,6 +16,7 @@ using System.Windows.Data;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels.Dialogs;
 using NETworkManager.Views.Dialogs;
+using System.Linq;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -30,66 +31,44 @@ namespace NETworkManager.ViewModels.Applications
 
         private bool _isLoading = true;
 
-        private string _hostname;
-        public string Hostname
+        private string _host;
+        public string Host
         {
-            get { return _hostname; }
+            get { return _host; }
             set
             {
-                if (value == _hostname)
+                if (value == _host)
                     return;
 
-                _hostname = value;
+                _host = value;
                 OnPropertyChanged();
             }
         }
 
-        private List<string> _hostnameHistory = new List<string>();
-        public List<string> HostnameHistory
+        private ICollectionView _hostHistoryView;
+        public ICollectionView HostHistoryView
         {
-            get { return _hostnameHistory; }
+            get { return _hostHistoryView; }
+        }
+
+        private string _port;
+        public string Port
+        {
+            get { return _port; }
             set
             {
-                if (value == _hostnameHistory)
+                if (value == _port)
                     return;
 
-                if (!_isLoading)
-                    SettingsManager.Current.PortScanner_HostnameHistory = value;
-
-                _hostnameHistory = value;
+                _port = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _ports;
-        public string Ports
+        private ICollectionView _portHistoryView;
+        public ICollectionView PortHistoryView
         {
-            get { return _ports; }
-            set
-            {
-                if (value == _ports)
-                    return;
-
-                _ports = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private List<string> _portsHistory = new List<string>();
-        public List<string> PortsHistory
-        {
-            get { return _portsHistory; }
-            set
-            {
-                if (value == _portsHistory)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.PortScanner_PortsHistory = value;
-
-                _portsHistory = value;
-                OnPropertyChanged();
-            }
+            get { return _portHistoryView; }
         }
 
         private bool _isScanRunning;
@@ -319,8 +298,8 @@ namespace NETworkManager.ViewModels.Applications
 
                 if (value != null)
                 {
-                    Hostname = value.Hostname;
-                    Ports = value.Ports;
+                    Host = value.Hostname;
+                    Port = value.Ports;
 
                     CheckCanScanProfile();
                 }
@@ -384,6 +363,10 @@ namespace NETworkManager.ViewModels.Applications
         {
             dialogCoordinator = instance;
 
+            // Set collection view
+            _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_HostHistory);
+            _portHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortHistory);
+
             // Result view
             _portScanResultView = CollectionViewSource.GetDefaultView(PortScanResult);
 
@@ -392,9 +375,9 @@ namespace NETworkManager.ViewModels.Applications
                 PortScannerProfileManager.Load();
 
             _portScannerProfiles = CollectionViewSource.GetDefaultView(PortScannerProfileManager.Profiles);
-            _portScannerProfiles.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
-            _portScannerProfiles.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
-            _portScannerProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            _portScannerProfiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortScannerProfileInfo.Group)));
+            _portScannerProfiles.SortDescriptions.Add(new SortDescription(nameof(PortScannerProfileInfo.Group), ListSortDirection.Ascending));
+            _portScannerProfiles.SortDescriptions.Add(new SortDescription(nameof(PortScannerProfileInfo.Name), ListSortDirection.Ascending));
             _portScannerProfiles.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
@@ -415,12 +398,6 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LoadSettings()
         {
-            if (SettingsManager.Current.PortScanner_HostnameHistory != null)
-                HostnameHistory = new List<string>(SettingsManager.Current.PortScanner_HostnameHistory);
-
-            if (SettingsManager.Current.PortScanner_PortsHistory != null)
-                PortsHistory = new List<string>(SettingsManager.Current.PortScanner_PortsHistory);
-
             ExpandStatistics = SettingsManager.Current.PortScanner_ExpandStatistics;
             ExpandProfileView = SettingsManager.Current.PortScanner_ExpandProfileView;
         }
@@ -454,8 +431,8 @@ namespace NETworkManager.ViewModels.Applications
 
         private void ScanProfileAction()
         {
-            Hostname = SelectedProfile.Hostname;
-            Ports = SelectedProfile.Ports;
+            Host = SelectedProfile.Hostname;
+            Port = SelectedProfile.Ports;
 
             StartScan();
         }
@@ -558,7 +535,7 @@ namespace NETworkManager.ViewModels.Applications
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, PortScannerProfileManager.GetProfileGroups(), new PortScannerProfileInfo() { Hostname = Hostname, Ports = Ports });
+            }, PortScannerProfileManager.GetProfileGroups(), new PortScannerProfileInfo() { Hostname = Host, Ports = Port });
 
             customDialog.Content = new PortScannerProfileDialog
             {
@@ -699,7 +676,7 @@ namespace NETworkManager.ViewModels.Applications
 
             cancellationTokenSource = new CancellationTokenSource();
 
-            string[] hosts = Hostname.Split(';');
+            string[] hosts = Host.Split(';');
 
             List<Tuple<IPAddress, string>> hostData = new List<Tuple<IPAddress, string>>();
 
@@ -778,7 +755,7 @@ namespace NETworkManager.ViewModels.Applications
                 return;
             }
 
-            int[] ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Ports);
+            int[] ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Port);
 
             try
             {
@@ -787,8 +764,8 @@ namespace NETworkManager.ViewModels.Applications
 
                 PreparingScan = false;
 
-                HostnameHistory = new List<string>(HistoryListHelper.Modify(HostnameHistory, Hostname, SettingsManager.Current.General_HistoryListEntries));
-                PortsHistory = new List<string>(HistoryListHelper.Modify(PortsHistory, Ports, SettingsManager.Current.General_HistoryListEntries));
+                AddHostToHistory(Host);
+                AddPortToHistory(Port);
 
                 PortScannerOptions portScannerOptions = new PortScannerOptions
                 {
@@ -839,6 +816,32 @@ namespace NETworkManager.ViewModels.Applications
         private void CheckCanScanProfile()
         {
             CanScanProfile = !IsScanRunning && !string.IsNullOrEmpty(SelectedProfile.Hostname) && !string.IsNullOrEmpty(SelectedProfile.Ports);
+        }
+
+        private void AddHostToHistory(string host)
+        {
+            // Create the new list
+            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.PortScanner_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.PortScanner_HostHistory.Clear();
+            OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.PortScanner_HostHistory.Add(x));
+        }
+
+        private void AddPortToHistory(string port)
+        {
+            // Create the new list
+            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.PortScanner_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.PortScanner_PortHistory.Clear();
+            OnPropertyChanged(nameof(Port)); // Raise property changed again, after the collection has been cleared
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.PortScanner_PortHistory.Add(x));
         }
         #endregion
 

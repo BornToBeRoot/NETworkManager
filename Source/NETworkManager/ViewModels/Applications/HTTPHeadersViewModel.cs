@@ -7,6 +7,9 @@ using NETworkManager.Models.Settings;
 using System.Net;
 using System.Windows.Threading;
 using System.Diagnostics;
+using System.ComponentModel;
+using System.Windows.Data;
+using System.Linq;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -32,21 +35,10 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private List<string> _websiteUriHistory = new List<string>();
-        public List<string> WebsiteUriHistory
+        private ICollectionView _websiteUriHistoryView;
+        public ICollectionView WebsiteUriHistoryView
         {
-            get { return _websiteUriHistory; }
-            set
-            {
-                if (value == _websiteUriHistory)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.HTTPHeaders_WebsiteUriHistory = value;
-
-                _websiteUriHistory = value;
-                OnPropertyChanged();
-            }
+            get { return _websiteUriHistoryView; }
         }
 
         private bool _isCheckRunning;
@@ -182,7 +174,10 @@ namespace NETworkManager.ViewModels.Applications
 
         #region Contructor, load settings
         public HTTPHeadersViewModel()
-        {            
+        {
+            // Set collection view
+            _websiteUriHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.HTTPHeaders_WebsiteUriHistory);
+
             LoadSettings();
 
             _isLoading = false;
@@ -190,9 +185,6 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LoadSettings()
         {
-            if (SettingsManager.Current.HTTPHeaders_WebsiteUriHistory != null)
-                WebsiteUriHistory = new List<string>(SettingsManager.Current.HTTPHeaders_WebsiteUriHistory);
-
             ExpandStatistics = SettingsManager.Current.HTTPHeaders_ExpandStatistics;
         }
         #endregion
@@ -244,7 +236,7 @@ namespace NETworkManager.ViewModels.Applications
                 DisplayStatusMessage = true;
             }
 
-            WebsiteUriHistory = new List<string>(HistoryListHelper.Modify(WebsiteUriHistory, WebsiteUri, SettingsManager.Current.General_HistoryListEntries));
+            AddWebsiteUriToHistory(WebsiteUri);
 
             // Stop timer and stopwatch
             stopwatch.Stop();
@@ -256,6 +248,19 @@ namespace NETworkManager.ViewModels.Applications
             stopwatch.Reset();
 
             IsCheckRunning = false;
+        }
+
+        private void AddWebsiteUriToHistory(string websiteUri)
+        {
+            // Create the new list
+            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.HTTPHeaders_WebsiteUriHistory.ToList(), websiteUri, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.HTTPHeaders_WebsiteUriHistory.Clear();
+            OnPropertyChanged(nameof(WebsiteUri)); // Raise property changed again, after the collection has been cleared
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.HTTPHeaders_WebsiteUriHistory.Add(x));
         }
         #endregion
 

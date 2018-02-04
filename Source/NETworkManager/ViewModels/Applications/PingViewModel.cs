@@ -13,6 +13,7 @@ using NETworkManager.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Threading;
+using System.Windows.Data;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -43,21 +44,10 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private List<string> _hostHistory = new List<string>();
-        public List<string> HostHistory
+        private ICollectionView _hostHistoryView;
+        public ICollectionView HostHistoryView
         {
-            get { return _hostHistory; }
-            set
-            {
-                if (value == _hostHistory)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Ping_HostHistory = value;
-
-                _hostHistory = value;
-                OnPropertyChanged();
-            }
+            get { return _hostHistoryView; }
         }
 
         private bool _isPingRunning;
@@ -273,24 +263,21 @@ namespace NETworkManager.ViewModels.Applications
         }
         #endregion
 
-        #region Contructor    
+        #region Contructor, load settings    
         public PingViewModel(int tabId, Action<Tuple<int, string>> changeTabTitle)
         {
             _tabId = tabId;
             ChangeTabTitle = changeTabTitle;
 
+            _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Ping_HostHistory);
+
             LoadSettings();
 
             _isLoading = false;
         }
-        #endregion
 
-        #region Load settings
         private void LoadSettings()
         {
-            if (SettingsManager.Current.Ping_HostHistory != null)
-                HostHistory = new List<string>(SettingsManager.Current.Ping_HostHistory);
-
             ExpandStatistics = SettingsManager.Current.Ping_ExpandStatistics;
         }
         #endregion
@@ -382,7 +369,7 @@ namespace NETworkManager.ViewModels.Applications
             ChangeTabTitle.BeginInvoke(Tuple.Create(_tabId, Host), null, null);
 
             // Add the hostname or ip address to the history
-            HostHistory = new List<string>(HistoryListHelper.Modify(HostHistory, Host, SettingsManager.Current.General_HistoryListEntries));
+            AddHostToHistory(Host);
 
             cancellationTokenSource = new CancellationTokenSource();
 
@@ -425,6 +412,19 @@ namespace NETworkManager.ViewModels.Applications
             EndTime = DateTime.Now;
 
             stopwatch.Reset();
+        }
+
+        private void AddHostToHistory(string host)
+        {
+            // Create the new list
+            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.Ping_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.Ping_HostHistory.Clear();
+            OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.Ping_HostHistory.Add(x));
         }
 
         public void OnShutdown()

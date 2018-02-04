@@ -54,9 +54,9 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Host}" Style="{StaticResource CenterTextBlock}" />
-                        <ComboBox Grid.Column="2" Grid.Row="0" x:Name="cbHostname" Height="{Binding ElementName=cbPorts, Path=ActualHeight}" ItemsSource="{Binding HostnameHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameAndOrIPAddress}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                        <ComboBox Grid.Column="2" Grid.Row="0" x:Name="cbHost" Height="{Binding ElementName=cbPort, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameAndOrIPAddress}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                             <ComboBox.Text>
-                                <Binding Path="Hostname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                                         <Validator:MultipleHostsValidator ValidatesOnTargetUpdated="True" />
@@ -65,9 +65,9 @@
                             </ComboBox.Text>
                         </ComboBox>
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Ports}" Style="{StaticResource CenterTextBlock}" />
-                        <ComboBox Grid.Column="2" Grid.Row="2" x:Name="cbPorts" ItemsSource="{Binding PortsHistory}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePortScanRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                        <ComboBox Grid.Column="2" Grid.Row="2" x:Name="cbPort" ItemsSource="{Binding PortHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePortScanRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                             <ComboBox.Text>
-                                <Binding Path="Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                                         <Validator:PortRangeValidator ValidatesOnTargetUpdated="True" />
@@ -80,10 +80,10 @@
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                                     <Setter Property="IsEnabled" Value="True" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=cbHostname, Path=(Validation.HasError)}" Value="True">
+                                        <DataTrigger Binding="{Binding ElementName=cbHost, Path=(Validation.HasError)}" Value="True">
                                             <Setter Property="IsEnabled" Value="False" />
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding ElementName=cbPorts, Path=(Validation.HasError)}" Value="True" >
+                                        <DataTrigger Binding="{Binding ElementName=cbPort, Path=(Validation.HasError)}" Value="True" >
                                             <Setter Property="IsEnabled" Value="False" />
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding CancelScan}" Value="True">
@@ -445,7 +445,7 @@
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=cbPorts, Path=(Validation.HasError)}" Value="True">
+                                    <DataTrigger Binding="{Binding ElementName=cbPort, Path=(Validation.HasError)}" Value="True">
                                         <Setter Property="IsEnabled" Value="False" />
                                     </DataTrigger>
                                 </Style.Triggers>

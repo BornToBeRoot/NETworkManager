@@ -205,9 +205,9 @@ namespace NETworkManager.ViewModels.Applications
                 WakeOnLANClientManager.Load();
 
             _wakeOnLANClients = CollectionViewSource.GetDefaultView(WakeOnLANClientManager.Clients);
-            _wakeOnLANClients.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
-            _wakeOnLANClients.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
-            _wakeOnLANClients.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            _wakeOnLANClients.GroupDescriptions.Add(new PropertyGroupDescription(nameof(WakeOnLANClientInfo.Group)));
+            _wakeOnLANClients.SortDescriptions.Add(new SortDescription(nameof(WakeOnLANClientInfo.Group), ListSortDirection.Ascending));
+            _wakeOnLANClients.SortDescriptions.Add(new SortDescription(nameof(WakeOnLANClientInfo.Name), ListSortDirection.Ascending));
             _wakeOnLANClients.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
@@ -216,7 +216,7 @@ namespace NETworkManager.ViewModels.Applications
                 WakeOnLANClientInfo info = o as WakeOnLANClientInfo;
 
                 string search = Search.Trim();
-
+                
                 // Search by: Name
                 return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
             };

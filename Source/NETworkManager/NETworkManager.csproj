@@ -272,8 +272,8 @@
     <Compile Include="Views\Applications\SNMPv1v2cView.xaml.cs">
       <DependentUpon>SNMPv1v2cView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\SNMPView.xaml.cs">
-      <DependentUpon>SNMPView.xaml</DependentUpon>
+    <Compile Include="Views\Applications\SNMPHostView.xaml.cs">
+      <DependentUpon>SNMPHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Applications\HTTPHeadersView.xaml.cs">
       <DependentUpon>HTTPHeadersView.xaml</DependentUpon>
@@ -457,7 +457,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\SNMPView.xaml">
+    <Page Include="Views\Applications\SNMPHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -25,35 +25,24 @@ namespace NETworkManager.ViewModels.Applications
 
         private bool _isLoading = true;
 
-        private string _hostname;
-        public string Hostname
+        private string _host;
+        public string Host
         {
-            get { return _hostname; }
+            get { return _host; }
             set
             {
-                if (value == _hostname)
+                if (value == _host)
                     return;
 
-                _hostname = value;
+                _host = value;
                 OnPropertyChanged();
             }
         }
 
-        private List<string> _hostnameHistory = new List<string>();
-        public List<string> HostnameHistory
+        private ICollectionView _hostHistoryView;
+        public ICollectionView HostHistoryView
         {
-            get { return _hostnameHistory; }
-            set
-            {
-                if (value == _hostnameHistory)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.SNMP_v1v2c_HostnameHistory = value;
-
-                _hostnameHistory = value;
-                OnPropertyChanged();
-            }
+            get { return _hostHistoryView; }
         }
 
         public List<SNMPVersion> Versions { get; set; }
@@ -106,21 +95,10 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private List<string> _oidHistory = new List<string>();
-        public List<string> OIDHistory
+        private ICollectionView _oidHistoryView;
+        public ICollectionView OIDHistoryView
         {
-            get { return _oidHistory; }
-            set
-            {
-                if (value == _oidHistory)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.SNMP_v1v2c_OIDHistory = value;
-
-                _oidHistory = value;
-                OnPropertyChanged();
-            }
+            get { return _oidHistoryView; }
         }
 
         private string _community;
@@ -289,9 +267,13 @@ namespace NETworkManager.ViewModels.Applications
         #region Contructor, load settings
         public SNMPv1v2cViewModel()
         {
+            // Set collection view
+            _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_v1v2c_HostHistory);
+            _oidHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_v1v2c_OIDHistory);
+
             // Result view
             _queryResultView = CollectionViewSource.GetDefaultView(QueryResult);
-            _queryResultView.SortDescriptions.Add(new SortDescription("OID", ListSortDirection.Ascending));
+            _queryResultView.SortDescriptions.Add(new SortDescription(nameof(SNMPReceivedInfo.OID), ListSortDirection.Ascending));
 
             // Version v1 and v2c (default v2c)
             Versions = new List<SNMPVersion>() { SNMPVersion.v1, SNMPVersion.v2c };
@@ -303,12 +285,6 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LoadSettings()
         {
-            if (SettingsManager.Current.SNMP_v1v2c_HostnameHistory != null)
-                HostnameHistory = new List<string>(SettingsManager.Current.SNMP_v1v2c_HostnameHistory);
-
-            if (SettingsManager.Current.SNMP_v1v2c_OIDHistory != null)
-                OIDHistory = new List<string>(SettingsManager.Current.SNMP_v1v2c_OIDHistory);
-
             Version = Versions.FirstOrDefault(x => x == SettingsManager.Current.SNMP_v1v2c_Version);
             Walk = SettingsManager.Current.SNMP_v1v2c_Walk;
             ExpandStatistics = SettingsManager.Current.SNMP_v1v2c_ExpandStatistics;
@@ -366,14 +342,14 @@ namespace NETworkManager.ViewModels.Applications
             Responses = 0;
 
             // Try to parse the string into an IP-Address
-            IPAddress.TryParse(Hostname, out IPAddress ipAddress);
+            IPAddress.TryParse(Host, out IPAddress ipAddress);
 
             try
             {
                 // Try to resolve the hostname
                 if (ipAddress == null)
                 {
-                    IPHostEntry ipHostEntrys = await Dns.GetHostEntryAsync(Hostname);
+                    IPHostEntry ipHostEntrys = await Dns.GetHostEntryAsync(Host);
 
                     foreach (IPAddress ipAddr in ipHostEntrys.AddressList)
                     {
@@ -404,7 +380,7 @@ namespace NETworkManager.ViewModels.Applications
             {
                 QueryFinished();
 
-                StatusMessage = string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, Hostname);
+                StatusMessage = string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, Host);
                 DisplayStatusMessage = true;
 
                 return;
@@ -431,8 +407,8 @@ namespace NETworkManager.ViewModels.Applications
                 snmp.Getv1v2cAsync(Version, ipAddress, Community, OID, snmpOptions);
 
             // Add to history...
-            HostnameHistory = new List<string>(HistoryListHelper.Modify(HostnameHistory, Hostname, SettingsManager.Current.General_HistoryListEntries));
-            OIDHistory = new List<string>(HistoryListHelper.Modify(OIDHistory, OID, SettingsManager.Current.General_HistoryListEntries));
+            AddHostToHistory(Host);
+            AddOIDToHistory(OID);
         }
 
         private void QueryFinished()
@@ -448,6 +424,33 @@ namespace NETworkManager.ViewModels.Applications
 
             stopwatch.Reset();
         }
+
+        private void AddHostToHistory(string host)
+        {
+            // Create the new list
+            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.SNMP_v1v2c_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.SNMP_v1v2c_HostHistory.Clear();
+            OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.SNMP_v1v2c_HostHistory.Add(x));
+        }
+        
+        private void AddOIDToHistory(string oid)
+        {
+            // Create the new list
+            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.SNMP_v1v2c_OIDHistory.ToList(), oid, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.SNMP_v1v2c_OIDHistory.Clear();
+            OnPropertyChanged(nameof(OID)); // Raise property changed again, after the collection has been cleared
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.SNMP_v1v2c_OIDHistory.Add(x));
+        }
+
         #endregion
 
         #region Events

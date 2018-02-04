@@ -37,12 +37,12 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{DynamicResource String_PortOrService}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="txtPortsOrService" ItemsSource="{Binding PortsHistory}" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding PortsOrServiceHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePortPortRangeOrService}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" x:Name="txtPortOrService" ItemsSource="{Binding PortsOrServicesHistoryView}" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding PortOrServiceHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePortPortRangeOrService}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.InputBindings>
                         <KeyBinding Command="{Binding PortLookupCommand}" Key="Return" />
                     </ComboBox.InputBindings>
                     <ComboBox.Text>
-                        <Binding Path="PortsOrService" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="PortOrService" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
@@ -54,7 +54,7 @@
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=txtPortsOrService}" Value="True" >
+                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=txtPortOrService}" Value="True" >
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding IsLookupRunning}" Value="True">

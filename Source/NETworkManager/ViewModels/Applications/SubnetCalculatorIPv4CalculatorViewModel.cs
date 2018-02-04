@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Net;
 using System.Windows.Input;
 using NETworkManager.Helpers;
+using System.ComponentModel;
+using System.Windows.Data;
+using System.Linq;
 
 namespace NETworkManager.ViewModels.Applications
 {
     public class SubnetCalculatorIPv4CalculatorViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
-
         private string _subnet;
         public string Subnet
         {
@@ -26,21 +27,10 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private List<string> _subnetHistory = new List<string>();
-        public List<string> SubnetHistory
+        private ICollectionView _subnetHistoryView;
+        public ICollectionView SubnetHistoryView
         {
-            get { return _subnetHistory; }
-            set
-            {
-                if (value == _subnetHistory)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.SubnetCalculator_IPv4Calculator_SubnetHistory = value;
-
-                _subnetHistory = value;
-                OnPropertyChanged();
-            }
+            get { return _subnetHistoryView; }
         }
 
         private bool _isDetailsVisible;
@@ -174,15 +164,8 @@ namespace NETworkManager.ViewModels.Applications
         #region Constructor, load settings
         public SubnetCalculatorIPv4CalculatorViewModel()
         {
-            LoadSettings();
-
-            _isLoading = false;
-        }
-
-        private void LoadSettings()
-        {
-            if (SettingsManager.Current.SubnetCalculator_IPv4Calculator_SubnetHistory != null)
-                SubnetHistory = new List<string>(SettingsManager.Current.SubnetCalculator_IPv4Calculator_SubnetHistory);
+            // Set collection view
+            _subnetHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_IPv4Calculator_SubnetHistory);
         }
         #endregion
 
@@ -219,7 +202,20 @@ namespace NETworkManager.ViewModels.Applications
 
             IsDetailsVisible = true;
 
-            SubnetHistory = new List<string>(HistoryListHelper.Modify(SubnetHistory, Subnet, SettingsManager.Current.General_HistoryListEntries));
+            AddSubnetToHistory(Subnet);
+        }
+
+        private void AddSubnetToHistory(string subnet)
+        {
+            // Create the new list
+            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.SubnetCalculator_IPv4Calculator_SubnetHistory.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.SubnetCalculator_IPv4Calculator_SubnetHistory.Clear();
+            OnPropertyChanged(nameof(Subnet)); // Raise property changed again, after the collection has been cleared
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.SubnetCalculator_IPv4Calculator_SubnetHistory.Add(x));
         }
         #endregion
     }
