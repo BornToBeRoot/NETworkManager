@@ -30,6 +30,6 @@ Starten Sie ggf. Ihr System neu und suchen Sie erneut nach Updates.
 
 **3) Überprüfen ob RDP 8.1 unterstützt wird**
 
-Öffnen Sie die Anwendung "Remotedesktopverbindung" (mstsc.exe) über das Windows Startmenü/Suche und klicken Sie auf _Info _. Im Dialog wird die unterstütze RDP-Version angezeigt.
+Öffnen Sie die Anwendung "Remotedesktopverbindung" (mstsc.exe) über das Windows Startmenü/Suche und klicken Sie auf _Info_. Im Dialog wird die unterstütze RDP-Version angezeigt.
 
 ![mstsc.exe/Info](../../_images/Windows6dot1_RDP8dot1.de-DE.png)

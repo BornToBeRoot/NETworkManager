@@ -27,3 +27,9 @@ At the time when the article was written, the following updates are available:
 - KB3075226
 
 If necessary, restart your system and check for updates again.
+
+**3) Check if RDP 8.1 is supported**
+
+Open the "Remote Desktop Connection" (mstsc.exe) application from the Windows Start menu/Search and click _Info_. The supported RDP version is displayed in the dialog.
+
+![mstsc.exe/Info](../../_images/Windows6dot1_RDP8dot1.png)
