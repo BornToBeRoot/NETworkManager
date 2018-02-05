@@ -329,7 +329,7 @@ namespace NETworkManager.ViewModels.Applications
         private void AddSubnetToHistory(string subnet)
         {
             // Create the new list
-            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.SubnetCalculator_IPv4Splitter_SubnetHistory.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_IPv4Splitter_SubnetHistory.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.SubnetCalculator_IPv4Splitter_SubnetHistory.Clear();
@@ -342,7 +342,7 @@ namespace NETworkManager.ViewModels.Applications
         private void AddNewSubnetmaskOrCIDRToHistory(string newSubnetmaskOrCIDR)
         {
             // Create the new list
-            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.SubnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory.ToList(), newSubnetmaskOrCIDR, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory.ToList(), newSubnetmaskOrCIDR, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.SubnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory.Clear();

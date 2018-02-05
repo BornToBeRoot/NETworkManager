@@ -2,7 +2,7 @@
 
 namespace NETworkManager.Helpers
 {
-    public static class HistoryListHelper
+    public static class ListHelper
     {
         public static List<string> Modify(List<string> list, string entry, int length)
         {

@@ -434,7 +434,7 @@ namespace NETworkManager.ViewModels.Applications
         private void AddHostToHistory(string host)
         {
             // Create the new list
-            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.Traceroute_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.Traceroute_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.Traceroute_HostHistory.Clear();

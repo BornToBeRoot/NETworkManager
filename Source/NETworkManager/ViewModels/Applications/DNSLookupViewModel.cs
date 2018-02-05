@@ -392,14 +392,14 @@ namespace NETworkManager.ViewModels.Applications
 
             AddHostToHistory(Host);
 
-            DNSLookupOptions DNSLookupOptions = new DNSLookupOptions();
+            DNSLookupOptions dnsLookupOptions = new DNSLookupOptions();
 
             if (SettingsManager.Current.DNSLookup_UseCustomDNSServer)
             {
-                if (!string.IsNullOrEmpty(SettingsManager.Current.DNSLookup_CustomDNSServer))
+                if (SettingsManager.Current.DNSLookup_CustomDNSServers != null)
                 {
-                    DNSLookupOptions.UseCustomDNSServer = SettingsManager.Current.DNSLookup_UseCustomDNSServer;
-                    DNSLookupOptions.CustomDNSServer = SettingsManager.Current.DNSLookup_CustomDNSServer;
+                    dnsLookupOptions.UseCustomDNSServer = SettingsManager.Current.DNSLookup_UseCustomDNSServer;
+                    dnsLookupOptions.CustomDNSServers = SettingsManager.Current.DNSLookup_CustomDNSServers;
                 }
                 else
                 {
@@ -408,41 +408,30 @@ namespace NETworkManager.ViewModels.Applications
                 }
             }
 
-            DNSLookupOptions.Class = SettingsManager.Current.DNSLookup_Class;
-            DNSLookupOptions.Type = Type;
-            DNSLookupOptions.Recursion = SettingsManager.Current.DNSLookup_Recursion;
-            DNSLookupOptions.UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache;
-            DNSLookupOptions.TransportType = SettingsManager.Current.DNSLookup_TransportType;
-            DNSLookupOptions.Attempts = SettingsManager.Current.DNSLookup_Attempts;
-            DNSLookupOptions.Timeout = SettingsManager.Current.DNSLookup_Timeout;
-            DNSLookupOptions.ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME;
+            dnsLookupOptions.AddDNSSuffix = SettingsManager.Current.DNSLookup_AddDNSSuffix;
+
+            if (SettingsManager.Current.DNSLookup_UseCustomDNSSuffix)
+            {
+                dnsLookupOptions.UseCustomDNSSuffix = true;
+                dnsLookupOptions.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix.TrimStart('.');
+            }
+
+            dnsLookupOptions.Class = SettingsManager.Current.DNSLookup_Class;
+            dnsLookupOptions.Type = Type;
+            dnsLookupOptions.Recursion = SettingsManager.Current.DNSLookup_Recursion;
+            dnsLookupOptions.UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache;
+            dnsLookupOptions.TransportType = SettingsManager.Current.DNSLookup_TransportType;
+            dnsLookupOptions.Attempts = SettingsManager.Current.DNSLookup_Attempts;
+            dnsLookupOptions.Timeout = SettingsManager.Current.DNSLookup_Timeout;
+            dnsLookupOptions.ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME;
 
             DNSLookup DNSLookup = new DNSLookup();
 
             DNSLookup.RecordReceived += DNSLookup_RecordReceived;
             DNSLookup.LookupError += DNSLookup_LookupError;
-            DNSLookup.LookupComplete += DNSLookup_LookupComplete;
+            DNSLookup.LookupComplete += DNSLookup_LookupComplete; ;
 
-            string hostnameOrIPAddress = Host;
-            string dnsSuffix = string.Empty;
-
-            // Detect hostname (usually they don't contain ".")
-            if (Host.IndexOf(".", StringComparison.OrdinalIgnoreCase) == -1)
-            {
-                if (SettingsManager.Current.DNSLookup_AddDNSSuffix)
-                {
-                    if (SettingsManager.Current.DNSLookup_UseCustomDNSSuffix)
-                        dnsSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix;
-                    else
-                        dnsSuffix = IPGlobalProperties.GetIPGlobalProperties().DomainName;
-                }
-            }
-
-            // Append dns suffix to hostname
-            if (!string.IsNullOrEmpty(dnsSuffix))
-                hostnameOrIPAddress += string.Format("{0}{1}", dnsSuffix.StartsWith(".") ? "" : ".", dnsSuffix);
-
-            DNSLookup.LookupAsync(hostnameOrIPAddress, DNSLookupOptions);
+            DNSLookup.LookupAsync(Host.Split(';').ToList(), dnsLookupOptions);
         }
 
         private void LookupFinished()
@@ -463,7 +452,7 @@ namespace NETworkManager.ViewModels.Applications
         private void AddHostToHistory(string host)
         {
             // Create the new list
-            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.DNSLookup_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.DNSLookup_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.DNSLookup_HostHistory.Clear();
@@ -497,23 +486,26 @@ namespace NETworkManager.ViewModels.Applications
             LookupFinished();
         }
 
-        private void DNSLookup_LookupComplete(object sender, DNSLookupCompleteArgs e)
+        private void DNSLookup_LookupComplete(object sender, EventArgs e)
         {
-            DNSServerAndPort = e.ServerAndPort;
-            Questions = e.QuestionsCount;
-            Answers = e.AnswersCount;
-            Authorities = e.AuthoritiesCount;
-            Additionals = e.AdditionalsCount;
-            MessageSize = e.MessageSize;
-
-            if (e.AnswersCount == 0)
-            {
-                StatusMessage = string.Format(Application.Current.Resources["String_NoDNSRecordFoundCheckYourInputAndSettings"] as string, Host);
-                DisplayStatusMessage = true;
-            }
-
             LookupFinished();
         }
+
+        /* private void DNSLookup_LookupComplete1(object sender, DNSLookupCompleteArgs e)
+         {
+             DNSServerAndPort = e.ServerAndPort;
+             Questions = e.QuestionsCount;
+             Answers = e.AnswersCount;
+             Authorities = e.AuthoritiesCount;
+             Additionals = e.AdditionalsCount;
+             MessageSize = e.MessageSize;
+
+             if (e.AnswersCount == 0)
+             {
+                 StatusMessage = string.Format(Application.Current.Resources["String_NoDNSRecordFoundCheckYourInputAndSettings"] as string, Host);
+                 DisplayStatusMessage = true;
+             }
+         }*/
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {

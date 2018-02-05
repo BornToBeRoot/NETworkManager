@@ -14,7 +14,7 @@
                 <Binding Path="CustomDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                        <Validator:IPAddressValidator ValidatesOnTargetUpdated="True" />
+                        <Validator:MultipleIPAddressesValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

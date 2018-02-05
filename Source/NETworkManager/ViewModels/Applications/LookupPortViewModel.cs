@@ -255,7 +255,7 @@ namespace NETworkManager.ViewModels.Applications
         private void AddPortOrServiceToHistory(string portOrService)
         {
             // Create the new list
-            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.Lookup_Port_PortsHistory.ToList(), portOrService, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.Lookup_Port_PortsHistory.ToList(), portOrService, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.Lookup_Port_PortsHistory.Clear();

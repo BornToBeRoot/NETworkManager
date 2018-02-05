@@ -214,7 +214,7 @@
     <system:String x:Key="String_Service">Service</system:String>
     <system:String x:Key="String_ShowClosedPorts">Show closed ports</system:String>
     <system:String x:Key="String_HostnameOrIPAddress">Hostname or IP address</system:String>
-    <system:String x:Key="String_Ports">Ports</system:String>
+    <system:String x:Key="String_Ports">Port(s)</system:String>
     <system:String x:Key="String_NumberOfStoredEntries">Number of stored entries</system:String>
     <system:String x:Key="String_NetworkLocationCannotBeReached">The network address cannot be reached. Check if your computer is connected to the network. For information about network troubleshooting, see Windows Help.</system:String>
     <system:String x:Key="String_NumberOfErrorsAfterWhichIsCanceled">Number of errors after which is canceled:</system:String>
@@ -496,6 +496,7 @@
     <system:String x:Key="String_ValidateError_EnterValidWebsiteUri">Enter a valid website (like https://example.com/index.html)</system:String>
     <system:String x:Key="String_ValidateError_EnterValidHosts">Enter valid hosts (multiple hosts can not end with ";")!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidNumber">Enter a valid number!</system:String>
+    <system:String x:Key="String_ValidateError_EnterOneOrMoreValidIPAddresses">Enter one or more valid IP addresses!</system:String>
     
     <!-- ApplicationView.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP Scanner</system:String>

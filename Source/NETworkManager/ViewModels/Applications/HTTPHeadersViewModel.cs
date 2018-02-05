@@ -253,7 +253,7 @@ namespace NETworkManager.ViewModels.Applications
         private void AddWebsiteUriToHistory(string websiteUri)
         {
             // Create the new list
-            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.HTTPHeaders_WebsiteUriHistory.ToList(), websiteUri, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.HTTPHeaders_WebsiteUriHistory.ToList(), websiteUri, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.HTTPHeaders_WebsiteUriHistory.Clear();

@@ -183,6 +183,8 @@
                 <DataGridTextColumn Header="{DynamicResource String_Class}" Binding="{Binding Class}" MinWidth="100" />
                 <DataGridTextColumn Header="{DynamicResource String_Type}" Binding="{Binding Type}" MinWidth="100" />
                 <DataGridTextColumn Header="{DynamicResource String_Result}" Binding="{Binding Result}" MinWidth="200" />
+                <DataGridTextColumn Header="{DynamicResource String_DNSServer}" Binding="{Binding DNSServer}" MinWidth="200" />
+                <DataGridTextColumn Header="{DynamicResource String_Port}" Binding="{Binding Port}" MinWidth="200" />
             </DataGrid.Columns>
         </DataGrid>
         <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource DefaultExpander}">

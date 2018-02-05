@@ -214,7 +214,7 @@
     <system:String x:Key="String_Service">Dienst</system:String>
     <system:String x:Key="String_ShowClosedPorts">Geschlossene Ports anzeigen</system:String>
     <system:String x:Key="String_HostnameOrIPAddress">Hostname oder IP-Adresse</system:String>
-    <system:String x:Key="String_Ports">Ports</system:String>
+    <system:String x:Key="String_Ports">Port(s)</system:String>
     <system:String x:Key="String_NumberOfStoredEntries">Anzahl gespeicherter Einträge</system:String>
     <system:String x:Key="String_NetworkLocationCannotBeReached">Die Netzwerkadresse kann nicht erreicht werden. Überprüfen Sie, ob Ihr Computer mit dem Netzwerk verbunden ist. Informationen zur Netzwerk-Fehlersuche finden Sie in der Windows-Hilfe.</system:String>
     <system:String x:Key="String_NumberOfErrorsAfterWhichIsCanceled">Anzahl Fehler nach denen abgebrochen wird:</system:String>
@@ -496,7 +496,8 @@
     <system:String x:Key="String_ValidateError_EnterValidWebsiteUri">Geben Sie eine gültige Webseite ein (z.B. https://example.com/index.html)</system:String>
     <system:String x:Key="String_ValidateError_EnterValidHosts">Geben Sie gültige Hosts ein (mehrere Hosts dürfen nicht mit ";" enden)!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidNumber">Geben Sie eine gültige Zahl ein!</system:String>
-    
+    <system:String x:Key="String_ValidateError_EnterOneOrMoreValidIPAddresses">Geben Sie eine oder mehrere gültige IP-Adressen ein!</system:String>
+
     <!-- ApplicationInfo.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>
     <system:String x:Key="String_ApplicationName_NetworkInterface">Netzwerkinterface</system:String>

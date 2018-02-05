@@ -214,6 +214,7 @@
     <Compile Include="Models\Update\UpdateAvailableArgs.cs" />
     <Compile Include="Models\Update\Updater.cs" />
     <Compile Include="Validators\Int32Validator.cs" />
+    <Compile Include="Validators\MultipleIPAddressesValidator.cs" />
     <Compile Include="Validators\MultipleHostsValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\SubnetCalculatorSubnetValidator.cs" />
@@ -676,7 +677,7 @@
     <Compile Include="Converters\ValidateSettingsImportConverter.cs" />
     <Compile Include="Converters\ValidateSettingsResetConverter.cs" />
     <Compile Include="Converters\ValidateSettingsExportConverter.cs" />
-    <Compile Include="Helpers\HistoryListHelper.cs" />
+    <Compile Include="Helpers\ListHelper.cs" />
     <Compile Include="Helpers\HotKeysHelper.cs" />
     <Compile Include="Models\Network\ARPTable.cs" />
     <Compile Include="Helpers\PortRangeHelper.cs" />

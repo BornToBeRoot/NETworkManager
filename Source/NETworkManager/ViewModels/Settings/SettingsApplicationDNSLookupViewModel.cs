@@ -38,7 +38,7 @@ namespace NETworkManager.ViewModels.Settings
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_CustomDNSServer = value;
+                    SettingsManager.Current.DNSLookup_CustomDNSServers = value.Split(';').ToList();
 
                 _customDNSServer = value;
                 OnPropertyChanged();
@@ -231,7 +231,10 @@ namespace NETworkManager.ViewModels.Settings
         private void LoadSettings()
         {
             UseCustomDNSServer = SettingsManager.Current.DNSLookup_UseCustomDNSServer;
-            CustomDNSServer = SettingsManager.Current.DNSLookup_CustomDNSServer;            
+
+            if (SettingsManager.Current.DNSLookup_CustomDNSServers != null)
+                CustomDNSServer = string.Join("; ", SettingsManager.Current.DNSLookup_CustomDNSServers);
+
             AddDNSSuffix = SettingsManager.Current.DNSLookup_AddDNSSuffix;
             UseCustomDNSSuffix = SettingsManager.Current.DNSLookup_UseCustomDNSSuffix;
             CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix;
