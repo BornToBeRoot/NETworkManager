@@ -117,7 +117,12 @@ namespace NETworkManager.Models.Network
 
                                          // Vendor lookup
                                          if (macAddress != null)
-                                             vendor = OUILookup.Lookup(macAddress.ToString()).FirstOrDefault().Vendor;
+                                         {
+                                             OUIInfo info = OUILookup.Lookup(macAddress.ToString()).FirstOrDefault();
+
+                                             if (info != null)
+                                                 vendor = info.Vendor;
+                                         }
                                      }
 
                                      OnHostFound(new IPScannerHostFoundArgs(pingInfo, hostname, macAddress, vendor));
