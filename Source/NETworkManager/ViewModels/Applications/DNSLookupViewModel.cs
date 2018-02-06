@@ -396,16 +396,9 @@ namespace NETworkManager.ViewModels.Applications
 
             if (SettingsManager.Current.DNSLookup_UseCustomDNSServer)
             {
-                if (SettingsManager.Current.DNSLookup_CustomDNSServers != null)
-                {
-                    dnsLookupOptions.UseCustomDNSServer = SettingsManager.Current.DNSLookup_UseCustomDNSServer;
-                    dnsLookupOptions.CustomDNSServers = SettingsManager.Current.DNSLookup_CustomDNSServers;
-                }
-                else
-                {
-                    StatusMessage = Application.Current.Resources["String_CustomDNSServerIsEmptyCheckYourSettingsUseWindowsOwnDNSServer"] as string;
-                    DisplayStatusMessage = true;
-                }
+                dnsLookupOptions.UseCustomDNSServer = SettingsManager.Current.DNSLookup_UseCustomDNSServer;
+                dnsLookupOptions.CustomDNSServers = SettingsManager.Current.DNSLookup_CustomDNSServer;
+                dnsLookupOptions.Port = SettingsManager.Current.DNSLookup_Port;
             }
 
             dnsLookupOptions.AddDNSSuffix = SettingsManager.Current.DNSLookup_AddDNSSuffix;

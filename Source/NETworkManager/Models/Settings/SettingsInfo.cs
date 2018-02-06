@@ -903,16 +903,30 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private List<string> _dnsLookup_CustomDNSServers;
-        public List<string> DNSLookup_CustomDNSServers
+        private List<string> _dnsLookup_CustomDNSServer;
+        public List<string> DNSLookup_CustomDNSServer
         {
-            get { return _dnsLookup_CustomDNSServers; }
+            get { return _dnsLookup_CustomDNSServer; }
             set
             {
-                if (value == _dnsLookup_CustomDNSServers)
+                if (value == _dnsLookup_CustomDNSServer)
                     return;
 
-                _dnsLookup_CustomDNSServers = value;
+                _dnsLookup_CustomDNSServer = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _dnsLookup_Port = 53;
+        public int DNSLookup_Port
+        {
+            get { return _dnsLookup_Port; }
+            set
+            {
+                if (value == _dnsLookup_Port)
+                    return;
+
+                _dnsLookup_Port = value;
                 SettingsChanged = true;
             }
         }

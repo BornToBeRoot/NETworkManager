@@ -84,10 +84,12 @@ namespace NETworkManager.Models.Network
                     if (dnsLookupOptions.Type == QType.NAPTR)
                         name = Resolver.GetArpaFromEnum(name);
 
+                    int port = dnsLookupOptions.UseCustomDNSServer ? dnsLookupOptions.Port : Resolver.DefaultPort;
+
                     Parallel.ForEach(dnsServers, dnsServer =>
                     {
                         // Create a new for each request
-                        Resolver resolver = new Resolver(dnsServer)
+                        Resolver resolver = new Resolver(dnsServer, port)
                         {
                             Recursion = dnsLookupOptions.Recursion,
                             TransportType = dnsLookupOptions.TransportType,
@@ -127,7 +129,6 @@ namespace NETworkManager.Models.Network
                 }
 
                 OnLookupComplete();
-                //OnLookupComplete(new DNSLookupCompleteArgs(dnsResponse.Server.ToString(), dnsResponse.Questions.Count, dnsResponse.Answers.Count, dnsResponse.Authorities.Count, dnsResponse.Additionals.Count, dnsResponse.MessageSize));
             });
         }
 
