@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using NETworkManager.Collections;
-using System.Net.NetworkInformation;
 using System.Windows.Threading;
 using System.Diagnostics;
 using Heijden.DNS;
@@ -287,6 +286,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_HostHistory);
             _lookupResultView = CollectionViewSource.GetDefaultView(LookupResult);
+            _lookupResultView.GroupDescriptions.Add(new PropertyGroupDescription("DNSServer"));
 
             LoadSettings();
 
@@ -362,6 +362,26 @@ namespace NETworkManager.ViewModels.Applications
         private void CopySelectedResultAction()
         {
             Clipboard.SetText(SelectedLookupResult.Result);
+        }
+
+        public ICommand CopySelectedDNSServerCommand
+        {
+            get { return new RelayCommand(p => CopySelectedDNSServerAction()); }
+        }
+
+        private void CopySelectedDNSServerAction()
+        {
+            Clipboard.SetText(SelectedLookupResult.DNSServer);
+        }
+
+        public ICommand CopySelectedPortCommand
+        {
+            get { return new RelayCommand(p => CopySelectedPortAction()); }
+        }
+
+        private void CopySelectedPortAction()
+        {
+            Clipboard.SetText(SelectedLookupResult.Port.ToString());
         }
         #endregion
 
