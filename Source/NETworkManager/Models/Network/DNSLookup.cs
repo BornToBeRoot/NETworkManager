@@ -109,8 +109,8 @@ namespace NETworkManager.Models.Network
                         // Process the results...
                         ProcessResponse(dnsResponse);
 
-                        // If we get a CNAME back (from a result), do a second request and try to get the A, AAAA etc... 
-                        if (dnsLookupOptions.ResolveCNAME && dnsLookupOptions.Type != QType.CNAME)
+                        // If we get a CNAME back (from an ANY result), do a second request and try to get the A, AAAA etc... 
+                        if (dnsLookupOptions.ResolveCNAME && dnsLookupOptions.Type == QType.ANY)
                         {
                             foreach (RecordCNAME r in dnsResponse.RecordsCNAME)
                             {

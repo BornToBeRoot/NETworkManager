@@ -236,7 +236,7 @@
     <system:String x:Key="String_NoDNSRecordFoundCheckYourInputAndSettings">Kein DNS-Eintrag für "{0}" gefunden! Überprüfe deine Eingabe und die Einstellungen.</system:String>
     <system:String x:Key="String_UnkownError">Unbekannter Fehler!</system:String>
     <system:String x:Key="String_TimeoutWhenQueryingDNSServer">Timeout beim Abfragen des DNS-Servers mit der IP-Adresse "{0}"!</system:String>
-    <system:String x:Key="String_ResolveCNAME">CNAME auflösen</system:String>
+    <system:String x:Key="String_ResolveCNAME">CNAME auflösen bei ANY anfragen</system:String>
     <system:String x:Key="String_Host">Host</system:String>
     <system:String x:Key="String_CouldNotResolveHostnameFor">Hostname konnte nicht aufgelöst werden für: "{0}"</system:String>
     <system:String x:Key="String_NothingToDoCheckYourInput">Nichts zu tun. Überprüfen Sie Ihre Eingabe!</system:String>

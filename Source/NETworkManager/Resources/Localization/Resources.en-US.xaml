@@ -236,7 +236,7 @@
     <system:String x:Key="String_NoDNSRecordFoundCheckYourInputAndSettings">No DNS record found for "{0}"! Check your input and the settings.</system:String>
     <system:String x:Key="String_UnkownError">Unkown error!</system:String>
     <system:String x:Key="String_TimeoutWhenQueryingDNSServer">Timeout when querying the DNS server with the IP address "{0}"!</system:String>
-    <system:String x:Key="String_ResolveCNAME">Resolve CNAME</system:String>
+    <system:String x:Key="String_ResolveCNAME">Resolve CNAME on ANY requests</system:String>
     <system:String x:Key="String_Host">Host</system:String>
     <system:String x:Key="String_CouldNotResolveHostnameFor">Could not resolve hostname for: "{0}"</system:String>
     <system:String x:Key="String_NothingToDoCheckYourInput">Nothing to do. Check your input!</system:String>
