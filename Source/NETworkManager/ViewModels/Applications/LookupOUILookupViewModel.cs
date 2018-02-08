@@ -199,7 +199,7 @@ namespace NETworkManager.ViewModels.Applications
         private void AddMACAddressOrVendorToHistory(string macAddressOrVendor)
         {
             // Create the new list
-            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory.ToList(), macAddressOrVendor, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory.ToList(), macAddressOrVendor, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory.Clear();

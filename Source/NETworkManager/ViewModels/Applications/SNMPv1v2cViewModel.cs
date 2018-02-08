@@ -428,7 +428,7 @@ namespace NETworkManager.ViewModels.Applications
         private void AddHostToHistory(string host)
         {
             // Create the new list
-            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.SNMP_v1v2c_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.SNMP_v1v2c_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.SNMP_v1v2c_HostHistory.Clear();
@@ -441,7 +441,7 @@ namespace NETworkManager.ViewModels.Applications
         private void AddOIDToHistory(string oid)
         {
             // Create the new list
-            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.SNMP_v1v2c_OIDHistory.ToList(), oid, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.SNMP_v1v2c_OIDHistory.ToList(), oid, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.SNMP_v1v2c_OIDHistory.Clear();

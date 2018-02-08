@@ -38,9 +38,26 @@ namespace NETworkManager.ViewModels.Settings
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_CustomDNSServer = value;
+                    SettingsManager.Current.DNSLookup_CustomDNSServer = value.Split(';').ToList();
 
                 _customDNSServer = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _port;
+        public int Port
+        {
+            get { return _port;}
+            set
+            {
+                if (value == _port)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.DNSLookup_Port = value;
+
+                _port = value;
                 OnPropertyChanged();
             }
         }
@@ -231,9 +248,13 @@ namespace NETworkManager.ViewModels.Settings
         private void LoadSettings()
         {
             UseCustomDNSServer = SettingsManager.Current.DNSLookup_UseCustomDNSServer;
-            CustomDNSServer = SettingsManager.Current.DNSLookup_CustomDNSServer;            
+
+            if (SettingsManager.Current.DNSLookup_CustomDNSServer != null)
+                CustomDNSServer = string.Join("; ", SettingsManager.Current.DNSLookup_CustomDNSServer);
+
             AddDNSSuffix = SettingsManager.Current.DNSLookup_AddDNSSuffix;
             UseCustomDNSSuffix = SettingsManager.Current.DNSLookup_UseCustomDNSSuffix;
+            Port = SettingsManager.Current.DNSLookup_Port;
             CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix;
             ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME;
             Recursion = SettingsManager.Current.DNSLookup_Recursion;

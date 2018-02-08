@@ -195,7 +195,7 @@
                 <DataGridTextColumn Header="{DynamicResource String_Data}" Binding="{Binding Data}" MinWidth="300" />
             </DataGrid.Columns>
         </DataGrid>
-        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource DefaultExpander}">
+        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}">
             <Expander.Header>
                 <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>

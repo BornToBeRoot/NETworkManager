@@ -150,7 +150,7 @@
     <system:String x:Key="String_Yes">Ja</system:String>
     <system:String x:Key="String_No">Nein</system:String>
     <system:String x:Key="String_DNSSuffix">DNS-Suffix</system:String>
-    <system:String x:Key="String_DNSServers">DNS-Servers</system:String>
+    <system:String x:Key="String_DNSServers">DNS-Server(s)</system:String>
     <system:String x:Key="String_DynamicIPv4Address">Dynamische IPv4-Adresse</system:String>
     <system:String x:Key="String_StaticIPv4Address">Statische IPv4-Address</system:String>
     <system:String x:Key="String_StaticIPv4DNSServer">Statischer IPv4-DNS-Server</system:String>
@@ -214,7 +214,7 @@
     <system:String x:Key="String_Service">Dienst</system:String>
     <system:String x:Key="String_ShowClosedPorts">Geschlossene Ports anzeigen</system:String>
     <system:String x:Key="String_HostnameOrIPAddress">Hostname oder IP-Adresse</system:String>
-    <system:String x:Key="String_Ports">Ports</system:String>
+    <system:String x:Key="String_Ports">Port(s)</system:String>
     <system:String x:Key="String_NumberOfStoredEntries">Anzahl gespeicherter Einträge</system:String>
     <system:String x:Key="String_NetworkLocationCannotBeReached">Die Netzwerkadresse kann nicht erreicht werden. Überprüfen Sie, ob Ihr Computer mit dem Netzwerk verbunden ist. Informationen zur Netzwerk-Fehlersuche finden Sie in der Windows-Hilfe.</system:String>
     <system:String x:Key="String_NumberOfErrorsAfterWhichIsCanceled">Anzahl Fehler nach denen abgebrochen wird:</system:String>
@@ -236,7 +236,7 @@
     <system:String x:Key="String_NoDNSRecordFoundCheckYourInputAndSettings">Kein DNS-Eintrag für "{0}" gefunden! Überprüfe deine Eingabe und die Einstellungen.</system:String>
     <system:String x:Key="String_UnkownError">Unbekannter Fehler!</system:String>
     <system:String x:Key="String_TimeoutWhenQueryingDNSServer">Timeout beim Abfragen des DNS-Servers mit der IP-Adresse "{0}"!</system:String>
-    <system:String x:Key="String_ResolveCNAME">CNAME auflösen</system:String>
+    <system:String x:Key="String_ResolveCNAME">CNAME auflösen bei ANY anfragen</system:String>
     <system:String x:Key="String_Host">Host</system:String>
     <system:String x:Key="String_CouldNotResolveHostnameFor">Hostname konnte nicht aufgelöst werden für: "{0}"</system:String>
     <system:String x:Key="String_NothingToDoCheckYourInput">Nichts zu tun. Überprüfen Sie Ihre Eingabe!</system:String>
@@ -246,7 +246,6 @@
     <system:String x:Key="String_TheFollwingParametersCanNotBeProcesses">Die folgenden Parameter können nicht verarbeitet werden:</system:String>
     <system:String x:Key="String_TheFollowingParametersAreAvailable">Folgende Parameter stehen zur Verfügung:</system:String>
     <system:String x:Key="String_Open">Offen</system:String>
-    <system:String x:Key="String_CustomDNSServerIsEmptyCheckYourSettingsUseWindowsOwnDNSServer">Benutzerdefinierte DNS-Server ist leer. Überprüfe deine Einstellungen! (Verwende Windows eigenen DNS-Server...)</system:String>
     <system:String x:Key="String_EnterNameForProfile">Geben Sie einen Namen ein, unter dem das Profil gespeichert werden soll.</system:String>
     <system:String x:Key="String_DeleteProfileMessage">Das ausgewählte Profil wird unwiderruflich gelöscht.</system:String>
     <system:String x:Key="String_DeleteSessionMessage">Die ausgewählte Sitzung wird unwiderruflich gelöscht.</system:String>
@@ -437,6 +436,7 @@
     <system:String x:Key="String_Watermark_ExampleHostname">SERVER-01</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Broadcast">192.168.178.255</system:String>
     <system:String x:Key="String_Watermark_ExamplePort7">7</system:String>
+    <system:String x:Key="String_Watermark_ExamplePort53">53</system:String>
     <system:String x:Key="String_Watermark_ExamplePort161">161</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Address">192.168.178.55</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmask">255.255.255.0</system:String>
@@ -449,6 +449,7 @@
     <system:String x:Key="String_Watermark_ExampleSubnetmaskOrCIDR">/24 oder 255.255.255.0</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Gateway">192.168.178.1</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4DNSServer">8.8.8.8</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPv4DNSServers">192.168.178.1; 8.8.8.8; 8.8.4.4</system:String>
     <system:String x:Key="String_Watermark_ExamplePortPortRangeOrService">22; 80; https; ldaps; 777 - 999; 8080</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnet">192.168.178.133/22 oder 192.168.178.133/255.255.252.0</system:String>
     <system:String x:Key="String_Watermark_Filter">Filter...</system:String>
@@ -496,7 +497,8 @@
     <system:String x:Key="String_ValidateError_EnterValidWebsiteUri">Geben Sie eine gültige Webseite ein (z.B. https://example.com/index.html)</system:String>
     <system:String x:Key="String_ValidateError_EnterValidHosts">Geben Sie gültige Hosts ein (mehrere Hosts dürfen nicht mit ";" enden)!</system:String>
     <system:String x:Key="String_ValidateError_EnterValidNumber">Geben Sie eine gültige Zahl ein!</system:String>
-    
+    <system:String x:Key="String_ValidateError_EnterOneOrMoreValidIPAddresses">Geben Sie eine oder mehrere gültige IP-Adressen ein!</system:String>
+
     <!-- ApplicationInfo.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>
     <system:String x:Key="String_ApplicationName_NetworkInterface">Netzwerkinterface</system:String>

@@ -138,9 +138,9 @@
                 <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding Status, Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150"/>
             </Control:ScrollingDataGrid.Columns>
         </Control:ScrollingDataGrid>
-        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource DefaultExpander}">
+        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}">
             <Expander.Header>
-                <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
+                <TextBlock Text="{DynamicResource String_Header_Destination}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>
             <Grid Margin="0,10,0,0">
                 <Grid.ColumnDefinitions>

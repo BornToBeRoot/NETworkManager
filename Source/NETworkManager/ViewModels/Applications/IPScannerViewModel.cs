@@ -724,7 +724,7 @@ namespace NETworkManager.ViewModels.Applications
         private void AddIPRangeToHistory(string ipRange)
         {
             // Create the new list
-            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.IPScanner_IPRangeHistory.ToList(), ipRange, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.IPScanner_IPRangeHistory.ToList(), ipRange, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.IPScanner_IPRangeHistory.Clear();

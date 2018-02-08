@@ -903,8 +903,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private string _dnsLookup_CustomDNSServer;
-        public string DNSLookup_CustomDNSServer
+        private List<string> _dnsLookup_CustomDNSServer;
+        public List<string> DNSLookup_CustomDNSServer
         {
             get { return _dnsLookup_CustomDNSServer; }
             set
@@ -913,6 +913,20 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_CustomDNSServer = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _dnsLookup_Port = 53;
+        public int DNSLookup_Port
+        {
+            get { return _dnsLookup_Port; }
+            set
+            {
+                if (value == _dnsLookup_Port)
+                    return;
+
+                _dnsLookup_Port = value;
                 SettingsChanged = true;
             }
         }
@@ -973,7 +987,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private string _dnsLookup_CustomDNSSuffix;
+        private string _dnsLookup_CustomDNSSuffix = string.Empty;
         public string DNSLookup_CustomDNSSuffix
         {
             get { return _dnsLookup_CustomDNSSuffix; }

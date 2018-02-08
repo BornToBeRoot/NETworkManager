@@ -821,7 +821,7 @@ namespace NETworkManager.ViewModels.Applications
         private void AddHostToHistory(string host)
         {
             // Create the new list
-            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.PortScanner_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.PortScanner_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PortScanner_HostHistory.Clear();
@@ -834,7 +834,7 @@ namespace NETworkManager.ViewModels.Applications
         private void AddPortToHistory(string port)
         {
             // Create the new list
-            List<string> list = HistoryListHelper.Modify(SettingsManager.Current.PortScanner_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.PortScanner_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PortScanner_PortHistory.Clear();
