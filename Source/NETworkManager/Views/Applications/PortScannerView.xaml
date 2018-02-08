@@ -279,7 +279,7 @@
                     <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding LookupInfo.Description}" MinWidth="200" />
                 </DataGrid.Columns>
             </DataGrid>
-            <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource DefaultExpander}">
+            <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}">
                 <Expander.Header>
                     <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
                 </Expander.Header>
@@ -390,7 +390,7 @@
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate>
-                                                    <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}" Padding="0">
+                                                    <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}">
                                                         <Expander.Header>
                                                             <TextBlock Text="{Binding Name}" Style="{StaticResource HeaderTextBlock}" FontSize="18" Margin="0" />
                                                         </Expander.Header>

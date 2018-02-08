@@ -187,7 +187,7 @@
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate>
-                                                    <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}" Padding="0">
+                                                    <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}">
                                                         <Expander.Header>
                                                             <TextBlock Text="{Binding Name}" Style="{StaticResource HeaderTextBlock}" FontSize="18" Margin="0" />
                                                         </Expander.Header>

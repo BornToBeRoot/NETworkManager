@@ -54,7 +54,7 @@ namespace NETworkManager.Models.Network
                 foreach (string host in hosts)
                 {
                     // Default
-                    string name = host.Trim();
+                    string name = host;
 
                     string dnsSuffix = string.Empty;
 

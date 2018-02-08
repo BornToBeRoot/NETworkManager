@@ -363,26 +363,6 @@ namespace NETworkManager.ViewModels.Applications
         {
             Clipboard.SetText(SelectedLookupResult.Result);
         }
-
-        public ICommand CopySelectedDNSServerCommand
-        {
-            get { return new RelayCommand(p => CopySelectedDNSServerAction()); }
-        }
-
-        private void CopySelectedDNSServerAction()
-        {
-            Clipboard.SetText(SelectedLookupResult.DNSServer);
-        }
-
-        public ICommand CopySelectedPortCommand
-        {
-            get { return new RelayCommand(p => CopySelectedPortAction()); }
-        }
-
-        private void CopySelectedPortAction()
-        {
-            Clipboard.SetText(SelectedLookupResult.Port.ToString());
-        }
         #endregion
 
         #region Methods      
@@ -417,7 +397,7 @@ namespace NETworkManager.ViewModels.Applications
             if (SettingsManager.Current.DNSLookup_UseCustomDNSServer)
             {
                 dnsLookupOptions.UseCustomDNSServer = SettingsManager.Current.DNSLookup_UseCustomDNSServer;
-                dnsLookupOptions.CustomDNSServers = SettingsManager.Current.DNSLookup_CustomDNSServer;
+                dnsLookupOptions.CustomDNSServers = SettingsManager.Current.DNSLookup_CustomDNSServer.Select(x => x.Trim()).ToList();
                 dnsLookupOptions.Port = SettingsManager.Current.DNSLookup_Port;
             }
 
@@ -444,7 +424,7 @@ namespace NETworkManager.ViewModels.Applications
             DNSLookup.LookupError += DNSLookup_LookupError;
             DNSLookup.LookupComplete += DNSLookup_LookupComplete; ;
 
-            DNSLookup.LookupAsync(Host.Split(';').ToList(), dnsLookupOptions);
+            DNSLookup.LookupAsync(Host.Split(';').Select(x => x.Trim()).ToList(), dnsLookupOptions);
         }
 
         private void LookupFinished()

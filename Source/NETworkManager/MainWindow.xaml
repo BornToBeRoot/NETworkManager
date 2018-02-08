@@ -595,9 +595,9 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Rectangle Grid.Column="0" Width="24" Height="24">
+                                <Rectangle Grid.Column="0" Width="20" Height="20">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:MaterialLight Kind=ArrowLeftCircle}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:MaterialLight Kind=ArrowLeft}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">

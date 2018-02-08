@@ -100,7 +100,7 @@
             </Grid>
             <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Headers}" />
             <TextBox Grid.Row="3" Text="{Binding Headers}" Style="{StaticResource DefaultTextBox}" FontFamily="Consolas" IsReadOnly="True" VerticalContentAlignment="Top" ContextMenu="{StaticResource CopyContextMenu}" Margin="0,0,0,20"/>
-            <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource DefaultExpander}">
+            <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}">
                 <Expander.Header>
                     <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
                 </Expander.Header>
