@@ -179,90 +179,6 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private string _dnsServerAndPort;
-        public string DNSServerAndPort
-        {
-            get { return _dnsServerAndPort; }
-            set
-            {
-                if (value == _dnsServerAndPort)
-                    return;
-
-                _dnsServerAndPort = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _questions;
-        public int Questions
-        {
-            get { return _questions; }
-            set
-            {
-                if (value == _questions)
-                    return;
-
-                _questions = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _answers;
-        public int Answers
-        {
-            get { return _answers; }
-            set
-            {
-                if (value == _answers)
-                    return;
-
-                _answers = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _authorities;
-        public int Authorities
-        {
-            get { return _authorities; }
-            set
-            {
-                if (value == _authorities)
-                    return;
-
-                _authorities = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _additionals;
-        public int Additionals
-        {
-            get { return _additionals; }
-            set
-            {
-                if (value == _additionals)
-                    return;
-
-                _additionals = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _messageSize;
-        public int MessageSize
-        {
-            get { return _messageSize; }
-            set
-            {
-                if (value == _messageSize)
-                    return;
-
-                _messageSize = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _expandStatistics;
         public bool ExpandStatistics
         {
@@ -369,15 +285,9 @@ namespace NETworkManager.ViewModels.Applications
         private void StartLookup()
         {
             DisplayStatusMessage = false;
-            IsLookupRunning = true;
+            StatusMessage = string.Empty;
 
-            // Reset statistic
-            DNSServerAndPort = string.Empty;
-            Questions = 0;
-            Answers = 0;
-            Authorities = 0;
-            Additionals = 0;
-            MessageSize = 0;
+            IsLookupRunning = true;
 
             // Measure the time
             StartTime = DateTime.Now;
@@ -461,18 +371,21 @@ namespace NETworkManager.ViewModels.Applications
         {
             DNSLookupRecordInfo DNSLookupRecordInfo = DNSLookupRecordInfo.Parse(e);
 
-            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(delegate ()
-             {
-                 LookupResult.Add(DNSLookupRecordInfo);
-             }));
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(delegate ()
+            {
+                LookupResult.Add(DNSLookupRecordInfo);
+            }));
         }
 
         private void DNSLookup_LookupError(object sender, DNSLookupErrorArgs e)
         {
+            if (!string.IsNullOrEmpty(StatusMessage))
+                StatusMessage += Environment.NewLine;
+
             if (e.ErrorCode == "Timeout Error")
-                StatusMessage = string.Format(Application.Current.Resources["String_TimeoutWhenQueryingDNSServer"] as string, e.DNSServer);
+                StatusMessage += string.Format(Application.Current.Resources["String_TimeoutWhenQueryingDNSServer"] as string, e.DNSServer);
             else
-                StatusMessage = Application.Current.Resources["String_UnkownError"] as string;
+                StatusMessage += Application.Current.Resources["String_UnkownError"] as string;
 
             DisplayStatusMessage = true;
 
@@ -483,22 +396,6 @@ namespace NETworkManager.ViewModels.Applications
         {
             LookupFinished();
         }
-
-        /* private void DNSLookup_LookupComplete1(object sender, DNSLookupCompleteArgs e)
-         {
-             DNSServerAndPort = e.ServerAndPort;
-             Questions = e.QuestionsCount;
-             Answers = e.AnswersCount;
-             Authorities = e.AuthoritiesCount;
-             Additionals = e.AdditionalsCount;
-             MessageSize = e.MessageSize;
-
-             if (e.AnswersCount == 0)
-             {
-                 StatusMessage = string.Format(Application.Current.Resources["String_NoDNSRecordFoundCheckYourInputAndSettings"] as string, Host);
-                 DisplayStatusMessage = true;
-             }
-         }*/
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {

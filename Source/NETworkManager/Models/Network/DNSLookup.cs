@@ -102,8 +102,8 @@ namespace NETworkManager.Models.Network
                         // If there was an error... return
                         if (!string.IsNullOrEmpty(dnsResponse.Error))
                         {
-                            // OnLookupError(new DNSLookupErrorArgs(dnsResponse.Error, resolver.DnsServer));
-                            // return;
+                            OnLookupError(new DNSLookupErrorArgs(dnsResponse.Error, resolver.DnsServer));
+                            return;
                         }
 
                         // Process the results...
