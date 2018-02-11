@@ -49,16 +49,16 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource String_Hostname}" />
-            <TextBox x:Name="txtHostname" Grid.Column="2" Grid.Row="1" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}">
-                <TextBox.Text>
-                    <Binding Path="Hostname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource String_Host}" />
+            <ComboBox x:Name="cbHost" Grid.Column="2" Grid.Row="1" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource EditableComboBox}">
+                <ComboBox.Text>
+                    <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
-                </TextBox.Text>
-            </TextBox>
+                </ComboBox.Text>
+            </ComboBox>
             <TextBlock Grid.Column="0" Grid.Row="3" Text="{DynamicResource String_UseCredentials}" />
             <mah:ToggleSwitch Grid.Column="2" Grid.Row="3" OffLabel="" OnLabel="" IsChecked="{Binding UseCredentials}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}" />
             <StackPanel Grid.Column="2" Grid.Row="5" Orientation="Horizontal" Visibility="{Binding UseCredentials, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -147,7 +147,7 @@
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
                         <Setter Property="IsEnabled" Value="True" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=txtHostname}" Value="True" >
+                            <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=cbHost}" Value="True" >
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
                             <MultiDataTrigger>

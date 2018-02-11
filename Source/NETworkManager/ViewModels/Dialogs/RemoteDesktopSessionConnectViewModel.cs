@@ -1,5 +1,6 @@
 ﻿using NETworkManager.Models.Settings;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security;
 using System.Windows.Data;
@@ -49,18 +50,24 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
-        private string _hostname;
-        public string Hostname
+        private string _host;
+        public string Host
         {
-            get { return _hostname; }
+            get { return _host; }
             set
             {
-                if (value == _hostname)
+                if (value == _host)
                     return;
 
-                _hostname = value;
+                _host = value;
                 OnPropertyChanged();
             }
+        }
+
+        private ICollectionView _hostHistoryView;
+        public ICollectionView HostHistoryView
+        {
+            get { return _hostHistoryView; }
         }
 
         private bool _useCredentials;
@@ -153,10 +160,15 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
-        public RemoteDesktopSessionConnectViewModel(Action<RemoteDesktopSessionConnectViewModel> connectCommand, Action<RemoteDesktopSessionConnectViewModel> cancelHandler)
+        public RemoteDesktopSessionConnectViewModel(Action<RemoteDesktopSessionConnectViewModel> connectCommand, Action<RemoteDesktopSessionConnectViewModel> cancelHandler, bool connectAs = false)
         {
             _connectCommand = new RelayCommand(p => connectCommand(this));
             _cancelCommand = new RelayCommand(p => cancelHandler(this));
+             
+            ConnectAs = connectAs;
+
+            if (!ConnectAs)
+                _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.RemoteDesktop_HostHistory);
 
             if (CredentialManager.Loaded)
                 _credentials = CollectionViewSource.GetDefaultView(CredentialManager.CredentialInfoList);

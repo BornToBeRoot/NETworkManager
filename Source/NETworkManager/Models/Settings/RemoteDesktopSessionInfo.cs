@@ -3,7 +3,7 @@
     public class RemoteDesktopSessionInfo
     {
         public string Name { get; set; }
-        public string Hostname { get; set; }
+        public string Host { get; set; }
         public int? CredentialID { get; set; }
         public string Group { get; set; }
         public string Tags { get; set; }
@@ -13,19 +13,19 @@
 
         }
 
-        public RemoteDesktopSessionInfo(string name, string hostname, string group, string tags)
+        public RemoteDesktopSessionInfo(string name, string host, string group, string tags)
         {
             Name = name;
-            Hostname = hostname;
+            Host = host;
             CredentialID = null;
             Group = group;
             Tags = tags;
         }
 
-        public RemoteDesktopSessionInfo(string name, string hostname, int credentialID, string group, string tags)
+        public RemoteDesktopSessionInfo(string name, string host, int credentialID, string group, string tags)
         {
             Name = name;
-            Hostname = hostname;
+            Host = host;
             CredentialID = credentialID; 
             Group = group;
             Tags = tags;

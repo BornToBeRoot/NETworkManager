@@ -13,6 +13,8 @@ using System;
 using System.Linq;
 using System.Diagnostics;
 using NETworkManager.Models.Documentation;
+using NETworkManager.Helpers;
+using System.Collections.Generic;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -119,7 +121,7 @@ namespace NETworkManager.ViewModels.Applications
 
             // Check if RDP 8.1 is available
             IsRDP8dot1Available = Models.RemoteDesktop.RemoteDesktop.IsRDP8dot1Available();
-            
+
             if (IsRDP8dot1Available)
             {
                 InterTabClient = new DragablzMainInterTabClient();
@@ -185,16 +187,20 @@ namespace NETworkManager.ViewModels.Applications
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
+                // Add host to history
+                AddHostToHistory(instance.Host);
+
+                // Create new remote desktop session info
                 Models.RemoteDesktop.RemoteDesktopSessionInfo remoteDesktopSessionInfo = new Models.RemoteDesktop.RemoteDesktopSessionInfo
                 {
-                    Hostname = instance.Hostname
+                    Hostname = instance.Host
                 };
 
-                if(instance.UseCredentials)
+                if (instance.UseCredentials)
                 {
                     remoteDesktopSessionInfo.CustomCredentials = true;
-                    
-                    if(instance.CustomCredentials)
+
+                    if (instance.CustomCredentials)
                     {
                         remoteDesktopSessionInfo.Username = instance.Username;
                         remoteDesktopSessionInfo.Password = instance.Password;
@@ -202,7 +208,7 @@ namespace NETworkManager.ViewModels.Applications
                     else
                     {
                         CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)instance.CredentialID);
-                        
+
                         remoteDesktopSessionInfo.Username = credentialInfo.Username;
                         remoteDesktopSessionInfo.Password = credentialInfo.Password;
                     }
@@ -244,7 +250,7 @@ namespace NETworkManager.ViewModels.Applications
                 RemoteDesktopSessionInfo remoteDesktopSessionInfo = new RemoteDesktopSessionInfo
                 {
                     Name = instance.Name,
-                    Hostname = instance.Hostname,
+                    Host = instance.Host,
                     CredentialID = instance.CredentialID,
                     Group = instance.Group,
                     Tags = instance.Tags
@@ -275,7 +281,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             Models.RemoteDesktop.RemoteDesktopSessionInfo sessionInfo = new Models.RemoteDesktop.RemoteDesktopSessionInfo
             {
-                Hostname = SelectedSession.Hostname
+                Hostname = SelectedSession.Host
             };
 
             if (SelectedSession.CredentialID != null) // Credentials need to be unlocked first
@@ -328,8 +334,8 @@ namespace NETworkManager.ViewModels.Applications
                 {
                     CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)SelectedSession.CredentialID);
 
-                    if(credentialInfo == null)
-                    {                     
+                    if (credentialInfo == null)
+                    {
                         await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_CredentialNotFound"] as string, Application.Current.Resources["String_CredentialNotFoundMessage"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
 
                         return;
@@ -338,7 +344,7 @@ namespace NETworkManager.ViewModels.Applications
                     sessionInfo.CustomCredentials = true;
                     sessionInfo.Username = credentialInfo.Username;
                     sessionInfo.Password = credentialInfo.Password;
- 
+
                     ConnectSession(sessionInfo, SelectedSession.Name);
                 }
             }
@@ -367,7 +373,7 @@ namespace NETworkManager.ViewModels.Applications
 
                 Models.RemoteDesktop.RemoteDesktopSessionInfo remoteDesktopSessionInfo = new Models.RemoteDesktop.RemoteDesktopSessionInfo
                 {
-                    Hostname = instance.Hostname
+                    Hostname = instance.Host
                 };
 
                 if (instance.UseCredentials)
@@ -393,12 +399,11 @@ namespace NETworkManager.ViewModels.Applications
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            });
+            }, true);
 
             // Set name, hostname
-            connectRemoteDesktopSessionViewModel.ConnectAs = true;
             connectRemoteDesktopSessionViewModel.Name = SelectedSession.Name;
-            connectRemoteDesktopSessionViewModel.Hostname = SelectedSession.Hostname;
+            connectRemoteDesktopSessionViewModel.Host = SelectedSession.Host;
 
             // Request credentials
             connectRemoteDesktopSessionViewModel.UseCredentials = true;
@@ -434,7 +439,7 @@ namespace NETworkManager.ViewModels.Applications
                 RemoteDesktopSessionInfo remoteDesktopSessionInfo = new RemoteDesktopSessionInfo
                 {
                     Name = instance.Name,
-                    Hostname = instance.Hostname,
+                    Host = instance.Host,
                     CredentialID = instance.CredentialID,
                     Group = instance.Group,
                     Tags = instance.Tags
@@ -476,7 +481,7 @@ namespace NETworkManager.ViewModels.Applications
                 RemoteDesktopSessionInfo remoteDesktopSessionInfo = new RemoteDesktopSessionInfo
                 {
                     Name = instance.Name,
-                    Hostname = instance.Hostname,
+                    Host = instance.Host,
                     Group = instance.Group,
                     Tags = instance.Tags
                 };
@@ -584,10 +589,23 @@ namespace NETworkManager.ViewModels.Applications
 
             string search = Search.Trim();
 
-            if (info.Hostname.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0)
+            if (info.Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0)
                 e.Accepted = true;
             else
                 e.Accepted = false;
+        }
+
+        // Modify history list
+        private void AddHostToHistory(string host)
+        {
+            // Create the new list
+            List<string> list = ListHelper.Modify(SettingsManager.Current.RemoteDesktop_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.RemoteDesktop_HostHistory.Clear();
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.RemoteDesktop_HostHistory.Add(x));
         }
         #endregion
     }

@@ -1148,7 +1148,21 @@ namespace NETworkManager.Models.Settings
         #endregion
         #endregion
 
-        #region RemoteDesktop  
+        #region RemoteDesktop 
+        private ObservableCollection<string> _remoteDesktop_HostHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> RemoteDesktop_HostHistory
+        {
+            get { return _remoteDesktop_HostHistory; }
+            set
+            {
+                if (value == _remoteDesktop_HostHistory)
+                    return;
+
+                _remoteDesktop_HostHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
         private bool _remoteDesktop_AdjustScreenAutomatically;
         public bool RemoteDesktop_AdjustScreenAutomatically
         {

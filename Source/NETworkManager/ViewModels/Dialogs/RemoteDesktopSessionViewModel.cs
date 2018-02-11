@@ -43,16 +43,16 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
-        private string _hostname;
-        public string Hostname
+        private string _host;
+        public string Host
         {
-            get { return _hostname; }
+            get { return _host; }
             set
             {
-                if (value == _hostname)
+                if (value == _host)
                     return;
 
-                _hostname = value;
+                _host = value;
 
                 if (!_isLoading)
                     HasSessionInfoChanged();
@@ -165,7 +165,7 @@ namespace NETworkManager.ViewModels.Dialogs
             _sessionInfo = sessionInfo ?? new RemoteDesktopSessionInfo();
 
             Name = _sessionInfo.Name;
-            Hostname = _sessionInfo.Hostname;
+            Host = _sessionInfo.Host;
             CredentialID = _sessionInfo.CredentialID;
 
             // Get the group, if not --> get the first group (ascending), fallback --> default group 
@@ -189,7 +189,7 @@ namespace NETworkManager.ViewModels.Dialogs
 
         private void HasSessionInfoChanged()
         {
-            SessionInfoChanged = (_sessionInfo.Name != Name) || (_sessionInfo.Hostname != Hostname) || (_sessionInfo.CredentialID != CredentialID) || (_sessionInfo.Group != Group) || (_sessionInfo.Tags != Tags);
+            SessionInfoChanged = (_sessionInfo.Name != Name) || (_sessionInfo.Host != Host) || (_sessionInfo.CredentialID != CredentialID) || (_sessionInfo.Group != Group) || (_sessionInfo.Tags != Tags);
         }
 
         #region ICommand & Actions
