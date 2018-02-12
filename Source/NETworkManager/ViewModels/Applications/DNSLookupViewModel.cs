@@ -202,7 +202,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_HostHistory);
             _lookupResultView = CollectionViewSource.GetDefaultView(LookupResult);
-            _lookupResultView.GroupDescriptions.Add(new PropertyGroupDescription("DNSServer"));
+            _lookupResultView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.DNSServer)));
 
             LoadSettings();
 

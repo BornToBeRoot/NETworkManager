@@ -334,7 +334,7 @@ namespace NETworkManager.ViewModels.Applications
 
             // Result view
             _ipScanResultView = CollectionViewSource.GetDefaultView(IPScanResult);
-            _ipScanResultView.SortDescriptions.Add(new SortDescription(nameof(PingInfo.IPAddressInt32), ListSortDirection.Ascending));
+            _ipScanResultView.SortDescriptions.Add(new SortDescription(nameof(IPScannerHostInfo.PingInfo) + "." + nameof(PingInfo.IPAddressInt32), ListSortDirection.Ascending));
 
             // Load profiles
             if (IPScannerProfileManager.Profiles == null)
@@ -490,9 +490,9 @@ namespace NETworkManager.ViewModels.Applications
         }
 
         private void CopySelectedStatusAction()
-        {          
+        {
             Clipboard.SetText(Application.Current.Resources["String_IPStatus_" + SelectedIPScanResult.PingInfo.Status.ToString()] as string);
-        }        
+        }
 
         public ICommand AddProfileCommand
         {
@@ -606,7 +606,7 @@ namespace NETworkManager.ViewModels.Applications
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
-                
+
         public ICommand DeleteProfileCommand
         {
             get { return new RelayCommand(p => DeleteProfileAction()); }
@@ -636,7 +636,7 @@ namespace NETworkManager.ViewModels.Applications
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }        
+        }
         #endregion
 
         #region Methods
