@@ -456,7 +456,7 @@
                                 <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=FilterRemoveOutline}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_SearchedApplicationNotFound}" Margin="10,0" TextWrapping="Wrap" TextAlignment="Center" />
+                        <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_SearchedApplicationNotFound}" Margin="10,0" TextWrapping="Wrap" TextAlignment="Center" />
                     </Grid>
                     <Border Grid.Row="2" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,1,0,0" Background="Transparent">
                         <Button Height="48" HorizontalContentAlignment="Stretch" Command="{Binding OpenSettingsCommand}" Focusable="False">
@@ -562,7 +562,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Border x:Name="HeaderBorder" Grid.Row="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,0,1" MouseDown="HeaderBorder_MouseDown">
-                    <TextBlock VerticalAlignment="Center" Height="48" TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Text="{Binding SelectedApplication.TranslatedName}" Foreground="{DynamicResource GrayBrush3}" Margin="0" />
+                    <TextBlock VerticalAlignment="Center" Height="48" TextAlignment="Center" FontSize="22" Style="{StaticResource HeaderTextBlock}" Text="{Binding SelectedApplication.TranslatedName}" Foreground="{DynamicResource GrayBrush3}" Margin="0" />
                 </Border>
                 <ContentControl x:Name="contentControlApplication" Grid.Row="1" Focusable="False" />
             </Grid>

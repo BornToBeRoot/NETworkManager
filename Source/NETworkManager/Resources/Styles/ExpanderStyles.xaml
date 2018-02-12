@@ -17,7 +17,7 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Grid.Column="0" x:Name="Chevron" Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" VerticalAlignment="Center">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ChevronDown}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Entypo Kind=ChevronThinDown}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <Controls:ContentControlEx Grid.Column="1" 
@@ -40,7 +40,7 @@
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Chevron" Property="OpacityMask">
                                 <Setter.Value>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ChevronUp}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Entypo Kind=ChevronThinUp}" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
@@ -91,7 +91,7 @@
                             </Controls:ContentControlEx>
                             <Rectangle Grid.Column="1" x:Name="Chevron" Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" VerticalAlignment="Center">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ChevronDown}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Entypo Kind=ChevronThinDown}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>                           
                         </Grid>
@@ -100,7 +100,7 @@
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Chevron" Property="OpacityMask">
                                 <Setter.Value>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ChevronUp}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Entypo Kind=ChevronThinUp}" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
@@ -138,7 +138,7 @@
                             <TextBlock Grid.Column="0" Text="{TemplateBinding Content}" Style="{StaticResource HeaderTextBlock}" Margin="10,10,10,0" />
                             <Rectangle Grid.Column="1" x:Name="Chevron" Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="0,10,10,0" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ChevronLeft}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Entypo Kind=ChevronThinLeft}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>                           
                         </Grid>
@@ -166,12 +166,12 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Rectangle Grid.Row="0" x:Name="Chevron" Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,14.5,10,10" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Rectangle Grid.Row="0" x:Name="Chevron" Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,12.5,10,10" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ChevronRight}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Entypo Kind=ChevronThinRight}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Grid.Row="1" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" FontSize="18" Style="{StaticResource HeaderTextBlock}" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Grid.Row="1" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" Style="{StaticResource HeaderTextBlock}" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <TextBlock.LayoutTransform>
                                     <RotateTransform Angle="90" />
                                 </TextBlock.LayoutTransform>

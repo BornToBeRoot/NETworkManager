@@ -136,7 +136,7 @@
                                                     <ControlTemplate>
                                                         <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}">
                                                             <Expander.Header>
-                                                                <TextBlock Text="{Binding Name}" Style="{StaticResource HeaderTextBlock}" FontSize="18" Margin="0" />
+                                                                <TextBlock Text="{Binding Name}" Style="{StaticResource DefaultTextBlock}" />
                                                             </Expander.Header>
                                                             <ItemsPresenter />
                                                         </Expander>
@@ -154,9 +154,9 @@
                                 </Style>
                             </ListBox.ItemContainerStyle>
                         </ListBox>
-                        <TextBlock Grid.Row="2" FontSize="18" Foreground="{DynamicResource GrayBrush3}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" >
+                        <TextBlock Grid.Row="2">
                             <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding RemoteDesktopSessions.Count}" Value="0" >
@@ -193,7 +193,7 @@
             </Border>
         </Grid>
         <StackPanel VerticalAlignment="Center" Visibility="{Binding IsRDP8dot1Available, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Margin="10">
-            <TextBlock FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_InstallRDP8dot1Message}" TextWrapping="Wrap" TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Margin="0,0,0,10" />
+            <TextBlock Text="{DynamicResource String_InstallRDP8dot1Message}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <StackPanel.InputBindings>
                     <MouseBinding Gesture="LeftClick" Command="{Binding OpenDocumentationCommand}" CommandParameter="00001" />

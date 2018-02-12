@@ -114,6 +114,6 @@
                 </Grid>
             </ScrollViewer>
         </StackPanel>
-        <TextBlock Grid.Row="2" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_EnterASubnetToCalculateIt}" Visibility="{Binding IsDetailsVisible, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
+        <TextBlock Grid.Row="2" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_EnterASubnetToCalculateIt}" Visibility="{Binding IsDetailsVisible, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
     </Grid>
 </UserControl>

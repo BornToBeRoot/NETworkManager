@@ -32,7 +32,7 @@
                                                             <ControlTemplate>
                                                                 <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}" Padding="0">
                                                                     <Expander.Header>
-                                                                        <TextBlock Text="{Binding Name}" Style="{StaticResource HeaderTextBlock}" FontSize="18" Margin="0" Foreground="{DynamicResource GrayBrush3}"/>
+                                                                        <TextBlock Text="{Binding Name}" Style="{StaticResource DefaultTextBlock}" Margin="0" Foreground="{DynamicResource GrayBrush3}"/>
                                                                     </Expander.Header>
                                                                     <ItemsPresenter />
                                                                 </Expander>
@@ -131,7 +131,7 @@
                                         <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=FilterRemoveOutline}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" FontSize="18" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_SearchedSettingNotFound}" Margin="10,0" TextWrapping="Wrap" TextAlignment="Center" />
+                                <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_SearchedSettingNotFound}" Margin="10,0" TextWrapping="Wrap" TextAlignment="Center" />
                             </Grid>
                         </Grid>
                     </Border>
