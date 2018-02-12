@@ -254,7 +254,41 @@
                             </Style>
                         </StackPanel.Style>
                         <TextBlock Text="{DynamicResource String_NoEnabledNetworkAdaptersFound}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
-                        <Button Content="{DynamicResource String_Button_NetworkConnections}" Command="{Binding OpenNetworkConnectionsCommand}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Command="{Binding ReloadNetworkInterfacesCommand}">
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                        <Setter Property="IsEnabled" Value="True" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsNetworkInterfaceLoading}" Value="True">
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Resources>
+                                <Button.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Width="20" Height="20" Margin="10,5,0,5">
+                                            <Rectangle.Resources>
+                                                <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:Material Kind=Refresh}"/>
+                                            </Rectangle.Resources>
+                                            <Rectangle.Style>
+                                                <Style TargetType="{x:Type Rectangle}">
+                                                    <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
+                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                </Style>
+                                            </Rectangle.Style>
+                                        </Rectangle>
+                                        <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center" Text="{DynamicResource String_Button_Refresh}" />
+                                    </Grid>
+                                </Button.Content>
+                            </Button>
+                            <Button Content="{DynamicResource String_Button_NetworkConnections}" Command="{Binding OpenNetworkConnectionsCommand}" Style="{StaticResource DefaultButton}" Margin="10,0,0,0"/>                                                       
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
             </ScrollViewer>
