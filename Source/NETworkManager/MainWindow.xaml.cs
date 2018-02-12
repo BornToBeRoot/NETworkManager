@@ -308,13 +308,13 @@ namespace NETworkManager
 
             // Chech for updates...
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
-                CheckForUpdates();                        
+                CheckForUpdates();
         }
 
         private void LoadApplicationList()
         {
             _applications = CollectionViewSource.GetDefaultView(ApplicationViewManager.List);
-            
+
             Applications.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending)); // Always have the same order, even if it is translated
             Applications.Filter = o =>
             {
@@ -570,10 +570,15 @@ namespace NETworkManager
             Updater updater = new Updater();
 
             updater.UpdateAvailable += Updater_UpdateAvailable;
-
+            updater.Error += Updater_Error;
             updater.Check();
         }
 
+        private void Updater_Error(object sender, EventArgs e)
+        {
+            //  Log
+        }
+       
         private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
         {
             UpdateText = string.Format(System.Windows.Application.Current.Resources["String_VersionxxAvailable"] as string, e.Version);

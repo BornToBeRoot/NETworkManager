@@ -3,6 +3,7 @@ using System.Windows.Input;
 using System.Diagnostics;
 using System.Windows;
 using NETworkManager.Models.Update;
+using System;
 
 namespace NETworkManager.ViewModels.Settings
 {
@@ -94,16 +95,30 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-        private bool _noUpdateAvailable;
-        public bool NoUpdateAvailable
+        private bool _showUpdaterMessage;
+        public bool ShowUpdaterMessage
         {
-            get { return _noUpdateAvailable; }
+            get { return _showUpdaterMessage; }
             set
             {
-                if (value == _noUpdateAvailable)
+                if (value == _showUpdaterMessage)
                     return;
 
-                _noUpdateAvailable = value;
+                _showUpdaterMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _updaterMessage;
+        public string UpdaterMessage
+        {
+            get { return _updaterMessage; }
+            set
+            {
+                if (value == _updaterMessage)
+                    return;
+
+                _updaterMessage = value;
                 OnPropertyChanged();
             }
         }
@@ -143,7 +158,7 @@ namespace NETworkManager.ViewModels.Settings
         private void CheckForUpdates()
         {
             UpdateAvailable = false;
-            NoUpdateAvailable = false;
+            ShowUpdaterMessage = false;
 
             IsUpdateCheckRunning = true;
 
@@ -151,6 +166,7 @@ namespace NETworkManager.ViewModels.Settings
 
             updater.UpdateAvailable += Updater_UpdateAvailable;
             updater.NoUpdateAvailable += Updater_NoUpdateAvailable;
+            updater.Error += Updater_Error;
 
             updater.Check();
         }
@@ -161,14 +177,24 @@ namespace NETworkManager.ViewModels.Settings
         {
             UpdateText = string.Format(Application.Current.Resources["String_VersionxxAvailable"] as string, e.Version);
 
-            IsUpdateCheckRunning = false;
-            UpdateAvailable = true;            
+            IsUpdateCheckRunning = false;            
+            UpdateAvailable = true;
         }
 
         private void Updater_NoUpdateAvailable(object sender, System.EventArgs e)
         {
+            UpdaterMessage = Application.Current.Resources["String_NoUpdateAvailable"] as string;
+
             IsUpdateCheckRunning = false;
-            NoUpdateAvailable = true;
+            ShowUpdaterMessage = true;
+        }
+
+        private void Updater_Error(object sender, EventArgs e)
+        {
+            UpdaterMessage = Application.Current.Resources["String_ErrorCheckingApiGithubComVerifyYourNetworkConnection"] as string; ;
+
+            IsUpdateCheckRunning = false;
+            ShowUpdaterMessage = true;
         }
         #endregion
     }

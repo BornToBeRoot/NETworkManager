@@ -22,6 +22,13 @@ namespace NETworkManager.Models.Update
         {
             NoUpdateAvailable?.Invoke(this, EventArgs.Empty);
         }
+
+        public event EventHandler Error;
+
+        protected virtual void OnError()
+        {
+            Error?.Invoke(this, EventArgs.Empty);
+        }
         #endregion
 
         #region Methods
@@ -29,17 +36,24 @@ namespace NETworkManager.Models.Update
         {
             Task.Run(() =>
             {
-                GitHubClient client = new GitHubClient(new ProductHeaderValue(Resources.NETworkManager_ProjectName));
+                try
+                {
+                    GitHubClient client = new GitHubClient(new ProductHeaderValue(Resources.NETworkManager_ProjectName));
 
-                Task<Release> latestRelease = client.Repository.Release.GetLatest(Resources.NETworkManager_GitHub_User, Resources.NETworkManager_GitHub_Repo);
-                
-                Version latestVersion = new Version(latestRelease.Result.TagName.TrimStart('v'));
+                    Task<Release> latestRelease = client.Repository.Release.GetLatest(Resources.NETworkManager_GitHub_User, Resources.NETworkManager_GitHub_Repo);
 
-                // Compare versions (tag=v1.4.2.0, version=1.4.2.0)
-                if (latestVersion > AssemblyManager.Current.Version)
-                    OnUpdateAvailable(new UpdateAvailableArgs(latestVersion));
-                else
-                    OnNoUpdateAvailable();
+                    Version latestVersion = new Version(latestRelease.Result.TagName.TrimStart('v'));
+
+                    // Compare versions (tag=v1.4.2.0, version=1.4.2.0)
+                    if (latestVersion > AssemblyManager.Current.Version)
+                        OnUpdateAvailable(new UpdateAvailableArgs(latestVersion));
+                    else
+                        OnNoUpdateAvailable();
+                }
+                catch
+                {
+                    OnError();
+                }
             });
         }
         #endregion
