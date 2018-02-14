@@ -100,6 +100,7 @@
     <system:String x:Key="String_Header_v1v2c">v1/v2c</system:String>
     <system:String x:Key="String_Header_v3">v3</system:String>
     <system:String x:Key="String_Header_HTTPHeaders">HTTP Headers</system:String>
+    <system:String x:Key="String_Header_Network">Network</system:String>
     
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -439,6 +440,7 @@
     <system:String x:Key="String_Watermark_ExamplePort7">7</system:String>
     <system:String x:Key="String_Watermark_ExamplePort53">53</system:String>
     <system:String x:Key="String_Watermark_ExamplePort161">161</system:String>
+    <system:String x:Key="String_Watermark_ExamplePort3389">3389</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Address">192.168.178.55</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmask">255.255.255.0</system:String>
     <system:String x:Key="String_Watermark_ExampleHostnameOrIPAddress">SERVER-01 or 172.16.0.100</system:String>

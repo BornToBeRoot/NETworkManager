@@ -1289,6 +1289,20 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private int _remoteDesktop_Port = 3389;
+        public int RemoteDesktop_Port
+        {
+            get { return _remoteDesktop_Port; }
+            set
+            {
+                if (value == _remoteDesktop_Port)
+                    return;
+
+                _remoteDesktop_Port = value;
+                SettingsChanged = true;
+            }
+        }
+
         private bool _remoteDesktop_EnableCredSspSupport = true;
         public bool RemoteDesktop_EnableCredSspSupport
         {

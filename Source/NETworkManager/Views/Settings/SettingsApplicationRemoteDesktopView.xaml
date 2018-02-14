@@ -58,11 +58,20 @@
                 </TextBox>
             </Grid>
         </GroupBox>
-
-        <!-- <mah:ToggleSwitch Header="{DynamicResource String_AdjustScreenAutomatically}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding AdjustScreenAutomatically}" Margin="0,0,0,10" /> -->
-
         <TextBlock Text="{DynamicResource String_ColorDepthBit}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding ColorDepths}" SelectedItem="{Binding SelectedColorDepth}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,20" />
+        <TextBlock Text="{DynamicResource String_Header_Network}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{DynamicResource String_Port}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBox Width="250" HorizontalAlignment="Left" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort3389 }" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,20">
+            <TextBox.Text>
+                <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <Validator:PortValidator ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <TextBlock Text="{DynamicResource String_Header_Authentication}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{DynamicResource String_CredentialSecuritySupportProvider}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding EnableCredSspSupport}" Margin="0,0,0,10" />
         <TextBlock Text="{DynamicResource String_AuthenticationLevel}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />

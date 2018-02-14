@@ -566,6 +566,7 @@ namespace NETworkManager.ViewModels.Applications
             }
 
             sessionInfo.ColorDepth = SettingsManager.Current.RemoteDesktop_ColorDepth;
+            sessionInfo.Port = SettingsManager.Current.RemoteDesktop_Port;
             sessionInfo.EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport;
             sessionInfo.AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;
             sessionInfo.RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;

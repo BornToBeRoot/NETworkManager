@@ -46,8 +46,8 @@ namespace NETworkManager.ViewModels.Applications
                 new DragablzPingTabItem(Application.Current.Resources["String_Header_Ping"] as string, new PingView(_tabId, ChangeTabTitleAction), _tabId)
             };
         }
-        #endregion              
-                
+        #endregion
+
         #region ICommand & Actions
         public ICommand AddPingTabCommand
         {

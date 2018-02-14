@@ -5,6 +5,7 @@ namespace NETworkManager.Models.RemoteDesktop
     public class RemoteDesktopSessionInfo
     {
         public string Hostname { get; set; }
+        public int Port { get; set; }
         public bool CustomCredentials { get; set; }
         public string Username { get; set; }
         public SecureString Password { get; set; }

@@ -151,6 +151,7 @@ namespace NETworkManager.Controls
         private void Connect()
         {
             rdpClient.Server = _rdpSessionInfo.Hostname;
+            rdpClient.AdvancedSettings9.RDPPort = _rdpSessionInfo.Port;
 
             if (_rdpSessionInfo.CustomCredentials)
             {

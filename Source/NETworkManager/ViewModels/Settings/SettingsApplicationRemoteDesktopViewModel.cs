@@ -1,9 +1,6 @@
-﻿using NETworkManager.Helpers;
-using NETworkManager.Models.Settings;
-using System;
+﻿using NETworkManager.Models.Settings;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 
 namespace NETworkManager.ViewModels.Settings
 {
@@ -189,6 +186,23 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
+        private int _port;
+        public int Port
+        {
+            get { return _port; }
+            set
+            {
+                if (value == _port)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_Port = value;
+
+                _port = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _enableCredSspSupport;
         public bool EnableCredSspSupport
         {
@@ -350,6 +364,7 @@ namespace NETworkManager.ViewModels.Settings
             CustomScreenWidth = SettingsManager.Current.RemoteDesktop_CustomScreenWidth.ToString();
             CustomScreenHeight = SettingsManager.Current.RemoteDesktop_CustomScreenHeight.ToString();
             SelectedColorDepth = ColorDepths.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_ColorDepth);
+            Port = SettingsManager.Current.RemoteDesktop_Port;
             EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport;
             AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;
             RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;
