@@ -5,9 +5,9 @@ namespace NETworkManager.Controls
     /// <summary>
     /// Interaktionslogik für Settings.xaml
     /// </summary>
-    public partial class DragablzTabHostWindow : MetroWindow
+    public partial class DragablzRemoteDesktopTabHostWindow : MetroWindow
     {        
-        public DragablzTabHostWindow()
+        public DragablzRemoteDesktopTabHostWindow()
         {
             InitializeComponent();
         }

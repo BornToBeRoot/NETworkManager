@@ -184,7 +184,11 @@
     <Compile Include="3rdParty\Heijden.DNS\Response.cs" />
     <Compile Include="3rdParty\Heijden.DNS\RR.cs" />
     <Compile Include="3rdParty\Heijden.DNS\Structs.cs" />
-    <Compile Include="Controls\DragablzMainInterTabClient.cs" />
+    <Compile Include="Controls\DragablzRemoteDesktopTabHostWindow.xaml.cs">
+      <DependentUpon>DragablzRemoteDesktopTabHostWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DragablzRemoteDesktopInterTabClient.cs" />
+    <Compile Include="Controls\DragablzPingInterTabClient.cs" />
     <Compile Include="Controls\DragablzPingTabItem.cs" />
     <Compile Include="Controls\DragablzRemoteDesktopTabItem.cs" />
     <Compile Include="Converters\NullOrEmptyToBoolConverter.cs" />
@@ -297,8 +301,8 @@
     <Compile Include="Views\Applications\RemoteDesktopView.xaml.cs">
       <DependentUpon>RemoteDesktopView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DragablzTabHostWindow.xaml.cs">
-      <DependentUpon>DragablzTabHostWindow.xaml</DependentUpon>
+    <Compile Include="Controls\DragablzPingTabHostWindow.xaml.cs">
+      <DependentUpon>DragablzPingTabHostWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\CredentialDialog.xaml.cs">
       <DependentUpon>CredentialDialog.xaml</DependentUpon>
@@ -359,6 +363,10 @@
     </Compile>
     <Compile Include="WpfHelper\PasswordBoxBindingBehavior.cs" />
     <Compile Include="WpfHelper\ProtocolSettingsLayout.cs" />
+    <Page Include="Controls\DragablzRemoteDesktopTabHostWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\ContextMenu\ContextMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -514,7 +522,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\DragablzTabHostWindow.xaml">
+    <Page Include="Controls\DragablzPingTabHostWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

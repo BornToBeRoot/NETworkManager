@@ -124,7 +124,7 @@ namespace NETworkManager.ViewModels.Applications
 
             if (IsRDP8dot1Available)
             {
-                InterTabClient = new DragablzMainInterTabClient();
+                InterTabClient = new DragablzRemoteDesktopInterTabClient();
                 TabItems = new ObservableCollection<DragablzRemoteDesktopTabItem>();
 
                 // Load sessions
@@ -399,14 +399,15 @@ namespace NETworkManager.ViewModels.Applications
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            }, true);
+            }, true)
+            {
+                // Set name, hostname
+                Name = SelectedSession.Name,
+                Host = SelectedSession.Host,
 
-            // Set name, hostname
-            connectRemoteDesktopSessionViewModel.Name = SelectedSession.Name;
-            connectRemoteDesktopSessionViewModel.Host = SelectedSession.Host;
-
-            // Request credentials
-            connectRemoteDesktopSessionViewModel.UseCredentials = true;
+                // Request credentials
+                UseCredentials = true
+            };
 
             customDialog.Content = new RemoteDesktopSessionConnectDialog
             {

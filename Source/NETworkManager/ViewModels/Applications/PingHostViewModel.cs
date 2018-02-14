@@ -39,7 +39,7 @@ namespace NETworkManager.ViewModels.Applications
         {
             ChangeTabTitleAction = ChangeTabTitle;
 
-            InterTabClient = new DragablzMainInterTabClient();
+            InterTabClient = new DragablzPingInterTabClient();
 
             TabItems = new ObservableCollection<DragablzPingTabItem>()
             {
