@@ -315,7 +315,7 @@
     <system:String x:Key="String_PasswordsDoesNotMatch">Passwords does not match!</system:String>
     <system:String x:Key="String_WrongPasswordDecryptionFailed">Credentials could not be decrypted with the given password.</system:String>
     <system:String x:Key="String_WrongPassword">The entered password is wrong.</system:String>
-    <system:String x:Key="String_HiddenPassword">************</system:String>
+    <system:String x:Key="String_HiddenPassword">••••••••••••</system:String>
     <system:String x:Key="String_DeleteCredentialMessage">The selected credential will be deleted permanently.</system:String>
     <system:String x:Key="String_DecryptAndLoadCredentialsMessage">Credentials must be decrypted and loaded to manage them.</system:String>
     <system:String x:Key="String_CredentialsEncryptionDisclaimer">The credentials are stored encrypted with AES-256 (Rijndael) in a file. The key for the encryption results from a master password (Rfc2898DeriveBytes). The application uses a SecureString for passwords. For some functions, passwords must be converted from a SecureString to plain text, or vice versa.</system:String>
@@ -472,7 +472,7 @@
     <system:String x:Key="String_Watermark_NotChanged">(not changed)</system:String>
     <system:String x:Key="String_Watermark_ExampleSNMPOID">1.3.6.1.2.1.1</system:String>
     <system:String x:Key="String_Watermark_ExampleSNMPCommunity">Public</system:String>
-    <system:String x:Key="String_Watermark_ExampleSNMPUsername">snmp-user</system:String>    
+    <system:String x:Key="String_Watermark_ExampleSNMPUsername">snmp-user</system:String>
     
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Set static IP address and gateway...</system:String>
