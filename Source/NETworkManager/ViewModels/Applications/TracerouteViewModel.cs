@@ -223,7 +223,7 @@ namespace NETworkManager.ViewModels.Applications
 
             // Result view
             _traceResultView = CollectionViewSource.GetDefaultView(TraceResult);
-            _traceResultView.SortDescriptions.Add(new SortDescription(nameof(Hops), ListSortDirection.Ascending));
+            _traceResultView.SortDescriptions.Add(new SortDescription(nameof(TracerouteHopInfo.Hop), ListSortDirection.Ascending));
 
             LoadSettings();
 

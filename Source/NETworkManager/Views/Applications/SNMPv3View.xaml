@@ -267,7 +267,7 @@
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
-        <DataGrid Grid.Row="3" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding QueryResultView}" SelectedItem="{Binding SelectedQueryResult}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True" Margin="0,0,0,20">
+        <DataGrid Grid.Row="3" ItemsSource="{Binding QueryResultView}" SelectedItem="{Binding SelectedQueryResult}" Margin="0,0,0,20">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -311,7 +311,7 @@
             </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{DynamicResource String_OID}" Binding="{Binding OID}" MinWidth="200" />
-                <DataGridTextColumn Header="{DynamicResource String_Data}" Binding="{Binding Data}" MinWidth="300" />
+                <DataGridTextColumn Header="{DynamicResource String_Data}" Binding="{Binding Data}" MinWidth="300" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
         <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}">

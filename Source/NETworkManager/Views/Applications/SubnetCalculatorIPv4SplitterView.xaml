@@ -141,7 +141,7 @@
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
-        <DataGrid Grid.Row="3" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding SplitResultView}" SelectedItem="{Binding SelectedSplitResult}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True">
+        <DataGrid Grid.Row="3" ItemsSource="{Binding SplitResultView}" SelectedItem="{Binding SelectedSplitResult}">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -245,7 +245,7 @@
                 <DataGridTextColumn Header="{DynamicResource String_CIDR}" Binding="{Binding CIDR}" MinWidth="80" />
                 <DataGridTextColumn Header="{DynamicResource String_FirstIPAddress}" Binding="{Binding HostFirstIP, Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="HostFirstIPInt32" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_LastIPAddress}" Binding="{Binding HostLastIP, Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="HostLastIPInt32" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Hosts}" Binding="{Binding Hosts}" MinWidth="80" />
+                <DataGridTextColumn Header="{DynamicResource String_Hosts}" Binding="{Binding Hosts}" MinWidth="80" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

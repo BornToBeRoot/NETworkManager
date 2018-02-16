@@ -118,7 +118,7 @@
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Status}" Style="{StaticResource HeaderTextBlock}" />
-        <Control:ScrollingDataGrid Grid.Row="3" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding PingResult}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,20">
+        <Control:ScrollingDataGrid Grid.Row="3" ItemsSource="{Binding PingResult}" Margin="0,0,0,20">
             <Control:ScrollingDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollingDataGridScrollBar}" />
             </Control:ScrollingDataGrid.Resources>
@@ -135,7 +135,7 @@
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="{DynamicResource String_TTL}" Binding="{Binding TTL, Converter={StaticResource IntToStringConverter}}" MinWidth="80"/>
-                <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding Status, Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150"/>
+                <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding Status, Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150" Width="*" />
             </Control:ScrollingDataGrid.Columns>
         </Control:ScrollingDataGrid>
         <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}">

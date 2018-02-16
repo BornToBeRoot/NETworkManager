@@ -27,7 +27,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBox x:Name="txtSearch" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
-        <DataGrid x:Name="dataGridArpTable" Grid.Row="2" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding ARPTableView}" SelectedItem="{Binding SelectedARPTableInfo}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True">
+        <DataGrid x:Name="dataGridArpTable" Grid.Row="2" ItemsSource="{Binding ARPTableView}" SelectedItem="{Binding SelectedARPTableInfo}">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
@@ -90,7 +90,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress}" SortMemberPath="IPAddressInt32" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" MinWidth="200" />
-                <DataGridTextColumn Header="{DynamicResource String_Multicast}" Binding="{Binding IsMulticast, Converter={StaticResource BooleanToStringConverter}}" MinWidth="100" />
+                <DataGridTextColumn Header="{DynamicResource String_Multicast}" Binding="{Binding IsMulticast, Converter={StaticResource BooleanToStringConverter}}" MinWidth="100" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
         <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
