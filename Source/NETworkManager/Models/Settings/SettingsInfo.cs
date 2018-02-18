@@ -1560,16 +1560,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _snmp_v1v2c_Walk = true;
-        public bool SNMP_v1v2c_Walk
+        private SNMPMode _snmp_v1v2c_Mode = SNMPMode.Walk;
+        public SNMPMode SNMP_v1v2c_Mode
         {
-            get { return _snmp_v1v2c_Walk; }
+            get { return _snmp_v1v2c_Mode; }
             set
             {
-                if (value == _snmp_v1v2c_Walk)
+                if (value == _snmp_v1v2c_Mode)
                     return;
 
-                _snmp_v1v2c_Walk = value;
+                _snmp_v1v2c_Mode = value;
                 SettingsChanged = true;
             }
         }
@@ -1630,16 +1630,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _snmp_v3_Walk = true;
-        public bool SNMP_v3_Walk
+        private SNMPMode _snmp_v3_Mode = SNMPMode.Walk;
+        public SNMPMode SNMP_v3_Mode
         {
-            get { return _snmp_v3_Walk; }
+            get { return _snmp_v3_Mode; }
             set
             {
-                if (value == _snmp_v3_Walk)
+                if (value == _snmp_v3_Mode)
                     return;
 
-                _snmp_v3_Walk = value;
+                _snmp_v3_Mode = value;
                 SettingsChanged = true;
             }
         }

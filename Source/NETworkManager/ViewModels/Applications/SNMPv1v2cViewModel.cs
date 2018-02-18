@@ -64,19 +64,21 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private bool _walk;
-        public bool Walk
+        public List<SNMPMode> Modes { get; set; }
+
+        private SNMPMode _mode;
+        public SNMPMode Mode
         {
-            get { return _walk; }
+            get { return _mode; }
             set
             {
-                if (value == _walk)
+                if (value == _mode)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.SNMP_v1v2c_Walk = value;
+                    SettingsManager.Current.SNMP_v1v2c_Mode = value;
 
-                _walk = value;
+                _mode = value;
                 OnPropertyChanged();
             }
         }
@@ -278,6 +280,9 @@ namespace NETworkManager.ViewModels.Applications
             // Version v1 and v2c (default v2c)
             Versions = new List<SNMPVersion>() { SNMPVersion.v1, SNMPVersion.v2c };
 
+            // Modes
+            Modes = Enum.GetValues(typeof(SNMPMode)).Cast<SNMPMode>().ToList();
+
             LoadSettings();
 
             _isLoading = false;
@@ -286,7 +291,7 @@ namespace NETworkManager.ViewModels.Applications
         private void LoadSettings()
         {
             Version = Versions.FirstOrDefault(x => x == SettingsManager.Current.SNMP_v1v2c_Version);
-            Walk = SettingsManager.Current.SNMP_v1v2c_Walk;
+            Mode = Modes.FirstOrDefault(x => x ==  SettingsManager.Current.SNMP_v1v2c_Mode);
             ExpandStatistics = SettingsManager.Current.SNMP_v1v2c_ExpandStatistics;
         }
         #endregion
@@ -401,10 +406,15 @@ namespace NETworkManager.ViewModels.Applications
             snmp.UserHasCanceled += Snmp_UserHasCanceled;
             snmp.Complete += Snmp_Complete;
 
-            if (Walk)
-                snmp.Walkv1v2cAsync(Version, ipAddress, Community, OID, snmpOptions, SettingsManager.Current.SNMP_WalkMode);
-            else
-                snmp.Getv1v2cAsync(Version, ipAddress, Community, OID, snmpOptions);
+            switch(Mode)
+            {
+                case SNMPMode.Get:
+                    snmp.Getv1v2cAsync(Version, ipAddress, Community, OID, snmpOptions);
+                    break;
+                case SNMPMode.Walk:
+                    snmp.Walkv1v2cAsync(Version, ipAddress, Community, OID, snmpOptions, SettingsManager.Current.SNMP_WalkMode);
+                    break;
+            }
 
             // Add to history...
             AddHostToHistory(Host);

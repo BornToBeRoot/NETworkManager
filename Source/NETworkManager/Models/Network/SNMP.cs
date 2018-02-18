@@ -224,6 +224,14 @@ namespace NETworkManager.Models.Network
             v3
         }
 
+        public enum SNMPMode
+        {
+            Get,
+            Walk,
+            Set,
+            Trap
+        }
+
         public enum SNMPv3Security
         {
             noAuthNoPriv,

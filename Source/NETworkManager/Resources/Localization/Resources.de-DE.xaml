@@ -340,7 +340,6 @@
     <system:String x:Key="String_OID">OID</system:String>
     <system:String x:Key="String_Community">Community</system:String>
     <system:String x:Key="String_Data">Data</system:String>
-    <system:String x:Key="String_Walk">Walk</system:String>
     <system:String x:Key="String_WalkMode">Walk Modus</system:String>
     <system:String x:Key="String_License">Lizenz</system:String>
     <system:String x:Key="String_TimeoutOnSNMPQuery">Zeitüberschreitung bei SNMP-Abfrage.</system:String>
@@ -360,7 +359,8 @@
     <system:String x:Key="String_InstallRDP8dot1Message">Sie müssen das Remotedesktopprotokoll (RDP) Version 8.1 auf Ihrem System installieren, um die Remotedesktopfunktionalität zu verwenden.</system:String>
     <system:String x:Key="String_TheProcessCanTakeUpSomeTimeAndResources">Der Vorgang kann einige Zeit und Ressourcen in Anspruch nehmen (CPU / RAM).</system:String>
     <system:String x:Key="String_ErrorCheckingApiGithubComVerifyYourNetworkConnection">Fehler beim Überprüfen von 'api.github.com', überprüfen Sie Ihre Netzwerkverbindung!</system:String>
-
+    <system:String x:Key="String_Mode">Modus</system:String>
+    
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
     

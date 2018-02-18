@@ -18,7 +18,10 @@
     </Controls:MetroWindow.WindowButtonCommands>
     <Controls:MetroWindow.IconTemplate>
         <DataTemplate>
-            <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}">
+            <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" >
+                <Rectangle.LayoutTransform>
+                    <RotateTransform Angle="-90"/>
+                </Rectangle.LayoutTransform>
                 <Rectangle.OpacityMask>
                     <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Sitemap}" />
                 </Rectangle.OpacityMask>

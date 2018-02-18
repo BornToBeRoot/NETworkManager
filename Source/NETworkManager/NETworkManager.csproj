@@ -55,7 +55,7 @@
     <StartupObject>NETworkManager.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\Images\NETworkManager.ico</ApplicationIcon>
+    <ApplicationIcon>NETworkManager.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AxMSTSCLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -947,12 +947,6 @@
     <Resource Include="Resources\Localization\Flags\en-US.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\NETworkManager.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\NETworkManager_128x128.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
@@ -984,7 +978,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="NETworkManager.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\NETworkManager.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\NETworkManager_128x128.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>PowerShell.exe -ExecutionPolicy Bypass -NoProfile -File "$(ProjectDir)..\..\Scripts\PreBuildEventCommandLine.ps1" "$(TargetDir)"</PreBuildEvent>

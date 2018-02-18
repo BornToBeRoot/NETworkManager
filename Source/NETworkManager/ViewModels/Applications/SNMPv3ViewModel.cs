@@ -64,19 +64,21 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private bool _walk;
-        public bool Walk
+        public List<SNMPMode> Modes { get; set; }
+
+        private SNMPMode _mode;
+        public SNMPMode Mode
         {
-            get { return _walk; }
+            get { return _mode; }
             set
             {
-                if (value == _walk)
+                if (value == _mode)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.SNMP_v3_Walk = value;
+                    SettingsManager.Current.SNMP_v3_Mode = value;
 
-                _walk = value;
+                _mode = value;
                 OnPropertyChanged();
             }
         }
@@ -340,8 +342,11 @@ namespace NETworkManager.ViewModels.Applications
             _queryResultView = CollectionViewSource.GetDefaultView(QueryResult);
             _queryResultView.SortDescriptions.Add(new SortDescription(nameof(SNMPReceivedInfo.OID), ListSortDirection.Ascending));
 
-            // Version v1 and v2c (default v2c)
+            // Security
             Securitys = new List<SNMPv3Security>() { SNMPv3Security.noAuthNoPriv, SNMPv3Security.authNoPriv, SNMPv3Security.authPriv };
+
+            // Modes
+            Modes = Enum.GetValues(typeof(SNMPMode)).Cast<SNMPMode>().ToList();
 
             // Auth / Priv
             AuthenticationProviders = new List<SNMPv3AuthenticationProvider>() { SNMPv3AuthenticationProvider.MD5, SNMPv3AuthenticationProvider.SHA1 };
@@ -357,7 +362,7 @@ namespace NETworkManager.ViewModels.Applications
             Security = Securitys.FirstOrDefault(x => x == SettingsManager.Current.SNMP_v3_Security);
             AuthenticationProvider = AuthenticationProviders.FirstOrDefault(x => x == SettingsManager.Current.SNMP_v3_AuthenticationProvider);
             PrivacyProvider = PrivacyProviders.FirstOrDefault(x => x == SettingsManager.Current.SNMP_v3_PrivacyProvider);
-            Walk = SettingsManager.Current.SNMP_v3_Walk;
+            Mode = Modes.FirstOrDefault(x => x == SettingsManager.Current.SNMP_v3_Mode);
             ExpandStatistics = SettingsManager.Current.SNMP_v3_ExpandStatistics;
         }
         #endregion
@@ -472,10 +477,15 @@ namespace NETworkManager.ViewModels.Applications
             snmp.UserHasCanceled += Snmp_UserHasCanceled;
             snmp.Complete += Snmp_Complete;
 
-            if (Walk)
-                snmp.Walkv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, snmpOptions, SettingsManager.Current.SNMP_WalkMode);
-            else
-                snmp.Getv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, snmpOptions);
+            switch(Mode)
+            {             
+                case SNMPMode.Get:
+                    snmp.Getv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, snmpOptions);
+                    break;
+                case SNMPMode.Walk:
+                    snmp.Walkv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, snmpOptions, SettingsManager.Current.SNMP_WalkMode);
+                    break;
+            }
 
             // Add to history...
             AddHostToHistory(Host);
