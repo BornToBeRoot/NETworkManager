@@ -535,16 +535,6 @@ namespace NETworkManager.ViewModels.Applications
             ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
-
-        public ICommand OpenDocumentationCommand
-        {
-            get { return new RelayCommand(p => OpenDocumentationAction(p)); }
-        }
-
-        private void OpenDocumentationAction(object id)
-        {
-            Process.Start(DocumentationManager.GetLocalizedURLbyID(int.Parse((string)id)));
-        }
         #endregion
 
         #region Methods

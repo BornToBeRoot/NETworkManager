@@ -363,6 +363,7 @@
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
+    <system:String x:Key="String_DocumentationTitle_00002">Wie erstelle ich ein benutzerdefiniertes Thema und Akzent?</system:String>
     
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>

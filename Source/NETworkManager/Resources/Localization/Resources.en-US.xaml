@@ -362,8 +362,9 @@
     <system:String x:Key="String_Mode">Mode</system:String>
     
     <!-- Documentation title -->
-    <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2?</system:String>
-    
+    <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
+    <system:String x:Key="String_DocumentationTitle_00002">How to create a custom theme and accent?</system:String>
+
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Reset all settings.</system:String>

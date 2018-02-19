@@ -8,7 +8,7 @@
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
         xmlns:Settings="clr-namespace:NETworkManager.Models.Settings"
-        xmlns:Resources="clr-namespace:NETworkManager.Properties"
+        xmlns:Documentation="clr-namespace:NETworkManager.Models.Documentation"
         Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
     <UserControl.Resources>
@@ -196,7 +196,7 @@
             <TextBlock Text="{DynamicResource String_InstallRDP8dot1Message}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <StackPanel.InputBindings>
-                    <MouseBinding Gesture="LeftClick" Command="{Binding OpenDocumentationCommand}" CommandParameter="00001" />
+                    <MouseBinding Gesture="LeftClick" Command="{x:Static Documentation:DocumentationManager.OpenDocumentationCommand}" CommandParameter="00001" />
                 </StackPanel.InputBindings>
                 <StackPanel.Style>
                     <Style TargetType="{x:Type StackPanel}">

@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using NETworkManager.ViewModels;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Windows.Input;
 
 namespace NETworkManager.Models.Documentation
 {
@@ -18,7 +21,8 @@ namespace NETworkManager.Models.Documentation
             {
                 return new List<DocumentationInfo>
                 {
-                    new DocumentationInfo(00001, @"/Help/Install_RDP_8dot1_on_Windows6dot1.md", GetLocalizationInfoList("en-US", "de-DE"))
+                    new DocumentationInfo(00001, @"/Help/Install_RDP_8dot1_on_Windows6dot1.md", GetLocalizationInfoList("en-US", "de-DE")),
+                    new DocumentationInfo(00002, @"/Help/Create_custom_theme_and_accent.md", GetLocalizationInfoList("en-US", "de-DE"))
                 };
             }
         }
@@ -43,6 +47,16 @@ namespace NETworkManager.Models.Documentation
                 list.Add(new Settings.LocalizationInfo(code));
 
             return list;
+        }
+
+        public static ICommand OpenDocumentationCommand
+        {
+            get { return new RelayCommand(p => OpenDocumentationAction(p)); }
+        }
+
+        private static void OpenDocumentationAction(object id)
+        {
+            Process.Start(DocumentationManager.GetLocalizedURLbyID(int.Parse((string)id)));
         }
     }
 }
