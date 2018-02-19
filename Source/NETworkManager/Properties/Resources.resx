@@ -165,18 +165,6 @@
   <data name="Libary_MahAppsMetroIconPacks_ProjectUrl" xml:space="preserve">
     <value>https://github.com/MahApps/MahApps.Metro.IconPacks</value>
   </data>
-  <data name="Libary_MahAppsMetro_Description" xml:space="preserve">
-    <value>A toolkit for creating Metro / Modern UI styled WPF apps.</value>
-  </data>
-  <data name="Libary_MahAppsMetro_LicenseUrl" xml:space="preserve">
-    <value>https://github.com/MahApps/MahApps.Metro/blob/master/LICENSE</value>
-  </data>
-  <data name="Libary_MahAppsMetro_Name" xml:space="preserve">
-    <value>MahApps.Metro</value>
-  </data>
-  <data name="Libary_MahAppsMetro_ProjectUrl" xml:space="preserve">
-    <value>https://github.com/mahapps/mahapps.metro</value>
-  </data>
   <data name="Libary_Octokit_Description" xml:space="preserve">
     <value>A GitHub API client library for .NET</value>
   </data>

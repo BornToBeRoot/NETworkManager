@@ -4,6 +4,9 @@ using System.Diagnostics;
 using System.Windows;
 using NETworkManager.Models.Update;
 using System;
+using System.ComponentModel;
+using NETworkManager.Models.Documentation;
+using System.Windows.Data;
 
 namespace NETworkManager.ViewModels.Settings
 {
@@ -122,6 +125,26 @@ namespace NETworkManager.ViewModels.Settings
                 OnPropertyChanged();
             }
         }
+
+        private ICollectionView _librariesView;
+        public ICollectionView LibrariesView
+        {
+            get { return _librariesView; }
+        }
+
+        private LibraryInfo _selectedLibraryInfo;
+        public LibraryInfo SelectedLibraryInfo
+        {
+            get { return _selectedLibraryInfo; }
+            set
+            {
+                if (value == _selectedLibraryInfo)
+                    return;
+
+                _selectedLibraryInfo = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor
@@ -129,6 +152,8 @@ namespace NETworkManager.ViewModels.Settings
         {
             Version = string.Format("{0} {1}", Application.Current.Resources["String_Version"] as string, AssemblyManager.Current.Version);
             CopyrightAndAuthor = string.Format("{0} {1}.", AssemblyManager.Current.Copyright, AssemblyManager.Current.Company);
+
+            _librariesView = CollectionViewSource.GetDefaultView(LibraryManager.List);
         }
         #endregion
 
@@ -151,6 +176,26 @@ namespace NETworkManager.ViewModels.Settings
         private void OpenWebsiteAction(object url)
         {
             Process.Start((string)url);
+        }
+
+        public ICommand OpenLibaryWebsiteCommand
+        {
+            get { return new RelayCommand(p => OpenLibaryWebsiteAction()); }
+        }
+
+        private void OpenLibaryWebsiteAction()
+        {
+            Process.Start(SelectedLibraryInfo.LibraryUrl);
+        }
+
+        public ICommand OpenLibaryLicenseCommand
+        {
+            get { return new RelayCommand(p => OpenLibaryLicenseAction()); }
+        }
+
+        private void OpenLibaryLicenseAction()
+        {
+            Process.Start(SelectedLibraryInfo.LicenseUrl);
         }
         #endregion
 
