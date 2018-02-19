@@ -21,8 +21,8 @@ namespace NETworkManager.Models.Documentation
             {
                 return new List<DocumentationInfo>
                 {
-                    new DocumentationInfo(00001, @"/Help/Install_RDP_8dot1_on_Windows6dot1.md", GetLocalizationInfoList("en-US", "de-DE")),
-                    new DocumentationInfo(00002, @"/Help/Create_custom_theme_and_accent.md", GetLocalizationInfoList("en-US", "de-DE"))
+                    new DocumentationInfo(00001, @"/HowTo/Install_RDP_8dot1_on_Windows6dot1.md", GetLocalizationInfoList("en-US", "de-DE")),
+                    new DocumentationInfo(00002, @"/Howto/Create_custom_theme_and_accent.md", GetLocalizationInfoList("en-US", "de-DE"))
                 };
             }
         }
