@@ -117,87 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Libary_ControlEx_Description" xml:space="preserve">
-    <value>Shared Controlz for WPF and ... more.</value>
-  </data>
-  <data name="Libary_ControlzEx_LicenseUrl" xml:space="preserve">
-    <value>https://github.com/ControlzEx/ControlzEx/blob/master/LICENSE</value>
-  </data>
-  <data name="Libary_ControlzEx_Name" xml:space="preserve">
-    <value>ControlzEx</value>
-  </data>
-  <data name="Libary_ControlzEx_ProjectUrl" xml:space="preserve">
-    <value>https://github.com/ControlzEx/ControlzEx</value>
-  </data>
-  <data name="Libary_Dragablz_Description" xml:space="preserve">
-    <value>Dragable and tearable tab control for WPF.</value>
-  </data>
-  <data name="Libary_Dragablz_LicenseUrl" xml:space="preserve">
-    <value>https://github.com/ButchersBoy/Dragablz/blob/master/LICENSE</value>
-  </data>
-  <data name="Libary_Dragablz_Name" xml:space="preserve">
-    <value>Dragablz</value>
-  </data>
-  <data name="Libary_Dragablz_ProjectUrl" xml:space="preserve">
-    <value>https://github.com/ButchersBoy/Dragablz</value>
-  </data>
-  <data name="Libary_HeijdenDNS_Description" xml:space="preserve">
-    <value>Reusable DNS resolver component.</value>
-  </data>
-  <data name="Libary_HeijdenDNS_LicenseUrl" xml:space="preserve">
-    <value>https://www.codeproject.com/info/cpol10.aspx</value>
-  </data>
-  <data name="Libary_HeijdenDNS_Name" xml:space="preserve">
-    <value>Heijden.DNS</value>
-  </data>
-  <data name="Libary_HeijdenDNS_ProjectUrl" xml:space="preserve">
-    <value>https://www.codeproject.com/Articles/23673/DNS-NET-Resolver-C</value>
-  </data>
-  <data name="Libary_MahAppsMetroIconPacks_Description" xml:space="preserve">
-    <value>Some awesome icons for WPF and UWP all together...</value>
-  </data>
-  <data name="Libary_MahAppsMetroIconPacks_LicenseUrl" xml:space="preserve">
-    <value>https://github.com/MahApps/MahApps.Metro.IconPacks/blob/master/LICENSE</value>
-  </data>
-  <data name="Libary_MahAppsMetroIconPacks_Name" xml:space="preserve">
-    <value>MahApps.Metro.IconPacks</value>
-  </data>
-  <data name="Libary_MahAppsMetroIconPacks_ProjectUrl" xml:space="preserve">
-    <value>https://github.com/MahApps/MahApps.Metro.IconPacks</value>
-  </data>
-  <data name="Libary_Octokit_Description" xml:space="preserve">
-    <value>A GitHub API client library for .NET</value>
-  </data>
-  <data name="Libary_Octokit_LicenseURL" xml:space="preserve">
-    <value>https://github.com/octokit/octokit.net/blob/master/LICENSE.txt</value>
-  </data>
-  <data name="Libary_Octokit_Name" xml:space="preserve">
-    <value>Octokit</value>
-  </data>
-  <data name="Libary_Octokit_ProjectURL" xml:space="preserve">
-    <value>https://github.com/octokit/octokit.net</value>
-  </data>
-  <data name="Libary_SharpSNMPLib_Description" xml:space="preserve">
-    <value>Sharp SNMP Library- Open Source SNMP for .NET and Mono</value>
-  </data>
-  <data name="Libary_SharpSNMPLib_LicenseUrl" xml:space="preserve">
-    <value>https://github.com/lextm/sharpsnmplib/blob/master/LICENSE</value>
-  </data>
-  <data name="Libary_SharpSNMPLib_Name" xml:space="preserve">
-    <value>#SNMP Libary</value>
-  </data>
-  <data name="Libary_SharpSNMPLib_ProjectUrl" xml:space="preserve">
-    <value>https://github.com/lextm/sharpsnmplib</value>
-  </data>
-  <data name="License_CPOL" xml:space="preserve">
-    <value>Code Project Open License</value>
-  </data>
-  <data name="License_GNUGPLv3" xml:space="preserve">
-    <value>GNU General Public License v3.0</value>
-  </data>
-  <data name="License_MIT" xml:space="preserve">
-    <value>MIT License</value>
-  </data>
   <data name="NETworkManager_GitHub_Repo" xml:space="preserve">
     <value>NETworkManager</value>
   </data>
@@ -206,6 +125,9 @@
   </data>
   <data name="NETworkManager_LatestReleaseURL" xml:space="preserve">
     <value>https://github.com/BornToBeRoot/NETworkManager/releases/latest</value>
+  </data>
+  <data name="NETworkManager_License" xml:space="preserve">
+    <value>GNU General Public License v3.0</value>
   </data>
   <data name="NETworkManager_LicenseUrl" xml:space="preserve">
     <value>https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE</value>

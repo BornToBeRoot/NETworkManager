@@ -15,8 +15,6 @@ namespace NETworkManager.ViewModels.Applications
         public IInterTabClient InterTabClient { get; private set; }
         public ObservableCollection<DragablzPingTabItem> TabItems { get; private set; }
 
-        Action<Tuple<int, string>> ChangeTabTitleAction;
-
         private int _tabId = 0;
 
         private int _selectedTabIndex;
@@ -37,13 +35,11 @@ namespace NETworkManager.ViewModels.Applications
         #region Constructor
         public PingHostViewModel()
         {
-            ChangeTabTitleAction = ChangeTabTitle;
-
             InterTabClient = new DragablzPingInterTabClient();
 
             TabItems = new ObservableCollection<DragablzPingTabItem>()
             {
-                new DragablzPingTabItem(Application.Current.Resources["String_Header_Ping"] as string, new PingView(_tabId, ChangeTabTitleAction), _tabId)
+                new DragablzPingTabItem(Application.Current.Resources["String_Header_Ping"] as string, new PingView(_tabId), _tabId)
             };
         }
         #endregion
@@ -65,13 +61,8 @@ namespace NETworkManager.ViewModels.Applications
         {
             _tabId++;
 
-            TabItems.Add(new DragablzPingTabItem(Application.Current.Resources["String_Header_Ping"] as string, new PingView(_tabId, ChangeTabTitleAction), _tabId));
+            TabItems.Add(new DragablzPingTabItem(Application.Current.Resources["String_Header_Ping"] as string, new PingView(_tabId), _tabId));
             SelectedTabIndex = TabItems.Count - 1;
-        }
-
-        private void ChangeTabTitle(Tuple<int, string> obj)
-        {
-            TabItems.First(x => x.ID == obj.Item1).Header = obj.Item2;
         }
         #endregion
     }

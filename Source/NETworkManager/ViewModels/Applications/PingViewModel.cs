@@ -14,6 +14,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Threading;
 using System.Windows.Data;
+using Dragablz;
+using NETworkManager.Controls;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -22,12 +25,11 @@ namespace NETworkManager.ViewModels.Applications
         #region Variables
         CancellationTokenSource cancellationTokenSource;
 
-        private readonly Action<Tuple<int, string>> ChangeTabTitle;
         private int _tabId;
 
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         Stopwatch stopwatch = new Stopwatch();
-                
+
         private bool _isLoading = true;
 
         private string _host;
@@ -264,10 +266,9 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Contructor, load settings    
-        public PingViewModel(int tabId, Action<Tuple<int, string>> changeTabTitle)
+        public PingViewModel(int tabId)
         {
             _tabId = tabId;
-            ChangeTabTitle = changeTabTitle;
 
             _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Ping_HostHistory);
 
@@ -320,6 +321,17 @@ namespace NETworkManager.ViewModels.Applications
             MinimumTime = 0;
             MaximumTime = 0;
 
+            // Change the tab title (not nice, but it works)
+            Window window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+            if (window != null)
+            {
+                foreach (TabablzControl tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+                {
+                    tabablzControl.Items.OfType<DragablzPingTabItem>().First(x => x.ID == _tabId).Header = Host;
+                }
+            }
+
             // Try to parse the string into an IP-Address
             IPAddress.TryParse(Host, out IPAddress ipAddress);
 
@@ -364,9 +376,6 @@ namespace NETworkManager.ViewModels.Applications
 
                 return;
             }
-
-            // Change the tab title
-            ChangeTabTitle.BeginInvoke(Tuple.Create(_tabId, Host), null, null);
 
             // Add the hostname or ip address to the history
             AddHostToHistory(Host);

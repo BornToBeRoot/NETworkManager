@@ -8,12 +8,12 @@ namespace NETworkManager.Views.Applications
     {
         PingViewModel viewModel;
             
-        public PingView(int tabId, Action<Tuple<int, string>> changeTabTitle)
+        public PingView(int tabId)
         {
             InitializeComponent();
 
-            viewModel = new PingViewModel(tabId, changeTabTitle);
-
+            viewModel = new PingViewModel(tabId);
+        
             DataContext = viewModel;
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;

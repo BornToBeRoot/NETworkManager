@@ -199,6 +199,7 @@
     <Compile Include="Helpers\PowerShellHelper.cs" />
     <Compile Include="Helpers\SecureStringHelper.cs" />
     <Compile Include="Helpers\SingleInstanceHelper.cs" />
+    <Compile Include="Helpers\VisualTreeHelper.cs" />
     <Compile Include="Models\Documentation\LibraryManager.cs" />
     <Compile Include="Models\Documentation\LibraryInfo.cs" />
     <Compile Include="Models\Documentation\DocumentationInfo.cs" />
@@ -981,10 +982,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="NETworkManager.ico" />
+    <Resource Include="Resources\Images\NETworkManager.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\NETworkManager.ico" />
+    <Resource Include="NETworkManager.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\NETworkManager_128x128.png" />

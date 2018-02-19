@@ -120,7 +120,7 @@ namespace NETworkManager.ViewModels.Settings
             dialogCoordinator = instance;
 
             _credentials = CollectionViewSource.GetDefaultView(CredentialManager.Credentials);
-            _credentials.SortDescriptions.Add(new SortDescription("ID", ListSortDirection.Ascending));
+            _credentials.SortDescriptions.Add(new SortDescription(nameof(CredentialInfo.ID), ListSortDirection.Ascending));
             _credentials.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))

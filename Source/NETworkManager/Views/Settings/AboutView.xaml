@@ -31,7 +31,7 @@
                 <TextBlock Text="{DynamicResource String_Slogan}" Style="{DynamicResource WrapTextBlock}" Margin="0,0,0,5" />
                 <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold" Margin="0,0,0,5" />
                 <TextBlock Text="{Binding CopyrightAndAuthor}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,5"/>
-                <TextBlock Text="{x:Static Resources:Resources.License_GNUGPLv3 }" Style="{StaticResource LinkTextBlock}">
+                <TextBlock Text="{x:Static Resources:Resources.NETworkManager_License}" Style="{StaticResource LinkTextBlock}">
                     <TextBlock.InputBindings>
                         <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.NETworkManager_LicenseUrl}" MouseAction="LeftClick" />
                     </TextBlock.InputBindings>
@@ -115,7 +115,7 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_Name}" Binding="{Binding Library}" SortMemberPath="IPAddressInt32" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_Name}" Binding="{Binding Library}" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding Description}" MinWidth="300" Width="*" />
                 <DataGridTextColumn Header="{DynamicResource String_License}" Binding="{Binding License}" MinWidth="150" />
             </DataGrid.Columns>

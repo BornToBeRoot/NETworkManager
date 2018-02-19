@@ -154,6 +154,7 @@ namespace NETworkManager.ViewModels.Settings
             CopyrightAndAuthor = string.Format("{0} {1}.", AssemblyManager.Current.Copyright, AssemblyManager.Current.Company);
 
             _librariesView = CollectionViewSource.GetDefaultView(LibraryManager.List);
+            _librariesView.SortDescriptions.Add(new SortDescription(nameof(LibraryInfo.Library), ListSortDirection.Ascending));
         }
         #endregion
 
@@ -222,7 +223,7 @@ namespace NETworkManager.ViewModels.Settings
         {
             UpdateText = string.Format(Application.Current.Resources["String_VersionxxAvailable"] as string, e.Version);
 
-            IsUpdateCheckRunning = false;            
+            IsUpdateCheckRunning = false;
             UpdateAvailable = true;
         }
 
