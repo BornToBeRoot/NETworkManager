@@ -16,6 +16,9 @@
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding ConnectNewSessionCommand}" />
+    </UserControl.InputBindings>
     <Grid>
         <Grid Visibility="{Binding IsRDP8dot1Available, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid.ColumnDefinitions>

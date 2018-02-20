@@ -172,7 +172,12 @@ namespace NETworkManager.ViewModels.Applications
         #region ICommand & Actions
         public ICommand ConnectNewSessionCommand
         {
-            get { return new RelayCommand(p => ConnectNewSessionAction()); }
+            get { return new RelayCommand(p => ConnectNewSessionAction(), ConnectNewSession_CanExecute); }
+        }
+
+        private bool ConnectNewSession_CanExecute(object parameter)
+        {
+            return IsRDP8dot1Available;
         }
 
         private async void ConnectNewSessionAction()

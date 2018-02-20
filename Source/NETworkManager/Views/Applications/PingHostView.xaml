@@ -11,6 +11,9 @@
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding AddPingTabCommand}" />
+    </UserControl.InputBindings>
     <Grid>
         <dragablz:TabablzControl Grid.Column="0" Grid.Row="0" Margin="-0,-2,0,0" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
             <dragablz:TabablzControl.InterTabController>
