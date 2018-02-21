@@ -362,6 +362,7 @@
     <system:String x:Key="String_Mode">Modus</system:String>
     <system:String x:Key="String_OpenProject">Projekt öffnen</system:String>
     <system:String x:Key="String_OpenLicense">Lizenz öffnen</system:String>
+    <system:String x:Key="String_ConnectExternal">Extern verbinden</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
