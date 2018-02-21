@@ -101,6 +101,7 @@
     <system:String x:Key="String_Header_v3">v3</system:String>
     <system:String x:Key="String_Header_HTTPHeaders">HTTP Headers</system:String>
     <system:String x:Key="String_Header_Network">Network</system:String>
+    <system:String x:Key="String_Header_Data">Data</system:String>
     
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -419,6 +420,7 @@
     <system:String x:Key="String_Button_DecryptAndLoad">Decrypt and load...</system:String>
     <system:String x:Key="String_Button_Query">Query</system:String>
     <system:String x:Key="String_Button_Open">Open</system:String>
+    <system:String x:Key="String_Button_Send">Send</system:String>
     <system:String x:Key="String_Button_CheckForUpdaptes">Check for updates</system:String>
     
     <!-- ContextMenuItem.Header -->

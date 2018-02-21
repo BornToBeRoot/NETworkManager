@@ -16,139 +16,154 @@
         <Converter:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
     </UserControl.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="20" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Query}" />
-        <Grid Grid.Row="1" Margin="0,0,0,20">
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Query}" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Margin="0,0,0,10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Host}" Style="{StaticResource CenterTextBlock}" />
-                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="cbHost" Height="{Binding ElementName=txtCommunity, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsQueryRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
-                    <ComboBox.Text>
-                        <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </ComboBox.Text>
-                </ComboBox>
-                <TextBlock Grid.Column="4" Grid.Row="0" Text="{DynamicResource String_Version}" Style="{StaticResource CenterTextBlock}" />
-                <ComboBox Grid.Column="6" Grid.Row="0" ItemsSource="{Binding Versions}" SelectedItem="{Binding Version}" IsEnabled="{Binding IsQueryRunning, Converter={StaticResource BooleanReverseConverter}}" />
-                <TextBlock Grid.Column="8" Grid.Row="0" Text="{DynamicResource String_Mode}" Style="{StaticResource CenterTextBlock}" IsEnabled="{Binding IsQueryRunning, Converter={StaticResource BooleanReverseConverter}}" />
-                <ComboBox Grid.Column="10" Grid.Row="0" ItemsSource="{Binding Modes}" SelectedItem="{Binding Mode}" IsEnabled="{Binding IsQueryRunning, Converter={StaticResource BooleanReverseConverter}}" />
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_OID}" Style="{StaticResource CenterTextBlock}" />
-                <ComboBox Grid.Column="2" Grid.Row="2" x:Name="cbOID" Height="{Binding ElementName=txtCommunity, Path=ActualHeight}" ItemsSource="{Binding OIDHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSNMPOID}" IsEnabled="{Binding IsQueryRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
-                    <ComboBox.Text>
-                        <Binding Path="OID" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </ComboBox.Text>
-                </ComboBox>
-                <TextBlock Grid.Column="4" Grid.Row="2" Text="{DynamicResource String_Community}" Style="{StaticResource CenterTextBlock}" />
-                <TextBox Grid.Column="6" Grid.Row="2" Grid.ColumnSpan="5" Name="txtCommunity" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSNMPCommunity}" IsEnabled="{Binding IsQueryRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultTextBox}">
-                    <TextBox.Text>
-                        <Binding Path="Community" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
-                <Button Grid.Column="12" Grid.Row="4" Command="{Binding QueryCommand}" IsDefault="{Binding IsQueryRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsQueryRunning}" HorizontalAlignment="Right">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                            <Setter Property="IsEnabled" Value="True" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=cbHost, Path=(Validation.HasError)}" Value="True">
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=cbOID, Path=(Validation.HasError)}" Value="True" >
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=txtCommunity, Path=(Validation.HasError)}" Value="True" >
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding IsQueryRunning}" Value="True">
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Resources>
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Width="20" Height="20" Margin="10,5,0,5">
-                                <Rectangle.Resources>
-                                    <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:Material Kind=Play}"/>
-                                    <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
-                                </Rectangle.Resources>
-                                <Rectangle.Style>
-                                    <Style TargetType="{x:Type Rectangle}">
-                                        <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
-                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                    </Style>
-                                </Rectangle.Style>
-                            </Rectangle>
-                            <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
-                                        <Setter Property="Text" Value="{DynamicResource String_Button_Query}"/>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                    </Button.Content>
-                </Button>
-            </Grid>
-            <Controls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
-                <Controls:MetroProgressBar.Style>
-                    <Style TargetType="{x:Type  Controls:MetroProgressBar}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsQueryRunning}" Value="False">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Controls:MetroProgressBar.Style>
-            </Controls:MetroProgressBar>
-            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Host}" Style="{StaticResource CenterTextBlock}" />
+            <ComboBox Grid.Column="2" Grid.Row="0" x:Name="cbHost" Height="{Binding ElementName=txtCommunity, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox.Text>
+                    <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ComboBox.Text>
+            </ComboBox>
+            <TextBlock Grid.Column="4" Grid.Row="0" Text="{DynamicResource String_Version}" Style="{StaticResource CenterTextBlock}" />
+            <ComboBox Grid.Column="6" Grid.Row="0" ItemsSource="{Binding Versions}" SelectedItem="{Binding Version}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
+            <TextBlock Grid.Column="8" Grid.Row="0" Text="{DynamicResource String_Mode}" Style="{StaticResource CenterTextBlock}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
+            <ComboBox Grid.Column="10" Grid.Row="0" ItemsSource="{Binding Modes}" SelectedItem="{Binding Mode}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_OID}" Style="{StaticResource CenterTextBlock}" />
+            <ComboBox Grid.Column="2" Grid.Row="2" x:Name="cbOID" Height="{Binding ElementName=txtCommunity, Path=ActualHeight}" ItemsSource="{Binding OIDHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSNMPOID}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox.Text>
+                    <Binding Path="OID" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ComboBox.Text>
+            </ComboBox>
+            <TextBlock Grid.Column="4" Grid.Row="2" Text="{DynamicResource String_Community}" Style="{StaticResource CenterTextBlock}" />
+            <TextBox Grid.Column="6" Grid.Row="2" Grid.ColumnSpan="5" Name="txtCommunity" Height="{Binding ElementName=btnQuery, Path=ActualHeight}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSNMPCommunity}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultTextBox}">
+                <TextBox.Text>
+                    <Binding Path="Community" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
         </Grid>
-        <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
-        <DataGrid Grid.Row="3" ItemsSource="{Binding QueryResultView}" SelectedItem="{Binding SelectedQueryResult}" Margin="0,0,0,20">
+        <Button x:Name="btnQuery" Grid.Column="2" Grid.Row="1" Command="{Binding QueryCommand}" VerticalAlignment="Bottom">
+            <Button.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                    <Setter Property="Visibility" Value="Hidden" />
+                    <Setter Property="IsDefault" Value="False" />
+                    <Setter Property="IsCancel" Value="False" />
+                    <Setter Property="IsEnabled" Value="True" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Mode}" Value="Get">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Setter Property="IsDefault" Value="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
+                            <Setter Property="IsCancel" Value="{Binding IsWorking}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Mode}" Value="Walk">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Setter Property="IsDefault" Value="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
+                            <Setter Property="IsCancel" Value="{Binding IsWorking}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=cbHost, Path=(Validation.HasError)}" Value="True">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=cbOID, Path=(Validation.HasError)}" Value="True" >
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=txtCommunity, Path=(Validation.HasError)}" Value="True" >
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsWorking}" Value="True">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Resources>
+            <Button.Content>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Width="20" Height="20" Margin="10,5,0,5">
+                        <Rectangle.Resources>
+                            <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:Material Kind=Play}"/>
+                            <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
+                        </Rectangle.Resources>
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
+                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                    <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+                                <Setter Property="Text" Value="{DynamicResource String_Button_Query}"/>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+            </Button.Content>
+        </Button>
+        <TextBlock Grid.Row="3" Grid.ColumnSpan="3">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+                    <Setter Property="Text" Value="{DynamicResource String_Header_Result}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Mode}" Value="Set">
+                            <Setter Property="Text" Value="{DynamicResource String_Header_Data}" />
+                            <Setter Property="Grid.ColumnSpan" Value="1"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Mode}" Value="Trap">
+                            <Setter Property="Text" Value="{DynamicResource String_Header_Data}" />
+                            <Setter Property="Grid.ColumnSpan" Value="1"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <DataGrid Grid.Row="4" Grid.ColumnSpan="3" ItemsSource="{Binding QueryResultView}" SelectedItem="{Binding SelectedQueryResult}">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -181,6 +196,19 @@
                     </MenuItem>
                 </ContextMenu>
             </DataGrid.Resources>
+            <DataGrid.Style>
+                <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource DefaultDataGrid}">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Mode}" Value="Get">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Mode}" Value="Walk">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Style>
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
                     <Style.Triggers>
@@ -195,7 +223,83 @@
                 <DataGridTextColumn Header="{DynamicResource String_Data}" Binding="{Binding Data}" MinWidth="300" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}">
+        <TextBox Grid.Row="4" Text="{Binding Data}">
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource ConsoleTextBox}">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Mode}" Value="Set">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Mode}" Value="Trap">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        <Button x:Name="btnSend" Grid.Column="2" Grid.Row="4" Command="{Binding SendCommand}" VerticalAlignment="Bottom">
+            <Button.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                    <Setter Property="Visibility" Value="Hidden" />
+                    <Setter Property="IsDefault" Value="False" />
+                    <Setter Property="IsCancel" Value="False" />
+                    <Setter Property="IsEnabled" Value="True" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Mode}" Value="Set">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Setter Property="IsDefault" Value="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
+                            <Setter Property="IsCancel" Value="{Binding IsWorking}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Mode}" Value="Trap">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Setter Property="IsDefault" Value="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
+                            <Setter Property="IsCancel" Value="{Binding IsWorking}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=cbHost, Path=(Validation.HasError)}" Value="True">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=cbOID, Path=(Validation.HasError)}" Value="True" >
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=txtCommunity, Path=(Validation.HasError)}" Value="True" >
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsWorking}" Value="True">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Resources>
+            <Button.Content>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Width="20" Height="20" Margin="10,5,0,5">
+                        <Rectangle.Resources>
+                            <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:Material Kind=Play}"/>
+                            <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
+                        </Rectangle.Resources>
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
+                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                    <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+                                <Setter Property="Text" Value="{DynamicResource String_Button_Send}"/>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+            </Button.Content>
+        </Button>
+        <Expander Grid.Row="6" Grid.ColumnSpan="3" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}">
             <Expander.Header>
                 <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>

@@ -13,6 +13,11 @@
     <!-- Apply the default design to all text boxes -->
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
 
+    <Style x:Key="ConsoleTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+        <Setter Property="FontFamily" Value="Consolas" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+    </Style>
+    
     <Style x:Key="SearchTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource SearchMetroTextBox}">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />

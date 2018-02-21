@@ -117,16 +117,30 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private bool _isQueryRunning;
-        public bool IsQueryRunning
+        private string _data;
+        public string Data
         {
-            get { return _isQueryRunning; }
+            get { return _data; }
             set
             {
-                if (value == _isQueryRunning)
+                if (value == _data)
                     return;
 
-                _isQueryRunning = value;
+                _data = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isWorking;
+        public bool IsWorking
+        {
+            get { return _isWorking; }
+            set
+            {
+                if (value == _isWorking)
+                    return;
+
+                _isWorking = value;
                 OnPropertyChanged();
             }
         }
@@ -291,7 +305,7 @@ namespace NETworkManager.ViewModels.Applications
         private void LoadSettings()
         {
             Version = Versions.FirstOrDefault(x => x == SettingsManager.Current.SNMP_v1v2c_Version);
-            Mode = Modes.FirstOrDefault(x => x ==  SettingsManager.Current.SNMP_v1v2c_Mode);
+            Mode = Modes.FirstOrDefault(x => x == SettingsManager.Current.SNMP_v1v2c_Mode);
             ExpandStatistics = SettingsManager.Current.SNMP_v1v2c_ExpandStatistics;
         }
         #endregion
@@ -333,7 +347,7 @@ namespace NETworkManager.ViewModels.Applications
         private async void Query()
         {
             DisplayStatusMessage = false;
-            IsQueryRunning = true;
+            IsWorking = true;
 
             // Measure time
             StartTime = DateTime.Now;
@@ -406,7 +420,7 @@ namespace NETworkManager.ViewModels.Applications
             snmp.UserHasCanceled += Snmp_UserHasCanceled;
             snmp.Complete += Snmp_Complete;
 
-            switch(Mode)
+            switch (Mode)
             {
                 case SNMPMode.Get:
                     snmp.Getv1v2cAsync(Version, ipAddress, Community, OID, snmpOptions);
@@ -423,7 +437,7 @@ namespace NETworkManager.ViewModels.Applications
 
         private void QueryFinished()
         {
-            IsQueryRunning = false;
+            IsWorking = false;
 
             // Stop timer and stopwatch
             stopwatch.Stop();
@@ -447,7 +461,7 @@ namespace NETworkManager.ViewModels.Applications
             // Fill with the new items
             list.ForEach(x => SettingsManager.Current.SNMP_v1v2c_HostHistory.Add(x));
         }
-        
+
         private void AddOIDToHistory(string oid)
         {
             // Create the new list
