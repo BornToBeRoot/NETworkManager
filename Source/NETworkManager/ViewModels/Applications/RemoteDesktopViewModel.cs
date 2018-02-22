@@ -423,6 +423,16 @@ namespace NETworkManager.ViewModels.Applications
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
+        public ICommand ConnectSessionExternalCommand
+        {
+            get { return new RelayCommand(p => ConnectSessionExternalAction()); }
+        }
+
+        private void ConnectSessionExternalAction()
+        {
+            Process.Start("mstsc.exe", string.Format("/V:{0}", SelectedSession.Host));
+        }
+
         public ICommand EditSessionCommand
         {
             get { return new RelayCommand(p => EditSessionAction()); }
