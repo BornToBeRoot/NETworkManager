@@ -3,8 +3,10 @@ using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NETworkManager.Models.Network
 {
@@ -178,6 +180,27 @@ namespace NETworkManager.Models.Network
                     OnError();
                 }
             });
+        }
+
+        public void Setv1v2cAsync(SNMPVersion version, IPAddress ipAddress, string communtiy, string oid, string data, SNMPOptions options)
+        {
+            /*  Task.Run(() =>
+            {
+                try
+                {*/
+                    var result = Messenger.Set(version == SNMPVersion.v1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(communtiy), new List<Variable> { new Variable(new ObjectIdentifier(oid), new OctetString(data)) }, options.Timeout);
+                    Debug.Write(result);
+                    OnComplete();
+                /*}
+                catch (Lextm.SharpSnmpLib.Messaging.TimeoutException)
+                {
+                    OnTimeout();
+                }
+                catch (ErrorException)
+                {
+                    OnError();
+                }
+            });*/
         }
 
         // noAuthNoPriv

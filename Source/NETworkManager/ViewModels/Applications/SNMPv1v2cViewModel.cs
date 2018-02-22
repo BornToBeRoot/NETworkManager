@@ -117,7 +117,7 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private string _data;
+        private string _data = string.Empty;
         public string Data
         {
             get { return _data; }
@@ -321,6 +321,16 @@ namespace NETworkManager.ViewModels.Applications
             Query();
         }
 
+        public ICommand SendCommand
+        {
+            get { return new RelayCommand(p => SendAction()); }
+        }
+
+        private void SendAction()
+        {
+            Send();
+        }
+
         public ICommand CopySelectedOIDCommand
         {
             get { return new RelayCommand(p => CopySelectedOIDAction()); }
@@ -397,7 +407,7 @@ namespace NETworkManager.ViewModels.Applications
             }
             catch (SocketException) // This will catch DNS resolve errors
             {
-                QueryFinished();
+                Finished();
 
                 StatusMessage = string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, Host);
                 DisplayStatusMessage = true;
@@ -435,7 +445,97 @@ namespace NETworkManager.ViewModels.Applications
             AddOIDToHistory(OID);
         }
 
-        private void QueryFinished()
+        private async void Send()
+        {
+            DisplayStatusMessage = false;
+            IsWorking = true;
+
+            // Measure time
+            StartTime = DateTime.Now;
+            stopwatch.Start();
+            dispatcherTimer.Tick += DispatcherTimer_Tick;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            dispatcherTimer.Start();
+            EndTime = null;
+
+            QueryResult.Clear();
+            Responses = 0;
+
+            // Try to parse the string into an IP-Address
+            IPAddress.TryParse(Host, out IPAddress ipAddress);
+
+            try
+            {
+                // Try to resolve the hostname
+                if (ipAddress == null)
+                {
+                    IPHostEntry ipHostEntrys = await Dns.GetHostEntryAsync(Host);
+
+                    foreach (IPAddress ipAddr in ipHostEntrys.AddressList)
+                    {
+                        if (ipAddr.AddressFamily == AddressFamily.InterNetwork && SettingsManager.Current.SNMP_ResolveHostnamePreferIPv4)
+                        {
+                            ipAddress = ipAddr;
+                            continue;
+                        }
+                        else if (ipAddr.AddressFamily == AddressFamily.InterNetworkV6 && !SettingsManager.Current.SNMP_ResolveHostnamePreferIPv4)
+                        {
+                            ipAddress = ipAddr;
+                            continue;
+                        }
+                    }
+
+                    // Fallback --> If we could not resolve our prefered ip protocol for the hostname
+                    if (ipAddress == null)
+                    {
+                        foreach (IPAddress ipAddr in ipHostEntrys.AddressList)
+                        {
+                            ipAddress = ipAddr;
+                            continue;
+                        }
+                    }
+                }
+            }
+            catch (SocketException) // This will catch DNS resolve errors
+            {
+                Finished();
+
+                StatusMessage = string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, Host);
+                DisplayStatusMessage = true;
+
+                return;
+            }
+
+            // SNMP...
+            SNMPOptions snmpOptions = new SNMPOptions()
+            {
+                Port = SettingsManager.Current.SNMP_Port,
+                Timeout = SettingsManager.Current.SNMP_Timeout
+            };
+
+            SNMP snmp = new SNMP();
+
+            snmp.Timeout += Snmp_Timeout;
+            snmp.Error += Snmp_Error;
+            snmp.UserHasCanceled += Snmp_UserHasCanceled;
+            snmp.Complete += Snmp_Complete;
+
+            switch (Mode)
+            {
+                case SNMPMode.Set:
+                    snmp.Setv1v2cAsync(Version, ipAddress, Community, OID, Data, snmpOptions);
+                    break;
+                case SNMPMode.Trap:
+                    break;
+            }
+
+            // Add to history...
+            AddHostToHistory(Host);
+            AddOIDToHistory(OID);
+        }
+
+
+        private void Finished()
         {
             IsWorking = false;
 
@@ -474,7 +574,6 @@ namespace NETworkManager.ViewModels.Applications
             // Fill with the new items
             list.ForEach(x => SettingsManager.Current.SNMP_v1v2c_OIDHistory.Add(x));
         }
-
         #endregion
 
         #region Events
@@ -495,7 +594,7 @@ namespace NETworkManager.ViewModels.Applications
             StatusMessage = Application.Current.Resources["String_TimeoutOnSNMPQuery"] as string;
             DisplayStatusMessage = true;
 
-            QueryFinished();
+            Finished();
         }
 
         private void Snmp_Error(object sender, EventArgs e)
@@ -503,7 +602,7 @@ namespace NETworkManager.ViewModels.Applications
             StatusMessage = Application.Current.Resources["String_ErrorInResponse"] as string;
             DisplayStatusMessage = true;
 
-            QueryFinished();
+            Finished();
         }
 
         private void Snmp_UserHasCanceled(object sender, EventArgs e)
@@ -511,12 +610,12 @@ namespace NETworkManager.ViewModels.Applications
             StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
             DisplayStatusMessage = true;
 
-            QueryFinished();
+            Finished();
         }
 
         private void Snmp_Complete(object sender, EventArgs e)
         {
-            QueryFinished();
+            Finished();
         }
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)

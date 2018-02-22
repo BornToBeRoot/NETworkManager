@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
         xmlns:Validator="clr-namespace:NETworkManager.Validators"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d">
@@ -331,8 +330,36 @@
                     <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Duration, StringFormat={}{0:hh}h {0:mm}m {0:ss}s {0:ff}ms}" />
                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_EndTime}" />
                     <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding EndTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
-                    <TextBlock Grid.Column="3" Grid.Row="0" Text="{DynamicResource String_Responses}" />
-                    <TextBox Grid.Column="4" Grid.Row="0" Text="{Binding Responses, Converter={StaticResource IntToStringConverter}}" />
+                    <TextBlock Grid.Column="3" Grid.Row="0" Text="{DynamicResource String_Responses}">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
+                                <Setter Property="Visibility" Value="Visible" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Mode}" Value="Set">
+                                        <Setter Property="Visibility" Value="Hidden" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Mode}" Value="Trap">
+                                        <Setter Property="Visibility" Value="Hidden" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <TextBox Grid.Column="4" Grid.Row="0" Text="{Binding Responses, Converter={StaticResource IntToStringConverter}}">
+                        <TextBox.Style>
+                            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
+                                <Setter Property="Visibility" Value="Visible" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Mode}" Value="Set">
+                                        <Setter Property="Visibility" Value="Hidden" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Mode}" Value="Trap">
+                                        <Setter Property="Visibility" Value="Hidden" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
                 </Grid>
             </StackPanel>
         </Expander>
