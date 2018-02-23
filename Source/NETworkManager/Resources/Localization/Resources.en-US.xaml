@@ -489,24 +489,25 @@
     <system:String x:Key="String_Progress_FixGatewayAfterDHCPEnabled">Fix gateway after DHCP is enabled...</system:String>
     
     <!-- Validate (User Input in GUI) -->
-    <system:String x:Key="String_ValidateError_FieldEmpty">Field cannot be empty!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidMACAddress">Enter a valid MAC address like 00:F1:23:AB:F2:35!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidPort">Enter a valid port (1 - 65535)!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidIPv4Address">Enter a valid IPv4 address!</system:String>
-    <system:String x:Key="String_ValidateError_FolderDoesNotExist">Folder does not exists!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidSubnetmask">Enter a valid subnetmask (like 255.255.255.0)!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidSubnetmaskOrCIDR">Enter a valid subnetmask or CIDR (like 255.255.255.0 or 24)!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidIPScanRange">Enter a valid ip range!</system:String>
-    <system:String x:Key="String_ValidateError_FileDoesNotExist">File does not exists!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidPortOrPortRange">Enter a valid port and/or port range (1 - 65535)!</system:String>
-    <system:String x:Key="String_ValidateError_OnlyNumbersCanBeEntered">Only numbers can be entered!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidValueBetween10and100">Enter a valid value between 10 and 100!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidIPAddress">Enter a valid IP address!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidSubnet">Enter a valid subnet (like 192.168.178.133/26)</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidWebsiteUri">Enter a valid website (like https://example.com/index.html)</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidHosts">Enter valid hosts (multiple hosts can not end with ";")!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidNumber">Enter a valid number!</system:String>
-    <system:String x:Key="String_ValidateError_EnterOneOrMoreValidIPAddresses">Enter one or more valid IP addresses!</system:String>
+    <system:String x:Key="String_ValidationError_FieldEmpty">Field cannot be empty!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidMACAddress">Enter a valid MAC address like 00:F1:23:AB:F2:35!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidPort">Enter a valid port (1 - 65535)!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidIPv4Address">Enter a valid IPv4 address!</system:String>
+    <system:String x:Key="String_ValidationError_FolderDoesNotExist">Folder does not exists!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidSubnetmask">Enter a valid subnetmask (like 255.255.255.0)!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidSubnetmaskOrCIDR">Enter a valid subnetmask or CIDR (like 255.255.255.0 or 24)!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidIPScanRange">Enter a valid ip range!</system:String>
+    <system:String x:Key="String_ValidationError_FileDoesNotExist">File does not exists!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidPortOrPortRange">Enter a valid port and/or port range (1 - 65535)!</system:String>
+    <system:String x:Key="String_ValidationError_OnlyNumbersCanBeEntered">Only numbers can be entered!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidValueBetween10and100">Enter a valid value between 10 and 100!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidIPAddress">Enter a valid IP address!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidSubnet">Enter a valid subnet (like 192.168.178.133/26)</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidWebsiteUri">Enter a valid website (like https://example.com/index.html)</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidHosts">Enter valid hosts (multiple hosts can not end with ";")!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidNumber">Enter a valid number!</system:String>
+    <system:String x:Key="String_ValidationError_EnterOneOrMoreValidIPAddresses">Enter one or more valid IP addresses!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidOID">Enter a valid OID!</system:String>
     
     <!-- ApplicationView.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP Scanner</system:String>

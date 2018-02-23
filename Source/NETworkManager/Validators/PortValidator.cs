@@ -16,7 +16,7 @@ namespace NETworkManager.Validators
                     return ValidationResult.ValidResult;
             }
 
-            return new ValidationResult(false, Application.Current.Resources["String_ValidateError_EnterValidPort"] as string);
+            return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidPort"] as string);
         }
     }
 }

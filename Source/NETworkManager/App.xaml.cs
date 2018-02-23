@@ -16,7 +16,7 @@ namespace NETworkManager
         // Single instance unique identifier
         private const string Guid = "6A3F34B2-161F-4F70-A8BC-A19C40F79CFB";
         Mutex _mutex;
-
+        
         private bool _singleInstanceClose = false;
 
         public App()

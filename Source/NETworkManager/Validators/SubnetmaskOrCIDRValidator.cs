@@ -26,7 +26,7 @@ namespace NETworkManager.Validators
                 }
             }
 
-            return new ValidationResult(false, Application.Current.Resources["String_ValidateError_EnterValidSubnetmaskOrCIDR"] as string);
+            return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidSubnetmaskOrCIDR"] as string);
         }
     }
 }

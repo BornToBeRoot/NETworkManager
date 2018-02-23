@@ -295,7 +295,7 @@ namespace NETworkManager.ViewModels.Applications
             Versions = new List<SNMPVersion>() { SNMPVersion.v1, SNMPVersion.v2c };
 
             // Modes
-            Modes = Enum.GetValues(typeof(SNMPMode)).Cast<SNMPMode>().ToList();
+            Modes = new List<SNMPMode>() { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
 
             LoadSettings();
 
@@ -533,7 +533,6 @@ namespace NETworkManager.ViewModels.Applications
             AddHostToHistory(Host);
             AddOIDToHistory(OID);
         }
-
 
         private void Finished()
         {

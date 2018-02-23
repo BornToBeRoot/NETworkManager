@@ -13,7 +13,7 @@ namespace NETworkManager.Validators
             if (Regex.IsMatch(value as string, RegexHelper.IPv4AddressRegex))
                 return ValidationResult.ValidResult;
 
-            return new ValidationResult(false, Application.Current.Resources["String_ValidateError_EnterValidIPv4Address"] as string);
+            return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidIPv4Address"] as string);
         }
     }
 }

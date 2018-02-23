@@ -43,5 +43,8 @@
 
         // Test for http|https uris
         public const string httpAndHttpsUriRegex = @"^http(s)?:\/\/([\w-]+.)+[\w-]+(\/[\w- ./?%&=])?$";
+
+        // OID (SNMP)
+        public const string OIDRegex = @"^([1-9][0-9]{0,3}|0)(\.([1-9][0-9]{0,3}|0)){5,13}$";
     }
 }

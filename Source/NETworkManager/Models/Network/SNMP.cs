@@ -184,14 +184,14 @@ namespace NETworkManager.Models.Network
 
         public void Setv1v2cAsync(SNMPVersion version, IPAddress ipAddress, string communtiy, string oid, string data, SNMPOptions options)
         {
-            /*  Task.Run(() =>
+            Task.Run(() =>
             {
                 try
-                {*/
+                {
                     var result = Messenger.Set(version == SNMPVersion.v1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(communtiy), new List<Variable> { new Variable(new ObjectIdentifier(oid), new OctetString(data)) }, options.Timeout);
-                    Debug.Write(result);
+
                     OnComplete();
-                /*}
+                }
                 catch (Lextm.SharpSnmpLib.Messaging.TimeoutException)
                 {
                     OnTimeout();
@@ -200,7 +200,7 @@ namespace NETworkManager.Models.Network
                 {
                     OnError();
                 }
-            });*/
+            });
         }
 
         // noAuthNoPriv
@@ -247,12 +247,14 @@ namespace NETworkManager.Models.Network
             v3
         }
 
+        // Trap and Inform not implemented
         public enum SNMPMode
         {
             Get,
             Walk,
             Set,
-            Trap
+            Trap,
+            Inform
         }
 
         public enum SNMPv3Security

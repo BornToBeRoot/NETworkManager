@@ -220,6 +220,7 @@
     <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Models\Update\UpdateAvailableArgs.cs" />
     <Compile Include="Models\Update\Updater.cs" />
+    <Compile Include="Validators\OIDValidator.cs" />
     <Compile Include="Validators\Int32Validator.cs" />
     <Compile Include="Validators\MultipleIPAddressesValidator.cs" />
     <Compile Include="Validators\MultipleHostsValidator.cs" />

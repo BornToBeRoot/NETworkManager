@@ -11,7 +11,7 @@ namespace NETworkManager.Validators
             if (int.TryParse(value as string, out int x) && x > 0)
                 return ValidationResult.ValidResult;
             else
-                return new ValidationResult(false, Application.Current.Resources["String_ValidateError_EnterValidNumber"] as string);
+                return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidNumber"] as string);
         }
     }
 }

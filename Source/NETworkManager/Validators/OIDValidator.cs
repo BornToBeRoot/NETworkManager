@@ -6,14 +6,14 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Validators
 {
-    public class IPAddressValidator : ValidationRule
+    public class OIDValidator : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (Regex.IsMatch(value as string, RegexHelper.IPv4AddressRegex) || Regex.IsMatch(value as string, RegexHelper.IPv6AddressRegex))
+            if (Regex.IsMatch(value as string, RegexHelper.OIDRegex))
                 return ValidationResult.ValidResult;
 
-            return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidIPAddress"] as string);
+            return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidOID"] as string);
         }
     }
 }
