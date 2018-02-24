@@ -13,7 +13,7 @@ namespace NETworkManager.Validators
             if (Regex.IsMatch(value as string, RegexHelper.MACAddressRegex))
                 return ValidationResult.ValidResult;
 
-            return new ValidationResult(false, Application.Current.Resources["String_ValidateError_EnterValidMACAddress"] as string);
+            return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidMACAddress"] as string);
         }
     }
 }

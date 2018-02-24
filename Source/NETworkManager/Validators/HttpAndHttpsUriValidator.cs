@@ -12,7 +12,7 @@ namespace NETworkManager.Validators
             if (Uri.TryCreate(value as string, UriKind.Absolute, out Uri uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
                 return ValidationResult.ValidResult;
 
-            return new ValidationResult(false, Application.Current.Resources["String_ValidateError_EnterValidWebsiteUri"] as string);
+            return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidWebsiteUri"] as string);
         }
     }
 }

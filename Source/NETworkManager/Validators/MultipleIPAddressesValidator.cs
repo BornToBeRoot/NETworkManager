@@ -13,7 +13,7 @@ namespace NETworkManager.Validators
             foreach (string ipAddress in (value as string).Split(';'))
             {
                 if (!Regex.IsMatch(ipAddress.Trim(), RegexHelper.IPv4AddressRegex) && !Regex.IsMatch(ipAddress.Trim(), RegexHelper.IPv6AddressRegex))
-                    return new ValidationResult(false, Application.Current.Resources["String_ValidateError_EnterOneOrMoreValidIPAddresses"] as string);
+                    return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterOneOrMoreValidIPAddresses"] as string);
             }
             return ValidationResult.ValidResult;
         }

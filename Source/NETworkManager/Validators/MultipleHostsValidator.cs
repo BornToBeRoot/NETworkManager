@@ -11,7 +11,7 @@ namespace NETworkManager.Validators
             foreach(string host in (value as string).Split(';'))
             {
                 if (string.IsNullOrEmpty(host))
-                    return new ValidationResult(false, Application.Current.Resources["String_ValidateError_EnterValidHosts"] as string);
+                    return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidHosts"] as string);
             }                
 
             return ValidationResult.ValidResult;

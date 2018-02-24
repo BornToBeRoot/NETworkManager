@@ -18,7 +18,7 @@ namespace NETworkManager.Validators
             if (Regex.IsMatch(subnet, RegexHelper.SubnetCalculatorIPv4AddressSubnetmaskRegex))
                 return ValidationResult.ValidResult;
 
-            return new ValidationResult(false, Application.Current.Resources["String_ValidateError_EnterValidSubnet"] as string);
+            return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidSubnet"] as string);
         }
     }
 }

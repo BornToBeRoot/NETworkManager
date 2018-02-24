@@ -101,6 +101,7 @@
     <system:String x:Key="String_Header_v3">v3</system:String>
     <system:String x:Key="String_Header_HTTPHeaders">HTTP Headers</system:String>
     <system:String x:Key="String_Header_Network">Network</system:String>
+    <system:String x:Key="String_Header_Data">Data</system:String>
     
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -363,6 +364,8 @@
     <system:String x:Key="String_OpenProject">Open project</system:String>
     <system:String x:Key="String_OpenLicense">Open license</system:String>
     <system:String x:Key="String_ConnectExternal">Connect external</system:String>
+    <system:String x:Key="String_DataHasBeenUpdated">Data has been updated!</system:String>
+    <system:String x:Key="String_ErrorInResponseCheckIfYouHaveWritePermissions">Error in response! Check if you have write permissions.</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
@@ -377,7 +380,7 @@
     <system:String x:Key="String_HelpMessage_RDPAuthenticationLevel">[0] If server authentication fails, connect to the computer without warning.\n[1] If server authentication fails, do not establish a connection.\n[2] If server authentication fails, show a warning and allow me to connect or refuse the connection.\n[3] No authentication requirement is specified.</system:String>
     
     <!-- Warn message -->
-    <system:String x:Key="String_WarnMessage_SettingsGeneralAppearanceTransparency">Some graphics cards / drivers have problems maximizing the application when transparency is enabled. The function must be disabled for using "Remote Desktop"! Enabling or disabling this feature requires a restart of the application.</system:String>
+    <system:String x:Key="String_WarningMessage_SettingsGeneralAppearanceTransparency">Some graphics cards / drivers have problems maximizing the application when transparency is enabled. The function must be disabled for using "Remote Desktop"! Enabling or disabling this feature requires a restart of the application.</system:String>
     
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Change</system:String>
@@ -420,6 +423,7 @@
     <system:String x:Key="String_Button_DecryptAndLoad">Decrypt and load...</system:String>
     <system:String x:Key="String_Button_Query">Query</system:String>
     <system:String x:Key="String_Button_Open">Open</system:String>
+    <system:String x:Key="String_Button_Send">Send</system:String>
     <system:String x:Key="String_Button_CheckForUpdaptes">Check for updates</system:String>
     
     <!-- ContextMenuItem.Header -->
@@ -475,7 +479,7 @@
     <system:String x:Key="String_Watermark_ExampleSuffix">fritz.box</system:String>
     <system:String x:Key="String_Watermark_NotChanged">(not changed)</system:String>
     <system:String x:Key="String_Watermark_ExampleSNMPOID">1.3.6.1.2.1.1</system:String>
-    <system:String x:Key="String_Watermark_ExampleSNMPCommunity">Public</system:String>
+    <system:String x:Key="String_Watermark_ExampleSNMPCommunity">public</system:String>
     <system:String x:Key="String_Watermark_ExampleSNMPUsername">snmp-user</system:String>
     
     <!-- ShowProgress -->
@@ -487,24 +491,26 @@
     <system:String x:Key="String_Progress_FixGatewayAfterDHCPEnabled">Fix gateway after DHCP is enabled...</system:String>
     
     <!-- Validate (User Input in GUI) -->
-    <system:String x:Key="String_ValidateError_FieldEmpty">Field cannot be empty!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidMACAddress">Enter a valid MAC address like 00:F1:23:AB:F2:35!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidPort">Enter a valid port (1 - 65535)!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidIPv4Address">Enter a valid IPv4 address!</system:String>
-    <system:String x:Key="String_ValidateError_FolderDoesNotExist">Folder does not exists!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidSubnetmask">Enter a valid subnetmask (like 255.255.255.0)!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidSubnetmaskOrCIDR">Enter a valid subnetmask or CIDR (like 255.255.255.0 or 24)!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidIPScanRange">Enter a valid ip range!</system:String>
-    <system:String x:Key="String_ValidateError_FileDoesNotExist">File does not exists!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidPortOrPortRange">Enter a valid port and/or port range (1 - 65535)!</system:String>
-    <system:String x:Key="String_ValidateError_OnlyNumbersCanBeEntered">Only numbers can be entered!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidValueBetween10and100">Enter a valid value between 10 and 100!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidIPAddress">Enter a valid IP address!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidSubnet">Enter a valid subnet (like 192.168.178.133/26)</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidWebsiteUri">Enter a valid website (like https://example.com/index.html)</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidHosts">Enter valid hosts (multiple hosts can not end with ";")!</system:String>
-    <system:String x:Key="String_ValidateError_EnterValidNumber">Enter a valid number!</system:String>
-    <system:String x:Key="String_ValidateError_EnterOneOrMoreValidIPAddresses">Enter one or more valid IP addresses!</system:String>
+    <system:String x:Key="String_ValidationError_FieldEmpty">Field cannot be empty!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidMACAddress">Enter a valid MAC address like 00:F1:23:AB:F2:35!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidPort">Enter a valid port (1 - 65535)!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidIPv4Address">Enter a valid IPv4 address!</system:String>
+    <system:String x:Key="String_ValidationError_FolderDoesNotExist">Folder does not exists!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidSubnetmask">Enter a valid subnetmask (like 255.255.255.0)!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidSubnetmaskOrCIDR">Enter a valid subnetmask or CIDR (like 255.255.255.0 or 24)!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidIPScanRange">Enter a valid ip range!</system:String>
+    <system:String x:Key="String_ValidationError_FileDoesNotExist">File does not exists!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidPortOrPortRange">Enter a valid port and/or port range (1 - 65535)!</system:String>
+    <system:String x:Key="String_ValidationError_OnlyNumbersCanBeEntered">Only numbers can be entered!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidValueBetween10and100">Enter a valid value between 10 and 100!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidIPAddress">Enter a valid IP address!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidSubnet">Enter a valid subnet (like 192.168.178.133/26)</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidWebsiteUri">Enter a valid website (like https://example.com/index.html)</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidHosts">Enter valid hosts (multiple hosts can not end with ";")!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidNumber">Enter a valid number!</system:String>
+    <system:String x:Key="String_ValidationError_EnterOneOrMoreValidIPAddresses">Enter one or more valid IP addresses!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidOID">Enter a valid OID!</system:String>
+    <system:String x:Key="String_ValidationError_KeyMustHave8CharactersOrMore">Key must have 8 characters or more!</system:String>
     
     <!-- ApplicationView.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP Scanner</system:String>

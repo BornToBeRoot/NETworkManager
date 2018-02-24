@@ -71,7 +71,7 @@ namespace NETworkManager.Validators
             if (isValid)
                 return ValidationResult.ValidResult;
             else
-                return new ValidationResult(false, Application.Current.Resources["String_ValidateError_EnterValidIPScanRange"] as string);
+                return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidIPScanRange"] as string);
         }
     }
 }

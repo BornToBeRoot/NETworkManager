@@ -11,13 +11,13 @@ namespace NETworkManager.Validators
             if (int.TryParse(value as string, out int result))
             {
                 if (result < 10 || result > 100)
-                    return new ValidationResult(false, Application.Current.Resources["String_ValidateError_EnterValidValueBetween10and100"] as string);
+                    return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidValueBetween10and100"] as string);
                 else
                     return ValidationResult.ValidResult;
             }
             else
             {
-                return new ValidationResult(false, Application.Current.Resources["String_ValidateError_OnlyNumbersCanBeEntered"] as string);
+                return new ValidationResult(false, Application.Current.Resources["String_ValidationError_OnlyNumbersCanBeEntered"] as string);
             }
         }
     }

@@ -17,7 +17,7 @@ using static NETworkManager.Models.Network.SNMP;
 
 namespace NETworkManager.ViewModels.Applications
 {
-    public class SNMPv3ViewModel : ViewModelBase
+    public class SNMPViewModel : ViewModelBase
     {
         #region Variables
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
@@ -45,21 +45,21 @@ namespace NETworkManager.ViewModels.Applications
             get { return _hostHistoryView; }
         }
 
-        public List<SNMPv3Security> Securitys { get; set; }
+        public List<SNMPVersion> Versions { get; set; }
 
-        private SNMPv3Security _security;
-        public SNMPv3Security Security
+        private SNMPVersion _version;
+        public SNMPVersion Version
         {
-            get { return _security; }
+            get { return _version; }
             set
             {
-                if (value == _security)
+                if (value == _version)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.SNMP_v3_Security = value;
+                    SettingsManager.Current.SNMP_Version = value;
 
-                _security = value;
+                _version = value;
                 OnPropertyChanged();
             }
         }
@@ -76,7 +76,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.SNMP_v3_Mode = value;
+                    SettingsManager.Current.SNMP_Mode = value;
 
                 _mode = value;
                 OnPropertyChanged();
@@ -101,6 +101,39 @@ namespace NETworkManager.ViewModels.Applications
         public ICollectionView OIDHistoryView
         {
             get { return _oidHistoryView; }
+        }
+
+        public List<SNMPv3Security> Securitys { get; set; }
+
+        private SNMPv3Security _security;
+        public SNMPv3Security Security
+        {
+            get { return _security; }
+            set
+            {
+                if (value == _security)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.SNMP_Security = value;
+
+                _security = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _community;
+        public string Community
+        {
+            get { return _community; }
+            set
+            {
+                if (value == _community)
+                    return;
+
+                _community = value;
+                OnPropertyChanged();
+            }
         }
 
         private string _username;
@@ -129,7 +162,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.SNMP_v3_AuthenticationProvider = value;
+                    SettingsManager.Current.SNMP_AuthenticationProvider = value;
 
                 _authenticationProvider = value;
                 OnPropertyChanged();
@@ -162,7 +195,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.SNMP_v3_PrivacyProvider = value;
+                    SettingsManager.Current.SNMP_PrivacyProvider = value;
 
                 _privacyProvider = value;
                 OnPropertyChanged();
@@ -183,16 +216,30 @@ namespace NETworkManager.ViewModels.Applications
             }
         }
 
-        private bool _isQueryRunning;
-        public bool IsQueryRunning
+        private string _data = string.Empty;
+        public string Data
         {
-            get { return _isQueryRunning; }
+            get { return _data; }
             set
             {
-                if (value == _isQueryRunning)
+                if (value == _data)
                     return;
 
-                _isQueryRunning = value;
+                _data = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isWorking;
+        public bool IsWorking
+        {
+            get { return _isWorking; }
+            set
+            {
+                if (value == _isWorking)
+                    return;
+
+                _isWorking = value;
                 OnPropertyChanged();
             }
         }
@@ -324,7 +371,7 @@ namespace NETworkManager.ViewModels.Applications
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.SNMP_v1v2c_ExpandStatistics = value;
+                    SettingsManager.Current.SNMP_ExpandStatistics = value;
 
                 _expandStatistics = value;
                 OnPropertyChanged();
@@ -333,20 +380,24 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Contructor, load settings
-        public SNMPv3ViewModel()
+        public SNMPViewModel()
         {
-            _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_v3_HostHistory);
-            _oidHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_v3_OIDHistory);
+            // Set collection view
+            _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_HostHistory);
+            _oidHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OIDHistory);
 
             // Result view
             _queryResultView = CollectionViewSource.GetDefaultView(QueryResult);
             _queryResultView.SortDescriptions.Add(new SortDescription(nameof(SNMPReceivedInfo.OID), ListSortDirection.Ascending));
 
-            // Security
-            Securitys = new List<SNMPv3Security>() { SNMPv3Security.noAuthNoPriv, SNMPv3Security.authNoPriv, SNMPv3Security.authPriv };
+            // Versions (v1, v2c, v3)
+            Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
 
             // Modes
-            Modes = Enum.GetValues(typeof(SNMPMode)).Cast<SNMPMode>().ToList();
+            Modes = new List<SNMPMode>() { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
+
+            // Security
+            Securitys = new List<SNMPv3Security>() { SNMPv3Security.noAuthNoPriv, SNMPv3Security.authNoPriv, SNMPv3Security.authPriv };
 
             // Auth / Priv
             AuthenticationProviders = new List<SNMPv3AuthenticationProvider>() { SNMPv3AuthenticationProvider.MD5, SNMPv3AuthenticationProvider.SHA1 };
@@ -359,23 +410,24 @@ namespace NETworkManager.ViewModels.Applications
 
         private void LoadSettings()
         {
-            Security = Securitys.FirstOrDefault(x => x == SettingsManager.Current.SNMP_v3_Security);
-            AuthenticationProvider = AuthenticationProviders.FirstOrDefault(x => x == SettingsManager.Current.SNMP_v3_AuthenticationProvider);
-            PrivacyProvider = PrivacyProviders.FirstOrDefault(x => x == SettingsManager.Current.SNMP_v3_PrivacyProvider);
-            Mode = Modes.FirstOrDefault(x => x == SettingsManager.Current.SNMP_v3_Mode);
-            ExpandStatistics = SettingsManager.Current.SNMP_v3_ExpandStatistics;
+            Version = Versions.FirstOrDefault(x => x == SettingsManager.Current.SNMP_Version);
+            Mode = Modes.FirstOrDefault(x => x == SettingsManager.Current.SNMP_Mode);
+            Security = Securitys.FirstOrDefault(x => x == SettingsManager.Current.SNMP_Security);
+            AuthenticationProvider = AuthenticationProviders.FirstOrDefault(x => x == SettingsManager.Current.SNMP_AuthenticationProvider);
+            PrivacyProvider = PrivacyProviders.FirstOrDefault(x => x == SettingsManager.Current.SNMP_PrivacyProvider);
+            ExpandStatistics = SettingsManager.Current.SNMP_ExpandStatistics;
         }
         #endregion
 
         #region ICommands & Actions
-        public ICommand QueryCommand
+        public ICommand WorkCommand
         {
-            get { return new RelayCommand(p => QueryAction()); }
+            get { return new RelayCommand(p => WorkAction()); }
         }
 
-        private void QueryAction()
+        private void WorkAction()
         {
-            Query();
+            Work();
         }
 
         public ICommand CopySelectedOIDCommand
@@ -401,10 +453,10 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Methods
-        private async void Query()
+        private async void Work()
         {
             DisplayStatusMessage = false;
-            IsQueryRunning = true;
+            IsWorking = true;
 
             // Measure time
             StartTime = DateTime.Now;
@@ -454,7 +506,7 @@ namespace NETworkManager.ViewModels.Applications
             }
             catch (SocketException) // This will catch DNS resolve errors
             {
-                QueryFinished();
+                Finished();
 
                 StatusMessage = string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, Host);
                 DisplayStatusMessage = true;
@@ -477,13 +529,27 @@ namespace NETworkManager.ViewModels.Applications
             snmp.UserHasCanceled += Snmp_UserHasCanceled;
             snmp.Complete += Snmp_Complete;
 
-            switch(Mode)
-            {             
+            switch (Mode)
+            {
                 case SNMPMode.Get:
-                    snmp.Getv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, snmpOptions);
+                    if (Version != SNMPVersion.v3)
+                        snmp.Getv1v2cAsync(Version, ipAddress, Community, OID, snmpOptions);
+                    else
+                        snmp.Getv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, snmpOptions);
+
                     break;
                 case SNMPMode.Walk:
-                    snmp.Walkv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, snmpOptions, SettingsManager.Current.SNMP_WalkMode);
+                    if (Version != SNMPVersion.v3)
+                        snmp.Walkv1v2cAsync(Version, ipAddress, Community, OID, SettingsManager.Current.SNMP_WalkMode, snmpOptions);
+                    else
+                        snmp.Walkv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, SettingsManager.Current.SNMP_WalkMode, snmpOptions);
+
+                    break;
+                case SNMPMode.Set:
+                    if (Version != SNMPVersion.v3)
+                        snmp.Setv1v2cAsync(Version, ipAddress, Community, OID, Data, snmpOptions);
+                    else
+                        snmp.Setv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, Data, snmpOptions);
                     break;
             }
 
@@ -492,9 +558,9 @@ namespace NETworkManager.ViewModels.Applications
             AddOIDToHistory(OID);
         }
 
-        private void QueryFinished()
+        private void Finished()
         {
-            IsQueryRunning = false;
+            IsWorking = false;
 
             // Stop timer and stopwatch
             stopwatch.Stop();
@@ -509,27 +575,27 @@ namespace NETworkManager.ViewModels.Applications
         private void AddHostToHistory(string host)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.SNMP_v3_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.SNMP_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
-            SettingsManager.Current.SNMP_v3_HostHistory.Clear();
+            SettingsManager.Current.SNMP_HostHistory.Clear();
             OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
 
             // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.SNMP_v3_HostHistory.Add(x));
+            list.ForEach(x => SettingsManager.Current.SNMP_HostHistory.Add(x));
         }
 
         private void AddOIDToHistory(string oid)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.SNMP_v3_OIDHistory.ToList(), oid, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.SNMP_OIDHistory.ToList(), oid, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
-            SettingsManager.Current.SNMP_v3_OIDHistory.Clear();
+            SettingsManager.Current.SNMP_OIDHistory.Clear();
             OnPropertyChanged(nameof(OID)); // Raise property changed again, after the collection has been cleared
 
             // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.SNMP_v3_OIDHistory.Add(x));
+            list.ForEach(x => SettingsManager.Current.SNMP_OIDHistory.Add(x));
         }
         #endregion
 
@@ -551,15 +617,19 @@ namespace NETworkManager.ViewModels.Applications
             StatusMessage = Application.Current.Resources["String_TimeoutOnSNMPQuery"] as string;
             DisplayStatusMessage = true;
 
-            QueryFinished();
+            Finished();
         }
 
         private void Snmp_Error(object sender, EventArgs e)
         {
-            StatusMessage = Application.Current.Resources["String_ErrorInResponse"] as string;
+            if (Mode == SNMPMode.Set)
+                StatusMessage = Application.Current.Resources["String_ErrorInResponseCheckIfYouHaveWritePermissions"] as string;
+            else
+                StatusMessage = Application.Current.Resources["String_ErrorInResponse"] as string;
+
             DisplayStatusMessage = true;
 
-            QueryFinished();
+            Finished();
         }
 
         private void Snmp_UserHasCanceled(object sender, EventArgs e)
@@ -567,12 +637,18 @@ namespace NETworkManager.ViewModels.Applications
             StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
             DisplayStatusMessage = true;
 
-            QueryFinished();
+            Finished();
         }
 
         private void Snmp_Complete(object sender, EventArgs e)
         {
-            QueryFinished();
+            if (Mode == SNMPMode.Set)
+            {
+                StatusMessage = Application.Current.Resources["String_DataHasBeenUpdated"] as string;
+                DisplayStatusMessage = true;
+            }
+
+            Finished();
         }
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)

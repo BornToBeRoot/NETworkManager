@@ -13,7 +13,7 @@ namespace NETworkManager.Validators
             if (Regex.IsMatch(value as string, RegexHelper.SubnetmaskRegex))
                 return ValidationResult.ValidResult;
 
-            return new ValidationResult(false, Application.Current.Resources["String_ValidateError_EnterValidSubnetmask"] as string);
+            return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidSubnetmask"] as string);
         }
     }
 }

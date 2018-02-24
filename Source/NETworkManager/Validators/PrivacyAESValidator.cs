@@ -4,12 +4,12 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Validators
 {
-    public class EmptyValidator : ValidationRule
+    public class PrivacyAESValidator : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (string.IsNullOrEmpty(value as string))
-                return new ValidationResult(false, Application.Current.Resources["String_ValidationError_FieldEmpty"] as string);
+            if ((value as string).Length < 8)
+                return new ValidationResult(false, Application.Current.Resources["String_ValidationError_KeyMustHave8CharactersOrMore"] as string);
 
             return ValidationResult.ValidResult;
         }
