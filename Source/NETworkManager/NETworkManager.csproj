@@ -220,6 +220,7 @@
     <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Models\Update\UpdateAvailableArgs.cs" />
     <Compile Include="Models\Update\Updater.cs" />
+    <Compile Include="Validators\PrivacyAESValidator.cs" />
     <Compile Include="Validators\OIDValidator.cs" />
     <Compile Include="Validators\Int32Validator.cs" />
     <Compile Include="Validators\MultipleIPAddressesValidator.cs" />
@@ -227,8 +228,7 @@
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\SubnetCalculatorSubnetValidator.cs" />
     <Compile Include="ViewModels\Applications\PingHostViewModel.cs" />
-    <Compile Include="ViewModels\Applications\SNMPv3ViewModel.cs" />
-    <Compile Include="ViewModels\Applications\SNMPv1v2cViewModel.cs" />
+    <Compile Include="ViewModels\Applications\SNMPViewModel.cs" />
     <Compile Include="ViewModels\Applications\HTTPHeadersViewModel.cs" />
     <Compile Include="ViewModels\Applications\ARPTableViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\CredentialsMasterPasswordViewModel.cs" />
@@ -275,14 +275,8 @@
     <Compile Include="Views\Applications\PingHostView.xaml.cs">
       <DependentUpon>PingHostView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\SNMPv3View.xaml.cs">
-      <DependentUpon>SNMPv3View.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Applications\SNMPv1v2cView.xaml.cs">
-      <DependentUpon>SNMPv1v2cView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Applications\SNMPHostView.xaml.cs">
-      <DependentUpon>SNMPHostView.xaml</DependentUpon>
+    <Compile Include="Views\Applications\SNMPView.xaml.cs">
+      <DependentUpon>SNMPView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Applications\HTTPHeadersView.xaml.cs">
       <DependentUpon>HTTPHeadersView.xaml</DependentUpon>
@@ -462,15 +456,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\SNMPv3View.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Applications\SNMPv1v2cView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Applications\SNMPHostView.xaml">
+    <Page Include="Views\Applications\SNMPView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

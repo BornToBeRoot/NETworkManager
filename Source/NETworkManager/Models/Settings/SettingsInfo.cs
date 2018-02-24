@@ -1532,170 +1532,114 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private ObservableCollection<string> _snmp_v1v2c_HostHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> SNMP_v1v2c_HostHistory
+        private ObservableCollection<string> _snmp_HostHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> SNMP_HostHistory
         {
-            get { return _snmp_v1v2c_HostHistory; }
+            get { return _snmp_HostHistory; }
             set
             {
-                if (value == _snmp_v1v2c_HostHistory)
+                if (value == _snmp_HostHistory)
                     return;
 
-                _snmp_v1v2c_HostHistory = value;
+                _snmp_HostHistory = value;
                 SettingsChanged = true;
             }
         }
 
-        private ObservableCollection<string> _snmp_v1v2c_OIDHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> SNMP_v1v2c_OIDHistory
+        private ObservableCollection<string> _snmp_OIDHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> SNMP_OIDHistory
         {
-            get { return _snmp_v1v2c_OIDHistory; }
+            get { return _snmp_OIDHistory; }
             set
             {
-                if (value == _snmp_v1v2c_OIDHistory)
+                if (value == _snmp_OIDHistory)
                     return;
 
-                _snmp_v1v2c_OIDHistory = value;
+                _snmp_OIDHistory = value;
                 SettingsChanged = true;
             }
         }
 
-        private SNMPMode _snmp_v1v2c_Mode = SNMPMode.Walk;
-        public SNMPMode SNMP_v1v2c_Mode
+        private SNMPMode _snmp_Mode = SNMPMode.Walk;
+        public SNMPMode SNMP_Mode
         {
-            get { return _snmp_v1v2c_Mode; }
+            get { return _snmp_Mode; }
             set
             {
-                if (value == _snmp_v1v2c_Mode)
+                if (value == _snmp_Mode)
                     return;
 
-                _snmp_v1v2c_Mode = value;
+                _snmp_Mode = value;
                 SettingsChanged = true;
             }
         }
 
-        private SNMPVersion _snmp_v1v2c_Version = SNMPVersion.v2c;
-        public SNMPVersion SNMP_v1v2c_Version
+        private SNMPVersion _snmp_Version = SNMPVersion.v2c;
+        public SNMPVersion SNMP_Version
         {
-            get { return _snmp_v1v2c_Version; }
+            get { return _snmp_Version; }
             set
             {
-                if (value == _snmp_v1v2c_Version)
+                if (value == _snmp_Version)
                     return;
 
-                _snmp_v1v2c_Version = value;
+                _snmp_Version = value;
                 SettingsChanged = true;
             }
         }
 
-        private bool _snmp_v1v2c_ExpandStatistics = true;
-        public bool SNMP_v1v2c_ExpandStatistics
+        private bool _snmp_ExpandStatistics = true;
+        public bool SNMP_ExpandStatistics
         {
-            get { return _snmp_v1v2c_ExpandStatistics; }
+            get { return _snmp_ExpandStatistics; }
             set
             {
-                if (value == _snmp_v1v2c_ExpandStatistics)
+                if (value == _snmp_ExpandStatistics)
                     return;
 
-                _snmp_v1v2c_ExpandStatistics = value;
+                _snmp_ExpandStatistics = value;
                 SettingsChanged = true;
             }
         }
 
-        private ObservableCollection<string> _snmp_v3_HostHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> SNMP_v3_HostHistory
+        private SNMPv3Security _snmp_Security = SNMPv3Security.authPriv;
+        public SNMPv3Security SNMP_Security
         {
-            get { return _snmp_v3_HostHistory; }
+            get { return _snmp_Security; }
             set
             {
-                if (value == _snmp_v3_HostHistory)
+                if (value == _snmp_Security)
                     return;
 
-                _snmp_v3_HostHistory = value;
+                _snmp_Security = value;
                 SettingsChanged = true;
             }
         }
 
-        private ObservableCollection<string> _snmp_v3_OIDHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> SNMP_v3_OIDHistory
+        private SNMPv3AuthenticationProvider _snmp_AuthenticationProvider = SNMPv3AuthenticationProvider.SHA1;
+        public SNMPv3AuthenticationProvider SNMP_AuthenticationProvider
         {
-            get { return _snmp_v3_OIDHistory; }
+            get { return _snmp_AuthenticationProvider; }
             set
             {
-                if (value == _snmp_v3_OIDHistory)
+                if (value == _snmp_AuthenticationProvider)
                     return;
 
-                _snmp_v3_OIDHistory = value;
+                _snmp_AuthenticationProvider = value;
                 SettingsChanged = true;
             }
         }
 
-        private SNMPMode _snmp_v3_Mode = SNMPMode.Walk;
-        public SNMPMode SNMP_v3_Mode
+        private SNMPv3PrivacyProvider _snmp_PrivacyProvider = SNMPv3PrivacyProvider.AES;
+        public SNMPv3PrivacyProvider SNMP_PrivacyProvider
         {
-            get { return _snmp_v3_Mode; }
+            get { return _snmp_PrivacyProvider; }
             set
             {
-                if (value == _snmp_v3_Mode)
+                if (value == _snmp_PrivacyProvider)
                     return;
 
-                _snmp_v3_Mode = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private SNMPv3Security _snmp_v3_Security = SNMPv3Security.authPriv;
-        public SNMPv3Security SNMP_v3_Security
-        {
-            get { return _snmp_v3_Security; }
-            set
-            {
-                if (value == _snmp_v3_Security)
-                    return;
-
-                _snmp_v3_Security = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private SNMPv3AuthenticationProvider _snmp_v3_AuthenticationProvider = SNMPv3AuthenticationProvider.SHA1;
-        public SNMPv3AuthenticationProvider SNMP_v3_AuthenticationProvider
-        {
-            get { return _snmp_v3_AuthenticationProvider; }
-            set
-            {
-                if (value == _snmp_v3_AuthenticationProvider)
-                    return;
-
-                _snmp_v3_AuthenticationProvider = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private SNMPv3PrivacyProvider _snmp_v3_PrivacyProvider = SNMPv3PrivacyProvider.AES;
-        public SNMPv3PrivacyProvider SNMP_v3_PrivacyProvider
-        {
-            get { return _snmp_v3_PrivacyProvider; }
-            set
-            {
-                if (value == _snmp_v3_PrivacyProvider)
-                    return;
-
-                _snmp_v3_PrivacyProvider = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _snmp_v3_ExpandStatistics = true;
-        public bool SNMP_v3_ExpandStatistics
-        {
-            get { return _snmp_v3_ExpandStatistics; }
-            set
-            {
-                if (value == _snmp_v3_ExpandStatistics)
-                    return;
-
-                _snmp_v3_ExpandStatistics = value;
+                _snmp_PrivacyProvider = value;
                 SettingsChanged = true;
             }
         }

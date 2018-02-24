@@ -408,7 +408,7 @@ namespace NETworkManager
         TracerouteView tracerouteView;
         DNSLookupView dnsLookupView;
         RemoteDesktopView remoteDesktopView;
-        SNMPHostView snmpHostView;
+        SNMPView snmpView;
         WakeOnLANView wakeOnLANView;
         SubnetCalculatorHostView subnetCalculatorHostView;
         HTTPHeadersView httpHeadersView;
@@ -467,10 +467,10 @@ namespace NETworkManager
                     contentControlApplication.Content = remoteDesktopView;
                     break;
                 case ApplicationViewManager.Name.SNMP:
-                    if (snmpHostView == null)
-                        snmpHostView = new SNMPHostView();
+                    if (snmpView == null)
+                        snmpView = new SNMPView();
 
-                    contentControlApplication.Content = snmpHostView;
+                    contentControlApplication.Content = snmpView;
                     break;
                 case ApplicationViewManager.Name.WakeOnLAN:
                     if (wakeOnLANView == null)

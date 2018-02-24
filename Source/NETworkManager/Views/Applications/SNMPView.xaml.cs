@@ -3,11 +3,11 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views.Applications
 {
-    public partial class SNMPv1v2cView : UserControl
+    public partial class SNMPView : UserControl
     {
-        SNMPv1v2cViewModel viewModel = new SNMPv1v2cViewModel();
+        SNMPViewModel viewModel = new SNMPViewModel();
 
-        public SNMPv1v2cView()
+        public SNMPView()
         {
             InitializeComponent();
             DataContext = viewModel;

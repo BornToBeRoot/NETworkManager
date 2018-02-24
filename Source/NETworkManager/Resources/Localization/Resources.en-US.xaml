@@ -510,6 +510,7 @@
     <system:String x:Key="String_ValidationError_EnterValidNumber">Enter a valid number!</system:String>
     <system:String x:Key="String_ValidationError_EnterOneOrMoreValidIPAddresses">Enter one or more valid IP addresses!</system:String>
     <system:String x:Key="String_ValidationError_EnterValidOID">Enter a valid OID!</system:String>
+    <system:String x:Key="String_ValidationError_KeyMustHave8CharactersOrMore">Key must have 8 characters or more!</system:String>
     
     <!-- ApplicationView.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP Scanner</system:String>

@@ -3,10 +3,8 @@ using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace NETworkManager.Models.Network
 {
@@ -76,7 +74,7 @@ namespace NETworkManager.Models.Network
             });
         }
 
-        public void Walkv1v2cAsync(SNMPVersion version, IPAddress ipAddress, string community, string oid, SNMPOptions options, WalkMode walkMode)
+        public void Walkv1v2cAsync(SNMPVersion version, IPAddress ipAddress, string community, string oid, WalkMode walkMode, SNMPOptions options)
         {
             Task.Run(() =>
             {
@@ -88,6 +86,27 @@ namespace NETworkManager.Models.Network
 
                     foreach (Variable result in results)
                         OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
+
+                    OnComplete();
+                }
+                catch (Lextm.SharpSnmpLib.Messaging.TimeoutException)
+                {
+                    OnTimeout();
+                }
+                catch (ErrorException)
+                {
+                    OnError();
+                }
+            });
+        }
+
+        public void Setv1v2cAsync(SNMPVersion version, IPAddress ipAddress, string communtiy, string oid, string data, SNMPOptions options)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    Messenger.Set(version == SNMPVersion.v1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(communtiy), new List<Variable> { new Variable(new ObjectIdentifier(oid), new OctetString(data)) }, options.Timeout);
 
                     OnComplete();
                 }
@@ -124,7 +143,9 @@ namespace NETworkManager.Models.Network
                         privacy = GetPrivacy();
 
                     GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(username), new List<Variable> { new Variable(new ObjectIdentifier(oid)) }, privacy, Messenger.MaxMessageSize, report);
-                    Variable result = request.GetResponse(options.Timeout, ipEndpoint).Pdu().Variables[0];
+                    ISnmpMessage reply = request.GetResponse(options.Timeout, ipEndpoint);
+
+                    Variable result = reply.Pdu().Variables[0];
 
                     OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
 
@@ -141,7 +162,7 @@ namespace NETworkManager.Models.Network
             });
         }
 
-        public void Walkv3Async(IPAddress ipAddress, string oid, SNMPv3Security security, string username, SNMPv3AuthenticationProvider authProvider, string auth, SNMPv3PrivacyProvider privProvider, string priv, SNMPOptions options, WalkMode walkMode)
+        public void Walkv3Async(IPAddress ipAddress, string oid, SNMPv3Security security, string username, SNMPv3AuthenticationProvider authProvider, string auth, SNMPv3PrivacyProvider privProvider, string priv, WalkMode walkMode, SNMPOptions options)
         {
             Task.Run(() =>
             {
@@ -182,20 +203,36 @@ namespace NETworkManager.Models.Network
             });
         }
 
-        public void Setv1v2cAsync(SNMPVersion version, IPAddress ipAddress, string communtiy, string oid, string data, SNMPOptions options)
+        public void Setv3Async(IPAddress ipAddress, string oid, SNMPv3Security security, string username, SNMPv3AuthenticationProvider authProvider, string auth, SNMPv3PrivacyProvider privProvider, string priv, string data, SNMPOptions options)
         {
             Task.Run(() =>
             {
                 try
                 {
-                    Messenger.Set(version == SNMPVersion.v1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(communtiy), new List<Variable> { new Variable(new ObjectIdentifier(oid), new OctetString(data)) }, options.Timeout);
+                    IPEndPoint ipEndpoint = new IPEndPoint(ipAddress, options.Port);
+
+                    // Discovery
+                    Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
+                    ReportMessage report = discovery.GetResponse(options.Timeout, ipEndpoint);
+
+                    IPrivacyProvider privacy;
+
+                    if (security == SNMPv3Security.authPriv)
+                        privacy = GetPrivacy(authProvider, auth, privProvider, priv);
+                    else if (security == SNMPv3Security.authNoPriv)
+                        privacy = GetPrivacy(authProvider, auth);
+                    else // noAuthNoPriv
+                        privacy = GetPrivacy();
+
+                    SetRequestMessage request = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(username), new List<Variable> { new Variable(new ObjectIdentifier(oid), new OctetString(data)) }, privacy, Messenger.MaxMessageSize, report);
+                    ISnmpMessage reply = request.GetResponse(options.Timeout, ipEndpoint);
 
                     OnComplete();
                 }
                 catch (Lextm.SharpSnmpLib.Messaging.TimeoutException)
                 {
                     OnTimeout();
-                }                
+                }
                 catch (ErrorException)
                 {
                     OnError();
