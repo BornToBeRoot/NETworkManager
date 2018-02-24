@@ -364,6 +364,8 @@
     <system:String x:Key="String_OpenProject">Open project</system:String>
     <system:String x:Key="String_OpenLicense">Open license</system:String>
     <system:String x:Key="String_ConnectExternal">Connect external</system:String>
+    <system:String x:Key="String_DataHasBeenUpdated">Data has been updated!</system:String>
+    <system:String x:Key="String_ErrorInResponseCheckIfYouHaveWritePermissions">Error in response! Check if you have write permissions.</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>

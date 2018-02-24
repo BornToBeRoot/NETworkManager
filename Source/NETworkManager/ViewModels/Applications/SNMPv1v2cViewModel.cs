@@ -598,7 +598,11 @@ namespace NETworkManager.ViewModels.Applications
 
         private void Snmp_Error(object sender, EventArgs e)
         {
-            StatusMessage = Application.Current.Resources["String_ErrorInResponse"] as string;
+            if (Mode == SNMPMode.Set)
+                StatusMessage = Application.Current.Resources["String_ErrorInResponseCheckIfYouHaveWritePermissions"] as string;
+            else
+                StatusMessage = Application.Current.Resources["String_ErrorInResponse"] as string;
+
             DisplayStatusMessage = true;
 
             Finished();
@@ -614,6 +618,12 @@ namespace NETworkManager.ViewModels.Applications
 
         private void Snmp_Complete(object sender, EventArgs e)
         {
+            if (Mode == SNMPMode.Set)
+            {
+                StatusMessage = Application.Current.Resources["String_DataHasBeenUpdated"] as string;
+                DisplayStatusMessage = true;
+            }
+
             Finished();
         }
 

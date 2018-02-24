@@ -188,14 +188,14 @@ namespace NETworkManager.Models.Network
             {
                 try
                 {
-                    var result = Messenger.Set(version == SNMPVersion.v1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(communtiy), new List<Variable> { new Variable(new ObjectIdentifier(oid), new OctetString(data)) }, options.Timeout);
+                    Messenger.Set(version == SNMPVersion.v1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(communtiy), new List<Variable> { new Variable(new ObjectIdentifier(oid), new OctetString(data)) }, options.Timeout);
 
                     OnComplete();
                 }
                 catch (Lextm.SharpSnmpLib.Messaging.TimeoutException)
                 {
                     OnTimeout();
-                }
+                }                
                 catch (ErrorException)
                 {
                     OnError();
