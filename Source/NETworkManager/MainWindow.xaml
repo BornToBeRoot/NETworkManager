@@ -30,7 +30,7 @@
     </Controls:MetroWindow.IconTemplate>
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
-            <Button Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Documentation:DocumentationManager.DocumentationURL}">
+            <Button Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Documentation:DocumentationManager.DocumentationURL}" Cursor="Hand">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
@@ -40,7 +40,7 @@
                     <TextBlock Text="{DynamicResource String_Documentation}" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
-            <Button Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.NETworkManager_ProjectUrl}">
+            <Button Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.NETworkManager_ProjectUrl}" Cursor="Hand">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
@@ -645,6 +645,7 @@
                     </StatusBarItem.InputBindings>
                     <StatusBarItem.Style>
                         <Style TargetType="{x:Type StatusBarItem}" BasedOn="{StaticResource MetroStatusBarItem}">
+                            <Setter Property="Cursor" Value="Hand" />
                             <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">

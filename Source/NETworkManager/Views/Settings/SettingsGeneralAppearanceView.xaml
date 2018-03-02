@@ -57,6 +57,7 @@
             <StackPanel.Style>
                 <Style TargetType="{x:Type StackPanel}">
                     <Setter Property="TextBlock.Foreground" Value="{DynamicResource AccentColorBrush}" />
+                    <Setter Property="Cursor" Value="Hand" />
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="TextBlock.Foreground" Value="{DynamicResource BlackColorBrush}" />
