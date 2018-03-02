@@ -24,6 +24,12 @@ namespace NETworkManager.Models.Network
 
         }
 
+        public PingInfo(IPAddress ipAddress, IPStatus ipStatus)
+        {
+            IPAddress = ipAddress;
+            Status = ipStatus;
+        }
+
         public PingInfo(DateTime timestamp, IPAddress ipAddress, IPStatus status)
         {
             Timestamp = timestamp;

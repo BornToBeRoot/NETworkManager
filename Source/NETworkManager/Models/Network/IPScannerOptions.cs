@@ -8,6 +8,7 @@
         public int Attempts { get; set; }
         public bool ResolveHostname { get; set; }
         public bool ResolveMACAddress { get; set; }
+        public bool ShowScanResultForAllIPAddresses { get; set; }
 
         public IPScannerOptions()
         {

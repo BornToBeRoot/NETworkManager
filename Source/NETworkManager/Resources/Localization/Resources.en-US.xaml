@@ -102,6 +102,7 @@
     <system:String x:Key="String_Header_HTTPHeaders">HTTP Headers</system:String>
     <system:String x:Key="String_Header_Network">Network</system:String>
     <system:String x:Key="String_Header_Data">Data</system:String>
+    <system:String x:Key="String_Header_IPScanner">IP Scanner</system:String>
     
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -366,7 +367,8 @@
     <system:String x:Key="String_ConnectExternal">Connect external</system:String>
     <system:String x:Key="String_DataHasBeenUpdated">Data has been updated!</system:String>
     <system:String x:Key="String_ErrorInResponseCheckIfYouHaveWritePermissions">Error in response! Check if you have write permissions.</system:String>
-    
+    <system:String x:Key="String_ShowScanResultForAllIPAddresses">Show scan result for all IP addresses</system:String>
+
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">How to create a custom theme and accent?</system:String>

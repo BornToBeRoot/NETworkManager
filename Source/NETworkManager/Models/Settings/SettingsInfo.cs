@@ -320,6 +320,20 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private bool _ipScanner_ShowScanResultForAllIPAddresses;
+        public bool IPScanner_ShowScanResultForAllIPAddresses
+        {
+            get { return _ipScanner_ShowScanResultForAllIPAddresses; }
+            set
+            {
+                if (value == _ipScanner_ShowScanResultForAllIPAddresses)
+                    return;
+
+                _ipScanner_ShowScanResultForAllIPAddresses = value;
+                SettingsChanged = true;
+            }
+        }
+
         private int _ipScanner_Threads = 256;
         public int IPScanner_Threads
         {

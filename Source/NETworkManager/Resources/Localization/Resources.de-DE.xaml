@@ -102,7 +102,8 @@
     <system:String x:Key="String_Header_HTTPHeaders">HTTP-Headers</system:String>
     <system:String x:Key="String_Header_Network">Netzwerk</system:String>
     <system:String x:Key="String_Header_Data">Daten</system:String>
-    
+    <system:String x:Key="String_Header_IPScanner">IP-Scanner</system:String>
+
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Ein leistungsstarkes Tool zum Verwalten von Netzwerken und zur Behebung von Netzwerkproblemen!</system:String>
@@ -366,6 +367,7 @@
     <system:String x:Key="String_ConnectExternal">Extern verbinden</system:String>
     <system:String x:Key="String_DataHasBeenUpdated">Daten wurden aktualisiert!</system:String>
     <system:String x:Key="String_ErrorInResponseCheckIfYouHaveWritePermissions">Fehler in Antwort! Prüfen Sie, ob Sie Schreibrechte haben.</system:String>
+    <system:String x:Key="String_ShowScanResultForAllIPAddresses">Zeige Scan-Ergebnis für alle IP-Adressen</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>

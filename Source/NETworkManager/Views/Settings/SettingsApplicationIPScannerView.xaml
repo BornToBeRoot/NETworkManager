@@ -6,6 +6,8 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d">
     <StackPanel>
+        <TextBlock Text="{DynamicResource String_Header_IPScanner}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{DynamicResource String_ShowScanResultForAllIPAddresses}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ShowScanResultForAllIPAddresses}" Margin="0,0,0,20"/>
         <TextBlock Text="{DynamicResource String_Header_Multithreading}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock  Text="{DynamicResource String_Threads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Threads}" Maximum="10000" Minimum="1" Interval="1" Margin="0,0,0,20" />

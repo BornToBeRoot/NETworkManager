@@ -687,7 +687,8 @@ namespace NETworkManager.ViewModels.Applications
                 Buffer = new byte[SettingsManager.Current.IPScanner_Buffer],
                 Attempts = SettingsManager.Current.IPScanner_Attempts,
                 ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname,
-                ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress
+                ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
+                ShowScanResultForAllIPAddresses = SettingsManager.Current.IPScanner_ShowScanResultForAllIPAddresses
             };
 
             IPScanner ipScanner = new IPScanner();

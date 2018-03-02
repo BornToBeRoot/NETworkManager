@@ -7,6 +7,23 @@ namespace NETworkManager.ViewModels.Settings
         #region Variables
         private bool _isLoading = true;
 
+        private bool _showScanResultForAllIPAddresses;
+        public bool ShowScanResultForAllIPAddresses
+        {
+            get { return _showScanResultForAllIPAddresses;}
+            set
+            {
+                if (value == _showScanResultForAllIPAddresses)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.IPScanner_ShowScanResultForAllIPAddresses = value;
+
+                _showScanResultForAllIPAddresses = value;
+                OnPropertyChanged();
+            }
+        }
+
         private int _threads;
         public int Threads
         {
