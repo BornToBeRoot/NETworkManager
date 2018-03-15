@@ -369,7 +369,10 @@ namespace NETworkManager.ViewModels.Applications
             }
             catch (SocketException) // This will catch DNS resolve errors
             {
-                PingFinished();
+                if (CancelPing)
+                    UserHasCanceled();
+                else
+                    PingFinished();
 
                 StatusMessage = string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, Host);
                 DisplayStatusMessage = true;
@@ -406,7 +409,16 @@ namespace NETworkManager.ViewModels.Applications
         private void StopPing()
         {
             CancelPing = true;
-            cancellationTokenSource.Cancel();
+
+            if (cancellationTokenSource != null)
+                cancellationTokenSource.Cancel();
+        }
+
+        private void UserHasCanceled()
+        {
+            CancelPing = false;
+
+            PingFinished();
         }
 
         private void PingFinished()
@@ -511,9 +523,7 @@ namespace NETworkManager.ViewModels.Applications
 
         private void Ping_UserHasCanceled(object sender, EventArgs e)
         {
-            CancelPing = false;
-
-            PingFinished();
+            UserHasCanceled();
         }
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
