@@ -2,8 +2,6 @@
 using NETworkManager.Controls;
 using Dragablz;
 using System.Windows.Input;
-using System;
-using System.Linq;
 using NETworkManager.Views.Applications;
 using System.Windows;
 

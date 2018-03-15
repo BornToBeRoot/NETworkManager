@@ -144,6 +144,7 @@ namespace NETworkManager.ViewModels.Applications
 
                     string search = Search.Trim();
 
+                    // Search by: Tag
                     if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
                     {
                         if (string.IsNullOrEmpty(info.Tags))
@@ -151,9 +152,9 @@ namespace NETworkManager.ViewModels.Applications
                         else
                             return info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).IndexOf(str, StringComparison.OrdinalIgnoreCase) > -1);
                     }
-                    else
+                    else // Search by: Name, Hostname
                     {
-                        return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+                        return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
                     }
                 };
 
