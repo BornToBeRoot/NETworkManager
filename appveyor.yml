@@ -1,6 +1,5 @@
 before_build:
  - nuget restore Source/NETworkManager.sln
-+image: Visual Studio 2017
- configuration:
-  - Release
- platform: Any CPU
+image: Visual Studio 2017
+configuration: Release
+platform: Any CPU
