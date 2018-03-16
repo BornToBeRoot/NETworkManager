@@ -1,0 +1,33 @@
+﻿<Controls:MetroWindow x:Class="NETworkManager.Controls.DragablzPuTTYTabHostWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+        mc:Ignorable="d"
+        Title="{DynamicResource String_ProductName}" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" TitleAlignment="Left">
+    <Controls:MetroWindow.WindowButtonCommands>
+        <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
+    </Controls:MetroWindow.WindowButtonCommands>
+    <Grid>
+        <dragablz:TabablzControl Name="TabsContainer">
+            <dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController Partition="70BF46A6-B55D-4DC2-B8BD-6B61EFC95883" />
+            </dragablz:TabablzControl.InterTabController>
+            <dragablz:TabablzControl.Style>
+                <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">                
+                    <!-- If not null, the header suffix will be removed in the main window -->
+                    <Setter Property="HeaderSuffixContent" Value="{x:Null}" />
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <ContentPresenter Content="{Binding View}" />
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </dragablz:TabablzControl.Style>
+        </dragablz:TabablzControl>
+    </Grid>
+</Controls:MetroWindow>

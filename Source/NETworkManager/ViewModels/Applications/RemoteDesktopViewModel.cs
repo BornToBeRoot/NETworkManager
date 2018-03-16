@@ -12,7 +12,6 @@ using System.Windows.Data;
 using System;
 using System.Linq;
 using System.Diagnostics;
-using NETworkManager.Models.Documentation;
 using NETworkManager.Helpers;
 using System.Collections.Generic;
 

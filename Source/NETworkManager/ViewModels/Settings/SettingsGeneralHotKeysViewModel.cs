@@ -1,6 +1,7 @@
 ﻿using NETworkManager.Models.Settings;
 using MahApps.Metro.Controls;
 using NETworkManager.Helpers;
+using NETworkManager.Utils;
 
 namespace NETworkManager.ViewModels.Settings
 {
@@ -41,8 +42,8 @@ namespace NETworkManager.ViewModels.Settings
 
                 if (!_isLoading && value != null)
                 {
-                    SettingsManager.Current.HotKey_ShowWindowKey = (int)HotKeysHelper.WpfKeyToFormsKeys(value.Key);
-                    SettingsManager.Current.HotKey_ShowWindowModifier = HotKeysHelper.GetModifierKeysSum(value.ModifierKeys);
+                    SettingsManager.Current.HotKey_ShowWindowKey = (int)HotKeys.WpfKeyToFormsKeys(value.Key);
+                    SettingsManager.Current.HotKey_ShowWindowModifier = HotKeys.GetModifierKeysSum(value.ModifierKeys);
 
                     SettingsManager.HotKeysChanged = true;
                 }
@@ -64,7 +65,7 @@ namespace NETworkManager.ViewModels.Settings
         private void LoadSettings()
         {
             HotKeyShowWindowEnabled = SettingsManager.Current.HotKey_ShowWindowEnabled;
-            HotKeyShowWindow = new HotKey(HotKeysHelper.FormsKeysToWpfKey(SettingsManager.Current.HotKey_ShowWindowKey), HotKeysHelper.GetModifierKeysFromInt(SettingsManager.Current.HotKey_ShowWindowModifier));
+            HotKeyShowWindow = new HotKey(HotKeys.FormsKeysToWpfKey(SettingsManager.Current.HotKey_ShowWindowKey), HotKeys.GetModifierKeysFromInt(SettingsManager.Current.HotKey_ShowWindowModifier));
         }
         #endregion        
     }

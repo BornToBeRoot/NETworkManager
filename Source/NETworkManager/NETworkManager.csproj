@@ -184,18 +184,27 @@
     <Compile Include="3rdParty\Heijden.DNS\Response.cs" />
     <Compile Include="3rdParty\Heijden.DNS\RR.cs" />
     <Compile Include="3rdParty\Heijden.DNS\Structs.cs" />
+    <Compile Include="Controls\DragablzPuTTYInterTabClient.cs" />
+    <Compile Include="Controls\DragablzPuTTYTabHostWindow.xaml.cs">
+      <DependentUpon>DragablzPuTTYTabHostWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DragablzRemoteDesktopTabHostWindow.xaml.cs">
       <DependentUpon>DragablzRemoteDesktopTabHostWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DragablzRemoteDesktopInterTabClient.cs" />
     <Compile Include="Controls\DragablzPingInterTabClient.cs" />
     <Compile Include="Controls\DragablzPingTabItem.cs" />
+    <Compile Include="Controls\DragablzPuTTYTabItem.cs" />
     <Compile Include="Controls\DragablzRemoteDesktopTabItem.cs" />
+    <Compile Include="Controls\PuTTYControl.xaml.cs">
+      <DependentUpon>PuTTYControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\NullOrEmptyToBoolConverter.cs" />
     <Compile Include="Converters\TimestampToStringConverter.cs" />
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
     <Compile Include="Converters\ValidateNetworkInterfaceProfileConverter.cs" />
     <Compile Include="Converters\ValidateSubnetCalculatorIPv4SplitterConverter.cs" />
+    <Compile Include="Utils\NativeMethods.cs" />
     <Compile Include="Helpers\PowerShellHelper.cs" />
     <Compile Include="Helpers\SecureStringHelper.cs" />
     <Compile Include="Helpers\SingleInstanceHelper.cs" />
@@ -227,6 +236,7 @@
     <Compile Include="Validators\MultipleHostsValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\SubnetCalculatorSubnetValidator.cs" />
+    <Compile Include="ViewModels\Applications\PuTTYViewModel.cs" />
     <Compile Include="ViewModels\Applications\PingHostViewModel.cs" />
     <Compile Include="ViewModels\Applications\SNMPViewModel.cs" />
     <Compile Include="ViewModels\Applications\HTTPHeadersViewModel.cs" />
@@ -272,6 +282,9 @@
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Settings\SettingsGeneralUpdateViewModel.cs" />
+    <Compile Include="Views\Applications\PuTTYView.xaml.cs">
+      <DependentUpon>PuTTYView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Applications\PingHostView.xaml.cs">
       <DependentUpon>PingHostView.xaml</DependentUpon>
     </Compile>
@@ -361,7 +374,15 @@
     </Compile>
     <Compile Include="WpfHelper\PasswordBoxBindingBehavior.cs" />
     <Compile Include="WpfHelper\ProtocolSettingsLayout.cs" />
+    <Page Include="Controls\DragablzPuTTYTabHostWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\DragablzRemoteDesktopTabHostWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\PuTTYControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -476,6 +497,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Include="Views\Applications\PuTTYView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Applications\PingHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -700,7 +725,7 @@
     <Compile Include="Converters\ValidateSettingsResetConverter.cs" />
     <Compile Include="Converters\ValidateSettingsExportConverter.cs" />
     <Compile Include="Helpers\ListHelper.cs" />
-    <Compile Include="Helpers\HotKeysHelper.cs" />
+    <Compile Include="Utils\HotKeys.cs" />
     <Compile Include="Models\Network\ARPTable.cs" />
     <Compile Include="Helpers\PortRangeHelper.cs" />
     <Compile Include="Helpers\IPScanRangeHelper.cs" />

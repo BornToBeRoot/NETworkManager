@@ -1,8 +1,8 @@
 ﻿using System.Windows.Input;
 
-namespace NETworkManager.Helpers
+namespace NETworkManager.Utils
 {
-    public static class HotKeysHelper
+    public static class HotKeys
     {
         public static int GetModifierKeysSum(ModifierKeys modifierKeys)
         {
