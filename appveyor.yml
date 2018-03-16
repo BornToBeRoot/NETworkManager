@@ -1,0 +1,16 @@
+branches:
+  only:
+   - master
+   - develop
+  
+before_build:
+ - nuget restore Source/NETworkManager.sln
+ 
+image: Visual Studio 2017
+
+configuration: Release
+
+platform: Any CPU
+
+pull_requests:
+  do_not_increment_build_number: false
