@@ -204,6 +204,9 @@
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
     <Compile Include="Converters\ValidateNetworkInterfaceProfileConverter.cs" />
     <Compile Include="Converters\ValidateSubnetCalculatorIPv4SplitterConverter.cs" />
+    <Compile Include="Models\PuTTY\PuTTYSessionInfo.cs" />
+    <Compile Include="Models\Settings\PuTTYSessionInfo.cs" />
+    <Compile Include="Models\Settings\PuTTYSessionManager.cs" />
     <Compile Include="Utils\NativeMethods.cs" />
     <Compile Include="Helpers\PowerShellHelper.cs" />
     <Compile Include="Helpers\SecureStringHelper.cs" />
@@ -248,6 +251,8 @@
     <Compile Include="ViewModels\Dialogs\PortScannerProfileViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ConfirmRemoveViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ARPTableAddEntryViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\PuTTYSessionConnectViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\PuTTYSessionViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\WakeOnLANClientViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\IPScannerProfileViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\RemoteDesktopSessionViewModel.cs" />
@@ -335,6 +340,12 @@
     </Compile>
     <Compile Include="Views\Dialogs\ARPTableAddEntryDialog.xaml.cs">
       <DependentUpon>ARPTableAddEntryDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\PuTTYSessionConnectDialog.xaml.cs">
+      <DependentUpon>PuTTYSessionConnectDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\PuTTYSessionDialog.xaml.cs">
+      <DependentUpon>PuTTYSessionDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\WakeOnLANClientDialog.xaml.cs">
       <DependentUpon>WakeOnLANClientDialog.xaml</DependentUpon>
@@ -590,6 +601,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Dialogs\ARPTableAddEntryDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\PuTTYSessionConnectDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\PuTTYSessionDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

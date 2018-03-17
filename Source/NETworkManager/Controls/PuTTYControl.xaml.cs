@@ -8,6 +8,7 @@ using System;
 using System.Windows.Threading;
 using System.Diagnostics;
 using NETworkManager.Utils;
+using NETworkManager.Models.PuTTY;
 
 namespace NETworkManager.Controls
 {
@@ -25,6 +26,8 @@ namespace NETworkManager.Controls
         #region Variables
         private bool _initialized = false;
 
+        private PuTTYSessionInfo _puTTYSessionInfo;
+
         Process PuTTYProcess = null;
         IntPtr AppWin;
 
@@ -33,10 +36,12 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Constructor, load
-        public PuTTYControl()
+        public PuTTYControl(PuTTYSessionInfo info)
         {
             InitializeComponent();
             DataContext = this;
+
+            _puTTYSessionInfo = info;
 
             resizeTimer.Tick += ResizeTimer_Tick;
             resizeTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
@@ -72,7 +77,7 @@ namespace NETworkManager.Controls
             ProcessStartInfo info = new ProcessStartInfo
             {
                 FileName = @"C:\Tools\PuTTY\putty.exe",
-                Arguments = @"192.168.178.30"
+                Arguments = string.Format("{0}",_puTTYSessionInfo.Hostname)
             };
 
             PuTTYProcess = Process.Start(info);
@@ -81,7 +86,7 @@ namespace NETworkManager.Controls
 
             AppWin = PuTTYProcess.MainWindowHandle;
 
-            NativeMethods.SetParent(AppWin, panel.Handle);
+            NativeMethods.SetParent(AppWin, puTTYHost.Handle);
 
             // Show window before set style and resize
             NativeMethods.ShowWindow(AppWin, NativeMethods.WindowShowStyle.Maximize);
@@ -98,12 +103,12 @@ namespace NETworkManager.Controls
 
         private void ResizeEmbeddedPuTTY()
         {
-            NativeMethods.SetWindowPos(PuTTYProcess.MainWindowHandle, IntPtr.Zero, 0, 0, panel.ClientSize.Width, panel.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
+            NativeMethods.SetWindowPos(PuTTYProcess.MainWindowHandle, IntPtr.Zero, 0, 0, puTTYHost.ClientSize.Width, puTTYHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
         }
         #endregion
 
         #region Events
-        private void puTTYGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void PuTTYGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (PuTTYProcess != null)
                 ResizeEmbeddedPuTTY();

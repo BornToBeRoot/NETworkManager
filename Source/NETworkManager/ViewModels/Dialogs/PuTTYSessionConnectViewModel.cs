@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels.Dialogs
 {
-    public class RemoteDesktopSessionConnectViewModel : ViewModelBase
+    public class PuTTYSessionConnectViewModel : ViewModelBase
     {
         private readonly ICommand _connectCommand;
         public ICommand ConnectCommand
@@ -159,7 +159,7 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
-        public RemoteDesktopSessionConnectViewModel(Action<RemoteDesktopSessionConnectViewModel> connectCommand, Action<RemoteDesktopSessionConnectViewModel> cancelHandler, bool connectAs = false)
+        public PuTTYSessionConnectViewModel(Action<PuTTYSessionConnectViewModel> connectCommand, Action<PuTTYSessionConnectViewModel> cancelHandler, bool connectAs = false)
         {
             _connectCommand = new RelayCommand(p => connectCommand(this));
             _cancelCommand = new RelayCommand(p => cancelHandler(this));
@@ -167,7 +167,7 @@ namespace NETworkManager.ViewModels.Dialogs
             ConnectAs = connectAs;
 
             if (!ConnectAs)
-                _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.RemoteDesktop_HostHistory);
+                _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_HostHistory);
 
             if (CredentialManager.Loaded)
                 _credentials = CollectionViewSource.GetDefaultView(CredentialManager.CredentialInfoList);

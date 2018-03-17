@@ -42,7 +42,7 @@ namespace NETworkManager.Utils
         [DllImport("user32.dll", EntryPoint = "GetWindowLongA", SetLastError = true)]
         public static extern long GetWindowLong(IntPtr hWnd, int nIndex);
         
-        [DllImport("user32.dll", EntryPoint = "SetWindowLongA", SetLastError = true)]
+        [DllImport("user32.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "SetWindowLongA", SetLastError = true)]
         public static extern long SetWindowLong(IntPtr hWnd, int nIndex, long dwNewLong);
 
         // http://msdn.microsoft.com/en-us/library/windows/desktop/ms644898%28v=vs.85%29.aspx

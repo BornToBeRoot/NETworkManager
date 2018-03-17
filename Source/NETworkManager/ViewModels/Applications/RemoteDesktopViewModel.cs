@@ -56,6 +56,7 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
+
         #region Sessions
         ICollectionView _remoteDesktopSessions;
         public ICollectionView RemoteDesktopSessions
