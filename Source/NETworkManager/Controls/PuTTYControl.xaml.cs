@@ -91,9 +91,9 @@ namespace NETworkManager.Controls
             NativeMethods.ShowWindow(AppWin, NativeMethods.WindowShowStyle.Maximize);
 
             // Remove border etc.
-            long style = NativeMethods.GetWindowLong(AppWin, NativeMethods.GWL_STYLE);
+            int style = (int)NativeMethods.GetWindowLong(AppWin, NativeMethods.GWL_STYLE);
             style &= ~(NativeMethods.WS_BORDER | NativeMethods.WS_THICKFRAME);
-            NativeMethods.SetWindowLong(AppWin, NativeMethods.GWL_STYLE, style);
+            NativeMethods.SetWindowLongPtr(AppWin, NativeMethods.GWL_STYLE, new IntPtr(style));
 
             // Resize embedded application & refresh
             if (PuTTYProcess != null)
@@ -108,7 +108,14 @@ namespace NETworkManager.Controls
 
         private void ResizeEmbeddedPuTTY()
         {
-            NativeMethods.SetWindowPos(PuTTYProcess.MainWindowHandle, IntPtr.Zero, 0, 0, puTTYHost.ClientSize.Width, puTTYHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
+            try
+            {
+                NativeMethods.SetWindowPos(PuTTYProcess.MainWindowHandle, IntPtr.Zero, 0, 0, puTTYHost.ClientSize.Width, puTTYHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public void CloseTab()
