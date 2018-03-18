@@ -495,12 +495,12 @@ namespace NETworkManager.ViewModels.Settings
         #endregion
 
         #region ICommands & Actions
-        public ICommand ImportBrowseFileCommand
+        public ICommand BrowseFileCommand
         {
-            get { return new RelayCommand(p => ImportBrowseFileAction()); }
+            get { return new RelayCommand(p => BrowseFileAction()); }
         }
 
-        private void ImportBrowseFileAction()
+        private void BrowseFileAction()
         {
             System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog()
             {

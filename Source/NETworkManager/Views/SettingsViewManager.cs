@@ -31,6 +31,7 @@ namespace NETworkManager.Views
                     new SettingsViewInfo(Name.Traceroute, new PackIconModern() {Kind = PackIconModernKind.TransitConnection}, Group.Applications),
                     new SettingsViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.Dna }, Group.Applications ),
                     new SettingsViewInfo(Name.RemoteDesktop, new PackIconOcticons() { Kind = PackIconOcticonsKind.DeviceDesktop}, Group.Applications),
+                    new SettingsViewInfo(Name.PuTTY, new PackIconOcticons() {Kind = PackIconOcticonsKind.Terminal}, Group.Applications),
                     new SettingsViewInfo(Name.SNMP,new PackIconMaterial() {Kind = PackIconMaterialKind.Switch }, Group.Applications),
                     new SettingsViewInfo(Name.WakeOnLAN, new PackIconMaterial() {Kind = PackIconMaterialKind.Power} , Group.Applications),
                     new SettingsViewInfo(Name.HTTPHeaders, new PackIconMaterial() {Kind = PackIconMaterialKind.Web}, Group.Applications)
@@ -55,6 +56,7 @@ namespace NETworkManager.Views
             Traceroute,
             DNSLookup,
             RemoteDesktop,
+            PuTTY,
             SNMP,
             WakeOnLAN,
             HTTPHeaders

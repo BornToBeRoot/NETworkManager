@@ -1472,6 +1472,23 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private string _puTTY_PuTTYLocation;
+        public string PuTTY_PuTTYLocation
+        {
+            get { return _puTTY_PuTTYLocation; }
+            set
+            {
+                if (value == _puTTY_PuTTYLocation)
+                    return;
+
+                _puTTY_PuTTYLocation = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region HTTP Headers

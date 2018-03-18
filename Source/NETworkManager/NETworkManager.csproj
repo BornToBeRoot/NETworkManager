@@ -279,6 +279,7 @@
     <Compile Include="ViewModels\Help\HelpCommandLineViewModel.cs" />
     <Compile Include="ViewModels\Settings\CredentialsViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationHTTPHeadersViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsApplicationPuTTYViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationSNMPViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationRemoteDesktopViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationDNSLookupViewModel.cs" />
@@ -364,6 +365,9 @@
     </Compile>
     <Compile Include="Views\Settings\SettingsApplicationHTTPHeadersView.xaml.cs">
       <DependentUpon>SettingsApplicationHTTPHeadersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsApplicationPuTTYView.xaml.cs">
+      <DependentUpon>SettingsApplicationPuTTYView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\SettingsApplicationSNMPView.xaml.cs">
       <DependentUpon>SettingsApplicationSNMPView.xaml</DependentUpon>
@@ -633,6 +637,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Settings\SettingsApplicationHTTPHeadersView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings\SettingsApplicationPuTTYView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

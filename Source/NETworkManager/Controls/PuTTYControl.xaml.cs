@@ -32,7 +32,6 @@ namespace NETworkManager.Controls
         IntPtr AppWin;
 
         DispatcherTimer resizeTimer = new DispatcherTimer();
-
         #endregion
 
         #region Constructor, load
@@ -61,7 +60,7 @@ namespace NETworkManager.Controls
 
         private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
         {
-            //   OnClose();
+            OnClose();
         }
         #endregion
 
@@ -76,8 +75,8 @@ namespace NETworkManager.Controls
         {
             ProcessStartInfo info = new ProcessStartInfo
             {
-                FileName = @"C:\Tools\PuTTY\putty.exe",
-                Arguments = string.Format("{0}",_puTTYSessionInfo.Hostname)
+                FileName = _puTTYSessionInfo.PuTTYLocation,
+                Arguments = string.Format("{0}", _puTTYSessionInfo.Hostname)
             };
 
             PuTTYProcess = Process.Start(info);
@@ -101,9 +100,25 @@ namespace NETworkManager.Controls
                 ResizeEmbeddedPuTTY();
         }
 
+        public void Disconnect()
+        {
+            if (PuTTYProcess != null && !PuTTYProcess.HasExited)
+                PuTTYProcess.Kill();
+        }
+
         private void ResizeEmbeddedPuTTY()
         {
             NativeMethods.SetWindowPos(PuTTYProcess.MainWindowHandle, IntPtr.Zero, 0, 0, puTTYHost.ClientSize.Width, puTTYHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
+        }
+
+        public void CloseTab()
+        {
+            Disconnect();
+        }
+
+        private void OnClose()
+        {
+            Disconnect();
         }
         #endregion
 

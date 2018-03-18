@@ -31,54 +31,6 @@
                 </dragablz:TabablzControl.InterTabController>
                 <dragablz:TabablzControl.Style>
                     <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">
-                        <Setter Property="HeaderItemTemplate">
-                            <Setter.Value>
-                                <DataTemplate>
-                                    <Border BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,1,0">
-                                        <Grid>
-                                            <Grid.InputBindings>
-                                                <MouseBinding Command="dragablz:TabablzControl.CloseItemCommand" Gesture="MiddleClick" />
-                                            </Grid.InputBindings>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Grid>
-                                                    <TextBlock Text="{Binding Header}" VerticalAlignment="Center" MinWidth="150" Margin="10">
-                                                        <TextBlock.Style>
-                                                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
-                                                                <Setter Property="FontSize" Value="18" />
-                                                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
-                                                                        <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </TextBlock.Style>
-                                                    </TextBlock>
-                                                    <Thumb Style="{DynamicResource InvisibleThumbStyle}" dragablz:DragablzItem.IsCustomThumb="True" />
-                                                </Grid>
-                                                <Button Style="{StaticResource CleanButton}" Command="dragablz:TabablzControl.CloseItemCommand" Margin="0,0,10,0">
-                                                    <Rectangle Width="16" Height="16">
-                                                        <Rectangle.OpacityMask>
-                                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=WindowClose}" />
-                                                        </Rectangle.OpacityMask>
-                                                        <Rectangle.Style>
-                                                            <Style TargetType="{x:Type Rectangle}">
-                                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </Rectangle.Style>
-                                                    </Rectangle>
-                                                </Button>
-                                            </StackPanel>
-                                        </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </Setter.Value>
-                        </Setter>
                         <Setter Property="HeaderSuffixContent" >
                             <Setter.Value>
                                 <Grid HorizontalAlignment="Left" Width="40" Height="40">

@@ -103,6 +103,7 @@
     <system:String x:Key="String_Header_Network">Network</system:String>
     <system:String x:Key="String_Header_Data">Data</system:String>
     <system:String x:Key="String_Header_IPScanner">IP Scanner</system:String>
+    <system:String x:Key="String_Header_PuTTY">PuTTY</system:String>
     
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -368,7 +369,8 @@
     <system:String x:Key="String_DataHasBeenUpdated">Data has been updated!</system:String>
     <system:String x:Key="String_ErrorInResponseCheckIfYouHaveWritePermissions">Error in response! Check if you have write permissions.</system:String>
     <system:String x:Key="String_ShowScanResultForAllIPAddresses">Show scan result for all IP addresses</system:String>
-
+    <system:String x:Key="String_ConfigureThePathToPuTTYInTheSettings">Configure the path to PuTTY in the settings...</system:String>
+    
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">How to create a custom theme and accent?</system:String>
@@ -483,6 +485,7 @@
     <system:String x:Key="String_Watermark_ExampleSNMPOID">1.3.6.1.2.1.1</system:String>
     <system:String x:Key="String_Watermark_ExampleSNMPCommunity">public</system:String>
     <system:String x:Key="String_Watermark_ExampleSNMPUsername">snmp-user</system:String>
+    <system:String x:Key="String_Watermark_PuTTYLocation">PuTTY location...</system:String>
     
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Set static IP address and gateway...</system:String>

@@ -5,18 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         Title="{DynamicResource String_ProductName}" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" TitleAlignment="Left">
     <Controls:MetroWindow.WindowButtonCommands>
         <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </Controls:MetroWindow.WindowButtonCommands>
     <Grid>
-        <dragablz:TabablzControl Name="TabsContainer">
+        <dragablz:TabablzControl Name="TabsContainer" ClosingItemCallback="{Binding CloseItemCommand}">
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController Partition="70BF46A6-B55D-4DC2-B8BD-6B61EFC95883" />
             </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.Style>
-                <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">                
+                <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">
                     <!-- If not null, the header suffix will be removed in the main window -->
                     <Setter Property="HeaderSuffixContent" Value="{x:Null}" />
                     <Setter Property="ContentTemplate">

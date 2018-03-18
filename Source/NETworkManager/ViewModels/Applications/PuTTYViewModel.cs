@@ -13,6 +13,7 @@ using NETworkManager.Views.Dialogs;
 using System.ComponentModel;
 using System.Windows.Data;
 using System;
+using System.IO;
 using System.Diagnostics;
 
 namespace NETworkManager.ViewModels.Applications
@@ -28,8 +29,6 @@ namespace NETworkManager.ViewModels.Applications
         private const string tagIdentifier = "tag=";
 
         private bool _isLoading = true;
-
-        private int _tabId = 0;
 
         private bool _isPuTTYConfigured;
         public bool IsPuTTYConfigured
@@ -122,12 +121,11 @@ namespace NETworkManager.ViewModels.Applications
             dialogCoordinator = instance;
 
             // Check if putty is available...
-            IsPuTTYConfigured = true;
-
+            CheckIfPuTTYConfigured();
+            
             InterTabClient = new DragablzPuTTYInterTabClient();
             TabItems = new ObservableCollection<DragablzPuTTYTabItem>();
-
-
+            
             // Load sessions
             if (PuTTYSessionManager.Sessions == null)
                 PuTTYSessionManager.Load();
@@ -160,8 +158,16 @@ namespace NETworkManager.ViewModels.Applications
             };
 
             LoadSettings();
+
+            SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
         }
 
+        private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SettingsInfo.PuTTY_PuTTYLocation))
+                CheckIfPuTTYConfigured();
+        }
+        
         private void LoadSettings()
         {
             ExpandSessionView = SettingsManager.Current.PuTTY_ExpandSessionView;
@@ -169,6 +175,16 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region ICommand & Actions
+        public ItemActionCallback CloseItemCommand
+        {
+            get { return CloseItemAction; }
+        }
+
+        private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
+        {
+           ((args.DragablzItem.Content as DragablzPuTTYTabItem).View as PuTTYControl).CloseTab();
+        }
+
         public ICommand ConnectNewSessionCommand
         {
             get { return new RelayCommand(p => ConnectNewSessionAction()); }
@@ -554,14 +570,20 @@ namespace NETworkManager.ViewModels.Applications
         #endregion
 
         #region Methods
+        private void CheckIfPuTTYConfigured()
+        {
+            IsPuTTYConfigured = File.Exists(SettingsManager.Current.PuTTY_PuTTYLocation);
+        }
+
         private void ConnectSession(Models.PuTTY.PuTTYSessionInfo sessionInfo, string Header = null)
         {
             // Add PuTTY path here...
-
+            sessionInfo.PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
+            
             TabItems.Add(new DragablzPuTTYTabItem(Header ?? sessionInfo.Hostname, new PuTTYControl(sessionInfo)));
             SelectedTabIndex = TabItems.Count - 1;
         }
-
+                
         // Modify history list
         private void AddHostToHistory(string host)
         {

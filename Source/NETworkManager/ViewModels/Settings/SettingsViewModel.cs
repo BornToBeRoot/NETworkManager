@@ -98,6 +98,7 @@ namespace NETworkManager.ViewModels.Settings
         SettingsApplicationTracerouteView _settingsApplicationTracerouteView;
         SettingsApplicationDNSLookupView _settingsApplicationDNSLookupView;
         SettingsApplicationRemoteDesktopView _settingsApplicationRemoteDesktopView;
+        SettingsApplicationPuTTYView _settingsApplicationPuTTYView;
         SettingsApplicationSNMPView _settingsApplicationSNMPView;
         SettingsApplicationWakeOnLANView _settingsApplicationWakeOnLANView;
         SettingsApplicationHTTPHeadersView _settingsApplicationHTTPHeadersView;
@@ -249,6 +250,12 @@ namespace NETworkManager.ViewModels.Settings
                         _settingsApplicationRemoteDesktopView = new SettingsApplicationRemoteDesktopView();
 
                     SettingsContent = _settingsApplicationRemoteDesktopView;
+                    break;
+                case SettingsViewManager.Name.PuTTY:
+                    if (_settingsApplicationPuTTYView == null)
+                        _settingsApplicationPuTTYView = new SettingsApplicationPuTTYView();
+
+                    SettingsContent = _settingsApplicationPuTTYView;
                     break;
                 case SettingsViewManager.Name.SNMP:
                     if (_settingsApplicationSNMPView == null)

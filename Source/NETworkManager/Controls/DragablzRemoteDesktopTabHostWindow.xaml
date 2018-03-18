@@ -16,7 +16,7 @@
                 <dragablz:InterTabController Partition="3D21565B-3E97-42F1-B0B9-CCA7DA63EFB2" />
             </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.Style>
-                <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">                
+                <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">
                     <!-- If not null, the header suffix will be removed in the main window -->
                     <Setter Property="HeaderSuffixContent" Value="{x:Null}" />
                     <Setter Property="ContentTemplate">
