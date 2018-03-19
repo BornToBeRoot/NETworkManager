@@ -23,7 +23,6 @@ using NETworkManager.Helpers;
 using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using NETworkManager.Models.Update;
-using NETworkManager.Models.RemoteDesktop;
 
 namespace NETworkManager
 {
@@ -408,6 +407,7 @@ namespace NETworkManager
         TracerouteView tracerouteView;
         DNSLookupView dnsLookupView;
         RemoteDesktopView remoteDesktopView;
+        PuTTYView puTTYView;
         SNMPView snmpView;
         WakeOnLANView wakeOnLANView;
         SubnetCalculatorHostView subnetCalculatorHostView;
@@ -465,6 +465,12 @@ namespace NETworkManager
                         remoteDesktopView = new RemoteDesktopView();
 
                     contentControlApplication.Content = remoteDesktopView;
+                    break;
+                case ApplicationViewManager.Name.PuTTY:
+                    if (puTTYView == null)
+                        puTTYView = new PuTTYView();
+
+                    contentControlApplication.Content = puTTYView;
                     break;
                 case ApplicationViewManager.Name.SNMP:
                     if (snmpView == null)

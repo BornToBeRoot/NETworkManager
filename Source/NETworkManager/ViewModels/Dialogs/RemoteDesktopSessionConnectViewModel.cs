@@ -1,6 +1,5 @@
 ﻿using NETworkManager.Models.Settings;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security;
 using System.Windows.Data;

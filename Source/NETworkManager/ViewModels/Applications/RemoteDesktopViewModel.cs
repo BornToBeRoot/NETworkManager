@@ -12,7 +12,6 @@ using System.Windows.Data;
 using System;
 using System.Linq;
 using System.Diagnostics;
-using NETworkManager.Models.Documentation;
 using NETworkManager.Helpers;
 using System.Collections.Generic;
 
@@ -57,6 +56,7 @@ namespace NETworkManager.ViewModels.Applications
                 OnPropertyChanged();
             }
         }
+
         #region Sessions
         ICollectionView _remoteDesktopSessions;
         public ICollectionView RemoteDesktopSessions

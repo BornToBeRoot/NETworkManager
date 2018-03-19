@@ -133,11 +133,6 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <!--<Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="4" ToolTip="{DynamicResource String_HelpMessage_Credentials}" Visibility="{Binding ShowUnlockCredentialsHint, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
-                    <Rectangle.Resources>
-                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
-                    </Rectangle.Resources>
-                </Rectangle>-->
             </Grid>
         </Grid>
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">

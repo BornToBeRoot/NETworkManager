@@ -114,6 +114,9 @@ namespace NETworkManager
 
                 if (RemoteDesktopSessionManager.SessionsChanged)
                     RemoteDesktopSessionManager.Save();
+
+                if (PuTTYSessionManager.SessionsChanged)
+                    PuTTYSessionManager.Save();
             }
         }
     }

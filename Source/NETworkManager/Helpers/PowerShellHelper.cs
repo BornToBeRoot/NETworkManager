@@ -24,24 +24,5 @@ namespace NETworkManager.Helpers
                 process.WaitForExit();
             }
         }
-
-        /* Catch error
-         try
-                {
-                 
-
-                }
-                catch (Win32Exception win32ex)
-                {
-                    switch (win32ex.NativeErrorCode)
-                    {
-                        case 1223:
-                            OnUserHasCanceled();
-                            break;
-                        default:
-                            throw;
-                    }
-                } 
-         */
     }
 }

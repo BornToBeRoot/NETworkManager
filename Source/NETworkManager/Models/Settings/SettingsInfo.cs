@@ -1444,6 +1444,53 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
+        #region PuTTY
+        private ObservableCollection<string> _puTTY_HostHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PuTTY_HostHistory
+        {
+            get { return _puTTY_HostHistory; }
+            set
+            {
+                if (value == _puTTY_HostHistory)
+                    return;
+
+                _puTTY_HostHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _puTTY_ExpandSessionView = true;
+        public bool PuTTY_ExpandSessionView
+        {
+            get { return _puTTY_ExpandSessionView; }
+            set
+            {
+                if (value == _puTTY_ExpandSessionView)
+                    return;
+
+                _puTTY_ExpandSessionView = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private string _puTTY_PuTTYLocation;
+        public string PuTTY_PuTTYLocation
+        {
+            get { return _puTTY_PuTTYLocation; }
+            set
+            {
+                if (value == _puTTY_PuTTYLocation)
+                    return;
+
+                _puTTY_PuTTYLocation = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
         #region HTTP Headers
         private ObservableCollection<string> _httpHeaders_WebsiteUriHistory = new ObservableCollection<string>();
         public ObservableCollection<string> HTTPHeaders_WebsiteUriHistory

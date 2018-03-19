@@ -103,6 +103,7 @@
     <system:String x:Key="String_Header_Network">Network</system:String>
     <system:String x:Key="String_Header_Data">Data</system:String>
     <system:String x:Key="String_Header_IPScanner">IP Scanner</system:String>
+    <system:String x:Key="String_Header_PuTTY">PuTTY</system:String>
     
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -265,6 +266,7 @@
     <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Network interface profiles reloaded</system:String>
     <system:String x:Key="String_PortScannerProfilesReloaded">Port Scanner profiles reloaded</system:String>
     <system:String x:Key="String_RemoteDesktopSessionsReloaded">Remote Desktop sessions reloaded</system:String>
+    <system:String x:Key="String_PuTTYSessionsReloaded">PuTTY sessions reloaded</system:String>
     <system:String x:Key="String_ComingSoon">Coming Soon!</system:String>
     <system:String x:Key="String_Override">override</system:String>
     <system:String x:Key="String_Add">add</system:String>
@@ -368,6 +370,8 @@
     <system:String x:Key="String_DataHasBeenUpdated">Data has been updated!</system:String>
     <system:String x:Key="String_ErrorInResponseCheckIfYouHaveWritePermissions">Error in response! Check if you have write permissions.</system:String>
     <system:String x:Key="String_ShowScanResultForAllIPAddresses">Show scan result for all IP addresses</system:String>
+    <system:String x:Key="String_ConfigureThePathToPuTTYInTheSettings">Configure the path to PuTTY in the settings...</system:String>
+    <system:String x:Key="String_PuTTYSessions">PuTTY sessions</system:String>
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
@@ -483,6 +487,7 @@
     <system:String x:Key="String_Watermark_ExampleSNMPOID">1.3.6.1.2.1.1</system:String>
     <system:String x:Key="String_Watermark_ExampleSNMPCommunity">public</system:String>
     <system:String x:Key="String_Watermark_ExampleSNMPUsername">snmp-user</system:String>
+    <system:String x:Key="String_Watermark_PuTTYLocation">PuTTY location...</system:String>
     
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Set static IP address and gateway...</system:String>
@@ -524,6 +529,7 @@
     <system:String x:Key="String_ApplicationName_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_ApplicationName_DNSLookup">DNS Lookup</system:String>
     <system:String x:Key="String_ApplicationName_RemoteDesktop">Remote Desktop</system:String>
+    <system:String x:Key="String_ApplicationName_PuTTY">PuTTY</system:String>
     <system:String x:Key="String_ApplicationName_SNMP">SNMP</system:String>
     <system:String x:Key="String_ApplicationName_HTTPHeaders">HTTP Headers</system:String>
     <system:String x:Key="String_ApplicationName_ARPTable">ARP Table</system:String>

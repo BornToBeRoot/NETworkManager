@@ -300,6 +300,48 @@ namespace NETworkManager.ViewModels.Settings
                 OnPropertyChanged();
             }
         }
+
+        private bool _importPuTTYSessionsExists;
+        public bool ImportPuTTYSessionsExists
+        {
+            get { return _importPuTTYSessionsExists; }
+            set
+            {
+                if (value == _importPuTTYSessionsExists)
+                    return;
+
+                _importPuTTYSessionsExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _importPuTTYSessions;
+        public bool ImportPuTTYSessions
+        {
+            get { return _importPuTTYSessions; }
+            set
+            {
+                if (value == _importPuTTYSessions)
+                    return;
+
+                _importPuTTYSessions = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _importOverridePuTTYSessions = true;
+        public bool ImportOverridePuTTYSessions
+        {
+            get { return _importOverridePuTTYSessions; }
+            set
+            {
+                if (value == _importOverridePuTTYSessions)
+                    return;
+
+                _importOverridePuTTYSessions = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Export
@@ -484,6 +526,34 @@ namespace NETworkManager.ViewModels.Settings
                 OnPropertyChanged();
             }
         }
+
+        private bool _puTTYSesionsExists;
+        public bool PuTTYSessionsExists
+        {
+            get { return _puTTYSesionsExists; }
+            set
+            {
+                if (value == _puTTYSesionsExists)
+                    return;
+
+                _puTTYSesionsExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _exportPuTTYSessions;
+        public bool ExportPuTTYSessions
+        {
+            get { return _exportPuTTYSessions; }
+            set
+            {
+                if (value == _exportPuTTYSessions)
+                    return;
+
+                _exportPuTTYSessions = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
         #endregion
 
@@ -495,12 +565,12 @@ namespace NETworkManager.ViewModels.Settings
         #endregion
 
         #region ICommands & Actions
-        public ICommand ImportBrowseFileCommand
+        public ICommand BrowseFileCommand
         {
-            get { return new RelayCommand(p => ImportBrowseFileAction()); }
+            get { return new RelayCommand(p => BrowseFileAction()); }
         }
 
-        private void ImportBrowseFileAction()
+        private void BrowseFileAction()
         {
             System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog()
             {
@@ -529,6 +599,7 @@ namespace NETworkManager.ViewModels.Settings
                 ImportWakeOnLANClientsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients);
                 ImportPortScannerProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.PortScannerProfiles);
                 ImportRemoteDesktopSessionsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.RemoteDesktopSessions);
+                ImportPuTTYSessionsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.PuTTYSessions);
             }
             catch (ImportFileNotValidException)
             {
@@ -607,6 +678,15 @@ namespace NETworkManager.ViewModels.Settings
                         RemoteDesktopSessionManager.Load(!ImportOverrideRemoteDesktopSessions);
                 }
 
+                if (ImportPuTTYSessionsExists && (ImportEverything || ImportPuTTYSessions))
+                {
+                    importOptions.Add(ImportExportManager.ImportExportOptions.PuTTYSessions);
+
+                    // Load remote desktop sessions (option: add)
+                    if (PuTTYSessionManager.Sessions == null)
+                        RemoteDesktopSessionManager.Load(!ImportOverridePuTTYSessions);
+                }
+
                 // Import (copy) files from zip archive
                 ImportExportManager.Import(ImportLocationSelectedPath, importOptions);
 
@@ -625,6 +705,9 @@ namespace NETworkManager.ViewModels.Settings
 
                 if (importOptions.Contains(ImportExportManager.ImportExportOptions.RemoteDesktopSessions))
                     RemoteDesktopSessionManager.Import(ImportEverything || ImportOverrideRemoteDesktopSessions);
+
+                if (importOptions.Contains(ImportExportManager.ImportExportOptions.PuTTYSessions))
+                    PuTTYSessionManager.Import(ImportEverything || ImportOverridePuTTYSessions);
 
                 // Show the user a message what happened
                 if (!ImportExportManager.ForceRestart)
@@ -647,6 +730,9 @@ namespace NETworkManager.ViewModels.Settings
 
                     if(importOptions.Contains(ImportExportManager.ImportExportOptions.RemoteDesktopSessions))
                         message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_RemoteDesktopSessionsReloaded"] as string);
+
+                    if(importOptions.Contains(ImportExportManager.ImportExportOptions.PuTTYSessions))
+                        message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_PuTTYSessionsReloaded"] as string);
 
                     await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, message, MessageDialogStyle.Affirmative, settings);
 
@@ -684,6 +770,9 @@ namespace NETworkManager.ViewModels.Settings
 
             if (RemoteDesktopSessionsExists && (ExportEverything || ExportRemoteDesktopSessions))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.RemoteDesktopSessions);
+
+            if (PuTTYSessionsExists && (ExportEverything || ExportPuTTYSessions))
+                exportOptions.Add(ImportExportManager.ImportExportOptions.PuTTYSessions);
 
             System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog()
             {
@@ -726,6 +815,9 @@ namespace NETworkManager.ViewModels.Settings
             if (RemoteDesktopSessionManager.SessionsChanged)
                 RemoteDesktopSessionManager.Save();
 
+            if (PuTTYSessionManager.SessionsChanged)
+                PuTTYSessionManager.Save();
+
             // Check if files exist
             ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
             NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
@@ -733,6 +825,7 @@ namespace NETworkManager.ViewModels.Settings
             WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
             PortScannerProfilesExists = File.Exists(PortScannerProfileManager.GetProfilesFilePath());
             RemoteDesktopSessionsExists = File.Exists(RemoteDesktopSessionManager.GetSessionsFilePath());
+            PuTTYSessionsExists = File.Exists(PuTTYSessionManager.GetSessionsFilePath());
         }
         #endregion
     }
