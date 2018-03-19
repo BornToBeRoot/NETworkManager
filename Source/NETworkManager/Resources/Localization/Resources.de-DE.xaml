@@ -266,6 +266,7 @@
     <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Netzwerkinterface Profile neu geladen</system:String>
     <system:String x:Key="String_PortScannerProfilesReloaded">Port-Scanner Profile neu geladen</system:String>
     <system:String x:Key="String_RemoteDesktopSessionsReloaded">Remote Desktop Sitzungen neu geladen</system:String>
+    <system:String x:Key="String_PuTTYSessionsReloaded">PuTTY Sitzungen neu geladen</system:String>
     <system:String x:Key="String_ComingSoon">Kommt demnächst!</system:String>
     <system:String x:Key="String_Override">überschreiben</system:String>
     <system:String x:Key="String_Add">hinzufügen</system:String>
@@ -370,6 +371,7 @@
     <system:String x:Key="String_ErrorInResponseCheckIfYouHaveWritePermissions">Fehler in Antwort! Prüfen Sie, ob Sie Schreibrechte haben.</system:String>
     <system:String x:Key="String_ShowScanResultForAllIPAddresses">Zeige Scan-Ergebnis für alle IP-Adressen</system:String>
     <system:String x:Key="String_ConfigureThePathToPuTTYInTheSettings">Konfiguriere den Pfad zu PuTTY in den Einstellungen...</system:String>
+    <system:String x:Key="String_PuTTYSessions">PuTTY Sitzungen</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>

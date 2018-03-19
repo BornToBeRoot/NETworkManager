@@ -257,6 +257,34 @@ namespace NETworkManager.ViewModels.Settings
                 OnPropertyChanged();
             }
         }
+
+        private bool _puTTYSessionsExists;
+        public bool PuTTYSessionsExists
+        {
+            get { return _puTTYSessionsExists; }
+            set
+            {
+                if (value == _puTTYSessionsExists)
+                    return;
+
+                _puTTYSessionsExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _resetPuTTYSessions;
+        public bool ResetPuTTYSessions
+        {
+            get { return _resetPuTTYSessions; }
+            set
+            {
+                if (value == _resetPuTTYSessions)
+                    return;
+
+                _resetPuTTYSessions = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, LoadSettings
@@ -383,6 +411,9 @@ namespace NETworkManager.ViewModels.Settings
             if (RemoteDesktopSessionsExists && (ResetEverything || ResetRemoteDesktopSessions))
                 RemoteDesktopSessionManager.Reset();
 
+            if (PuTTYSessionsExists && (ResetEverything || ResetPuTTYSessions))
+                PuTTYSessionManager.Reset();
+
             // Restart after reset or show a completed message
             if (forceRestart)
             {
@@ -446,6 +477,9 @@ namespace NETworkManager.ViewModels.Settings
             if (RemoteDesktopSessionManager.SessionsChanged)
                 RemoteDesktopSessionManager.Save();
 
+            if (PuTTYSessionManager.SessionsChanged)
+                PuTTYSessionManager.Save();
+
             // Check if files exist
             ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
             NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
@@ -453,6 +487,7 @@ namespace NETworkManager.ViewModels.Settings
             WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
             PortScannerProfilesExists = File.Exists(PortScannerProfileManager.GetProfilesFilePath());
             RemoteDesktopSessionsExists = File.Exists(RemoteDesktopSessionManager.GetSessionsFilePath());
+            PuTTYSessionsExists = File.Exists(PuTTYSessionManager.GetSessionsFilePath());
         }
         #endregion
     }

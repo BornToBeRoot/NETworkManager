@@ -11,7 +11,6 @@
         Loaded="UserControl_Loaded"
         mc:Ignorable="d">
     <UserControl.Resources>
-        <!-- Converter -->
         <Converter:ValidateSettingsExportConverter x:Key="ValidateSettingsExportConverter" />
         <Converter:ValidateSettingsImportConverter x:Key="ValidateSettingsImportConverter" />
         <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
@@ -63,6 +62,8 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
@@ -126,6 +127,16 @@
                         <RadioButton Grid.Column="0" Grid.Row="0" GroupName="ImportRemoteDesktopSessions" Content="{DynamicResource String_Override}" IsChecked="{Binding ImportOverrideRemoteDesktopSessions}" />
                         <RadioButton Grid.Column="2" Grid.Row="0" GroupName="ImportRemoteDesktopSessions" Content="{DynamicResource String_Add}" />
                     </Grid>
+                    <CheckBox Grid.Column="0" Grid.Row="12" Content="{DynamicResource String_PuTTYSessions}" IsEnabled="{Binding ImportPuTTYSessionsExists}" IsChecked="{Binding ImportPuTTYSessions}" />
+                    <Grid Grid.Column="2" Grid.Row="12" IsEnabled="{Binding ImportPuTTYSessionsExists}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="100" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition MinWidth="100" />
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Grid.Column="0" Grid.Row="0" GroupName="ImportPuTTYSessions" Content="{DynamicResource String_Override}" IsChecked="{Binding ImportOverridePuTTYSessions}" />
+                        <RadioButton Grid.Column="2" Grid.Row="0" GroupName="ImportPuTTYSessions" Content="{DynamicResource String_Add}" />
+                    </Grid>
                 </Grid>
             </GroupBox>
             <Button Content="{DynamicResource String_Button_Import}" Command="{Binding ImportSettingsCommand}" HorizontalAlignment="Left"  >
@@ -146,6 +157,7 @@
                                         <Binding Path="ImportWakeOnLANClients" />
                                         <Binding Path="ImportPortScannerProfiles" />
                                         <Binding Path="ImportRemoteDesktopSessions" />
+                                        <Binding Path="ImportPuTTYSessions" />
                                     </MultiBinding>
                                 </DataTrigger.Binding>
                                 <Setter  Property="IsEnabled" Value="True" />
@@ -176,7 +188,8 @@
                 <CheckBox Content="{DynamicResource String_IPScannerProfiles}" IsEnabled="{Binding IPScannerProfilesExists}" IsChecked="{Binding ExportIPScannerProfiles}" Margin="0,0,0,10" />
                 <CheckBox Content="{DynamicResource String_WakeOnLANClients}" IsEnabled="{Binding WakeOnLANClientsExists}" IsChecked="{Binding ExportWakeOnLANClients}" Margin="0,0,0,10" />
                 <CheckBox Content="{DynamicResource String_PortScannerProfiles}" IsEnabled="{Binding PortScannerProfilesExists}" IsChecked="{Binding ExportPortScannerProfiles}" Margin="0,0,0,10" />
-                <CheckBox Content="{DynamicResource String_RemoteDesktopSessions}" IsEnabled="{Binding RemoteDesktopSessionsExists}" IsChecked="{Binding ExportRemoteDesktopSessions}" />
+                <CheckBox Content="{DynamicResource String_RemoteDesktopSessions}" IsEnabled="{Binding RemoteDesktopSessionsExists}" IsChecked="{Binding ExportRemoteDesktopSessions}" Margin="0,0,0,10" />
+                <CheckBox Content="{DynamicResource String_PuTTYSessions}" IsEnabled="{Binding PuTTYSessionsExists}" IsChecked="{Binding ExportPuTTYSessions}" />
             </StackPanel>
         </GroupBox>
         <Button Content="{DynamicResource String_Button_Export}" Command="{Binding ExportSettingsCommand}" HorizontalAlignment="Left">
@@ -197,6 +210,7 @@
                                     <Binding Path="ExportWakeOnLANClients" />
                                     <Binding Path="ExportPortScannerProfiles" />
                                     <Binding Path="ExportRemoteDesktopSessions" />
+                                    <Binding Path="ExportPuTTYSessions" />
                                 </MultiBinding>
                             </DataTrigger.Binding>
                             <Setter  Property="IsEnabled" Value="True" />

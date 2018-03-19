@@ -76,7 +76,7 @@ namespace NETworkManager.Controls
             ProcessStartInfo info = new ProcessStartInfo
             {
                 FileName = _puTTYSessionInfo.PuTTYLocation,
-                Arguments = string.Format("{0}", _puTTYSessionInfo.Hostname)
+                Arguments = string.Format("{0}", _puTTYSessionInfo.Host)
             };
 
             PuTTYProcess = Process.Start(info);

@@ -10,7 +10,7 @@
         <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
-    <Grid x:Name="puTTYGrid" SizeChanged="PuTTYGrid_SizeChanged">
+    <Grid x:Name="puTTYGrid" SizeChanged="PuTTYGrid_SizeChanged" Margin="10">
         <WindowsFormsHost> 
             <WindowsForms:Panel x:Name="puTTYHost" />
         </WindowsFormsHost>

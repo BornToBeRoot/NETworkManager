@@ -61,30 +61,6 @@ namespace NETworkManager.ViewModels.Dialogs
             }
         }
 
-        private int? _credentialID = null;
-        public int? CredentialID
-        {
-            get { return _credentialID; }
-            set
-            {
-                if (value == _credentialID)
-                    return;
-
-                _credentialID = value;
-
-                if (!_isLoading)
-                    HasSessionInfoChanged();
-
-                OnPropertyChanged();
-            }
-        }
-
-        ICollectionView _credentials;
-        public ICollectionView Credentials
-        {
-            get { return _credentials; }
-        }
-
         private string _group;
         public string Group
         {
@@ -166,20 +142,10 @@ namespace NETworkManager.ViewModels.Dialogs
 
             Name = _sessionInfo.Name;
             Host = _sessionInfo.Host;
-            CredentialID = _sessionInfo.CredentialID;
 
             // Get the group, if not --> get the first group (ascending), fallback --> default group 
             Group = string.IsNullOrEmpty(_sessionInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Application.Current.Resources["String_Default"] as string) : _sessionInfo.Group;
             Tags = _sessionInfo.Tags;
-
-            if (CredentialManager.Loaded)
-                _credentials = CollectionViewSource.GetDefaultView(CredentialManager.CredentialInfoList);
-            else
-                ShowUnlockCredentialsHint = true;
-
-            // Fake the entry for the user (if credentials are not loaded or credential was deleted) --> example [12]
-            if (CredentialID != null && (!CredentialManager.Loaded || CredentialManager.GetCredentialByID((int)CredentialID) == null))
-                _credentials = CollectionViewSource.GetDefaultView(new List<CredentialInfo>() { new CredentialInfo((int)CredentialID) });
 
             _groups = CollectionViewSource.GetDefaultView(groups);
             _groups.SortDescriptions.Add(new SortDescription());
@@ -189,19 +155,7 @@ namespace NETworkManager.ViewModels.Dialogs
 
         private void HasSessionInfoChanged()
         {
-            SessionInfoChanged = (_sessionInfo.Name != Name) || (_sessionInfo.Host != Host) || (_sessionInfo.CredentialID != CredentialID) || (_sessionInfo.Group != Group) || (_sessionInfo.Tags != Tags);
+            SessionInfoChanged = (_sessionInfo.Name != Name) || (_sessionInfo.Host != Host) || (_sessionInfo.Group != Group) || (_sessionInfo.Tags != Tags);
         }
-
-        #region ICommand & Actions
-        public ICommand UnselectCredentialCommand
-        {
-            get { return new RelayCommand(p => UnselectCredentialAction()); }
-        }
-
-        private void UnselectCredentialAction()
-        {
-            CredentialID = null;
-        }
-        #endregion
     }
 }

@@ -122,10 +122,10 @@ namespace NETworkManager.ViewModels.Applications
 
             // Check if putty is available...
             CheckIfPuTTYConfigured();
-            
+
             InterTabClient = new DragablzPuTTYInterTabClient();
             TabItems = new ObservableCollection<DragablzPuTTYTabItem>();
-            
+
             // Load sessions
             if (PuTTYSessionManager.Sessions == null)
                 PuTTYSessionManager.Load();
@@ -167,7 +167,7 @@ namespace NETworkManager.ViewModels.Applications
             if (e.PropertyName == nameof(SettingsInfo.PuTTY_PuTTYLocation))
                 CheckIfPuTTYConfigured();
         }
-        
+
         private void LoadSettings()
         {
             ExpandSessionView = SettingsManager.Current.PuTTY_ExpandSessionView;
@@ -182,7 +182,7 @@ namespace NETworkManager.ViewModels.Applications
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-           ((args.DragablzItem.Content as DragablzPuTTYTabItem).View as PuTTYControl).CloseTab();
+            ((args.DragablzItem.Content as DragablzPuTTYTabItem).View as PuTTYControl).CloseTab();
         }
 
         public ICommand ConnectNewSessionCommand
@@ -208,28 +208,9 @@ namespace NETworkManager.ViewModels.Applications
                 // Create new remote desktop session info
                 Models.PuTTY.PuTTYSessionInfo puTTYSessionInfo = new Models.PuTTY.PuTTYSessionInfo
                 {
-                    Hostname = instance.Host
+                    Host = instance.Host
                 };
-
-                /*
-                if (instance.UseCredentials)
-                {
-                    remoteDesktopSessionInfo.CustomCredentials = true;
-
-                    if (instance.CustomCredentials)
-                    {
-                        remoteDesktopSessionInfo.Username = instance.Username;
-                        remoteDesktopSessionInfo.Password = instance.Password;
-                    }
-                    else
-                    {
-                        CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)instance.CredentialID);
-
-                        remoteDesktopSessionInfo.Username = credentialInfo.Username;
-                        remoteDesktopSessionInfo.Password = credentialInfo.Password;
-                    }
-                }*/
-
+             
                 ConnectSession(puTTYSessionInfo);
             }, instance =>
             {
@@ -267,7 +248,6 @@ namespace NETworkManager.ViewModels.Applications
                 {
                     Name = instance.Name,
                     Host = instance.Host,
-                    CredentialID = instance.CredentialID,
                     Group = instance.Group,
                     Tags = instance.Tags
                 };
@@ -293,151 +273,15 @@ namespace NETworkManager.ViewModels.Applications
             get { return new RelayCommand(p => ConnectSessionAction()); }
         }
 
-        private async void ConnectSessionAction()
+        private void ConnectSessionAction()
         {
             Models.PuTTY.PuTTYSessionInfo sessionInfo = new Models.PuTTY.PuTTYSessionInfo
             {
-                Hostname = SelectedSession.Host
-            };
-            
-            if (SelectedSession.CredentialID != null) // Credentials need to be unlocked first
-            {
-                if (!CredentialManager.Loaded)
-                {
-                    CustomDialog customDialog = new CustomDialog()
-                    {
-                        Title = Application.Current.Resources["String_Header_MasterPassword"] as string
-                    };
-
-                    CredentialsMasterPasswordViewModel credentialsMasterPasswordViewModel = new CredentialsMasterPasswordViewModel(async instance =>
-                    {
-                        await dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                        if (CredentialManager.Load(instance.Password))
-                        {
-                            CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)SelectedSession.CredentialID);
-
-                            if (credentialInfo == null)
-                            {
-                                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_CredentialNotFound"] as string, Application.Current.Resources["String_CredentialNotFoundMessage"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
-
-                                return;
-                            }
-
-                            /*
-                            sessionInfo.CustomCredentials = true;
-                            sessionInfo.Username = credentialInfo.Username;
-                            sessionInfo.Password = credentialInfo.Password;
-                            */
-
-                            ConnectSession(sessionInfo, SelectedSession.Name);
-                        }
-                        else
-                        {
-                            await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_WrongPassword"] as string, Application.Current.Resources["String_WrongPasswordDecryptionFailed"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
-                        }
-                    }, instance =>
-                    {
-                        dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                    });
-
-                    customDialog.Content = new CredentialsMasterPasswordDialog
-                    {
-                        DataContext = credentialsMasterPasswordViewModel
-                    };
-
-                    await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-                }
-                else // Connect already unlocked
-                {
-                    CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)SelectedSession.CredentialID);
-
-                    if (credentialInfo == null)
-                    {
-                        await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_CredentialNotFound"] as string, Application.Current.Resources["String_CredentialNotFoundMessage"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
-
-                        return;
-                    }
-
-                    /*
-                    sessionInfo.CustomCredentials = true;
-                    sessionInfo.Username = credentialInfo.Username;
-                    sessionInfo.Password = credentialInfo.Password;
-                    */
-
-                    ConnectSession(sessionInfo, SelectedSession.Name);
-                }
-            }
-            else // Connect without credentials
-            {
-                ConnectSession(sessionInfo, SelectedSession.Name);
-            }
-        }
-
-        public ICommand ConnectSessionAsCommand
-        {
-            get { return new RelayCommand(p => ConnectSessionAsAction()); }
-        }
-
-        private async void ConnectSessionAsAction()
-        {
-            CustomDialog customDialog = new CustomDialog()
-            {
-                Title = Application.Current.Resources["String_Header_ConnectAs"] as string
+                Host = SelectedSession.Host
             };
 
-            PuTTYSessionConnectViewModel puTTYSessionConnectViewModel = new PuTTYSessionConnectViewModel(instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
 
-                Models.PuTTY.PuTTYSessionInfo puTTYSessionInfo = new Models.PuTTY.PuTTYSessionInfo
-                {
-                    Hostname = instance.Host
-                };
-
-                /*
-                if (instance.UseCredentials)
-                {
-                    puTTYSessionInfo.CustomCredentials = true;
-
-                    if (instance.CustomCredentials)
-                    {
-                        puTTYSessionInfo.Username = instance.Username;
-                        puTTYSessionInfo.Password = instance.Password;
-                    }
-                    else
-                    {
-                        CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)instance.CredentialID);
-
-                        puTTYSessionInfo.Username = credentialInfo.Username;
-                        puTTYSessionInfo.Password = credentialInfo.Password;
-                    }
-                }
-                */
-
-                ConnectSession(puTTYSessionInfo, instance.Name);
-            }, instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
-            }, true)
-            {
-                // Set name, hostname
-                Name = SelectedSession.Name,
-                Host = SelectedSession.Host,
-
-                // Request credentials
-                UseCredentials = true
-            };
-
-            customDialog.Content = new PuTTYSessionConnectDialog
-            {
-                DataContext = puTTYSessionConnectViewModel
-            };
-
-            ConfigurationManager.Current.FixAirspace = true;
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            ConnectSession(sessionInfo, SelectedSession.Name);
         }
 
         public ICommand ConnectSessionExternalCommand
@@ -473,7 +317,6 @@ namespace NETworkManager.ViewModels.Applications
                 {
                     Name = instance.Name,
                     Host = instance.Host,
-                    CredentialID = instance.CredentialID,
                     Group = instance.Group,
                     Tags = instance.Tags
                 };
@@ -493,7 +336,7 @@ namespace NETworkManager.ViewModels.Applications
             ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
-        
+
         public ICommand CopyAsSessionCommand
         {
             get { return new RelayCommand(p => CopyAsSessionAction()); }
@@ -579,11 +422,11 @@ namespace NETworkManager.ViewModels.Applications
         {
             // Add PuTTY path here...
             sessionInfo.PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
-            
-            TabItems.Add(new DragablzPuTTYTabItem(Header ?? sessionInfo.Hostname, new PuTTYControl(sessionInfo)));
+
+            TabItems.Add(new DragablzPuTTYTabItem(Header ?? sessionInfo.Host, new PuTTYControl(sessionInfo)));
             SelectedTabIndex = TabItems.Count - 1;
         }
-                
+
         // Modify history list
         private void AddHostToHistory(string host)
         {
