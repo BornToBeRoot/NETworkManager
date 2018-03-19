@@ -8,10 +8,10 @@ using System.Windows.Input;
 using System;
 using System.Windows.Threading;
 using NETworkManager.Helpers;
+using System.Diagnostics;
 
 namespace NETworkManager.Controls
 {
-
     public partial class RemoteDesktopControl : UserControl, INotifyPropertyChanged
     {
         #region PropertyChangedEventHandler
@@ -207,17 +207,6 @@ namespace NETworkManager.Controls
             rdpClient.Connect();
         }
 
-        private void Disconnect()
-        {
-            rdpClient.Disconnect();
-        }
-
-        public void OnClose()
-        {
-            if (Connected)
-                Disconnect();
-        }
-
         private void ReconnectAdjustScreen()
         {
             rdpClient.Reconnect((uint)rdpGrid.ActualWidth, (uint)rdpGrid.ActualHeight);
@@ -230,6 +219,22 @@ namespace NETworkManager.Controls
             RDPClientHeight = rdpClient.DesktopHeight;
         }
 
+        private void Disconnect()
+        {
+            if (Connected)
+                rdpClient.Disconnect();
+        }
+
+        public void CloseTab()
+        {
+            Disconnect();
+        }
+
+        public void OnClose()
+        {
+            Disconnect();
+        }
+        
         // Source: https://msdn.microsoft.com/en-us/library/aa382170(v=vs.85).aspx
         private string GetDisconnectReasonFromResource(string reason)
         {

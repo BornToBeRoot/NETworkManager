@@ -168,9 +168,19 @@ namespace NETworkManager.ViewModels.Applications
         {
             ExpandSessionView = SettingsManager.Current.RemoteDesktop_ExpandSessionView;
         }
-        #endregion              
+        #endregion
 
         #region ICommand & Actions
+        public ItemActionCallback CloseItemCommand
+        {
+            get { return CloseItemAction; }
+        }
+
+        private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
+        {
+            ((args.DragablzItem.Content as DragablzRemoteDesktopTabItem).View as RemoteDesktopControl).CloseTab();
+        }
+
         public ICommand ConnectNewSessionCommand
         {
             get { return new RelayCommand(p => ConnectNewSessionAction(), ConnectNewSession_CanExecute); }

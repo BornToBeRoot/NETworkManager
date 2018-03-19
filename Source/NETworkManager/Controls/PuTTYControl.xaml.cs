@@ -100,22 +100,22 @@ namespace NETworkManager.Controls
                 ResizeEmbeddedPuTTY();
         }
 
-        public void Disconnect()
-        {
-            if (PuTTYProcess != null && !PuTTYProcess.HasExited)
-                PuTTYProcess.Kill();
-        }
-
         private void ResizeEmbeddedPuTTY()
         {
             try
             {
                 NativeMethods.SetWindowPos(PuTTYProcess.MainWindowHandle, IntPtr.Zero, 0, 0, puTTYHost.ClientSize.Width, puTTYHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        public void Disconnect()
+        {
+            if (PuTTYProcess != null && !PuTTYProcess.HasExited)
+                PuTTYProcess.Kill();
         }
 
         public void CloseTab()
