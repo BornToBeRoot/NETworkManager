@@ -16,10 +16,7 @@
   <p>
     <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/master">
       <img alt="AppVeyor Master" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/master.svg?style=flat-square&&label=master" />
-    </a>
-      <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/develop">
-      <img alt="AppVeyor Develop" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/develop.svg?style=flat-square&&label=develop" />
-    </a>
+    </a>    
   </p>
 </div>
 
