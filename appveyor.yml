@@ -1,7 +1,6 @@
 branches:
   only:
    - master
-   - develop
   
 before_build:
  - nuget restore Source/NETworkManager.sln
