@@ -16,6 +16,7 @@ using System.Windows.Data;
 using NETworkManager.ViewModels.Dialogs;
 using NETworkManager.Views.Dialogs;
 using System.Linq;
+using System.Windows.Controls;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -636,6 +637,16 @@ namespace NETworkManager.ViewModels.Applications
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand EditGroupCommand
+        {
+            get {  return new RelayCommand(p => EditGroupAction(p)); }
+        }
+
+        private void EditGroupAction(object name)
+        {
+            Debug.WriteLine(name);
         }
         #endregion
 

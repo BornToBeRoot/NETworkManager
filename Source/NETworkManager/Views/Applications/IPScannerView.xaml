@@ -250,7 +250,7 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                         </MenuItem>
-                    </ContextMenu>
+                    </ContextMenu>                       
                 </DataGrid.Resources>
                 <DataGrid.RowStyle>
                     <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">                        
@@ -340,7 +340,7 @@
                     <ListBox Grid.Column="0" Grid.Row="2" x:Name="listBoxProfiles" FontSize="14" ItemsSource="{Binding IPScannerProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}">
                         <ListBox.Resources>
                             <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
-                            <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                            <ContextMenu x:Key="ProfileContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                 <MenuItem Header="{DynamicResource String_Scan}" Command="{Binding ScanProfileCommand}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}">
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
@@ -378,6 +378,17 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </ContextMenu>
+                            <ContextMenu x:Key="EditGroupContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                                <MenuItem Header="{DynamicResource String_Edit}" Command="{Binding EditGroupCommand}" CommandParameter="{Binding Name, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type GroupItem}}}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem> 
+                            </ContextMenu>
                         </ListBox.Resources>
                         <ListBox.InputBindings>
                             <KeyBinding Command="{Binding EditProfileCommand}" Key="F2" />
@@ -387,6 +398,7 @@
                             <GroupStyle>
                                 <GroupStyle.ContainerStyle>
                                     <Style TargetType="{x:Type GroupItem}">
+                                        <Setter Property="ContextMenu" Value="{StaticResource EditGroupContextMenu}" />
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate>
@@ -405,7 +417,7 @@
                         </ListBox.GroupStyle>
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
-                                <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
+                                <Setter Property="ContextMenu" Value="{StaticResource ProfileContextMenu}" />
                             </Style>
                         </ListBox.ItemContainerStyle>
                     </ListBox>
