@@ -646,7 +646,7 @@ namespace NETworkManager.ViewModels.Applications
 
         private void EditGroupAction(object name)
         {
-            Debug.WriteLine(name);
+            Debug.WriteLine(((name as GroupItem).Content as CollectionViewGroup).Name);
         }
         #endregion
 

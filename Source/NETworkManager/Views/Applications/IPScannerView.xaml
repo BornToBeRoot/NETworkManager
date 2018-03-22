@@ -379,7 +379,7 @@
                                 </MenuItem>
                             </ContextMenu>
                             <ContextMenu x:Key="EditGroupContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                                <MenuItem Header="{DynamicResource String_Edit}" Command="{Binding EditGroupCommand}" CommandParameter="{Binding Name, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type GroupItem}}}">
+                                <MenuItem Header="{DynamicResource String_Edit}" Command="{Binding EditGroupCommand}" CommandParameter="{Binding ., RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type GroupItem}}}">
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                             <Rectangle.OpacityMask>
@@ -398,7 +398,7 @@
                             <GroupStyle>
                                 <GroupStyle.ContainerStyle>
                                     <Style TargetType="{x:Type GroupItem}">
-                                        <Setter Property="ContextMenu" Value="{StaticResource EditGroupContextMenu}" />
+                                        <Setter Property="ContextMenu" Value="{DynamicResource EditGroupContextMenu}" />
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate>
