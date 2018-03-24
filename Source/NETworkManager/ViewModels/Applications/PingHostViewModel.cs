@@ -2,7 +2,7 @@
 using NETworkManager.Controls;
 using Dragablz;
 using System.Windows.Input;
-using NETworkManager.Views.Applications;
+using NETworkManager.Views;
 using System.Windows;
 
 namespace NETworkManager.ViewModels.Applications

@@ -317,34 +317,34 @@
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Settings\SettingsGeneralUpdateViewModel.cs" />
-    <Compile Include="Views\Applications\PuTTYView.xaml.cs">
+    <Compile Include="Views\PuTTYView.xaml.cs">
       <DependentUpon>PuTTYView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\PingHostView.xaml.cs">
+    <Compile Include="Views\PingHostView.xaml.cs">
       <DependentUpon>PingHostView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\SNMPView.xaml.cs">
+    <Compile Include="Views\SNMPView.xaml.cs">
       <DependentUpon>SNMPView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\HTTPHeadersView.xaml.cs">
+    <Compile Include="Views\HTTPHeadersView.xaml.cs">
       <DependentUpon>HTTPHeadersView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\ARPTableView.xaml.cs">
+    <Compile Include="Views\ARPTableView.xaml.cs">
       <DependentUpon>ARPTableView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\SubnetCalculatorIPv4SplitterView.xaml.cs">
+    <Compile Include="Views\SubnetCalculatorIPv4SplitterView.xaml.cs">
       <DependentUpon>SubnetCalculatorIPv4SplitterView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\SubnetCalculatorHostView.xaml.cs">
+    <Compile Include="Views\SubnetCalculatorHostView.xaml.cs">
       <DependentUpon>SubnetCalculatorHostView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\LookupOUILookupView.xaml.cs">
+    <Compile Include="Views\LookupOUILookupView.xaml.cs">
       <DependentUpon>LookupOUILookupView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\LookupPortLookupView.xaml.cs">
+    <Compile Include="Views\LookupPortLookupView.xaml.cs">
       <DependentUpon>LookupPortLookupView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\RemoteDesktopView.xaml.cs">
+    <Compile Include="Views\RemoteDesktopView.xaml.cs">
       <DependentUpon>RemoteDesktopView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DragablzPingTabHostWindow.xaml.cs">
@@ -544,67 +544,67 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Page Include="Views\Applications\PuTTYView.xaml">
+    <Page Include="Views\PuTTYView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\PingHostView.xaml">
+    <Page Include="Views\PingHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\SNMPView.xaml">
+    <Page Include="Views\SNMPView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\HTTPHeadersView.xaml">
+    <Page Include="Views\HTTPHeadersView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\ARPTableView.xaml">
+    <Page Include="Views\ARPTableView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\SubnetCalculatorIPv4SplitterView.xaml">
+    <Page Include="Views\SubnetCalculatorIPv4SplitterView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\SubnetCalculatorHostView.xaml">
+    <Page Include="Views\SubnetCalculatorHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\LookupOUILookupView.xaml">
+    <Page Include="Views\LookupOUILookupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\LookupPortLookupView.xaml">
+    <Page Include="Views\LookupPortLookupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\RemoteDesktopView.xaml">
+    <Page Include="Views\RemoteDesktopView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\LookupHostView.xaml">
+    <Page Include="Views\LookupHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\TracerouteView.xaml">
+    <Page Include="Views\TracerouteView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\PingView.xaml">
+    <Page Include="Views\PingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\DNSLookupView.xaml">
+    <Page Include="Views\DNSLookupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\PortScannerView.xaml">
+    <Page Include="Views\PortScannerView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\IPScannerView.xaml">
+    <Page Include="Views\IPScannerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -760,15 +760,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Applications\NetworkInterfaceView.xaml">
+    <Page Include="Views\NetworkInterfaceView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Applications\WakeOnLANView.xaml">
+    <Page Include="Views\WakeOnLANView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Applications\SubnetCalculatorIPv4CalculatorView.xaml">
+    <Page Include="Views\SubnetCalculatorIPv4CalculatorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -820,7 +820,7 @@
     <Compile Include="ViewModels\Settings\SettingsApplicationPingViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsGeneralGeneralViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationTracerouteViewModel.cs" />
-    <Compile Include="Views\Applications\LookupHostView.xaml.cs">
+    <Compile Include="Views\LookupHostView.xaml.cs">
       <DependentUpon>LookupHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ApplicationViewManager.cs" />
@@ -893,13 +893,13 @@
     <Compile Include="ViewModels\Settings\SettingsGeneralAutostartViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="Views\Applications\TracerouteView.xaml.cs">
+    <Compile Include="Views\TracerouteView.xaml.cs">
       <DependentUpon>TracerouteView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\PingView.xaml.cs">
+    <Compile Include="Views\PingView.xaml.cs">
       <DependentUpon>PingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\DNSLookupView.xaml.cs">
+    <Compile Include="Views\DNSLookupView.xaml.cs">
       <DependentUpon>DNSLookupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BooleanReverseToVisibilityConverter.cs" />
@@ -961,16 +961,16 @@
     <Compile Include="Converters\IsDefaultLocationToBoolConverter.cs" />
     <Compile Include="Converters\AccentToBrushConverter.cs" />
     <Compile Include="Converters\AppThemeToBrushConverter.cs" />
-    <Compile Include="Views\Applications\PortScannerView.xaml.cs">
+    <Compile Include="Views\PortScannerView.xaml.cs">
       <DependentUpon>PortScannerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\NetworkInterfaceView.xaml.cs">
+    <Compile Include="Views\NetworkInterfaceView.xaml.cs">
       <DependentUpon>NetworkInterfaceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BooleanToStringConverter.cs" />
     <Compile Include="Converters\AccentToStringConverter.cs" />
     <Compile Include="Converters\AppThemeToStringConverter.cs" />
-    <Compile Include="Views\Applications\IPScannerView.xaml.cs">
+    <Compile Include="Views\IPScannerView.xaml.cs">
       <DependentUpon>IPScannerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Validators\IPScanRangeValidator.cs" />
@@ -984,10 +984,10 @@
     <Compile Include="Validators\EmptyValidator.cs" />
     <Compile Include="Validators\PortValidator.cs" />
     <Compile Include="Validators\MACAddressValidator.cs" />
-    <Compile Include="Views\Applications\WakeOnLANView.xaml.cs">
+    <Compile Include="Views\WakeOnLANView.xaml.cs">
       <DependentUpon>WakeOnLANView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Applications\SubnetCalculatorIPv4CalculatorView.xaml.cs">
+    <Compile Include="Views\SubnetCalculatorIPv4CalculatorView.xaml.cs">
       <DependentUpon>SubnetCalculatorIPv4CalculatorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">

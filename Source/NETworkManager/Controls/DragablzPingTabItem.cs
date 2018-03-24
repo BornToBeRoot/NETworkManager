@@ -1,5 +1,5 @@
 ﻿using NETworkManager.ViewModels;
-using NETworkManager.Views.Applications;
+using NETworkManager.Views;
 
 namespace NETworkManager.Controls
 {
