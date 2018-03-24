@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Xml.Serialization;
@@ -104,6 +105,22 @@ namespace NETworkManager.Models.Settings
         public static void RemoveProfile(IPScannerProfileInfo profile)
         {
             Profiles.Remove(profile);
+        }
+
+        public static void RenameGroup(string oldGroup, string group)
+        {
+            // Go through all groups
+            for(int i=0; i < Profiles.Count; i++ )
+            {
+                // Find specific group
+                if (Profiles[i].Group == oldGroup)
+                {
+                    // Rename the group
+                    Profiles[i].Group = group;
+
+                    ProfilesChanged = true;
+                }
+            }
         }
     }
 }

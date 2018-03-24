@@ -16,6 +16,7 @@ using System.Windows.Data;
 using NETworkManager.ViewModels.Dialogs;
 using NETworkManager.Views.Dialogs;
 using System.Linq;
+using System.Windows.Controls;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -614,7 +615,6 @@ namespace NETworkManager.ViewModels.Applications
 
         private async void DeleteProfileAction()
         {
-
             CustomDialog customDialog = new CustomDialog()
             {
                 Title = Application.Current.Resources["String_Header_DeleteProfile"] as string
@@ -633,6 +633,38 @@ namespace NETworkManager.ViewModels.Applications
             customDialog.Content = new ConfirmRemoveDialog
             {
                 DataContext = confirmRemoveViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand EditGroupCommand
+        {
+            get { return new RelayCommand(p => EditGroupAction(p)); }
+        }
+
+        private async void EditGroupAction(object group)
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_EditGroup"] as string
+            };
+
+            EditGroupViewModel editGroupViewModel = new EditGroupViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                IPScannerProfileManager.RenameGroup(instance.OldGroup, instance.Group);
+
+                _ipScannerProfiles.Refresh();
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, group.ToString());
+
+            customDialog.Content = new EditGroupDialog
+            {
+                DataContext = editGroupViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);

@@ -253,7 +253,7 @@
                     </ContextMenu>
                 </DataGrid.Resources>
                 <DataGrid.RowStyle>
-                    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">                        
+                    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" Value="1" >
                                 <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
@@ -340,7 +340,7 @@
                     <ListBox Grid.Column="0" Grid.Row="2" x:Name="listBoxProfiles" FontSize="14" ItemsSource="{Binding IPScannerProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}">
                         <ListBox.Resources>
                             <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
-                            <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                            <ContextMenu x:Key="ProfileContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                 <MenuItem Header="{DynamicResource String_Scan}" Command="{Binding ScanProfileCommand}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}">
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
@@ -392,7 +392,30 @@
                                                 <ControlTemplate>
                                                     <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}">
                                                         <Expander.Header>
-                                                            <TextBlock Text="{Binding Name}" Style="{DynamicResource DefaultTextBlock}" />
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="Auto" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{DynamicResource DefaultTextBlock}"/>
+                                                                <Button Grid.Column="1" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource CleanButton}">
+                                                                    <Rectangle Width="16" Height="16">
+                                                                        <Rectangle.OpacityMask>
+                                                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
+                                                                        </Rectangle.OpacityMask>
+                                                                        <Rectangle.Style>
+                                                                            <Style TargetType="{x:Type Rectangle}">
+                                                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Rectangle.Style>
+                                                                    </Rectangle>
+                                                                </Button>
+                                                            </Grid>
                                                         </Expander.Header>
                                                         <ItemsPresenter />
                                                     </Expander>
@@ -405,7 +428,7 @@
                         </ListBox.GroupStyle>
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
-                                <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
+                                <Setter Property="ContextMenu" Value="{StaticResource ProfileContextMenu}" />
                             </Style>
                         </ListBox.ItemContainerStyle>
                     </ListBox>

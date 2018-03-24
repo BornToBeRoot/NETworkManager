@@ -104,6 +104,7 @@
     <system:String x:Key="String_Header_Data">Data</system:String>
     <system:String x:Key="String_Header_IPScanner">IP Scanner</system:String>
     <system:String x:Key="String_Header_PuTTY">PuTTY</system:String>
+    <system:String x:Key="String_Header_EditGroup">Edit group</system:String>
     
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>

@@ -14,7 +14,6 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System;
 using System.IO;
-using System.Diagnostics;
 
 namespace NETworkManager.ViewModels.Applications
 {
@@ -408,6 +407,38 @@ namespace NETworkManager.ViewModels.Applications
             };
 
             ConfigurationManager.Current.FixAirspace = true;
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand EditGroupCommand
+        {
+            get { return new RelayCommand(p => EditGroupAction(p)); }
+        }
+
+        private async void EditGroupAction(object group)
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = Application.Current.Resources["String_Header_EditGroup"] as string
+            };
+
+            EditGroupViewModel editGroupViewModel = new EditGroupViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                PuTTYSessionManager.RenameGroup(instance.OldGroup, instance.Group);
+
+                _puTTYSessions.Refresh();
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, group.ToString());
+
+            customDialog.Content = new EditGroupDialog
+            {
+                DataContext = editGroupViewModel
+            };
+
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
         #endregion

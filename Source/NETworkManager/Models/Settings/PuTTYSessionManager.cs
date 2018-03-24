@@ -105,5 +105,21 @@ namespace NETworkManager.Models.Settings
         {
             Sessions.Remove(session);
         }
+
+        public static void RenameGroup(string oldGroup, string group)
+        {
+            // Go through all groups
+            for (int i = 0; i < Sessions.Count; i++)
+            {
+                // Find specific group
+                if (Sessions[i].Group == oldGroup)
+                {
+                    // Rename the group
+                    Sessions[i].Group = group;
+
+                    SessionsChanged = true;
+                }
+            }
+        }
     }
 }
