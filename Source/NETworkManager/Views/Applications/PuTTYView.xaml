@@ -87,15 +87,6 @@
                                             </Rectangle>
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <!--<MenuItem Header="{DynamicResource String_ConnectExternal}" Command="{Binding ConnectSessionExternalCommand}">
-                                        <MenuItem.Icon>
-                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                                <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Octicons Kind=DeviceDesktop}" />
-                                                </Rectangle.OpacityMask>
-                                            </Rectangle>
-                                        </MenuItem.Icon>
-                                    </MenuItem>-->
                                     <MenuItem Header="{DynamicResource String_Edit}" Command="{Binding EditSessionCommand}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
@@ -138,7 +129,30 @@
                                                     <ControlTemplate>
                                                         <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}">
                                                             <Expander.Header>
-                                                                <TextBlock Text="{Binding Name}" Style="{StaticResource DefaultTextBlock}" />
+                                                                <Grid>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="*" />
+                                                                        <ColumnDefinition Width="Auto" />
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{DynamicResource DefaultTextBlock}"/>
+                                                                    <Button Grid.Column="1" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource CleanButton}">
+                                                                        <Rectangle Width="16" Height="16">
+                                                                            <Rectangle.OpacityMask>
+                                                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
+                                                                            </Rectangle.OpacityMask>
+                                                                            <Rectangle.Style>
+                                                                                <Style TargetType="{x:Type Rectangle}">
+                                                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                                                    <Style.Triggers>
+                                                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                                                        </DataTrigger>
+                                                                                    </Style.Triggers>
+                                                                                </Style>
+                                                                            </Rectangle.Style>
+                                                                        </Rectangle>
+                                                                    </Button>
+                                                                </Grid>
                                                             </Expander.Header>
                                                             <ItemsPresenter />
                                                         </Expander>

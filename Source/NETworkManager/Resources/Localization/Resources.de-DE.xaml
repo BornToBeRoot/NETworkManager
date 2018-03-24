@@ -104,7 +104,8 @@
     <system:String x:Key="String_Header_Data">Daten</system:String>
     <system:String x:Key="String_Header_IPScanner">IP-Scanner</system:String>
     <system:String x:Key="String_Header_PuTTY">PuTTY</system:String>
-
+    <system:String x:Key="String_Header_EditGroup">Gruppe bearbeiten</system:String>
+    
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Ein leistungsstarkes Tool zum Verwalten von Netzwerken und zur Behebung von Netzwerkproblemen!</system:String>

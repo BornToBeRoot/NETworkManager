@@ -287,7 +287,7 @@
                                     </Grid>
                                 </Button.Content>
                             </Button>
-                            <Button Content="{DynamicResource String_Button_NetworkConnections}" Command="{Binding OpenNetworkConnectionsCommand}" Style="{StaticResource DefaultButton}" Margin="10,0,0,0"/>                                                       
+                            <Button Content="{DynamicResource String_Button_NetworkConnections}" Command="{Binding OpenNetworkConnectionsCommand}" Style="{StaticResource DefaultButton}" Margin="10,0,0,0"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
@@ -527,45 +527,45 @@
                                 </Grid>
                             </GroupBox>
                         </StackPanel>
-                            <Button Grid.Row="3" HorizontalAlignment="Right" Command="{Binding ApplyNetworkInterfaceConfigCommand}">
-                                <Button.Content>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentSave}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Apply}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
-                                    </Grid>
-                                </Button.Content>
-                                <Button.Style>
-                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                                        <Style.Triggers>
-                                            <DataTrigger Value="False">
-                                                <DataTrigger.Binding>
-                                                    <MultiBinding Converter="{StaticResource ValidateNetworkInterfaceConfigConverter}">
-                                                        <Binding Path="ConfigEnableDynamicIPAddress" />
-                                                        <Binding Path="ConfigEnableStaticIPAddress" />
-                                                        <Binding ElementName="txtConfigIPAddress" Path="(Validation.HasError)" />
-                                                        <Binding ElementName="cbConfigSubnetmaskOrCidr" Path="(Validation.HasError)" />
-                                                        <Binding ElementName="txtConfigGateway" Path="(Validation.HasError)" />
-                                                        <Binding Path="ConfigEnableDynamicDNS" />
-                                                        <Binding Path="ConfigEnableStaticDNS" />
-                                                        <Binding ElementName="txtConfigPrimaryDNSServer" Path="(Validation.HasError)" />
-                                                        <Binding ElementName="txtConfigSecondaryDNSServer" Path="(Validation.HasError)" />
-                                                        <Binding Path="CanConfigure" />
-                                                    </MultiBinding>
-                                                </DataTrigger.Binding>
-                                                <Setter Property="IsEnabled" Value="False" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
-                            </Button>
+                        <Button Grid.Row="3" HorizontalAlignment="Right" Command="{Binding ApplyNetworkInterfaceConfigCommand}">
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentSave}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Apply}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                                </Grid>
+                            </Button.Content>
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                    <Style.Triggers>
+                                        <DataTrigger Value="False">
+                                            <DataTrigger.Binding>
+                                                <MultiBinding Converter="{StaticResource ValidateNetworkInterfaceConfigConverter}">
+                                                    <Binding Path="ConfigEnableDynamicIPAddress" />
+                                                    <Binding Path="ConfigEnableStaticIPAddress" />
+                                                    <Binding ElementName="txtConfigIPAddress" Path="(Validation.HasError)" />
+                                                    <Binding ElementName="cbConfigSubnetmaskOrCidr" Path="(Validation.HasError)" />
+                                                    <Binding ElementName="txtConfigGateway" Path="(Validation.HasError)" />
+                                                    <Binding Path="ConfigEnableDynamicDNS" />
+                                                    <Binding Path="ConfigEnableStaticDNS" />
+                                                    <Binding ElementName="txtConfigPrimaryDNSServer" Path="(Validation.HasError)" />
+                                                    <Binding ElementName="txtConfigSecondaryDNSServer" Path="(Validation.HasError)" />
+                                                    <Binding Path="CanConfigure" />
+                                                </MultiBinding>
+                                            </DataTrigger.Binding>
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                     </Grid>
                 </ScrollViewer>
                 <Border Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource GrayBrush8}">
@@ -632,9 +632,32 @@
                                                 <Setter Property="Template">
                                                     <Setter.Value>
                                                         <ControlTemplate>
-                                                            <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}" Padding="0">
+                                                            <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}">
                                                                 <Expander.Header>
-                                                                    <TextBlock Text="{Binding Name}" Style="{StaticResource DefaultTextBlock}" />
+                                                                    <Grid>
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition Width="*" />
+                                                                            <ColumnDefinition Width="Auto" />
+                                                                        </Grid.ColumnDefinitions>
+                                                                        <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{DynamicResource DefaultTextBlock}"/>
+                                                                        <Button Grid.Column="1" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource CleanButton}">
+                                                                            <Rectangle Width="16" Height="16">
+                                                                                <Rectangle.OpacityMask>
+                                                                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
+                                                                                </Rectangle.OpacityMask>
+                                                                                <Rectangle.Style>
+                                                                                    <Style TargetType="{x:Type Rectangle}">
+                                                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                                                        <Style.Triggers>
+                                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                                                            </DataTrigger>
+                                                                                        </Style.Triggers>
+                                                                                    </Style>
+                                                                                </Rectangle.Style>
+                                                                            </Rectangle>
+                                                                        </Button>
+                                                                    </Grid>
                                                                 </Expander.Header>
                                                                 <ItemsPresenter />
                                                             </Expander>

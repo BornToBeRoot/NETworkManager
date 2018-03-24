@@ -133,5 +133,21 @@ namespace NETworkManager.Models.Settings
         {
             Profiles.Remove(profile);
         }
+
+        public static void RenameGroup(string oldGroup, string group)
+        {
+            // Go through all groups
+            for (int i = 0; i < Profiles.Count; i++)
+            {
+                // Find specific group
+                if (Profiles[i].Group == oldGroup)
+                {
+                    // Rename the group
+                    Profiles[i].Group = group;
+
+                    ProfilesChanged = true;
+                }
+            }
+        }
     }
 }

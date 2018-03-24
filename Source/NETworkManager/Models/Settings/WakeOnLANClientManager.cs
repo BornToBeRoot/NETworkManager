@@ -105,5 +105,21 @@ namespace NETworkManager.Models.Settings
         {
             Clients.Remove(client);
         }
+
+        public static void RenameGroup(string oldGroup, string group)
+        {
+            // Go through all groups
+            for (int i = 0; i < Clients.Count; i++)
+            {
+                // Find specific group
+                if (Clients[i].Group == oldGroup)
+                {
+                    // Rename the group
+                    Clients[i].Group = group;
+
+                    ClientsChanged = true;
+                }
+            }
+        }
     }
 }
