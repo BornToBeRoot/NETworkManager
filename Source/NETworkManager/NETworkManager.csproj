@@ -272,7 +272,7 @@
     <Compile Include="ViewModels\SNMPViewModel.cs" />
     <Compile Include="ViewModels\HTTPHeadersViewModel.cs" />
     <Compile Include="ViewModels\ARPTableViewModel.cs" />
-    <Compile Include="ViewModels\EditGroupViewModel.cs" />
+    <Compile Include="ViewModels\GroupViewModel.cs" />
     <Compile Include="ViewModels\CredentialsMasterPasswordViewModel.cs" />
     <Compile Include="ViewModels\CredentialViewModel.cs" />
     <Compile Include="ViewModels\CredentialsSetMasterPasswordViewModel.cs" />
@@ -356,8 +356,8 @@
     <Compile Include="Views\CredentialDialog.xaml.cs">
       <DependentUpon>CredentialDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EditGroupDialog.xaml.cs">
-      <DependentUpon>EditGroupDialog.xaml</DependentUpon>
+    <Compile Include="Views\GroupDialog.xaml.cs">
+      <DependentUpon>GroupDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CredentialsMasterPasswordDialog.xaml.cs">
       <DependentUpon>CredentialsMasterPasswordDialog.xaml</DependentUpon>
@@ -623,7 +623,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\EditGroupDialog.xaml">
+    <Page Include="Views\GroupDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

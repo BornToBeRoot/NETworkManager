@@ -648,7 +648,7 @@ namespace NETworkManager.ViewModels
                 Title = Application.Current.Resources["String_Header_EditGroup"] as string
             };
 
-            EditGroupViewModel editGroupViewModel = new EditGroupViewModel(instance =>
+            GroupViewModel editGroupViewModel = new GroupViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -660,7 +660,7 @@ namespace NETworkManager.ViewModels
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             }, group.ToString());
 
-            customDialog.Content = new EditGroupDialog
+            customDialog.Content = new GroupDialog
             {
                 DataContext = editGroupViewModel
             };

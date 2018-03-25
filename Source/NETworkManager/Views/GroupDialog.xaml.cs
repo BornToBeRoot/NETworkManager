@@ -2,9 +2,9 @@
 
 namespace NETworkManager.Views
 {
-    public partial class EditGroupDialog : UserControl
+    public partial class GroupDialog : UserControl
     {
-        public EditGroupDialog()
+        public GroupDialog()
         {
             InitializeComponent();
         }

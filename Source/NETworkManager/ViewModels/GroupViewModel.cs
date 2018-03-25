@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
-    public class EditGroupViewModel : ViewModelBase
+    public class GroupViewModel : ViewModelBase
     {
         bool _isLoading = true;
 
@@ -65,7 +65,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public EditGroupViewModel(Action<EditGroupViewModel> okCommand, Action<EditGroupViewModel> cancelHandler, string group)
+        public GroupViewModel(Action<GroupViewModel> okCommand, Action<GroupViewModel> cancelHandler, string group)
         {
             _okCommand = new RelayCommand(p => okCommand(this));
             _cancelCommand = new RelayCommand(p => cancelHandler(this));
