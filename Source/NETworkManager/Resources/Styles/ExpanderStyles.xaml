@@ -15,7 +15,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Rectangle Grid.Column="0" x:Name="Chevron" Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" VerticalAlignment="Center">
+                            <Rectangle Grid.Column="0" x:Name="Chevron" Width="16" Height="16" Fill="{DynamicResource GrayBrush3}" VerticalAlignment="Center">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{IconPacks:Entypo Kind=ChevronThinDown}" />
                                 </Rectangle.OpacityMask>
@@ -89,7 +89,7 @@
                                                        RecognizesAccessKey="True"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                             </Controls:ContentControlEx>
-                            <Rectangle Grid.Column="1" x:Name="Chevron" Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" VerticalAlignment="Center">
+                            <Rectangle Grid.Column="1" x:Name="Chevron" Width="16" Height="16" Fill="{DynamicResource GrayBrush3}" VerticalAlignment="Center">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{IconPacks:Entypo Kind=ChevronThinDown}" />
                                 </Rectangle.OpacityMask>
@@ -136,7 +136,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="{TemplateBinding Content}" Style="{StaticResource HeaderTextBlock}" Margin="10,10,10,0" />
-                            <Rectangle Grid.Column="1" x:Name="Chevron" Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="0,10,10,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Rectangle Grid.Column="1" x:Name="Chevron" Width="16" Height="16" Fill="{DynamicResource GrayBrush3}" Margin="0,10,10,0" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{IconPacks:Entypo Kind=ChevronThinLeft}" />
                                 </Rectangle.OpacityMask>
@@ -166,7 +166,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Rectangle Grid.Row="0" x:Name="Chevron" Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,12.5,10,10" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Rectangle Grid.Row="0" x:Name="Chevron" Width="16" Height="16" Fill="{DynamicResource GrayBrush3}" Margin="10,14.5,10,10" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{IconPacks:Entypo Kind=ChevronThinRight}" />
                                 </Rectangle.OpacityMask>
