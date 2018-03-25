@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Helpers;
+using NETworkManager.Utilities;
 using System.Net.NetworkInformation;
 
 namespace NETworkManager.Converters

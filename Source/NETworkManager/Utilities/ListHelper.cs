@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NETworkManager.Helpers
+namespace NETworkManager.Utilities
 {
     public static class ListHelper
     {

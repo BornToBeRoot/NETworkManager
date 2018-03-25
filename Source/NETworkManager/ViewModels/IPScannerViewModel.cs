@@ -7,7 +7,6 @@ using System;
 using System.Threading;
 using System.Collections.Generic;
 using NETworkManager.Models.Network;
-using NETworkManager.Helpers;
 using System.Windows.Threading;
 using System.Diagnostics;
 using System.ComponentModel;
@@ -15,7 +14,7 @@ using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Data;
 using NETworkManager.Views;
 using System.Linq;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {

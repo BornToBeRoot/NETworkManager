@@ -3,9 +3,9 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace NETworkManager.Helpers
+namespace NETworkManager.Utilities
 {    
-    internal class SingleInstanceHelper
+    internal class SingleInstance
     {
         public const int HWND_BROADCAST = 0xffff;
         public static readonly int WM_SHOWME = RegisterWindowMessage("WM_SHOWME");

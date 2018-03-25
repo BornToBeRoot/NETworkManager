@@ -8,13 +8,13 @@ using NETworkManager.Models.Settings;
 using System.Collections.Generic;
 using NETworkManager.Models.Network;
 using System.Threading;
-using NETworkManager.Helpers;
+using NETworkManager.Utilities;
 using System.Diagnostics;
 using System.Windows.Threading;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Linq;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {

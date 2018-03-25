@@ -1,5 +1,4 @@
-﻿using NETworkManager.Helpers;
-using NETworkManager.Models.Settings;
+﻿using NETworkManager.Models.Settings;
 using System.Net;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
@@ -9,7 +8,7 @@ using NETworkManager.Models.Network;
 using System.ComponentModel;
 using System.Windows.Data;
 using NETworkManager.Views;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {
@@ -248,7 +247,7 @@ namespace NETworkManager.ViewModels
         {
             WakeOnLANInfo info = new WakeOnLANInfo
             {
-                MagicPacket = MagicPacketHelper.Create(MACAddress),
+                MagicPacket = WakeOnLAN.CreateMagicPacket(MACAddress),
                 Broadcast = IPAddress.Parse(Broadcast),
                 Port = Port
             };
@@ -265,7 +264,7 @@ namespace NETworkManager.ViewModels
         {
             WakeOnLANInfo info = new WakeOnLANInfo
             {
-                MagicPacket = MagicPacketHelper.Create(SelectedClient.MACAddress),
+                MagicPacket = WakeOnLAN.CreateMagicPacket(SelectedClient.MACAddress),
                 Broadcast = IPAddress.Parse(SelectedClient.Broadcast),
                 Port = SelectedClient.Port
             };

@@ -1,6 +1,5 @@
 ﻿using NETworkManager.Models.Network;
 using NETworkManager.Models.Settings;
-using NETworkManager.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +15,7 @@ using System.Windows.Threading;
 using System.Windows.Data;
 using Dragablz;
 using NETworkManager.Controls;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {

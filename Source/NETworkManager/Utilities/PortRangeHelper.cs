@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace NETworkManager.Helpers
+namespace NETworkManager.Utilities
 {
     public static class PortRangeHelper
     {

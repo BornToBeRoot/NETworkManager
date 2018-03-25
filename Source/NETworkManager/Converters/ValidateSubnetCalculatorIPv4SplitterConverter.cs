@@ -1,4 +1,4 @@
-﻿using NETworkManager.Helpers;
+﻿using NETworkManager.Models.Network;
 using System;
 using System.Globalization;
 using System.Net;
@@ -28,7 +28,7 @@ namespace NETworkManager.Converters
             if (subnetmaskOrCIDR.Length < 3)
                 cidr = int.Parse(subnetmaskOrCIDR);
             else
-                cidr = SubnetmaskHelper.ConvertSubnetmaskToCidr(IPAddress.Parse(subnetmaskOrCIDR));
+                cidr = Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(subnetmaskOrCIDR));
             
             newSubnetmaskOrCIDR = newSubnetmaskOrCIDR.TrimStart('/');
             int newCidr;
@@ -36,7 +36,7 @@ namespace NETworkManager.Converters
             if (newSubnetmaskOrCIDR.Length < 3)
                 newCidr = int.Parse(newSubnetmaskOrCIDR);
             else
-                newCidr = SubnetmaskHelper.ConvertSubnetmaskToCidr(IPAddress.Parse(newSubnetmaskOrCIDR));
+                newCidr = Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(newSubnetmaskOrCIDR));
 
             // Compare
             return newCidr > cidr;

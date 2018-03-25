@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using NETworkManager.Helpers;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators
 {
@@ -17,9 +17,7 @@ namespace NETworkManager.Validators
 
             if (subnetmaskOrCidr.StartsWith("/"))
             {
-                int cidr;
-
-                if (int.TryParse(subnetmaskOrCidr.TrimStart('/'), out cidr))
+                if (int.TryParse(subnetmaskOrCidr.TrimStart('/'), out int cidr))
                 {
                     if (cidr >= 0 && cidr < 33)
                         return ValidationResult.ValidResult;

@@ -13,7 +13,7 @@ using System.Windows.Data;
 using System.ComponentModel;
 using System.Diagnostics;
 using NETworkManager.Views;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {

@@ -8,7 +8,7 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Views;
 using System;
 using System.Windows.Threading;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {

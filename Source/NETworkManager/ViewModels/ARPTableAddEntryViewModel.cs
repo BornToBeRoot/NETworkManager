@@ -1,4 +1,4 @@
-﻿using NETworkManager.Utils;
+﻿using NETworkManager.Utilities;
 using System;
 using System.Windows.Input;
 

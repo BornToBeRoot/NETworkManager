@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
-namespace NETworkManager.Helpers
+namespace NETworkManager.Utilities
 {
     public static class IPv4AddressHelper
     {

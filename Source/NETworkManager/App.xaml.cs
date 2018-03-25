@@ -1,4 +1,4 @@
-﻿using NETworkManager.Helpers;
+﻿using NETworkManager.Utilities;
 using NETworkManager.Models.Settings;
 using System;
 using System.Diagnostics;
@@ -73,7 +73,7 @@ namespace NETworkManager
             else
             {
                 // Bring the already running application into the foreground
-                SingleInstanceHelper.PostMessage((IntPtr)SingleInstanceHelper.HWND_BROADCAST, SingleInstanceHelper.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);
+                SingleInstance.PostMessage((IntPtr)SingleInstance.HWND_BROADCAST, SingleInstance.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);
 
                 _singleInstanceClose = true;
                 Shutdown();

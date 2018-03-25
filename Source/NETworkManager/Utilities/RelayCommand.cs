@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 // Source: https://msdn.microsoft.com/en-us/magazine/dd419663.aspx?f=255&MSPPError=-2147217396#id0090030
 
-namespace NETworkManager.Utils
+namespace NETworkManager.Utilities
 {
     public class RelayCommand : ICommand
     {

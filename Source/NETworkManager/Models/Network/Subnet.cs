@@ -1,4 +1,4 @@
-﻿using NETworkManager.Helpers;
+﻿using NETworkManager.Utilities;
 using System;
 using System.Collections.Concurrent;
 using System.Net;
@@ -10,12 +10,40 @@ namespace NETworkManager.Models.Network
     public class Subnet
     {
         #region Static methods
+        // Source: https://blogs.msdn.microsoft.com/knom/2008/12/31/ip-address-calculations-with-c-subnetmasks-networks/
+        public static IPAddress GetIPv4NetworkAddress(IPAddress ipv4Address, IPAddress subnetmask)
+        {
+            byte[] ipv4AdressBytes = ipv4Address.GetAddressBytes();
+            byte[] subnetmaskBytes = subnetmask.GetAddressBytes();
+
+            byte[] broadcastBytes = new byte[ipv4AdressBytes.Length];
+
+            for (int i = 0; i < broadcastBytes.Length; i++)
+                broadcastBytes[i] = (byte)(ipv4AdressBytes[i] & (subnetmaskBytes[i]));
+
+            return new IPAddress(broadcastBytes);
+        }
+
+        // Source: https://blogs.msdn.microsoft.com/knom/2008/12/31/ip-address-calculations-with-c-subnetmasks-networks/
+        public static IPAddress GetIPv4Broadcast(IPAddress ipv4Address, IPAddress subnetmask)
+        {
+            byte[] ipv4AddressBytes = ipv4Address.GetAddressBytes();
+            byte[] subnetmaskBytes = subnetmask.GetAddressBytes();
+
+            byte[] broadcastBytes = new byte[ipv4AddressBytes.Length];
+
+            for (int i = 0; i < broadcastBytes.Length; i++)
+                broadcastBytes[i] = (byte)(ipv4AddressBytes[i] | (subnetmaskBytes[i] ^ 255));
+
+            return new IPAddress(broadcastBytes);
+        }
+
         public static SubnetInfo CalculateIPv4Subnet(IPAddress ipv4Address, IPAddress subnetmask)
         {
-            IPAddress networkAddress = SubnetHelper.GetIPv4NetworkAddress(ipv4Address, subnetmask);
-            IPAddress broadcast = SubnetHelper.GetIPv4Broadcast(ipv4Address, subnetmask);
-            int cidr = SubnetmaskHelper.ConvertSubnetmaskToCidr(subnetmask);
-            long totalIPs = SubnetmaskHelper.GetNumberIPv4Addresses(cidr);
+            IPAddress networkAddress = GetIPv4NetworkAddress(ipv4Address, subnetmask);
+            IPAddress broadcast = GetIPv4Broadcast(ipv4Address, subnetmask);
+            int cidr = Subnetmask.ConvertSubnetmaskToCidr(subnetmask);
+            long totalIPs = Subnetmask.GetNumberIPv4Addresses(cidr);
 
             // Fix bug when /31 (host first/last can be null)
             IPAddress hostFirstIP = null;
@@ -62,7 +90,7 @@ namespace NETworkManager.Models.Network
             // Calculate the current subnet
             SubnetInfo subnetInfo = CalculateIPv4Subnet(ipv4Address, subnetmask);
 
-            int newCidr = SubnetmaskHelper.ConvertSubnetmaskToCidr(newSubnetmask);
+            int newCidr = Subnetmask.ConvertSubnetmaskToCidr(newSubnetmask);
 
             // Get new  HostBits based on SubnetBits (CIDR) // Hostbits (32 - /24 = 8 -> 00000000000000000000000011111111)
             string newHostBits = (new string('1', (32 - newCidr))).PadLeft(32, '0');

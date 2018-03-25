@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 
-namespace NETworkManager.Helpers
+namespace NETworkManager.Utilities
 {
     public class VisualTreeHelper
     {

@@ -1,11 +1,12 @@
-﻿using System.Collections.Concurrent;
+﻿using NETworkManager.Models.Network;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NETworkManager.Helpers
+namespace NETworkManager.Utilities
 {
     public static class IPScanRangeHelper
     {
@@ -38,10 +39,10 @@ namespace NETworkManager.Helpers
                     string[] subnet = ipOrRange.Split('/');
 
                     IPAddress ip = IPAddress.Parse(subnet[0]);
-                    IPAddress subnetmask = int.TryParse(subnet[1], out int cidr) ? IPAddress.Parse(SubnetmaskHelper.ConvertCidrToSubnetmask(cidr)) : IPAddress.Parse(subnet[1]);
+                    IPAddress subnetmask = int.TryParse(subnet[1], out int cidr) ? IPAddress.Parse(Subnetmask.ConvertCidrToSubnetmask(cidr)) : IPAddress.Parse(subnet[1]);
 
-                    IPAddress networkAddress = SubnetHelper.GetIPv4NetworkAddress(ip, subnetmask);
-                    IPAddress broadcast = SubnetHelper.GetIPv4Broadcast(ip, subnetmask);
+                    IPAddress networkAddress = Subnet.GetIPv4NetworkAddress(ip, subnetmask);
+                    IPAddress broadcast = Subnet.GetIPv4Broadcast(ip, subnetmask);
 
                     Parallel.For(IPv4AddressHelper.ConvertToInt32(networkAddress), IPv4AddressHelper.ConvertToInt32(broadcast) + 1, parallelOptions, i =>
                     {

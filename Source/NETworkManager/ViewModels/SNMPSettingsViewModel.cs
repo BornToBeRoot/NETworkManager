@@ -1,6 +1,6 @@
 ﻿using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Models.Settings;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 

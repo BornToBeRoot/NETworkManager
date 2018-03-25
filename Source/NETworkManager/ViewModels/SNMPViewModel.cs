@@ -1,7 +1,6 @@
-﻿using NETworkManager.Helpers;
+﻿using NETworkManager.Utilities;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.Settings;
-using NETworkManager.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

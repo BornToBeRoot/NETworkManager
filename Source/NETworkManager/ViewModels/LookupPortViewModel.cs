@@ -2,13 +2,12 @@
 using System.Collections.ObjectModel;
 using NETworkManager.Models.Settings;
 using System.Collections.Generic;
-using NETworkManager.Helpers;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows;
 using NETworkManager.Models.Lookup;
 using System.Linq;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {

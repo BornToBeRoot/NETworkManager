@@ -6,14 +6,13 @@ using System.Windows;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Settings;
 using System.Collections.Generic;
-using NETworkManager.Helpers;
 using System.Linq;
 using NETworkManager.Views;
 using System.ComponentModel;
 using System.Windows.Data;
 using System;
 using System.IO;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {

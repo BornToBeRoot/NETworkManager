@@ -3,7 +3,7 @@ using NETworkManager.Models.Settings;
 using System.Collections.Generic;
 using System.Net;
 using System.Windows.Input;
-using NETworkManager.Helpers;
+using NETworkManager.Utilities;
 using System.Collections.ObjectModel;
 using System;
 using System.Threading;
@@ -12,7 +12,7 @@ using System.Windows.Data;
 using System.ComponentModel;
 using MahApps.Metro.Controls.Dialogs;
 using System.Linq;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {
@@ -275,8 +275,8 @@ namespace NETworkManager.ViewModels
             string newSubnetmaskOrCidr = NewSubnetmaskOrCIDR.TrimStart('/');
 
             // Validate the user input and display warning
-            double cidr = subnetSplit[1].Length < 3 ? double.Parse(subnetSplit[1]) : SubnetmaskHelper.ConvertSubnetmaskToCidr(subnetSplit[1]);
-            double newCidr = newSubnetmaskOrCidr.Length < 3 ? double.Parse(newSubnetmaskOrCidr) : SubnetmaskHelper.ConvertSubnetmaskToCidr(newSubnetmaskOrCidr);
+            double cidr = subnetSplit[1].Length < 3 ? double.Parse(subnetSplit[1]) : Subnetmask.ConvertSubnetmaskToCidr(subnetSplit[1]);
+            double newCidr = newSubnetmaskOrCidr.Length < 3 ? double.Parse(newSubnetmaskOrCidr) : Subnetmask.ConvertSubnetmaskToCidr(newSubnetmaskOrCidr);
 
             if (65535 < (Math.Pow(2, (32 - cidr)) / Math.Pow(2, (32 - newCidr))))
             {

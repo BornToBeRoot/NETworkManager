@@ -1,5 +1,4 @@
 ﻿using NETworkManager.Models.Network;
-using NETworkManager.Helpers;
 using System;
 using System.Windows.Input;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Linq;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {

@@ -7,9 +7,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System;
 using System.Windows.Threading;
-using NETworkManager.Helpers;
+using NETworkManager.Utilities;
 using System.Diagnostics;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Controls
 {

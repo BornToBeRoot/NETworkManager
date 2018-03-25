@@ -3,7 +3,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace NETworkManager.Utils
+namespace NETworkManager.Utilities
 {
     class NativeMethods
     {

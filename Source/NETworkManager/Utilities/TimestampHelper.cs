@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NETworkManager.Helpers
+namespace NETworkManager.Utilities
 {
     public static class TimestampHelper
     {

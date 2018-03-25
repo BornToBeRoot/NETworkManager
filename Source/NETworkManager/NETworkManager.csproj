@@ -235,11 +235,11 @@
     <Compile Include="Models\PuTTY\PuTTYSessionInfo.cs" />
     <Compile Include="Models\Settings\PuTTYSessionInfo.cs" />
     <Compile Include="Models\Settings\PuTTYSessionManager.cs" />
-    <Compile Include="Utils\NativeMethods.cs" />
-    <Compile Include="Helpers\PowerShellHelper.cs" />
-    <Compile Include="Helpers\SecureStringHelper.cs" />
-    <Compile Include="Helpers\SingleInstanceHelper.cs" />
-    <Compile Include="Helpers\VisualTreeHelper.cs" />
+    <Compile Include="Utilities\NativeMethods.cs" />
+    <Compile Include="Utilities\PowerShellHelper.cs" />
+    <Compile Include="Utilities\SecureStringHelper.cs" />
+    <Compile Include="Utilities\SingleInstance.cs" />
+    <Compile Include="Utilities\VisualTreeHelper.cs" />
     <Compile Include="Models\Documentation\LibraryManager.cs" />
     <Compile Include="Models\Documentation\LibraryInfo.cs" />
     <Compile Include="Models\Documentation\DocumentationInfo.cs" />
@@ -790,18 +790,15 @@
     <Compile Include="Converters\ValidateSettingsImportConverter.cs" />
     <Compile Include="Converters\ValidateSettingsResetConverter.cs" />
     <Compile Include="Converters\ValidateSettingsExportConverter.cs" />
-    <Compile Include="Helpers\ListHelper.cs" />
-    <Compile Include="Utils\HotKeys.cs" />
+    <Compile Include="Utilities\ListHelper.cs" />
+    <Compile Include="Utilities\HotKeys.cs" />
     <Compile Include="Models\Network\ARPTable.cs" />
-    <Compile Include="Helpers\PortRangeHelper.cs" />
-    <Compile Include="Helpers\IPScanRangeHelper.cs" />
-    <Compile Include="Helpers\IPv4AddressHelper.cs" />
-    <Compile Include="Helpers\MACAddressHelper.cs" />
-    <Compile Include="Helpers\MagicPacketHelper.cs" />
-    <Compile Include="Helpers\RegexHelper.cs" />
-    <Compile Include="Helpers\SubnetHelper.cs" />
-    <Compile Include="Helpers\SubnetmaskHelper.cs" />
-    <Compile Include="Helpers\TimestampHelper.cs" />
+    <Compile Include="Utilities\PortRangeHelper.cs" />
+    <Compile Include="Utilities\IPScanRangeHelper.cs" />
+    <Compile Include="Utilities\IPv4AddressHelper.cs" />
+    <Compile Include="Utilities\MACAddressHelper.cs" />
+    <Compile Include="Utilities\RegexHelper.cs" />
+    <Compile Include="Utilities\TimestampHelper.cs" />
     <Compile Include="Models\Network\PingExceptionArgs.cs" />
     <Compile Include="Models\Network\PortInfo.cs" />
     <Compile Include="Models\Network\PortScannedArgs.cs" />
@@ -885,7 +882,7 @@
     <Compile Include="ViewModels\SubnetCalculatorIPv4CalculatorViewModel.cs" />
     <Compile Include="ViewModels\TracerouteViewModel.cs" />
     <Compile Include="ViewModels\WakeOnLANViewModel.cs" />
-    <Compile Include="Utils\RelayCommand.cs" />
+    <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\SettingsWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingsAppearanceViewModel.cs" />
@@ -895,7 +892,7 @@
     <Compile Include="ViewModels\SettingsSettingsViewModel.cs" />
     <Compile Include="ViewModels\SettingsAutostartViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="Utils\ViewModelBase.cs" />
+    <Compile Include="Utilities\ViewModelBase.cs" />
     <Compile Include="Views\TracerouteView.xaml.cs">
       <DependentUpon>TracerouteView.xaml</DependentUpon>
     </Compile>

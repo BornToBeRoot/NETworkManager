@@ -16,11 +16,11 @@ using NETworkManager.Models.Settings;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Collections.Generic;
-using NETworkManager.Helpers;
+using NETworkManager.Utilities;
 using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using NETworkManager.Models.Update;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 
 namespace NETworkManager
 {
@@ -546,7 +546,7 @@ namespace NETworkManager
         private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             // Single instance
-            if (msg == SingleInstanceHelper.WM_SHOWME)
+            if (msg == SingleInstance.WM_SHOWME)
             {
                 ShowWindowAction();
                 handled = true;

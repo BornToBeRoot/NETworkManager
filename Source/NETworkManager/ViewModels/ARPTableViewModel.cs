@@ -1,5 +1,4 @@
 ﻿using NETworkManager.Models.Network;
-using NETworkManager.Helpers;
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -8,7 +7,7 @@ using System.Windows.Data;
 using System.Collections.ObjectModel;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Views;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {

@@ -1,7 +1,6 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Helpers;
 using NETworkManager.Models.Settings;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;

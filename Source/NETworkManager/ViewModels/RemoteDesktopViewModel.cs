@@ -11,9 +11,9 @@ using System.Windows.Data;
 using System;
 using System.Linq;
 using System.Diagnostics;
-using NETworkManager.Helpers;
+using NETworkManager.Utilities;
 using System.Collections.Generic;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace NETworkManager.Utils
+namespace NETworkManager.Utilities
 {
     public static class HotKeys
     {

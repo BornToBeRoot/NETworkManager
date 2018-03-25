@@ -3,7 +3,7 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 
-namespace NETworkManager.Helpers
+namespace NETworkManager.Utilities
 {
     public static class MACAddressHelper
     {

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace NETworkManager.Helpers
+namespace NETworkManager.Utilities
 {
     public static class PowerShellHelper
     {

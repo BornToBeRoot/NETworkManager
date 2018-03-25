@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.ObjectModel;
 using NETworkManager.Models.Settings;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {

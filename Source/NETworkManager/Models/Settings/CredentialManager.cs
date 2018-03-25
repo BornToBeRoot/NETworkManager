@@ -1,6 +1,6 @@
 ﻿// Contains code from: https://stackoverflow.com/questions/10168240/encrypting-decrypting-a-string-in-c-sharp 
 
-using NETworkManager.Helpers;
+using NETworkManager.Utilities;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;

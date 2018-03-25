@@ -1,4 +1,4 @@
-﻿using NETworkManager.Utils;
+﻿using NETworkManager.Utilities;
 using NETworkManager.ViewModels;
 using NETworkManager.Views;
 

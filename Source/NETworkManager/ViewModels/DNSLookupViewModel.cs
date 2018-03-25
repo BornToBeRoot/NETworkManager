@@ -1,6 +1,5 @@
 ﻿using NETworkManager.Models.Network;
 using NETworkManager.Models.Settings;
-using NETworkManager.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -12,7 +11,7 @@ using Heijden.DNS;
 using System.Linq;
 using System.ComponentModel;
 using System.Windows.Data;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {

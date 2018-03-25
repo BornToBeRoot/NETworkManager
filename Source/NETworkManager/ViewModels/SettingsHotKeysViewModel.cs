@@ -1,7 +1,6 @@
 ﻿using NETworkManager.Models.Settings;
 using MahApps.Metro.Controls;
-using NETworkManager.Helpers;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {

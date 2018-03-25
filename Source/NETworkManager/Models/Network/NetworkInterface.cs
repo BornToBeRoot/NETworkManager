@@ -1,5 +1,5 @@
 ﻿using Microsoft.Win32;
-using NETworkManager.Helpers;
+using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
