@@ -267,11 +267,11 @@
     <Compile Include="Validators\MultipleHostsValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\SubnetCalculatorSubnetValidator.cs" />
-    <Compile Include="ViewModels\Applications\PuTTYViewModel.cs" />
-    <Compile Include="ViewModels\Applications\PingHostViewModel.cs" />
-    <Compile Include="ViewModels\Applications\SNMPViewModel.cs" />
-    <Compile Include="ViewModels\Applications\HTTPHeadersViewModel.cs" />
-    <Compile Include="ViewModels\Applications\ARPTableViewModel.cs" />
+    <Compile Include="ViewModels\PuTTYViewModel.cs" />
+    <Compile Include="ViewModels\PingHostViewModel.cs" />
+    <Compile Include="ViewModels\SNMPViewModel.cs" />
+    <Compile Include="ViewModels\HTTPHeadersViewModel.cs" />
+    <Compile Include="ViewModels\ARPTableViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\EditGroupViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\CredentialsMasterPasswordViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\CredentialViewModel.cs" />
@@ -301,10 +301,10 @@
     <Compile Include="Validators\EmptyOrIPv4AddressValidator.cs" />
     <Compile Include="Validators\SubnetValidator.cs" />
     <Compile Include="Validators\OpacityTextboxValidator.cs" />
-    <Compile Include="ViewModels\Applications\DNSLookupViewModel.cs" />
-    <Compile Include="ViewModels\Applications\SubnetCalculatorIPv4SplitterViewModel.cs" />
-    <Compile Include="ViewModels\Applications\LookupOUILookupViewModel.cs" />
-    <Compile Include="ViewModels\Applications\RemoteDesktopViewModel.cs" />
+    <Compile Include="ViewModels\DNSLookupViewModel.cs" />
+    <Compile Include="ViewModels\SubnetCalculatorIPv4SplitterViewModel.cs" />
+    <Compile Include="ViewModels\LookupOUILookupViewModel.cs" />
+    <Compile Include="ViewModels\RemoteDesktopViewModel.cs" />
     <Compile Include="ViewModels\Help\HelpCommandLineViewModel.cs" />
     <Compile Include="ViewModels\Settings\CredentialsViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationHTTPHeadersViewModel.cs" />
@@ -813,8 +813,8 @@
     <Compile Include="Models\Settings\SettingsFileInfo.cs" />
     <Compile Include="Validators\FileExistsValidator.cs" />
     <Compile Include="Validators\PortRangeValidator.cs" />
-    <Compile Include="ViewModels\Applications\PortScannerViewModel.cs" />
-    <Compile Include="ViewModels\Applications\LookupPortViewModel.cs" />
+    <Compile Include="ViewModels\PortScannerViewModel.cs" />
+    <Compile Include="ViewModels\LookupPortViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationPortScannerViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationIPScannerViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsApplicationPingViewModel.cs" />
@@ -823,8 +823,8 @@
     <Compile Include="Views\LookupHostView.xaml.cs">
       <DependentUpon>LookupHostView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ApplicationViewManager.cs" />
-    <Compile Include="Views\ApplicationViewInfo.cs" />
+    <Compile Include="ApplicationViewManager.cs" />
+    <Compile Include="ApplicationViewInfo.cs" />
     <Compile Include="Collections\AsyncObservableCollection.cs" />
     <Compile Include="Models\Network\ProgressChangedArgs.cs" />
     <Compile Include="Models\Network\TracerouteHopInfo.cs" />
@@ -861,8 +861,8 @@
     <Compile Include="Models\Settings\LocalizationManager.cs" />
     <Compile Include="Models\Settings\SettingsInfo.cs" />
     <Compile Include="Models\Settings\SettingsManager.cs" />
-    <Compile Include="Views\SettingsViewInfo.cs" />
-    <Compile Include="Views\SettingsViewManager.cs" />
+    <Compile Include="SettingsViewInfo.cs" />
+    <Compile Include="SettingsViewManager.cs" />
     <Compile Include="Models\Settings\WakeOnLANClientManager.cs" />
     <Compile Include="Models\Settings\NetworkInterfaceProfileInfo.cs" />
     <Compile Include="Models\Settings\WakeOnLANClientInfo.cs" />
@@ -876,13 +876,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Applications\IPScannerViewModel.cs" />
-    <Compile Include="ViewModels\Applications\NetworkInterfaceViewModel.cs" />
-    <Compile Include="ViewModels\Applications\PingViewModel.cs" />
-    <Compile Include="ViewModels\Applications\SubnetCalculatorIPv4CalculatorViewModel.cs" />
-    <Compile Include="ViewModels\Applications\TracerouteViewModel.cs" />
-    <Compile Include="ViewModels\Applications\WakeOnLANViewModel.cs" />
-    <Compile Include="ViewModels\RelayCommand.cs" />
+    <Compile Include="ViewModels\IPScannerViewModel.cs" />
+    <Compile Include="ViewModels\NetworkInterfaceViewModel.cs" />
+    <Compile Include="ViewModels\PingViewModel.cs" />
+    <Compile Include="ViewModels\SubnetCalculatorIPv4CalculatorViewModel.cs" />
+    <Compile Include="ViewModels\TracerouteViewModel.cs" />
+    <Compile Include="ViewModels\WakeOnLANViewModel.cs" />
+    <Compile Include="Utils\RelayCommand.cs" />
     <Compile Include="ViewModels\Settings\AboutViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsGeneralWindowViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsGeneralAppearanceViewModel.cs" />
@@ -892,7 +892,7 @@
     <Compile Include="ViewModels\Settings\SettingsGeneralSettingsViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsGeneralAutostartViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Utils\ViewModelBase.cs" />
     <Compile Include="Views\TracerouteView.xaml.cs">
       <DependentUpon>TracerouteView.xaml</DependentUpon>
     </Compile>

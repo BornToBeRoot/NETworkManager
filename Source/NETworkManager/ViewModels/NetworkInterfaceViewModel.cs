@@ -14,8 +14,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using NETworkManager.ViewModels.Dialogs;
 using NETworkManager.Views.Dialogs;
+using NETworkManager.Utils;
 
-namespace NETworkManager.ViewModels.Applications
+namespace NETworkManager.ViewModels
 {
     public class NetworkInterfaceViewModel : ViewModelBase
     {

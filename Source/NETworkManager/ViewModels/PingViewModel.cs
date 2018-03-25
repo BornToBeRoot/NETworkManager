@@ -16,9 +16,9 @@ using System.Windows.Threading;
 using System.Windows.Data;
 using Dragablz;
 using NETworkManager.Controls;
-using System.Threading.Tasks;
+using NETworkManager.Utils;
 
-namespace NETworkManager.ViewModels.Applications
+namespace NETworkManager.ViewModels
 {
     public class PingViewModel : ViewModelBase
     {

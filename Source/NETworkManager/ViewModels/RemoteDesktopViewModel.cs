@@ -14,8 +14,9 @@ using System.Linq;
 using System.Diagnostics;
 using NETworkManager.Helpers;
 using System.Collections.Generic;
+using NETworkManager.Utils;
 
-namespace NETworkManager.ViewModels.Applications
+namespace NETworkManager.ViewModels
 {
     public class RemoteDesktopViewModel : ViewModelBase
     {

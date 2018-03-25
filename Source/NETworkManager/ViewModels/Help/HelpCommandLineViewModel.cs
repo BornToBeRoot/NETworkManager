@@ -8,6 +8,7 @@ using System;
 using NETworkManager.Models.Settings;
 using System.Collections.ObjectModel;
 using System.Linq;
+using NETworkManager.Utils;
 
 namespace NETworkManager.ViewModels.Help
 {

@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using NETworkManager.ViewModels.Applications;
+using NETworkManager.ViewModels;
 using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.Views

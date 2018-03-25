@@ -14,8 +14,9 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System;
 using System.IO;
+using NETworkManager.Utils;
 
-namespace NETworkManager.ViewModels.Applications
+namespace NETworkManager.ViewModels
 {
     public class PuTTYViewModel : ViewModelBase
     {

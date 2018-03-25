@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 
-namespace NETworkManager.Views
+namespace NETworkManager
 {
     public static class SettingsViewManager
     {

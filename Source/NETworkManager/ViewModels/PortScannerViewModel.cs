@@ -17,8 +17,9 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels.Dialogs;
 using NETworkManager.Views.Dialogs;
 using System.Linq;
+using NETworkManager.Utils;
 
-namespace NETworkManager.ViewModels.Applications
+namespace NETworkManager.ViewModels
 {
     public class PortScannerViewModel : ViewModelBase
     {

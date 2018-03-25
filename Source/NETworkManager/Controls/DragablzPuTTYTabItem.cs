@@ -1,7 +1,4 @@
-﻿using NETworkManager.Models.PuTTY;
-using NETworkManager.ViewModels;
-using System;
-using System.Diagnostics;
+﻿using NETworkManager.Utils;
 
 namespace NETworkManager.Controls
 {

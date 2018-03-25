@@ -1,4 +1,4 @@
-﻿using NETworkManager.ViewModels;
+﻿using NETworkManager.Utils;
 
 namespace NETworkManager.Controls
 {

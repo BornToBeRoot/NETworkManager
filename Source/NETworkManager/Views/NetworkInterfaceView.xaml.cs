@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
-using NETworkManager.ViewModels.Applications;
+using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
 {

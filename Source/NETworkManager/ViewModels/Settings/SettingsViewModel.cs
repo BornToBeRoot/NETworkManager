@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System;
 using System.Text.RegularExpressions;
+using NETworkManager.Utils;
 
 namespace NETworkManager.ViewModels.Settings
 {

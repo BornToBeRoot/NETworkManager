@@ -4,8 +4,9 @@ using Dragablz;
 using System.Windows.Input;
 using NETworkManager.Views;
 using System.Windows;
+using NETworkManager.Utils;
 
-namespace NETworkManager.ViewModels.Applications
+namespace NETworkManager.ViewModels
 {
     public class PingHostViewModel : ViewModelBase
     {

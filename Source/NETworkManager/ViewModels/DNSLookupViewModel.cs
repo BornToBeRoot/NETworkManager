@@ -12,8 +12,9 @@ using Heijden.DNS;
 using System.Linq;
 using System.ComponentModel;
 using System.Windows.Data;
+using NETworkManager.Utils;
 
-namespace NETworkManager.ViewModels.Applications
+namespace NETworkManager.ViewModels
 {
     public class DNSLookupViewModel : ViewModelBase
     {

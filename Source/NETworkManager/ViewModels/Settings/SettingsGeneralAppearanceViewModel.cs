@@ -1,6 +1,6 @@
 ﻿using MahApps.Metro;
 using NETworkManager.Models.Settings;
-using System.Windows;
+using NETworkManager.Utils;
 
 namespace NETworkManager.ViewModels.Settings
 {

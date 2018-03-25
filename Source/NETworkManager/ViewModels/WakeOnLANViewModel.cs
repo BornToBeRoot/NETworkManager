@@ -10,8 +10,9 @@ using System.ComponentModel;
 using System.Windows.Data;
 using NETworkManager.ViewModels.Dialogs;
 using NETworkManager.Views.Dialogs;
+using NETworkManager.Utils;
 
-namespace NETworkManager.ViewModels.Applications
+namespace NETworkManager.ViewModels
 {
     public class WakeOnLANViewModel : ViewModelBase
     {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NETworkManager.Utils;
+using System;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels.Dialogs

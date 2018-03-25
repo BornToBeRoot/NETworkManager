@@ -1,4 +1,5 @@
 ﻿using NETworkManager.Models.Settings;
+using NETworkManager.Utils;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels.Settings

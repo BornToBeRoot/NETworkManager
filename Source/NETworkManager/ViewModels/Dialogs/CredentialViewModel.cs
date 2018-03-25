@@ -1,5 +1,6 @@
 ﻿using NETworkManager.Helpers;
 using NETworkManager.Models.Settings;
+using NETworkManager.Utils;
 using System;
 using System.Security;
 using System.Windows.Input;

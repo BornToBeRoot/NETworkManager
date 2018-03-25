@@ -14,8 +14,9 @@ using System.Windows.Threading;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Linq;
+using NETworkManager.Utils;
 
-namespace NETworkManager.ViewModels.Applications
+namespace NETworkManager.ViewModels
 {
     public class TracerouteViewModel : ViewModelBase
     {

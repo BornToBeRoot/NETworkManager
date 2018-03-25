@@ -1,7 +1,7 @@
 ﻿using MahApps.Metro.IconPacks;
 using System.Windows.Controls;
 
-namespace NETworkManager.Views
+namespace NETworkManager
 {
     public class ApplicationViewInfo
     {

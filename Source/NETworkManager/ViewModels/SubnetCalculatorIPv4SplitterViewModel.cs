@@ -12,8 +12,9 @@ using System.Windows.Data;
 using System.ComponentModel;
 using MahApps.Metro.Controls.Dialogs;
 using System.Linq;
+using NETworkManager.Utils;
 
-namespace NETworkManager.ViewModels.Applications
+namespace NETworkManager.ViewModels
 {
     public class SubnetCalculatorIPv4SplitterViewModel : ViewModelBase
     {

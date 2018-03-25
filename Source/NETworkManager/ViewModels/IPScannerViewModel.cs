@@ -16,9 +16,9 @@ using System.Windows.Data;
 using NETworkManager.ViewModels.Dialogs;
 using NETworkManager.Views.Dialogs;
 using System.Linq;
-using System.Windows.Controls;
+using NETworkManager.Utils;
 
-namespace NETworkManager.ViewModels.Applications
+namespace NETworkManager.ViewModels
 {
     public class IPScannerViewModel : ViewModelBase
     {

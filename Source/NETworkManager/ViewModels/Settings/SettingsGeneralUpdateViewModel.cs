@@ -1,4 +1,6 @@
 ﻿using NETworkManager.Models.Settings;
+using NETworkManager.Utils;
+
 namespace NETworkManager.ViewModels.Settings
 {
     public class SettingsGeneralUpdateViewModel : ViewModelBase

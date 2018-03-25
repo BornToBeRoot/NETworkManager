@@ -7,6 +7,7 @@ using System;
 using System.ComponentModel;
 using NETworkManager.Models.Documentation;
 using System.Windows.Data;
+using NETworkManager.Utils;
 
 namespace NETworkManager.ViewModels.Settings
 {

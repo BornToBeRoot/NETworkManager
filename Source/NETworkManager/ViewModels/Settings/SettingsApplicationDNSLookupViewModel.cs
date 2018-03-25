@@ -1,5 +1,6 @@
 ﻿using Heijden.DNS;
 using NETworkManager.Models.Settings;
+using NETworkManager.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

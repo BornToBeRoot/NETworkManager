@@ -9,6 +9,7 @@ using NETworkManager.ViewModels.Dialogs;
 using NETworkManager.Views.Dialogs;
 using System;
 using System.Windows.Threading;
+using NETworkManager.Utils;
 
 namespace NETworkManager.ViewModels.Settings
 {

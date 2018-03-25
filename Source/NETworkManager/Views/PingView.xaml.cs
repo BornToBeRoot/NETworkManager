@@ -1,4 +1,4 @@
-﻿using NETworkManager.ViewModels.Applications;
+﻿using NETworkManager.ViewModels;
 using System;
 using System.Windows.Controls;
 

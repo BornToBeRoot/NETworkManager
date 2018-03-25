@@ -8,8 +8,9 @@ using System.Windows.Data;
 using System.Windows;
 using NETworkManager.Models.Lookup;
 using System.Linq;
+using NETworkManager.Utils;
 
-namespace NETworkManager.ViewModels.Applications
+namespace NETworkManager.ViewModels
 {
     public class LookupPortLookupViewModel : ViewModelBase
     {

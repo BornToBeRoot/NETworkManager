@@ -1,4 +1,5 @@
-﻿using NETworkManager.ViewModels;
+﻿using NETworkManager.Utils;
+using NETworkManager.ViewModels;
 using NETworkManager.Views;
 
 namespace NETworkManager.Controls
