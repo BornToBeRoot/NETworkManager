@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="NETworkManager.Views.LookupHostView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Views ="clr-namespace:NETworkManager.Views"
+        mc:Ignorable="d">
+    <TabControl Style="{StaticResource DefaultTabControl}">
+        <TabItem Header="{DynamicResource String_Header_OUI}">
+            <Views:LookupOUILookupView Margin="10" />
+        </TabItem>
+        <TabItem Header="{DynamicResource String_Header_Port}">
+            <Views:LookupPortLookupView Margin="10" />
+        </TabItem>
+    </TabControl>
+</UserControl>

@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using NETworkManager.Helpers;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators
 {

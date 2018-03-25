@@ -1,0 +1,135 @@
+﻿<UserControl x:Class="NETworkManager.Views.LookupOUILookupView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Validator="clr-namespace:NETworkManager.Validators"
+        xmlns:Converter="clr-namespace:NETworkManager.Converters"
+        xmlns:WpfHelper="clr-namespace:NETworkManager.WpfHelper"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
+        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d">
+    <UserControl.Resources>
+        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Converter:NullOrEmptyToStringConverter x:Key="NullOrEmptyToStringConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="{DynamicResource String_Header_Lookup}" Style="{StaticResource HeaderTextBlock}" />
+        <Grid Grid.Row="1" Margin="0,0,0,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid  Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{DynamicResource String_MACAddressOrVendor}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
+                <ComboBox Grid.Column="2" x:Name="txtMACAddressOrVendor" ItemsSource="{Binding MACAddressOrVendorHistoryView}" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressOrVendorHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddressesOrVendor}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                    <ComboBox.InputBindings>
+                        <KeyBinding Command="{Binding OUILookupCommand}" Key="Return" />
+                    </ComboBox.InputBindings>
+                    <ComboBox.Text>
+                        <Binding Path="MACAddressOrVendor" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </ComboBox.Text>
+                </ComboBox>
+                <Button Grid.Column="4" Command="{Binding OUILookupCommand}" HorizontalAlignment="Right">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                            <Setter Property="IsEnabled" Value="True" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=txtMACAddressOrVendor}" Value="True" >
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsLookupRunning}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Magnify}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center" Text="{DynamicResource String_Button_Lookup}" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+            </Grid>
+            <Controls:MetroProgressBar Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True" Visibility="{Binding IsLookupRunning, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,10,0,0" />
+            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{DynamicResource String_NoVendorFoundCheckYourInput}" Visibility="{Binding NoVendorFound, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+        </Grid>
+        <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Result}" Style="{StaticResource HeaderTextBlock}" />
+        <DataGrid Grid.Row="3" ItemsSource="{Binding OUILookupResultView}" SelectedItem="{Binding SelectedOUILookup}" CanUserSortColumns="False">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
+                <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
+                    <MenuItem Header="{DynamicResource String_CopyDots}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                        <MenuItem Header="{DynamicResource String_MACAddress}" Command="{Binding CopySelectedMACAddressCommand}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{DynamicResource String_Vendor}" Command="{Binding CopySelectedVendorCommand}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                </ContextMenu>
+            </DataGrid.Resources>
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" Value="1" >
+                            <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_Vendor}" Binding="{Binding Vendor, Converter={StaticResource NullOrEmptyToStringConverter}}" MinWidth="200" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

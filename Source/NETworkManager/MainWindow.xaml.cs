@@ -9,17 +9,14 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Linq;
-using NETworkManager.ViewModels;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Views.Applications;
-using NETworkManager.Views.Settings;
+using NETworkManager.Views;
 using NETworkManager.Models.Settings;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Collections.Generic;
-using NETworkManager.Views;
-using NETworkManager.Helpers;
+using NETworkManager.Utilities;
 using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using NETworkManager.Models.Update;
@@ -548,7 +545,7 @@ namespace NETworkManager
         private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             // Single instance
-            if (msg == SingleInstanceHelper.WM_SHOWME)
+            if (msg == SingleInstance.WM_SHOWME)
             {
                 ShowWindowAction();
                 handled = true;

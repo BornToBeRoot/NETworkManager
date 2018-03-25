@@ -1,4 +1,4 @@
-﻿using NETworkManager.Helpers;
+﻿using NETworkManager.Utilities;
 using System.Net;
 
 namespace NETworkManager.Models.Network

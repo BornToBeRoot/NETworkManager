@@ -1,7 +1,7 @@
 ﻿// Contains code from: https://stackoverflow.com/a/1148861/4986782
 // Modified by BornToBeRoot
 
-using NETworkManager.Helpers;
+using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

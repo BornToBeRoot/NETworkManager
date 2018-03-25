@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System;
 using System.Windows.Threading;
 using System.Diagnostics;
-using NETworkManager.Utils;
+using NETworkManager.Utilities;
 using NETworkManager.Models.PuTTY;
 
 namespace NETworkManager.Controls
