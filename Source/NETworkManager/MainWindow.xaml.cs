@@ -20,7 +20,6 @@ using NETworkManager.Utilities;
 using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using NETworkManager.Models.Update;
-using NETworkManager.Utilities;
 
 namespace NETworkManager
 {

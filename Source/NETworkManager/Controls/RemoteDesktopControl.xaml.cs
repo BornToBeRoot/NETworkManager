@@ -1,5 +1,4 @@
 ﻿using NETworkManager.Models.RemoteDesktop;
-using NETworkManager.ViewModels;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -7,8 +6,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System;
 using System.Windows.Threading;
-using NETworkManager.Utilities;
-using System.Diagnostics;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Controls

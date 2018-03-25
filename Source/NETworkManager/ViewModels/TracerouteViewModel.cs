@@ -14,7 +14,6 @@ using System.Windows.Threading;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Linq;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {
