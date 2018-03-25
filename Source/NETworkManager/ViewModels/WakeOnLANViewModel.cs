@@ -8,8 +8,7 @@ using System;
 using NETworkManager.Models.Network;
 using System.ComponentModel;
 using System.Windows.Data;
-using NETworkManager.ViewModels.Dialogs;
-using NETworkManager.Views.Dialogs;
+using NETworkManager.Views;
 using NETworkManager.Utils;
 
 namespace NETworkManager.ViewModels

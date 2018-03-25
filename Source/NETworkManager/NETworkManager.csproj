@@ -272,20 +272,20 @@
     <Compile Include="ViewModels\SNMPViewModel.cs" />
     <Compile Include="ViewModels\HTTPHeadersViewModel.cs" />
     <Compile Include="ViewModels\ARPTableViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\EditGroupViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\CredentialsMasterPasswordViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\CredentialViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\CredentialsSetMasterPasswordViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\NetworkInterfaceProfileViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\PortScannerProfileViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\ConfirmRemoveViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\ARPTableAddEntryViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\PuTTYSessionConnectViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\PuTTYSessionViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\WakeOnLANClientViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\IPScannerProfileViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\RemoteDesktopSessionViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\RemoteDesktopSessionConnectViewModel.cs" />
+    <Compile Include="ViewModels\EditGroupViewModel.cs" />
+    <Compile Include="ViewModels\CredentialsMasterPasswordViewModel.cs" />
+    <Compile Include="ViewModels\CredentialViewModel.cs" />
+    <Compile Include="ViewModels\CredentialsSetMasterPasswordViewModel.cs" />
+    <Compile Include="ViewModels\NetworkInterfaceProfileViewModel.cs" />
+    <Compile Include="ViewModels\PortScannerProfileViewModel.cs" />
+    <Compile Include="ViewModels\ConfirmRemoveViewModel.cs" />
+    <Compile Include="ViewModels\ARPTableAddEntryViewModel.cs" />
+    <Compile Include="ViewModels\PuTTYSessionConnectViewModel.cs" />
+    <Compile Include="ViewModels\PuTTYSessionViewModel.cs" />
+    <Compile Include="ViewModels\WakeOnLANClientViewModel.cs" />
+    <Compile Include="ViewModels\IPScannerProfileViewModel.cs" />
+    <Compile Include="ViewModels\RemoteDesktopSessionViewModel.cs" />
+    <Compile Include="ViewModels\RemoteDesktopSessionConnectViewModel.cs" />
     <Compile Include="Models\Network\DNSLookup.cs" />
     <Compile Include="Models\Network\DNSLookupCompleteArgs.cs" />
     <Compile Include="Models\Network\DNSLookupOptions.cs" />
@@ -305,23 +305,26 @@
     <Compile Include="ViewModels\SubnetCalculatorIPv4SplitterViewModel.cs" />
     <Compile Include="ViewModels\LookupOUILookupViewModel.cs" />
     <Compile Include="ViewModels\RemoteDesktopViewModel.cs" />
-    <Compile Include="ViewModels\Help\HelpCommandLineViewModel.cs" />
-    <Compile Include="ViewModels\Settings\CredentialsViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsApplicationHTTPHeadersViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsApplicationPuTTYViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsApplicationSNMPViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsApplicationRemoteDesktopViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsApplicationDNSLookupViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsApplicationWakeOnLANViewModel.cs" />
+    <Compile Include="ViewModels\CommandLineHelpViewModel.cs" />
+    <Compile Include="ViewModels\CredentialsViewModel.cs" />
+    <Compile Include="ViewModels\HTTPHeadersSettingsViewModel.cs" />
+    <Compile Include="ViewModels\PuTTYSettingsViewModel.cs" />
+    <Compile Include="ViewModels\SNMPSettingsViewModel.cs" />
+    <Compile Include="ViewModels\RemoteDesktopSettingsViewModel.cs" />
+    <Compile Include="ViewModels\DNSLookupSettingsViewModel.cs" />
+    <Compile Include="ViewModels\WakeOnLANSettingsViewModel.cs" />
     <Compile Include="Controls\RemoteDesktopControl.xaml.cs">
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Settings\SettingsGeneralUpdateViewModel.cs" />
+    <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
     <Compile Include="Views\PuTTYView.xaml.cs">
       <DependentUpon>PuTTYView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PingHostView.xaml.cs">
       <DependentUpon>PingHostView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PingSettingsView.xaml.cs">
+      <DependentUpon>PingSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SNMPView.xaml.cs">
       <DependentUpon>SNMPView.xaml</DependentUpon>
@@ -350,74 +353,74 @@
     <Compile Include="Controls\DragablzPingTabHostWindow.xaml.cs">
       <DependentUpon>DragablzPingTabHostWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\CredentialDialog.xaml.cs">
+    <Compile Include="Views\CredentialDialog.xaml.cs">
       <DependentUpon>CredentialDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\EditGroupDialog.xaml.cs">
+    <Compile Include="Views\EditGroupDialog.xaml.cs">
       <DependentUpon>EditGroupDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\CredentialsMasterPasswordDialog.xaml.cs">
+    <Compile Include="Views\CredentialsMasterPasswordDialog.xaml.cs">
       <DependentUpon>CredentialsMasterPasswordDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\CredentialsSetMasterPasswordDialog.xaml.cs">
+    <Compile Include="Views\CredentialsSetMasterPasswordDialog.xaml.cs">
       <DependentUpon>CredentialsSetMasterPasswordDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\NetworkInterfaceProfileDialog.xaml.cs">
+    <Compile Include="Views\NetworkInterfaceProfileDialog.xaml.cs">
       <DependentUpon>NetworkInterfaceProfileDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\PortScannerProfileDialog.xaml.cs">
+    <Compile Include="Views\PortScannerProfileDialog.xaml.cs">
       <DependentUpon>PortScannerProfileDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\ConfirmRemoveDialog.xaml.cs">
+    <Compile Include="Views\ConfirmRemoveDialog.xaml.cs">
       <DependentUpon>ConfirmRemoveDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\ARPTableAddEntryDialog.xaml.cs">
+    <Compile Include="Views\ARPTableAddEntryDialog.xaml.cs">
       <DependentUpon>ARPTableAddEntryDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\PuTTYSessionConnectDialog.xaml.cs">
+    <Compile Include="Views\PuTTYSessionConnectDialog.xaml.cs">
       <DependentUpon>PuTTYSessionConnectDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\PuTTYSessionDialog.xaml.cs">
+    <Compile Include="Views\PuTTYSessionDialog.xaml.cs">
       <DependentUpon>PuTTYSessionDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\WakeOnLANClientDialog.xaml.cs">
+    <Compile Include="Views\WakeOnLANClientDialog.xaml.cs">
       <DependentUpon>WakeOnLANClientDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\IPScannerProfileDialog.xaml.cs">
+    <Compile Include="Views\IPScannerProfileDialog.xaml.cs">
       <DependentUpon>IPScannerProfileDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\RemoteDesktopSessionDialog.xaml.cs">
+    <Compile Include="Views\RemoteDesktopSessionDialog.xaml.cs">
       <DependentUpon>RemoteDesktopSessionDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialogs\RemoteDesktopSessionConnectDialog.xaml.cs">
+    <Compile Include="Views\RemoteDesktopSessionConnectDialog.xaml.cs">
       <DependentUpon>RemoteDesktopSessionConnectDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\CredentialsView.xaml.cs">
+    <Compile Include="Views\CredentialsView.xaml.cs">
       <DependentUpon>CredentialsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsApplicationHTTPHeadersView.xaml.cs">
-      <DependentUpon>SettingsApplicationHTTPHeadersView.xaml</DependentUpon>
+    <Compile Include="Views\HTTPHeadersSettingsView.xaml.cs">
+      <DependentUpon>HTTPHeadersSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsApplicationPuTTYView.xaml.cs">
-      <DependentUpon>SettingsApplicationPuTTYView.xaml</DependentUpon>
+    <Compile Include="Views\PuTTYSettingsView.xaml.cs">
+      <DependentUpon>PuTTYSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsApplicationSNMPView.xaml.cs">
-      <DependentUpon>SettingsApplicationSNMPView.xaml</DependentUpon>
+    <Compile Include="Views\SNMPSettingsView.xaml.cs">
+      <DependentUpon>SNMPSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsApplicationRemoteDesktopView.xaml.cs">
-      <DependentUpon>SettingsApplicationRemoteDesktopView.xaml</DependentUpon>
+    <Compile Include="Views\RemoteDesktopSettingsView.xaml.cs">
+      <DependentUpon>RemoteDesktopSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsGeneralUpdateView.xaml.cs">
-      <DependentUpon>SettingsGeneralUpdateView.xaml</DependentUpon>
+    <Compile Include="Views\SettingsUpdateView.xaml.cs">
+      <DependentUpon>SettingsUpdateView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsApplicationDNSLookupView.xaml.cs">
-      <DependentUpon>SettingsApplicationDNSLookupView.xaml</DependentUpon>
+    <Compile Include="Views\DNSLookupSettingsView.xaml.cs">
+      <DependentUpon>DNSLookupSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsApplicationWakeOnLANView.xaml.cs">
-      <DependentUpon>SettingsApplicationWakeOnLANView.xaml</DependentUpon>
+    <Compile Include="Views\WakeOnLANSettingsView.xaml.cs">
+      <DependentUpon>WakeOnLANSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Help\HelpCommandLineWindow.xaml.cs">
-      <DependentUpon>HelpCommandLineWindow.xaml</DependentUpon>
+    <Compile Include="Views\CommandLineHelpWindow.xaml.cs">
+      <DependentUpon>CommandLineHelpWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WpfHelper\PasswordBoxBindingBehavior.cs" />
     <Compile Include="WpfHelper\ProtocolSettingsLayout.cs" />
@@ -552,6 +555,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\PingSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\SNMPView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -612,151 +619,147 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\CredentialDialog.xaml">
+    <Page Include="Views\CredentialDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\EditGroupDialog.xaml">
+    <Page Include="Views\EditGroupDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\CredentialsMasterPasswordDialog.xaml">
+    <Page Include="Views\CredentialsMasterPasswordDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\CredentialsSetMasterPasswordDialog.xaml">
+    <Page Include="Views\CredentialsSetMasterPasswordDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\NetworkInterfaceProfileDialog.xaml">
+    <Page Include="Views\NetworkInterfaceProfileDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\PortScannerProfileDialog.xaml">
+    <Page Include="Views\PortScannerProfileDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\ConfirmRemoveDialog.xaml">
+    <Page Include="Views\ConfirmRemoveDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\ARPTableAddEntryDialog.xaml">
+    <Page Include="Views\ARPTableAddEntryDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\PuTTYSessionConnectDialog.xaml">
+    <Page Include="Views\PuTTYSessionConnectDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\PuTTYSessionDialog.xaml">
+    <Page Include="Views\PuTTYSessionDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\WakeOnLANClientDialog.xaml">
+    <Page Include="Views\WakeOnLANClientDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\IPScannerProfileDialog.xaml">
+    <Page Include="Views\IPScannerProfileDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\RemoteDesktopSessionDialog.xaml">
+    <Page Include="Views\RemoteDesktopSessionDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Dialogs\RemoteDesktopSessionConnectDialog.xaml">
+    <Page Include="Views\RemoteDesktopSessionConnectDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Settings\CredentialsView.xaml">
+    <Page Include="Views\CredentialsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsApplicationHTTPHeadersView.xaml">
+    <Page Include="Views\HTTPHeadersSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsApplicationPuTTYView.xaml">
+    <Page Include="Views\PuTTYSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsApplicationSNMPView.xaml">
+    <Page Include="Views\SNMPSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsApplicationRemoteDesktopView.xaml">
+    <Page Include="Views\RemoteDesktopSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsGeneralUpdateView.xaml">
+    <Page Include="Views\SettingsUpdateView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsApplicationDNSLookupView.xaml">
+    <Page Include="Views\DNSLookupSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsApplicationWakeOnLANView.xaml">
+    <Page Include="Views\WakeOnLANSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsApplicationPortScannerView.xaml">
+    <Page Include="Views\PortScannerSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsApplicationTracerouteView.xaml">
+    <Page Include="Views\TracerouteSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsApplicationIPScannerView.xaml">
+    <Page Include="Views\IPScannerSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsApplicationPingView.xaml">
+    <Page Include="Views\SettingsGeneralView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsGeneralGeneralView.xaml">
+    <Page Include="Views\SettingsImportExportView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsGeneralImportExportView.xaml">
+    <Page Include="Views\SettingsSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsGeneralSettingsView.xaml">
+    <Page Include="Views\SettingsAutostartView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsGeneralAutostartView.xaml">
+    <Page Include="Views\SettingsHotKeysView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsGeneralHotKeysView.xaml">
+    <Page Include="Views\SettingsLanguageView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsGeneralLanguageView.xaml">
+    <Page Include="Views\SettingsAppearanceView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsGeneralAppearanceView.xaml">
+    <Page Include="Views\SettingsWindowView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\SettingsGeneralWindowView.xaml">
+    <Page Include="Views\AboutView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Settings\AboutView.xaml">
+    <Page Include="Views\CommandLineHelpWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Help\HelpCommandLineWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Settings\SettingsView.xaml">
+    <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -815,11 +818,11 @@
     <Compile Include="Validators\PortRangeValidator.cs" />
     <Compile Include="ViewModels\PortScannerViewModel.cs" />
     <Compile Include="ViewModels\LookupPortViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsApplicationPortScannerViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsApplicationIPScannerViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsApplicationPingViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsGeneralGeneralViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsApplicationTracerouteViewModel.cs" />
+    <Compile Include="ViewModels\PortScannerSettingsViewModel.cs" />
+    <Compile Include="ViewModels\IPScannerSettingsViewModel.cs" />
+    <Compile Include="ViewModels\PingSettingsViewModel.cs" />
+    <Compile Include="ViewModels\SettingsGeneralViewModel.cs" />
+    <Compile Include="ViewModels\TracerouteSettingsViewModel.cs" />
     <Compile Include="Views\LookupHostView.xaml.cs">
       <DependentUpon>LookupHostView.xaml</DependentUpon>
     </Compile>
@@ -883,15 +886,15 @@
     <Compile Include="ViewModels\TracerouteViewModel.cs" />
     <Compile Include="ViewModels\WakeOnLANViewModel.cs" />
     <Compile Include="Utils\RelayCommand.cs" />
-    <Compile Include="ViewModels\Settings\AboutViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsGeneralWindowViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsGeneralAppearanceViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsGeneralLanguageViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsGeneralHotKeysViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsGeneralImportExportViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsGeneralSettingsViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsGeneralAutostartViewModel.cs" />
-    <Compile Include="ViewModels\Settings\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\AboutViewModel.cs" />
+    <Compile Include="ViewModels\SettingsWindowViewModel.cs" />
+    <Compile Include="ViewModels\SettingsAppearanceViewModel.cs" />
+    <Compile Include="ViewModels\SettingsLanguageViewModel.cs" />
+    <Compile Include="ViewModels\SettingsHotKeysViewModel.cs" />
+    <Compile Include="ViewModels\SettingsImportExportViewModel.cs" />
+    <Compile Include="ViewModels\SettingsSettingsViewModel.cs" />
+    <Compile Include="ViewModels\SettingsAutostartViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Utils\ViewModelBase.cs" />
     <Compile Include="Views\TracerouteView.xaml.cs">
       <DependentUpon>TracerouteView.xaml</DependentUpon>
@@ -911,43 +914,40 @@
     <Compile Include="Converters\NullOrEmptyToStringConverter.cs" />
     <Compile Include="Converters\SelectedItemsToBoolConverter.cs" />
     <Compile Include="Converters\IntToStringConverter.cs" />
-    <Compile Include="Views\Settings\SettingsApplicationPortScannerView.xaml.cs">
-      <DependentUpon>SettingsApplicationPortScannerView.xaml</DependentUpon>
+    <Compile Include="Views\PortScannerSettingsView.xaml.cs">
+      <DependentUpon>PortScannerSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsApplicationTracerouteView.xaml.cs">
-      <DependentUpon>SettingsApplicationTracerouteView.xaml</DependentUpon>
+    <Compile Include="Views\TracerouteSettingsView.xaml.cs">
+      <DependentUpon>TracerouteSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsApplicationIPScannerView.xaml.cs">
-      <DependentUpon>SettingsApplicationIPScannerView.xaml</DependentUpon>
+    <Compile Include="Views\IPScannerSettingsView.xaml.cs">
+      <DependentUpon>IPScannerSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsApplicationPingView.xaml.cs">
-      <DependentUpon>SettingsApplicationPingView.xaml</DependentUpon>
+    <Compile Include="Views\SettingsGeneralView.xaml.cs">
+      <DependentUpon>SettingsGeneralView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsGeneralGeneralView.xaml.cs">
-      <DependentUpon>SettingsGeneralGeneralView.xaml</DependentUpon>
+    <Compile Include="Views\SettingsImportExportView.xaml.cs">
+      <DependentUpon>SettingsImportExportView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsGeneralImportExportView.xaml.cs">
-      <DependentUpon>SettingsGeneralImportExportView.xaml</DependentUpon>
+    <Compile Include="Views\SettingsSettingsView.xaml.cs">
+      <DependentUpon>SettingsSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsGeneralSettingsView.xaml.cs">
-      <DependentUpon>SettingsGeneralSettingsView.xaml</DependentUpon>
+    <Compile Include="Views\SettingsAutostartView.xaml.cs">
+      <DependentUpon>SettingsAutostartView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsGeneralAutostartView.xaml.cs">
-      <DependentUpon>SettingsGeneralAutostartView.xaml</DependentUpon>
+    <Compile Include="Views\SettingsHotKeysView.xaml.cs">
+      <DependentUpon>SettingsHotKeysView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsGeneralHotKeysView.xaml.cs">
-      <DependentUpon>SettingsGeneralHotKeysView.xaml</DependentUpon>
+    <Compile Include="Views\SettingsLanguageView.xaml.cs">
+      <DependentUpon>SettingsLanguageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsGeneralLanguageView.xaml.cs">
-      <DependentUpon>SettingsGeneralLanguageView.xaml</DependentUpon>
+    <Compile Include="Views\SettingsAppearanceView.xaml.cs">
+      <DependentUpon>SettingsAppearanceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsGeneralAppearanceView.xaml.cs">
-      <DependentUpon>SettingsGeneralAppearanceView.xaml</DependentUpon>
+    <Compile Include="Views\SettingsWindowView.xaml.cs">
+      <DependentUpon>SettingsWindowView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Settings\SettingsGeneralWindowView.xaml.cs">
-      <DependentUpon>SettingsGeneralWindowView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Settings\AboutView.xaml.cs">
+    <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WpfHelper\BindingProxy.cs" />
@@ -974,7 +974,7 @@
       <DependentUpon>IPScannerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Validators\IPScanRangeValidator.cs" />
-    <Compile Include="Views\Settings\SettingsView.xaml.cs">
+    <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Validators\SettingsFolderExistsValidator.cs" />

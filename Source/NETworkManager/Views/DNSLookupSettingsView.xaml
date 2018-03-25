@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="NETworkManager.Views.DNSLookupSettingsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Validator="clr-namespace:NETworkManager.Validators"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        mc:Ignorable="d">
+    <StackPanel>
+        <TextBlock Text="{DynamicResource String_Header_DNSLookup}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{DynamicResource String_UseCustomDNSServer}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding UseCustomDNSServer}" Margin="0,0,0,10"/>
+        <TextBlock Text="{DynamicResource String_DNSServers}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNSServers}" Style="{StaticResource DefaultTextBox}">
+            <TextBox.Text>
+                <Binding Path="CustomDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <Validator:MultipleIPAddressesValidator ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBlock Text="{DynamicResource String_Port}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort53}" Style="{StaticResource DefaultTextBox}">
+            <TextBox.Text>
+                <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <Validator:PortValidator ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <mah:ToggleSwitch Header="{DynamicResource String_AddDNSSuffixToHostname}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding AddDNSSuffix}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{DynamicResource String_UseCustomDNSSuffix}" IsEnabled="{Binding AddDNSSuffix}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding UseCustomDNSSuffix}" Margin="0,0,0,10"/>
+        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSuffix}" Margin="0,0,0,10">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+                    <Setter Property="IsEnabled" Value="False" />
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding AddDNSSuffix}" Value="True" />
+                                <Condition Binding="{Binding UseCustomDNSSuffix}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="IsEnabled" Value="True" />
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Resources>
+            <TextBox.Text>
+                <Binding Path="CustomDNSSuffix" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <mah:ToggleSwitch Header="{DynamicResource String_ResolveCNAME}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ResolveCNAME}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{DynamicResource String_Recursion}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding Recursion}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{DynamicResource String_UseResolverCache}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding UseResolverCache}" Margin="0,0,0,10"/>
+        <TextBlock Text="{DynamicResource String_Class}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <ComboBox ItemsSource="{Binding Classes}" SelectedItem="{Binding Class}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" />
+        <TextBlock Text="{DynamicResource String_Protocol}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <ComboBox ItemsSource="{Binding TransportTypes}" SelectedItem="{Binding TransportType}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
+        <TextBlock Text="{DynamicResource String_Attempts}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding Attempts}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
+        <TextBlock Text="{DynamicResource String_Timeout}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding Timeout}" Maximum="10000" Minimum="100" Interval="100" />
+    </StackPanel>
+</UserControl>

@@ -54,7 +54,7 @@ namespace NETworkManager
 
             if (CommandLineManager.Current.Help)
             {
-                StartupUri = new Uri("/Views/Help/HelpCommandLineWindow.xaml", UriKind.Relative);
+                StartupUri = new Uri("/Views/CommandLineHelpWindow.xaml", UriKind.Relative);
                 return;
             }
 

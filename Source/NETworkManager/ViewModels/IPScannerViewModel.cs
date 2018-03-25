@@ -13,8 +13,7 @@ using System.Diagnostics;
 using System.ComponentModel;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Data;
-using NETworkManager.ViewModels.Dialogs;
-using NETworkManager.Views.Dialogs;
+using NETworkManager.Views;
 using System.Linq;
 using NETworkManager.Utils;
 

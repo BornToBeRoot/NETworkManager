@@ -12,8 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.ComponentModel;
 using System.Diagnostics;
-using NETworkManager.ViewModels.Dialogs;
-using NETworkManager.Views.Dialogs;
+using NETworkManager.Views;
 using NETworkManager.Utils;
 
 namespace NETworkManager.ViewModels

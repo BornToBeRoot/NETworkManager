@@ -14,8 +14,7 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System.Windows.Data;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.ViewModels.Dialogs;
-using NETworkManager.Views.Dialogs;
+using NETworkManager.Views;
 using System.Linq;
 using NETworkManager.Utils;
 

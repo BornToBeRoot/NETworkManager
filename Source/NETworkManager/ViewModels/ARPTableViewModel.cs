@@ -7,8 +7,7 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.ViewModels.Dialogs;
-using NETworkManager.Views.Dialogs;
+using NETworkManager.Views;
 using NETworkManager.Utils;
 
 namespace NETworkManager.ViewModels
