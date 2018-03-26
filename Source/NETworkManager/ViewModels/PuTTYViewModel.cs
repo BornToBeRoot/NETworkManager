@@ -424,6 +424,7 @@ namespace NETworkManager.ViewModels
             GroupViewModel editGroupViewModel = new GroupViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ConfigurationManager.Current.FixAirspace = false;
 
                 PuTTYSessionManager.RenameGroup(instance.OldGroup, instance.Group);
 
@@ -438,6 +439,7 @@ namespace NETworkManager.ViewModels
                 DataContext = editGroupViewModel
             };
 
+            ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
         #endregion
