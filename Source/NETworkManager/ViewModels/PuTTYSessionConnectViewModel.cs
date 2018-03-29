@@ -100,7 +100,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (value)
-                {
+                {                    
                     Baud = SettingsManager.Current.PuTTY_BaudRate;
                     ConnectionMode = ConnectionMode.Serial;
                 }
@@ -270,8 +270,12 @@ namespace NETworkManager.ViewModels
             _usernameHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_UsernameHistory);
             _profileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_ProfileHistory);
 
+            SerialLine = SettingsManager.Current.PuTTY_SerialLine;
+
             // SSH is default...
             UseSSH = true;
         }
+
+        
     }
 }

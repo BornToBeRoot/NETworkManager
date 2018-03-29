@@ -18,151 +18,151 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-        <Grid Margin="0,0,0,10">
-            <Grid.Resources>
-                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-            </Grid.Resources>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="10" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Name}" />
-            <TextBox x:Name="txtName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleNetworkInterfaceProfileName}">
-                <TextBox.Text>
-                    <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-        </Grid>
-        <RadioButton x:Name="radioButtonEnableDynamicIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding EnableDynamicIPAddress}" Content="{DynamicResource String_ObtainAnIPAddressAutomatically}" Margin="0,0,0,10"/>
-        <RadioButton x:Name="radioButtonEnableStaticIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding EnableStaticIPAddress}" Content="{DynamicResource String_UseTheFollowingIPAddress}" Margin="0,0,0,10"/>
-        <Grid IsEnabled="{Binding EnableStaticIPAddress}" Margin="0,0,0,10">
-            <Grid.Resources>
-                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-            </Grid.Resources>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="10" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="10" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_IPv4Address}" />
-            <TextBox x:Name="txtIPAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}" >
-                <TextBox.Text>
-                    <Binding Path="IPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_SubnetmaskOrCIDR}" />
-            <ComboBox x:Name="cbSubnetmaskOrCidr" Grid.Column="2" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnetmaskOrCIDR}" ItemsSource="{x:Static Network:Subnetmask.List}">
-                <ComboBox.Text>
-                    <Binding Path="SubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <Validator:SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </ComboBox.Text>
-            </ComboBox>
-            <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_DefaultGateway}" />
-            <TextBox x:Name="txtGateway" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" >
-                <TextBox.Text>
-                    <Binding Path="Gateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-        </Grid>
-        <RadioButton x:Name="radioButtonEnableDynamicDNS" GroupName="DNSServerConfig" Content="{DynamicResource String_ObtainDNSServerAddressAutomatically}" IsChecked="{Binding EnableDynamicDNS}" Margin="0,0,0,10" IsEnabled="{Binding EnableDynamicIPAddress}" />
-        <RadioButton x:Name="radioButtonEnableStaticDNS" GroupName="DNSServerConfig" Content="{DynamicResource String_UseTheFollowingDNSServerAddresses}" IsChecked="{Binding EnableStaticDNS}" Margin="0,0,0,10"/>
-        <Grid Margin="0,0,0,10" IsEnabled="{Binding EnableStaticDNS}">
-            <Grid.Resources>
-                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-            </Grid.Resources>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="10" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_PrimaryDNSServer}" />
-            <TextBox x:Name="txtPrimaryDNSServer" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" >
-                <TextBox.Text>
-                    <Binding Path="PrimaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />                            
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_SecondaryDNSServer}" />
-            <TextBox x:Name="txtSecondaryDNSServer" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNSServer}" >
-                <TextBox.Text>
-                    <Binding Path="SecondaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-        </Grid>
-        <Grid>
-            <Grid.Resources>
-                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-            </Grid.Resources>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Group}" />
-            <ComboBox x:Name="cbGroup" Grid.Column="2" Grid.Row="0" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleGroupSwitche}">
-                <ComboBox.Text>
-                    <Binding Path="Group" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </ComboBox.Text>
-            </ComboBox>
-        </Grid>
+            <Grid Margin="0,0,0,10">
+                <Grid.Resources>
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Name}" />
+                <TextBox x:Name="txtName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleNetworkInterfaceProfileName}">
+                    <TextBox.Text>
+                        <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </Grid>
+            <RadioButton x:Name="radioButtonEnableDynamicIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding EnableDynamicIPAddress}" Content="{DynamicResource String_ObtainAnIPAddressAutomatically}" Margin="0,0,0,10"/>
+            <RadioButton x:Name="radioButtonEnableStaticIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding EnableStaticIPAddress}" Content="{DynamicResource String_UseTheFollowingIPAddress}" Margin="0,0,0,10"/>
+            <Grid IsEnabled="{Binding EnableStaticIPAddress}" Margin="0,0,0,10">
+                <Grid.Resources>
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_IPv4Address}" />
+                <TextBox x:Name="txtIPAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}" >
+                    <TextBox.Text>
+                        <Binding Path="IPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_SubnetmaskOrCIDR}" />
+                <ComboBox x:Name="cbSubnetmaskOrCidr" Grid.Column="2" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnetmaskOrCIDR}" ItemsSource="{x:Static Network:Subnetmask.List}">
+                    <ComboBox.Text>
+                        <Binding Path="SubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                <Validator:SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </ComboBox.Text>
+                </ComboBox>
+                <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_DefaultGateway}" />
+                <TextBox x:Name="txtGateway" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" >
+                    <TextBox.Text>
+                        <Binding Path="Gateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </Grid>
+            <RadioButton x:Name="radioButtonEnableDynamicDNS" GroupName="DNSServerConfig" Content="{DynamicResource String_ObtainDNSServerAddressAutomatically}" IsChecked="{Binding EnableDynamicDNS}" Margin="0,0,0,10" IsEnabled="{Binding EnableDynamicIPAddress}" />
+            <RadioButton x:Name="radioButtonEnableStaticDNS" GroupName="DNSServerConfig" Content="{DynamicResource String_UseTheFollowingDNSServerAddresses}" IsChecked="{Binding EnableStaticDNS}" Margin="0,0,0,10"/>
+            <Grid Margin="0,0,0,10" IsEnabled="{Binding EnableStaticDNS}">
+                <Grid.Resources>
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>              
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_PrimaryDNSServer}" />
+                <TextBox x:Name="txtPrimaryDNSServer" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" >
+                    <TextBox.Text>
+                        <Binding Path="PrimaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_SecondaryDNSServer}" />
+                <TextBox x:Name="txtSecondaryDNSServer" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNSServer}" >
+                    <TextBox.Text>
+                        <Binding Path="SecondaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </Grid>
+            <Grid>
+                <Grid.Resources>
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Group}" />
+                <ComboBox x:Name="cbGroup" Grid.Column="2" Grid.Row="0" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleGroupSwitche}">
+                    <ComboBox.Text>
+                        <Binding Path="Group" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </ComboBox.Text>
+                </ComboBox>
+            </Grid>
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{DynamicResource String_Button_Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
             <Button Content="{DynamicResource String_Button_Save}" Command="{Binding SaveCommand}" IsDefault="True" Margin="10,0,0,0">
                 <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">                        
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
                         <Style.Triggers>
                             <DataTrigger Value="False">
                                 <DataTrigger.Binding>
@@ -182,7 +182,7 @@
                                     </MultiBinding>
                                 </DataTrigger.Binding>
                                 <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>                            
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>

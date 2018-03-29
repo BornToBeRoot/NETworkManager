@@ -24,9 +24,9 @@
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
             </Grid.Resources>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -102,7 +102,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ComboBox x:Name="cbPort" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding PortHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort22}" Visibility="{Binding UseRAW, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="cbPort" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding PortHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort22}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -111,7 +111,7 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <ComboBox x:Name="cbBaud" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding BaudHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleBaud9600}" Visibility="{Binding UseRAW, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="cbBaud" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding BaudHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleBaud9600}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Baud" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -124,7 +124,7 @@
             <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_Username}" />
             <ComboBox x:Name="cbUsername" Grid.Column="2" Grid.Row="6" Text="{Binding Username}" ItemsSource="{Binding UsernameHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleUsername}" Style="{StaticResource EditableComboBox}" />
             <TextBlock Grid.Column="0" Grid.Row="8" Text="{DynamicResource String_Profile}" />
-            <ComboBox x:Name="cbProfile" Grid.Column="2" Grid.Row="8" Text="{Binding Profile}" ItemsSource="{Binding PuTTYProfileHistoryView}" Style="{StaticResource EditableComboBox}" />
+            <ComboBox x:Name="cbProfile" Grid.Column="2" Grid.Row="8" Text="{Binding Profile}" ItemsSource="{Binding ProfileHistoryView}" Style="{StaticResource EditableComboBox}" />
             <TextBlock Grid.Column="0" Grid.Row="10" Text="{DynamicResource String_AdditionalCommandLine}" />
             <TextBox x:Name="txtAdditionalCommandLine" Grid.Column="2" Grid.Row="10" Text="{Binding AdditionalCommandLine}" Style="{StaticResource DefaultTextBox}" />
         </Grid>
