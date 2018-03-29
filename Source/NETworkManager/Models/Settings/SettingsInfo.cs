@@ -1,6 +1,5 @@
 ﻿using Heijden.DNS;
 using Lextm.SharpSnmpLib.Messaging;
-using NETworkManager.Views;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -1459,6 +1458,76 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private ObservableCollection<string> _puTTY_SerialLineHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PuTTY_SerialLineHistory
+        {
+            get { return _puTTY_SerialLineHistory; }
+            set
+            {
+                if (value == _puTTY_SerialLineHistory)
+                    return;
+
+                _puTTY_SerialLineHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _puTTY_PortHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PuTTY_PortHistory
+        {
+            get { return _puTTY_PortHistory; }
+            set
+            {
+                if (value == _puTTY_PortHistory)
+                    return;
+
+                _puTTY_PortHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _puTTY_BaudHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PuTTY_BaudHistory
+        {
+            get { return _puTTY_BaudHistory; }
+            set
+            {
+                if (value == _puTTY_BaudHistory)
+                    return;
+
+                _puTTY_BaudHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _puTTY_UsernameHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PuTTY_UsernameHistory
+        {
+            get { return _puTTY_UsernameHistory; }
+            set
+            {
+                if (value == _puTTY_UsernameHistory)
+                    return;
+
+                _puTTY_UsernameHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _puTTY_ProfileHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PuTTY_ProfileHistory
+        {
+            get { return _puTTY_ProfileHistory; }
+            set
+            {
+                if (value == _puTTY_ProfileHistory)
+                    return;
+
+                _puTTY_ProfileHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
         private bool _puTTY_ExpandSessionView = true;
         public bool PuTTY_ExpandSessionView
         {
@@ -1486,6 +1555,90 @@ namespace NETworkManager.Models.Settings
 
                 OnPropertyChanged();
 
+                SettingsChanged = true;
+            }
+        }
+
+        private string _puTTY_PuTTYProfile;
+        public string PuTTY_PuTTYProfile
+        {
+            get { return _puTTY_PuTTYProfile; }
+            set
+            {
+                if (value == _puTTY_PuTTYProfile)
+                    return;
+
+                _puTTY_PuTTYProfile = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private string _puTTY_SerialLine = "COM1";
+        public string PuTTY_SerialLine
+        {
+            get { return _puTTY_SerialLine; }
+            set
+            {
+                if (value == _puTTY_SerialLine)
+                    return;
+
+                _puTTY_SerialLine = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _puTTY_SSHPort = 22;
+        public int PuTTY_SSHPort
+        {
+            get { return _puTTY_SSHPort; }
+            set
+            {
+                if (value == _puTTY_SSHPort)
+                    return;
+
+                _puTTY_SSHPort = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _puTTY_TelnetPort = 23;
+        public int PuTTY_TelnetPort
+        {
+            get { return _puTTY_TelnetPort; }
+            set
+            {
+                if (value == _puTTY_TelnetPort)
+                    return;
+
+                _puTTY_TelnetPort = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _puTTY_RloginPort = 513;
+        public int PuTTY_RloginPort
+        {
+            get { return _puTTY_RloginPort; }
+            set
+            {
+                if (value == _puTTY_RloginPort)
+                    return;
+
+                _puTTY_RloginPort = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _puTTY_BaudRate = 9600;
+        public int PuTTY_BaudRate
+        {
+            get { return _puTTY_BaudRate; }
+            set
+            {
+                if (value == _puTTY_BaudRate)
+                    return;
+
+                _puTTY_BaudRate = value;
                 SettingsChanged = true;
             }
         }

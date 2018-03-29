@@ -373,6 +373,20 @@
     <system:String x:Key="String_ShowScanResultForAllIPAddresses">Zeige Scan-Ergebnis für alle IP-Adressen</system:String>
     <system:String x:Key="String_ConfigureThePathToPuTTYInTheSettings">Konfiguriere den Pfad zu PuTTY in den Einstellungen...</system:String>
     <system:String x:Key="String_PuTTYSessions">PuTTY Sitzungen</system:String>
+    <system:String x:Key="String_SSH">SSH</system:String>
+    <system:String x:Key="String_Telnet">Telnet</system:String>
+    <system:String x:Key="String_Rlogin">Rlogin</system:String>
+    <system:String x:Key="String_RAW">RAW</system:String>
+    <system:String x:Key="String_Baud">Baud</system:String>
+    <system:String x:Key="String_Serial">Seriell</system:String>
+    <system:String x:Key="String_SerialLine">Serielle Schnittstelle</system:String>
+    <system:String x:Key="String_DefaultSSHPort">Standard SSH Port</system:String>
+    <system:String x:Key="String_DefaultTelnetPort">Standard Telnet Port</system:String>
+    <system:String x:Key="String_DefaultBaudRate">Standard Baudrate</system:String>
+    <system:String x:Key="String_DefaultRloginPort">Standard Rlogin Port</system:String>
+    <system:String x:Key="String_PuTTYProfile">PuTTY Profil</system:String>
+    <system:String x:Key="String_Profile">Profil</system:String>
+    <system:String x:Key="String_AdditionalCommandLine">Zusätzliche Kommandozeile</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
@@ -432,6 +446,7 @@
     <system:String x:Key="String_Button_Open">Öffnen</system:String>
     <system:String x:Key="String_Button_Send">Senden</system:String>
     <system:String x:Key="String_Button_CheckForUpdaptes">Auf Updates prüfen</system:String>
+    <system:String x:Key="String_Button_ConfigurePuTTY">PuTTY konfigurieren</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Ausschneiden</system:String>
@@ -453,8 +468,11 @@
     <system:String x:Key="String_Watermark_ExampleHostname">SERVER-01</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Broadcast">192.168.178.255</system:String>
     <system:String x:Key="String_Watermark_ExamplePort7">7</system:String>
+    <system:String x:Key="String_Watermark_ExamplePort22">22</system:String>
+    <system:String x:Key="String_Watermark_ExamplePort23">23</system:String>
     <system:String x:Key="String_Watermark_ExamplePort53">53</system:String>
     <system:String x:Key="String_Watermark_ExamplePort161">161</system:String>
+    <system:String x:Key="String_Watermark_ExamplePort513">513</system:String>
     <system:String x:Key="String_Watermark_ExamplePort3389">3389</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Address">192.168.178.55</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmask">255.255.255.0</system:String>
@@ -489,6 +507,8 @@
     <system:String x:Key="String_Watermark_ExampleSNMPCommunity">public</system:String>
     <system:String x:Key="String_Watermark_ExampleSNMPUsername">snmp-user</system:String>
     <system:String x:Key="String_Watermark_PuTTYLocation">PuTTY Speicherort...</system:String>
+    <system:String x:Key="String_Watermark_ExampleBaud9600">9600</system:String>
+    <system:String x:Key="String_Watermark_ExampleSerialLine">COM5</system:String>
     
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Setze statische IP-Adresse und Gateway...</system:String>

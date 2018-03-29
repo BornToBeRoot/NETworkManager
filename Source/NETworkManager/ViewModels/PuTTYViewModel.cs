@@ -202,11 +202,23 @@ namespace NETworkManager.ViewModels
 
                 // Add host to history
                 AddHostToHistory(instance.Host);
+                AddSerialLineToHistory(instance.SerialLine);
+                AddPortToHistory(instance.Port.ToString());
+                AddBaudToHistory(instance.Baud.ToString());
+                AddUsernameToHistory(instance.Username);
+                AddProfileToHistory(instance.Profile);
 
                 // Create new remote desktop session info
                 Models.PuTTY.PuTTYSessionInfo puTTYSessionInfo = new Models.PuTTY.PuTTYSessionInfo
                 {
-                    Host = instance.Host
+                    Host = instance.Host,
+                    SerialLine = instance.SerialLine,
+                    Mode = instance.ConnectionMode,
+                    Port = instance.Port,                    
+                    Baud = instance.Baud,
+                    Username = instance.Username,
+                    Profile = instance.Profile,
+                    AdditionalCommandLine = instance.AdditionalCommandLine
                 };
              
                 ConnectSession(puTTYSessionInfo);
@@ -277,7 +289,6 @@ namespace NETworkManager.ViewModels
             {
                 Host = SelectedSession.Host
             };
-
 
             ConnectSession(sessionInfo, SelectedSession.Name);
         }
@@ -466,10 +477,70 @@ namespace NETworkManager.ViewModels
             List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
-            SettingsManager.Current.RemoteDesktop_HostHistory.Clear();
+            SettingsManager.Current.PuTTY_HostHistory.Clear();
 
             // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.RemoteDesktop_HostHistory.Add(x));
+            list.ForEach(x => SettingsManager.Current.PuTTY_HostHistory.Add(x));
+        }
+
+        private void AddSerialLineToHistory(string serialLine)
+        {
+            // Create the new list
+            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_SerialLineHistory.ToList(), serialLine, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.PuTTY_SerialLineHistory.Clear();
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.PuTTY_SerialLineHistory.Add(x));
+        }
+
+        private void AddPortToHistory(string host)
+        {
+            // Create the new list
+            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_PortHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.PuTTY_PortHistory.Clear();
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.PuTTY_PortHistory.Add(x));
+        }
+
+        private void AddBaudToHistory(string host)
+        {
+            // Create the new list
+            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_BaudHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.PuTTY_BaudHistory.Clear();
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.PuTTY_BaudHistory.Add(x));
+        }
+
+        private void AddUsernameToHistory(string host)
+        {
+            // Create the new list
+            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_UsernameHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.PuTTY_UsernameHistory.Clear();
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.PuTTY_UsernameHistory.Add(x));
+        }
+
+        private void AddProfileToHistory(string host)
+        {
+            // Create the new list
+            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_ProfileHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.PuTTY_ProfileHistory.Clear();
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.PuTTY_ProfileHistory.Add(x));
         }
         #endregion
     }

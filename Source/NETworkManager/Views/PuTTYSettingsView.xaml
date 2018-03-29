@@ -18,5 +18,54 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
+        <Button Content="{DynamicResource String_Button_ConfigurePuTTY}" Command="{Binding ConfigurePuTTYCommand}" IsEnabled="{Binding IsPuTTYConfigured}" HorizontalAlignment="Left" Style="{StaticResource DefaultButton}" Margin="0,0,0,10" />
+        <TextBlock Text="{DynamicResource String_PuTTYProfile}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBox Width="250" Text="{Binding PuTTYProfile}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
+        <TextBlock Text="{DynamicResource String_DefaultSSHPort}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort22}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
+            <TextBox.Text>
+                <Binding Path="SSHPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <Validator:PortValidator ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBlock Text="{DynamicResource String_DefaultTelnetPort}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort23}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
+            <TextBox.Text>
+                <Binding Path="TelnetPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <Validator:PortValidator ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox> 
+        <TextBlock Text="{DynamicResource String_DefaultRloginPort}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort513}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
+            <TextBox.Text>
+                <Binding Path="RloginPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <Validator:PortValidator ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBlock Text="{DynamicResource String_SerialLine}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBox Width="250" Text="{Binding SerialLine}" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSerialLine}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
+        <TextBlock Text="{DynamicResource String_DefaultBaudRate}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleBaud9600}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
+            <TextBox.Text>
+                <Binding Path="BaudRate" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />                        
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+       
     </StackPanel>
 </UserControl>

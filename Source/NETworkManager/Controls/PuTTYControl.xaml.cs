@@ -65,9 +65,7 @@ namespace NETworkManager.Controls
         #endregion
 
         #region ICommands & Actions
-
-
-
+        
         #endregion
 
         #region Methods       
@@ -76,7 +74,7 @@ namespace NETworkManager.Controls
             ProcessStartInfo info = new ProcessStartInfo
             {
                 FileName = _puTTYSessionInfo.PuTTYLocation,
-                Arguments = string.Format("{0}", _puTTYSessionInfo.Host)
+                Arguments = PuTTY.BuildCommandLine(_puTTYSessionInfo)
             };
 
             PuTTYProcess = Process.Start(info);

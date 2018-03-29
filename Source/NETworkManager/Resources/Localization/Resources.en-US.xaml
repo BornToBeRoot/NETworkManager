@@ -363,7 +363,7 @@
     <system:String x:Key="String_NoUpdateAvailable">No update available!</system:String>
     <system:String x:Key="String_InstallRDP8dot1Message">You must install the Remote Desktop Protocol (RDP) version 8.1 on your system to use the Remote Desktop functionality!</system:String>
     <system:String x:Key="String_TheProcessCanTakeUpSomeTimeAndResources">The process can take up some time and resources (CPU / RAM).</system:String>
-    <system:String x:Key="String_ErrorCheckingApiGithubComVerifyYourNetworkConnection">Error checking 'api.github.com', check your network connection!</system:String>
+    <system:String x:Key="String_ErrorCheckingApiGithubComVerifyYourNetworkConnection">Error checking 'eapi.github.com', check your network connection!</system:String>
     <system:String x:Key="String_Mode">Mode</system:String>
     <system:String x:Key="String_OpenProject">Open project</system:String>
     <system:String x:Key="String_OpenLicense">Open license</system:String>
@@ -373,7 +373,21 @@
     <system:String x:Key="String_ShowScanResultForAllIPAddresses">Show scan result for all IP addresses</system:String>
     <system:String x:Key="String_ConfigureThePathToPuTTYInTheSettings">Configure the path to PuTTY in the settings...</system:String>
     <system:String x:Key="String_PuTTYSessions">PuTTY sessions</system:String>
-
+    <system:String x:Key="String_SSH">SSH</system:String>
+    <system:String x:Key="String_Telnet">Telnet</system:String>
+    <system:String x:Key="String_Rlogin">Rlogin</system:String>
+    <system:String x:Key="String_RAW">RAW</system:String>
+    <system:String x:Key="String_Baud">Baud</system:String>
+    <system:String x:Key="String_Serial">Serial</system:String>
+    <system:String x:Key="String_SerialLine">Serial line</system:String>
+    <system:String x:Key="String_DefaultSSHPort">Default SSH port</system:String>
+    <system:String x:Key="String_DefaultTelnetPort">Default Telnet port</system:String>
+    <system:String x:Key="String_DefaultBaudRate">Default baud rate</system:String>
+    <system:String x:Key="String_DefaultRloginPort">Default Rlogin port</system:String>
+    <system:String x:Key="String_PuTTYProfile">PuTTY profile</system:String>
+    <system:String x:Key="String_Profile">Profile</system:String>
+    <system:String x:Key="String_AdditionalCommandLine">Additional command line</system:String>
+    
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">How to create a custom theme and accent?</system:String>
@@ -432,6 +446,7 @@
     <system:String x:Key="String_Button_Open">Open</system:String>
     <system:String x:Key="String_Button_Send">Send</system:String>
     <system:String x:Key="String_Button_CheckForUpdaptes">Check for updates</system:String>
+    <system:String x:Key="String_Button_ConfigurePuTTY">Configure PuTTY</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Cut</system:String>
@@ -453,8 +468,11 @@
     <system:String x:Key="String_Watermark_ExampleHostname">SERVER-01</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Broadcast">192.168.178.255</system:String>
     <system:String x:Key="String_Watermark_ExamplePort7">7</system:String>
+    <system:String x:Key="String_Watermark_ExamplePort22">22</system:String>
+    <system:String x:Key="String_Watermark_ExamplePort23">23</system:String>
     <system:String x:Key="String_Watermark_ExamplePort53">53</system:String>
     <system:String x:Key="String_Watermark_ExamplePort161">161</system:String>
+    <system:String x:Key="String_Watermark_ExamplePort513">513</system:String>
     <system:String x:Key="String_Watermark_ExamplePort3389">3389</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Address">192.168.178.55</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetmask">255.255.255.0</system:String>
@@ -489,6 +507,8 @@
     <system:String x:Key="String_Watermark_ExampleSNMPCommunity">public</system:String>
     <system:String x:Key="String_Watermark_ExampleSNMPUsername">snmp-user</system:String>
     <system:String x:Key="String_Watermark_PuTTYLocation">PuTTY location...</system:String>
+    <system:String x:Key="String_Watermark_ExampleBaud9600">9600</system:String>
+    <system:String x:Key="String_Watermark_ExampleSerialLine">COM5</system:String>
     
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Set static IP address and gateway...</system:String>
