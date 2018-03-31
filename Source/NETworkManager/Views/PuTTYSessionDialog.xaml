@@ -10,6 +10,7 @@
              mc:Ignorable="d" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
     </UserControl.Resources>
     <Grid Margin="0,20">
         <Grid.RowDefinitions>
@@ -36,7 +37,17 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>      
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Name}" />
             <TextBox x:Name="txtName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleRemoteDesktopSessionName}">
                 <TextBox.Text>
@@ -47,8 +58,38 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
-            <TextBox x:Name="txtHost" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Mode}" />
+            <Grid Grid.Column="2" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <RadioButton Grid.Column="0" Content="{DynamicResource String_SSH}" IsChecked="{Binding UseSSH}" />
+                <RadioButton Grid.Column="2" Content="{DynamicResource String_Telnet}" IsChecked="{Binding UseTelnet}" />
+                <RadioButton Grid.Column="4" Content="{DynamicResource String_Serial}" IsChecked="{Binding UseSerial}" />
+                <RadioButton Grid.Column="6" Content="{DynamicResource String_Rlogin}" IsChecked="{Binding UseRlogin}" />
+                <RadioButton Grid.Column="8" Content="{DynamicResource String_RAW}" IsChecked="{Binding UseRAW}" />
+            </Grid>
+            <TextBlock Grid.Column="0" Grid.Row="4">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+                        <Setter Property="Text" Value="{StaticResource String_Host}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding UseSerial}" Value="True">
+                                <Setter Property="Text" Value="{StaticResource String_SerialLine}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <TextBox x:Name="txtHost" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
                 <TextBox.Text>
                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -57,8 +98,55 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Group}" />
-            <ComboBox x:Name="cbGroup" Grid.Column="2" Grid.Row="4" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleGroupServers}">
+            <TextBox x:Name="txtSerialLine" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSerialLine}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <TextBox.Text>
+                    <Binding Path="SerialLine" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBlock Grid.Column="0" Grid.Row="6">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+                        <Setter Property="Text" Value="{DynamicResource String_Port}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding UseSerial}" Value="True">
+                                <Setter Property="Text" Value="{DynamicResource String_Baud}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <TextBox x:Name="txtPort" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort22}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
+                <TextBox.Text>
+                    <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <Validator:PortValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox x:Name="txtBaud" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleBaud9600}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <TextBox.Text>
+                    <Binding Path="Baud" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <Validator:BaudValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBlock Grid.Column="0" Grid.Row="8" Text="{DynamicResource String_Username}" />
+            <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding Username}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleUsername}" />
+            <TextBlock Grid.Column="0" Grid.Row="10" Text="{DynamicResource String_Profile}" />
+            <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding Profile}" />
+            <TextBlock Grid.Column="0" Grid.Row="12" Text="{DynamicResource String_AdditionalCommandLine}" />
+            <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding AdditionalCommandLine}" Style="{StaticResource DefaultTextBox}" />
+            <TextBlock Grid.Column="0" Grid.Row="14" Text="{DynamicResource String_Group}" />
+            <ComboBox x:Name="cbGroup" Grid.Column="2" Grid.Row="14" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleGroupServers}">
                 <ComboBox.Text>
                     <Binding Path="Group" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -67,9 +155,9 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_Tags}" />
-            <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Tags, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleTags}"/>
-            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="6" ToolTip="{DynamicResource String_HelpMessage_Tags}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+            <TextBlock Grid.Column="0" Grid.Row="16" Text="{DynamicResource String_Tags}" />
+            <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding Tags, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleTags}"/>
+            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="16" ToolTip="{DynamicResource String_HelpMessage_Tags}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                 </Rectangle.Resources>
@@ -84,8 +172,23 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding UseSerial}" Value="True" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtName}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtSerialLine}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtBaud}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=cbGroup}" Value="False" />
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.SessionInfoChanged}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="True" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding UseSerial}" Value="False" />
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtName}" Value="False" />
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtHost}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtPort}" Value="False" />
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=cbGroup}" Value="False" />
                                     <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.SessionInfoChanged}" Value="True" />
                                 </MultiDataTrigger.Conditions>

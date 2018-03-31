@@ -539,6 +539,7 @@
     <system:String x:Key="String_ValidationError_EnterOneOrMoreValidIPAddresses">Geben Sie eine oder mehrere gültige IP-Adressen ein!</system:String>
     <system:String x:Key="String_ValidationError_EnterValidOID">Geben Sie eine gültige OID ein!</system:String>
     <system:String x:Key="String_ValidationError_KeyMustHave8CharactersOrMore">Der Schlüssel muss mindestens 8 Zeichen lang sein!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidBaud">Geben Sie eine gültige Baud ein.</system:String>
     
     <!-- ApplicationInfo.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>

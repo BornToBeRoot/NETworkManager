@@ -56,7 +56,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PuTTY_PuTTYProfile = value;
+                    SettingsManager.Current.PuTTY_Profile = value;
 
                 _puTTYProfile = value;
                 OnPropertyChanged();
@@ -161,7 +161,7 @@ namespace NETworkManager.ViewModels
         {
             PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
             SerialLine = SettingsManager.Current.PuTTY_SerialLine;
-            PuTTYProfile = SettingsManager.Current.PuTTY_PuTTYProfile;
+            PuTTYProfile = SettingsManager.Current.PuTTY_Profile;
             SSHPort = SettingsManager.Current.PuTTY_SSHPort;
             TelnetPort = SettingsManager.Current.PuTTY_TelnetPort;
             BaudRate = SettingsManager.Current.PuTTY_BaudRate;

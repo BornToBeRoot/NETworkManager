@@ -107,6 +107,7 @@
                     <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <Validator:PortValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </ComboBox.Text>
@@ -116,7 +117,7 @@
                     <Binding Path="Baud" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <Validator:PortValidator ValidatesOnTargetUpdated="True" />
+                            <Validator:BaudValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </ComboBox.Text>
@@ -133,11 +134,28 @@
             <Button Content="{DynamicResource String_Button_Connect}" Command="{Binding ConnectCommand}" IsDefault="True" Margin="10,0,0,0">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
-                        <Setter Property="IsEnabled" Value="True" />
+                        <Setter Property="IsEnabled" Value="False" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=cbHost}" Value="True" >
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding UseSerial}" Value="True" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=cbSerialLine}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=cbBaud}" Value="False" />                                    
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                <Setter Property="IsEnabled" Value="True" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding UseSerial}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=cbHost}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=cbPort}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="True" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>

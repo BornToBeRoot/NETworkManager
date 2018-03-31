@@ -214,13 +214,13 @@ namespace NETworkManager.ViewModels
                     Host = instance.Host,
                     SerialLine = instance.SerialLine,
                     Mode = instance.ConnectionMode,
-                    Port = instance.Port,                    
+                    Port = instance.Port,
                     Baud = instance.Baud,
                     Username = instance.Username,
                     Profile = instance.Profile,
                     AdditionalCommandLine = instance.AdditionalCommandLine
                 };
-             
+
                 ConnectSession(puTTYSessionInfo);
             }, instance =>
             {
@@ -254,15 +254,7 @@ namespace NETworkManager.ViewModels
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                PuTTYSessionInfo puTTYSessionInfo = new PuTTYSessionInfo
-                {
-                    Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
-                };
-
-                PuTTYSessionManager.AddSession(puTTYSessionInfo);
+                PuTTYSessionManager.AddSession(new PuTTYSessionInfo(instance.Name, instance.ConnectionMode, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port, instance.Username, instance.Profile, instance.AdditionalCommandLine, instance.Group, instance.Tags));
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -322,15 +314,7 @@ namespace NETworkManager.ViewModels
 
                 PuTTYSessionManager.RemoveSession(SelectedSession);
 
-                PuTTYSessionInfo puTTYSessionInfo = new PuTTYSessionInfo
-                {
-                    Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
-                };
-
-                PuTTYSessionManager.AddSession(puTTYSessionInfo);
+                PuTTYSessionManager.AddSession(new PuTTYSessionInfo(instance.Name, instance.ConnectionMode, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port, instance.Username, instance.Profile, instance.AdditionalCommandLine, instance.Group, instance.Tags));
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -363,15 +347,7 @@ namespace NETworkManager.ViewModels
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                PuTTYSessionInfo puTTYSessionInfo = new PuTTYSessionInfo
-                {
-                    Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
-                };
-
-                PuTTYSessionManager.AddSession(puTTYSessionInfo);
+                PuTTYSessionManager.AddSession(new PuTTYSessionInfo(instance.Name, instance.ConnectionMode, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port, instance.Username, instance.Profile, instance.AdditionalCommandLine, instance.Group, instance.Tags));
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);

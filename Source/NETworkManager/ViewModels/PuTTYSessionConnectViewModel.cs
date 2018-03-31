@@ -21,36 +21,8 @@ namespace NETworkManager.ViewModels
         {
             get { return _cancelCommand; }
         }
-
-        private string _host;
-        public string Host
-        {
-            get { return _host; }
-            set
-            {
-                if (value == _host)
-                    return;
-
-                _host = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _serialLine;
-        public string SerialLine
-        {
-            get { return _serialLine; }
-            set
-            {
-                if (value == _serialLine)
-                    return;
-
-                _serialLine = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _useSSH; // Defaul is SSH
+            
+        private bool _useSSH; // Default is SSH
         public bool UseSSH
         {
             get { return _useSSH; }
@@ -146,6 +118,34 @@ namespace NETworkManager.ViewModels
                 }
 
                 _useRAW = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _host;
+        public string Host
+        {
+            get { return _host; }
+            set
+            {
+                if (value == _host)
+                    return;
+
+                _host = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _serialLine;
+        public string SerialLine
+        {
+            get { return _serialLine; }
+            set
+            {
+                if (value == _serialLine)
+                    return;
+
+                _serialLine = value;
                 OnPropertyChanged();
             }
         }
@@ -271,6 +271,7 @@ namespace NETworkManager.ViewModels
             _profileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_ProfileHistory);
 
             SerialLine = SettingsManager.Current.PuTTY_SerialLine;
+            Profile = SettingsManager.Current.PuTTY_Profile;
 
             // SSH is default...
             UseSSH = true;
