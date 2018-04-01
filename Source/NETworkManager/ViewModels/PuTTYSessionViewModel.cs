@@ -3,7 +3,6 @@ using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
@@ -405,8 +404,6 @@ namespace NETworkManager.ViewModels
                 SessionInfoChanged = (_sessionInfo.Name != Name) || (_sessionInfo.ConnectionMode != ConnectionMode) || (_sessionInfo.SerialLine != SerialLine) || (_sessionInfo.Baud != Baud) || (_sessionInfo.Username != Username) || (_sessionInfo.Profile != Profile) || (_sessionInfo.AdditionalCommandLine != AdditionalCommandLine) || (_sessionInfo.Group != Group) || (_sessionInfo.Tags != Tags);
             else
                 SessionInfoChanged = (_sessionInfo.Name != Name) || (_sessionInfo.ConnectionMode != ConnectionMode) || (_sessionInfo.Host != Host) || (_sessionInfo.Port != Port) || (_sessionInfo.Username != Username) || (_sessionInfo.Profile != Profile) || (_sessionInfo.AdditionalCommandLine != AdditionalCommandLine) || (_sessionInfo.Group != Group) || (_sessionInfo.Tags != Tags);
-
-            Debug.WriteLine(SessionInfoChanged);
         }
     }
 }
