@@ -14,6 +14,9 @@
     </a>  
   </p>
   <p>
+    <a href="https://gitter.im/BornToBeRoot-NETworkManager">
+      <img src="https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square">
+    </a>
     <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/master">
       <img alt="AppVeyor Master" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/master.svg?style=flat-square&&label=master" />
     </a>    
