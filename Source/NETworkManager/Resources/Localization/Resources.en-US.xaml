@@ -540,6 +540,7 @@
     <system:String x:Key="String_ValidationError_EnterValidOID">Enter a valid OID!</system:String>
     <system:String x:Key="String_ValidationError_KeyMustHave8CharactersOrMore">Key must have 8 characters or more!</system:String>
     <system:String x:Key="String_ValidationError_EnterValidBaud">Enter a valid baud.</system:String>
+    <system:String x:Key="String_ValidationError_SpacesAreNotAllowed">Spaces are not allowed!</system:String>
     
     <!-- ApplicationView.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP Scanner</system:String>

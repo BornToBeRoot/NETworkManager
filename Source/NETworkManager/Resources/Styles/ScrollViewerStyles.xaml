@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style x:Key="DefaulScrollViewer" TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource MetroScrollViewer}">
         <Setter Property="PanningMode" Value="Both" />
-        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Hidden" />
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="Template">
             <Setter.Value>
@@ -23,7 +23,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style x:Key="FadeOutScrollViewer" TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource MetroScrollViewer}">
         <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
         <Setter Property="PanningMode" Value="VerticalOnly" />
@@ -50,5 +50,5 @@
                 <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
             </Trigger>
         </Style.Triggers>
-    </Style>    
+    </Style>
 </ResourceDictionary>

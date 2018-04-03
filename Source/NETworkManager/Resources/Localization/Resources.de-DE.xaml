@@ -540,6 +540,7 @@
     <system:String x:Key="String_ValidationError_EnterValidOID">Geben Sie eine gültige OID ein!</system:String>
     <system:String x:Key="String_ValidationError_KeyMustHave8CharactersOrMore">Der Schlüssel muss mindestens 8 Zeichen lang sein!</system:String>
     <system:String x:Key="String_ValidationError_EnterValidBaud">Geben Sie eine gültige Baud ein.</system:String>
+    <system:String x:Key="String_ValidationError_SpacesAreNotAllowed">Leerzeichen sind nicht erlaubt!</system:String>
     
     <!-- ApplicationInfo.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">IP-Scanner</system:String>

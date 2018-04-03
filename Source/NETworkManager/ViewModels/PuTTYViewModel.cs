@@ -13,6 +13,8 @@ using System.Windows.Data;
 using System;
 using System.IO;
 using NETworkManager.Utilities;
+using System.Diagnostics;
+using NETworkManager.Models.PuTTY;
 
 namespace NETworkManager.ViewModels
 {
@@ -63,8 +65,8 @@ namespace NETworkManager.ViewModels
             get { return _puTTYSessions; }
         }
 
-        private PuTTYSessionInfo _selectedSession = new PuTTYSessionInfo();
-        public PuTTYSessionInfo SelectedSession
+        private Models.Settings.PuTTYSessionInfo _selectedSession = new Models.Settings.PuTTYSessionInfo();
+        public Models.Settings.PuTTYSessionInfo SelectedSession
         {
             get { return _selectedSession; }
             set
@@ -137,7 +139,7 @@ namespace NETworkManager.ViewModels
                 if (string.IsNullOrEmpty(Search))
                     return true;
 
-                PuTTYSessionInfo info = o as PuTTYSessionInfo;
+                Models.Settings.PuTTYSessionInfo info = o as Models.Settings.PuTTYSessionInfo;
 
                 string search = Search.Trim();
 
@@ -207,8 +209,8 @@ namespace NETworkManager.ViewModels
                 AddBaudToHistory(instance.Baud.ToString());
                 AddUsernameToHistory(instance.Username);
                 AddProfileToHistory(instance.Profile);
-
-                // Create new remote desktop session info
+                
+                // Create session info
                 Models.PuTTY.PuTTYSessionInfo puTTYSessionInfo = new Models.PuTTY.PuTTYSessionInfo
                 {
                     Host = instance.Host,
@@ -221,6 +223,7 @@ namespace NETworkManager.ViewModels
                     AdditionalCommandLine = instance.AdditionalCommandLine
                 };
 
+                // Connect
                 ConnectSession(puTTYSessionInfo);
             }, instance =>
             {
@@ -254,7 +257,7 @@ namespace NETworkManager.ViewModels
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                PuTTYSessionManager.AddSession(new PuTTYSessionInfo(instance.Name, instance.ConnectionMode, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port, instance.Username, instance.Profile, instance.AdditionalCommandLine, instance.Group, instance.Tags));
+                PuTTYSessionManager.AddSession(new Models.Settings.PuTTYSessionInfo(instance.Name, instance.ConnectionMode, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port, instance.Username, instance.Profile, instance.AdditionalCommandLine, instance.Group, instance.Tags));
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -276,13 +279,9 @@ namespace NETworkManager.ViewModels
         }
 
         private void ConnectSessionAction()
-        {
-            Models.PuTTY.PuTTYSessionInfo sessionInfo = new Models.PuTTY.PuTTYSessionInfo
-            {
-                Host = SelectedSession.Host
-            };
-
-            ConnectSession(sessionInfo, SelectedSession.Name);
+        {        
+            // Connect
+            ConnectSession(Models.PuTTY.PuTTYSessionInfo.Parse(SelectedSession), SelectedSession.Name);
         }
 
         public ICommand ConnectSessionExternalCommand
@@ -292,7 +291,13 @@ namespace NETworkManager.ViewModels
 
         private void ConnectSessionExternalAction()
         {
-            //Process.Start("mstsc.exe", string.Format("/V:{0}", SelectedSession.Host));
+            ProcessStartInfo info = new ProcessStartInfo
+            {
+                FileName = SettingsManager.Current.PuTTY_PuTTYLocation,
+                Arguments = PuTTY.BuildCommandLine(Models.PuTTY.PuTTYSessionInfo.Parse(SelectedSession))
+            };
+
+            Process.Start(info);            
         }
 
         public ICommand EditSessionCommand
@@ -314,7 +319,7 @@ namespace NETworkManager.ViewModels
 
                 PuTTYSessionManager.RemoveSession(SelectedSession);
 
-                PuTTYSessionManager.AddSession(new PuTTYSessionInfo(instance.Name, instance.ConnectionMode, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port, instance.Username, instance.Profile, instance.AdditionalCommandLine, instance.Group, instance.Tags));
+                PuTTYSessionManager.AddSession(new Models.Settings.PuTTYSessionInfo(instance.Name, instance.ConnectionMode, instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port, instance.Username, instance.Profile, instance.AdditionalCommandLine, instance.Group, instance.Tags));
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -347,7 +352,7 @@ namespace NETworkManager.ViewModels
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                PuTTYSessionManager.AddSession(new PuTTYSessionInfo(instance.Name, instance.ConnectionMode, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port, instance.Username, instance.Profile, instance.AdditionalCommandLine, instance.Group, instance.Tags));
+                PuTTYSessionManager.AddSession(new Models.Settings.PuTTYSessionInfo(instance.Name, instance.ConnectionMode, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port, instance.Username, instance.Profile, instance.AdditionalCommandLine, instance.Group, instance.Tags));
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);

@@ -261,6 +261,7 @@
     <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Models\Update\UpdateAvailableArgs.cs" />
     <Compile Include="Models\Update\Updater.cs" />
+    <Compile Include="Validators\NoSpacesValidator.cs" />
     <Compile Include="Validators\BaudValidator.cs" />
     <Compile Include="Validators\PrivacyAESValidator.cs" />
     <Compile Include="Validators\OIDValidator.cs" />
