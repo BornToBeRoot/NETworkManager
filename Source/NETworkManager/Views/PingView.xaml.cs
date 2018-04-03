@@ -21,7 +21,12 @@ namespace NETworkManager.Views
 
         private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
         {
-            viewModel.OnShutdown();
+            viewModel.OnClose();
+        }
+
+        public void CloseTab()
+        {
+            viewModel.OnClose();
         }
     }
 }

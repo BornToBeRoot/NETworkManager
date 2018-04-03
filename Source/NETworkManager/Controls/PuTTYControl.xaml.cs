@@ -116,12 +116,7 @@ namespace NETworkManager.Controls
                 PuTTYProcess.Kill();
         }
 
-        public void CloseTab()
-        {
-            Disconnect();
-        }
-
-        private void OnClose()
+        public void OnClose()
         {
             Disconnect();
         }

@@ -22,7 +22,7 @@ namespace NETworkManager.Controls
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzRemoteDesktopTabItem).View as RemoteDesktopControl).CloseTab();
+            ((args.DragablzItem.Content as DragablzRemoteDesktopTabItem).View as RemoteDesktopControl).OnClose();
         }
         #endregion
     }

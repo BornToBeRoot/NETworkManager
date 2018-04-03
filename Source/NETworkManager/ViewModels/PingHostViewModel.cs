@@ -53,6 +53,16 @@ namespace NETworkManager.ViewModels
         {
             AddPingTab();
         }
+
+        public ItemActionCallback CloseItemCommand
+        {
+            get { return CloseItemAction; }
+        }
+
+        private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
+        {
+            ((args.DragablzItem.Content as DragablzPingTabItem).View as PingView).CloseTab();
+        }
         #endregion
 
         #region Methods
