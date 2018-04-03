@@ -223,16 +223,11 @@ namespace NETworkManager.Controls
                 rdpClient.Disconnect();
         }
 
-        public void CloseTab()
-        {
-            Disconnect();
-        }
-
         public void OnClose()
         {
             Disconnect();
         }
-        
+
         // Source: https://msdn.microsoft.com/en-us/library/aa382170(v=vs.85).aspx
         private string GetDisconnectReasonFromResource(string reason)
         {

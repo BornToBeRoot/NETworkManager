@@ -447,8 +447,9 @@ namespace NETworkManager.ViewModels
             list.ForEach(x => SettingsManager.Current.Ping_HostHistory.Add(x));
         }
 
-        public void OnShutdown()
-        {
+        public void OnClose()
+        {            
+            // Stop the ping
             if (IsPingRunning)
                 PingAction();
         }

@@ -11,7 +11,7 @@
         <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </Controls:MetroWindow.WindowButtonCommands>
     <Grid>
-        <dragablz:TabablzControl Name="TabsContainer">
+        <dragablz:TabablzControl Name="TabsContainer" ClosingItemCallback="{Binding CloseItemCommand}">
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController Partition="DF0DC56F-0C28-4917-B1B1-5DA7A9C8FFA5" />
             </dragablz:TabablzControl.InterTabController>

@@ -1,4 +1,6 @@
-﻿using MahApps.Metro.Controls;
+﻿using Dragablz;
+using MahApps.Metro.Controls;
+using NETworkManager.Views;
 
 namespace NETworkManager.Controls
 {
@@ -10,6 +12,19 @@ namespace NETworkManager.Controls
         public DragablzPingTabHostWindow()
         {
             InitializeComponent();
+            DataContext = this;
         }
+
+        #region ICommand & Actions
+        public ItemActionCallback CloseItemCommand
+        {
+            get { return CloseItemAction; }
+        }
+
+        private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
+        {
+            ((args.DragablzItem.Content as DragablzPingTabItem).View as PingView).CloseTab();
+        }
+        #endregion
     }
 }

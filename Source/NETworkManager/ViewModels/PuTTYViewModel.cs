@@ -182,7 +182,7 @@ namespace NETworkManager.ViewModels
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzPuTTYTabItem).View as PuTTYControl).CloseTab();
+            ((args.DragablzItem.Content as DragablzPuTTYTabItem).View as PuTTYControl).OnClose();
         }
 
         public ICommand ConnectNewSessionCommand
