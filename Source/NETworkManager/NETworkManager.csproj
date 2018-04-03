@@ -233,6 +233,7 @@
     <Compile Include="Converters\ValidateNetworkInterfaceProfileConverter.cs" />
     <Compile Include="Converters\ValidateSubnetCalculatorIPv4SplitterConverter.cs" />
     <Compile Include="Models\PuTTY\PuTTYSessionInfo.cs" />
+    <Compile Include="Models\PuTTY\PuTTY.cs" />
     <Compile Include="Models\Settings\PuTTYSessionInfo.cs" />
     <Compile Include="Models\Settings\PuTTYSessionManager.cs" />
     <Compile Include="Utilities\NativeMethods.cs" />
@@ -260,6 +261,8 @@
     <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Models\Update\UpdateAvailableArgs.cs" />
     <Compile Include="Models\Update\Updater.cs" />
+    <Compile Include="Validators\NoSpacesValidator.cs" />
+    <Compile Include="Validators\BaudValidator.cs" />
     <Compile Include="Validators\PrivacyAESValidator.cs" />
     <Compile Include="Validators\OIDValidator.cs" />
     <Compile Include="Validators\Int32Validator.cs" />

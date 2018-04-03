@@ -13,6 +13,8 @@ using System.Windows.Data;
 using System;
 using System.IO;
 using NETworkManager.Utilities;
+using System.Diagnostics;
+using NETworkManager.Models.PuTTY;
 
 namespace NETworkManager.ViewModels
 {
@@ -63,8 +65,8 @@ namespace NETworkManager.ViewModels
             get { return _puTTYSessions; }
         }
 
-        private PuTTYSessionInfo _selectedSession = new PuTTYSessionInfo();
-        public PuTTYSessionInfo SelectedSession
+        private Models.Settings.PuTTYSessionInfo _selectedSession = new Models.Settings.PuTTYSessionInfo();
+        public Models.Settings.PuTTYSessionInfo SelectedSession
         {
             get { return _selectedSession; }
             set
@@ -137,7 +139,7 @@ namespace NETworkManager.ViewModels
                 if (string.IsNullOrEmpty(Search))
                     return true;
 
-                PuTTYSessionInfo info = o as PuTTYSessionInfo;
+                Models.Settings.PuTTYSessionInfo info = o as Models.Settings.PuTTYSessionInfo;
 
                 string search = Search.Trim();
 
@@ -202,13 +204,26 @@ namespace NETworkManager.ViewModels
 
                 // Add host to history
                 AddHostToHistory(instance.Host);
-
-                // Create new remote desktop session info
+                AddSerialLineToHistory(instance.SerialLine);
+                AddPortToHistory(instance.Port.ToString());
+                AddBaudToHistory(instance.Baud.ToString());
+                AddUsernameToHistory(instance.Username);
+                AddProfileToHistory(instance.Profile);
+                
+                // Create session info
                 Models.PuTTY.PuTTYSessionInfo puTTYSessionInfo = new Models.PuTTY.PuTTYSessionInfo
                 {
-                    Host = instance.Host
+                    Host = instance.Host,
+                    SerialLine = instance.SerialLine,
+                    Mode = instance.ConnectionMode,
+                    Port = instance.Port,
+                    Baud = instance.Baud,
+                    Username = instance.Username,
+                    Profile = instance.Profile,
+                    AdditionalCommandLine = instance.AdditionalCommandLine
                 };
-             
+
+                // Connect
                 ConnectSession(puTTYSessionInfo);
             }, instance =>
             {
@@ -242,15 +257,7 @@ namespace NETworkManager.ViewModels
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                PuTTYSessionInfo puTTYSessionInfo = new PuTTYSessionInfo
-                {
-                    Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
-                };
-
-                PuTTYSessionManager.AddSession(puTTYSessionInfo);
+                PuTTYSessionManager.AddSession(new Models.Settings.PuTTYSessionInfo(instance.Name, instance.ConnectionMode, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port, instance.Username, instance.Profile, instance.AdditionalCommandLine, instance.Group, instance.Tags));
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -272,14 +279,9 @@ namespace NETworkManager.ViewModels
         }
 
         private void ConnectSessionAction()
-        {
-            Models.PuTTY.PuTTYSessionInfo sessionInfo = new Models.PuTTY.PuTTYSessionInfo
-            {
-                Host = SelectedSession.Host
-            };
-
-
-            ConnectSession(sessionInfo, SelectedSession.Name);
+        {        
+            // Connect
+            ConnectSession(Models.PuTTY.PuTTYSessionInfo.Parse(SelectedSession), SelectedSession.Name);
         }
 
         public ICommand ConnectSessionExternalCommand
@@ -289,7 +291,13 @@ namespace NETworkManager.ViewModels
 
         private void ConnectSessionExternalAction()
         {
-            //Process.Start("mstsc.exe", string.Format("/V:{0}", SelectedSession.Host));
+            ProcessStartInfo info = new ProcessStartInfo
+            {
+                FileName = SettingsManager.Current.PuTTY_PuTTYLocation,
+                Arguments = PuTTY.BuildCommandLine(Models.PuTTY.PuTTYSessionInfo.Parse(SelectedSession))
+            };
+
+            Process.Start(info);            
         }
 
         public ICommand EditSessionCommand
@@ -311,15 +319,7 @@ namespace NETworkManager.ViewModels
 
                 PuTTYSessionManager.RemoveSession(SelectedSession);
 
-                PuTTYSessionInfo puTTYSessionInfo = new PuTTYSessionInfo
-                {
-                    Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
-                };
-
-                PuTTYSessionManager.AddSession(puTTYSessionInfo);
+                PuTTYSessionManager.AddSession(new Models.Settings.PuTTYSessionInfo(instance.Name, instance.ConnectionMode, instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port, instance.Username, instance.Profile, instance.AdditionalCommandLine, instance.Group, instance.Tags));
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -352,15 +352,7 @@ namespace NETworkManager.ViewModels
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                PuTTYSessionInfo puTTYSessionInfo = new PuTTYSessionInfo
-                {
-                    Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
-                };
-
-                PuTTYSessionManager.AddSession(puTTYSessionInfo);
+                PuTTYSessionManager.AddSession(new Models.Settings.PuTTYSessionInfo(instance.Name, instance.ConnectionMode, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port, instance.Username, instance.Profile, instance.AdditionalCommandLine, instance.Group, instance.Tags));
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -466,10 +458,70 @@ namespace NETworkManager.ViewModels
             List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
-            SettingsManager.Current.RemoteDesktop_HostHistory.Clear();
+            SettingsManager.Current.PuTTY_HostHistory.Clear();
 
             // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.RemoteDesktop_HostHistory.Add(x));
+            list.ForEach(x => SettingsManager.Current.PuTTY_HostHistory.Add(x));
+        }
+
+        private void AddSerialLineToHistory(string serialLine)
+        {
+            // Create the new list
+            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_SerialLineHistory.ToList(), serialLine, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.PuTTY_SerialLineHistory.Clear();
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.PuTTY_SerialLineHistory.Add(x));
+        }
+
+        private void AddPortToHistory(string host)
+        {
+            // Create the new list
+            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_PortHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.PuTTY_PortHistory.Clear();
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.PuTTY_PortHistory.Add(x));
+        }
+
+        private void AddBaudToHistory(string host)
+        {
+            // Create the new list
+            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_BaudHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.PuTTY_BaudHistory.Clear();
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.PuTTY_BaudHistory.Add(x));
+        }
+
+        private void AddUsernameToHistory(string host)
+        {
+            // Create the new list
+            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_UsernameHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.PuTTY_UsernameHistory.Clear();
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.PuTTY_UsernameHistory.Add(x));
+        }
+
+        private void AddProfileToHistory(string host)
+        {
+            // Create the new list
+            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_ProfileHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.PuTTY_ProfileHistory.Clear();
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.PuTTY_ProfileHistory.Add(x));
         }
         #endregion
     }
