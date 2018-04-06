@@ -26,10 +26,14 @@
 <h2>Download</h2>
 
 <div align="center"> 
-:package: <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.5.0.0/NETworkManager_v1.5.0.0.zip">Version 1.5.0.0</a>
+  <p>
+    :package:
+    <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.5.0.0/NETworkManager_v1.5.0.0.zip">Version 1.5.0.0</a>
+  </p>
 </div>
 
 SHA256: `B70D60EF1DCF285F6DB190C7034E2228F6ABC6B2AF3BAE52B832082FB46681D1`
+
 
 The software is portable by default, simply unpack the ZIP archive and save it in a folder you have write permissions on.
 
