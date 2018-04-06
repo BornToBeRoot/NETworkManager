@@ -14,7 +14,7 @@
     </a>  
   </p>
   <p>
-    <a href="https://gitter.im/BornToBeRoot-NETworkManager">
+    <a href="https://gitter.im/BornToBeRoot-NETworkManager/Lobby">
       <img src="https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square">
     </a>
     <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/master">
@@ -25,7 +25,9 @@
 
 <h2>Download</h2>
 
-:package: [Version 1.5.0.0](https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.5.0.0/NETworkManager_v1.5.0.0.zip)
+<div align="center"> 
+:package: <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.5.0.0/NETworkManager_v1.5.0.0.zip">Version 1.5.0.0</a>
+</div>
 
 SHA256: `B70D60EF1DCF285F6DB190C7034E2228F6ABC6B2AF3BAE52B832082FB46681D1`
 
