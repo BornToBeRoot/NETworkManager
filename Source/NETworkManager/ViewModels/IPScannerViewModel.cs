@@ -279,7 +279,7 @@ namespace NETworkManager.ViewModels
                 if (value == _selectedProfile)
                     return;
 
-                if (value != null)
+                if (value != null && !IsScanRunning)
                     IPRange = value.IPRange;
 
                 _selectedProfile = value;

@@ -295,7 +295,7 @@ namespace NETworkManager.ViewModels
 
                 _selectedProfile = value;
 
-                if (value != null)
+                if (value != null && !IsScanRunning)
                 {
                     Host = value.Hostname;
                     Port = value.Ports;
