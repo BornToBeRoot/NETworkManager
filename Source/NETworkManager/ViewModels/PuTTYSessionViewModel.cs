@@ -375,13 +375,13 @@ namespace NETworkManager.ViewModels
 
             if (_sessionInfo.ConnectionMode == ConnectionMode.Serial)
             {
-                SerialLine = sessionInfo.SerialLine;
-                Baud = sessionInfo.Baud;
+                SerialLine = sessionInfo.HostOrSerialLine;
+                Baud = sessionInfo.PortOrBaud;
             }
             else
             {
-                Host = _sessionInfo.Host;
-                Port = _sessionInfo.Port;
+                Host = _sessionInfo.HostOrSerialLine;
+                Port = _sessionInfo.PortOrBaud;
             }
 
             Username = _sessionInfo.Username;
@@ -399,11 +399,11 @@ namespace NETworkManager.ViewModels
         }
 
         private void HasSessionInfoChanged()
-        {            
+        {
             if (ConnectionMode == ConnectionMode.Serial)
-                SessionInfoChanged = (_sessionInfo.Name != Name) || (_sessionInfo.ConnectionMode != ConnectionMode) || (_sessionInfo.SerialLine != SerialLine) || (_sessionInfo.Baud != Baud) || (_sessionInfo.Username != Username) || (_sessionInfo.Profile != Profile) || (_sessionInfo.AdditionalCommandLine != AdditionalCommandLine) || (_sessionInfo.Group != Group) || (_sessionInfo.Tags != Tags);
+                SessionInfoChanged = (_sessionInfo.Name != Name) || (_sessionInfo.ConnectionMode != ConnectionMode) || (_sessionInfo.HostOrSerialLine != SerialLine) || (_sessionInfo.PortOrBaud != Baud) || (_sessionInfo.Username != Username) || (_sessionInfo.Profile != Profile) || (_sessionInfo.AdditionalCommandLine != AdditionalCommandLine) || (_sessionInfo.Group != Group) || (_sessionInfo.Tags != Tags);
             else
-                SessionInfoChanged = (_sessionInfo.Name != Name) || (_sessionInfo.ConnectionMode != ConnectionMode) || (_sessionInfo.Host != Host) || (_sessionInfo.Port != Port) || (_sessionInfo.Username != Username) || (_sessionInfo.Profile != Profile) || (_sessionInfo.AdditionalCommandLine != AdditionalCommandLine) || (_sessionInfo.Group != Group) || (_sessionInfo.Tags != Tags);
+                SessionInfoChanged = (_sessionInfo.Name != Name) || (_sessionInfo.ConnectionMode != ConnectionMode) || (_sessionInfo.HostOrSerialLine != Host) || (_sessionInfo.PortOrBaud != Port) || (_sessionInfo.Username != Username) || (_sessionInfo.Profile != Profile) || (_sessionInfo.AdditionalCommandLine != AdditionalCommandLine) || (_sessionInfo.Group != Group) || (_sessionInfo.Tags != Tags);
         }
     }
 }

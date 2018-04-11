@@ -153,10 +153,7 @@ namespace NETworkManager.ViewModels
                 }
                 else // Search by: Name, (Hostname || SerialLine)
                 {
-                    if (info.ConnectionMode == PuTTY.ConnectionMode.Serial)
-                        return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.SerialLine.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-                    else
-                        return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+                    return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.HostOrSerialLine.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
                 }
             };
 
@@ -216,11 +213,9 @@ namespace NETworkManager.ViewModels
                 // Create session info
                 Models.PuTTY.PuTTYSessionInfo puTTYSessionInfo = new Models.PuTTY.PuTTYSessionInfo
                 {
-                    Host = instance.Host,
-                    SerialLine = instance.SerialLine,
+                    HostOrSerialLine = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
                     Mode = instance.ConnectionMode,
-                    Port = instance.Port,
-                    Baud = instance.Baud,
+                    PortOrBaud = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port,
                     Username = instance.Username,
                     Profile = instance.Profile,
                     AdditionalCommandLine = instance.AdditionalCommandLine
@@ -450,7 +445,7 @@ namespace NETworkManager.ViewModels
             // Add PuTTY path here...
             sessionInfo.PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
 
-            TabItems.Add(new DragablzPuTTYTabItem(Header ?? sessionInfo.Host, new PuTTYControl(sessionInfo)));
+            TabItems.Add(new DragablzPuTTYTabItem(Header ?? sessionInfo.HostOrSerialLine, new PuTTYControl(sessionInfo)));
             SelectedTabIndex = TabItems.Count - 1;
         }
 

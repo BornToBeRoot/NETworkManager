@@ -6,10 +6,8 @@ namespace NETworkManager.Models.Settings
     {
         public string Name { get; set; }
         public ConnectionMode ConnectionMode { get; set; }
-        public string Host { get; set; }
-        public string SerialLine { get; set; }
-        public int Port { get; set; }
-        public int Baud { get; set; }
+        public string HostOrSerialLine { get; set; }
+        public int PortOrBaud { get; set; }
         public string Username { get; set; }
         public string Profile { get; set; }
         public string AdditionalCommandLine { get; set; }
@@ -25,18 +23,8 @@ namespace NETworkManager.Models.Settings
         {
             Name = name;
             ConnectionMode = connectionMode;
-
-            if(connectionMode==ConnectionMode.Serial)
-            {
-                SerialLine = hostOrSerialLine;
-                Baud = portOrBaud;
-            }
-            else
-            {
-                Host = hostOrSerialLine;
-                Port = portOrBaud;
-            }
-            
+            HostOrSerialLine = hostOrSerialLine;
+            PortOrBaud = portOrBaud;
             Username = username;
             Profile = profile;
             AdditionalCommandLine = additionalCommandLine;
