@@ -18,20 +18,29 @@ namespace NETworkManager.Models.PuTTY
         {
 
         }
-
+                
         public static PuTTYSessionInfo Parse(Settings.PuTTYSessionInfo sessionInfo)
-        {            
-            return new PuTTYSessionInfo
+        {
+            PuTTYSessionInfo info = new PuTTYSessionInfo();
+
+            if(sessionInfo.ConnectionMode == ConnectionMode.Serial)
             {
-                Host = sessionInfo.Host,
-                SerialLine = sessionInfo.SerialLine,
-                Mode = sessionInfo.ConnectionMode,
-                Port = sessionInfo.Port,
-                Baud = sessionInfo.Baud,
-                Username = sessionInfo.Username,
-                Profile = sessionInfo.Profile,
-                AdditionalCommandLine = sessionInfo.AdditionalCommandLine
-            };
+                info.SerialLine = sessionInfo.SerialLine;
+                info.Baud = sessionInfo.Baud;
+            }
+            else
+            {
+                info.Host = sessionInfo.Host;
+                info.Port = sessionInfo.Port;
+
+            }
+
+            info.Mode = sessionInfo.ConnectionMode;
+            info.Username = sessionInfo.Username;
+            info.Profile = sessionInfo.Profile;
+            info.AdditionalCommandLine = sessionInfo.AdditionalCommandLine;
+
+            return info;
         }
     }
 }

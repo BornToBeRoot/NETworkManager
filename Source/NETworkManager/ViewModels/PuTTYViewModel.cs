@@ -151,9 +151,12 @@ namespace NETworkManager.ViewModels
                     else
                         return info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).IndexOf(str, StringComparison.OrdinalIgnoreCase) > -1);
                 }
-                else // Search by: Name, Hostname
+                else // Search by: Name, (Hostname || SerialLine)
                 {
-                    return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+                    if (info.ConnectionMode == PuTTY.ConnectionMode.Serial)
+                        return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.SerialLine.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+                    else
+                        return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
                 }
             };
 
@@ -209,7 +212,7 @@ namespace NETworkManager.ViewModels
                 AddBaudToHistory(instance.Baud.ToString());
                 AddUsernameToHistory(instance.Username);
                 AddProfileToHistory(instance.Profile);
-                
+
                 // Create session info
                 Models.PuTTY.PuTTYSessionInfo puTTYSessionInfo = new Models.PuTTY.PuTTYSessionInfo
                 {
@@ -279,7 +282,7 @@ namespace NETworkManager.ViewModels
         }
 
         private void ConnectSessionAction()
-        {        
+        {
             // Connect
             ConnectSession(Models.PuTTY.PuTTYSessionInfo.Parse(SelectedSession), SelectedSession.Name);
         }
@@ -297,7 +300,7 @@ namespace NETworkManager.ViewModels
                 Arguments = PuTTY.BuildCommandLine(Models.PuTTY.PuTTYSessionInfo.Parse(SelectedSession))
             };
 
-            Process.Start(info);            
+            Process.Start(info);
         }
 
         public ICommand EditSessionCommand
