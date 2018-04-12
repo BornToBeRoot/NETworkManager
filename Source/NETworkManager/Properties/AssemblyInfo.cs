@@ -8,9 +8,9 @@ using System.Windows;
 [assembly: AssemblyTitle("NETworkManager")]
 [assembly: AssemblyDescription("A powerful tool for managing networks and troubleshoot network problems!")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("BornToBeRoot")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("NETworkManager")]
-[assembly: AssemblyCopyright("Copyright ©  2016-2018")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

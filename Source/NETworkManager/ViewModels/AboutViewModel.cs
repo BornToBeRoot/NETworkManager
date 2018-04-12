@@ -42,20 +42,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _copyrightAndAuthor;
-        public string CopyrightAndAuthor
-        {
-            get { return _copyrightAndAuthor; }
-            set
-            {
-                if (value == _copyrightAndAuthor)
-                    return;
-
-                _copyrightAndAuthor = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _isUpdateCheckRunning;
         public bool IsUpdateCheckRunning
         {
@@ -152,7 +138,6 @@ namespace NETworkManager.ViewModels
         public AboutViewModel()
         {
             Version = string.Format("{0} {1}", Application.Current.Resources["String_Version"] as string, AssemblyManager.Current.Version);
-            CopyrightAndAuthor = string.Format("{0} {1}.", AssemblyManager.Current.Copyright, AssemblyManager.Current.Company);
 
             _librariesView = CollectionViewSource.GetDefaultView(LibraryManager.List);
             _librariesView.SortDescriptions.Add(new SortDescription(nameof(LibraryInfo.Library), ListSortDirection.Ascending));

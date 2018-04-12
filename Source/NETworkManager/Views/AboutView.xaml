@@ -18,6 +18,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="0,0,0,20">
@@ -25,21 +27,38 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Grid.Row="0" Width="128" Height="128" Source="/Resources/Images/NETworkManager.ico" />
+            <Image Grid.Column="0" Grid.Row="0" Width="128" Height="128" Source="/Resources/Images/NETworkManager.ico" VerticalAlignment="Top" />
             <StackPanel Grid.Column="1" Margin="20,0,0,0">
                 <TextBlock FontSize="32" Grid.Row="0" Text="{DynamicResource String_ProductName}" Style="{StaticResource HeaderTextBlock}" />
                 <TextBlock Text="{DynamicResource String_Slogan}" Style="{DynamicResource WrapTextBlock}" Margin="0,0,0,5" />
                 <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold" Margin="0,0,0,5" />
-                <TextBlock Text="{Binding CopyrightAndAuthor}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,5"/>
-                <TextBlock Text="{x:Static Resources:Resources.NETworkManager_License}" Style="{StaticResource LinkTextBlock}">
+                <TextBlock Text="{x:Static Resources:Resources.NETworkManager_License}" Style="{StaticResource LinkTextBlock}" Margin="0,0,0,5">
                     <TextBlock.InputBindings>
                         <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.NETworkManager_LicenseUrl}" MouseAction="LeftClick" />
                     </TextBlock.InputBindings>
                 </TextBlock>
+                <TextBlock Text="Maintained by GitHub.com/BornToBeRoot" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
+                    <Rectangle Width="24" Height="24" Fill="{DynamicResource GrayBrush3}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:SimpleIcons Kind=GitHub}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <Rectangle Width="24" Height="24" Fill="{DynamicResource GrayBrush3}" Margin="10,0,0,0">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:SimpleIcons Kind=Gitter}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <Rectangle Width="24" Height="24" Fill="{DynamicResource GrayBrush3}" Margin="10,0,0,0">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:SimpleIcons Kind=Reddit}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>                    
+                </StackPanel>
             </StackPanel>
         </Grid>
-        <TextBlock Grid.Row="1" Text="{DynamicResource String_Header_Update}" Style="{StaticResource HeaderTextBlock}"/>
-        <Grid Grid.Row="2" Margin="0,0,0,20">
+        <TextBlock Grid.Row="3" Text="{DynamicResource String_Header_Update}" Style="{StaticResource HeaderTextBlock}"/>
+        <Grid Grid.Row="4" Margin="0,0,0,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="10" />
@@ -80,8 +99,8 @@
             <Controls:ProgressRing Grid.Column="2" Visibility="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanToVisibilityConverter}}" Height="{Binding ElementName=btnCheckForUpdates, Path=ActualHeight}" Width="{Binding ElementName=btnCheckForUpdates, Path=ActualHeight}" HorizontalAlignment="Left" IsActive="True" />
             <TextBlock Grid.Column="2" Text="{Binding UpdaterMessage}" Visibility="{Binding ShowUpdaterMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource CenterTextBlock}" Margin="10,0,0,0" />
         </Grid>
-        <TextBlock Grid.Row="3" Text="{DynamicResource String_Header_Libraries}" Style="{StaticResource HeaderTextBlock}"/>
-        <DataGrid x:Name="dataGridLibary" Grid.Row="4" ItemsSource="{Binding LibrariesView}" SelectedItem="{Binding SelectedLibraryInfo}">
+        <TextBlock Grid.Row="5" Text="{DynamicResource String_Header_Libraries}" Style="{StaticResource HeaderTextBlock}"/>
+        <DataGrid x:Name="dataGridLibary" Grid.Row="6" ItemsSource="{Binding LibrariesView}" SelectedItem="{Binding SelectedLibraryInfo}">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
