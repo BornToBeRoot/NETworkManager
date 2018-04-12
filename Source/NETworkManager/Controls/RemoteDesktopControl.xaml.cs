@@ -60,7 +60,7 @@ namespace NETworkManager.Controls
             }
         }
 
-        private bool _connected;
+        private bool _connected = true;
         public bool Connected
         {
             get { return _connected; }
@@ -70,20 +70,6 @@ namespace NETworkManager.Controls
                     return;
 
                 _connected = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _disconnected;
-        public bool Disconnected
-        {
-            get { return _disconnected; }
-            set
-            {
-                if (value == _disconnected)
-                    return;
-
-                _disconnected = value;
                 OnPropertyChanged();
             }
         }
@@ -348,14 +334,12 @@ namespace NETworkManager.Controls
         #region Events
         private void RdpClient_OnConnected(object sender, EventArgs e)
         {
-            Disconnected = false;
             Connected = true;
         }
 
         private void RdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
         {
             Connected = false;
-            Disconnected = true;
 
             DisconnectReason = GetDisconnectReason(e.discReason);
         }

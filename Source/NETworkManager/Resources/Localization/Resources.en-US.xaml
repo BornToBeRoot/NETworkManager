@@ -387,6 +387,7 @@
     <system:String x:Key="String_PuTTYProfile">PuTTY profile</system:String>
     <system:String x:Key="String_Profile">Profile</system:String>
     <system:String x:Key="String_AdditionalCommandLine">Additional command line</system:String>
+    <system:String x:Key="String_PuTTYProcessHasEnded">PuTTY process has ended!</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>

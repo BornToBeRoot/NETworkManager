@@ -68,7 +68,7 @@
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Octicons Kind=Settings}" />
+                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Settings}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>

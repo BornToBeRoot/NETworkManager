@@ -9,6 +9,7 @@ using System.Windows.Threading;
 using System.Diagnostics;
 using NETworkManager.Utilities;
 using NETworkManager.Models.PuTTY;
+using System.Windows.Input;
 
 namespace NETworkManager.Controls
 {
@@ -32,6 +33,20 @@ namespace NETworkManager.Controls
         IntPtr AppWin;
 
         DispatcherTimer resizeTimer = new DispatcherTimer();
+        
+        private bool _connected = true;
+        public bool Connected
+        {
+            get { return _connected; }
+            set
+            {
+                if (value == _connected)
+                    return;
+
+                _connected = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, load
@@ -65,7 +80,15 @@ namespace NETworkManager.Controls
         #endregion
 
         #region ICommands & Actions
-        
+        public ICommand ReconnectCommand
+        {
+            get { return new RelayCommand(p => ReconnectAction()); }
+        }
+
+        private void ReconnectAction()
+        {
+            Connect();
+        }
         #endregion
 
         #region Methods       
@@ -79,8 +102,12 @@ namespace NETworkManager.Controls
 
             PuTTYProcess = Process.Start(info);
 
-            PuTTYProcess.WaitForInputIdle();
+            PuTTYProcess.EnableRaisingEvents = true;
+            PuTTYProcess.Exited += PuTTYProcess_Exited;
 
+            PuTTYProcess.WaitForInputIdle();
+            
+            // Embed putty window into panel, remove border etc.
             AppWin = PuTTYProcess.MainWindowHandle;
 
             NativeMethods.SetParent(AppWin, puTTYHost.Handle);
@@ -93,21 +120,22 @@ namespace NETworkManager.Controls
             style &= ~(NativeMethods.WS_BORDER | NativeMethods.WS_THICKFRAME);
             NativeMethods.SetWindowLongPtr(AppWin, NativeMethods.GWL_STYLE, new IntPtr(style));
 
-            // Resize embedded application & refresh
+            // Resize embedded application & refresh       
             if (PuTTYProcess != null)
                 ResizeEmbeddedPuTTY();
+
+            Connected = true;
+        }
+
+        private void PuTTYProcess_Exited(object sender, EventArgs e)
+        {
+            // This happens when the user exit the process
+            Connected = false;
         }
 
         private void ResizeEmbeddedPuTTY()
         {
-            try
-            {
-                NativeMethods.SetWindowPos(PuTTYProcess.MainWindowHandle, IntPtr.Zero, 0, 0, puTTYHost.ClientSize.Width, puTTYHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            NativeMethods.SetWindowPos(PuTTYProcess.MainWindowHandle, IntPtr.Zero, 0, 0, puTTYHost.ClientSize.Width, puTTYHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
         }
 
         public void Disconnect()

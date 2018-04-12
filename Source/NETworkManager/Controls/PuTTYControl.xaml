@@ -11,8 +11,19 @@
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
     <Grid x:Name="puTTYGrid" SizeChanged="PuTTYGrid_SizeChanged">
-        <WindowsFormsHost> 
+        <WindowsFormsHost Visibility="{Binding Connected, Converter={StaticResource BooleanToVisibilityConverter}}">  
             <WindowsForms:Panel x:Name="puTTYHost" />
         </WindowsFormsHost>
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding Connected, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="{DynamicResource String_Header_Disconnected}" Style="{StaticResource HeaderTextBlock}" />
+            <TextBlock Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{DynamicResource String_PuTTYProcessHasEnded}" Style="{DynamicResource DefaultTextBlock}" />
+            <Button Grid.Row="4" Content="{DynamicResource String_Button_Reconnect}" Command="{Binding ReconnectCommand}" IsDefault="True" Style="{StaticResource DefaultButton}"/>
+        </Grid>
     </Grid>
 </UserControl>
