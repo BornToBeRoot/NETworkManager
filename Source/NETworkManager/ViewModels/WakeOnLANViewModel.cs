@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Windows.Data;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -18,6 +19,20 @@ namespace NETworkManager.ViewModels
         private IDialogCoordinator dialogCoordinator;
 
         private bool _isLoading = true;
+
+        private bool _isSending;
+        public bool IsSending
+        {
+            get { return _isSending; }
+            set
+            {
+                if (value == _isSending)
+                    return;
+
+                _isSending = value;
+                OnPropertyChanged();
+            }
+        }
 
         private string _MACAddress;
         public string MACAddress
@@ -147,7 +162,7 @@ namespace NETworkManager.ViewModels
                 if (value == _selectedClient)
                     return;
 
-                if (value != null)
+                if (value != null && !IsSending)
                 {
                     MACAddress = value.MACAddress;
                     Broadcast = value.Broadcast;
@@ -215,7 +230,7 @@ namespace NETworkManager.ViewModels
                 WakeOnLANClientInfo info = o as WakeOnLANClientInfo;
 
                 string search = Search.Trim();
-                
+
                 // Search by: Name
                 return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
             };
@@ -455,14 +470,17 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void WakeUp(WakeOnLANInfo info)
+        private async void WakeUp(WakeOnLANInfo info)
         {
             DisplayStatusMessage = false;
-            StatusMessage = string.Empty;
+            IsSending = true;
 
             try
             {
                 WakeOnLAN.Send(info);
+
+                // DEBUG
+                //await Task.Delay(5000);
 
                 StatusMessage = Application.Current.Resources["String_MagicPacketSuccessfulSended"] as string;
                 DisplayStatusMessage = true;
@@ -471,6 +489,10 @@ namespace NETworkManager.ViewModels
             {
                 StatusMessage = ex.Message;
                 DisplayStatusMessage = true;
+            }
+            finally
+            {
+                IsSending = false;
             }
         }
         #endregion
