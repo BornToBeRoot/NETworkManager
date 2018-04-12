@@ -448,6 +448,7 @@
     <system:String x:Key="String_Button_Send">Senden</system:String>
     <system:String x:Key="String_Button_CheckForUpdaptes">Auf Updates prüfen</system:String>
     <system:String x:Key="String_Button_ConfigurePuTTY">PuTTY konfigurieren</system:String>
+    <system:String x:Key="String_Button_FlushDNSCache">DNS-Cache leeren</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Ausschneiden</system:String>

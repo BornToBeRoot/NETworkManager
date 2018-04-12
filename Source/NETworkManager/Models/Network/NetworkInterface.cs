@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace NETworkManager.Models.Network
 {
@@ -152,6 +153,14 @@ namespace NETworkManager.Models.Network
                         throw;
                 }
             }
+        }
+
+        [DllImport("dnsapi.dll", EntryPoint = "DnsFlushResolverCache")]
+        private static extern UInt32 DnsFlushResolverCache();
+
+        public static void FlusDnsResolverCache()
+        {
+            UInt32 result = DnsFlushResolverCache();
         }
         #endregion
     }

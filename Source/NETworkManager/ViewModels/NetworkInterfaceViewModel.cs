@@ -1071,6 +1071,16 @@ namespace NETworkManager.ViewModels
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
+
+        public ICommand FlushDNSCommand
+        {
+            get { return new RelayCommand(p => FlushDNSAction()); }
+        }
+
+        private void FlushDNSAction()
+        {
+            Models.Network.NetworkInterface.FlusDnsResolverCache();
+        }
         #endregion
 
         #region Events
