@@ -25,7 +25,7 @@
         <TextBlock Grid.Row="0" Text="{DynamicResource String_Header_CommandLineArguments}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Grid.Row="1" Text="{DynamicResource String_TheFollowingParametersAreAvailable}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <Border Grid.Row="2" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" Margin="0,0,0,10" Padding="5">
-        <ScrollViewer Style="{StaticResource DefaulScrollViewer}" >
+        <ScrollViewer Style="{StaticResource DefaultScrollViewer}" >
         <Grid>
             <Grid.Resources>
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />

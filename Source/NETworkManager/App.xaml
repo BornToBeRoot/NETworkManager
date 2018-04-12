@@ -27,7 +27,7 @@
                 <ResourceDictionary Source="/Resources/Styles/CheckBoxStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ContextMenuStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/DataGridStyles.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/GroupBoxStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/GroupBoxStyles.xaml" />                
                 <ResourceDictionary Source="/Resources/Styles/NumericUpDownStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/RadioButtonStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ScrollBarStyles.xaml" />
@@ -44,6 +44,7 @@
                 <ResourceDictionary Source="/Resources/Styles/ExpanderStyles.xaml" /> <!-- Requires button styles -->
                 <ResourceDictionary Source="/Resources/Styles/RectangleStyles.xaml" /> <!-- Requires tooltip styles -->
                 <ResourceDictionary Source="/Resources/Styles/PasswordBoxStyles.xaml" /> <!-- Requires tooltip styles -->
+                <ResourceDictionary Source="/Resources/Styles/ListBoxStyle.xaml" /> <!-- Requires scrollviewer/scrollbar styles -->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

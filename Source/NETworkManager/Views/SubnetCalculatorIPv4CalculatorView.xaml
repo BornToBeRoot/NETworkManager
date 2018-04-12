@@ -71,7 +71,7 @@
         </Grid>
         <StackPanel Grid.Row="2">
             <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Details}" Visibility="{Binding IsDetailsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <ScrollViewer Style="{DynamicResource DefaulScrollViewer}" Visibility="{Binding IsDetailsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ScrollViewer Style="{DynamicResource DefaultScrollViewer}" Visibility="{Binding IsDetailsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Grid>
                     <Grid.Resources>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />

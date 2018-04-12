@@ -48,7 +48,7 @@
     </UserControl.Resources>
     <TabControl Style="{StaticResource  DefaultTabControl}">
         <TabItem Header="{DynamicResource String_Header_Information}">
-            <ScrollViewer Margin="10" Style="{StaticResource DefaulScrollViewer}">
+            <ScrollViewer Margin="10" Style="{StaticResource DefaultScrollViewer}">
                 <Grid>
                     <Grid>
                         <Grid.Style>
@@ -299,7 +299,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <ScrollViewer Grid.Column="0" Margin="10" Style="{StaticResource DefaulScrollViewer}">
+                <ScrollViewer Grid.Column="0" Margin="10" Style="{StaticResource DefaultScrollViewer}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -579,9 +579,8 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <TextBox x:Name="txtSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}"/>
-                            <ListBox Grid.Column="0" Grid.Row="2" x:Name="listBoxProfiles" FontSize="14" ItemsSource="{Binding NetworkInterfaceProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}">
+                            <ListBox Grid.Column="0" Grid.Row="2" x:Name="listBoxProfiles" ItemsSource="{Binding NetworkInterfaceProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                                 <ListBox.Resources>
-                                    <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
                                     <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                         <MenuItem Header="{DynamicResource String_Apply}" Command="{Binding ApplyProfileCommand}">
                                             <MenuItem.Icon>

@@ -135,7 +135,7 @@
                             </Grid>
                         </Grid>
                     </Border>
-                    <ScrollViewer Grid.Column="1" Style="{StaticResource DefaulScrollViewer}" Margin="10">
+                    <ScrollViewer Grid.Column="1" Style="{StaticResource DefaultScrollViewer}" Margin="10">
                         <ContentControl Content="{Binding SettingsContent}" />
                     </ScrollViewer>
                 </Grid>

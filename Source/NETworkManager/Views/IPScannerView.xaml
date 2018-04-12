@@ -337,9 +337,8 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <TextBox x:Name="txtSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
-                    <ListBox Grid.Column="0" Grid.Row="2" x:Name="listBoxProfiles" FontSize="14" ItemsSource="{Binding IPScannerProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}">
+                    <ListBox Grid.Column="0" Grid.Row="2" x:Name="listBoxProfiles" ItemsSource="{Binding IPScannerProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                         <ListBox.Resources>
-                            <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
                             <ContextMenu x:Key="ProfileContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                 <MenuItem Header="{DynamicResource String_Scan}" Command="{Binding ScanProfileCommand}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}">
                                     <MenuItem.Icon>

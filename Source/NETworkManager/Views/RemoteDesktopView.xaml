@@ -123,9 +123,8 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <TextBox x:Name="txtSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}"/>
-                        <ListBox Grid.Row="2" FontSize="14" ItemsSource="{Binding RemoteDesktopSessions}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedSession}">
+                        <ListBox Grid.Row="2" ItemsSource="{Binding RemoteDesktopSessions}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedSession}" Style="{StaticResource ProfileListBox}">
                             <ListBox.Resources>
-                                <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaulScrollViewer}" />
                                 <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                     <MenuItem Header="{DynamicResource String_Connect}" Command="{Binding ConnectSessionCommand}">
                                         <MenuItem.Icon>
