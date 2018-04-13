@@ -390,6 +390,8 @@
     <system:String x:Key="String_PuTTYProcessHasEnded">PuTTY process has ended!</system:String>
     <system:String x:Key="String_EditGroup">Edit group</system:String>
     <system:String x:Key="String_NewSession">New session</system:String>
+    <system:String x:Key="String_Gitter">Gitter</system:String>
+    <system:String x:Key="String_GitHub">GitHub</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>

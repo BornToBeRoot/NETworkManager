@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Resources="clr-namespace:NETworkManager.Properties"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:Documentation="clr-namespace:NETworkManager.Models.Documentation"
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
         mc:Ignorable="d">
@@ -39,21 +40,40 @@
                 </TextBlock>
                 <TextBlock Text="Maintained by GitHub.com/BornToBeRoot" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
-                    <Rectangle Width="24" Height="24" Fill="{DynamicResource GrayBrush3}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:SimpleIcons Kind=GitHub}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                    <Rectangle Width="24" Height="24" Fill="{DynamicResource GrayBrush3}" Margin="10,0,0,0">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:SimpleIcons Kind=Gitter}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                    <Rectangle Width="24" Height="24" Fill="{DynamicResource GrayBrush3}" Margin="10,0,0,0">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:SimpleIcons Kind=Reddit}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>                    
+                    <Button ToolTip="{DynamicResource String_GitHub}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Documentation:CommunityManager.GithubURL}" Style="{StaticResource CleanButton}">
+                        <Rectangle Width="24" Height="24">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:SimpleIcons Kind=GitHub}" />
+                            </Rectangle.OpacityMask>
+                            <Rectangle.Style>
+                                <Style TargetType="{x:Type Rectangle}">
+                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                        </Rectangle>
+                    </Button>
+                    <Button ToolTip="{DynamicResource String_Gitter}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Documentation:CommunityManager.GitterURL}" Style="{StaticResource CleanButton}" Margin="10,0,0,0">
+                        <Rectangle Width="24" Height="24" >
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:SimpleIcons Kind=Gitter}" />
+                            </Rectangle.OpacityMask>
+                            <Rectangle.Style>
+                                <Style TargetType="{x:Type Rectangle}">
+                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                        </Rectangle>
+                    </Button>
                 </StackPanel>
             </StackPanel>
         </Grid>
