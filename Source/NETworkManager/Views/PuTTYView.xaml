@@ -33,7 +33,7 @@
                         <Setter Property="HeaderSuffixContent" >
                             <Setter.Value>
                                 <Grid HorizontalAlignment="Left" Width="40" Height="40">
-                                    <Button Style="{StaticResource CleanButton}" Command="{Binding ConnectNewSessionCommand}" Focusable="False">
+                                    <Button ToolTip="{DynamicResource String_NewSession}" Command="{Binding ConnectNewSessionCommand}" Style="{StaticResource CleanButton}">
                                         <Rectangle Width="20" Height="20">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
@@ -143,7 +143,7 @@
                                                                         <ColumnDefinition Width="Auto" />
                                                                     </Grid.ColumnDefinitions>
                                                                     <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{DynamicResource DefaultTextBlock}"/>
-                                                                    <Button Grid.Column="1" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource CleanButton}">
+                                                                    <Button Grid.Column="1" ToolTip="{DynamicResource String_EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource CleanButton}">
                                                                         <Rectangle Width="16" Height="16">
                                                                             <Rectangle.OpacityMask>
                                                                                 <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
