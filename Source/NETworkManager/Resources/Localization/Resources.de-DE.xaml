@@ -91,7 +91,6 @@
     <system:String x:Key="String_Header_AddCredential">Anmeldeinformation hinzufügen</system:String>
     <system:String x:Key="String_Header_EditCredential">Anmeldeinformation bearbeiten</system:String>
     <system:String x:Key="String_Header_DeleteCredential">Anmeldeinformation löschen</system:String>
-    <system:String x:Key="String_Header_ConfigureNetworkInterface">Konfiguriere Netzwerkinterface</system:String>
     <system:String x:Key="String_Header_Authentication">Authentifizierung</system:String>
     <system:String x:Key="String_Header_CredentialNotFound">Anmeldeinformation nicht gefunden!</system:String>
     <system:String x:Key="String_Header_ConnectAs">Verbinden als</system:String>

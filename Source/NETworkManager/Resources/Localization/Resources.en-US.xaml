@@ -91,7 +91,6 @@
     <system:String x:Key="String_Header_AddCredential">Add credential</system:String>
     <system:String x:Key="String_Header_EditCredential">Edit credential</system:String>
     <system:String x:Key="String_Header_DeleteCredential">Delete credential</system:String>
-    <system:String x:Key="String_Header_ConfigureNetworkInterface">Configure Network Interface</system:String>
     <system:String x:Key="String_Header_Authentication">Authentication</system:String>
     <system:String x:Key="String_Header_CredentialNotFound">Credential not found!</system:String>
     <system:String x:Key="String_Header_ConnectAs">Connect as</system:String>

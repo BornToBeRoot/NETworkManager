@@ -158,7 +158,7 @@ namespace NETworkManager.Models.Network
         [DllImport("dnsapi.dll", EntryPoint = "DnsFlushResolverCache")]
         private static extern UInt32 DnsFlushResolverCache();
 
-        public static void FlusDnsResolverCache()
+        public static void FlushDnsResolverCache()
         {
             UInt32 result = DnsFlushResolverCache();
         }

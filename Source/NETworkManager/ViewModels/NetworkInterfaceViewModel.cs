@@ -58,6 +58,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _isConfigurationRunning;
+        public bool IsConfigurationRunning
+        {
+            get { return _isConfigurationRunning; }
+            set
+            {
+                if (value == _isConfigurationRunning)
+                    return;
+
+                _isConfigurationRunning = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
         {
@@ -752,61 +766,9 @@ namespace NETworkManager.ViewModels
             get { return new RelayCommand(p => ApplyNetworkInterfaceConfigAction()); }
         }
 
-        public async void ApplyNetworkInterfaceConfigAction()
+        public void ApplyNetworkInterfaceConfigAction()
         {
-            DisplayStatusMessage = false;
-
-            progressDialogController = await dialogCoordinator.ShowProgressAsync(this, Application.Current.Resources["String_Header_ConfigureNetworkInterface"] as string, string.Empty);
-            progressDialogController.SetIndeterminate();
-
-            string subnetmask = ConfigSubnetmaskOrCidr;
-
-            // CIDR to subnetmask
-            if (ConfigEnableStaticIPAddress && subnetmask.StartsWith("/"))
-                subnetmask = Subnetmask.GetFromCidr(int.Parse(subnetmask.TrimStart('/'))).Subnetmask;
-
-            // If primary and secondary DNS are empty --> autoconfiguration
-            if (ConfigEnableStaticDNS && string.IsNullOrEmpty(ConfigPrimaryDNSServer) && string.IsNullOrEmpty(ConfigSecondaryDNSServer))
-                ConfigEnableDynamicDNS = true;
-
-            // When primary DNS is empty, swap it with secondary (if not empty)
-            if (ConfigEnableStaticDNS && string.IsNullOrEmpty(ConfigPrimaryDNSServer) && !string.IsNullOrEmpty(ConfigSecondaryDNSServer))
-            {
-                ConfigPrimaryDNSServer = ConfigSecondaryDNSServer;
-                ConfigSecondaryDNSServer = string.Empty;
-            }
-
-            NetworkInterfaceConfig config = new NetworkInterfaceConfig
-            {
-                Name = SelectedNetworkInterface.Name,
-                EnableStaticIPAddress = ConfigEnableStaticIPAddress,
-                IPAddress = ConfigIPAddress,
-                Subnetmask = subnetmask,
-                Gateway = ConfigGateway,
-                EnableStaticDNS = ConfigEnableStaticDNS,
-                PrimaryDNSServer = ConfigPrimaryDNSServer,
-                SecondaryDNSServer = ConfigSecondaryDNSServer
-            };
-
-            try
-            {
-                Models.Network.NetworkInterface networkInterface = new Models.Network.NetworkInterface();
-
-                networkInterface.UserHasCanceled += NetworkInterface_UserHasCanceled;
-
-                await networkInterface.ConfigureNetworkInterfaceAsync(config);
-
-                ReloadNetworkInterfacesAction();
-            }
-            catch (Exception ex)
-            {
-                StatusMessage = ex.Message;
-                DisplayStatusMessage = true;
-            }
-            finally
-            {
-                await progressDialogController.CloseAsync();
-            }
+            ApplyNetworkInterfaceConfig();
         }
 
         public ICommand ApplyProfileCommand
@@ -816,67 +778,7 @@ namespace NETworkManager.ViewModels
 
         private async void ApplyProfileAction()
         {
-            DisplayStatusMessage = false;
-
-            progressDialogController = await dialogCoordinator.ShowProgressAsync(this, Application.Current.Resources["String_Header_ConfigureNetworkInterface"] as string, string.Empty);
-            progressDialogController.SetIndeterminate();
-
-            string subnetmask = SelectedProfile.Subnetmask;
-
-            // CIDR to subnetmask
-            if (SelectedProfile.EnableStaticIPAddress && subnetmask.StartsWith("/"))
-                subnetmask = Subnetmask.GetFromCidr(int.Parse(subnetmask.TrimStart('/'))).Subnetmask;
-
-            bool enableStaticDNS = SelectedProfile.EnableStaticDNS;
-
-            string primaryDNSServer = SelectedProfile.PrimaryDNSServer;
-            string secondaryDNSServer = SelectedProfile.SecondaryDNSServer;
-
-            Debug.WriteLine(primaryDNSServer);
-            Debug.WriteLine(secondaryDNSServer);
-
-            // If primary and secondary DNS are empty --> autoconfiguration
-            if (enableStaticDNS && string.IsNullOrEmpty(primaryDNSServer) && string.IsNullOrEmpty(secondaryDNSServer))
-                enableStaticDNS = false;
-
-            // When primary DNS is empty, swap it with secondary (if not empty)
-            if (SelectedProfile.EnableStaticDNS && string.IsNullOrEmpty(primaryDNSServer) && !string.IsNullOrEmpty(secondaryDNSServer))
-            {
-                primaryDNSServer = secondaryDNSServer;
-                secondaryDNSServer = string.Empty;
-            }
-
-            NetworkInterfaceConfig config = new NetworkInterfaceConfig
-            {
-                Name = SelectedNetworkInterface.Name,
-                EnableStaticIPAddress = SelectedProfile.EnableStaticIPAddress,
-                IPAddress = SelectedProfile.IPAddress,
-                Subnetmask = subnetmask,
-                Gateway = SelectedProfile.Gateway,
-                EnableStaticDNS = enableStaticDNS,
-                PrimaryDNSServer = primaryDNSServer,
-                SecondaryDNSServer = secondaryDNSServer
-            };
-
-            try
-            {
-                Models.Network.NetworkInterface networkInterface = new Models.Network.NetworkInterface();
-
-                networkInterface.UserHasCanceled += NetworkInterface_UserHasCanceled;
-
-                await networkInterface.ConfigureNetworkInterfaceAsync(config);
-
-                ReloadNetworkInterfacesAction();
-            }
-            catch (Exception ex)
-            {
-                StatusMessage = ex.Message;
-                DisplayStatusMessage = true;
-            }
-            finally
-            {
-                await progressDialogController.CloseAsync();
-            }
+            ApplyProfile();
         }
 
         public ICommand AddProfileCommand
@@ -1072,14 +974,141 @@ namespace NETworkManager.ViewModels
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand FlushDNSCommand
+        public ICommand FlushDNSCacheCommand
         {
-            get { return new RelayCommand(p => FlushDNSAction()); }
+            get { return new RelayCommand(p => FlushDNSCacheAction()); }
         }
 
-        private void FlushDNSAction()
+        private void FlushDNSCacheAction()
         {
-            Models.Network.NetworkInterface.FlusDnsResolverCache();
+            FlushDNSCache();
+        }
+        #endregion
+
+        #region Methods
+        public async void ApplyNetworkInterfaceConfig()
+        {
+            IsConfigurationRunning = true;
+            DisplayStatusMessage = false;
+
+            string subnetmask = ConfigSubnetmaskOrCidr;
+
+            // CIDR to subnetmask
+            if (ConfigEnableStaticIPAddress && subnetmask.StartsWith("/"))
+                subnetmask = Subnetmask.GetFromCidr(int.Parse(subnetmask.TrimStart('/'))).Subnetmask;
+
+            // If primary and secondary DNS are empty --> autoconfiguration
+            if (ConfigEnableStaticDNS && string.IsNullOrEmpty(ConfigPrimaryDNSServer) && string.IsNullOrEmpty(ConfigSecondaryDNSServer))
+                ConfigEnableDynamicDNS = true;
+
+            // When primary DNS is empty, swap it with secondary (if not empty)
+            if (ConfigEnableStaticDNS && string.IsNullOrEmpty(ConfigPrimaryDNSServer) && !string.IsNullOrEmpty(ConfigSecondaryDNSServer))
+            {
+                ConfigPrimaryDNSServer = ConfigSecondaryDNSServer;
+                ConfigSecondaryDNSServer = string.Empty;
+            }
+
+            NetworkInterfaceConfig config = new NetworkInterfaceConfig
+            {
+                Name = SelectedNetworkInterface.Name,
+                EnableStaticIPAddress = ConfigEnableStaticIPAddress,
+                IPAddress = ConfigIPAddress,
+                Subnetmask = subnetmask,
+                Gateway = ConfigGateway,
+                EnableStaticDNS = ConfigEnableStaticDNS,
+                PrimaryDNSServer = ConfigPrimaryDNSServer,
+                SecondaryDNSServer = ConfigSecondaryDNSServer
+            };
+
+            try
+            {
+                Models.Network.NetworkInterface networkInterface = new Models.Network.NetworkInterface();
+
+                networkInterface.UserHasCanceled += NetworkInterface_UserHasCanceled;
+
+                await networkInterface.ConfigureNetworkInterfaceAsync(config);
+
+                ReloadNetworkInterfacesAction();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = ex.Message;
+                DisplayStatusMessage = true;
+            }
+            finally
+            {
+                IsConfigurationRunning = false;
+            }
+        }
+
+        public async void ApplyProfile()
+        {
+            IsConfigurationRunning = true;
+            DisplayStatusMessage = false;
+
+            string subnetmask = SelectedProfile.Subnetmask;
+
+            // CIDR to subnetmask
+            if (SelectedProfile.EnableStaticIPAddress && subnetmask.StartsWith("/"))
+                subnetmask = Subnetmask.GetFromCidr(int.Parse(subnetmask.TrimStart('/'))).Subnetmask;
+
+            bool enableStaticDNS = SelectedProfile.EnableStaticDNS;
+
+            string primaryDNSServer = SelectedProfile.PrimaryDNSServer;
+            string secondaryDNSServer = SelectedProfile.SecondaryDNSServer;
+
+            // If primary and secondary DNS are empty --> autoconfiguration
+            if (enableStaticDNS && string.IsNullOrEmpty(primaryDNSServer) && string.IsNullOrEmpty(secondaryDNSServer))
+                enableStaticDNS = false;
+
+            // When primary DNS is empty, swap it with secondary (if not empty)
+            if (SelectedProfile.EnableStaticDNS && string.IsNullOrEmpty(primaryDNSServer) && !string.IsNullOrEmpty(secondaryDNSServer))
+            {
+                primaryDNSServer = secondaryDNSServer;
+                secondaryDNSServer = string.Empty;
+            }
+
+            NetworkInterfaceConfig config = new NetworkInterfaceConfig
+            {
+                Name = SelectedNetworkInterface.Name,
+                EnableStaticIPAddress = SelectedProfile.EnableStaticIPAddress,
+                IPAddress = SelectedProfile.IPAddress,
+                Subnetmask = subnetmask,
+                Gateway = SelectedProfile.Gateway,
+                EnableStaticDNS = enableStaticDNS,
+                PrimaryDNSServer = primaryDNSServer,
+                SecondaryDNSServer = secondaryDNSServer
+            };
+
+            try
+            {
+                Models.Network.NetworkInterface networkInterface = new Models.Network.NetworkInterface();
+
+                networkInterface.UserHasCanceled += NetworkInterface_UserHasCanceled;
+
+                await networkInterface.ConfigureNetworkInterfaceAsync(config);
+
+                ReloadNetworkInterfacesAction();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = ex.Message;
+                DisplayStatusMessage = true;
+            }
+            finally
+            {
+                IsConfigurationRunning = false;
+            }
+        }
+
+        public void FlushDNSCache()
+        {
+            IsConfigurationRunning = true;
+            DisplayStatusMessage = false;
+
+            Models.Network.NetworkInterface.FlushDnsResolverCache();
+
+            IsConfigurationRunning = false;
         }
         #endregion
 

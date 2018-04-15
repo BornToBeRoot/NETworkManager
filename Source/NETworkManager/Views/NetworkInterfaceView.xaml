@@ -7,6 +7,7 @@
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
         xmlns:Validator="clr-namespace:NETworkManager.Validators"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         Dialog:DialogParticipation.Register="{Binding}"
@@ -46,7 +47,7 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <TabControl Style="{StaticResource  DefaultTabControl}">
+    <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{DynamicResource String_Header_Information}">
             <ScrollViewer Margin="10" Style="{StaticResource DefaultScrollViewer}">
                 <Grid>
@@ -304,6 +305,8 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ScrollViewer Grid.Row="0" Style="{StaticResource DefaultScrollViewer}">
                         <Grid>
@@ -403,7 +406,6 @@
                                         </Rectangle>
                                     </Button>
                                     <TextBlock Grid.Column="0" Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{DynamicResource String_ConnectTheNetworkCardToConfigureIt}" Visibility="{Binding CanConfigure, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
-                                    <TextBlock Grid.Column="0" Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
                                 </Grid>
                             </StackPanel>
                             <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Configure}" />
@@ -533,13 +535,26 @@
                                 </GroupBox>
                             </StackPanel>
                         </Grid>
-                    </ScrollViewer>
-                    <Grid Grid.Row="3">
+                    </ScrollViewer>            
+                    <Controls:MetroProgressBar Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True" Margin="0,0,0,10">
+                        <Controls:MetroProgressBar.Style>
+                            <Style TargetType="{x:Type  Controls:MetroProgressBar}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsConfigurationRunning}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Controls:MetroProgressBar.Style>
+                    </Controls:MetroProgressBar>
+                    <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+                    <Grid Grid.Row="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" HorizontalAlignment="Left" Command="{Binding FlushDNSCommand}" Style="{StaticResource ImageWithTextButton}">
+                        <Button Grid.Column="0" HorizontalAlignment="Left" Command="{Binding FlushDNSCacheCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}">
                             <Button.Content>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -588,6 +603,9 @@
                                                     <Binding Path="CanConfigure" />
                                                 </MultiBinding>
                                             </DataTrigger.Binding>
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsConfigurationRunning}" Value="True">
                                             <Setter Property="IsEnabled" Value="False" />
                                         </DataTrigger>
                                     </Style.Triggers>
