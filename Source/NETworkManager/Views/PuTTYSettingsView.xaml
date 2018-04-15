@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:Validator="clr-namespace:NETworkManager.Validators"        
+        xmlns:Validator="clr-namespace:NETworkManager.Validators"
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
     <StackPanel>
         <TextBlock Text="{DynamicResource String_Header_PuTTY}" Style="{StaticResource HeaderTextBlock}" />
@@ -18,7 +20,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button Content="{DynamicResource String_Button_ConfigurePuTTY}" Command="{Binding ConfigurePuTTYCommand}" IsEnabled="{Binding IsPuTTYConfigured}" HorizontalAlignment="Left" Style="{StaticResource DefaultButton}" Margin="0,0,0,10" />
+        <Button Content="{DynamicResource String_Button_ConfigurePuTTY}" Command="{Binding ConfigurePuTTYCommand}" IsEnabled="{Binding IsPuTTYConfigured}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" Margin="0,0,0,10" />
         <TextBlock Text="{DynamicResource String_PuTTYProfile}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <TextBox Width="250" Text="{Binding PuTTYProfile}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
         <TextBlock Text="{DynamicResource String_DefaultSSHPort}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />

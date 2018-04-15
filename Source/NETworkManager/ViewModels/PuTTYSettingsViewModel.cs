@@ -1,6 +1,10 @@
-﻿using NETworkManager.Models.Settings;
+﻿using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
+using System;
 using System.Diagnostics;
+using System.IO;
+using System.Windows;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
@@ -9,7 +13,8 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private const string ApplicationFileExtensionFilter = "Application (*.exe)|*.exe";
-
+        private IDialogCoordinator dialogCoordinator;
+        
         private bool _isLoading = true;
 
         private string _puTTYLocation;
@@ -150,8 +155,10 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public PuTTYSettingsViewModel()
+        public PuTTYSettingsViewModel(IDialogCoordinator instance)
         {
+            dialogCoordinator = instance;
+
             LoadSettings();
 
             _isLoading = false;
@@ -160,6 +167,7 @@ namespace NETworkManager.ViewModels
         private void LoadSettings()
         {
             PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
+            IsPuTTYConfigured = File.Exists(PuTTYLocation);
             SerialLine = SettingsManager.Current.PuTTY_SerialLine;
             PuTTYProfile = SettingsManager.Current.PuTTY_Profile;
             SSHPort = SettingsManager.Current.PuTTY_SSHPort;
@@ -193,7 +201,24 @@ namespace NETworkManager.ViewModels
 
         private void ConfigurePuTTYAction()
         {
-            Process.Start(SettingsManager.Current.PuTTY_PuTTYLocation);
+            ConfigurePuTTY();
+        }
+        #endregion
+
+        #region Methods
+        private async void ConfigurePuTTY()
+        {
+            try
+            {
+                Process.Start(SettingsManager.Current.PuTTY_PuTTYLocation);
+            }
+            catch (Exception ex)
+            {
+                MetroDialogSettings settings = AppearanceManager.MetroDialog;
+                settings.AffirmativeButtonText = Application.Current.Resources["String_Button_OK"] as string;
+
+                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, settings);
+            }
         }
         #endregion
     }

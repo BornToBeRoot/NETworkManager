@@ -10,6 +10,8 @@ using System.Diagnostics;
 using NETworkManager.Utilities;
 using NETworkManager.Models.PuTTY;
 using System.Windows.Input;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Controls
 {
@@ -26,14 +28,15 @@ namespace NETworkManager.Controls
 
         #region Variables
         private bool _initialized = false;
+        private IDialogCoordinator dialogCoordinator;
 
-        private PuTTYSessionInfo _puTTYSessionInfo;
+        private Models.PuTTY.PuTTYSessionInfo _puTTYSessionInfo;
 
         Process PuTTYProcess = null;
         IntPtr AppWin;
 
         DispatcherTimer resizeTimer = new DispatcherTimer();
-        
+
         private bool _connected = true;
         public bool Connected
         {
@@ -50,10 +53,12 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Constructor, load
-        public PuTTYControl(PuTTYSessionInfo info)
+        public PuTTYControl(Models.PuTTY.PuTTYSessionInfo info)
         {
             InitializeComponent();
             DataContext = this;
+
+            dialogCoordinator = DialogCoordinator.Instance;
 
             _puTTYSessionInfo = info;
 
@@ -92,39 +97,55 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Methods       
-        private void Connect()
+        private async void Connect()
         {
+
+
             ProcessStartInfo info = new ProcessStartInfo
             {
                 FileName = _puTTYSessionInfo.PuTTYLocation,
                 Arguments = PuTTY.BuildCommandLine(_puTTYSessionInfo)
             };
 
-            PuTTYProcess = Process.Start(info);
+            try
+            {
+                PuTTYProcess = Process.Start(info);
 
-            PuTTYProcess.EnableRaisingEvents = true;
-            PuTTYProcess.Exited += PuTTYProcess_Exited;
+                PuTTYProcess.EnableRaisingEvents = true;
+                PuTTYProcess.Exited += PuTTYProcess_Exited;
 
-            PuTTYProcess.WaitForInputIdle();
-            
-            // Embed putty window into panel, remove border etc.
-            AppWin = PuTTYProcess.MainWindowHandle;
+                PuTTYProcess.WaitForInputIdle();
 
-            NativeMethods.SetParent(AppWin, puTTYHost.Handle);
+                // Embed putty window into panel, remove border etc.
+                AppWin = PuTTYProcess.MainWindowHandle;
 
-            // Show window before set style and resize
-            NativeMethods.ShowWindow(AppWin, NativeMethods.WindowShowStyle.Maximize);
+                NativeMethods.SetParent(AppWin, puTTYHost.Handle);
 
-            // Remove border etc.
-            int style = (int)NativeMethods.GetWindowLong(AppWin, NativeMethods.GWL_STYLE);
-            style &= ~(NativeMethods.WS_BORDER | NativeMethods.WS_THICKFRAME);
-            NativeMethods.SetWindowLongPtr(AppWin, NativeMethods.GWL_STYLE, new IntPtr(style));
+                // Show window before set style and resize
+                NativeMethods.ShowWindow(AppWin, NativeMethods.WindowShowStyle.Maximize);
 
-            // Resize embedded application & refresh       
-            if (PuTTYProcess != null)
-                ResizeEmbeddedPuTTY();
+                // Remove border etc.
+                int style = (int)NativeMethods.GetWindowLong(AppWin, NativeMethods.GWL_STYLE);
+                style &= ~(NativeMethods.WS_BORDER | NativeMethods.WS_THICKFRAME);
+                NativeMethods.SetWindowLongPtr(AppWin, NativeMethods.GWL_STYLE, new IntPtr(style));
 
-            Connected = true;
+                // Resize embedded application & refresh       
+                if (PuTTYProcess != null)
+                    ResizeEmbeddedPuTTY();
+
+                Connected = true;
+            }
+            catch (Exception ex)
+            {
+                MetroDialogSettings settings = AppearanceManager.MetroDialog;
+                settings.AffirmativeButtonText = Application.Current.Resources["String_Button_OK"] as string;
+
+                ConfigurationManager.Current.FixAirspace = true;
+
+                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, settings);
+
+                ConfigurationManager.Current.FixAirspace = false;
+            }
         }
 
         private void PuTTYProcess_Exited(object sender, EventArgs e)

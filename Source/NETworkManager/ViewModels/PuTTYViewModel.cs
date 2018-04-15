@@ -437,7 +437,10 @@ namespace NETworkManager.ViewModels
         #region Methods
         private void CheckIfPuTTYConfigured()
         {
-            IsPuTTYConfigured = File.Exists(SettingsManager.Current.PuTTY_PuTTYLocation);
+            if (!string.IsNullOrEmpty(SettingsManager.Current.PuTTY_PuTTYLocation))
+                IsPuTTYConfigured = File.Exists(SettingsManager.Current.PuTTY_PuTTYLocation);
+            else
+                IsPuTTYConfigured = false;
         }
 
         private void ConnectSession(Models.PuTTY.PuTTYSessionInfo sessionInfo, string Header = null)
