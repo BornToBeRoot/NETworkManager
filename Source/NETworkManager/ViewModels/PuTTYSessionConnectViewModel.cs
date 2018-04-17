@@ -275,8 +275,6 @@ namespace NETworkManager.ViewModels
 
             // SSH is default...
             UseSSH = true;
-        }
-
-        
+        }        
     }
 }

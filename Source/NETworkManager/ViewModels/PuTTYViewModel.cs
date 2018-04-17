@@ -255,7 +255,7 @@ namespace NETworkManager.ViewModels
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                PuTTYSessionManager.AddSession(new Models.Settings.PuTTYSessionInfo(instance.Name, instance.ConnectionMode, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port, instance.Username, instance.Profile, instance.AdditionalCommandLine, instance.Group, instance.Tags));
+                PuTTYSessionManager.AddSession(new Models.Settings.PuTTYSessionInfo(instance.Name, instance.ConnectionMode, instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host, instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port, instance.Username, instance.Profile, instance.AdditionalCommandLine, instance.Group, instance.Tags));
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);

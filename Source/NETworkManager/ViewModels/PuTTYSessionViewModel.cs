@@ -45,7 +45,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _useSSH = true; // Default is SSH
+        private bool _useSSH; // Default is SSH
         public bool UseSSH
         {
             get { return _useSSH; }
@@ -356,6 +356,7 @@ namespace NETworkManager.ViewModels
 
             switch (_sessionInfo.ConnectionMode)
             {
+                // SSH is default
                 case ConnectionMode.SSH:
                     UseSSH = true;
                     break;
@@ -381,7 +382,7 @@ namespace NETworkManager.ViewModels
             else
             {
                 Host = _sessionInfo.HostOrSerialLine;
-                Port = _sessionInfo.PortOrBaud;
+                Port = _sessionInfo.PortOrBaud == 0 ? SettingsManager.Current.PuTTY_SSHPort : _sessionInfo.PortOrBaud; // Default SSH port
             }
 
             Username = _sessionInfo.Username;
@@ -394,7 +395,7 @@ namespace NETworkManager.ViewModels
 
             _groups = CollectionViewSource.GetDefaultView(groups);
             _groups.SortDescriptions.Add(new SortDescription());
-
+            
             _isLoading = false;
         }
 
