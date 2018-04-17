@@ -333,10 +333,13 @@ namespace NETworkManager.ViewModels
         {
             MovingFiles = true;
 
+            // Check if there are any file...
+            //string[] filesInNewFolder =  Directory.GetFiles(LocationSelectedPath);
+
             // Try moving files (permissions, file is in use...)
             try
             {
-                await SettingsManager.MoveSettingsAsync(SettingsManager.GetSettingsLocation(), LocationSelectedPath);
+                await SettingsManager.MoveSettingsAsync(SettingsManager.GetSettingsLocation(), LocationSelectedPath, true);
 
                 Properties.Settings.Default.Settings_CustomSettingsLocation = LocationSelectedPath;
 
@@ -441,7 +444,7 @@ namespace NETworkManager.ViewModels
             // Try moving files (permissions, file is in use...)
             try
             {
-                await SettingsManager.MakePortableAsync(isPortable);
+                await SettingsManager.MakePortableAsync(isPortable, true);
 
                 Properties.Settings.Default.Settings_CustomSettingsLocation = string.Empty;
                 LocationSelectedPath = SettingsManager.GetSettingsLocationNotPortable();
