@@ -20,6 +20,7 @@ using NETworkManager.Utilities;
 using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using NETworkManager.Models.Update;
+using NETworkManager.Models.Documentation;
 
 namespace NETworkManager
 {
@@ -581,7 +582,7 @@ namespace NETworkManager
         {
             //  Log
         }
-       
+
         private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
         {
             UpdateText = string.Format(System.Windows.Application.Current.Resources["String_VersionxxAvailable"] as string, e.Version);
@@ -709,6 +710,63 @@ namespace NETworkManager
         private void OpenWebsiteAction(object url)
         {
             Process.Start((string)url);
+        }
+
+        public ICommand OpenDocumentationCommand
+        {
+            get { return new RelayCommand(p => OpenDocumentationAction()); }
+        }
+
+        private void OpenDocumentationAction()
+        {
+            switch (SelectedApplication.Name)
+            {
+                case ApplicationViewManager.Name.NetworkInterface:
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_NetworkInterface);
+                    break;
+                case ApplicationViewManager.Name.IPScanner:
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_IPScanner);
+                    break;
+                case ApplicationViewManager.Name.PortScanner:
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_PortScanner);
+                    break;
+                case ApplicationViewManager.Name.Ping:
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_Ping);
+                    break;
+                case ApplicationViewManager.Name.Traceroute:
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_Traceroute);
+                    break;
+                case ApplicationViewManager.Name.DNSLookup:
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_DNSLookup);
+                    break;
+                case ApplicationViewManager.Name.RemoteDesktop:
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_RemoteDesktop);
+                    break;
+                case ApplicationViewManager.Name.PuTTY:
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_PuTTY);
+                    break;
+                case ApplicationViewManager.Name.SNMP:
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_SNMP);
+                    break;
+                case ApplicationViewManager.Name.WakeOnLAN:
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_WakeOnLAN);
+                    break;
+                case ApplicationViewManager.Name.HTTPHeaders:
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_HTTPHeaders);
+                    break;
+                case ApplicationViewManager.Name.SubnetCalculator:
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_SubnetCalculator);
+                    break;
+                case ApplicationViewManager.Name.Lookup:
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_Lookup);
+                    break;
+                case ApplicationViewManager.Name.ARPTable:
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_ARPTable);
+                    break;
+                default:
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Default);
+                    break;
+            }
         }
 
         public ICommand OpenApplicationListCommand
