@@ -28,9 +28,9 @@
 <div align="center"> 
   <p>
     :package:
-    <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.5.0.0/NETworkManager_v1.5.0.0.zip">Version 1.5.0.0</a>
+    <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.5.0.0/NETworkManager_v1.5.0.0.zip">Download</a>
     :book:
-    [Documentation](Documentation/README.md)
+    <a href="https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/README.md">Documentation</a>
   </p>
 </div>
 
