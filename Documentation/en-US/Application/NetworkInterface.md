@@ -2,10 +2,12 @@
 
 ## Information
 
-![NetworkInterface/Information](../../_images/NetworkInterface_Information.png)
+![Network Interface/Information](../../_images/NetworkInterface_Information.png)
 
 ## Configure
 
-![NetworkInterface/Configure](../../_images/NetworkInterface_Configure.png)
+![Network Interface/Configure](../../_images/NetworkInterface_Configure.png)
 
-![NetworkInterface/Configure_Profile](../../_images/NetworkInterface_Configure_Profile.png)
+![Network Interface/Configure Profile](../../_images/NetworkInterface_Configure_Profile.png)
+
+[back](../README.md)
