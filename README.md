@@ -29,6 +29,8 @@
   <p>
     :package:
     <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.5.0.0/NETworkManager_v1.5.0.0.zip">Version 1.5.0.0</a>
+    :book:
+    [Documentation](Documentation/README.md)
   </p>
 </div>
 
@@ -68,10 +70,6 @@ _On Windows 10 systems, SmartScreen may prevent the execution of the_ `NETworkMa
 - Windows 7 or later
 - .NET-Framework 4.6
 - RDP 8.1 ([How to install RDP 8.1 on Windows 7/Server 2008 R2?](Documentation/en-US/HowTo/Install_RDP_8dot1_on_Windows6dot1.md))
-
-<h2>Documentation</h2>
-
-The documentation can be found [here](Documentation/README.md).
 
 <h2>Changelog</h2>
 
