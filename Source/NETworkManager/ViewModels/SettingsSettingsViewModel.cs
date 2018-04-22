@@ -489,9 +489,9 @@ namespace NETworkManager.ViewModels
             }
             else
             {
-                settings.AffirmativeButtonText = Application.Current.Resources["String_Button_OK"] as string;
+                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
 
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, Application.Current.Resources["String_SettingsSuccessfullyReset"] as string, MessageDialogStyle.Affirmative, settings);
+                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Success"), LocalizationManager.GetStringByKey("String_SettingsSuccessfullyReset"), MessageDialogStyle.Affirmative, settings);
             }
         }
         #endregion
@@ -518,7 +518,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
 
             MakingPortable = false;

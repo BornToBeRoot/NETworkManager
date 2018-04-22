@@ -1,6 +1,6 @@
-﻿using System;
+﻿using NETworkManager.Models.Settings;
+using System;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
 
 namespace NETworkManager.Converters
@@ -10,9 +10,9 @@ namespace NETworkManager.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if ((bool)value)
-                return Application.Current.Resources["String_Yes"] as string;
+                return LocalizationManager.GetStringByKey("String_Yes");
 
-            return Application.Current.Resources["String_No"] as string;
+            return LocalizationManager.GetStringByKey("String_No");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

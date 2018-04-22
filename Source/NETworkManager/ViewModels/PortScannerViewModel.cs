@@ -473,7 +473,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {
-            Clipboard.SetText(Application.Current.Resources["String_PortStatus_" + SelectedScanResult.Status.ToString()] as string);
+            Clipboard.SetText(LocalizationManager.GetStringByKey("String_PortStatus_" + SelectedScanResult.Status.ToString()));
         }
 
         public ICommand CopySelectedProtocolCommand
@@ -515,7 +515,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_AddProfile"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
             };
 
             PortScannerProfileViewModel portScannerProfileViewModel = new PortScannerProfileViewModel(instance =>
@@ -553,7 +553,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_EditProfile"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
             };
 
             PortScannerProfileViewModel portScannerProfileViewModel = new PortScannerProfileViewModel(instance =>
@@ -593,7 +593,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_CopyProfile"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
             };
 
             PortScannerProfileViewModel portScannerProfileViewModel = new PortScannerProfileViewModel(instance =>
@@ -631,7 +631,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_DeleteProfile"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
             };
 
             ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
@@ -642,7 +642,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Application.Current.Resources["String_DeleteProfileMessage"] as string);
+            }, LocalizationManager.GetStringByKey("String_DeleteProfileMessage"));
 
             customDialog.Content = new ConfirmRemoveDialog
             {
@@ -661,7 +661,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_EditGroup"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
             };
 
             GroupViewModel editGroupViewModel = new GroupViewModel(instance =>
@@ -767,7 +767,7 @@ namespace NETworkManager.ViewModels
                     if (!string.IsNullOrEmpty(StatusMessage))
                         StatusMessage += Environment.NewLine;
 
-                    StatusMessage += string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, host);
+                    StatusMessage += string.Format(LocalizationManager.GetStringByKey("String_CouldNotResolveHostnameFor"), host);
                     DisplayStatusMessage = true;
 
                     continue;
@@ -778,7 +778,7 @@ namespace NETworkManager.ViewModels
 
             if (hostData.Count == 0)
             {
-                StatusMessage += Environment.NewLine + Application.Current.Resources["String_NothingToDoCheckYourInput"] as string;
+                StatusMessage += Environment.NewLine + LocalizationManager.GetStringByKey("String_NothingToDoCheckYourInput");
                 DisplayStatusMessage = true;
 
                 ScanFinished();
@@ -879,7 +879,7 @@ namespace NETworkManager.ViewModels
         #region Events
         private void PortScanner_UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
+            StatusMessage = LocalizationManager.GetStringByKey("String_CanceledByUser");
             DisplayStatusMessage = true;
 
             ScanFinished();

@@ -1,7 +1,7 @@
 ﻿using MahApps.Metro;
+using NETworkManager.Models.Settings;
 using System;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
 
 namespace NETworkManager.Converters
@@ -13,7 +13,7 @@ namespace NETworkManager.Converters
         {
             Accent accent = value as Accent;
 
-            string name = Application.Current.Resources["String_Accent_" + accent.Name] as string;
+            string name = LocalizationManager.GetStringByKey("String_Accent_" + accent.Name);
 
             if (string.IsNullOrEmpty(name))
                 name = accent.Name;

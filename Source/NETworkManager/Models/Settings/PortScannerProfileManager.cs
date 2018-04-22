@@ -51,12 +51,12 @@ namespace NETworkManager.Models.Settings
         {
             return new List<PortScannerProfileInfo>
             {
-                new PortScannerProfileInfo("1-1023 (well known)",string.Empty, "1-1023", Application.Current.Resources["String_Default"] as string),
-                new PortScannerProfileInfo("FTP",string.Empty,"20; 21", Application.Current.Resources["String_Default"] as string),
-                new PortScannerProfileInfo("LDAP/LDAPS", string.Empty,"389; 636", Application.Current.Resources["String_Default"] as string),
-                new PortScannerProfileInfo("RDP", string.Empty,"3389", Application.Current.Resources["String_Default"] as string),
-                new PortScannerProfileInfo("SSH",string.Empty, "22", Application.Current.Resources["String_Default"] as string),
-                new PortScannerProfileInfo("Webserver", string.Empty, "80; 443", Application.Current.Resources["String_Default"] as string),
+                new PortScannerProfileInfo("1-1023 (well known)",string.Empty, "1-1023", LocalizationManager.GetStringByKey("String_Default")),
+                new PortScannerProfileInfo("FTP",string.Empty,"20; 21", LocalizationManager.GetStringByKey("String_Default")),
+                new PortScannerProfileInfo("LDAP/LDAPS", string.Empty,"389; 636", LocalizationManager.GetStringByKey("String_Default")),
+                new PortScannerProfileInfo("RDP", string.Empty,"3389", LocalizationManager.GetStringByKey("String_Default")),
+                new PortScannerProfileInfo("SSH",string.Empty, "22", LocalizationManager.GetStringByKey("String_Default")),
+                new PortScannerProfileInfo("Webserver", string.Empty, "80; 443", LocalizationManager.GetStringByKey("String_Default")),
             };
         }
 

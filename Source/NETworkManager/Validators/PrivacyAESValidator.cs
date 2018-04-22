@@ -1,5 +1,5 @@
-﻿using System.Globalization;
-using System.Windows;
+﻿using NETworkManager.Models.Settings;
+using System.Globalization;
 using System.Windows.Controls;
 
 namespace NETworkManager.Validators
@@ -9,7 +9,7 @@ namespace NETworkManager.Validators
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             if ((value as string).Length < 8)
-                return new ValidationResult(false, Application.Current.Resources["String_ValidationError_KeyMustHave8CharactersOrMore"] as string);
+                return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_KeyMustHave8CharactersOrMore"));
 
             return ValidationResult.ValidResult;
         }

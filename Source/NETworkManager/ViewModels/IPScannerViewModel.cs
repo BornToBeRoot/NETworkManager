@@ -490,7 +490,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {
-            Clipboard.SetText(Application.Current.Resources["String_IPStatus_" + SelectedIPScanResult.PingInfo.Status.ToString()] as string);
+            Clipboard.SetText(LocalizationManager.GetStringByKey("String_IPStatus_" + SelectedIPScanResult.PingInfo.Status.ToString()));
         }
 
         public ICommand AddProfileCommand
@@ -502,7 +502,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_AddProfile"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
             };
 
             IPScannerProfileViewModel ipScannerProfileViewModel = new IPScannerProfileViewModel(instance =>
@@ -539,7 +539,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_EditProfile"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
             };
 
             IPScannerProfileViewModel ipScannerProfileViewModel = new IPScannerProfileViewModel(instance =>
@@ -578,7 +578,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_CopyProfile"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
             };
 
             IPScannerProfileViewModel ipScannerProfileViewModel = new IPScannerProfileViewModel(instance =>
@@ -615,7 +615,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_DeleteProfile"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
             };
 
             ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
@@ -626,7 +626,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Application.Current.Resources["String_DeleteProfileMessage"] as string);
+            }, LocalizationManager.GetStringByKey("String_DeleteProfileMessage"));
 
             customDialog.Content = new ConfirmRemoveDialog
             {
@@ -645,7 +645,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_EditGroup"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
             };
 
             GroupViewModel editGroupViewModel = new GroupViewModel(instance =>
@@ -791,7 +791,7 @@ namespace NETworkManager.ViewModels
 
         private void IpScanner_UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
+            StatusMessage = LocalizationManager.GetStringByKey("String_CanceledByUser");
             DisplayStatusMessage = true;
 
             ScanFinished();

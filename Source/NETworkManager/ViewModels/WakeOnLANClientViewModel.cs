@@ -151,7 +151,7 @@ namespace NETworkManager.ViewModels
             Port = _clientInfo.Port;
 
             // Get the group, if not --> get the first group (ascending), fallback --> default group 
-            Group = string.IsNullOrEmpty(_clientInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Application.Current.Resources["String_Default"] as string) : _clientInfo.Group;
+            Group = string.IsNullOrEmpty(_clientInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : LocalizationManager.GetStringByKey("String_Default")) : _clientInfo.Group;
 
             _groups = CollectionViewSource.GetDefaultView(groups);
             _groups.SortDescriptions.Add(new SortDescription());

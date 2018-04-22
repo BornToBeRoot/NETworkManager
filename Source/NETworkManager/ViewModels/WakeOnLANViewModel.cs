@@ -296,7 +296,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_AddClient"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_AddClient")
             };
 
             WakeOnLANClientViewModel wakeOnLANClientViewModel = new WakeOnLANClientViewModel(instance =>
@@ -335,7 +335,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_EditClient"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_EditClient")
             };
 
             WakeOnLANClientViewModel wakeOnLANClientViewModel = new WakeOnLANClientViewModel(instance =>
@@ -376,7 +376,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_CopyClient"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_CopyClient")
             };
 
             WakeOnLANClientViewModel wakeOnLANClientViewModel = new WakeOnLANClientViewModel(instance =>
@@ -415,7 +415,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_DeleteClient"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_DeleteClient")
             };
 
             ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
@@ -426,7 +426,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Application.Current.Resources["String_DeleteClientMessage"] as string);
+            }, LocalizationManager.GetStringByKey("String_DeleteClientMessage"));
 
             customDialog.Content = new ConfirmRemoveDialog
             {
@@ -445,7 +445,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_EditGroup"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
             };
 
             GroupViewModel editGroupViewModel = new GroupViewModel(instance =>
@@ -470,7 +470,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private async void WakeUp(WakeOnLANInfo info)
+        private void WakeUp(WakeOnLANInfo info)
         {
             DisplayStatusMessage = false;
             IsSending = true;
@@ -482,7 +482,7 @@ namespace NETworkManager.ViewModels
                 // DEBUG
                 //await Task.Delay(5000);
 
-                StatusMessage = Application.Current.Resources["String_MagicPacketSuccessfulSended"] as string;
+                StatusMessage = LocalizationManager.GetStringByKey("String_MagicPacketSuccessfulSended");
                 DisplayStatusMessage = true;
             }
             catch (Exception ex)

@@ -1,5 +1,5 @@
-﻿using System.Globalization;
-using System.Windows;
+﻿using NETworkManager.Models.Settings;
+using System.Globalization;
 using System.Windows.Controls;
 
 namespace NETworkManager.Validators
@@ -11,7 +11,7 @@ namespace NETworkManager.Validators
             foreach(string host in (value as string).Split(';'))
             {
                 if (string.IsNullOrEmpty(host))
-                    return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidHosts"] as string);
+                    return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidHosts"));
             }                
 
             return ValidationResult.ValidResult;

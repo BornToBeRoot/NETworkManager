@@ -373,7 +373,7 @@ namespace NETworkManager.ViewModels
                 else
                     PingFinished();
 
-                StatusMessage = string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, Host);
+                StatusMessage = string.Format(LocalizationManager.GetStringByKey("String_CouldNotResolveHostnameFor"), Host);
                 DisplayStatusMessage = true;
 
                 return;
@@ -508,7 +508,7 @@ namespace NETworkManager.ViewModels
             switch (w32ex.NativeErrorCode)
             {
                 case 1231:
-                    errorMessage = Application.Current.Resources["String_NetworkLocationCannotBeReached"] as string;
+                    errorMessage = LocalizationManager.GetStringByKey("String_NetworkLocationCannotBeReached");
                     break;
                 default:
                     errorMessage = e.InnerException.Message;

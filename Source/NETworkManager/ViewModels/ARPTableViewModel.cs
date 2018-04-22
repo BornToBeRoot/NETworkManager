@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
+using NETworkManager.Models.Settings;
 
 namespace NETworkManager.ViewModels
 {
@@ -210,7 +211,7 @@ namespace NETworkManager.ViewModels
 
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_AddEntry"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_AddEntry")
             };
 
             ARPTableAddEntryViewModel arpTableAddEntryViewModel = new ARPTableAddEntryViewModel(async instance =>
@@ -272,7 +273,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedMulticastAction()
         {
-            Clipboard.SetText(SelectedARPTableInfo.IsMulticast ? Application.Current.Resources["String_Yes"] as string : Application.Current.Resources["String_No"] as string);
+            Clipboard.SetText(SelectedARPTableInfo.IsMulticast ? LocalizationManager.GetStringByKey("String_Yes") : LocalizationManager.GetStringByKey("String_No"));
         }
         #endregion
 
@@ -292,7 +293,7 @@ namespace NETworkManager.ViewModels
         #region Events
         private void ArpTable_UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
+            StatusMessage = LocalizationManager.GetStringByKey("String_CanceledByUser");
             DisplayStatusMessage = true;
         }
         #endregion

@@ -194,7 +194,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_Connect"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_Connect")
             };
 
             PuTTYSessionConnectViewModel puTTYSessionConnectViewModel = new PuTTYSessionConnectViewModel(instance =>
@@ -247,7 +247,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_AddSession"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_AddSession")
             };
 
             PuTTYSessionViewModel puTTYSessionViewModel = new PuTTYSessionViewModel(instance =>
@@ -307,7 +307,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_EditSession"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_EditSession")
             };
 
             PuTTYSessionViewModel puTTYSessionViewModel = new PuTTYSessionViewModel(instance =>
@@ -342,7 +342,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_CopySession"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_CopySession")
             };
 
             PuTTYSessionViewModel puTTYSessionViewModel = new PuTTYSessionViewModel(instance =>
@@ -375,7 +375,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_DeleteSession"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_DeleteSession")
             };
 
             ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
@@ -388,7 +388,7 @@ namespace NETworkManager.ViewModels
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            }, Application.Current.Resources["String_DeleteSessionMessage"] as string);
+            }, LocalizationManager.GetStringByKey("String_DeleteSessionMessage"));
 
             customDialog.Content = new ConfirmRemoveDialog
             {
@@ -408,7 +408,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_EditGroup"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
             };
 
             GroupViewModel editGroupViewModel = new GroupViewModel(instance =>

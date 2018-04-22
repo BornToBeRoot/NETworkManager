@@ -1,5 +1,5 @@
-﻿using System.Globalization;
-using System.Windows;
+﻿using NETworkManager.Models.Settings;
+using System.Globalization;
 using System.Windows.Controls;
 
 namespace NETworkManager.Validators
@@ -43,7 +43,7 @@ namespace NETworkManager.Validators
             if (isValid)
                 return ValidationResult.ValidResult;
             else
-                return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidPortOrPortRange"] as string);
+                return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidPortOrPortRange"));
         }
     }
 }

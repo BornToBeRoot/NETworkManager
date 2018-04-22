@@ -1,9 +1,9 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Windows;
 using System.Windows.Controls;
 using NETworkManager.Utilities;
 using System.Net;
+using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Validators
 {
@@ -71,7 +71,7 @@ namespace NETworkManager.Validators
             if (isValid)
                 return ValidationResult.ValidResult;
             else
-                return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidIPScanRange"] as string);
+                return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidIPScanRange"));
         }
     }
 }

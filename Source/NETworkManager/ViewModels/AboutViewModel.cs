@@ -137,7 +137,7 @@ namespace NETworkManager.ViewModels
         #region Constructor
         public AboutViewModel()
         {
-            Version = string.Format("{0} {1}", Application.Current.Resources["String_Version"] as string, AssemblyManager.Current.Version);
+            Version = string.Format("{0} {1}", LocalizationManager.GetStringByKey("String_Version"), AssemblyManager.Current.Version);
 
             _librariesView = CollectionViewSource.GetDefaultView(LibraryManager.List);
             _librariesView.SortDescriptions.Add(new SortDescription(nameof(LibraryInfo.Library), ListSortDirection.Ascending));
@@ -207,7 +207,7 @@ namespace NETworkManager.ViewModels
         #region Events
         private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
         {
-            UpdateText = string.Format(Application.Current.Resources["String_VersionxxAvailable"] as string, e.Version);
+            UpdateText = string.Format(LocalizationManager.GetStringByKey("String_VersionxxAvailable"), e.Version);
 
             IsUpdateCheckRunning = false;
             UpdateAvailable = true;
@@ -215,7 +215,7 @@ namespace NETworkManager.ViewModels
 
         private void Updater_NoUpdateAvailable(object sender, System.EventArgs e)
         {
-            UpdaterMessage = Application.Current.Resources["String_NoUpdateAvailable"] as string;
+            UpdaterMessage = LocalizationManager.GetStringByKey("String_NoUpdateAvailable");
 
             IsUpdateCheckRunning = false;
             ShowUpdaterMessage = true;
@@ -223,7 +223,7 @@ namespace NETworkManager.ViewModels
 
         private void Updater_Error(object sender, EventArgs e)
         {
-            UpdaterMessage = Application.Current.Resources["String_ErrorCheckingApiGithubComVerifyYourNetworkConnection"] as string; ;
+            UpdaterMessage = LocalizationManager.GetStringByKey("String_ErrorCheckingApiGithubComVerifyYourNetworkConnection"); ;
 
             IsUpdateCheckRunning = false;
             ShowUpdaterMessage = true;

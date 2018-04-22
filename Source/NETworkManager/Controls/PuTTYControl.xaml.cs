@@ -138,11 +138,11 @@ namespace NETworkManager.Controls
             catch (Exception ex)
             {
                 MetroDialogSettings settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Application.Current.Resources["String_Button_OK"] as string;
+                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
 
                 ConfigurationManager.Current.FixAirspace = true;
 
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, settings);
+                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, settings);
 
                 ConfigurationManager.Current.FixAirspace = false;
             }

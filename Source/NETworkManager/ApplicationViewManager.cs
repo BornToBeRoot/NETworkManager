@@ -1,6 +1,6 @@
 using MahApps.Metro.IconPacks;
+using NETworkManager.Models.Settings;
 using System.Collections.Generic;
-using System.Windows;
 
 namespace NETworkManager
 {
@@ -33,7 +33,7 @@ namespace NETworkManager
 
         public static string TranslateName(Name name)
         {
-            return Application.Current.Resources["String_ApplicationName_" + name] as string;
+            return LocalizationManager.GetStringByKey("String_ApplicationName_" + name);
         }
 
         public enum Name
