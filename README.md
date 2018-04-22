@@ -52,7 +52,8 @@ _On Windows 10 systems, SmartScreen may prevent the execution of the_ `NETworkMa
 - Ping
 - Traceroute
 - DNS Lookup
-- Remote Desktop
+- Remote Desktop (with Tabs)
+- PuTTY (with Tabs)
 - SNMP - Get/Walk/Set (v1, v2c, v3)
 - Wake on LAN
 - HTTP Headers
