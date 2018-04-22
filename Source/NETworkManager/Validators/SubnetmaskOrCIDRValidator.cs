@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators
@@ -24,7 +25,7 @@ namespace NETworkManager.Validators
                 }
             }
 
-            return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidSubnetmaskOrCIDR"] as string);
+            return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidSubnetmaskOrCIDR"));
         }
     }
 }

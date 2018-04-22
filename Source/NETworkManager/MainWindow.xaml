@@ -626,7 +626,7 @@
                                 </TextBlock>
                             </Grid>
                         </Button>
-                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Height="48"  TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Settings}" Foreground="{DynamicResource GrayBrush3}" Margin="10,0" />
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Height="48" TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Settings}" FontSize="22" Foreground="{DynamicResource GrayBrush3}" Margin="10,0" />
                     </Grid>
                 </Border>
                 <ContentControl Grid.Row="1" x:Name="contentControlSettings" />

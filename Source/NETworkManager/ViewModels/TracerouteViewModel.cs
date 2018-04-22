@@ -404,7 +404,7 @@ namespace NETworkManager.ViewModels
             {
                 TracerouteFinished();
 
-                StatusMessage = string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, Host);
+                StatusMessage = string.Format(LocalizationManager.GetStringByKey("String_CouldNotResolveHostnameFor"), Host);
                 DisplayStatusMessage = true;
             }
             catch (Exception ex) // This will catch any exception
@@ -468,7 +468,7 @@ namespace NETworkManager.ViewModels
         {
             TracerouteFinished();
 
-            StatusMessage = string.Format(Application.Current.Resources["String_MaximumNumberOfHopsReached"] as string, e.Hops);
+            StatusMessage = string.Format(LocalizationManager.GetStringByKey("String_MaximumNumberOfHopsReached"), e.Hops);
             DisplayStatusMessage = true;
         }
 
@@ -476,7 +476,7 @@ namespace NETworkManager.ViewModels
         {
             TracerouteFinished();
 
-            StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
+            StatusMessage = LocalizationManager.GetStringByKey("String_CanceledByUser");
             DisplayStatusMessage = true;
         }
 

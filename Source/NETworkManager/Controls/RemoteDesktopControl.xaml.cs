@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System;
 using System.Windows.Threading;
 using NETworkManager.Utilities;
+using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Controls
 {
@@ -26,7 +27,7 @@ namespace NETworkManager.Controls
 
         private const string RemoteDesktopDisconnectReasonIdentifier = "String_RemoteDesktopDisconnectReason_";
 
-        private RemoteDesktopSessionInfo _rdpSessionInfo;
+        private Models.RemoteDesktop.RemoteDesktopSessionInfo _rdpSessionInfo;
 
         DispatcherTimer reconnectAdjustScreenTimer = new DispatcherTimer();
 
@@ -90,7 +91,7 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Constructor, load
-        public RemoteDesktopControl(RemoteDesktopSessionInfo info)
+        public RemoteDesktopControl(Models.RemoteDesktop.RemoteDesktopSessionInfo info)
         {
             InitializeComponent();
             DataContext = this;
@@ -219,7 +220,7 @@ namespace NETworkManager.Controls
         {
             try
             {
-                return Application.Current.Resources[RemoteDesktopDisconnectReasonIdentifier + reason] as string;
+                return LocalizationManager.GetStringByKey(RemoteDesktopDisconnectReasonIdentifier + reason);
             }
             catch (NullReferenceException ex) // This happens when the application gets closed and the resources have already been released
             {

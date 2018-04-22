@@ -99,7 +99,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
 
             ConfiguringAutostart = false;

@@ -170,7 +170,7 @@ namespace NETworkManager.ViewModels
             CredentialID = _sessionInfo.CredentialID;
 
             // Get the group, if not --> get the first group (ascending), fallback --> default group 
-            Group = string.IsNullOrEmpty(_sessionInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Application.Current.Resources["String_Default"] as string) : _sessionInfo.Group;
+            Group = string.IsNullOrEmpty(_sessionInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : LocalizationManager.GetStringByKey("String_Default")) : _sessionInfo.Group;
             Tags = _sessionInfo.Tags;
 
             if (CredentialManager.Loaded)

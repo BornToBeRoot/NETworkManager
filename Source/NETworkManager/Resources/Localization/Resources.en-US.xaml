@@ -104,7 +104,8 @@
     <system:String x:Key="String_Header_IPScanner">IP Scanner</system:String>
     <system:String x:Key="String_Header_PuTTY">PuTTY</system:String>
     <system:String x:Key="String_Header_EditGroup">Edit group</system:String>
-    
+    <system:String x:Key="String_Header_Overwrite">Overwrite?</system:String>
+
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">A powerful tool for managing networks and troubleshoot network problems!</system:String>
@@ -391,6 +392,7 @@
     <system:String x:Key="String_NewSession">New session</system:String>
     <system:String x:Key="String_Gitter">Gitter</system:String>
     <system:String x:Key="String_GitHub">GitHub</system:String>
+    <system:String x:Key="String_OverwriteSettingsInTheDestinationFolder">Overwrite settings in the destination folder?\n\nIf you click "Move &amp; Restart", the remaining files will be copied and the application will be restarted with the new settings!</system:String>    
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
@@ -452,6 +454,10 @@
     <system:String x:Key="String_Button_CheckForUpdaptes">Check for updates</system:String>
     <system:String x:Key="String_Button_ConfigurePuTTY">Configure PuTTY</system:String>
     <system:String x:Key="String_Button_FlushDNSCache">Flush DNS cache</system:String>
+    <system:String x:Key="String_Button_Yes">Yes</system:String>
+    <system:String x:Key="String_Button_No">No</system:String>
+    <system:String x:Key="String_Button_Overwrite">Overwrite</system:String>
+    <system:String x:Key="String_Button_MoveAndRestart">Move &amp; Restart</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Cut</system:String>

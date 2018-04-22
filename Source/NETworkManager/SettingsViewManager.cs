@@ -1,6 +1,6 @@
 ﻿using MahApps.Metro.IconPacks;
+using NETworkManager.Models.Settings;
 using System.Collections.Generic;
-using System.Windows;
 
 namespace NETworkManager
 {
@@ -20,7 +20,7 @@ namespace NETworkManager
                     new SettingsViewInfo(Name.Language, new PackIconMaterial() { Kind = PackIconMaterialKind.Flag}, Group.General),
                     new SettingsViewInfo(Name.HotKeys, new PackIconOcticons() { Kind = PackIconOcticonsKind.Keyboard }, Group.General),
                     new SettingsViewInfo(Name.Autostart, new PackIconMaterial() { Kind = PackIconMaterialKind.Power }, Group.General),
-                    new SettingsViewInfo(Name.Settings, new PackIconOcticons() { Kind = PackIconOcticonsKind.Settings }, Group.General),
+                    new SettingsViewInfo(Name.Settings, new PackIconModern() { Kind = PackIconModernKind.Settings }, Group.General),
                     new SettingsViewInfo(Name.Update, new PackIconMaterial() {Kind = PackIconMaterialKind.Download }, Group.General),
                     new SettingsViewInfo(Name.ImportExport, new PackIconMaterial() { Kind = PackIconMaterialKind.Import}, Group.General),
 
@@ -67,9 +67,9 @@ namespace NETworkManager
             switch (group)
             {
                 case Group.General:
-                    return Application.Current.Resources["String_SettingsName_" + name] as string;
+                    return LocalizationManager.GetStringByKey("String_SettingsName_" + name);
                 case Group.Applications:
-                    return Application.Current.Resources["String_ApplicationName_" + name] as string;
+                    return LocalizationManager.GetStringByKey("String_ApplicationName_" + name);
                 default:
                     return "Not found!";
             }
@@ -83,7 +83,7 @@ namespace NETworkManager
 
         public static string TranslateGroup(Group group)
         {
-            return Application.Current.Resources["String_SettingsGroup_" + group] as string;
+            return LocalizationManager.GetStringByKey("String_SettingsGroup_" + group);
         }
     }
 }

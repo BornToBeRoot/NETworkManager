@@ -508,7 +508,7 @@ namespace NETworkManager.ViewModels
             {
                 Finished();
 
-                StatusMessage = string.Format(Application.Current.Resources["String_CouldNotResolveHostnameFor"] as string, Host);
+                StatusMessage = string.Format(LocalizationManager.GetStringByKey("String_CouldNotResolveHostnameFor"), Host);
                 DisplayStatusMessage = true;
 
                 return;
@@ -614,7 +614,7 @@ namespace NETworkManager.ViewModels
 
         private void Snmp_Timeout(object sender, EventArgs e)
         {
-            StatusMessage = Application.Current.Resources["String_TimeoutOnSNMPQuery"] as string;
+            StatusMessage = LocalizationManager.GetStringByKey("String_TimeoutOnSNMPQuery");
             DisplayStatusMessage = true;
 
             Finished();
@@ -623,9 +623,9 @@ namespace NETworkManager.ViewModels
         private void Snmp_Error(object sender, EventArgs e)
         {
             if (Mode == SNMPMode.Set)
-                StatusMessage = Application.Current.Resources["String_ErrorInResponseCheckIfYouHaveWritePermissions"] as string;
+                StatusMessage = LocalizationManager.GetStringByKey("String_ErrorInResponseCheckIfYouHaveWritePermissions");
             else
-                StatusMessage = Application.Current.Resources["String_ErrorInResponse"] as string;
+                StatusMessage = LocalizationManager.GetStringByKey("String_ErrorInResponse");
 
             DisplayStatusMessage = true;
 
@@ -634,7 +634,7 @@ namespace NETworkManager.ViewModels
 
         private void Snmp_UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
+            StatusMessage = LocalizationManager.GetStringByKey("String_CanceledByUser");
             DisplayStatusMessage = true;
 
             Finished();
@@ -644,7 +644,7 @@ namespace NETworkManager.ViewModels
         {
             if (Mode == SNMPMode.Set)
             {
-                StatusMessage = Application.Current.Resources["String_DataHasBeenUpdated"] as string;
+                StatusMessage = LocalizationManager.GetStringByKey("String_DataHasBeenUpdated");
                 DisplayStatusMessage = true;
             }
 

@@ -74,12 +74,7 @@ namespace NETworkManager.Models.Settings
             if (GetIsPortable())
                 return GetPortableSettingsLocation();
 
-            string settingsLocation = GetCustomSettingsLocation();
-
-            if (!string.IsNullOrEmpty(settingsLocation) && Directory.Exists(settingsLocation))
-                return settingsLocation;
-
-            return GetDefaultSettingsLocation();
+            return GetSettingsLocationNotPortable();
         }
 
         public static string GetSettingsLocationNotPortable()
@@ -133,12 +128,12 @@ namespace NETworkManager.Models.Settings
             Current.SettingsChanged = false;
         }
 
-        public static Task MoveSettingsAsync(string sourceLocation, string targedLocation)
+        public static Task MoveSettingsAsync(string sourceLocation, string targedLocation, bool overwrite)
         {
-            return Task.Run(() => MoveSettings(sourceLocation, targedLocation));
+            return Task.Run(() => MoveSettings(sourceLocation, targedLocation, overwrite));
         }
 
-        private static void MoveSettings(string sourceLocation, string targedLocation)
+        private static void MoveSettings(string sourceLocation, string targedLocation, bool overwrite)
         {
             string[] sourceFiles = Directory.GetFiles(sourceLocation);
 
@@ -146,7 +141,13 @@ namespace NETworkManager.Models.Settings
             Directory.CreateDirectory(targedLocation);
 
             foreach (string file in sourceFiles)
-                File.Copy(file, Path.Combine(targedLocation, Path.GetFileName(file)), true);
+            {
+                // Skip if file exists and user don't want to overwrite it
+                if (!overwrite && File.Exists(file))
+                    continue;
+
+                File.Copy(file, Path.Combine(targedLocation, Path.GetFileName(file)), overwrite);
+            }
 
             // Delete the old files
             foreach (string file in sourceFiles)
@@ -157,23 +158,23 @@ namespace NETworkManager.Models.Settings
                 Directory.Delete(sourceLocation);
         }
 
-        public static Task MakePortableAsync(bool isPortable)
+        public static Task MakePortableAsync(bool isPortable, bool overwrite)
         {
-            return Task.Run(() => MakePortable(isPortable));
+            return Task.Run(() => MakePortable(isPortable, overwrite));
         }
 
-        public static void MakePortable(bool isPortable)
+        public static void MakePortable(bool isPortable, bool overwrite)
         {
             if (isPortable)
             {
-                MoveSettings(GetSettingsLocationNotPortable(), GetPortableSettingsLocation());
+                MoveSettings(GetSettingsLocationNotPortable(), GetPortableSettingsLocation(), overwrite);
 
                 // After moving the files, set the indicator that the settings are now portable
                 File.Create(GetIsPortableFilePath());
             }
             else
             {
-                MoveSettings(GetPortableSettingsLocation(), GetSettingsLocationNotPortable());
+                MoveSettings(GetPortableSettingsLocation(), GetSettingsLocationNotPortable(), overwrite);
 
                 // Remove the indicator after moving the files...
                 File.Delete(GetIsPortableFilePath());

@@ -15,7 +15,7 @@ namespace NETworkManager.Validators
             if (Directory.Exists(path) || SettingsManager.GetDefaultSettingsLocation() == path)
                 return ValidationResult.ValidResult;
 
-            return new ValidationResult(false, Application.Current.Resources["String_ValidationError_FolderDoesNotExist"] as string);
+            return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_FolderDoesNotExist"));
         }
     }
 }

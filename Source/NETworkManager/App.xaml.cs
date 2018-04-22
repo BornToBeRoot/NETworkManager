@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Windows;
+using NETworkManager.Properties;
 
 namespace NETworkManager
 {
@@ -90,10 +91,13 @@ namespace NETworkManager
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)
-        {
+        {            
             // Save settings, when the application is normally closed
             if (!_singleInstanceClose && !ImportExportManager.ForceRestart && !CommandLineManager.Current.Help)
             {
+                // Save local settings (custom settings path in AppData/Local)
+                Settings.Default.Save();
+
                 if (SettingsManager.Current.SettingsChanged) // This will also create the "Settings" folder, if it does not exist
                     SettingsManager.Save(); 
 

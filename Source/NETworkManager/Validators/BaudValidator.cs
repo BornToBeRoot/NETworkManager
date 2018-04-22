@@ -1,6 +1,6 @@
-﻿using System.Globalization;
+﻿using NETworkManager.Models.Settings;
+using System.Globalization;
 using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace NETworkManager.Validators
@@ -11,15 +11,13 @@ namespace NETworkManager.Validators
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            int baud = 0;
-
-            if (int.TryParse(value as string, out baud))
+            if (int.TryParse(value as string, out int baud))
             {
                 if (Bauds.Contains(baud))
                     return ValidationResult.ValidResult;
             }
 
-            return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidBaud"] as string);
+            return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidBaud"));
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using MahApps.Metro;
+using NETworkManager.Models.Settings;
 using System;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
 
 namespace NETworkManager.Converters
@@ -13,7 +13,7 @@ namespace NETworkManager.Converters
         {
             AppTheme theme = value as AppTheme;
 
-            string name = Application.Current.Resources["String_AppTheme_" + theme.Name] as string;
+            string name = LocalizationManager.GetStringByKey("String_AppTheme_" + theme.Name);
 
             if (string.IsNullOrEmpty(name))
                 name = theme.Name;

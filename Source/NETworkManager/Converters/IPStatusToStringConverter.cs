@@ -1,7 +1,7 @@
-﻿using System;
+﻿using NETworkManager.Models.Settings;
+using System;
 using System.Globalization;
 using System.Net.NetworkInformation;
-using System.Windows;
 using System.Windows.Data;
 
 namespace NETworkManager.Converters
@@ -12,7 +12,7 @@ namespace NETworkManager.Converters
         {
             IPStatus ipStatus = (IPStatus)value;
 
-            string status = Application.Current.Resources["String_IPStatus_" + ipStatus.ToString()] as string;
+            string status = LocalizationManager.GetStringByKey("String_IPStatus_" + ipStatus.ToString());
 
             if (string.IsNullOrEmpty(status))
                 return ipStatus.ToString();

@@ -281,12 +281,12 @@ namespace NETworkManager.ViewModels
             {
                 MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Continue"] as string;
-                settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
+                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_Continue");
+                settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_Cancel");
 
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-                if (await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, Application.Current.Resources["String_TheProcessCanTakeUpSomeTimeAndResources"] as string, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+                if (await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_AreYouSure"), LocalizationManager.GetStringByKey("String_TheProcessCanTakeUpSomeTimeAndResources"), MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 {
                     CancelSplit = false;
                     IsSplitRunning = false;
@@ -312,7 +312,7 @@ namespace NETworkManager.ViewModels
             }
             catch (OperationCanceledException)
             {
-                StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
+                StatusMessage = LocalizationManager.GetStringByKey("String_CanceledByUser");
                 DisplayStatusMessage = true;
             }
 

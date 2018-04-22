@@ -21,7 +21,6 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private IDialogCoordinator dialogCoordinator;
-        ProgressDialogController progressDialogController;
 
         private bool _isLoading = true;
 
@@ -757,7 +756,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
         }
 
@@ -776,7 +775,7 @@ namespace NETworkManager.ViewModels
             get { return new RelayCommand(p => ApplyProfileAction()); }
         }
 
-        private async void ApplyProfileAction()
+        private void ApplyProfileAction()
         {
             ApplyProfile();
         }
@@ -790,7 +789,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_AddProfile"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
             };
 
             NetworkInterfaceProfileViewModel networkInterfaceProfileViewModel = new NetworkInterfaceProfileViewModel(instance =>
@@ -833,7 +832,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_EditProfile"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
             };
 
             NetworkInterfaceProfileViewModel networkInterfaceProfileViewModel = new NetworkInterfaceProfileViewModel(instance =>
@@ -878,7 +877,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_CopyProfile"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
             };
 
             NetworkInterfaceProfileViewModel networkInterfaceProfileViewModel = new NetworkInterfaceProfileViewModel(instance =>
@@ -921,7 +920,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_DeleteProfile"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
             };
 
             ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
@@ -932,7 +931,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Application.Current.Resources["String_DeleteProfileMessage"] as string);
+            }, LocalizationManager.GetStringByKey("String_DeleteProfileMessage"));
 
             customDialog.Content = new ConfirmRemoveDialog
             {
@@ -951,7 +950,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_EditGroup"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
             };
 
             GroupViewModel editGroupViewModel = new GroupViewModel(instance =>
@@ -1115,7 +1114,7 @@ namespace NETworkManager.ViewModels
         #region Events
         private void NetworkInterface_UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = Application.Current.Resources["String_CanceledByUser"] as string;
+            StatusMessage = LocalizationManager.GetStringByKey("String_CanceledByUser");
             DisplayStatusMessage = true;
         }
         #endregion

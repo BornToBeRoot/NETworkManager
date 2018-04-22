@@ -329,14 +329,75 @@ namespace NETworkManager.ViewModels
             get { return new RelayCommand(p => ChangeSettingsAction()); }
         }
 
+        // Check if a file(name) is a settings file
+        private bool FilesContainsSettingsFiles(string[] files)
+        {
+            foreach (string file in files)
+            {
+                string fileName = Path.GetFileName(file);
+
+                if (SettingsManager.GetSettingsFileName() == fileName)
+                    return true;
+
+                if (NetworkInterfaceProfileManager.ProfilesFileName == fileName)
+                    return true;
+
+                if (IPScannerProfileManager.ProfilesFileName == fileName)
+                    return true;
+
+                if (PortScannerProfileManager.ProfilesFileName == fileName)
+                    return true;
+
+                if (RemoteDesktopSessionManager.SessionsFileName == fileName)
+                    return true;
+
+                if (PuTTYSessionManager.SessionsFileName == fileName)
+                    return true;
+
+                if (WakeOnLANClientManager.ClientsFileName == fileName)
+                    return true;
+            }
+
+            return false;
+        }
+
         private async void ChangeSettingsAction()
         {
             MovingFiles = true;
+            bool overwrite = false;
+            bool forceRestart = false;
+
+            // Check if there are any settings files in the folder...
+            if (FilesContainsSettingsFiles(Directory.GetFiles(LocationSelectedPath)))
+            {
+                MetroDialogSettings settings = AppearanceManager.MetroDialog;
+
+                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_Overwrite");
+                settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_Cancel");
+                settings.FirstAuxiliaryButtonText = LocalizationManager.GetStringByKey("String_Button_MoveAndRestart");
+                settings.DefaultButtonFocus = MessageDialogResult.FirstAuxiliary;
+
+                MessageDialogResult result = await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Overwrite"),LocalizationManager.GetStringByKey("String_OverwriteSettingsInTheDestinationFolder"), MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
+
+                if (result == MessageDialogResult.Negative)
+                {
+                    MovingFiles = false;
+                    return;
+                }
+                else if (result == MessageDialogResult.Affirmative)
+                {
+                    overwrite = true;
+                }
+                else if (result == MessageDialogResult.FirstAuxiliary)
+                {
+                    forceRestart = true;
+                }
+            }
 
             // Try moving files (permissions, file is in use...)
             try
             {
-                await SettingsManager.MoveSettingsAsync(SettingsManager.GetSettingsLocation(), LocationSelectedPath);
+                await SettingsManager.MoveSettingsAsync(SettingsManager.GetSettingsLocation(), LocationSelectedPath, overwrite);
 
                 Properties.Settings.Default.Settings_CustomSettingsLocation = LocationSelectedPath;
 
@@ -345,11 +406,17 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error") as string, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
 
             LocationSelectedPath = string.Empty;
             LocationSelectedPath = Properties.Settings.Default.Settings_CustomSettingsLocation;
+
+            if (forceRestart)
+            {
+                SettingsManager.ForceRestart = true;
+                CloseAction();
+            }
 
             MovingFiles = false;
         }
@@ -373,20 +440,20 @@ namespace NETworkManager.ViewModels
         {
             MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
-            settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Continue"] as string;
-            settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
+            settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_Continue");
+            settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_Cancel");
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            string message = Application.Current.Resources["String_SelectedSettingsAreReset"] as string;
+            string message = LocalizationManager.GetStringByKey("String_SelectedSettingsAreReset");
 
             if (ResetEverything || ResetApplicationSettings)
             {
-                message += Environment.NewLine + Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_TheSettingsLocationIsNotAffected"] as string);
-                message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_ApplicationIsRestartedAfterwards"] as string);
+                message += Environment.NewLine + Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_TheSettingsLocationIsNotAffected"));
+                message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_ApplicationIsRestartedAfterwards"));
             }
 
-            if (await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+            if (await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_AreYouSure"), message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 return;
 
             bool forceRestart = false;
@@ -422,9 +489,9 @@ namespace NETworkManager.ViewModels
             }
             else
             {
-                settings.AffirmativeButtonText = Application.Current.Resources["String_Button_OK"] as string;
+                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
 
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, Application.Current.Resources["String_SettingsSuccessfullyReset"] as string, MessageDialogStyle.Affirmative, settings);
+                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Success"), LocalizationManager.GetStringByKey("String_SettingsSuccessfullyReset"), MessageDialogStyle.Affirmative, settings);
             }
         }
         #endregion
@@ -441,7 +508,7 @@ namespace NETworkManager.ViewModels
             // Try moving files (permissions, file is in use...)
             try
             {
-                await SettingsManager.MakePortableAsync(isPortable);
+                await SettingsManager.MakePortableAsync(isPortable, true);
 
                 Properties.Settings.Default.Settings_CustomSettingsLocation = string.Empty;
                 LocationSelectedPath = SettingsManager.GetSettingsLocationNotPortable();
@@ -451,7 +518,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Error"] as string, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
 
             MakingPortable = false;

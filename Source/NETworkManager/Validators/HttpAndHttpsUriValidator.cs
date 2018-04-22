@@ -1,6 +1,6 @@
-﻿using System;
+﻿using NETworkManager.Models.Settings;
+using System;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace NETworkManager.Validators
@@ -12,7 +12,7 @@ namespace NETworkManager.Validators
             if (Uri.TryCreate(value as string, UriKind.Absolute, out Uri uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
                 return ValidationResult.ValidResult;
 
-            return new ValidationResult(false, Application.Current.Resources["String_ValidationError_EnterValidWebsiteUri"] as string);
+            return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidWebsiteUri"));
         }
     }
 }

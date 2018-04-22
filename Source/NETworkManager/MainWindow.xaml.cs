@@ -280,7 +280,7 @@ namespace NETworkManager
 
             // Set windows title if admin
             if (ConfigurationManager.Current.IsAdmin)
-                Title = string.Format("[{0}] {1}", System.Windows.Application.Current.Resources["String_Administrator"] as string, Title);
+                Title = string.Format("[{0}] {1}", LocalizationManager.GetStringByKey("String_Administrator"), Title);
 
             // Set the version text
             Version = string.Format("Version {0}", AssemblyManager.Current.Version);
@@ -367,14 +367,14 @@ namespace NETworkManager
 
                 MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = System.Windows.Application.Current.Resources["String_Button_Close"] as string;
-                settings.NegativeButtonText = System.Windows.Application.Current.Resources["String_Button_Cancel"] as string;
+                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_Close");
+                settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_Cancel");
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 // Fix airspace issues
                 ConfigurationManager.Current.FixAirspace = true;
 
-                MessageDialogResult result = await this.ShowMessageAsync(System.Windows.Application.Current.Resources["String_Header_Confirm"] as string, System.Windows.Application.Current.Resources["String_ConfirmCloseQuesiton"] as string, MessageDialogStyle.AffirmativeAndNegative, settings);
+                MessageDialogResult result = await this.ShowMessageAsync(LocalizationManager.GetStringByKey("String_Header_Confirm"), LocalizationManager.GetStringByKey("String_ConfirmCloseQuesiton"), MessageDialogStyle.AffirmativeAndNegative, settings);
 
                 ConfigurationManager.Current.FixAirspace = false;
 
@@ -585,7 +585,7 @@ namespace NETworkManager
 
         private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
         {
-            UpdateText = string.Format(System.Windows.Application.Current.Resources["String_VersionxxAvailable"] as string, e.Version);
+            UpdateText = string.Format(LocalizationManager.GetStringByKey("String_VersionxxAvailable"), e.Version);
             UpdateAvailable = true;
         }
         #endregion
@@ -836,13 +836,13 @@ namespace NETworkManager
 
                 MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = System.Windows.Application.Current.Resources["String_Button_RestartNow"] as string;
-                settings.NegativeButtonText = System.Windows.Application.Current.Resources["String_Button_OK"] as string;
+                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_RestartNow");
+                settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 ConfigurationManager.Current.FixAirspace = true;
 
-                if (await this.ShowMessageAsync(System.Windows.Application.Current.Resources["String_RestartRequired"] as string, System.Windows.Application.Current.Resources["String_RestartRequiredAfterSettingsChanged"] as string, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
+                if (await this.ShowMessageAsync(LocalizationManager.GetStringByKey("String_RestartRequired"), LocalizationManager.GetStringByKey("String_RestartRequiredAfterSettingsChanged"), MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
                 {
                     RestartApplication();
                     return;

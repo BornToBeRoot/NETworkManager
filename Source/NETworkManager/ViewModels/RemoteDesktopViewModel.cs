@@ -194,7 +194,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_Connect"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_Connect")
             };
 
             RemoteDesktopSessionConnectViewModel connectRemoteDesktopSessionViewModel = new RemoteDesktopSessionConnectViewModel(instance =>
@@ -254,7 +254,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_AddSession"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_AddSession")
             };
 
             RemoteDesktopSessionViewModel remoteDesktopSessionViewModel = new RemoteDesktopSessionViewModel(instance =>
@@ -305,7 +305,7 @@ namespace NETworkManager.ViewModels
                 {
                     CustomDialog customDialog = new CustomDialog()
                     {
-                        Title = Application.Current.Resources["String_Header_MasterPassword"] as string
+                        Title = LocalizationManager.GetStringByKey("String_Header_MasterPassword")
                     };
 
                     CredentialsMasterPasswordViewModel credentialsMasterPasswordViewModel = new CredentialsMasterPasswordViewModel(async instance =>
@@ -318,7 +318,7 @@ namespace NETworkManager.ViewModels
 
                             if (credentialInfo == null)
                             {
-                                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_CredentialNotFound"] as string, Application.Current.Resources["String_CredentialNotFoundMessage"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_CredentialNotFound"), LocalizationManager.GetStringByKey("String_CredentialNotFoundMessage"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
 
                                 return;
                             }
@@ -331,7 +331,7 @@ namespace NETworkManager.ViewModels
                         }
                         else
                         {
-                            await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_WrongPassword"] as string, Application.Current.Resources["String_WrongPasswordDecryptionFailed"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                            await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_WrongPassword"), LocalizationManager.GetStringByKey("String_WrongPasswordDecryptionFailed"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
                         }
                     }, instance =>
                     {
@@ -351,7 +351,7 @@ namespace NETworkManager.ViewModels
 
                     if (credentialInfo == null)
                     {
-                        await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_CredentialNotFound"] as string, Application.Current.Resources["String_CredentialNotFoundMessage"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                        await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_CredentialNotFound"), LocalizationManager.GetStringByKey("String_CredentialNotFoundMessage"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
 
                         return;
                     }
@@ -378,7 +378,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_ConnectAs"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_ConnectAs")
             };
 
             RemoteDesktopSessionConnectViewModel connectRemoteDesktopSessionViewModel = new RemoteDesktopSessionConnectViewModel(instance =>
@@ -452,7 +452,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_EditSession"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_EditSession")
             };
 
             RemoteDesktopSessionViewModel remoteDesktopSessionViewModel = new RemoteDesktopSessionViewModel(instance =>
@@ -496,7 +496,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_CopySession"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_CopySession")
             };
 
             RemoteDesktopSessionViewModel remoteDesktopSessionViewModel = new RemoteDesktopSessionViewModel(instance =>
@@ -537,7 +537,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_DeleteSession"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_DeleteSession")
             };
 
             ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
@@ -550,7 +550,7 @@ namespace NETworkManager.ViewModels
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            }, Application.Current.Resources["String_DeleteSessionMessage"] as string);
+            }, LocalizationManager.GetStringByKey("String_DeleteSessionMessage"));
 
             customDialog.Content = new ConfirmRemoveDialog
             {
@@ -570,7 +570,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = Application.Current.Resources["String_Header_EditGroup"] as string
+                Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
             };
 
             GroupViewModel editGroupViewModel = new GroupViewModel(instance =>

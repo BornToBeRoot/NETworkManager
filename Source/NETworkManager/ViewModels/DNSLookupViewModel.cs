@@ -383,9 +383,9 @@ namespace NETworkManager.ViewModels
                 StatusMessage += Environment.NewLine;
 
             if (e.ErrorCode == "Timeout Error")
-                StatusMessage += string.Format(Application.Current.Resources["String_TimeoutWhenQueryingDNSServer"] as string, e.DNSServer);
+                StatusMessage += string.Format(LocalizationManager.GetStringByKey("String_TimeoutWhenQueryingDNSServer"), e.DNSServer);
             else
-                StatusMessage += Application.Current.Resources["String_UnkownError"] as string;
+                StatusMessage += LocalizationManager.GetStringByKey("String_UnkownError");
 
             DisplayStatusMessage = true;
 

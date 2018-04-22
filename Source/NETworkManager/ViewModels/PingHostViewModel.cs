@@ -3,8 +3,8 @@ using NETworkManager.Controls;
 using Dragablz;
 using System.Windows.Input;
 using NETworkManager.Views;
-using System.Windows;
 using NETworkManager.Utilities;
+using NETworkManager.Models.Settings;
 
 namespace NETworkManager.ViewModels
 {
@@ -38,7 +38,7 @@ namespace NETworkManager.ViewModels
 
             TabItems = new ObservableCollection<DragablzPingTabItem>()
             {
-                new DragablzPingTabItem(Application.Current.Resources["String_Header_Ping"] as string, new PingView(_tabId), _tabId)
+                new DragablzPingTabItem(LocalizationManager.GetStringByKey("String_Header_Ping"), new PingView(_tabId), _tabId)
             };
         }
         #endregion
@@ -70,7 +70,7 @@ namespace NETworkManager.ViewModels
         {
             _tabId++;
 
-            TabItems.Add(new DragablzPingTabItem(Application.Current.Resources["String_Header_Ping"] as string, new PingView(_tabId), _tabId));
+            TabItems.Add(new DragablzPingTabItem(LocalizationManager.GetStringByKey("String_Header_Ping"), new PingView(_tabId), _tabId));
             SelectedTabIndex = TabItems.Count - 1;
         }
         #endregion

@@ -603,7 +603,7 @@ namespace NETworkManager.ViewModels.Settings
             }
             catch (ImportFileNotValidException)
             {
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_ValidationFailed"] as string, Application.Current.Resources["String_NoValidFileFoundToImport"] as string, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_ValidationFailed"), LocalizationManager.GetStringByKey("String_NoValidFileFoundToImport"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
         }
 
@@ -616,17 +616,17 @@ namespace NETworkManager.ViewModels.Settings
         {
             MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
-            settings.AffirmativeButtonText = Application.Current.Resources["String_Button_Continue"] as string;
-            settings.NegativeButtonText = Application.Current.Resources["String_Button_Cancel"] as string;
+            settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_Continue");
+            settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_Cancel");
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            string message = Application.Current.Resources["String_SelectedSettingsAreOverwritten"] as string;
+            string message = LocalizationManager.GetStringByKey("String_SelectedSettingsAreOverwritten");
 
             if (ImportApplicationSettingsExists && (ImportEverything || ImportApplicationSettings))
-                message += Environment.NewLine + Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_ApplicationIsRestartedAfterwards"] as string);
+                message += Environment.NewLine + Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_ApplicationIsRestartedAfterwards"));
 
-            if (await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_AreYouSure"] as string, message, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
+            if (await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_AreYouSure"), message, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
             {
                 List<ImportExportManager.ImportExportOptions> importOptions = new List<ImportExportManager.ImportExportOptions>();
 
@@ -712,29 +712,29 @@ namespace NETworkManager.ViewModels.Settings
                 // Show the user a message what happened
                 if (!ImportExportManager.ForceRestart)
                 {
-                    settings.AffirmativeButtonText = Application.Current.Resources["String_Button_OK"] as string;
+                    settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
 
-                    message = Application.Current.Resources["String_SettingsSuccessfullyImported"] as string + Environment.NewLine;
+                    message = LocalizationManager.GetStringByKey("String_SettingsSuccessfullyImported") + Environment.NewLine;
 
                     if (importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles))
-                        message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_NetworkInterfaceProfilesReloaded"] as string);
+                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_NetworkInterfaceProfilesReloaded"));
 
                     if (importOptions.Contains(ImportExportManager.ImportExportOptions.IPScannerProfiles))
-                        message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_IPScannerProfilesReloaded"] as string);
+                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_IPScannerProfilesReloaded"));
 
                     if (importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients))
-                        message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_WakeOnLANClientsReloaded"] as string);
+                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_WakeOnLANClientsReloaded"));
 
                     if (importOptions.Contains(ImportExportManager.ImportExportOptions.PortScannerProfiles))
-                        message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_PortScannerProfilesReloaded"] as string);
+                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_PortScannerProfilesReloaded"));
 
                     if(importOptions.Contains(ImportExportManager.ImportExportOptions.RemoteDesktopSessions))
-                        message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_RemoteDesktopSessionsReloaded"] as string);
+                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_RemoteDesktopSessionsReloaded"));
 
                     if(importOptions.Contains(ImportExportManager.ImportExportOptions.PuTTYSessions))
-                        message += Environment.NewLine + string.Format("* {0}", Application.Current.Resources["String_PuTTYSessionsReloaded"] as string);
+                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_PuTTYSessionsReloaded"));
 
-                    await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, message, MessageDialogStyle.Affirmative, settings);
+                    await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Success"), message, MessageDialogStyle.Affirmative, settings);
 
                     return;
                 }
@@ -777,7 +777,7 @@ namespace NETworkManager.ViewModels.Settings
             System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog()
             {
                 Filter = ImportExportFileExtensionFilter,
-                FileName = string.Format("{0}_{1}_{2}{3}", Application.Current.Resources["String_ProductName"] as string, Application.Current.Resources["String_Backup"] as string, TimestampHelper.GetTimestamp(), ImportExportManager.ImportExportFileExtension)
+                FileName = string.Format("{0}_{1}_{2}{3}", LocalizationManager.GetStringByKey("String_ProductName"), LocalizationManager.GetStringByKey("String_Backup"), TimestampHelper.GetTimestamp(), ImportExportManager.ImportExportFileExtension)
             };
 
             if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -786,9 +786,9 @@ namespace NETworkManager.ViewModels.Settings
 
                 MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = Application.Current.Resources["String_Button_OK"] as string;
+                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
 
-                await dialogCoordinator.ShowMessageAsync(this, Application.Current.Resources["String_Header_Success"] as string, string.Format("{0}\n\n{1}: {2}", Application.Current.Resources["String_SettingsSuccessfullyExported"] as string, Application.Current.Resources["String_Path"] as string, saveFileDialog.FileName), MessageDialogStyle.Affirmative, settings);
+                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Success"), string.Format("{0}\n\n{1}: {2}", LocalizationManager.GetStringByKey("String_SettingsSuccessfullyExported"), LocalizationManager.GetStringByKey("String_Path"), saveFileDialog.FileName), MessageDialogStyle.Affirmative, settings);
             }
         }
         #endregion
