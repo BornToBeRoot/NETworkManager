@@ -25,7 +25,7 @@
 
 <div align="center"> 
   <p>
-     :package: <a style="margin-right: 25px;"  href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.0.0/NETworkManager_v1.6.0.0.zip">Download</a> :page_facing_up: <a href="https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog">Changelog</a> :book: <a href="https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/README.md">Documentation</a>
+      <a style="margin-right: 25px;"  href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.0.0/NETworkManager_v1.6.0.0.zip">:package: Download</a>  <a href="https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog">:page_facing_up: Changelog</a> <a href="https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/README.md">:book: Documentation</a>
   </p>
 </div>
 
