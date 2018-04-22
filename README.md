@@ -33,7 +33,6 @@
   </p>
 </div>
 
-***
 <img alt="NETworkManager" src="NETworkManager.gif" />
 
 The software is portable by default, simply unpack the ZIP archive and save it in a folder you have write permissions on.
