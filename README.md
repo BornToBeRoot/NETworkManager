@@ -33,14 +33,14 @@
   </p>
 </div>
 
+***
+<img alt="NETworkManager" src="NETworkManager.gif" />
+
 The software is portable by default, simply unpack the ZIP archive and save it in a folder you have write permissions on.
 
 _On Windows 10 systems, SmartScreen may prevent the execution of the_ `NETworkManger.exe` _, because the binary is not digitaly signed. To open it anyway, click in the dialog on "More info" then click the button "Run anyway"._
 
 SHA256: `5C8036D49ED268144C058581EC6A5B2E0101D41A1705BE38F35153656A93C759`
-
-<h2>Preview</h2>
-<img alt="NETworkManager" src="NETworkManager.gif" />
 
 <h2>Features</h2>
 
