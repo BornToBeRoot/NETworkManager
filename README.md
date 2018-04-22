@@ -27,12 +27,7 @@
 
 <div align="center"> 
   <p>
-    :package:
-    <a style="margin-right: 25px;"  href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.0.0/NETworkManager_v1.6.0.0.zip">Download</a>
-    :page_facing_up: 
-    <a href="https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog">Changelog</a>
-    :book:
-    <a href="https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/README.md">Documentation</a>
+     :package: <a style="margin-right: 25px;"  href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.0.0/NETworkManager_v1.6.0.0.zip">Download</a> :page_facing_up: <a href="https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog">Changelog</a> :book: <a href="https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/README.md">Documentation</a>
   </p>
 </div>
 
@@ -72,10 +67,6 @@ _On Windows 10 systems, SmartScreen may prevent the execution of the_ `NETworkMa
 - Windows 7 or later
 - .NET-Framework 4.6
 - RDP 8.1 ([How to install RDP 8.1 on Windows 7/Server 2008 R2?](Documentation/en-US/HowTo/Install_RDP_8dot1_on_Windows6dot1.md))
-
-<h2>Changelog</h2>
-
-The changelog can be found [here](https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog).
 
 <h2>Found an issue?</h2>
 
