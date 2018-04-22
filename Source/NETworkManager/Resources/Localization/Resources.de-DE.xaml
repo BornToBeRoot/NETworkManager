@@ -104,6 +104,7 @@
     <system:String x:Key="String_Header_IPScanner">IP-Scanner</system:String>
     <system:String x:Key="String_Header_PuTTY">PuTTY</system:String>
     <system:String x:Key="String_Header_EditGroup">Gruppe bearbeiten</system:String>
+    <system:String x:Key="String_Header_Overwrite">Überschreiben?</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -391,6 +392,7 @@
     <system:String x:Key="String_NewSession">Neue Sitzung</system:String>
     <system:String x:Key="String_Gitter">Gitter</system:String>
     <system:String x:Key="String_GitHub">GitHub</system:String>
+    <system:String x:Key="String_OverwriteSettingsInTheDestinationFolder">Einstellungen im Zielordner überschreiben?\n\nWenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Dateien kopiert und die Anwendung danach mit den neuen Einstellungen neu gestartet!</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
@@ -452,6 +454,10 @@
     <system:String x:Key="String_Button_CheckForUpdaptes">Auf Updates prüfen</system:String>
     <system:String x:Key="String_Button_ConfigurePuTTY">PuTTY konfigurieren</system:String>
     <system:String x:Key="String_Button_FlushDNSCache">DNS-Cache leeren</system:String>
+    <system:String x:Key="String_Button_Yes">Ja</system:String>
+    <system:String x:Key="String_Button_No">Nein</system:String>
+    <system:String x:Key="String_Button_Overwrite">Überschreiben</system:String>
+    <system:String x:Key="String_Button_MoveAndRestart">Verschieben &amp; neu starten</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Ausschneiden</system:String>

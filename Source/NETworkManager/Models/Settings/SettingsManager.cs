@@ -141,7 +141,13 @@ namespace NETworkManager.Models.Settings
             Directory.CreateDirectory(targedLocation);
 
             foreach (string file in sourceFiles)
+            {
+                // Skip if file exists and user don't want to overwrite it
+                if (!overwrite && File.Exists(file))
+                    continue;
+
                 File.Copy(file, Path.Combine(targedLocation, Path.GetFileName(file)), overwrite);
+            }
 
             // Delete the old files
             foreach (string file in sourceFiles)
