@@ -118,7 +118,7 @@
                                 <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddEntry}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddEntry}" TextAlignment="Center" Margin="10,5" />
                     </Grid>
                 </Button.Content>
             </Button>
@@ -134,7 +134,7 @@
                                 <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_DeleteEntry}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_DeleteEntry}" TextAlignment="Center" Margin="10,5" />
                     </Grid>
                 </Button.Content>
                 <Button.Style>
@@ -160,7 +160,7 @@
                                 <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_DeleteTable}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_DeleteTable}" TextAlignment="Center" Margin="10,5" />
                     </Grid>
                 </Button.Content>
             </Button>
@@ -176,7 +176,7 @@
                                 <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Refresh}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Refresh}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Refresh}" TextAlignment="Center" Margin="10,5" />
                     </Grid>
                 </Button.Content>
             </Button>

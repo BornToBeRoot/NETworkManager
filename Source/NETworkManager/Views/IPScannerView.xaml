@@ -100,7 +100,7 @@
                                 </Rectangle>
                                 <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center">
                                     <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+                                        <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Text" Value="{DynamicResource String_Button_Scan}"/>
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding IsScanRunning}" Value="True" >

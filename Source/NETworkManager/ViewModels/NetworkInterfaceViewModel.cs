@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Windows;
 using System;
 using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
