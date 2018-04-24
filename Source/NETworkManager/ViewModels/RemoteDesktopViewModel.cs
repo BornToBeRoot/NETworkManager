@@ -584,6 +584,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ConfigurationManager.Current.FixAirspace = false;
             }, group.ToString());
 
             customDialog.Content = new GroupDialog
