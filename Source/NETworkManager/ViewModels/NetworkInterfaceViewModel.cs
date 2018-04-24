@@ -159,7 +159,7 @@ namespace NETworkManager.ViewModels
                         ConfigEnableStaticIPAddress = true;
                         ConfigIPAddress = (value != null) ? value.IPv4Address.FirstOrDefault().ToString() : string.Empty;
                         ConfigSubnetmaskOrCidr = (value.Subnetmask != null) ? value.Subnetmask.FirstOrDefault().ToString() : string.Empty;
-                        ConfigGateway = (value.IPv4Gateway != null) ? value.IPv4Gateway.FirstOrDefault().ToString() : string.Empty;
+                        ConfigGateway = (value.IPv4Gateway?.Any() == true) ? value.IPv4Gateway.FirstOrDefault().ToString() : string.Empty;
                     }
 
                     if (value.DNSAutoconfigurationEnabled)
