@@ -638,7 +638,7 @@
                     <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource GrayBrush3}" FontWeight="Bold" />
                 </StatusBarItem>
                 <Separator Background="{DynamicResource GrayBrush8}" Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="10,0" />
-                <StatusBarItem Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <StatusBarItem Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left">
                     <StatusBarItem.InputBindings>
                         <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.NETworkManager_LatestReleaseURL}" />
                     </StatusBarItem.InputBindings>
