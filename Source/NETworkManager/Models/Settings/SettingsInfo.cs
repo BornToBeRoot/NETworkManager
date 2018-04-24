@@ -608,6 +608,20 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _ping_ExpandProfileView = true;
+        public bool Ping_ExpandProfileView
+        {
+            get { return _ping_ExpandProfileView; }
+            set
+            {
+                if (value == _ping_ExpandProfileView)
+                    return;
+
+                _ping_ExpandProfileView = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Traceroute

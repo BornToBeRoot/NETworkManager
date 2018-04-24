@@ -237,6 +237,8 @@
     <Compile Include="Models\PuTTY\PuTTY.cs" />
     <Compile Include="Models\Settings\PuTTYSessionInfo.cs" />
     <Compile Include="Models\Settings\PuTTYSessionManager.cs" />
+    <Compile Include="Models\Settings\PingProfileInfo.cs" />
+    <Compile Include="Models\Settings\PingProfileManager.cs" />
     <Compile Include="Utilities\NativeMethods.cs" />
     <Compile Include="Utilities\PowerShellHelper.cs" />
     <Compile Include="Utilities\SecureStringHelper.cs" />
