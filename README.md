@@ -25,7 +25,7 @@
 
 <div align="center"> 
   <p>
-      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.0.0/NETworkManager_v1.6.0.0.zip">:package: Download</a>
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.1.0/NETworkManager_v1.6.1.0.zip">:package: Download</a>
   </p>
   <p>
     <a href="https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog">:page_facing_up: Changelog</a>
