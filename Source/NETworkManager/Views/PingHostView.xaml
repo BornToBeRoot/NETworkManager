@@ -122,7 +122,7 @@
                     <ListBox Grid.Row="2" ItemsSource="{Binding PingProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                         <ListBox.Resources>
                             <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                                <MenuItem Header="{DynamicResource String_Connect}" Command="{Binding PingProfileCommand}">
+                                <MenuItem Header="{DynamicResource String_Ping}" Command="{Binding PingProfileCommand}">
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                             <Rectangle.OpacityMask>
