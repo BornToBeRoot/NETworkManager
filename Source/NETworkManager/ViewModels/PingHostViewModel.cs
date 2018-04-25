@@ -9,19 +9,22 @@ using System.ComponentModel;
 using System;
 using System.Windows.Data;
 using System.Linq;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.ViewModels
 {
     public class PingHostViewModel : ViewModelBase
     {
         #region Variables
+        private IDialogCoordinator dialogCoordinator;
+
         public IInterTabClient InterTabClient { get; private set; }
         public ObservableCollection<DragablzPingTabItem> TabItems { get; private set; }
 
         private const string tagIdentifier = "tag=";
-        
+
         private bool _isLoading = true;
-        
+
         private int _tabId = 0;
 
         private int _selectedTabIndex;
@@ -45,8 +48,8 @@ namespace NETworkManager.ViewModels
             get { return _pingProfiles; }
         }
 
-        private RemoteDesktopSessionInfo _selectedProfile = new RemoteDesktopSessionInfo();
-        public RemoteDesktopSessionInfo SelectedProfile
+        private PingProfileInfo _selectedProfile = new PingProfileInfo();
+        public PingProfileInfo SelectedProfile
         {
             get { return _selectedProfile; }
             set
@@ -96,8 +99,10 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor
-        public PingHostViewModel()
+        public PingHostViewModel(IDialogCoordinator instance)
         {
+            dialogCoordinator = instance;
+
             InterTabClient = new DragablzPingInterTabClient();
 
             TabItems = new ObservableCollection<DragablzPingTabItem>()
@@ -158,6 +163,194 @@ namespace NETworkManager.ViewModels
             AddPingTab();
         }
 
+        public ICommand AddProfileCommand
+        {
+            get { return new RelayCommand(p => AddProfileAction()); }
+        }
+
+        private async void AddProfileAction()
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
+            };
+
+            PingProfileViewModel pingProfileViewModel = new PingProfileViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                PingProfileInfo pingProfileInfo = new PingProfileInfo
+                {
+                    Name = instance.Name,
+                    Host = instance.Host,
+                    Group = instance.Group,
+                    Tags = instance.Tags
+                };
+
+                PingProfileManager.AddProfile(pingProfileInfo);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, PingProfileManager.GetProfileGroups());
+
+            customDialog.Content = new PingProfileDialog
+            {
+                DataContext = pingProfileViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand PingProfileCommand
+        {
+            get { return new RelayCommand(p => PingProfileAction()); }
+        }
+
+        private void PingProfileAction()
+        {
+            AddPingTab(SelectedProfile.Host);
+        }
+
+        public ICommand EditProfileCommand
+        {
+            get { return new RelayCommand(p => EditProfileAction()); }
+        }
+
+        private async void EditProfileAction()
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
+            };
+
+            PingProfileViewModel pingProfileViewModel = new PingProfileViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                PingProfileManager.RemoveProfile(SelectedProfile);
+
+                PingProfileInfo pingProfileInfo = new PingProfileInfo
+                {
+                    Name = instance.Name,
+                    Host = instance.Host,
+                    Group = instance.Group,
+                    Tags = instance.Tags
+                };
+
+                PingProfileManager.AddProfile(pingProfileInfo);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, PingProfileManager.GetProfileGroups(), SelectedProfile);
+
+            customDialog.Content = new PingProfileDialog
+            {
+                DataContext = pingProfileViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand CopyAsProfileCommand
+        {
+            get { return new RelayCommand(p => CopyAsProfileAction()); }
+        }
+
+        private async void CopyAsProfileAction()
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
+            };
+
+            PingProfileViewModel pingProfileViewModel = new PingProfileViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                PingProfileInfo pingProfileInfo = new PingProfileInfo
+                {
+                    Name = instance.Name,
+                    Host = instance.Host,
+                    Group = instance.Group,
+                    Tags = instance.Tags
+                };
+
+                PingProfileManager.AddProfile(pingProfileInfo);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, PingProfileManager.GetProfileGroups(), SelectedProfile);
+
+            customDialog.Content = new PingProfileDialog
+            {
+                DataContext = pingProfileViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand DeleteProfileCommand
+        {
+            get { return new RelayCommand(p => DeleteProfileAction()); }
+        }
+
+        private async void DeleteProfileAction()
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
+            };
+
+            ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                PingProfileManager.RemoveProfile(SelectedProfile);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, LocalizationManager.GetStringByKey("String_DeleteProfileMessage"));
+
+            customDialog.Content = new ConfirmRemoveDialog
+            {
+                DataContext = confirmRemoveViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand EditGroupCommand
+        {
+            get { return new RelayCommand(p => EditGroupAction(p)); }
+        }
+
+        private async void EditGroupAction(object group)
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
+            };
+
+            GroupViewModel editGroupViewModel = new GroupViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                PingProfileManager.RenameGroup(instance.OldGroup, instance.Group);
+
+                _pingProfiles.Refresh();
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, group.ToString());
+
+            customDialog.Content = new GroupDialog
+            {
+                DataContext = editGroupViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
         public ItemActionCallback CloseItemCommand
         {
             get { return CloseItemAction; }
@@ -170,11 +363,12 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void AddPingTab()
+        private void AddPingTab(string host = null)
         {
             _tabId++;
 
-            TabItems.Add(new DragablzPingTabItem(LocalizationManager.GetStringByKey("String_Header_Ping"), new PingView(_tabId), _tabId));
+            TabItems.Add(new DragablzPingTabItem(host ?? LocalizationManager.GetStringByKey("String_Header_Ping"), new PingView(_tabId, host), _tabId));
+
             SelectedTabIndex = TabItems.Count - 1;
         }
         #endregion

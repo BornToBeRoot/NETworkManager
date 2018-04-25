@@ -275,6 +275,7 @@
     <Compile Include="Validators\SubnetCalculatorSubnetValidator.cs" />
     <Compile Include="ViewModels\PuTTYViewModel.cs" />
     <Compile Include="ViewModels\PingHostViewModel.cs" />
+    <Compile Include="ViewModels\PingProfileViewModel.cs" />
     <Compile Include="ViewModels\SNMPViewModel.cs" />
     <Compile Include="ViewModels\HTTPHeadersViewModel.cs" />
     <Compile Include="ViewModels\ARPTableViewModel.cs" />
@@ -331,6 +332,9 @@
     </Compile>
     <Compile Include="Views\PingSettingsView.xaml.cs">
       <DependentUpon>PingSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PingProfileDialog.xaml.cs">
+      <DependentUpon>PingProfileDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SNMPView.xaml.cs">
       <DependentUpon>SNMPView.xaml</DependentUpon>
@@ -566,6 +570,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\PingSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PingProfileDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

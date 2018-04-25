@@ -6,6 +6,8 @@
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
     <UserControl.Resources>
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -124,7 +126,7 @@
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Octicons Kind=DeviceDesktop}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Play}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
