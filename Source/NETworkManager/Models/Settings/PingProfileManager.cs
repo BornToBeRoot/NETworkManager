@@ -7,14 +7,14 @@ namespace NETworkManager.Models.Settings
 {
     public static class PingProfileManager
     {
-        public const string SessionsFileName = "Ping.profiles";
+        public const string ProfilesFileName = "Ping.profiles";
 
         public static ObservableCollection<PingProfileInfo> Profiles { get; set; }
         public static bool ProfilesChanged { get; set; }
 
         public static string GetProfilesFilePath()
         {
-            return Path.Combine(SettingsManager.GetSettingsLocation(), SessionsFileName);
+            return Path.Combine(SettingsManager.GetSettingsLocation(), ProfilesFileName);
         }
 
         public static List<string> GetProfileGroups()

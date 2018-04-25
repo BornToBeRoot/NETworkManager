@@ -200,6 +200,7 @@
     <system:String x:Key="String_CanceledByUser">The operation has been canceled by the user!</system:String>
     <system:String x:Key="String_ApplicationSettings">Application settings</system:String>
     <system:String x:Key="String_NetworkInterfaceProfiles">Network interface profiles</system:String>
+    <system:String x:Key="String_PingProfiles">Ping profiles</system:String>
     <system:String x:Key="String_PortScannerProfiles">Port Scanner profiles</system:String>
     <system:String x:Key="String_WakeOnLANClients">Wake on LAN clients</system:String>
     <system:String x:Key="String_RemoteDesktopSessions">Remote Desktop sessions</system:String>

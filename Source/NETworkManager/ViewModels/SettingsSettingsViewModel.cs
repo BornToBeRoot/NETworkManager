@@ -174,35 +174,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private bool _wakeOnLANClientsExists;
-        public bool WakeOnLANClientsExists
-        {
-            get { return _wakeOnLANClientsExists; }
-            set
-            {
-                if (value == _wakeOnLANClientsExists)
-                    return;
-
-                _wakeOnLANClientsExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resetWakeOnLANClients;
-        public bool ResetWakeOnLANClients
-        {
-            get { return _resetWakeOnLANClients; }
-            set
-            {
-                if (value == _resetWakeOnLANClients)
-                    return;
-
-                _resetWakeOnLANClients = value;
-                OnPropertyChanged();
-            }
-        }
-
+                
         private bool _portScannerProfilesExists;
         public bool PortScannerProfilesExists
         {
@@ -227,6 +199,34 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _resetPortScannerProfiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _pingProfilesExists;
+        public bool PingProfilesExists
+        {
+            get { return _pingProfilesExists; }
+            set
+            {
+                if (value == _pingProfilesExists)
+                    return;
+
+                _pingProfilesExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _resetPingProfiles;
+        public bool ResetPingProfiles
+        {
+            get { return _resetPingProfiles; }
+            set
+            {
+                if (value == _resetPingProfiles)
+                    return;
+
+                _resetPingProfiles = value;
                 OnPropertyChanged();
             }
         }
@@ -283,6 +283,34 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _resetPuTTYSessions = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _wakeOnLANClientsExists;
+        public bool WakeOnLANClientsExists
+        {
+            get { return _wakeOnLANClientsExists; }
+            set
+            {
+                if (value == _wakeOnLANClientsExists)
+                    return;
+
+                _wakeOnLANClientsExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _resetWakeOnLANClients;
+        public bool ResetWakeOnLANClients
+        {
+            get { return _resetWakeOnLANClients; }
+            set
+            {
+                if (value == _resetWakeOnLANClients)
+                    return;
+
+                _resetWakeOnLANClients = value;
                 OnPropertyChanged();
             }
         }
@@ -346,6 +374,9 @@ namespace NETworkManager.ViewModels
                     return true;
 
                 if (PortScannerProfileManager.ProfilesFileName == fileName)
+                    return true;
+
+                if (PingProfileManager.ProfilesFileName == fileName)
                     return true;
 
                 if (RemoteDesktopSessionManager.SessionsFileName == fileName)
@@ -469,18 +500,21 @@ namespace NETworkManager.ViewModels
 
             if (IPScannerProfilesExists && (ResetEverything || ResetIPScannerProfiles))
                 IPScannerProfileManager.Reset();
-
-            if (WakeOnLANClientsExists && (ResetEverything || ResetWakeOnLANClients))
-                WakeOnLANClientManager.Reset();
-
+                        
             if (PortScannerProfilesExists && (ResetEverything || ResetPortScannerProfiles))
                 PortScannerProfileManager.Reset();
+
+            if (PingProfilesExists && (ResetEverything || ResetPingProfiles))
+                PingProfileManager.Reset();
 
             if (RemoteDesktopSessionsExists && (ResetEverything || ResetRemoteDesktopSessions))
                 RemoteDesktopSessionManager.Reset();
 
             if (PuTTYSessionsExists && (ResetEverything || ResetPuTTYSessions))
                 PuTTYSessionManager.Reset();
+
+            if (WakeOnLANClientsExists && (ResetEverything || ResetWakeOnLANClients))
+                WakeOnLANClientManager.Reset();
 
             // Restart after reset or show a completed message
             if (forceRestart)
@@ -535,12 +569,12 @@ namespace NETworkManager.ViewModels
 
             if (IPScannerProfileManager.ProfilesChanged)
                 IPScannerProfileManager.Save();
-
-            if (WakeOnLANClientManager.ClientsChanged)
-                WakeOnLANClientManager.Save();
-
+                        
             if (PortScannerProfileManager.ProfilesChanged)
                 PortScannerProfileManager.Save();
+
+            if (PingProfileManager.ProfilesChanged)
+                PingProfileManager.Save();
 
             if (RemoteDesktopSessionManager.SessionsChanged)
                 RemoteDesktopSessionManager.Save();
@@ -548,14 +582,18 @@ namespace NETworkManager.ViewModels
             if (PuTTYSessionManager.SessionsChanged)
                 PuTTYSessionManager.Save();
 
+            if (WakeOnLANClientManager.ClientsChanged)
+                WakeOnLANClientManager.Save();
+            
             // Check if files exist
             ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
             NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
             IPScannerProfilesExists = File.Exists(IPScannerProfileManager.GetProfilesFilePath());
-            WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
             PortScannerProfilesExists = File.Exists(PortScannerProfileManager.GetProfilesFilePath());
+            PingProfilesExists = File.Exists(PingProfileManager.GetProfilesFilePath());
             RemoteDesktopSessionsExists = File.Exists(RemoteDesktopSessionManager.GetSessionsFilePath());
             PuTTYSessionsExists = File.Exists(PuTTYSessionManager.GetSessionsFilePath());
+            WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
         }
         #endregion
     }

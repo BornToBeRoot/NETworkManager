@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Data;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Converters
 {
@@ -8,7 +10,7 @@ namespace NETworkManager.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            return (!(bool)values[0] && (bool)values[1] || (bool)values[2] || (bool)values[3] || (bool)values[4] || (bool)values[5] || (bool)values[6] || (bool)values[7]);
+            return (!(bool)values[0] && ArrayHelper.SubArray(values, 1, 7).Any(x => (bool)x) == true);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

@@ -1,7 +1,6 @@
 ﻿using NETworkManager.Models.Settings;
 using System.Windows.Input;
 using System.Diagnostics;
-using System.Windows;
 using NETworkManager.Models.Update;
 using System;
 using System.ComponentModel;
