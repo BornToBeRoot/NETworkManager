@@ -121,11 +121,12 @@
             <StackPanel>
                 <CheckBox Content="{DynamicResource String_ApplicationSettings}" IsEnabled="{Binding ApplicationSettingsExists}" IsChecked="{Binding ResetApplicationSettings}" Margin="0,0,0,10" />
                 <CheckBox Content="{DynamicResource String_NetworkInterfaceProfiles}" IsEnabled="{Binding NetworkInterfaceProfilesExists}" IsChecked="{Binding ResetNetworkInterfaceProfiles}" Margin="0,0,0,10" />
-                <CheckBox Content="{DynamicResource String_IPScannerProfiles}" IsEnabled="{Binding IPScannerProfilesExists}" IsChecked="{Binding ResetIPScannerProfiles}" Margin="0,0,0,10" />
-                <CheckBox Content="{DynamicResource String_WakeOnLANClients}" IsEnabled="{Binding WakeOnLANClientsExists}" IsChecked="{Binding ResetWakeOnLANClients}" Margin="0,0,0,10" />
+                <CheckBox Content="{DynamicResource String_IPScannerProfiles}" IsEnabled="{Binding IPScannerProfilesExists}" IsChecked="{Binding ResetIPScannerProfiles}" Margin="0,0,0,10" />                
                 <CheckBox Content="{DynamicResource String_PortScannerProfiles}" IsEnabled="{Binding PortScannerProfilesExists}" IsChecked="{Binding ResetPortScannerProfiles}" Margin="0,0,0,10" />
+                <CheckBox Content="{DynamicResource String_PingProfiles}" IsEnabled="{Binding PingProfilesExists}" IsChecked="{Binding ResetPingProfiles}" Margin="0,0,0,10" />
                 <CheckBox Content="{DynamicResource String_RemoteDesktopSessions}" IsEnabled="{Binding RemoteDesktopSessionsExists}" IsChecked="{Binding ResetRemoteDesktopSessions}" Margin="0,0,0,10" />
-                <CheckBox Content="{DynamicResource String_PuTTYSessions}" IsEnabled="{Binding PuTTYSessionsExists}" IsChecked="{Binding ResetPuTTYSessions}" />
+                <CheckBox Content="{DynamicResource String_PuTTYSessions}" IsEnabled="{Binding PuTTYSessionsExists}" IsChecked="{Binding ResetPuTTYSessions}" Margin="0,0,0,10" />
+                <CheckBox Content="{DynamicResource String_WakeOnLANClients}" IsEnabled="{Binding WakeOnLANClientsExists}" IsChecked="{Binding ResetWakeOnLANClients}" />
             </StackPanel>
         </GroupBox>
         <Button Content="{DynamicResource String_Button_Reset}" Command="{Binding ResetSettingsCommand}" HorizontalAlignment="Left">
@@ -143,10 +144,11 @@
                                     <Binding Path="ResetApplicationSettings" />
                                     <Binding Path="ResetNetworkInterfaceProfiles" />
                                     <Binding Path="ResetIPScannerProfiles" />
-                                    <Binding Path="ResetWakeOnLANClients" />
                                     <Binding Path="ResetPortScannerProfiles" />
+                                    <Binding Path="ResetPingProfiles" />
                                     <Binding Path="ResetRemoteDesktopSessions" />
                                     <Binding Path="ResetPuTTYSessions" />
+                                    <Binding Path="ResetWakeOnLANClients" />
                                 </MultiBinding>
                             </DataTrigger.Binding>
                             <Setter  Property="IsEnabled" Value="True" />

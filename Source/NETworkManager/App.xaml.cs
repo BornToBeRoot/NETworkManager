@@ -99,7 +99,7 @@ namespace NETworkManager
                 Settings.Default.Save();
 
                 if (SettingsManager.Current.SettingsChanged) // This will also create the "Settings" folder, if it does not exist
-                    SettingsManager.Save(); 
+                    SettingsManager.Save();
 
                 if (CredentialManager.CredentialsChanged)
                     CredentialManager.Save();
@@ -110,17 +110,21 @@ namespace NETworkManager
                 if (IPScannerProfileManager.ProfilesChanged)
                     IPScannerProfileManager.Save();
 
-                if (WakeOnLANClientManager.ClientsChanged)
-                    WakeOnLANClientManager.Save();
-
                 if (PortScannerProfileManager.ProfilesChanged)
                     PortScannerProfileManager.Save();
+
+                if (PingProfileManager.ProfilesChanged)
+                    PingProfileManager.Save();
 
                 if (RemoteDesktopSessionManager.SessionsChanged)
                     RemoteDesktopSessionManager.Save();
 
                 if (PuTTYSessionManager.SessionsChanged)
                     PuTTYSessionManager.Save();
+
+                if (WakeOnLANClientManager.ClientsChanged)
+                    WakeOnLANClientManager.Save();
+
             }
         }
     }

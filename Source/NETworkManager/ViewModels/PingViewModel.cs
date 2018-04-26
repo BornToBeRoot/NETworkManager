@@ -30,7 +30,7 @@ namespace NETworkManager.ViewModels
         Stopwatch stopwatch = new Stopwatch();
 
         private bool _isLoading = true;
-
+                
         private string _host;
         public string Host
         {
@@ -265,15 +265,22 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings    
-        public PingViewModel(int tabId)
+        public PingViewModel(int tabId, string host)
         {
             _tabId = tabId;
+            Host = host;
 
             _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Ping_HostHistory);
 
             LoadSettings();
 
             _isLoading = false;
+        }
+
+        public void OnLoaded()
+        {
+            if (!string.IsNullOrEmpty(Host))
+                StartPing();
         }
 
         private void LoadSettings()

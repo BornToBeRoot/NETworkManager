@@ -254,7 +254,7 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <Button x:Name="btnAddProfile" Grid.Row="4" Command="{Binding AddSessionCommand}" Style="{StaticResource ImageWithTextButton}">
+                        <Button x:Name="btnAddSession" Grid.Row="4" Command="{Binding AddSessionCommand}" Style="{StaticResource ImageWithTextButton}">
                             <Button.Content>
                                 <Grid>
                                     <Grid.ColumnDefinitions>

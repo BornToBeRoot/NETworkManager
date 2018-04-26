@@ -8,15 +8,20 @@ namespace NETworkManager.Views
     {
         PingViewModel viewModel;
             
-        public PingView(int tabId)
+        public PingView(int tabId, string host = null)
         {
             InitializeComponent();
 
-            viewModel = new PingViewModel(tabId);
+            viewModel = new PingViewModel(tabId,host);
         
             DataContext = viewModel;
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+        }
+
+        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            viewModel.OnLoaded();
         }
 
         private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
@@ -27,6 +32,6 @@ namespace NETworkManager.Views
         public void CloseTab()
         {
             viewModel.OnClose();
-        }
+        }        
     }
 }

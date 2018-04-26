@@ -200,6 +200,7 @@
     <system:String x:Key="String_CanceledByUser">Der Vorgang wurde vom Benutzer abgebrochen!</system:String>
     <system:String x:Key="String_ApplicationSettings">Anwendungseinstellungen</system:String>
     <system:String x:Key="String_NetworkInterfaceProfiles">Netzwerkinterface Profile</system:String>
+    <system:String x:Key="String_PingProfiles">Ping Profile</system:String>
     <system:String x:Key="String_PortScannerProfiles">Port-Scanner Profile</system:String>
     <system:String x:Key="String_WakeOnLANClients">Wake on LAN Clients</system:String>
     <system:String x:Key="String_RemoteDesktopSessions">Remote Desktop Sitzungen</system:String>
@@ -263,11 +264,12 @@
     <system:String x:Key="String_UseCustomDNSSuffix">Verwende benutzerdefinierten DNS-Suffix</system:String>
     <system:String x:Key="String_SettingsSuccessfullyImported">Einstellungen erfolgreich importiert!</system:String>
     <system:String x:Key="String_IPScannerProfilesReloaded">IP-Scanner Profile neu geladen</system:String>
-    <system:String x:Key="String_WakeOnLANClientsReloaded">Wake on LAN Clients neu geladen</system:String>
+    <system:String x:Key="String_PingProfilesReloaded">Ping Profile neu geladen</system:String>
     <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Netzwerkinterface Profile neu geladen</system:String>
     <system:String x:Key="String_PortScannerProfilesReloaded">Port-Scanner Profile neu geladen</system:String>
     <system:String x:Key="String_RemoteDesktopSessionsReloaded">Remote Desktop Sitzungen neu geladen</system:String>
     <system:String x:Key="String_PuTTYSessionsReloaded">PuTTY Sitzungen neu geladen</system:String>
+    <system:String x:Key="String_WakeOnLANClientsReloaded">Wake on LAN Clients neu geladen</system:String>
     <system:String x:Key="String_ComingSoon">Kommt demnächst!</system:String>
     <system:String x:Key="String_Override">überschreiben</system:String>
     <system:String x:Key="String_Add">hinzufügen</system:String>
@@ -393,6 +395,7 @@
     <system:String x:Key="String_Gitter">Gitter</system:String>
     <system:String x:Key="String_GitHub">GitHub</system:String>
     <system:String x:Key="String_OverwriteSettingsInTheDestinationFolder">Einstellungen im Zielordner überschreiben?\n\nWenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Dateien kopiert und die Anwendung danach mit den neuen Einstellungen neu gestartet!</system:String>
+    <system:String x:Key="String_Ping">Ping</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
