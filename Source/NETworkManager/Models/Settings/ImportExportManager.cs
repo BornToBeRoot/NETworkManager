@@ -83,10 +83,11 @@ namespace NETworkManager.Models.Settings
             ApplicationSettings,
             NetworkInterfaceProfiles,
             IPScannerProfiles,
-            WakeOnLANClients,
             PortScannerProfiles,
+            PingProfiles,
             RemoteDesktopSessions,
-            PuTTYSessions
+            PuTTYSessions,
+            WakeOnLANClients
         }
 
         public static ImportExportOptions GetImportExportOption(string fileName)
@@ -99,18 +100,21 @@ namespace NETworkManager.Models.Settings
 
             if (fileName == IPScannerProfileManager.ProfilesFileName)
                 return ImportExportOptions.IPScannerProfiles;
-
-            if (fileName == WakeOnLANClientManager.ClientsFileName)
-                return ImportExportOptions.WakeOnLANClients;
-
+                        
             if (fileName == PortScannerProfileManager.ProfilesFileName)
                 return ImportExportOptions.PortScannerProfiles;
+
+            if (fileName == PingProfileManager.ProfilesFileName)
+                return ImportExportOptions.PingProfiles;
 
             if (fileName == RemoteDesktopSessionManager.SessionsFileName)
                 return ImportExportOptions.RemoteDesktopSessions;
 
             if (fileName == PuTTYSessionManager.SessionsFileName)
                 return ImportExportOptions.PuTTYSessions;
+
+            if (fileName == WakeOnLANClientManager.ClientsFileName)
+                return ImportExportOptions.WakeOnLANClients;
 
             return ImportExportOptions.None;
         }
@@ -125,14 +129,16 @@ namespace NETworkManager.Models.Settings
                     return NetworkInterfaceProfileManager.ProfilesFileName;
                 case ImportExportOptions.IPScannerProfiles:
                     return IPScannerProfileManager.ProfilesFileName;
-                case ImportExportOptions.WakeOnLANClients:
-                    return WakeOnLANClientManager.ClientsFileName;
                 case ImportExportOptions.PortScannerProfiles:
                     return PortScannerProfileManager.ProfilesFileName;
+                case ImportExportOptions.PingProfiles:
+                    return PingProfileManager.ProfilesFileName;
                 case ImportExportOptions.RemoteDesktopSessions:
                     return RemoteDesktopSessionManager.SessionsFileName;
                 case ImportExportOptions.PuTTYSessions:
                     return PuTTYSessionManager.SessionsFileName;
+                case ImportExportOptions.WakeOnLANClients:
+                    return WakeOnLANClientManager.ClientsFileName;
             }
 
             return string.Empty;
@@ -148,14 +154,16 @@ namespace NETworkManager.Models.Settings
                     return NetworkInterfaceProfileManager.GetProfilesFilePath();
                 case ImportExportOptions.IPScannerProfiles:
                     return IPScannerProfileManager.GetProfilesFilePath();
-                case ImportExportOptions.WakeOnLANClients:
-                    return WakeOnLANClientManager.GetClientsFilePath();
                 case ImportExportOptions.PortScannerProfiles:
                     return PortScannerProfileManager.GetProfilesFilePath();
+                case ImportExportOptions.PingProfiles:
+                    return PingProfileManager.GetProfilesFilePath();
                 case ImportExportOptions.RemoteDesktopSessions:
                     return RemoteDesktopSessionManager.GetSessionsFilePath();
                 case ImportExportOptions.PuTTYSessions:
                     return PuTTYSessionManager.GetSessionsFilePath();
+                case ImportExportOptions.WakeOnLANClients:
+                    return WakeOnLANClientManager.GetClientsFilePath();
             }
 
             return string.Empty;

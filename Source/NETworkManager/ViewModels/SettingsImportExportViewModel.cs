@@ -175,48 +175,6 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-        private bool _importWakeOnLANClientsExists;
-        public bool ImportWakeOnLANClientsExists
-        {
-            get { return _importWakeOnLANClientsExists; }
-            set
-            {
-                if (value == _importWakeOnLANClientsExists)
-                    return;
-
-                _importWakeOnLANClientsExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importWakeOnLANClients;
-        public bool ImportWakeOnLANClients
-        {
-            get { return _importWakeOnLANClients; }
-            set
-            {
-                if (value == _importWakeOnLANClients)
-                    return;
-
-                _importWakeOnLANClients = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importOverrideWakeOnLANClients = true;
-        public bool ImportOverrideWakeOnLANClients
-        {
-            get { return _importOverrideWakeOnLANClients; }
-            set
-            {
-                if (value == _importOverrideWakeOnLANClients)
-                    return;
-
-                _importOverrideWakeOnLANClients = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _importPortScannerProfilesExists;
         public bool ImportPortScannerProfilesExists
         {
@@ -255,6 +213,48 @@ namespace NETworkManager.ViewModels.Settings
                     return;
 
                 _importOverridePortScannerProfiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _importPingProfilesExists;
+        public bool ImportPingProfilesExists
+        {
+            get { return _importPingProfilesExists; }
+            set
+            {
+                if (value == _importPingProfilesExists)
+                    return;
+
+                _importPingProfilesExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _importPingProfiles;
+        public bool ImportPingProfiles
+        {
+            get { return _importPingProfiles; }
+            set
+            {
+                if (value == _importPingProfiles)
+                    return;
+
+                _importPingProfiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _importOverridePingProfiles = true;
+        public bool ImportOverridePingProfiles
+        {
+            get { return _importOverridePingProfiles; }
+            set
+            {
+                if (value == _importOverridePingProfiles)
+                    return;
+
+                _importOverridePingProfiles = value;
                 OnPropertyChanged();
             }
         }
@@ -339,6 +339,48 @@ namespace NETworkManager.ViewModels.Settings
                     return;
 
                 _importOverridePuTTYSessions = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _importWakeOnLANClientsExists;
+        public bool ImportWakeOnLANClientsExists
+        {
+            get { return _importWakeOnLANClientsExists; }
+            set
+            {
+                if (value == _importWakeOnLANClientsExists)
+                    return;
+
+                _importWakeOnLANClientsExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _importWakeOnLANClients;
+        public bool ImportWakeOnLANClients
+        {
+            get { return _importWakeOnLANClients; }
+            set
+            {
+                if (value == _importWakeOnLANClients)
+                    return;
+
+                _importWakeOnLANClients = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _importOverrideWakeOnLANClients = true;
+        public bool ImportOverrideWakeOnLANClients
+        {
+            get { return _importOverrideWakeOnLANClients; }
+            set
+            {
+                if (value == _importOverrideWakeOnLANClients)
+                    return;
+
+                _importOverrideWakeOnLANClients = value;
                 OnPropertyChanged();
             }
         }
@@ -443,34 +485,6 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-        private bool _wakeOnLANClientsExists;
-        public bool WakeOnLANClientsExists
-        {
-            get { return _wakeOnLANClientsExists; }
-            set
-            {
-                if (value == _wakeOnLANClientsExists)
-                    return;
-
-                _wakeOnLANClientsExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _exportWakeOnLANClients;
-        public bool ExportWakeOnLANClients
-        {
-            get { return _exportWakeOnLANClients; }
-            set
-            {
-                if (value == _exportWakeOnLANClients)
-                    return;
-
-                _exportWakeOnLANClients = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _portScannerProfilesExists;
         public bool PortScannerProfilesExists
         {
@@ -495,6 +509,34 @@ namespace NETworkManager.ViewModels.Settings
                     return;
 
                 _exportPortScannerProfiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _pingProfilesExists;
+        public bool PingProfilesExists
+        {
+            get { return _pingProfilesExists; }
+            set
+            {
+                if (value == _pingProfilesExists)
+                    return;
+
+                _pingProfilesExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _exportPingProfiles;
+        public bool ExportPingProfiles
+        {
+            get { return _exportPingProfiles; }
+            set
+            {
+                if (value == _exportPingProfiles)
+                    return;
+
+                _exportPingProfiles = value;
                 OnPropertyChanged();
             }
         }
@@ -554,6 +596,34 @@ namespace NETworkManager.ViewModels.Settings
                 OnPropertyChanged();
             }
         }
+
+        private bool _wakeOnLANClientsExists;
+        public bool WakeOnLANClientsExists
+        {
+            get { return _wakeOnLANClientsExists; }
+            set
+            {
+                if (value == _wakeOnLANClientsExists)
+                    return;
+
+                _wakeOnLANClientsExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _exportWakeOnLANClients;
+        public bool ExportWakeOnLANClients
+        {
+            get { return _exportWakeOnLANClients; }
+            set
+            {
+                if (value == _exportWakeOnLANClients)
+                    return;
+
+                _exportWakeOnLANClients = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
         #endregion
 
@@ -596,10 +666,11 @@ namespace NETworkManager.ViewModels.Settings
                 ImportApplicationSettingsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.ApplicationSettings);
                 ImportNetworkInterfaceProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
                 ImportIPScannerProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.IPScannerProfiles);
-                ImportWakeOnLANClientsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients);
                 ImportPortScannerProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.PortScannerProfiles);
+                ImportPingProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.PingProfiles);
                 ImportRemoteDesktopSessionsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.RemoteDesktopSessions);
                 ImportPuTTYSessionsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.PuTTYSessions);
+                ImportWakeOnLANClientsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients);
             }
             catch (ImportFileNotValidException)
             {
@@ -651,13 +722,13 @@ namespace NETworkManager.ViewModels.Settings
                         IPScannerProfileManager.Load(!ImportOverrideIPScannerProfiles);
                 }
 
-                if (ImportWakeOnLANClientsExists && (ImportEverything || ImportWakeOnLANClients))
+                if (ImportPingProfilesExists && (ImportEverything || ImportPingProfiles))
                 {
-                    importOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANClients);
+                    importOptions.Add(ImportExportManager.ImportExportOptions.PingProfiles);
 
-                    // Load WoL clients (option: add)
-                    if (WakeOnLANClientManager.Clients == null)
-                        WakeOnLANClientManager.Load(!ImportOverrideWakeOnLANClients);
+                    // Load ping profiles (option: add)
+                    if (PingProfileManager.Profiles == null)
+                        PingProfileManager.Load(!ImportOverridePingProfiles);
                 }
 
                 if (ImportPortScannerProfilesExists && (ImportEverything || ImportPortScannerProfiles))
@@ -687,6 +758,15 @@ namespace NETworkManager.ViewModels.Settings
                         RemoteDesktopSessionManager.Load(!ImportOverridePuTTYSessions);
                 }
 
+                if (ImportWakeOnLANClientsExists && (ImportEverything || ImportWakeOnLANClients))
+                {
+                    importOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANClients);
+
+                    // Load WoL clients (option: add)
+                    if (WakeOnLANClientManager.Clients == null)
+                        WakeOnLANClientManager.Load(!ImportOverrideWakeOnLANClients);
+                }
+
                 // Import (copy) files from zip archive
                 ImportExportManager.Import(ImportLocationSelectedPath, importOptions);
 
@@ -697,17 +777,20 @@ namespace NETworkManager.ViewModels.Settings
                 if (importOptions.Contains(ImportExportManager.ImportExportOptions.IPScannerProfiles))
                     IPScannerProfileManager.Import(ImportEverything || ImportOverrideIPScannerProfiles);
 
-                if (importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients))
-                    WakeOnLANClientManager.Import(ImportEverything || ImportOverrideWakeOnLANClients);
-
                 if (importOptions.Contains(ImportExportManager.ImportExportOptions.PortScannerProfiles))
                     PortScannerProfileManager.Import(ImportEverything || ImportOverridePortScannerProfiles);
+
+                if (importOptions.Contains(ImportExportManager.ImportExportOptions.PingProfiles))
+                    PingProfileManager.Import(ImportEverything || ImportOverridePingProfiles);
 
                 if (importOptions.Contains(ImportExportManager.ImportExportOptions.RemoteDesktopSessions))
                     RemoteDesktopSessionManager.Import(ImportEverything || ImportOverrideRemoteDesktopSessions);
 
                 if (importOptions.Contains(ImportExportManager.ImportExportOptions.PuTTYSessions))
                     PuTTYSessionManager.Import(ImportEverything || ImportOverridePuTTYSessions);
+
+                if (importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients))
+                    WakeOnLANClientManager.Import(ImportEverything || ImportOverrideWakeOnLANClients);
 
                 // Show the user a message what happened
                 if (!ImportExportManager.ForceRestart)
@@ -722,17 +805,20 @@ namespace NETworkManager.ViewModels.Settings
                     if (importOptions.Contains(ImportExportManager.ImportExportOptions.IPScannerProfiles))
                         message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_IPScannerProfilesReloaded"));
 
-                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients))
-                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_WakeOnLANClientsReloaded"));
-
                     if (importOptions.Contains(ImportExportManager.ImportExportOptions.PortScannerProfiles))
                         message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_PortScannerProfilesReloaded"));
 
-                    if(importOptions.Contains(ImportExportManager.ImportExportOptions.RemoteDesktopSessions))
+                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.PingProfiles))
+                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_PingProfilesReloaded"));
+
+                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.RemoteDesktopSessions))
                         message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_RemoteDesktopSessionsReloaded"));
 
-                    if(importOptions.Contains(ImportExportManager.ImportExportOptions.PuTTYSessions))
+                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.PuTTYSessions))
                         message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_PuTTYSessionsReloaded"));
+
+                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients))
+                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_WakeOnLANClientsReloaded"));
 
                     await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Success"), message, MessageDialogStyle.Affirmative, settings);
 
@@ -761,18 +847,21 @@ namespace NETworkManager.ViewModels.Settings
 
             if (IPScannerProfilesExists && (ExportEverything || ExportIPScannerProfiles))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.IPScannerProfiles);
-
-            if (WakeOnLANClientsExists && (ExportEverything || ExportWakeOnLANClients))
-                exportOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANClients);
-
+                        
             if (PortScannerProfilesExists && (ExportEverything || ExportPortScannerProfiles))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.PortScannerProfiles);
 
+            if (PingProfilesExists && (ExportEverything || ExportPingProfiles))
+                exportOptions.Add(ImportExportManager.ImportExportOptions.PingProfiles);
+            
             if (RemoteDesktopSessionsExists && (ExportEverything || ExportRemoteDesktopSessions))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.RemoteDesktopSessions);
 
             if (PuTTYSessionsExists && (ExportEverything || ExportPuTTYSessions))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.PuTTYSessions);
+
+            if (WakeOnLANClientsExists && (ExportEverything || ExportWakeOnLANClients))
+                exportOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANClients);
 
             System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog()
             {
@@ -806,8 +895,8 @@ namespace NETworkManager.ViewModels.Settings
             if (IPScannerProfileManager.ProfilesChanged)
                 IPScannerProfileManager.Save();
 
-            if (WakeOnLANClientManager.ClientsChanged)
-                WakeOnLANClientManager.Save();
+            if (PingProfileManager.ProfilesChanged)
+                PingProfileManager.Save();
 
             if (PortScannerProfileManager.ProfilesChanged)
                 PortScannerProfileManager.Save();
@@ -818,14 +907,18 @@ namespace NETworkManager.ViewModels.Settings
             if (PuTTYSessionManager.SessionsChanged)
                 PuTTYSessionManager.Save();
 
+            if (WakeOnLANClientManager.ClientsChanged)
+                WakeOnLANClientManager.Save();
+
             // Check if files exist
             ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
             NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
             IPScannerProfilesExists = File.Exists(IPScannerProfileManager.GetProfilesFilePath());
-            WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
             PortScannerProfilesExists = File.Exists(PortScannerProfileManager.GetProfilesFilePath());
+            PingProfilesExists = File.Exists(PingProfileManager.GetProfilesFilePath());
             RemoteDesktopSessionsExists = File.Exists(RemoteDesktopSessionManager.GetSessionsFilePath());
             PuTTYSessionsExists = File.Exists(PuTTYSessionManager.GetSessionsFilePath());
+            WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
         }
         #endregion
     }

@@ -264,11 +264,12 @@
     <system:String x:Key="String_UseCustomDNSSuffix">Use custom DNS suffix</system:String>
     <system:String x:Key="String_SettingsSuccessfullyImported">Settings successfully imported!</system:String>
     <system:String x:Key="String_IPScannerProfilesReloaded">IP Scanner profiles reloaded</system:String>
-    <system:String x:Key="String_WakeOnLANClientsReloaded">Wake on LAN clients reloaded</system:String>
+    <system:String x:Key="String_PingProfilesReloaded">Ping profiles reloaded</system:String>
     <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Network interface profiles reloaded</system:String>
     <system:String x:Key="String_PortScannerProfilesReloaded">Port Scanner profiles reloaded</system:String>
     <system:String x:Key="String_RemoteDesktopSessionsReloaded">Remote Desktop sessions reloaded</system:String>
     <system:String x:Key="String_PuTTYSessionsReloaded">PuTTY sessions reloaded</system:String>
+    <system:String x:Key="String_WakeOnLANClientsReloaded">Wake on LAN clients reloaded</system:String>
     <system:String x:Key="String_ComingSoon">Coming Soon!</system:String>
     <system:String x:Key="String_Override">override</system:String>
     <system:String x:Key="String_Add">add</system:String>
