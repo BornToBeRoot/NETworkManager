@@ -144,6 +144,10 @@ namespace NETworkManager.ViewModels.Settings
         #region Methods
         public void ChangeSettingsView(ApplicationViewManager.Name applicationName)
         {
+            // Don't change the view, if the user has filtered the settings...
+            if (!string.IsNullOrEmpty(Search))
+                return;
+
             if (Enum.GetNames(typeof(SettingsViewManager.Name)).Contains(applicationName.ToString()) && ApplicationViewManager.Name.None.ToString() != applicationName.ToString())
                 SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name.ToString() == applicationName.ToString());
             else
