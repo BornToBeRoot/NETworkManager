@@ -116,6 +116,9 @@ namespace NETworkManager
                 if (PingProfileManager.ProfilesChanged)
                     PingProfileManager.Save();
 
+                if (TracerouteProfileManager.ProfilesChanged)
+                    TracerouteProfileManager.Save();
+
                 if (RemoteDesktopSessionManager.SessionsChanged)
                     RemoteDesktopSessionManager.Save();
 

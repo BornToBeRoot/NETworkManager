@@ -3,7 +3,7 @@ using NETworkManager.Views;
 
 namespace NETworkManager.Controls
 {
-    public class DragablzPingTabItem : ViewModelBase
+    public class DragablzTracerouteTabItem : ViewModelBase
     {
         private string _header;
         public string Header
@@ -19,10 +19,10 @@ namespace NETworkManager.Controls
             }
         }
 
-        public PingView View { get; set; }
+        public TracerouteView View { get; set; }
         public int ID { get; set; }
 
-        public DragablzPingTabItem(string header, PingView view, int id)
+        public DragablzTracerouteTabItem(string header, TracerouteView view, int id)
         {
             Header = header;
             View = view;
