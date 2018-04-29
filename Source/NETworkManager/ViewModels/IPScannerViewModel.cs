@@ -10,19 +10,20 @@ using NETworkManager.Models.Network;
 using System.Windows.Threading;
 using System.Diagnostics;
 using System.ComponentModel;
-using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Data;
-using NETworkManager.Views;
 using System.Linq;
 using NETworkManager.Utilities;
+using Dragablz;
+using NETworkManager.Controls;
 
 namespace NETworkManager.ViewModels
 {
     public class IPScannerViewModel : ViewModelBase
     {
         #region Variables
-        private IDialogCoordinator dialogCoordinator;
         CancellationTokenSource cancellationTokenSource;
+
+        private int _tabId;
 
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         Stopwatch stopwatch = new Stopwatch();
@@ -262,71 +263,13 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        #region Profiles
-        ICollectionView _ipScannerProfiles;
-        public ICollectionView IPScannerProfiles
-        {
-            get { return _ipScannerProfiles; }
-        }
-
-        private IPScannerProfileInfo _selectedProfile = new IPScannerProfileInfo();
-        public IPScannerProfileInfo SelectedProfile
-        {
-            get { return _selectedProfile; }
-            set
-            {
-                if (value == _selectedProfile)
-                    return;
-
-                if (value != null && !IsScanRunning)
-                    IPRange = value.IPRange;
-
-                _selectedProfile = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _expandProfileView;
-        public bool ExpandProfileView
-        {
-            get { return _expandProfileView; }
-            set
-            {
-                if (value == _expandProfileView)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.IPScanner_ExpandProfileView = value;
-
-                _expandProfileView = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _search;
-        public string Search
-        {
-            get { return _search; }
-            set
-            {
-                if (value == _search)
-                    return;
-
-                _search = value;
-
-                IPScannerProfiles.Refresh();
-
-                OnPropertyChanged();
-            }
-        }
-        #endregion
         #endregion
 
         #region Constructor, load settings, shutdown
-        public IPScannerViewModel(IDialogCoordinator instance)
+        public IPScannerViewModel(int tabId, string ipRange)
         {
-            dialogCoordinator = instance;
+            _tabId = tabId;
+            IPRange = ipRange;
 
             // Set collection view
             _ipRangeHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_IPRangeHistory);
@@ -339,23 +282,6 @@ namespace NETworkManager.ViewModels
             if (IPScannerProfileManager.Profiles == null)
                 IPScannerProfileManager.Load();
 
-            _ipScannerProfiles = CollectionViewSource.GetDefaultView(IPScannerProfileManager.Profiles);
-            _ipScannerProfiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(IPScannerProfileInfo.Group)));
-            _ipScannerProfiles.SortDescriptions.Add(new SortDescription(nameof(IPScannerProfileInfo.Group), ListSortDirection.Ascending));
-            _ipScannerProfiles.SortDescriptions.Add(new SortDescription(nameof(IPScannerProfileInfo.Name), ListSortDirection.Ascending));
-            _ipScannerProfiles.Filter = o =>
-            {
-                if (string.IsNullOrEmpty(Search))
-                    return true;
-
-                IPScannerProfileInfo info = o as IPScannerProfileInfo;
-
-                string search = Search.Trim();
-
-                // Search by: Name
-                return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-            };
-
             LoadSettings();
 
             // Detect if settings have changed...
@@ -364,26 +290,15 @@ namespace NETworkManager.ViewModels
             _isLoading = false;
         }
 
+        public void OnLoaded()
+        {
+            if (!string.IsNullOrEmpty(IPRange))
+                StartScan();
+        }
+
         private void LoadSettings()
         {
             ExpandStatistics = SettingsManager.Current.IPScanner_ExpandStatistics;
-            ExpandProfileView = SettingsManager.Current.IPScanner_ExpandProfileView;
-        }
-
-        public void OnShutdown()
-        {
-            // Stop scan
-            if (IsScanRunning)
-                StopScan();
-        }
-
-        private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(SettingsInfo.IPScanner_ResolveMACAddress))
-                OnPropertyChanged(nameof(ResolveMACAddress));
-
-            if (e.PropertyName == nameof(SettingsInfo.IPScanner_ResolveHostname))
-                OnPropertyChanged(nameof(ResolveHostname));
         }
         #endregion
 
@@ -399,18 +314,6 @@ namespace NETworkManager.ViewModels
                 StopScan();
             else
                 StartScan();
-        }
-
-        public ICommand ScanProfileCommand
-        {
-            get { return new RelayCommand(p => ScanProfileAction()); }
-        }
-
-        private void ScanProfileAction()
-        {
-            IPRange = SelectedProfile.IPRange;
-
-            StartScan();
         }
 
         public ICommand CopySelectedIPAddressCommand
@@ -492,181 +395,6 @@ namespace NETworkManager.ViewModels
         {
             Clipboard.SetText(LocalizationManager.GetStringByKey("String_IPStatus_" + SelectedIPScanResult.PingInfo.Status.ToString()));
         }
-
-        public ICommand AddProfileCommand
-        {
-            get { return new RelayCommand(p => AddProfileAction()); }
-        }
-
-        private async void AddProfileAction()
-        {
-            CustomDialog customDialog = new CustomDialog()
-            {
-                Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
-            };
-
-            IPScannerProfileViewModel ipScannerProfileViewModel = new IPScannerProfileViewModel(instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                IPScannerProfileInfo ipScannerProfileInfo = new IPScannerProfileInfo
-                {
-                    Name = instance.Name,
-                    IPRange = instance.IPRange,
-                    Group = instance.Group
-                };
-
-                IPScannerProfileManager.AddProfile(ipScannerProfileInfo);
-            }, instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, IPScannerProfileManager.GetProfileGroups(), new IPScannerProfileInfo() { IPRange = IPRange });
-
-            customDialog.Content = new IPScannerProfileDialog
-            {
-                DataContext = ipScannerProfileViewModel
-            };
-
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand EditProfileCommand
-        {
-            get { return new RelayCommand(p => EditProfileAction()); }
-        }
-
-        private async void EditProfileAction()
-        {
-            CustomDialog customDialog = new CustomDialog()
-            {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
-            };
-
-            IPScannerProfileViewModel ipScannerProfileViewModel = new IPScannerProfileViewModel(instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                IPScannerProfileManager.RemoveProfile(SelectedProfile);
-
-                IPScannerProfileInfo ipScannerProfileInfo = new IPScannerProfileInfo
-                {
-                    Name = instance.Name,
-                    IPRange = instance.IPRange,
-                    Group = instance.Group
-                };
-
-                IPScannerProfileManager.AddProfile(ipScannerProfileInfo);
-            }, instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, IPScannerProfileManager.GetProfileGroups(), SelectedProfile);
-
-            customDialog.Content = new IPScannerProfileDialog
-            {
-                DataContext = ipScannerProfileViewModel
-            };
-
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand CopyAsProfileCommand
-        {
-            get { return new RelayCommand(p => CopyAsProfileAction()); }
-        }
-
-        private async void CopyAsProfileAction()
-        {
-            CustomDialog customDialog = new CustomDialog()
-            {
-                Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
-            };
-
-            IPScannerProfileViewModel ipScannerProfileViewModel = new IPScannerProfileViewModel(instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                IPScannerProfileInfo ipScannerProfileInfo = new IPScannerProfileInfo
-                {
-                    Name = instance.Name,
-                    IPRange = instance.IPRange,
-                    Group = instance.Group
-                };
-
-                IPScannerProfileManager.AddProfile(ipScannerProfileInfo);
-            }, instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, IPScannerProfileManager.GetProfileGroups(), SelectedProfile);
-
-            customDialog.Content = new IPScannerProfileDialog
-            {
-                DataContext = ipScannerProfileViewModel
-            };
-
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand DeleteProfileCommand
-        {
-            get { return new RelayCommand(p => DeleteProfileAction()); }
-        }
-
-        private async void DeleteProfileAction()
-        {
-            CustomDialog customDialog = new CustomDialog()
-            {
-                Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
-            };
-
-            ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                IPScannerProfileManager.RemoveProfile(SelectedProfile);
-            }, instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, LocalizationManager.GetStringByKey("String_DeleteProfileMessage"));
-
-            customDialog.Content = new ConfirmRemoveDialog
-            {
-                DataContext = confirmRemoveViewModel
-            };
-
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand EditGroupCommand
-        {
-            get { return new RelayCommand(p => EditGroupAction(p)); }
-        }
-
-        private async void EditGroupAction(object group)
-        {
-            CustomDialog customDialog = new CustomDialog()
-            {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
-            };
-
-            GroupViewModel editGroupViewModel = new GroupViewModel(instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                IPScannerProfileManager.RenameGroup(instance.OldGroup, instance.Group);
-
-                _ipScannerProfiles.Refresh();
-            }, instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, group.ToString());
-
-            customDialog.Content = new GroupDialog
-            {
-                DataContext = editGroupViewModel
-            };
-
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
         #endregion
 
         #region Methods
@@ -686,6 +414,17 @@ namespace NETworkManager.ViewModels
 
             IPScanResult.Clear();
             HostsFound = 0;
+
+            // Change the tab title (not nice, but it works)
+            Window window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+            if (window != null)
+            {
+                foreach (TabablzControl tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+                {
+                    tabablzControl.Items.OfType<DragablzIPScannerTabItem>().First(x => x.ID == _tabId).Header = IPRange;
+                }
+            }
 
             cancellationTokenSource = new CancellationTokenSource();
 
@@ -764,6 +503,13 @@ namespace NETworkManager.ViewModels
             // Fill with the new items
             list.ForEach(x => SettingsManager.Current.IPScanner_IPRangeHistory.Add(x));
         }
+
+        public void OnClose()
+        {
+            // Stop scan
+            if (IsScanRunning)
+                StopScan();
+        }
         #endregion
 
         #region Events
@@ -800,6 +546,15 @@ namespace NETworkManager.ViewModels
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             Duration = stopwatch.Elapsed;
+        }
+
+        private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SettingsInfo.IPScanner_ResolveMACAddress))
+                OnPropertyChanged(nameof(ResolveMACAddress));
+
+            if (e.PropertyName == nameof(SettingsInfo.IPScanner_ResolveHostname))
+                OnPropertyChanged(nameof(ResolveHostname));
         }
         #endregion
     }

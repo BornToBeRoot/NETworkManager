@@ -399,7 +399,7 @@ namespace NETworkManager
 
         #region Application Views
         NetworkInterfaceView networkInterfaceView;
-        IPScannerView ipScannerView;
+        IPScannerHostView ipScannerHostView;
         PortScannerView portScannerView;
         PingHostView pingHostView;
         TracerouteHostView tracerouteHostView;
@@ -429,10 +429,10 @@ namespace NETworkManager
                     contentControlApplication.Content = networkInterfaceView;
                     break;
                 case ApplicationViewManager.Name.IPScanner:
-                    if (ipScannerView == null)
-                        ipScannerView = new IPScannerView();
+                    if (ipScannerHostView == null)
+                        ipScannerHostView = new IPScannerHostView();
 
-                    contentControlApplication.Content = ipScannerView;
+                    contentControlApplication.Content = ipScannerHostView;
                     break;
                 case ApplicationViewManager.Name.PortScanner:
                     if (portScannerView == null)

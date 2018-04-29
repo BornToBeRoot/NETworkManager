@@ -105,6 +105,7 @@
     <system:String x:Key="String_Header_PuTTY">PuTTY</system:String>
     <system:String x:Key="String_Header_EditGroup">Gruppe bearbeiten</system:String>
     <system:String x:Key="String_Header_Overwrite">Überschreiben?</system:String>
+    <system:String x:Key="String_Header_NewTab">Neuer Tab</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>

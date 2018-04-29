@@ -107,7 +107,7 @@ namespace NETworkManager.ViewModels
 
             TabItems = new ObservableCollection<DragablzPingTabItem>()
             {
-                new DragablzPingTabItem(LocalizationManager.GetStringByKey("String_Header_Ping"), new PingView(_tabId), _tabId)
+                new DragablzPingTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new PingView(_tabId), _tabId)
             };
 
             // Load profiles
@@ -367,7 +367,7 @@ namespace NETworkManager.ViewModels
         {
             _tabId++;
 
-            TabItems.Add(new DragablzPingTabItem(host ?? LocalizationManager.GetStringByKey("String_Header_Ping"), new PingView(_tabId, host), _tabId));
+            TabItems.Add(new DragablzPingTabItem(host ?? LocalizationManager.GetStringByKey("String_Header_NewTab"), new PingView(_tabId, host), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

@@ -13,13 +13,13 @@ using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.ViewModels
 {
-    public class TracerouteHostViewModel : ViewModelBase
+    public class IPScannerHostViewModel : ViewModelBase
     {
         #region Variables
         private IDialogCoordinator dialogCoordinator;
 
         public IInterTabClient InterTabClient { get; private set; }
-        public ObservableCollection<DragablzTracerouteTabItem> TabItems { get; private set; }
+        public ObservableCollection<DragablzIPScannerTabItem> TabItems { get; private set; }
 
         private const string tagIdentifier = "tag=";
 
@@ -41,15 +41,15 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        #region Sessions
-        ICollectionView _tracerouteProfiles;
-        public ICollectionView TracerouteProfiles
+        #region Profiles
+        ICollectionView _ipScannerProfiles;
+        public ICollectionView IPScannerProfiles
         {
-            get { return _tracerouteProfiles; }
+            get { return _ipScannerProfiles; }
         }
 
-        private TracerouteProfileInfo _selectedProfile = new TracerouteProfileInfo();
-        public TracerouteProfileInfo SelectedProfile
+        private IPScannerProfileInfo _selectedProfile = new IPScannerProfileInfo();
+        public IPScannerProfileInfo SelectedProfile
         {
             get { return _selectedProfile; }
             set
@@ -72,7 +72,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Traceroute_ExpandProfileView = value;
+                    SettingsManager.Current.IPScanner_ExpandProfileView = value;
 
                 _expandProfileView = value;
                 OnPropertyChanged();
@@ -90,7 +90,7 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                TracerouteProfiles.Refresh();
+                IPScannerProfiles.Refresh();
 
                 OnPropertyChanged();
             }
@@ -99,46 +99,36 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor
-        public TracerouteHostViewModel(IDialogCoordinator instance)
+        public IPScannerHostViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
 
-            InterTabClient = new DragablzTracerouteInterTabClient();
+            InterTabClient = new DragablzIPScannerInterTabClient();
 
-            TabItems = new ObservableCollection<DragablzTracerouteTabItem>()
+            TabItems = new ObservableCollection<DragablzIPScannerTabItem>()
             {
-                new DragablzTracerouteTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new TracerouteView(_tabId), _tabId)
+                new DragablzIPScannerTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new IPScannerView(_tabId), _tabId)
             };
 
             // Load profiles
-            if (TracerouteProfileManager.Profiles == null)
-                TracerouteProfileManager.Load();
+            if (IPScannerProfileManager.Profiles == null)
+                IPScannerProfileManager.Load();
 
-            _tracerouteProfiles = CollectionViewSource.GetDefaultView(TracerouteProfileManager.Profiles);
-            _tracerouteProfiles.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
-            _tracerouteProfiles.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
-            _tracerouteProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            _tracerouteProfiles.Filter = o =>
+            _ipScannerProfiles = CollectionViewSource.GetDefaultView(IPScannerProfileManager.Profiles);
+            _ipScannerProfiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(IPScannerProfileInfo.Group)));
+            _ipScannerProfiles.SortDescriptions.Add(new SortDescription(nameof(IPScannerProfileInfo.Group), ListSortDirection.Ascending));
+            _ipScannerProfiles.SortDescriptions.Add(new SortDescription(nameof(IPScannerProfileInfo.Name), ListSortDirection.Ascending));
+            _ipScannerProfiles.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
                     return true;
 
-                TracerouteProfileInfo info = o as TracerouteProfileInfo;
+                IPScannerProfileInfo info = o as IPScannerProfileInfo;
 
                 string search = Search.Trim();
 
-                // Search by: Tag
-                if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (string.IsNullOrEmpty(info.Tags))
-                        return false;
-                    else
-                        return info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).IndexOf(str, StringComparison.OrdinalIgnoreCase) > -1);
-                }
-                else // Search by: Name, Hostname
-                {
-                    return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-                }
+                // Search by: Name
+                return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
             LoadSettings();
@@ -148,19 +138,19 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            ExpandProfileView = SettingsManager.Current.Traceroute_ExpandProfileView;
+            ExpandProfileView = SettingsManager.Current.IPScanner_ExpandProfileView;
         }
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddTracerouteTabCommand
+        public ICommand AddIPScannerTabCommand
         {
-            get { return new RelayCommand(p => AddTracerouteTabAction()); }
+            get { return new RelayCommand(p => AddIPScannerTabAction()); }
         }
 
-        private void AddTracerouteTabAction()
+        private void AddIPScannerTabAction()
         {
-            AddTracerouteTab();
+            AddIPScannerTab();
         }
 
         public ICommand AddProfileCommand
@@ -175,40 +165,39 @@ namespace NETworkManager.ViewModels
                 Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
             };
 
-            TracerouteProfileViewModel tracerouteProfileViewModel = new TracerouteProfileViewModel(instance =>
+            IPScannerProfileViewModel ipScannerProfileViewModel = new IPScannerProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                TracerouteProfileInfo tracerouteProfileInfo = new TracerouteProfileInfo
+                IPScannerProfileInfo ipScannerProfileInfo = new IPScannerProfileInfo
                 {
                     Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
+                    IPRange = instance.IPRange,
+                    Group = instance.Group
                 };
 
-                TracerouteProfileManager.AddProfile(tracerouteProfileInfo);
+                IPScannerProfileManager.AddProfile(ipScannerProfileInfo);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, TracerouteProfileManager.GetProfileGroups());
+            }, IPScannerProfileManager.GetProfileGroups());
 
-            customDialog.Content = new TracerouteProfileDialog
+            customDialog.Content = new IPScannerProfileDialog
             {
-                DataContext = tracerouteProfileViewModel
+                DataContext = ipScannerProfileViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand TraceProfileCommand
+        public ICommand ScanProfileCommand
         {
-            get { return new RelayCommand(p => TraceProfileAction()); }
+            get { return new RelayCommand(p => ScanProfileAction()); }
         }
 
-        private void TraceProfileAction()
+        private void ScanProfileAction()
         {
-            AddTracerouteTab(SelectedProfile.Host);
+            AddIPScannerTab(SelectedProfile.IPRange);
         }
 
         public ICommand EditProfileCommand
@@ -223,29 +212,28 @@ namespace NETworkManager.ViewModels
                 Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
             };
 
-            TracerouteProfileViewModel tracerouteProfileViewModel = new TracerouteProfileViewModel(instance =>
+            IPScannerProfileViewModel ipScannerProfileViewModel = new IPScannerProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                TracerouteProfileManager.RemoveProfile(SelectedProfile);
+                IPScannerProfileManager.RemoveProfile(SelectedProfile);
 
-                TracerouteProfileInfo tracerouteProfileInfo = new TracerouteProfileInfo
+                IPScannerProfileInfo ipScannerProfileInfo = new IPScannerProfileInfo
                 {
                     Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
+                    IPRange = instance.IPRange,
+                    Group = instance.Group
                 };
 
-                TracerouteProfileManager.AddProfile(tracerouteProfileInfo);
+                IPScannerProfileManager.AddProfile(ipScannerProfileInfo);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, TracerouteProfileManager.GetProfileGroups(), SelectedProfile);
+            }, IPScannerProfileManager.GetProfileGroups(), SelectedProfile);
 
-            customDialog.Content = new TracerouteProfileDialog
+            customDialog.Content = new IPScannerProfileDialog
             {
-                DataContext = tracerouteProfileViewModel
+                DataContext = ipScannerProfileViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
@@ -263,27 +251,26 @@ namespace NETworkManager.ViewModels
                 Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
             };
 
-            TracerouteProfileViewModel tracerouteProfileViewModel = new TracerouteProfileViewModel(instance =>
+            IPScannerProfileViewModel ipScannerProfileViewModel = new IPScannerProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                TracerouteProfileInfo tracerouteProfileInfo = new TracerouteProfileInfo
+                IPScannerProfileInfo ipScannerProfileInfo = new IPScannerProfileInfo
                 {
                     Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
+                    IPRange = instance.IPRange,
+                    Group = instance.Group
                 };
 
-                TracerouteProfileManager.AddProfile(tracerouteProfileInfo);
+                IPScannerProfileManager.AddProfile(ipScannerProfileInfo);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, TracerouteProfileManager.GetProfileGroups(), SelectedProfile);
+            }, IPScannerProfileManager.GetProfileGroups(), SelectedProfile);
 
-            customDialog.Content = new TracerouteProfileDialog
+            customDialog.Content = new IPScannerProfileDialog
             {
-                DataContext = tracerouteProfileViewModel
+                DataContext = ipScannerProfileViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
@@ -305,7 +292,7 @@ namespace NETworkManager.ViewModels
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                TracerouteProfileManager.RemoveProfile(SelectedProfile);
+                IPScannerProfileManager.RemoveProfile(SelectedProfile);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -335,9 +322,9 @@ namespace NETworkManager.ViewModels
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                TracerouteProfileManager.RenameGroup(instance.OldGroup, instance.Group);
+                IPScannerProfileManager.RenameGroup(instance.OldGroup, instance.Group);
 
-                _tracerouteProfiles.Refresh();
+                _ipScannerProfiles.Refresh();
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -358,16 +345,16 @@ namespace NETworkManager.ViewModels
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzTracerouteTabItem).View as TracerouteView).CloseTab();
+            ((args.DragablzItem.Content as DragablzIPScannerTabItem).View as IPScannerView).CloseTab();
         }
         #endregion
 
         #region Methods
-        private void AddTracerouteTab(string host = null)
+        private void AddIPScannerTab(string host = null)
         {
             _tabId++;
 
-            TabItems.Add(new DragablzTracerouteTabItem(host ?? LocalizationManager.GetStringByKey("String_Header_NewTab"), new TracerouteView(_tabId, host), _tabId));
+            TabItems.Add(new DragablzIPScannerTabItem(host ?? LocalizationManager.GetStringByKey("String_Header_NewTab"), new IPScannerView(_tabId, host), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

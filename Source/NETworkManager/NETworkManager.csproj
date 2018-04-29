@@ -212,6 +212,11 @@
     <Compile Include="3rdParty\Heijden.DNS\Response.cs" />
     <Compile Include="3rdParty\Heijden.DNS\RR.cs" />
     <Compile Include="3rdParty\Heijden.DNS\Structs.cs" />
+    <Compile Include="Controls\DragablzIPScannerInterTabClient.cs" />
+    <Compile Include="Controls\DragablzIPScannerTabHostWindow.xaml.cs">
+      <DependentUpon>DragablzIPScannerTabHostWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DragablzIPScannerTabItem.cs" />
     <Compile Include="Controls\DragablzTracerouteInterTabClient.cs" />
     <Compile Include="Controls\DragablzTracerouteTabHostWindow.xaml.cs">
       <DependentUpon>DragablzTracerouteTabHostWindow.xaml</DependentUpon>
@@ -281,6 +286,7 @@
     <Compile Include="Validators\MultipleHostsValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\SubnetCalculatorSubnetValidator.cs" />
+    <Compile Include="ViewModels\IPScannerHostViewModel.cs" />
     <Compile Include="ViewModels\TracerouteProfileViewModel.cs" />
     <Compile Include="ViewModels\TracerouteHostViewModel.cs" />
     <Compile Include="ViewModels\PuTTYViewModel.cs" />
@@ -334,6 +340,9 @@
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
+    <Compile Include="Views\IPScannerHostView.xaml.cs">
+      <DependentUpon>IPScannerHostView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TracerouteProfileDialog.xaml.cs">
       <DependentUpon>TracerouteProfileDialog.xaml</DependentUpon>
     </Compile>
@@ -450,6 +459,10 @@
     </Compile>
     <Compile Include="WpfHelper\PasswordBoxBindingBehavior.cs" />
     <Compile Include="WpfHelper\ProtocolSettingsLayout.cs" />
+    <Page Include="Controls\DragablzIPScannerTabHostWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\DragablzTracerouteTabHostWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -581,6 +594,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Include="Views\IPScannerHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\TracerouteProfileDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
