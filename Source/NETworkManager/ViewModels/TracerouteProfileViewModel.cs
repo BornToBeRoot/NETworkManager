@@ -4,12 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
-    public class PortScannerProfileViewModel : ViewModelBase
+    public class TracerouteProfileViewModel : ViewModelBase
     {
         private bool _isLoading = true;
 
@@ -37,43 +38,25 @@ namespace NETworkManager.ViewModels
                 _name = value;
 
                 if (!_isLoading)
-                    HasProfileInfoChanged();
+                    HasSessionInfoChanged();
 
                 OnPropertyChanged();
             }
         }
 
-        private string _hostname;
-        public string Hostname
+        private string _host;
+        public string Host
         {
-            get { return _hostname; }
+            get { return _host; }
             set
             {
-                if (value == _hostname)
+                if (value == _host)
                     return;
 
-                _hostname = value;
+                _host = value;
 
                 if (!_isLoading)
-                    HasProfileInfoChanged();
-
-                OnPropertyChanged();
-            }
-        }
-
-        private string _ports;
-        public string Ports
-        {
-            get { return _ports; }
-            set
-            {
-                if (value == _ports)
-                    return;
-
-                _ports = value;
-
-                if (!_isLoading)
-                    HasProfileInfoChanged();
+                    HasSessionInfoChanged();
 
                 OnPropertyChanged();
             }
@@ -91,7 +74,7 @@ namespace NETworkManager.ViewModels
                 _group = value;
 
                 if (!_isLoading)
-                    HasProfileInfoChanged();
+                    HasSessionInfoChanged();
 
                 OnPropertyChanged();
             }
@@ -102,8 +85,26 @@ namespace NETworkManager.ViewModels
         {
             get { return _groups; }
         }
-               
-        private PortScannerProfileInfo _profileInfo;
+
+        private string _tags;
+        public string Tags
+        {
+            get { return _tags; }
+            set
+            {
+                if (value == _tags)
+                    return;
+
+                _tags = value;
+
+                if (!_isLoading)
+                    HasSessionInfoChanged();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private TracerouteProfileInfo _profileInfo;
 
         private bool _profileInfoChanged;
         public bool ProfileInfoChanged
@@ -119,19 +120,19 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public PortScannerProfileViewModel(Action<PortScannerProfileViewModel> saveCommand, Action<PortScannerProfileViewModel> cancelHandler, List<string> groups, PortScannerProfileInfo profileInfo = null)
+        public TracerouteProfileViewModel(Action<TracerouteProfileViewModel> saveCommand, Action<TracerouteProfileViewModel> cancelHandler, List<string> groups, TracerouteProfileInfo profileInfo = null)
         {
             _saveCommand = new RelayCommand(p => saveCommand(this));
             _cancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            _profileInfo = profileInfo ?? new PortScannerProfileInfo();
+            _profileInfo = profileInfo ?? new TracerouteProfileInfo();
 
             Name = _profileInfo.Name;
-            Hostname = _profileInfo.Hostname;
-            Ports = _profileInfo.Ports;
+            Host = _profileInfo.Host;
 
             // Get the group, if not --> get the first group (ascending), fallback --> default group 
             Group = string.IsNullOrEmpty(_profileInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : LocalizationManager.GetStringByKey("String_Default")) : _profileInfo.Group;
+            Tags = _profileInfo.Tags;
 
             _groups = CollectionViewSource.GetDefaultView(groups);
             _groups.SortDescriptions.Add(new SortDescription());
@@ -139,9 +140,9 @@ namespace NETworkManager.ViewModels
             _isLoading = false;
         }
 
-        private void HasProfileInfoChanged()
+        private void HasSessionInfoChanged()
         {
-            ProfileInfoChanged = (_profileInfo.Name != Name) || (_profileInfo.Hostname != Hostname) || (_profileInfo.Ports != Ports) || (_profileInfo.Group != Group);
+            ProfileInfoChanged = (_profileInfo.Name != Name) || (_profileInfo.Host != Host) || (_profileInfo.Group != Group) || (_profileInfo.Tags != Tags);
         }
     }
 }

@@ -212,6 +212,11 @@
     <Compile Include="3rdParty\Heijden.DNS\Response.cs" />
     <Compile Include="3rdParty\Heijden.DNS\RR.cs" />
     <Compile Include="3rdParty\Heijden.DNS\Structs.cs" />
+    <Compile Include="Controls\DragablzTracerouteInterTabClient.cs" />
+    <Compile Include="Controls\DragablzTracerouteTabHostWindow.xaml.cs">
+      <DependentUpon>DragablzTracerouteTabHostWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DragablzTracerouteTabItem.cs" />
     <Compile Include="Controls\DragablzPuTTYInterTabClient.cs" />
     <Compile Include="Controls\DragablzPuTTYTabHostWindow.xaml.cs">
       <DependentUpon>DragablzPuTTYTabHostWindow.xaml</DependentUpon>
@@ -235,6 +240,8 @@
     <Compile Include="Models\Documentation\CommunityManager.cs" />
     <Compile Include="Models\PuTTY\PuTTYSessionInfo.cs" />
     <Compile Include="Models\PuTTY\PuTTY.cs" />
+    <Compile Include="Models\Settings\TracerouteProfileManager.cs" />
+    <Compile Include="Models\Settings\TracerouteProfileInfo.cs" />
     <Compile Include="Models\Settings\PuTTYSessionInfo.cs" />
     <Compile Include="Models\Settings\PuTTYSessionManager.cs" />
     <Compile Include="Models\Settings\PingProfileInfo.cs" />
@@ -274,6 +281,8 @@
     <Compile Include="Validators\MultipleHostsValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\SubnetCalculatorSubnetValidator.cs" />
+    <Compile Include="ViewModels\TracerouteProfileViewModel.cs" />
+    <Compile Include="ViewModels\TracerouteHostViewModel.cs" />
     <Compile Include="ViewModels\PuTTYViewModel.cs" />
     <Compile Include="ViewModels\PingHostViewModel.cs" />
     <Compile Include="ViewModels\PingProfileViewModel.cs" />
@@ -325,6 +334,12 @@
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
+    <Compile Include="Views\TracerouteProfileDialog.xaml.cs">
+      <DependentUpon>TracerouteProfileDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TracerouteHostView.xaml.cs">
+      <DependentUpon>TracerouteHostView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PuTTYView.xaml.cs">
       <DependentUpon>PuTTYView.xaml</DependentUpon>
     </Compile>
@@ -435,6 +450,10 @@
     </Compile>
     <Compile Include="WpfHelper\PasswordBoxBindingBehavior.cs" />
     <Compile Include="WpfHelper\ProtocolSettingsLayout.cs" />
+    <Page Include="Controls\DragablzTracerouteTabHostWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\DragablzPuTTYTabHostWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -562,6 +581,14 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Include="Views\TracerouteProfileDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TracerouteHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\PuTTYView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

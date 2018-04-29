@@ -201,6 +201,7 @@
     <system:String x:Key="String_ApplicationSettings">Application settings</system:String>
     <system:String x:Key="String_NetworkInterfaceProfiles">Network interface profiles</system:String>
     <system:String x:Key="String_PingProfiles">Ping profiles</system:String>
+    <system:String x:Key="String_TracerouteProfiles">Traceroute profiles</system:String>
     <system:String x:Key="String_PortScannerProfiles">Port Scanner profiles</system:String>
     <system:String x:Key="String_WakeOnLANClients">Wake on LAN clients</system:String>
     <system:String x:Key="String_RemoteDesktopSessions">Remote Desktop sessions</system:String>
@@ -265,6 +266,7 @@
     <system:String x:Key="String_SettingsSuccessfullyImported">Settings successfully imported!</system:String>
     <system:String x:Key="String_IPScannerProfilesReloaded">IP Scanner profiles reloaded</system:String>
     <system:String x:Key="String_PingProfilesReloaded">Ping profiles reloaded</system:String>
+    <system:String x:Key="String_TracerouteProfilesReloaded">Traceroute profiles reloaded</system:String>
     <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Network interface profiles reloaded</system:String>
     <system:String x:Key="String_PortScannerProfilesReloaded">Port Scanner profiles reloaded</system:String>
     <system:String x:Key="String_RemoteDesktopSessionsReloaded">Remote Desktop sessions reloaded</system:String>
@@ -396,7 +398,8 @@
     <system:String x:Key="String_GitHub">GitHub</system:String>
     <system:String x:Key="String_OverwriteSettingsInTheDestinationFolder">Overwrite settings in the destination folder?\n\nIf you click "Move &amp; Restart", the remaining files will be copied and the application will be restarted with the new settings!</system:String>
     <system:String x:Key="String_Ping">Ping</system:String>
-    
+    <system:String x:Key="String_Trace">Trace</system:String>
+        
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">How to create a custom theme and accent?</system:String>

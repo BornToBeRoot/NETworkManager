@@ -85,6 +85,7 @@ namespace NETworkManager.Models.Settings
             IPScannerProfiles,
             PortScannerProfiles,
             PingProfiles,
+            TracerouteProfiles,
             RemoteDesktopSessions,
             PuTTYSessions,
             WakeOnLANClients
@@ -106,6 +107,9 @@ namespace NETworkManager.Models.Settings
 
             if (fileName == PingProfileManager.ProfilesFileName)
                 return ImportExportOptions.PingProfiles;
+
+            if (fileName == TracerouteProfileManager.ProfilesFileName)
+                return ImportExportOptions.TracerouteProfiles;
 
             if (fileName == RemoteDesktopSessionManager.SessionsFileName)
                 return ImportExportOptions.RemoteDesktopSessions;
@@ -133,6 +137,8 @@ namespace NETworkManager.Models.Settings
                     return PortScannerProfileManager.ProfilesFileName;
                 case ImportExportOptions.PingProfiles:
                     return PingProfileManager.ProfilesFileName;
+                case ImportExportOptions.TracerouteProfiles:
+                    return TracerouteProfileManager.ProfilesFileName;
                 case ImportExportOptions.RemoteDesktopSessions:
                     return RemoteDesktopSessionManager.SessionsFileName;
                 case ImportExportOptions.PuTTYSessions:
@@ -158,6 +164,8 @@ namespace NETworkManager.Models.Settings
                     return PortScannerProfileManager.GetProfilesFilePath();
                 case ImportExportOptions.PingProfiles:
                     return PingProfileManager.GetProfilesFilePath();
+                case ImportExportOptions.TracerouteProfiles:
+                    return TracerouteProfileManager.GetProfilesFilePath();
                 case ImportExportOptions.RemoteDesktopSessions:
                     return RemoteDesktopSessionManager.GetSessionsFilePath();
                 case ImportExportOptions.PuTTYSessions:

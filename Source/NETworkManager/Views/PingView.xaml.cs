@@ -7,13 +7,13 @@ namespace NETworkManager.Views
     public partial class PingView : UserControl
     {
         PingViewModel viewModel;
-            
+
         public PingView(int tabId, string host = null)
         {
             InitializeComponent();
 
-            viewModel = new PingViewModel(tabId,host);
-        
+            viewModel = new PingViewModel(tabId, host);
+
             DataContext = viewModel;
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
@@ -32,6 +32,6 @@ namespace NETworkManager.Views
         public void CloseTab()
         {
             viewModel.OnClose();
-        }        
+        }
     }
 }

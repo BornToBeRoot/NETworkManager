@@ -402,7 +402,7 @@ namespace NETworkManager
         IPScannerView ipScannerView;
         PortScannerView portScannerView;
         PingHostView pingHostView;
-        TracerouteView tracerouteView;
+        TracerouteHostView tracerouteHostView;
         DNSLookupView dnsLookupView;
         RemoteDesktopView remoteDesktopView;
         PuTTYView puTTYView;
@@ -447,10 +447,10 @@ namespace NETworkManager
                     contentControlApplication.Content = pingHostView;
                     break;
                 case ApplicationViewManager.Name.Traceroute:
-                    if (tracerouteView == null)
-                        tracerouteView = new TracerouteView();
+                    if (tracerouteHostView == null)
+                        tracerouteHostView = new TracerouteHostView();
 
-                    contentControlApplication.Content = tracerouteView;
+                    contentControlApplication.Content = tracerouteHostView;
                     break;
                 case ApplicationViewManager.Name.DNSLookup:
                     if (dnsLookupView == null)

@@ -14,6 +14,8 @@ using System.Windows.Threading;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Linq;
+using Dragablz;
+using NETworkManager.Controls;
 
 namespace NETworkManager.ViewModels
 {
@@ -22,6 +24,8 @@ namespace NETworkManager.ViewModels
         #region Variables
         CancellationTokenSource cancellationTokenSource;
 
+        private int _tabId;
+        
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         Stopwatch stopwatch = new Stopwatch();
 
@@ -216,8 +220,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings
-        public TracerouteViewModel()
+        public TracerouteViewModel(int tabId, string host)
         {
+            _tabId = tabId;
+            Host = host;
+
             // Set collection view
             _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Traceroute_HostHistory);
 
@@ -236,6 +243,12 @@ namespace NETworkManager.ViewModels
         {
             if (e.PropertyName == nameof(SettingsInfo.Traceroute_ResolveHostname))
                 OnPropertyChanged(nameof(ResolveHostname));
+        }
+
+        public void OnLoaded()
+        {
+            if (!string.IsNullOrEmpty(Host))
+                StartTrace();
         }
 
         private void LoadSettings()
@@ -342,6 +355,17 @@ namespace NETworkManager.ViewModels
             TraceResult.Clear();
             Hops = 0;
 
+            // Change the tab title (not nice, but it works)
+            Window window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+            if (window != null)
+            {
+                foreach (TabablzControl tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+                {
+                    tabablzControl.Items.OfType<DragablzTracerouteTabItem>().First(x => x.ID == _tabId).Header = Host;
+                }
+            }
+
             cancellationTokenSource = new CancellationTokenSource();
             
             // Try to parse the string into an IP-Address
@@ -444,7 +468,7 @@ namespace NETworkManager.ViewModels
             list.ForEach(x => SettingsManager.Current.Traceroute_HostHistory.Add(x));
         }
 
-        public void OnShutdown()
+        public void OnClose()
         {
             if (IsTraceRunning)
                 StopTrace();

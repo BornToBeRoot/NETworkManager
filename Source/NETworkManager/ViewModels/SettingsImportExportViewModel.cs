@@ -259,6 +259,48 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
+        private bool _importTracerouteProfilesExists;
+        public bool ImportTracerouteProfilesExists
+        {
+            get { return _importTracerouteProfilesExists; }
+            set
+            {
+                if (value == _importTracerouteProfilesExists)
+                    return;
+
+                _importTracerouteProfilesExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _importTracerouteProfiles;
+        public bool ImportTracerouteProfiles
+        {
+            get { return _importTracerouteProfiles; }
+            set
+            {
+                if (value == _importTracerouteProfiles)
+                    return;
+
+                _importTracerouteProfiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _importOverrideTracerouteProfiles = true;
+        public bool ImportOverrideTracerouteProfiles
+        {
+            get { return _importOverrideTracerouteProfiles; }
+            set
+            {
+                if (value == _importOverrideTracerouteProfiles)
+                    return;
+
+                _importOverrideTracerouteProfiles = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _importRemoteDesktopSessionsExists;
         public bool ImportRemoteDesktopSessionsExists
         {
@@ -541,6 +583,34 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
+        private bool _tracerouteProfilesExists;
+        public bool TracerouteProfilesExists
+        {
+            get { return _tracerouteProfilesExists; }
+            set
+            {
+                if (value == _tracerouteProfilesExists)
+                    return;
+
+                _tracerouteProfilesExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _exportTracerouteProfiles;
+        public bool ExportTracerouteProfiles
+        {
+            get { return _exportTracerouteProfiles; }
+            set
+            {
+                if (value == _exportTracerouteProfiles)
+                    return;
+
+                _exportTracerouteProfiles = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _remoteDesktopSesionsExists;
         public bool RemoteDesktopSessionsExists
         {
@@ -668,6 +738,7 @@ namespace NETworkManager.ViewModels.Settings
                 ImportIPScannerProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.IPScannerProfiles);
                 ImportPortScannerProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.PortScannerProfiles);
                 ImportPingProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.PingProfiles);
+                ImportTracerouteProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.TracerouteProfiles);
                 ImportRemoteDesktopSessionsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.RemoteDesktopSessions);
                 ImportPuTTYSessionsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.PuTTYSessions);
                 ImportWakeOnLANClientsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients);
@@ -731,6 +802,15 @@ namespace NETworkManager.ViewModels.Settings
                         PingProfileManager.Load(!ImportOverridePingProfiles);
                 }
 
+                if (ImportTracerouteProfilesExists && (ImportEverything || ImportTracerouteProfiles))
+                {
+                    importOptions.Add(ImportExportManager.ImportExportOptions.TracerouteProfiles);
+
+                    // Load traceroute profiles (option: add)
+                    if (TracerouteProfileManager.Profiles == null)
+                        TracerouteProfileManager.Load(!ImportOverrideTracerouteProfiles);
+                }
+
                 if (ImportPortScannerProfilesExists && (ImportEverything || ImportPortScannerProfiles))
                 {
                     importOptions.Add(ImportExportManager.ImportExportOptions.PortScannerProfiles);
@@ -783,6 +863,9 @@ namespace NETworkManager.ViewModels.Settings
                 if (importOptions.Contains(ImportExportManager.ImportExportOptions.PingProfiles))
                     PingProfileManager.Import(ImportEverything || ImportOverridePingProfiles);
 
+                if (importOptions.Contains(ImportExportManager.ImportExportOptions.TracerouteProfiles))
+                    TracerouteProfileManager.Import(ImportEverything || ImportOverrideTracerouteProfiles);
+
                 if (importOptions.Contains(ImportExportManager.ImportExportOptions.RemoteDesktopSessions))
                     RemoteDesktopSessionManager.Import(ImportEverything || ImportOverrideRemoteDesktopSessions);
 
@@ -810,6 +893,9 @@ namespace NETworkManager.ViewModels.Settings
 
                     if (importOptions.Contains(ImportExportManager.ImportExportOptions.PingProfiles))
                         message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_PingProfilesReloaded"));
+
+                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.TracerouteProfiles))
+                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_TracerouteProfilesReloaded"));
 
                     if (importOptions.Contains(ImportExportManager.ImportExportOptions.RemoteDesktopSessions))
                         message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_RemoteDesktopSessionsReloaded"));
@@ -853,7 +939,10 @@ namespace NETworkManager.ViewModels.Settings
 
             if (PingProfilesExists && (ExportEverything || ExportPingProfiles))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.PingProfiles);
-            
+
+            if (TracerouteProfilesExists && (ExportEverything || ExportTracerouteProfiles))
+                exportOptions.Add(ImportExportManager.ImportExportOptions.TracerouteProfiles);
+
             if (RemoteDesktopSessionsExists && (ExportEverything || ExportRemoteDesktopSessions))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.RemoteDesktopSessions);
 
@@ -895,12 +984,15 @@ namespace NETworkManager.ViewModels.Settings
             if (IPScannerProfileManager.ProfilesChanged)
                 IPScannerProfileManager.Save();
 
-            if (PingProfileManager.ProfilesChanged)
-                PingProfileManager.Save();
-
             if (PortScannerProfileManager.ProfilesChanged)
                 PortScannerProfileManager.Save();
 
+            if (PingProfileManager.ProfilesChanged)
+                PingProfileManager.Save();
+
+            if (TracerouteProfileManager.ProfilesChanged)
+                TracerouteProfileManager.Save();
+            
             if (RemoteDesktopSessionManager.SessionsChanged)
                 RemoteDesktopSessionManager.Save();
 
@@ -916,6 +1008,7 @@ namespace NETworkManager.ViewModels.Settings
             IPScannerProfilesExists = File.Exists(IPScannerProfileManager.GetProfilesFilePath());
             PortScannerProfilesExists = File.Exists(PortScannerProfileManager.GetProfilesFilePath());
             PingProfilesExists = File.Exists(PingProfileManager.GetProfilesFilePath());
+            TracerouteProfilesExists = File.Exists(TracerouteProfileManager.GetProfilesFilePath());
             RemoteDesktopSessionsExists = File.Exists(RemoteDesktopSessionManager.GetSessionsFilePath());
             PuTTYSessionsExists = File.Exists(PuTTYSessionManager.GetSessionsFilePath());
             WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());

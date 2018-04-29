@@ -725,6 +725,20 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _traceroute_ExpandProfileView = true;
+        public bool Traceroute_ExpandProfileView
+        {
+            get { return _traceroute_ExpandProfileView; }
+            set
+            {
+                if (value == _traceroute_ExpandProfileView)
+                    return;
+
+                _traceroute_ExpandProfileView = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Lookup
