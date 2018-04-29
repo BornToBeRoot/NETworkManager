@@ -124,6 +124,7 @@
                 <CheckBox Content="{DynamicResource String_IPScannerProfiles}" IsEnabled="{Binding IPScannerProfilesExists}" IsChecked="{Binding ResetIPScannerProfiles}" Margin="0,0,0,10" />                
                 <CheckBox Content="{DynamicResource String_PortScannerProfiles}" IsEnabled="{Binding PortScannerProfilesExists}" IsChecked="{Binding ResetPortScannerProfiles}" Margin="0,0,0,10" />
                 <CheckBox Content="{DynamicResource String_PingProfiles}" IsEnabled="{Binding PingProfilesExists}" IsChecked="{Binding ResetPingProfiles}" Margin="0,0,0,10" />
+                <CheckBox Content="{DynamicResource String_TracerouteProfiles}" IsEnabled="{Binding TracerouteProfilesExists}" IsChecked="{Binding ResetTracerouteProfiles}" Margin="0,0,0,10" />
                 <CheckBox Content="{DynamicResource String_RemoteDesktopSessions}" IsEnabled="{Binding RemoteDesktopSessionsExists}" IsChecked="{Binding ResetRemoteDesktopSessions}" Margin="0,0,0,10" />
                 <CheckBox Content="{DynamicResource String_PuTTYSessions}" IsEnabled="{Binding PuTTYSessionsExists}" IsChecked="{Binding ResetPuTTYSessions}" Margin="0,0,0,10" />
                 <CheckBox Content="{DynamicResource String_WakeOnLANClients}" IsEnabled="{Binding WakeOnLANClientsExists}" IsChecked="{Binding ResetWakeOnLANClients}" />
@@ -146,6 +147,7 @@
                                     <Binding Path="ResetIPScannerProfiles" />
                                     <Binding Path="ResetPortScannerProfiles" />
                                     <Binding Path="ResetPingProfiles" />
+                                    <Binding Path="ResetTracerouteProfiles" />
                                     <Binding Path="ResetRemoteDesktopSessions" />
                                     <Binding Path="ResetPuTTYSessions" />
                                     <Binding Path="ResetWakeOnLANClients" />

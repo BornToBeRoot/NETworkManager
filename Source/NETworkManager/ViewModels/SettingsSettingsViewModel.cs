@@ -231,6 +231,34 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _tracerouteProfilesExists;
+        public bool TracerouteProfilesExists
+        {
+            get { return _tracerouteProfilesExists; }
+            set
+            {
+                if (value == _tracerouteProfilesExists)
+                    return;
+
+                _tracerouteProfilesExists = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _resetTracerouteProfiles;
+        public bool ResetTracerouteProfiles
+        {
+            get { return _resetTracerouteProfiles; }
+            set
+            {
+                if (value == _resetTracerouteProfiles)
+                    return;
+
+                _resetTracerouteProfiles = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _remoteDesktopSessionsExists;
         public bool RemoteDesktopSessionsExists
         {
@@ -379,6 +407,9 @@ namespace NETworkManager.ViewModels
                 if (PingProfileManager.ProfilesFileName == fileName)
                     return true;
 
+                if (PingProfileManager.ProfilesFileName == fileName)
+                    return true;
+
                 if (RemoteDesktopSessionManager.SessionsFileName == fileName)
                     return true;
 
@@ -507,6 +538,9 @@ namespace NETworkManager.ViewModels
             if (PingProfilesExists && (ResetEverything || ResetPingProfiles))
                 PingProfileManager.Reset();
 
+            if (TracerouteProfilesExists && (ResetEverything || ResetTracerouteProfiles))
+                TracerouteProfileManager.Reset();
+
             if (RemoteDesktopSessionsExists && (ResetEverything || ResetRemoteDesktopSessions))
                 RemoteDesktopSessionManager.Reset();
 
@@ -576,6 +610,9 @@ namespace NETworkManager.ViewModels
             if (PingProfileManager.ProfilesChanged)
                 PingProfileManager.Save();
 
+            if (TracerouteProfileManager.ProfilesChanged)
+                TracerouteProfileManager.Save();
+
             if (RemoteDesktopSessionManager.SessionsChanged)
                 RemoteDesktopSessionManager.Save();
 
@@ -591,6 +628,7 @@ namespace NETworkManager.ViewModels
             IPScannerProfilesExists = File.Exists(IPScannerProfileManager.GetProfilesFilePath());
             PortScannerProfilesExists = File.Exists(PortScannerProfileManager.GetProfilesFilePath());
             PingProfilesExists = File.Exists(PingProfileManager.GetProfilesFilePath());
+            TracerouteProfilesExists = File.Exists(TracerouteProfileManager.GetProfilesFilePath());
             RemoteDesktopSessionsExists = File.Exists(RemoteDesktopSessionManager.GetSessionsFilePath());
             PuTTYSessionsExists = File.Exists(PuTTYSessionManager.GetSessionsFilePath());
             WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());

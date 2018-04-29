@@ -201,6 +201,7 @@
     <system:String x:Key="String_ApplicationSettings">Anwendungseinstellungen</system:String>
     <system:String x:Key="String_NetworkInterfaceProfiles">Netzwerkinterface Profile</system:String>
     <system:String x:Key="String_PingProfiles">Ping Profile</system:String>
+    <system:String x:Key="String_TracerouteProfiles">Traceroute profiles</system:String>
     <system:String x:Key="String_PortScannerProfiles">Port-Scanner Profile</system:String>
     <system:String x:Key="String_WakeOnLANClients">Wake on LAN Clients</system:String>
     <system:String x:Key="String_RemoteDesktopSessions">Remote Desktop Sitzungen</system:String>
@@ -265,6 +266,7 @@
     <system:String x:Key="String_SettingsSuccessfullyImported">Einstellungen erfolgreich importiert!</system:String>
     <system:String x:Key="String_IPScannerProfilesReloaded">IP-Scanner Profile neu geladen</system:String>
     <system:String x:Key="String_PingProfilesReloaded">Ping Profile neu geladen</system:String>
+    <system:String x:Key="String_TracerouteProfilesReloaded">Traceroute Profile neu geladen</system:String>
     <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Netzwerkinterface Profile neu geladen</system:String>
     <system:String x:Key="String_PortScannerProfilesReloaded">Port-Scanner Profile neu geladen</system:String>
     <system:String x:Key="String_RemoteDesktopSessionsReloaded">Remote Desktop Sitzungen neu geladen</system:String>
