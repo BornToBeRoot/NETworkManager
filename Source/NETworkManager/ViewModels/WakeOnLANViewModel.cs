@@ -470,7 +470,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void WakeUp(WakeOnLANInfo info)
+        private async void WakeUp(WakeOnLANInfo info)
         {
             DisplayStatusMessage = false;
             IsSending = true;
@@ -479,8 +479,7 @@ namespace NETworkManager.ViewModels
             {
                 WakeOnLAN.Send(info);
 
-                // DEBUG
-                //await Task.Delay(5000);
+                await Task.Delay(2000); // Make the user happy, let him see a reload animation (and he cannot spam the send command)
 
                 StatusMessage = LocalizationManager.GetStringByKey("String_MagicPacketSuccessfulSended");
                 DisplayStatusMessage = true;

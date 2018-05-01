@@ -27,6 +27,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Client}" />
             <Grid Grid.Row="1" Margin="0,0,0,10">
@@ -103,22 +104,36 @@
                     </Button.Content>
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}" >
-                            <Setter Property="IsEnabled" Value="False" />
+                            <Setter Property="IsEnabled" Value="True" />
                             <Style.Triggers>
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtMACAddress}" Value="False"/>
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtBroadcast}" Value="False"/>
-                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtPort}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtMACAddress}" Value="True"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtBroadcast}" Value="True"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=txtPort}" Value="True"/>
                                     </MultiDataTrigger.Conditions>
-                                    <Setter Property="IsEnabled" Value="True" />
+                                    <Setter Property="IsEnabled" Value="False" />
                                 </MultiDataTrigger>
+                                <DataTrigger Binding="{Binding IsSending}" Value="True" >
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
                 </Button>
             </Grid>
-            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+            <Controls:MetroProgressBar Grid.Row="2" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
+                <Controls:MetroProgressBar.Style>
+                    <Style TargetType="{x:Type  Controls:MetroProgressBar}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSending}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Controls:MetroProgressBar.Style>
+            </Controls:MetroProgressBar>
+            <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <Border Grid.Column="1" Grid.Row="0" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource GrayBrush8}">
             <Expander x:Name="expanderProfiles" Header="{DynamicResource String_Header_Clients}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandClientView}">

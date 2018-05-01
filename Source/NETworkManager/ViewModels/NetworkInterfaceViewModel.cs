@@ -727,7 +727,7 @@ namespace NETworkManager.ViewModels
         {
             IsNetworkInterfaceLoading = true;
 
-            await Task.Delay(2000); // Make the user happy, let him see a reload animation
+            await Task.Delay(2000); // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
 
             string id = string.Empty;
 
