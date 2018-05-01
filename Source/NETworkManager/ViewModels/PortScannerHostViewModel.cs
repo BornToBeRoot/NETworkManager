@@ -13,13 +13,13 @@ using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.ViewModels
 {
-    public class TracerouteHostViewModel : ViewModelBase
+    public class PortScannerHostViewModel : ViewModelBase
     {
         #region Variables
         private IDialogCoordinator dialogCoordinator;
 
         public IInterTabClient InterTabClient { get; private set; }
-        public ObservableCollection<DragablzTracerouteTabItem> TabItems { get; private set; }
+        public ObservableCollection<DragablzPortScannerTabItem> TabItems { get; private set; }
 
         private const string tagIdentifier = "tag=";
 
@@ -41,15 +41,15 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        #region Sessions
-        ICollectionView _tracerouteProfiles;
-        public ICollectionView TracerouteProfiles
+        #region Profiles
+        ICollectionView _portScannerProfiles;
+        public ICollectionView PortScannerProfiles
         {
-            get { return _tracerouteProfiles; }
+            get { return _portScannerProfiles; }
         }
 
-        private TracerouteProfileInfo _selectedProfile = new TracerouteProfileInfo();
-        public TracerouteProfileInfo SelectedProfile
+        private PortScannerProfileInfo _selectedProfile = new PortScannerProfileInfo();
+        public PortScannerProfileInfo SelectedProfile
         {
             get { return _selectedProfile; }
             set
@@ -72,7 +72,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Traceroute_ExpandProfileView = value;
+                    SettingsManager.Current.PortScanner_ExpandProfileView = value;
 
                 _expandProfileView = value;
                 OnPropertyChanged();
@@ -90,7 +90,7 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                TracerouteProfiles.Refresh();
+                PortScannerProfiles.Refresh();
 
                 OnPropertyChanged();
             }
@@ -99,46 +99,36 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor
-        public TracerouteHostViewModel(IDialogCoordinator instance)
+        public PortScannerHostViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
 
-            InterTabClient = new DragablzTracerouteInterTabClient();
+            InterTabClient = new DragablzPortScannerInterTabClient();
 
-            TabItems = new ObservableCollection<DragablzTracerouteTabItem>()
+            TabItems = new ObservableCollection<DragablzPortScannerTabItem>()
             {
-                new DragablzTracerouteTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new TracerouteView(_tabId), _tabId)
+                new DragablzPortScannerTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new PortScannerView(_tabId), _tabId)
             };
 
             // Load profiles
-            if (TracerouteProfileManager.Profiles == null)
-                TracerouteProfileManager.Load();
+            if (PortScannerProfileManager.Profiles == null)
+                PortScannerProfileManager.Load();
 
-            _tracerouteProfiles = CollectionViewSource.GetDefaultView(TracerouteProfileManager.Profiles);
-            _tracerouteProfiles.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
-            _tracerouteProfiles.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
-            _tracerouteProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            _tracerouteProfiles.Filter = o =>
+            _portScannerProfiles = CollectionViewSource.GetDefaultView(PortScannerProfileManager.Profiles);
+            _portScannerProfiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortScannerProfileInfo.Group)));
+            _portScannerProfiles.SortDescriptions.Add(new SortDescription(nameof(PortScannerProfileInfo.Group), ListSortDirection.Ascending));
+            _portScannerProfiles.SortDescriptions.Add(new SortDescription(nameof(PortScannerProfileInfo.Name), ListSortDirection.Ascending));
+            _portScannerProfiles.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
                     return true;
 
-                TracerouteProfileInfo info = o as TracerouteProfileInfo;
+                PortScannerProfileInfo info = o as PortScannerProfileInfo;
 
                 string search = Search.Trim();
 
-                // Search by: Tag
-                if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (string.IsNullOrEmpty(info.Tags))
-                        return false;
-                    else
-                        return info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).IndexOf(str, StringComparison.OrdinalIgnoreCase) > -1);
-                }
-                else // Search by: Name, Hostname
-                {
-                    return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-                }
+                // Search by: Name
+                return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
             LoadSettings();
@@ -148,19 +138,29 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            ExpandProfileView = SettingsManager.Current.Traceroute_ExpandProfileView;
+            ExpandProfileView = SettingsManager.Current.PortScanner_ExpandProfileView;
         }
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddTracerouteTabCommand
+        public ICommand AddPortScannerTabCommand
         {
-            get { return new RelayCommand(p => AddTracerouteTabAction()); }
+            get { return new RelayCommand(p => AddPortScannerTabAction()); }
         }
 
-        private void AddTracerouteTabAction()
+        private void AddPortScannerTabAction()
         {
-            AddTracerouteTab();
+            AddPortScannerTab();
+        }
+
+        public ICommand ScanProfileCommand
+        {
+            get { return new RelayCommand(p => ScanProfileAction()); }
+        }
+
+        private void ScanProfileAction()
+        {
+            AddPortScannerTab(SelectedProfile.Hostname, SelectedProfile.Ports);
         }
 
         public ICommand AddProfileCommand
@@ -175,40 +175,30 @@ namespace NETworkManager.ViewModels
                 Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
             };
 
-            TracerouteProfileViewModel tracerouteProfileViewModel = new TracerouteProfileViewModel(instance =>
+            PortScannerProfileViewModel portScannerProfileViewModel = new PortScannerProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                TracerouteProfileInfo tracerouteProfileInfo = new TracerouteProfileInfo
+                PortScannerProfileInfo portScannerProfileInfo = new PortScannerProfileInfo
                 {
                     Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
+                    Hostname = instance.Hostname,
+                    Ports = instance.Ports,
+                    Group = instance.Group
                 };
 
-                TracerouteProfileManager.AddProfile(tracerouteProfileInfo);
+                PortScannerProfileManager.AddProfile(portScannerProfileInfo);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, TracerouteProfileManager.GetProfileGroups());
+            }, PortScannerProfileManager.GetProfileGroups());
 
-            customDialog.Content = new TracerouteProfileDialog
+            customDialog.Content = new PortScannerProfileDialog
             {
-                DataContext = tracerouteProfileViewModel
+                DataContext = portScannerProfileViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand TraceProfileCommand
-        {
-            get { return new RelayCommand(p => TraceProfileAction()); }
-        }
-
-        private void TraceProfileAction()
-        {
-            AddTracerouteTab(SelectedProfile.Host);
         }
 
         public ICommand EditProfileCommand
@@ -223,29 +213,29 @@ namespace NETworkManager.ViewModels
                 Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
             };
 
-            TracerouteProfileViewModel tracerouteProfileViewModel = new TracerouteProfileViewModel(instance =>
+            PortScannerProfileViewModel portScannerProfileViewModel = new PortScannerProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                TracerouteProfileManager.RemoveProfile(SelectedProfile);
+                PortScannerProfileManager.RemoveProfile(SelectedProfile);
 
-                TracerouteProfileInfo tracerouteProfileInfo = new TracerouteProfileInfo
+                PortScannerProfileInfo portScannerProfileInfo = new PortScannerProfileInfo
                 {
                     Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
+                    Hostname = instance.Hostname,
+                    Ports = instance.Ports,
+                    Group = instance.Group
                 };
 
-                TracerouteProfileManager.AddProfile(tracerouteProfileInfo);
+                PortScannerProfileManager.AddProfile(portScannerProfileInfo);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, TracerouteProfileManager.GetProfileGroups(), SelectedProfile);
+            }, PortScannerProfileManager.GetProfileGroups(), SelectedProfile);
 
-            customDialog.Content = new TracerouteProfileDialog
+            customDialog.Content = new PortScannerProfileDialog
             {
-                DataContext = tracerouteProfileViewModel
+                DataContext = portScannerProfileViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
@@ -263,27 +253,27 @@ namespace NETworkManager.ViewModels
                 Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
             };
 
-            TracerouteProfileViewModel tracerouteProfileViewModel = new TracerouteProfileViewModel(instance =>
+            PortScannerProfileViewModel portScannerProfileViewModel = new PortScannerProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                TracerouteProfileInfo tracerouteProfileInfo = new TracerouteProfileInfo
+                PortScannerProfileInfo portScannerProfileInfo = new PortScannerProfileInfo
                 {
                     Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
+                    Hostname = instance.Hostname,
+                    Ports = instance.Ports,
+                    Group = instance.Group
                 };
 
-                TracerouteProfileManager.AddProfile(tracerouteProfileInfo);
+                PortScannerProfileManager.AddProfile(portScannerProfileInfo);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, TracerouteProfileManager.GetProfileGroups(), SelectedProfile);
+            }, PortScannerProfileManager.GetProfileGroups(), SelectedProfile);
 
-            customDialog.Content = new TracerouteProfileDialog
+            customDialog.Content = new PortScannerProfileDialog
             {
-                DataContext = tracerouteProfileViewModel
+                DataContext = portScannerProfileViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
@@ -305,7 +295,7 @@ namespace NETworkManager.ViewModels
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                TracerouteProfileManager.RemoveProfile(SelectedProfile);
+                PortScannerProfileManager.RemoveProfile(SelectedProfile);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -335,9 +325,9 @@ namespace NETworkManager.ViewModels
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                TracerouteProfileManager.RenameGroup(instance.OldGroup, instance.Group);
+                PortScannerProfileManager.RenameGroup(instance.OldGroup, instance.Group);
 
-                _tracerouteProfiles.Refresh();
+                _portScannerProfiles.Refresh();
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -358,16 +348,16 @@ namespace NETworkManager.ViewModels
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzTracerouteTabItem).View as TracerouteView).CloseTab();
+            ((args.DragablzItem.Content as DragablzPortScannerTabItem).View as PortScannerView).CloseTab();
         }
         #endregion
 
         #region Methods
-        private void AddTracerouteTab(string host = null)
+        private void AddPortScannerTab(string host = null, string ports = null)
         {
             _tabId++;
 
-            TabItems.Add(new DragablzTracerouteTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new TracerouteView(_tabId, host), _tabId));
+            TabItems.Add(new DragablzPortScannerTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new PortScannerView(_tabId, host, ports), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

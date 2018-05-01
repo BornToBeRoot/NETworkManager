@@ -400,7 +400,7 @@ namespace NETworkManager
         #region Application Views
         NetworkInterfaceView networkInterfaceView;
         IPScannerHostView ipScannerHostView;
-        PortScannerView portScannerView;
+        PortScannerHostView portScannerHostView;
         PingHostView pingHostView;
         TracerouteHostView tracerouteHostView;
         DNSLookupView dnsLookupView;
@@ -435,10 +435,10 @@ namespace NETworkManager
                     contentControlApplication.Content = ipScannerHostView;
                     break;
                 case ApplicationViewManager.Name.PortScanner:
-                    if (portScannerView == null)
-                        portScannerView = new PortScannerView();
+                    if (portScannerHostView == null)
+                        portScannerHostView = new PortScannerHostView();
 
-                    contentControlApplication.Content = portScannerView;
+                    contentControlApplication.Content = portScannerHostView;
                     break;
                 case ApplicationViewManager.Name.Ping:
                     if (pingHostView == null)

@@ -8,7 +8,6 @@ using NETworkManager.Models.Settings;
 using System.ComponentModel;
 using System;
 using System.Windows.Data;
-using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.ViewModels
@@ -354,7 +353,7 @@ namespace NETworkManager.ViewModels
         {
             _tabId++;
 
-            TabItems.Add(new DragablzIPScannerTabItem(host ?? LocalizationManager.GetStringByKey("String_Header_NewTab"), new IPScannerView(_tabId, host), _tabId));
+            TabItems.Add(new DragablzIPScannerTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new IPScannerView(_tabId, host), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

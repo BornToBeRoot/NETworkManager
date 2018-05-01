@@ -16,14 +16,17 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Views;
 using System.Linq;
 using NETworkManager.Utilities;
+using Dragablz;
+using NETworkManager.Controls;
 
 namespace NETworkManager.ViewModels
 {
     public class PortScannerViewModel : ViewModelBase
     {
         #region Variables
-        private IDialogCoordinator dialogCoordinator;
         CancellationTokenSource cancellationTokenSource;
+
+        private int _tabId;
 
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         Stopwatch stopwatch = new Stopwatch();
@@ -80,8 +83,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _isScanRunning = value;
-
-                CheckCanScanProfile();
 
                 OnPropertyChanged();
             }
@@ -276,119 +277,21 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        #region Profiles
-        ICollectionView _portScannerProfiles;
-        public ICollectionView PortScannerProfiles
-        {
-            get { return _portScannerProfiles; }
-        }
-
-        private PortScannerProfileInfo _selectedProfile = new PortScannerProfileInfo();
-        public PortScannerProfileInfo SelectedProfile
-        {
-            get { return _selectedProfile; }
-            set
-            {
-                if (value == _selectedProfile)
-                    return;
-
-                _selectedProfile = value;
-
-                if (value != null && !IsScanRunning)
-                {
-                    Host = value.Hostname;
-                    Port = value.Ports;
-
-                    CheckCanScanProfile();
-                }
-
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _expandProfileView;
-        public bool ExpandProfileView
-        {
-            get { return _expandProfileView; }
-            set
-            {
-                if (value == _expandProfileView)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.PortScanner_ExpandProfileView = value;
-
-                _expandProfileView = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _search;
-        public string Search
-        {
-            get { return _search; }
-            set
-            {
-                if (value == _search)
-                    return;
-
-                _search = value;
-
-                PortScannerProfiles.Refresh();
-
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _canScanProfile;
-        public bool CanScanProfile
-        {
-            get { return _canScanProfile; }
-            set
-            {
-                if (value == _canScanProfile)
-                    return;
-
-                _canScanProfile = value;
-                OnPropertyChanged();
-            }
-        }
-        #endregion
         #endregion
 
         #region Constructor, load settings, shutdown
-        public PortScannerViewModel(IDialogCoordinator instance)
+        public PortScannerViewModel(int tabId, string host, string port)
         {
-            dialogCoordinator = instance;
-
+            _tabId = tabId;
+            Host = host;
+            Port = port;
+            
             // Set collection view
             _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_HostHistory);
             _portHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortHistory);
 
             // Result view
             _portScanResultView = CollectionViewSource.GetDefaultView(PortScanResult);
-
-            // Load profiles
-            if (PortScannerProfileManager.Profiles == null)
-                PortScannerProfileManager.Load();
-
-            _portScannerProfiles = CollectionViewSource.GetDefaultView(PortScannerProfileManager.Profiles);
-            _portScannerProfiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortScannerProfileInfo.Group)));
-            _portScannerProfiles.SortDescriptions.Add(new SortDescription(nameof(PortScannerProfileInfo.Group), ListSortDirection.Ascending));
-            _portScannerProfiles.SortDescriptions.Add(new SortDescription(nameof(PortScannerProfileInfo.Name), ListSortDirection.Ascending));
-            _portScannerProfiles.Filter = o =>
-            {
-                if (string.IsNullOrEmpty(Search))
-                    return true;
-
-                PortScannerProfileInfo info = o as PortScannerProfileInfo;
-
-                string search = Search.Trim();
-
-                // Search by: Name
-                return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-            };
 
             LoadSettings();
 
@@ -397,11 +300,16 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            ExpandStatistics = SettingsManager.Current.PortScanner_ExpandStatistics;
-            ExpandProfileView = SettingsManager.Current.PortScanner_ExpandProfileView;
+            ExpandStatistics = SettingsManager.Current.PortScanner_ExpandStatistics;            
         }
 
-        public void OnShutdown()
+        public void OnLoaded()
+        {
+            if (!string.IsNullOrEmpty(Host) && !string.IsNullOrEmpty(Port))
+                StartScan();
+        }
+
+        public void OnClose()
         {
             // Stop scan
             if (IsScanRunning)
@@ -421,19 +329,6 @@ namespace NETworkManager.ViewModels
                 StopScan();
             else
                 StartScan();
-        }
-
-        public ICommand ScanProfileCommand
-        {
-            get { return new RelayCommand(p => ScanProfileAction()); }
-        }
-
-        private void ScanProfileAction()
-        {
-            Host = SelectedProfile.Hostname;
-            Port = SelectedProfile.Ports;
-
-            StartScan();
         }
 
         public ICommand CopySelectedIPAddressCommand
@@ -504,185 +399,7 @@ namespace NETworkManager.ViewModels
         private void CopySelectedDescriptionAction()
         {
             Clipboard.SetText(SelectedScanResult.LookupInfo.Description);
-        }
-
-        public ICommand AddProfileCommand
-        {
-            get { return new RelayCommand(p => AddProfileAction()); }
-        }
-
-        private async void AddProfileAction()
-        {
-            CustomDialog customDialog = new CustomDialog()
-            {
-                Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
-            };
-
-            PortScannerProfileViewModel portScannerProfileViewModel = new PortScannerProfileViewModel(instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                PortScannerProfileInfo portScannerProfileInfo = new PortScannerProfileInfo
-                {
-                    Name = instance.Name,
-                    Hostname = instance.Hostname,
-                    Ports = instance.Ports,
-                    Group = instance.Group
-                };
-
-                PortScannerProfileManager.AddProfile(portScannerProfileInfo);
-            }, instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, PortScannerProfileManager.GetProfileGroups(), new PortScannerProfileInfo() { Hostname = Host, Ports = Port });
-
-            customDialog.Content = new PortScannerProfileDialog
-            {
-                DataContext = portScannerProfileViewModel
-            };
-
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand EditProfileCommand
-        {
-            get { return new RelayCommand(p => EditProfileAction()); }
-        }
-
-        private async void EditProfileAction()
-        {
-            CustomDialog customDialog = new CustomDialog()
-            {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
-            };
-
-            PortScannerProfileViewModel portScannerProfileViewModel = new PortScannerProfileViewModel(instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                PortScannerProfileManager.RemoveProfile(SelectedProfile);
-
-                PortScannerProfileInfo portScannerProfileInfo = new PortScannerProfileInfo
-                {
-                    Name = instance.Name,
-                    Hostname = instance.Hostname,
-                    Ports = instance.Ports,
-                    Group = instance.Group
-                };
-
-                PortScannerProfileManager.AddProfile(portScannerProfileInfo);
-            }, instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, PortScannerProfileManager.GetProfileGroups(), SelectedProfile);
-
-            customDialog.Content = new PortScannerProfileDialog
-            {
-                DataContext = portScannerProfileViewModel
-            };
-
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand CopyAsProfileCommand
-        {
-            get { return new RelayCommand(p => CopyAsProfileAction()); }
-        }
-
-        private async void CopyAsProfileAction()
-        {
-            CustomDialog customDialog = new CustomDialog()
-            {
-                Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
-            };
-
-            PortScannerProfileViewModel portScannerProfileViewModel = new PortScannerProfileViewModel(instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                PortScannerProfileInfo portScannerProfileInfo = new PortScannerProfileInfo
-                {
-                    Name = instance.Name,
-                    Hostname = instance.Hostname,
-                    Ports = instance.Ports,
-                    Group = instance.Group
-                };
-
-                PortScannerProfileManager.AddProfile(portScannerProfileInfo);
-            }, instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, PortScannerProfileManager.GetProfileGroups(), SelectedProfile);
-
-            customDialog.Content = new PortScannerProfileDialog
-            {
-                DataContext = portScannerProfileViewModel
-            };
-
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand DeleteProfileCommand
-        {
-            get { return new RelayCommand(p => DeleteProfileAction()); }
-        }
-
-        private async void DeleteProfileAction()
-        {
-            CustomDialog customDialog = new CustomDialog()
-            {
-                Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
-            };
-
-            ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                PortScannerProfileManager.RemoveProfile(SelectedProfile);
-            }, instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, LocalizationManager.GetStringByKey("String_DeleteProfileMessage"));
-
-            customDialog.Content = new ConfirmRemoveDialog
-            {
-                DataContext = confirmRemoveViewModel
-            };
-
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand EditGroupCommand
-        {
-            get { return new RelayCommand(p => EditGroupAction(p)); }
-        }
-
-        private async void EditGroupAction(object group)
-        {
-            CustomDialog customDialog = new CustomDialog()
-            {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
-            };
-
-            GroupViewModel editGroupViewModel = new GroupViewModel(instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                PortScannerProfileManager.RenameGroup(instance.OldGroup, instance.Group);
-
-                _portScannerProfiles.Refresh();
-            }, instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, group.ToString());
-
-            customDialog.Content = new GroupDialog
-            {
-                DataContext = editGroupViewModel
-            };
-
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
+        }       
         #endregion
 
         #region Methods
@@ -704,6 +421,17 @@ namespace NETworkManager.ViewModels
 
             PortScanResult.Clear();
             PortsOpen = 0;
+
+            // Change the tab title (not nice, but it works)
+            Window window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+            if (window != null)
+            {
+                foreach (TabablzControl tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+                {
+                    tabablzControl.Items.OfType<DragablzPortScannerTabItem>().First(x => x.ID == _tabId).Header = Host;
+                }
+            }
 
             cancellationTokenSource = new CancellationTokenSource();
 
@@ -842,11 +570,6 @@ namespace NETworkManager.ViewModels
 
             CancelScan = false;
             IsScanRunning = false;
-        }
-
-        private void CheckCanScanProfile()
-        {
-            CanScanProfile = !IsScanRunning && !string.IsNullOrEmpty(SelectedProfile.Hostname) && !string.IsNullOrEmpty(SelectedProfile.Ports);
         }
 
         private void AddHostToHistory(string host)
