@@ -141,7 +141,7 @@
     <system:String x:Key="String_NewSubnetmaskOrCIDR">New subnetmask or CIDR</system:String>
     <system:String x:Key="String_IPv4DefaultGateway">IPv4-Default-Gateway</system:String>
     <system:String x:Key="String_DHCPEnabled">DHCP enabled</system:String>
-    <system:String x:Key="String_DHCPServer">DHCP server</system:String>
+    <system:String x:Key="String_DHCPServer">DHCP Server</system:String>
     <system:String x:Key="String_DHCPLeaseObtained">DHCP Lease Obtained</system:String>
     <system:String x:Key="String_DHCPLeaseExpires">DHCP Lease Expires</system:String>
     <system:String x:Key="String_IPv6Address">IPv6 Address</system:String>
