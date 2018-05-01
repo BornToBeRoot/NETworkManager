@@ -4,6 +4,6 @@
 
 ## Profile
 
-![IPScanner](../../_images/IPScanner_Profile.png)
+![IPScanner Profile](../../_images/IPScanner_Profile.png)
 
 [back](../README.md)
