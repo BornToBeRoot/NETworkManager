@@ -185,7 +185,7 @@ namespace NETworkManager.Models.Network
 
                     List<Variable> results = new List<Variable>();
 
-                    Messenger.BulkWalk(VersionCode.V3, ipEndpoint, new OctetString(username), new ObjectIdentifier(oid), results, options.Timeout, 10, walkMode, privacy, report);
+                    Messenger.BulkWalk(VersionCode.V3, ipEndpoint, new OctetString(username), OctetString.Empty, new ObjectIdentifier(oid), results, options.Timeout, 10, walkMode, privacy, report);
 
                     foreach (Variable result in results)
                         OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
@@ -224,7 +224,7 @@ namespace NETworkManager.Models.Network
                     else // noAuthNoPriv
                         privacy = GetPrivacy();
 
-                    SetRequestMessage request = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(username), new List<Variable> { new Variable(new ObjectIdentifier(oid), new OctetString(data)) }, privacy, Messenger.MaxMessageSize, report);
+                    SetRequestMessage request = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(username), OctetString.Empty, new List<Variable> { new Variable(new ObjectIdentifier(oid), new OctetString(data)) }, privacy, Messenger.MaxMessageSize, report);
                     ISnmpMessage reply = request.GetResponse(options.Timeout, ipEndpoint);
 
                     OnComplete();
