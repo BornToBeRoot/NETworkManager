@@ -24,6 +24,7 @@ namespace NETworkManager.ViewModels
         CancellationTokenSource cancellationTokenSource;
 
         private int _tabId;
+        private bool _firstLoad = true;
 
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         Stopwatch stopwatch = new Stopwatch();
@@ -277,7 +278,7 @@ namespace NETworkManager.ViewModels
             // Result view
             _ipScanResultView = CollectionViewSource.GetDefaultView(IPScanResult);
             _ipScanResultView.SortDescriptions.Add(new SortDescription(nameof(IPScannerHostInfo.PingInfo) + "." + nameof(PingInfo.IPAddressInt32), ListSortDirection.Ascending));
-            
+
             LoadSettings();
 
             // Detect if settings have changed...
@@ -288,8 +289,13 @@ namespace NETworkManager.ViewModels
 
         public void OnLoaded()
         {
-            if (!string.IsNullOrEmpty(IPRange))
-                StartScan();
+            if (_firstLoad)
+            {
+                if (!string.IsNullOrEmpty(IPRange))
+                    StartScan();
+
+                _firstLoad = false;
+            }
         }
 
         private void LoadSettings()

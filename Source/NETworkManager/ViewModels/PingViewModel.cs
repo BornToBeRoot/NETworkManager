@@ -25,6 +25,7 @@ namespace NETworkManager.ViewModels
         CancellationTokenSource cancellationTokenSource;
 
         private int _tabId;
+        private bool _firstLoad = true;
 
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         Stopwatch stopwatch = new Stopwatch();
@@ -290,8 +291,13 @@ namespace NETworkManager.ViewModels
 
         public void OnLoaded()
         {
-            if (!string.IsNullOrEmpty(Host))
-                StartPing();
+            if (_firstLoad)
+            {
+                if (!string.IsNullOrEmpty(Host))
+                    StartPing();
+
+                _firstLoad = false;
+            }
         }
 
         private void LoadSettings()

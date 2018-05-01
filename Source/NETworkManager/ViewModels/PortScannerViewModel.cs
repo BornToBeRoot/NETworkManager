@@ -12,8 +12,6 @@ using System.Windows.Threading;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.Windows.Data;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Views;
 using System.Linq;
 using NETworkManager.Utilities;
 using Dragablz;
@@ -27,6 +25,7 @@ namespace NETworkManager.ViewModels
         CancellationTokenSource cancellationTokenSource;
 
         private int _tabId;
+        private bool _firstLoad = true;
 
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         Stopwatch stopwatch = new Stopwatch();
@@ -305,8 +304,13 @@ namespace NETworkManager.ViewModels
 
         public void OnLoaded()
         {
-            if (!string.IsNullOrEmpty(Host) && !string.IsNullOrEmpty(Port))
-                StartScan();
+            if (_firstLoad)
+            {
+                if (!string.IsNullOrEmpty(Host) && !string.IsNullOrEmpty(Port))
+                    StartScan();
+
+                _firstLoad = false;
+            }
         }
 
         public void OnClose()
