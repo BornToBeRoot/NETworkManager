@@ -480,7 +480,7 @@ namespace NETworkManager.ViewModels
         {
             TracerouteHopInfo tracerouteInfo = TracerouteHopInfo.Parse(e);
 
-            Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
             {
                 TraceResult.Add(tracerouteInfo);
             }));

@@ -513,7 +513,7 @@ namespace NETworkManager.ViewModels
         {
             IPScannerHostInfo ipScannerHostInfo = IPScannerHostInfo.Parse(e);
 
-            Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
             {
                 IPScanResult.Add(ipScannerHostInfo);
             }));

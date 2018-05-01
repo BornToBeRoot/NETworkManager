@@ -8,7 +8,6 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
-using NETworkManager.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Threading;
@@ -16,6 +15,7 @@ using System.Windows.Data;
 using Dragablz;
 using NETworkManager.Controls;
 using NETworkManager.Utilities;
+using System.Collections.ObjectModel;
 
 namespace NETworkManager.ViewModels
 {
@@ -30,7 +30,7 @@ namespace NETworkManager.ViewModels
         Stopwatch stopwatch = new Stopwatch();
 
         private bool _isLoading = true;
-                
+
         private string _host;
         public string Host
         {
@@ -79,8 +79,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private AsyncObservableCollection<PingInfo> _pingResult = new AsyncObservableCollection<PingInfo>();
-        public AsyncObservableCollection<PingInfo> PingResult
+        private ObservableCollection<PingInfo> _pingResult = new ObservableCollection<PingInfo>();
+        public ObservableCollection<PingInfo> PingResult
         {
             get { return _pingResult; }
             set
@@ -91,6 +91,13 @@ namespace NETworkManager.ViewModels
                 _pingResult = value;
             }
         }
+
+        private ICollectionView _pingResultView;
+        public ICollectionView PingResultView
+        {
+            get { return _pingResultView; }
+        }
+
 
         private int _pingsTransmitted;
         public int PingsTransmitted
@@ -270,7 +277,11 @@ namespace NETworkManager.ViewModels
             _tabId = tabId;
             Host = host;
 
+            // Set collection view
             _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Ping_HostHistory);
+
+            // Result view
+            _pingResultView = CollectionViewSource.GetDefaultView(PingResult);
 
             LoadSettings();
 
@@ -455,7 +466,7 @@ namespace NETworkManager.ViewModels
         }
 
         public void OnClose()
-        {            
+        {
             // Stop the ping
             if (IsPingRunning)
                 PingAction();
@@ -468,7 +479,10 @@ namespace NETworkManager.ViewModels
             PingInfo pingInfo = PingInfo.Parse(e);
 
             // Add the result to the collection
-            PingResult.Add(pingInfo);
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
+            {
+                PingResult.Add(pingInfo);
+            }));
 
             // Calculate statistics
             PingsTransmitted++;
@@ -489,10 +503,10 @@ namespace NETworkManager.ViewModels
 
                     if (MaximumTime < pingInfo.Time)
                         MaximumTime = pingInfo.Time;
-                }
 
-                // I don't know if this can slow my application if the collection is to large
-                AverageTime = (int)PingResult.Average(s => s.Time);
+                    // I don't know if this can slow my application if the collection is to large
+                    AverageTime = (int)PingResult.Select(s => s.Time).Average();
+                }                                
             }
             else
             {

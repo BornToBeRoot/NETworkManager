@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
-using NETworkManager.Collections;
 using System.Windows.Threading;
 using System.Diagnostics;
 using Heijden.DNS;
@@ -12,6 +11,7 @@ using System.Linq;
 using System.ComponentModel;
 using System.Windows.Data;
 using NETworkManager.Utilities;
+using System.Collections.ObjectModel;
 
 namespace NETworkManager.ViewModels
 {
@@ -76,8 +76,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private AsyncObservableCollection<DNSLookupRecordInfo> _lookupResult = new AsyncObservableCollection<DNSLookupRecordInfo>();
-        public AsyncObservableCollection<DNSLookupRecordInfo> LookupResult
+        private ObservableCollection<DNSLookupRecordInfo> _lookupResult = new ObservableCollection<DNSLookupRecordInfo>();
+        public ObservableCollection<DNSLookupRecordInfo> LookupResult
         {
             get { return _lookupResult; }
             set
@@ -371,7 +371,7 @@ namespace NETworkManager.ViewModels
         {
             DNSLookupRecordInfo DNSLookupRecordInfo = DNSLookupRecordInfo.Parse(e);
 
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(delegate ()
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
             {
                 LookupResult.Add(DNSLookupRecordInfo);
             }));

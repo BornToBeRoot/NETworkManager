@@ -905,7 +905,6 @@
     </Compile>
     <Compile Include="ApplicationViewManager.cs" />
     <Compile Include="ApplicationViewInfo.cs" />
-    <Compile Include="Collections\AsyncObservableCollection.cs" />
     <Compile Include="Models\Network\ProgressChangedArgs.cs" />
     <Compile Include="Models\Network\TracerouteHopInfo.cs" />
     <Compile Include="Models\Network\TracerouteHopReceivedArgs.cs" />

@@ -604,7 +604,7 @@ namespace NETworkManager.ViewModels
         {
             SNMPReceivedInfo snmpReceivedInfo = SNMPReceivedInfo.Parse(e);
 
-            Application.Current.Dispatcher.BeginInvoke(new Action(delegate ()
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
             {
                 QueryResult.Add(snmpReceivedInfo);
             }));
