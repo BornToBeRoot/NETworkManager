@@ -23,6 +23,8 @@ namespace NETworkManager.ViewModels
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         Stopwatch stopwatch = new Stopwatch();
 
+        private int _tabId;
+        
         private bool _isLoading = true;
 
         private string _host;
@@ -380,8 +382,10 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public SNMPViewModel()
+        public SNMPViewModel(int tabId)
         {
+            _tabId = tabId;
+
             // Set collection view
             _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_HostHistory);
             _oidHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OIDHistory);
@@ -570,6 +574,11 @@ namespace NETworkManager.ViewModels
             EndTime = DateTime.Now;
 
             stopwatch.Reset();
+        }
+
+        public void OnClose()
+        {
+
         }
 
         private void AddHostToHistory(string host)

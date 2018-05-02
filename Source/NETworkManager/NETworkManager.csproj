@@ -222,10 +222,15 @@
     </Compile>
     <Compile Include="Controls\DragablzPortScannerTabItem.cs" />
     <Compile Include="Controls\DragablzIPScannerTabItem.cs" />
+    <Compile Include="Controls\DragablzSNMPInterTabClient.cs" />
     <Compile Include="Controls\DragablzTracerouteInterTabClient.cs" />
+    <Compile Include="Controls\DragablzSNMPTabHostWindow.xaml.cs">
+      <DependentUpon>DragablzSNMPTabHostWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DragablzTracerouteTabHostWindow.xaml.cs">
       <DependentUpon>DragablzTracerouteTabHostWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DragablzSNMPTabItem.cs" />
     <Compile Include="Controls\DragablzTracerouteTabItem.cs" />
     <Compile Include="Controls\DragablzPuTTYInterTabClient.cs" />
     <Compile Include="Controls\DragablzPuTTYTabHostWindow.xaml.cs">
@@ -293,6 +298,7 @@
     <Compile Include="Validators\SubnetCalculatorSubnetValidator.cs" />
     <Compile Include="ViewModels\PortScannerHostViewModel.cs" />
     <Compile Include="ViewModels\IPScannerHostViewModel.cs" />
+    <Compile Include="ViewModels\SNMPHostViewModel.cs" />
     <Compile Include="ViewModels\TracerouteProfileViewModel.cs" />
     <Compile Include="ViewModels\TracerouteHostViewModel.cs" />
     <Compile Include="ViewModels\PuTTYViewModel.cs" />
@@ -351,6 +357,9 @@
     </Compile>
     <Compile Include="Views\IPScannerHostView.xaml.cs">
       <DependentUpon>IPScannerHostView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SNMPHostView.xaml.cs">
+      <DependentUpon>SNMPHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TracerouteProfileDialog.xaml.cs">
       <DependentUpon>TracerouteProfileDialog.xaml</DependentUpon>
@@ -473,6 +482,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\DragablzIPScannerTabHostWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\DragablzSNMPTabHostWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -612,6 +625,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\IPScannerHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SNMPHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -41,7 +41,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        #region Sessions
+        #region Profiles
         ICollectionView _tracerouteProfiles;
         public ICollectionView TracerouteProfiles
         {
