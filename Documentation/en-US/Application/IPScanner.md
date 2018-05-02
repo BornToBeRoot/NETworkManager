@@ -1,9 +1,9 @@
 # IP Scanner
 
-![IPScanner](../../_images/IPScanner.png)
+![IP Scanner](../../_images/IPScanner.png)
 
 ## Profile
 
-![IPScanner Profile](../../_images/IPScanner_Profile.png)
+![IP Scanner Profile](../../_images/IPScanner_Profile.png)
 
 [back](../README.md)
