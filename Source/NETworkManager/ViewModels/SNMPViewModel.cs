@@ -14,6 +14,8 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
 using static NETworkManager.Models.Network.SNMP;
+using NETworkManager.Controls;
+using Dragablz;
 
 namespace NETworkManager.ViewModels
 {
@@ -472,6 +474,17 @@ namespace NETworkManager.ViewModels
 
             QueryResult.Clear();
             Responses = 0;
+
+            // Change the tab title (not nice, but it works)
+            Window window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+            if (window != null)
+            {
+                foreach (TabablzControl tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+                {
+                    tabablzControl.Items.OfType<DragablzSNMPTabItem>().First(x => x.ID == _tabId).Header = Host;
+                }
+            }
 
             // Try to parse the string into an IP-Address
             IPAddress.TryParse(Host, out IPAddress ipAddress);
