@@ -4,6 +4,6 @@
 
 ## Profil
 
-![Port-Scanner Profile](../../_images/PortScanner_Profile.de-DE.png)
+![Port-Scanner Profil](../../_images/PortScanner_Profile.de-DE.png)
 
 [zurück](../README.md)
