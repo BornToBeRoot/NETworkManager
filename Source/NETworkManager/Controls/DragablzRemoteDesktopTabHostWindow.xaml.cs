@@ -1,5 +1,6 @@
 ﻿using Dragablz;
 using MahApps.Metro.Controls;
+using System.Windows.Input;
 
 namespace NETworkManager.Controls
 {
@@ -25,5 +26,14 @@ namespace NETworkManager.Controls
             ((args.DragablzItem.Content as DragablzRemoteDesktopTabItem).View as RemoteDesktopControl).OnClose();
         }
         #endregion
+
+        #region Window helper
+        // Move the window when the user hold the title...
+        private void HeaderBorder_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                DragMove();
+        }
+        #endregion 
     }
 }

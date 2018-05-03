@@ -11,7 +11,14 @@
         <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </Controls:MetroWindow.WindowButtonCommands>
     <Grid>
-        <dragablz:TabablzControl Name="TabsContainer" ClosingItemCallback="{Binding CloseItemCommand}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border x:Name="HeaderBorder" Grid.Row="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,0,1" MouseDown="HeaderBorder_MouseDown">
+            <TextBlock VerticalAlignment="Center" Height="48" TextAlignment="Center" FontSize="22" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_ApplicationName_Ping}" Foreground="{DynamicResource GrayBrush3}" Margin="0" />
+        </Border>
+        <dragablz:TabablzControl Grid.Row="1" Name="TabsContainer" ClosingItemCallback="{Binding CloseItemCommand}">
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController Partition="DF0DC56F-0C28-4917-B1B1-5DA7A9C8FFA5" />
             </dragablz:TabablzControl.InterTabController>
