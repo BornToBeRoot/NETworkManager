@@ -403,7 +403,7 @@ namespace NETworkManager
         PortScannerHostView portScannerHostView;
         PingHostView pingHostView;
         TracerouteHostView tracerouteHostView;
-        DNSLookupView dnsLookupView;
+        DNSLookupHostView dnsLookupHostView;
         RemoteDesktopView remoteDesktopView;
         PuTTYView puTTYView;
         SNMPHostView snmpHostView;
@@ -453,10 +453,10 @@ namespace NETworkManager
                     contentControlApplication.Content = tracerouteHostView;
                     break;
                 case ApplicationViewManager.Name.DNSLookup:
-                    if (dnsLookupView == null)
-                        dnsLookupView = new DNSLookupView();
+                    if (dnsLookupHostView == null)
+                        dnsLookupHostView = new DNSLookupHostView();
 
-                    contentControlApplication.Content = dnsLookupView;
+                    contentControlApplication.Content = dnsLookupHostView;
                     break;
                 case ApplicationViewManager.Name.RemoteDesktop:
                     if (remoteDesktopView == null)

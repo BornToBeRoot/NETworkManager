@@ -222,7 +222,12 @@
     </Compile>
     <Compile Include="Controls\DragablzPortScannerTabItem.cs" />
     <Compile Include="Controls\DragablzIPScannerTabItem.cs" />
+    <Compile Include="Controls\DragablzDNSLookupInterTabClient.cs" />
     <Compile Include="Controls\DragablzSNMPInterTabClient.cs" />
+    <Compile Include="Controls\DragablzDNSLookupTabHostWindow.xaml.cs">
+      <DependentUpon>DragablzDNSLookupTabHostWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DragablzDNSLookupTabItem.cs" />
     <Compile Include="Controls\DragablzTracerouteInterTabClient.cs" />
     <Compile Include="Controls\DragablzSNMPTabHostWindow.xaml.cs">
       <DependentUpon>DragablzSNMPTabHostWindow.xaml</DependentUpon>
@@ -298,6 +303,7 @@
     <Compile Include="Validators\SubnetCalculatorSubnetValidator.cs" />
     <Compile Include="ViewModels\PortScannerHostViewModel.cs" />
     <Compile Include="ViewModels\IPScannerHostViewModel.cs" />
+    <Compile Include="ViewModels\DNSLookupHostViewModel.cs" />
     <Compile Include="ViewModels\SNMPHostViewModel.cs" />
     <Compile Include="ViewModels\TracerouteProfileViewModel.cs" />
     <Compile Include="ViewModels\TracerouteHostViewModel.cs" />
@@ -357,6 +363,9 @@
     </Compile>
     <Compile Include="Views\IPScannerHostView.xaml.cs">
       <DependentUpon>IPScannerHostView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DNSLookupHostView.xaml.cs">
+      <DependentUpon>DNSLookupHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SNMPHostView.xaml.cs">
       <DependentUpon>SNMPHostView.xaml</DependentUpon>
@@ -482,6 +491,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\DragablzIPScannerTabHostWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\DragablzDNSLookupTabHostWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -625,6 +638,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\IPScannerHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DNSLookupHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

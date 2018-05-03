@@ -3,14 +3,14 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class SNMPHostView : UserControl
+    public partial class DNSLookupHostView : UserControl
     {
-        SNMPHostViewModel viewModel = new SNMPHostViewModel();
+        DNSLookupHostViewModel viewModel = new DNSLookupHostViewModel();
 
-        public SNMPHostView()
+        public DNSLookupHostView()
         {
             InitializeComponent();
             DataContext = viewModel;
-        }               
+        }
     }
 }

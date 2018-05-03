@@ -12,15 +12,19 @@ using System.ComponentModel;
 using System.Windows.Data;
 using NETworkManager.Utilities;
 using System.Collections.ObjectModel;
+using NETworkManager.Controls;
+using Dragablz;
 
 namespace NETworkManager.ViewModels
 {
     public class DNSLookupViewModel : ViewModelBase
     {
         #region Variables
+        private int _tabId;
+
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         Stopwatch stopwatch = new Stopwatch();
-
+                
         private bool _isLoading = true;
 
         private string _host;
@@ -198,8 +202,10 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public DNSLookupViewModel()
+        public DNSLookupViewModel(int tabId)
         {
+            _tabId = tabId;
+
             _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_HostHistory);
             _lookupResultView = CollectionViewSource.GetDefaultView(LookupResult);
             _lookupResultView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.DNSServer)));
@@ -300,6 +306,17 @@ namespace NETworkManager.ViewModels
             // Reset the latest results
             LookupResult.Clear();
 
+            // Change the tab title (not nice, but it works)
+            Window window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+            if (window != null)
+            {
+                foreach (TabablzControl tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+                {
+                    tabablzControl.Items.OfType<DragablzDNSLookupTabItem>().First(x => x.ID == _tabId).Header = Host;
+                }
+            }
+
             AddHostToHistory(Host);
 
             DNSLookupOptions dnsLookupOptions = new DNSLookupOptions();
@@ -351,6 +368,11 @@ namespace NETworkManager.ViewModels
             IsLookupRunning = false;
         }
 
+        public void OnClose()
+        {
+
+        }
+
         // Modify history list
         private void AddHostToHistory(string host)
         {
@@ -400,7 +422,7 @@ namespace NETworkManager.ViewModels
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             Duration = stopwatch.Elapsed;
-        }
+        }                
         #endregion
     }
 }

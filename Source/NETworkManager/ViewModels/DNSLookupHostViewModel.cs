@@ -5,19 +5,17 @@ using System.Windows.Input;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
 using NETworkManager.Models.Settings;
-using MahApps.Metro.Controls.Dialogs;
+using System;
 
 namespace NETworkManager.ViewModels
 {
-    public class SNMPHostViewModel : ViewModelBase
+    public class DNSLookupHostViewModel : ViewModelBase
     {
         #region Variables
         public IInterTabClient InterTabClient { get; private set; }
-        public ObservableCollection<DragablzSNMPTabItem> TabItems { get; private set; }
+        public ObservableCollection<DragablzDNSLookupTabItem> TabItems { get; private set; }
 
         private const string tagIdentifier = "tag=";
-
-        private bool _isLoading = true;
 
         private int _tabId = 0;
 
@@ -37,28 +35,26 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor
-        public SNMPHostViewModel()
+        public DNSLookupHostViewModel()
         {
-            InterTabClient = new DragablzSNMPInterTabClient();
+            InterTabClient = new DragablzDNSLookupInterTabClient();
 
-            TabItems = new ObservableCollection<DragablzSNMPTabItem>()
+            TabItems = new ObservableCollection<DragablzDNSLookupTabItem>()
             {
-                new DragablzSNMPTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new SNMPView (_tabId), _tabId)
+                new DragablzDNSLookupTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new DNSLookupView (_tabId), _tabId)
             };
-
-            _isLoading = false;
         }
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddSNMPTabCommand
+        public ICommand AddDNSLookupTabCommand
         {
-            get { return new RelayCommand(p => AddSNMPTabAction()); }
+            get { return new RelayCommand(p => AddDNSLookupTabAction()); }
         }
 
-        private void AddSNMPTabAction()
+        private void AddDNSLookupTabAction()
         {
-            AddSNMPTab();
+            AddDNSLookupTab();
         }
 
         public ItemActionCallback CloseItemCommand
@@ -68,16 +64,16 @@ namespace NETworkManager.ViewModels
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzSNMPTabItem).View as SNMPView).CloseTab();
+            ((args.DragablzItem.Content as DragablzDNSLookupTabItem).View as DNSLookupView).CloseTab();
         }
         #endregion
 
         #region Methods
-        private void AddSNMPTab()
+        private void AddDNSLookupTab()
         {
             _tabId++;
 
-            TabItems.Add(new DragablzSNMPTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new SNMPView(_tabId), _tabId));
+            TabItems.Add(new DragablzDNSLookupTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new DNSLookupView(_tabId), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }
