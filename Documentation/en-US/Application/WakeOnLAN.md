@@ -4,6 +4,6 @@
 
 ## Client
 
-![Wake on LAN Client](../../_images/WakeOnLAN_Client.png)
+![Wake on LAN / Client](../../_images/WakeOnLAN_Client.png)
 
 [back](../README.md)
