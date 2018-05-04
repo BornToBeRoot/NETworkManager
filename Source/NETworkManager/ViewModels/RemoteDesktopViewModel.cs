@@ -21,14 +21,14 @@ namespace NETworkManager.ViewModels
         private IDialogCoordinator dialogCoordinator;
 
         public IInterTabClient InterTabClient { get; private set; }
-        public ObservableCollection<DragablzRemoteDesktopTabItem> TabItems { get; private set; }
+        public ObservableCollection<DragablzTabItem> TabItems { get; private set; }
 
         private const string tagIdentifier = "tag=";
 
         private bool _isLoading = true;
 
         private bool _isRDP8dot1Available;
-        public bool IsRDP8dot1Available
+        public bool IsRDP8dot1Available 
         {
             get { return _isRDP8dot1Available; }
             set
@@ -123,7 +123,7 @@ namespace NETworkManager.ViewModels
             if (IsRDP8dot1Available)
             {
                 InterTabClient = new DragablzRemoteDesktopInterTabClient();
-                TabItems = new ObservableCollection<DragablzRemoteDesktopTabItem>();
+                TabItems = new ObservableCollection<DragablzTabItem>();
 
                 // Load sessions
                 if (RemoteDesktopSessionManager.Sessions == null)
@@ -176,7 +176,7 @@ namespace NETworkManager.ViewModels
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzRemoteDesktopTabItem).View as RemoteDesktopControl).OnClose();
+            ((args.DragablzItem.Content as DragablzTabItem).View as RemoteDesktopControl).OnClose();
         }
 
         public ICommand ConnectNewSessionCommand
@@ -624,7 +624,7 @@ namespace NETworkManager.ViewModels
             sessionInfo.RedirectPorts = SettingsManager.Current.RemoteDesktop_RedirectPorts;
             sessionInfo.RedirectSmartCards = SettingsManager.Current.RemoteDesktop_RedirectSmartCards;
 
-            TabItems.Add(new DragablzRemoteDesktopTabItem(Header ?? sessionInfo.Hostname, new RemoteDesktopControl(sessionInfo)));
+            TabItems.Add(new DragablzTabItem(Header ?? sessionInfo.Hostname, new RemoteDesktopControl(sessionInfo)));
             SelectedTabIndex = TabItems.Count - 1;
         }
 

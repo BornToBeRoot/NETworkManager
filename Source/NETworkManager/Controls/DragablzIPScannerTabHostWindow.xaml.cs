@@ -24,7 +24,7 @@ namespace NETworkManager.Controls
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzIPScannerTabItem).View as IPScannerView).CloseTab();
+            ((args.DragablzItem.Content as DragablzTabItem).View as IPScannerView).CloseTab();
         }
         #endregion
         

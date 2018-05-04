@@ -24,7 +24,7 @@ namespace NETworkManager.Controls
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzTracerouteTabItem).View as TracerouteView).CloseTab();
+            ((args.DragablzItem.Content as DragablzTabItem).View as TracerouteView).CloseTab();
         }
         #endregion
 

@@ -351,7 +351,7 @@ namespace NETworkManager.ViewModels
             {
                 foreach (TabablzControl tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
                 {
-                    tabablzControl.Items.OfType<DragablzPingTabItem>().First(x => x.ID == _tabId).Header = Host;
+                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.ID == _tabId).Header = Host;
                 }
             }
 

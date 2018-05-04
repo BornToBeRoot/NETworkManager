@@ -24,7 +24,7 @@ namespace NETworkManager.Controls
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzPingTabItem).View as PingView).CloseTab();
+            ((args.DragablzItem.Content as DragablzTabItem).View as PingView).CloseTab();
         }
         #endregion
 

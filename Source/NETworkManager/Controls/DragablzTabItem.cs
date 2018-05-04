@@ -1,9 +1,9 @@
 ﻿using NETworkManager.Utilities;
-using NETworkManager.Views;
+using System.Windows.Controls;
 
 namespace NETworkManager.Controls
 {
-    public class DragablzHTTPHeadersTabItem : ViewModelBase
+    public class DragablzTabItem : ViewModelBase
     {
         private string _header;
         public string Header
@@ -19,10 +19,16 @@ namespace NETworkManager.Controls
             }
         }
 
-        public HTTPHeadersView View { get; set; }
+        public UserControl View { get; set; }
         public int ID { get; set; }
 
-        public DragablzHTTPHeadersTabItem(string header, HTTPHeadersView view, int id)
+        public DragablzTabItem(string header, UserControl view)
+        {
+            Header = header;
+            View = view;         
+        }
+
+        public DragablzTabItem(string header, UserControl view, int id)
         {
             Header = header;
             View = view;

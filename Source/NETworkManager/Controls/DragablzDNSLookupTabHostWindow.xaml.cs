@@ -24,7 +24,7 @@ namespace NETworkManager.Controls
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzDNSLookupTabItem).View as DNSLookupView).CloseTab();
+            ((args.DragablzItem.Content as DragablzTabItem).View as DNSLookupView).CloseTab();
         }
         #endregion
 

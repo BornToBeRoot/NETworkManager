@@ -19,7 +19,7 @@ namespace NETworkManager.ViewModels
         private IDialogCoordinator dialogCoordinator;
 
         public IInterTabClient InterTabClient { get; private set; }
-        public ObservableCollection<DragablzTracerouteTabItem> TabItems { get; private set; }
+        public ObservableCollection<DragablzTabItem> TabItems { get; private set; }
 
         private const string tagIdentifier = "tag=";
 
@@ -105,9 +105,9 @@ namespace NETworkManager.ViewModels
 
             InterTabClient = new DragablzTracerouteInterTabClient();
 
-            TabItems = new ObservableCollection<DragablzTracerouteTabItem>()
+            TabItems = new ObservableCollection<DragablzTabItem>()
             {
-                new DragablzTracerouteTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new TracerouteView(_tabId), _tabId)
+                new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new TracerouteView(_tabId), _tabId)
             };
 
             // Load profiles
@@ -358,7 +358,7 @@ namespace NETworkManager.ViewModels
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzTracerouteTabItem).View as TracerouteView).CloseTab();
+            ((args.DragablzItem.Content as DragablzTabItem).View as TracerouteView).CloseTab();
         }
         #endregion
 
@@ -367,7 +367,7 @@ namespace NETworkManager.ViewModels
         {
             _tabId++;
 
-            TabItems.Add(new DragablzTracerouteTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new TracerouteView(_tabId, host), _tabId));
+            TabItems.Add(new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new TracerouteView(_tabId, host), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

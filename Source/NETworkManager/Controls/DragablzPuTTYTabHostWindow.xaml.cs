@@ -23,7 +23,7 @@ namespace NETworkManager.Controls
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzPuTTYTabItem).View as PuTTYControl).OnClose();
+            ((args.DragablzItem.Content as DragablzTabItem).View as PuTTYControl).OnClose();
         }
         #endregion
 

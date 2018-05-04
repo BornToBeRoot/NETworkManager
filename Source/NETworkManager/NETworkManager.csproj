@@ -220,14 +220,11 @@
     <Compile Include="Controls\DragablzIPScannerTabHostWindow.xaml.cs">
       <DependentUpon>DragablzIPScannerTabHostWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DragablzPortScannerTabItem.cs" />
-    <Compile Include="Controls\DragablzIPScannerTabItem.cs" />
     <Compile Include="Controls\DragablzDNSLookupInterTabClient.cs" />
     <Compile Include="Controls\DragablzSNMPInterTabClient.cs" />
     <Compile Include="Controls\DragablzDNSLookupTabHostWindow.xaml.cs">
       <DependentUpon>DragablzDNSLookupTabHostWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DragablzDNSLookupTabItem.cs" />
     <Compile Include="Controls\DragablzHTTPHeadersInterTabClient.cs" />
     <Compile Include="Controls\DragablzTracerouteInterTabClient.cs" />
     <Compile Include="Controls\DragablzSNMPTabHostWindow.xaml.cs">
@@ -239,9 +236,7 @@
     <Compile Include="Controls\DragablzTracerouteTabHostWindow.xaml.cs">
       <DependentUpon>DragablzTracerouteTabHostWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DragablzSNMPTabItem.cs" />
-    <Compile Include="Controls\DragablzHTTPHeadersTabItem.cs" />
-    <Compile Include="Controls\DragablzTracerouteTabItem.cs" />
+    <Compile Include="Controls\DragablzTabItem.cs" />
     <Compile Include="Controls\DragablzPuTTYInterTabClient.cs" />
     <Compile Include="Controls\DragablzPuTTYTabHostWindow.xaml.cs">
       <DependentUpon>DragablzPuTTYTabHostWindow.xaml</DependentUpon>
@@ -251,9 +246,6 @@
     </Compile>
     <Compile Include="Controls\DragablzRemoteDesktopInterTabClient.cs" />
     <Compile Include="Controls\DragablzPingInterTabClient.cs" />
-    <Compile Include="Controls\DragablzPingTabItem.cs" />
-    <Compile Include="Controls\DragablzPuTTYTabItem.cs" />
-    <Compile Include="Controls\DragablzRemoteDesktopTabItem.cs" />
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>

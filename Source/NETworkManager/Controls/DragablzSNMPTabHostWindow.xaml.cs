@@ -24,7 +24,7 @@ namespace NETworkManager.Controls
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzSNMPTabItem).View as SNMPView).CloseTab();
+            ((args.DragablzItem.Content as DragablzTabItem).View as SNMPView).CloseTab();
         }
         #endregion
 

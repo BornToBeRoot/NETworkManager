@@ -24,7 +24,7 @@ namespace NETworkManager.ViewModels
         private IDialogCoordinator dialogCoordinator;
 
         public IInterTabClient InterTabClient { get; private set; }
-        public ObservableCollection<DragablzPuTTYTabItem> TabItems { get; private set; }
+        public ObservableCollection<DragablzTabItem> TabItems { get; private set; }
 
         private const string tagIdentifier = "tag=";
 
@@ -124,7 +124,7 @@ namespace NETworkManager.ViewModels
             CheckIfPuTTYConfigured();
 
             InterTabClient = new DragablzPuTTYInterTabClient();
-            TabItems = new ObservableCollection<DragablzPuTTYTabItem>();
+            TabItems = new ObservableCollection<DragablzTabItem>();
 
             // Load sessions
             if (PuTTYSessionManager.Sessions == null)
@@ -182,7 +182,7 @@ namespace NETworkManager.ViewModels
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzPuTTYTabItem).View as PuTTYControl).OnClose();
+            ((args.DragablzItem.Content as DragablzTabItem).View as PuTTYControl).OnClose();
         }
 
         public ICommand ConnectNewSessionCommand
@@ -449,7 +449,7 @@ namespace NETworkManager.ViewModels
             // Add PuTTY path here...
             sessionInfo.PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
 
-            TabItems.Add(new DragablzPuTTYTabItem(Header ?? sessionInfo.HostOrSerialLine, new PuTTYControl(sessionInfo)));
+            TabItems.Add(new DragablzTabItem(Header ?? sessionInfo.HostOrSerialLine, new PuTTYControl(sessionInfo)));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

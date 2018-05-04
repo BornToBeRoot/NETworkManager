@@ -12,7 +12,7 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         public IInterTabClient InterTabClient { get; private set; }
-        public ObservableCollection<DragablzSNMPTabItem> TabItems { get; private set; }
+        public ObservableCollection<DragablzTabItem> TabItems { get; private set; }
 
         private const string tagIdentifier = "tag=";
 
@@ -38,9 +38,9 @@ namespace NETworkManager.ViewModels
         {
             InterTabClient = new DragablzSNMPInterTabClient();
 
-            TabItems = new ObservableCollection<DragablzSNMPTabItem>()
+            TabItems = new ObservableCollection<DragablzTabItem>()
             {
-                new DragablzSNMPTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new SNMPView (_tabId), _tabId)
+                new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new SNMPView (_tabId), _tabId)
             };
         }
         #endregion
@@ -63,7 +63,7 @@ namespace NETworkManager.ViewModels
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzSNMPTabItem).View as SNMPView).CloseTab();
+            ((args.DragablzItem.Content as DragablzTabItem).View as SNMPView).CloseTab();
         }
         #endregion
 
@@ -72,7 +72,7 @@ namespace NETworkManager.ViewModels
         {
             _tabId++;
 
-            TabItems.Add(new DragablzSNMPTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new SNMPView(_tabId), _tabId));
+            TabItems.Add(new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new SNMPView(_tabId), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

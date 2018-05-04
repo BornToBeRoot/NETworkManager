@@ -19,7 +19,7 @@ namespace NETworkManager.ViewModels
         private IDialogCoordinator dialogCoordinator;
 
         public IInterTabClient InterTabClient { get; private set; }
-        public ObservableCollection<DragablzPingTabItem> TabItems { get; private set; }
+        public ObservableCollection<DragablzTabItem> TabItems { get; private set; }
 
         private const string tagIdentifier = "tag=";
 
@@ -105,9 +105,9 @@ namespace NETworkManager.ViewModels
 
             InterTabClient = new DragablzPingInterTabClient();
 
-            TabItems = new ObservableCollection<DragablzPingTabItem>()
+            TabItems = new ObservableCollection<DragablzTabItem>()
             {
-                new DragablzPingTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new PingView(_tabId), _tabId)
+                new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new PingView(_tabId), _tabId)
             };
 
             // Load profiles
@@ -358,7 +358,7 @@ namespace NETworkManager.ViewModels
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzPingTabItem).View as PingView).CloseTab();
+            ((args.DragablzItem.Content as DragablzTabItem).View as PingView).CloseTab();
         }
         #endregion
 
@@ -367,7 +367,7 @@ namespace NETworkManager.ViewModels
         {
             _tabId++;
 
-            TabItems.Add(new DragablzPingTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new PingView(_tabId, host), _tabId));
+            TabItems.Add(new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new PingView(_tabId, host), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }
