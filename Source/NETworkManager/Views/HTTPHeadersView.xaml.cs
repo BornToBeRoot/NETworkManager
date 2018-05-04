@@ -5,12 +5,20 @@ namespace NETworkManager.Views
 {
     public partial class HTTPHeadersView : UserControl
     {
-        HTTPHeadersViewModel viewModel = new HTTPHeadersViewModel();
+        HTTPHeadersViewModel viewModel;
 
-        public HTTPHeadersView()
+        public HTTPHeadersView(int tabId)
         {
             InitializeComponent();
+
+            viewModel = new HTTPHeadersViewModel(tabId);
+
             DataContext = viewModel;
+        }
+
+        public void CloseTab()
+        {
+            viewModel.OnClose();
         }
 
         private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)

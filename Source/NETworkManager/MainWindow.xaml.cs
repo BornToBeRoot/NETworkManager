@@ -409,7 +409,7 @@ namespace NETworkManager
         SNMPHostView snmpHostView;
         WakeOnLANView wakeOnLANView;
         SubnetCalculatorHostView subnetCalculatorHostView;
-        HTTPHeadersView httpHeadersView;
+        HTTPHeadersHostView httpHeadersHostView;
         ARPTableView arpTableView;
         LookupHostView lookupHostView;
 
@@ -489,10 +489,10 @@ namespace NETworkManager
                     contentControlApplication.Content = subnetCalculatorHostView;
                     break;
                 case ApplicationViewManager.Name.HTTPHeaders:
-                    if (httpHeadersView == null)
-                        httpHeadersView = new HTTPHeadersView();
+                    if (httpHeadersHostView == null)
+                        httpHeadersHostView = new HTTPHeadersHostView();
 
-                    contentControlApplication.Content = httpHeadersView;
+                    contentControlApplication.Content = httpHeadersHostView;
                     break;
                 case ApplicationViewManager.Name.ARPTable:
                     if (arpTableView == null)

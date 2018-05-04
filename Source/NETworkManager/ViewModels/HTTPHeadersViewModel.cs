@@ -10,16 +10,21 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System.Linq;
 using NETworkManager.Utilities;
+using System.Windows;
+using NETworkManager.Controls;
+using Dragablz;
 
 namespace NETworkManager.ViewModels
 {
     public class HTTPHeadersViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
-
+        private int _tabId;
+                
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         Stopwatch stopwatch = new Stopwatch();
+
+        private bool _isLoading = true;
 
         private string _websiteUri;
         public string WebsiteUri
@@ -173,8 +178,10 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public HTTPHeadersViewModel()
+        public HTTPHeadersViewModel(int tabId)
         {
+            _tabId = tabId;
+
             // Set collection view
             _websiteUriHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.HTTPHeaders_WebsiteUriHistory);
 
@@ -218,6 +225,17 @@ namespace NETworkManager.ViewModels
             Headers = null;
             HeadersCount = 0;
 
+            // Change the tab title (not nice, but it works)
+            Window window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+            if (window != null)
+            {
+                foreach (TabablzControl tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+                {
+                    tabablzControl.Items.OfType<DragablzHTTPHeadersTabItem>().First(x => x.ID == _tabId).Header = WebsiteUri;
+                }
+            }
+
             try
             {
                 HTTPHeadersOptions options = new HTTPHeadersOptions()
@@ -248,6 +266,11 @@ namespace NETworkManager.ViewModels
             stopwatch.Reset();
 
             IsCheckRunning = false;
+        }
+
+        public void OnClose()
+        {
+
         }
 
         private void AddWebsiteUriToHistory(string websiteUri)

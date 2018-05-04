@@ -8,11 +8,11 @@ using NETworkManager.Models.Settings;
 
 namespace NETworkManager.ViewModels
 {
-    public class SNMPHostViewModel : ViewModelBase
+    public class HTTPHeadersHostViewModel : ViewModelBase
     {
         #region Variables
         public IInterTabClient InterTabClient { get; private set; }
-        public ObservableCollection<DragablzSNMPTabItem> TabItems { get; private set; }
+        public ObservableCollection<DragablzHTTPHeadersTabItem> TabItems { get; private set; }
 
         private const string tagIdentifier = "tag=";
 
@@ -34,26 +34,26 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor
-        public SNMPHostViewModel()
+        public HTTPHeadersHostViewModel()
         {
-            InterTabClient = new DragablzSNMPInterTabClient();
+            InterTabClient = new DragablzHTTPHeadersInterTabClient();
 
-            TabItems = new ObservableCollection<DragablzSNMPTabItem>()
+            TabItems = new ObservableCollection<DragablzHTTPHeadersTabItem>()
             {
-                new DragablzSNMPTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new SNMPView (_tabId), _tabId)
+                new DragablzHTTPHeadersTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new HTTPHeadersView (_tabId), _tabId)
             };
         }
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddSNMPTabCommand
+        public ICommand AddHTTPHeadersTabCommand
         {
-            get { return new RelayCommand(p => AddSNMPTabAction()); }
+            get { return new RelayCommand(p => AddHTTPHeadersTabAction()); }
         }
 
-        private void AddSNMPTabAction()
+        private void AddHTTPHeadersTabAction()
         {
-            AddSNMPTab();
+            AddHTTPHeadersTab();
         }
 
         public ItemActionCallback CloseItemCommand
@@ -63,16 +63,16 @@ namespace NETworkManager.ViewModels
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzSNMPTabItem).View as SNMPView).CloseTab();
+            ((args.DragablzItem.Content as DragablzHTTPHeadersTabItem).View as HTTPHeadersView).CloseTab();
         }
         #endregion
 
         #region Methods
-        private void AddSNMPTab()
+        private void AddHTTPHeadersTab()
         {
             _tabId++;
 
-            TabItems.Add(new DragablzSNMPTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new SNMPView(_tabId), _tabId));
+            TabItems.Add(new DragablzHTTPHeadersTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new HTTPHeadersView(_tabId), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

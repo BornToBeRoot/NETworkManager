@@ -228,14 +228,19 @@
       <DependentUpon>DragablzDNSLookupTabHostWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DragablzDNSLookupTabItem.cs" />
+    <Compile Include="Controls\DragablzHTTPHeadersInterTabClient.cs" />
     <Compile Include="Controls\DragablzTracerouteInterTabClient.cs" />
     <Compile Include="Controls\DragablzSNMPTabHostWindow.xaml.cs">
       <DependentUpon>DragablzSNMPTabHostWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DragablzHTTPHeadersTabHostWindow.xaml.cs">
+      <DependentUpon>DragablzHTTPHeadersTabHostWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DragablzTracerouteTabHostWindow.xaml.cs">
       <DependentUpon>DragablzTracerouteTabHostWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DragablzSNMPTabItem.cs" />
+    <Compile Include="Controls\DragablzHTTPHeadersTabItem.cs" />
     <Compile Include="Controls\DragablzTracerouteTabItem.cs" />
     <Compile Include="Controls\DragablzPuTTYInterTabClient.cs" />
     <Compile Include="Controls\DragablzPuTTYTabHostWindow.xaml.cs">
@@ -304,6 +309,7 @@
     <Compile Include="ViewModels\PortScannerHostViewModel.cs" />
     <Compile Include="ViewModels\IPScannerHostViewModel.cs" />
     <Compile Include="ViewModels\DNSLookupHostViewModel.cs" />
+    <Compile Include="ViewModels\HTTPHeadersHostViewModel.cs" />
     <Compile Include="ViewModels\SNMPHostViewModel.cs" />
     <Compile Include="ViewModels\TracerouteProfileViewModel.cs" />
     <Compile Include="ViewModels\TracerouteHostViewModel.cs" />
@@ -366,6 +372,9 @@
     </Compile>
     <Compile Include="Views\DNSLookupHostView.xaml.cs">
       <DependentUpon>DNSLookupHostView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HTTPHeadersHostView.xaml.cs">
+      <DependentUpon>HTTPHeadersHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SNMPHostView.xaml.cs">
       <DependentUpon>SNMPHostView.xaml</DependentUpon>
@@ -499,6 +508,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\DragablzSNMPTabHostWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\DragablzHTTPHeadersTabHostWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -642,6 +655,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\DNSLookupHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\HTTPHeadersHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
