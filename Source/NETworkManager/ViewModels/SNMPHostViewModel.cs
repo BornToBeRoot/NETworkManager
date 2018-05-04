@@ -46,14 +46,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddSNMPTabCommand
+        public ICommand AddTabCommand
         {
-            get { return new RelayCommand(p => AddSNMPTabAction()); }
+            get { return new RelayCommand(p => AddTabAction()); }
         }
 
-        private void AddSNMPTabAction()
+        private void AddTabAction()
         {
-            AddSNMPTab();
+            AddTab();
         }
 
         public ItemActionCallback CloseItemCommand
@@ -68,7 +68,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void AddSNMPTab()
+        private void AddTab()
         {
             _tabId++;
 

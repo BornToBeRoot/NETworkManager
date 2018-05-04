@@ -153,14 +153,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddTracerouteTabCommand
+        public ICommand AddTabCommand
         {
-            get { return new RelayCommand(p => AddTracerouteTabAction()); }
+            get { return new RelayCommand(p => AddTabAction()); }
         }
 
-        private void AddTracerouteTabAction()
+        private void AddTabAction()
         {
-            AddTracerouteTab();
+            AddTab();
         }
 
         public ICommand AddProfileCommand
@@ -208,7 +208,7 @@ namespace NETworkManager.ViewModels
 
         private void TraceProfileAction()
         {
-            AddTracerouteTab(SelectedProfile.Host);
+            AddTab(SelectedProfile.Host);
         }
 
         public ICommand EditProfileCommand
@@ -363,7 +363,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void AddTracerouteTab(string host = null)
+        private void AddTab(string host = null)
         {
             _tabId++;
 

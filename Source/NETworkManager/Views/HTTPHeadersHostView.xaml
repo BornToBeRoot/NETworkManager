@@ -12,7 +12,7 @@
         <Converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
     </UserControl.Resources>
     <UserControl.InputBindings>
-        <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding AddHTTPHeadersTabCommand}" />
+        <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding AddTabCommand}" />
     </UserControl.InputBindings>
     <Grid>
         <dragablz:TabablzControl Margin="-0,-2,0,0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" >
@@ -72,7 +72,7 @@
                     <Setter Property="HeaderSuffixContent" >
                         <Setter.Value>
                             <Grid HorizontalAlignment="Left" Width="40" Height="40">
-                                <Button Style="{StaticResource CleanButton}" Command="{Binding AddHTTPHeadersTabCommand}" Focusable="False">
+                                <Button Style="{StaticResource CleanButton}" Command="{Binding AddTabCommand}" Focusable="False">
                                     <Rectangle Width="20" Height="20">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />

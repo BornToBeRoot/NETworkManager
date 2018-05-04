@@ -143,14 +143,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddPortScannerTabCommand
+        public ICommand AddTabCommand
         {
-            get { return new RelayCommand(p => AddPortScannerTabAction()); }
+            get { return new RelayCommand(p => AddTabAction()); }
         }
 
-        private void AddPortScannerTabAction()
+        private void AddTabAction()
         {
-            AddPortScannerTab();
+            AddTab();
         }
 
         public ICommand ScanProfileCommand
@@ -160,7 +160,7 @@ namespace NETworkManager.ViewModels
 
         private void ScanProfileAction()
         {
-            AddPortScannerTab(SelectedProfile.Hostname, SelectedProfile.Ports);
+            AddTab(SelectedProfile.Hostname, SelectedProfile.Ports);
         }
 
         public ICommand AddProfileCommand
@@ -353,7 +353,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void AddPortScannerTab(string host = null, string ports = null)
+        private void AddTab(string host = null, string ports = null)
         {
             _tabId++;
 

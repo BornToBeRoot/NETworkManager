@@ -450,6 +450,7 @@ namespace NETworkManager.ViewModels
             sessionInfo.PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
 
             TabItems.Add(new DragablzPuTTYTabItem(Header ?? sessionInfo.HostOrSerialLine, new PuTTYControl(sessionInfo)));
+
             SelectedTabIndex = TabItems.Count - 1;
         }
 

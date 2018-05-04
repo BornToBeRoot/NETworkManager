@@ -5,7 +5,6 @@ using System.Windows.Input;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
 using NETworkManager.Models.Settings;
-using System;
 
 namespace NETworkManager.ViewModels
 {
@@ -47,14 +46,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddDNSLookupTabCommand
+        public ICommand AddTabCommand
         {
-            get { return new RelayCommand(p => AddDNSLookupTabAction()); }
+            get { return new RelayCommand(p => AddTabAction()); }
         }
 
-        private void AddDNSLookupTabAction()
+        private void AddTabAction()
         {
-            AddDNSLookupTab();
+            AddTab();
         }
 
         public ItemActionCallback CloseItemCommand
@@ -69,7 +68,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void AddDNSLookupTab()
+        private void AddTab()
         {
             _tabId++;
 

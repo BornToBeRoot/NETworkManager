@@ -153,14 +153,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddPingTabCommand
+        public ICommand AddTabCommand
         {
-            get { return new RelayCommand(p => AddPingTabAction()); }
+            get { return new RelayCommand(p => AddTabAction()); }
         }
 
-        private void AddPingTabAction()
+        private void AddTabAction()
         {
-            AddPingTab();
+            AddTab();
         }
 
         public ICommand AddProfileCommand
@@ -208,7 +208,7 @@ namespace NETworkManager.ViewModels
 
         private void PingProfileAction()
         {
-            AddPingTab(SelectedProfile.Host);
+            AddTab(SelectedProfile.Host);
         }
 
         public ICommand EditProfileCommand
@@ -363,7 +363,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void AddPingTab(string host = null)
+        private void AddTab(string host = null)
         {
             _tabId++;
 

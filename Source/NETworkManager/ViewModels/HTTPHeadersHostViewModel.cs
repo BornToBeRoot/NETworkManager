@@ -46,14 +46,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddHTTPHeadersTabCommand
+        public ICommand AddTabCommand
         {
-            get { return new RelayCommand(p => AddHTTPHeadersTabAction()); }
+            get { return new RelayCommand(p => AddTabAction()); }
         }
 
-        private void AddHTTPHeadersTabAction()
+        private void AddTabAction()
         {
-            AddHTTPHeadersTab();
+            AddTab();
         }
 
         public ItemActionCallback CloseItemCommand
@@ -68,7 +68,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void AddHTTPHeadersTab()
+        private void AddTab()
         {
             _tabId++;
 

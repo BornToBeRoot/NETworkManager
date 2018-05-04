@@ -142,14 +142,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddIPScannerTabCommand
+        public ICommand AddTabCommand
         {
-            get { return new RelayCommand(p => AddIPScannerTabAction()); }
+            get { return new RelayCommand(p => AddTabAction()); }
         }
 
-        private void AddIPScannerTabAction()
+        private void AddTabAction()
         {
-            AddIPScannerTab();
+            AddTab();
         }
 
         public ICommand AddProfileCommand
@@ -196,7 +196,7 @@ namespace NETworkManager.ViewModels
 
         private void ScanProfileAction()
         {
-            AddIPScannerTab(SelectedProfile.IPRange);
+            AddTab(SelectedProfile.IPRange);
         }
 
         public ICommand EditProfileCommand
@@ -349,7 +349,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void AddIPScannerTab(string host = null)
+        private void AddTab(string host = null)
         {
             _tabId++;
 
