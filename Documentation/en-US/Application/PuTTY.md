@@ -4,6 +4,6 @@
 
 ## Session
 
-![PuTTY Session](../../_images/PuTTY_Session.png)
+![PuTTY_Session](../../_images/PuTTY_Session.png)
 
 [back](../README.md)

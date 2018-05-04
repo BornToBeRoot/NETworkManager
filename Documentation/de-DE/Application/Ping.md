@@ -4,6 +4,6 @@
 
 # Profil
 
-![Ping Profil](../../_images/Ping_Profile.de-DE.png)
+![Ping_Profile](../../_images/Ping_Profile.de-DE.png)
 
 [zurück](../README.md)

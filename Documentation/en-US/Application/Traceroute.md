@@ -4,6 +4,6 @@
 
 ## Profile
 
-![Traceroute Profile](../../_images/Traceroute_Profile.png)
+![Traceroute_Profile](../../_images/Traceroute_Profile.png)
 
 [back](../README.md)

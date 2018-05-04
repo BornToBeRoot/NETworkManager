@@ -4,12 +4,12 @@ Das **Netzwerkinterface** Tool erkennt alle Netzwerkadapter des Computers mit de
 
 ## Informationen
 
-![Netzwerkinterface/Informationen](../../_images/NetworkInterface_Information.de-DE.png)
+![NetworkInterface_Information](../../_images/NetworkInterface_Information.de-DE.png)
 
 ## Konfigurieren
 
-![Netzwerkinterface/Konfigurieren](../../_images/NetworkInterface_Configure.de-DE.png)
+![NetworkInterface_Configure](../../_images/NetworkInterface_Configure.de-DE.png)
 
-![Netzwerkinterface/Konfigurieren Profile](../../_images/NetworkInterface_Configure_Profile.de-DE.png)
+![NetworkInterface_Configure_Profile](../../_images/NetworkInterface_Configure_Profile.de-DE.png)
 
 [zurück](../README.md)

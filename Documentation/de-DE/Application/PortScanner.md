@@ -1,9 +1,9 @@
 # Port-Scanner
 
-![Port-Scanner](../../_images/PortScanner.de-DE.png)
+![PortScanner](../../_images/PortScanner.de-DE.png)
 
 ## Profil
 
-![Port-Scanner Profil](../../_images/PortScanner_Profile.de-DE.png)
+![PortScanner_Profile](../../_images/PortScanner_Profile.de-DE.png)
 
 [zurück](../README.md)

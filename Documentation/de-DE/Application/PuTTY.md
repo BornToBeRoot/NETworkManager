@@ -5,6 +5,6 @@
 
 ## Sitzung
 
-![PuTTY Sitzung](../../_images/PuTTY_Session.de-DE.png)
+![PuTTY_Session](../../_images/PuTTY_Session.de-DE.png)
 
 [zurück](../README.md)

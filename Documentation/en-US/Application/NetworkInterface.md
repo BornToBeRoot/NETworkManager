@@ -4,12 +4,12 @@ The **Network Interface** tool detects all network adapters of the computer with
 
 ## Information
 
-![Network Interface/Information](../../_images/NetworkInterface_Information.png)
+![NetworkInterface_Information](../../_images/NetworkInterface_Information.png)
 
 ## Configure
 
-![Network Interface/Configure](../../_images/NetworkInterface_Configure.png)
+![NetworkInterface_Configure](../../_images/NetworkInterface_Configure.png)
 
-![Network Interface/Configure Profile](../../_images/NetworkInterface_Configure_Profile.png)
+![NetworkInterface_Configure_Profile](../../_images/NetworkInterface_Configure_Profile.png)
 
 [back](../README.md)

@@ -32,4 +32,4 @@ If necessary, restart your system and check for updates again.
 
 Open the "Remote Desktop Connection" (mstsc.exe) application from the Windows Start menu/Search and click _Info_. The supported RDP version is displayed in the dialog.
 
-![mstsc.exe/Info](../../_images/Windows6dot1_RDP8dot1.png)
+![Windows6dot1_RDP8dot1](../../_images/Windows6dot1_RDP8dot1.png)
