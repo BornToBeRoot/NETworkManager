@@ -102,5 +102,17 @@
                 </Style>
             </dragablz:TabablzControl.Style>
         </dragablz:TabablzControl>
+        <TextBlock Text="{DynamicResource String_AddATabToQueryTheHTTPHeaders}" >
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding TabItems.Count}" Value="0">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
     </Grid>
 </UserControl>

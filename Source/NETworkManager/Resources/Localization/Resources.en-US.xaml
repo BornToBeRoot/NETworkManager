@@ -400,7 +400,15 @@
     <system:String x:Key="String_OverwriteSettingsInTheDestinationFolder">Overwrite settings in the destination folder?\n\nIf you click "Move &amp; Restart", the remaining files will be copied and the application will be restarted with the new settings!</system:String>
     <system:String x:Key="String_Ping">Ping</system:String>
     <system:String x:Key="String_Trace">Trace</system:String>
-        
+    <system:String x:Key="String_AddATabToPerformANetworkScan">Add a tab to perform a network scan...</system:String>
+    <system:String x:Key="String_AddATabToPerformAPortScan">Add a tab to perform a port scan...</system:String>
+    <system:String x:Key="String_AddATabToPerformAPing">Add a tab to perform a ping...</system:String>
+    <system:String x:Key="String_AddATabToPerformATrace">Add a tab to perform a trace...</system:String>
+    <system:String x:Key="String_AddATabToPerformADNSLookup">Add a tab to perform a DNS lookup...</system:String>
+    <system:String x:Key="String_AddATabToPerformAnSNMPAction">Add a tab to perform an SNMP action...</system:String>
+    <system:String x:Key="String_AddATabToQueryTheHTTPHeaders">Add a tab to query the HTTP headers...</system:String>
+    <system:String x:Key="String_OpenANewConnectioByAddingANewTabOrDoubleClickingOnASession">Open a new connection by adding a new tab or double-clicking on a session...</system:String>
+    
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">How to create a custom theme and accent?</system:String>

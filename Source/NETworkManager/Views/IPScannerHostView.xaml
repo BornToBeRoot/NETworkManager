@@ -109,6 +109,18 @@
                 </Style>
             </dragablz:TabablzControl.Style>
         </dragablz:TabablzControl>
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_AddATabToPerformANetworkScan}" >
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding TabItems.Count}" Value="0">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
         <Border Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource GrayBrush8}">
             <Expander x:Name="expanderProfiles" Header="{DynamicResource String_Header_Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
                 <Grid Width="250">
