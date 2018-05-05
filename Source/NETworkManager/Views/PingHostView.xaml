@@ -108,9 +108,9 @@
                 </Style>
             </dragablz:TabablzControl.Style>
         </dragablz:TabablzControl>
-        <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_AddATabToPerformAPing}" >
-            <TextBlock.Style>
-                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+        <Grid Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
                     <Setter Property="Visibility" Value="Collapsed" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding TabItems.Count}" Value="0">
@@ -118,8 +118,28 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </TextBlock.Style>
-        </TextBlock>
+            </Grid.Style>
+            <StackPanel>
+                <Button Style="{StaticResource CleanButton}" Command="{Binding AddTabCommand}" Focusable="False" Margin="0,0,0,10">
+                    <Rectangle Width="20" Height="20">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
+                        </Rectangle.OpacityMask>
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </Button>
+                <TextBlock Text="{DynamicResource String_AddATabToPerformAPing}" Style="{StaticResource MessageTextBlock}" />
+            </StackPanel>
+        </Grid>
         <Border Grid.Column="1" Grid.Row="0" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource GrayBrush8}">
             <Expander Header="{DynamicResource String_Header_Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
                 <Grid Width="250">
