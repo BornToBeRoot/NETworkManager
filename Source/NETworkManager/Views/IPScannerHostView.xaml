@@ -121,7 +121,7 @@
                 </Style>
             </Grid.Style>
             <StackPanel>
-                <Button Style="{StaticResource CleanButton}" Command="{Binding AddTabCommand}" Focusable="False" Margin="0,0,0,10">
+                <Button HorizontalAlignment="Center" Focusable="False" Command="{Binding AddTabCommand}" Style="{StaticResource CleanButton}" Margin="0,0,0,10">
                     <Rectangle Width="20" Height="20">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
@@ -247,24 +247,64 @@
                             </Style>
                         </ListBox.ItemContainerStyle>
                     </ListBox>
-                    <TextBlock Grid.Row="2" >
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+                    <Grid Grid.Row="2" VerticalAlignment="Center">
+                        <Grid.Style>
+                            <Style TargetType="{x:Type Grid}">
                                 <Setter Property="Visibility" Value="Collapsed" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IPScannerProfiles.Count}" Value="0" >
-                                        <DataTrigger.Setters>
-                                            <Setter Property="Visibility" Value="Visible" />
-                                            <Setter Property="Text" Value="{DynamicResource String_NoProfilesFoundCreateOne}" />
-                                        </DataTrigger.Setters>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
-                                        <Setter Property="Text" Value="{DynamicResource String_NothingFound}" />
+                                    <DataTrigger Binding="{Binding IPScannerProfiles.Count}" Value="0">
+                                        <Setter Property="Visibility" Value="Visible" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
+                        </Grid.Style>
+                        <StackPanel>
+                            <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
+                                        <Setter Property="Command" Value="{Binding AddProfileCommand}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                                <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <Rectangle Width="20" Height="20">
+                                    <Rectangle.Resources>
+                                        <VisualBrush x:Key="VisualPlus" Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}"/>
+                                        <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{IconPacks:Material Kind=FilterRemoveOutline}" />
+                                    </Rectangle.Resources>
+                                    <Rectangle.Style>
+                                        <Style TargetType="{x:Type Rectangle}">
+                                            <Setter Property="OpacityMask" Value="{StaticResource VisualPlus}" />
+                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                                    <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                            </Button>
+                            <TextBlock>
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+                                        <Setter Property="Text" Value="{DynamicResource String_NoProfilesFoundCreateOne}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                                <Setter Property="Text" Value="{DynamicResource String_NothingFound}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
                     <Button x:Name="btnAddProfile" Grid.Column="0" Grid.Row="4" Command="{Binding AddProfileCommand}" Style="{StaticResource ImageWithTextButton}">
                         <Button.Content>
                             <Grid>

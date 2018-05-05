@@ -120,7 +120,7 @@
                 </Style>
             </Grid.Style>
             <StackPanel>
-                <Button Style="{StaticResource CleanButton}" Command="{Binding AddTabCommand}" Focusable="False" Margin="0,0,0,10">
+                <Button HorizontalAlignment="Center" Focusable="False" Command="{Binding AddTabCommand}" Style="{StaticResource CleanButton}" Margin="0,0,0,10">
                     <Rectangle Width="20" Height="20">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
