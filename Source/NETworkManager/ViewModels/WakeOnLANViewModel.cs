@@ -467,6 +467,16 @@ namespace NETworkManager.ViewModels
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
+
+        public ICommand ClearSearchCommand
+        {
+            get { return new RelayCommand(p => ClearSearchAction()); }
+        }
+
+        private void ClearSearchAction()
+        {
+            Search = string.Empty;
+        }
         #endregion
 
         #region Methods

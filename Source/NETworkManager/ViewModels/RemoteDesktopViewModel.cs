@@ -168,17 +168,7 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
-        #region ICommand & Actions
-        public ItemActionCallback CloseItemCommand
-        {
-            get { return CloseItemAction; }
-        }
-
-        private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
-        {
-            ((args.DragablzItem.Content as DragablzTabItem).View as RemoteDesktopControl).OnClose();
-        }
-
+        #region ICommand & Actions        
         public ICommand ConnectNewSessionCommand
         {
             get { return new RelayCommand(p => ConnectNewSessionAction(), ConnectNewSession_CanExecute); }
@@ -593,6 +583,26 @@ namespace NETworkManager.ViewModels
 
             ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand ClearSearchCommand
+        {
+            get { return new RelayCommand(p => ClearSearchAction()); }
+        }
+
+        private void ClearSearchAction()
+        {
+            Search = string.Empty;
+        }
+
+        public ItemActionCallback CloseItemCommand
+        {
+            get { return CloseItemAction; }
+        }
+
+        private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
+        {
+            ((args.DragablzItem.Content as DragablzTabItem).View as RemoteDesktopControl).OnClose();
         }
         #endregion
 

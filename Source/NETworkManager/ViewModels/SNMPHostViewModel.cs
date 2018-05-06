@@ -55,7 +55,7 @@ namespace NETworkManager.ViewModels
         {
             AddTab();
         }
-
+                
         public ItemActionCallback CloseItemCommand
         {
             get { return CloseItemAction; }
