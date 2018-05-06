@@ -407,7 +407,7 @@
     <system:String x:Key="String_AddATabToPerformADNSLookup">Add a tab to perform a DNS lookup...</system:String>
     <system:String x:Key="String_AddATabToPerformAnSNMPAction">Add a tab to perform an SNMP action...</system:String>
     <system:String x:Key="String_AddATabToQueryTheHTTPHeaders">Add a tab to query the HTTP headers...</system:String>
-    <system:String x:Key="String_OpenANewConnectioByAddingANewTabOrDoubleClickingOnASession">Open a new connection by adding a new tab or double-clicking on a session...</system:String>
+    <system:String x:Key="String_AddATabToOpenANewConnection">Add a tab to open a new connection...</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>

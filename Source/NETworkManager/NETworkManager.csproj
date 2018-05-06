@@ -377,8 +377,8 @@
     <Compile Include="Views\TracerouteHostView.xaml.cs">
       <DependentUpon>TracerouteHostView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PuTTYView.xaml.cs">
-      <DependentUpon>PuTTYView.xaml</DependentUpon>
+    <Compile Include="Views\PuTTYHostView.xaml.cs">
+      <DependentUpon>PuTTYHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PingHostView.xaml.cs">
       <DependentUpon>PingHostView.xaml</DependentUpon>
@@ -410,8 +410,8 @@
     <Compile Include="Views\LookupPortLookupView.xaml.cs">
       <DependentUpon>LookupPortLookupView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RemoteDesktopView.xaml.cs">
-      <DependentUpon>RemoteDesktopView.xaml</DependentUpon>
+    <Compile Include="Views\RemoteDesktopHostView.xaml.cs">
+      <DependentUpon>RemoteDesktopHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DragablzPingTabHostWindow.xaml.cs">
       <DependentUpon>DragablzPingTabHostWindow.xaml</DependentUpon>
@@ -666,7 +666,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\PuTTYView.xaml">
+    <Page Include="Views\PuTTYHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -710,7 +710,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\RemoteDesktopView.xaml">
+    <Page Include="Views\RemoteDesktopHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

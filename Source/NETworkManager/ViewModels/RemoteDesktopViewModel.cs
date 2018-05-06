@@ -15,7 +15,7 @@ using System.Collections.Generic;
 
 namespace NETworkManager.ViewModels
 {
-    public class RemoteDesktopViewModel : ViewModelBase
+    public class RemoteDesktopHostViewModel : ViewModelBase
     {
         #region Variables
         private IDialogCoordinator dialogCoordinator;
@@ -113,7 +113,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor
-        public RemoteDesktopViewModel(IDialogCoordinator instance)
+        public RemoteDesktopHostViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
 

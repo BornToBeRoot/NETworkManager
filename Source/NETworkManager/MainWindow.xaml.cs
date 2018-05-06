@@ -59,7 +59,7 @@ namespace NETworkManager
                     SettingsManager.Current.ApplicationView_Expand = value;
 
                 if (!value)
-                    ClearSearchFilterOnApplicationListMinimize();
+                    ClearSearchOnApplicationListMinimize();
 
                 _applicationView_Expand = value;
                 OnPropertyChanged();
@@ -76,7 +76,7 @@ namespace NETworkManager
                     return;
 
                 if (!value)
-                    ClearSearchFilterOnApplicationListMinimize();
+                    ClearSearchOnApplicationListMinimize();
 
                 _isTextBoxSearchFocused = value;
                 OnPropertyChanged();
@@ -93,7 +93,7 @@ namespace NETworkManager
                     return;
 
                 if (!value)
-                    ClearSearchFilterOnApplicationListMinimize();
+                    ClearSearchOnApplicationListMinimize();
 
                 _openApplicationList = value;
                 OnPropertyChanged();
@@ -110,7 +110,7 @@ namespace NETworkManager
                     return;
 
                 if (!value)
-                    ClearSearchFilterOnApplicationListMinimize();
+                    ClearSearchOnApplicationListMinimize();
 
                 _isMouseOverApplicationList = value;
                 OnPropertyChanged();
@@ -404,8 +404,8 @@ namespace NETworkManager
         PingHostView pingHostView;
         TracerouteHostView tracerouteHostView;
         DNSLookupHostView dnsLookupHostView;
-        RemoteDesktopView remoteDesktopView;
-        PuTTYView puTTYView;
+        RemoteDesktopHostView remoteDesktopHostView;
+        PuTTYHostView puTTYHostView;
         SNMPHostView snmpHostView;
         WakeOnLANView wakeOnLANView;
         SubnetCalculatorHostView subnetCalculatorHostView;
@@ -459,16 +459,16 @@ namespace NETworkManager
                     contentControlApplication.Content = dnsLookupHostView;
                     break;
                 case ApplicationViewManager.Name.RemoteDesktop:
-                    if (remoteDesktopView == null)
-                        remoteDesktopView = new RemoteDesktopView();
+                    if (remoteDesktopHostView == null)
+                        remoteDesktopHostView = new RemoteDesktopHostView();
 
-                    contentControlApplication.Content = remoteDesktopView;
+                    contentControlApplication.Content = remoteDesktopHostView;
                     break;
                 case ApplicationViewManager.Name.PuTTY:
-                    if (puTTYView == null)
-                        puTTYView = new PuTTYView();
+                    if (puTTYHostView == null)
+                        puTTYHostView = new PuTTYHostView();
 
-                    contentControlApplication.Content = puTTYView;
+                    contentControlApplication.Content = puTTYHostView;
                     break;
                 case ApplicationViewManager.Name.SNMP:
                     if (snmpHostView == null)
@@ -511,7 +511,7 @@ namespace NETworkManager
             currentApplicationViewName = name;
         }
 
-        private void ClearSearchFilterOnApplicationListMinimize()
+        private void ClearSearchOnApplicationListMinimize()
         {
             if (ApplicationView_Expand)
                 return;
@@ -962,6 +962,16 @@ namespace NETworkManager
                 OpenApplicationList = false;
 
             IsTextBoxSearchFocused = false;
+        }
+
+        public ICommand ClearSearchCommand
+        {
+            get { return new RelayCommand(p => ClearSearchAction()); }
+        }
+
+        private void ClearSearchAction()
+        {
+            Search = string.Empty;
         }
         #endregion
 

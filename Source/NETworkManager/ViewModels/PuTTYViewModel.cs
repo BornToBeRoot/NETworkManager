@@ -2,7 +2,6 @@
 using NETworkManager.Controls;
 using Dragablz;
 using System.Windows.Input;
-using System.Windows;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Settings;
 using System.Collections.Generic;
@@ -18,7 +17,7 @@ using NETworkManager.Models.PuTTY;
 
 namespace NETworkManager.ViewModels
 {
-    public class PuTTYViewModel : ViewModelBase
+    public class PuTTYHostViewModel : ViewModelBase
     {
         #region Variables
         private IDialogCoordinator dialogCoordinator;
@@ -116,7 +115,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor
-        public PuTTYViewModel(IDialogCoordinator instance)
+        public PuTTYHostViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
 

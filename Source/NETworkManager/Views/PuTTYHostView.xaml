@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NETworkManager.Views.PuTTYView"
+﻿<UserControl x:Class="NETworkManager.Views.PuTTYHostView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -92,7 +92,7 @@
                             </Rectangle.Style>
                         </Rectangle>
                     </Button>
-                    <TextBlock Text="{DynamicResource String_OpenANewConnectioByAddingANewTabOrDoubleClickingOnASession}" Style="{StaticResource MessageTextBlock}" />
+                    <TextBlock Text="{DynamicResource String_AddATabToOpenANewConnection}" Style="{StaticResource MessageTextBlock}" />
                 </StackPanel>
             </Grid>
             <Border Grid.Column="1" Grid.Row="0" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource GrayBrush8}">

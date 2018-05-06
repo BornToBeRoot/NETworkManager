@@ -4,11 +4,11 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class PuTTYView : UserControl
+    public partial class PuTTYHostView : UserControl
     {
-        PuTTYViewModel viewModel = new PuTTYViewModel(DialogCoordinator.Instance);
+        PuTTYHostViewModel viewModel = new PuTTYHostViewModel(DialogCoordinator.Instance);
 
-        public PuTTYView()
+        public PuTTYHostView()
         {
             InitializeComponent();
             DataContext = viewModel;

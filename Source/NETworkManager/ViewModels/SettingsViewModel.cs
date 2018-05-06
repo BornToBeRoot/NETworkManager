@@ -6,6 +6,7 @@ using System.Windows.Data;
 using System;
 using System.Text.RegularExpressions;
 using NETworkManager.Utilities;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels.Settings
 {
@@ -138,6 +139,18 @@ namespace NETworkManager.ViewModels.Settings
                 // Search by TranslatedName and Name
                 return (regex.Replace(info.TranslatedName, "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1) || (regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
+        }
+        #endregion
+
+        #region ICommands & Actions
+        public ICommand ClearSearchCommand
+        {
+            get { return new RelayCommand(p => ClearSearchAction()); }
+        }
+
+        private void ClearSearchAction()
+        {
+            Search = string.Empty;
         }
         #endregion
 

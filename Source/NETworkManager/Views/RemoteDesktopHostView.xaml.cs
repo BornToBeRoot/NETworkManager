@@ -5,11 +5,11 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class RemoteDesktopView : UserControl
+    public partial class RemoteDesktopHostView : UserControl
     {
-        RemoteDesktopViewModel viewModel = new RemoteDesktopViewModel(DialogCoordinator.Instance);
+        RemoteDesktopHostViewModel viewModel = new RemoteDesktopHostViewModel(DialogCoordinator.Instance);
 
-        public RemoteDesktopView()
+        public RemoteDesktopHostView()
         {
             InitializeComponent();
             DataContext = viewModel;

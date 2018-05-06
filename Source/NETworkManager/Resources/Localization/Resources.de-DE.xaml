@@ -400,14 +400,14 @@
     <system:String x:Key="String_OverwriteSettingsInTheDestinationFolder">Einstellungen im Zielordner überschreiben?\n\nWenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Dateien kopiert und die Anwendung danach mit den neuen Einstellungen neu gestartet!</system:String>
     <system:String x:Key="String_Ping">Ping</system:String>
     <system:String x:Key="String_Trace">Trace</system:String>
-    <system:String x:Key="String_AddATabToPerformANetworkScan">Fügen Sie eine Registerkarte hinzu, um einen Netzwerk-Scan durchzuführen...</system:String>
-    <system:String x:Key="String_AddATabToPerformAPortScan">Fügen Sie eine Registerkarte hinzu, um einen Port-Scan durchzuführen...</system:String>
-    <system:String x:Key="String_AddATabToPerformAPing">Fügen Sie eine Registerkarte hinzu, um einen Ping durchzuführen...</system:String>
-    <system:String x:Key="String_AddATabToPerformATrace">Fügen Sie eine Registerkarte hinzu, um eine Ablaufverfolgung durchzuführen...</system:String>
-    <system:String x:Key="String_AddATabToPerformADNSLookup">Fügen Sie eine Registerkarte hinzu, um eine DNS-Suche durchzuführen...</system:String>
-    <system:String x:Key="String_AddATabToPerformAnSNMPAction">Fügen Sie eine Registerkarte hinzu, um eine SNMP-Aktion auszuführen...</system:String>
-    <system:String x:Key="String_AddATabToQueryTheHTTPHeaders">Fügen Sie eine Registerkarte hinzu, um die HTTP Headers abzufragen...</system:String>
-    <system:String x:Key="String_OpenANewConnectioByAddingANewTabOrDoubleClickingOnASession">Öffnen Sie eine neue Verbindung, indem Sie eine neue Registerkarte hinzufügen oder auf eine Sitzung doppelklicken...</system:String>
+    <system:String x:Key="String_AddATabToPerformANetworkScan">Füge eine Registerkarte hinzu, um einen Netzwerk-Scan durchzuführen...</system:String>
+    <system:String x:Key="String_AddATabToPerformAPortScan">Füge eine Registerkarte hinzu, um einen Port-Scan durchzuführen...</system:String>
+    <system:String x:Key="String_AddATabToPerformAPing">Füge eine Registerkarte hinzu, um einen Ping durchzuführen...</system:String>
+    <system:String x:Key="String_AddATabToPerformATrace">Füge eine Registerkarte hinzu, um eine Ablaufverfolgung durchzuführen...</system:String>
+    <system:String x:Key="String_AddATabToPerformADNSLookup">Füge eine Registerkarte hinzu, um eine DNS-Suche durchzuführen...</system:String>
+    <system:String x:Key="String_AddATabToPerformAnSNMPAction">Füge eine Registerkarte hinzu, um eine SNMP-Aktion auszuführen...</system:String>
+    <system:String x:Key="String_AddATabToQueryTheHTTPHeaders">Füge eine Registerkarte hinzu, um die HTTP Headers abzufragen...</system:String>
+    <system:String x:Key="String_AddATabToOpenANewConnection">Füge eine Registerkarte hinzu, um eine neue Verbindung zu öffnen...</system:String>
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
