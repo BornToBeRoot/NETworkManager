@@ -407,7 +407,7 @@
     <system:String x:Key="String_AddATabToPerformADNSLookup">Füge eine Registerkarte hinzu, um eine DNS-Suche durchzuführen...</system:String>
     <system:String x:Key="String_AddATabToPerformAnSNMPAction">Füge eine Registerkarte hinzu, um eine SNMP-Aktion auszuführen...</system:String>
     <system:String x:Key="String_AddATabToQueryTheHTTPHeaders">Füge eine Registerkarte hinzu, um die HTTP Headers abzufragen...</system:String>
-    <system:String x:Key="String_AddATabToOpenANewConnection">Füge eine Registerkarte hinzu, um eine neue Verbindung zu öffnen...</system:String>
+    <system:String x:Key="String_AddATabToOpenANewConnection">Füge eine Registerkarte hinzu, um eine neue Verbindung herzustellen...</system:String>
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
