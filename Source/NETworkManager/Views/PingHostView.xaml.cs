@@ -26,5 +26,10 @@ namespace NETworkManager.Views
             if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
                 viewModel.PingProfileCommand.Execute(null);
         }
+
+        public void AddTab(string host)
+        {
+            viewModel.AddTab(host);
+        }
     }
 }

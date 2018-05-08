@@ -291,7 +291,35 @@ namespace NETworkManager
             // Load settings
             ApplicationView_Expand = SettingsManager.Current.ApplicationView_Expand;
 
+            // Register some events
+            EventSystem.RedirectToApplicationEvent += EventSystem_RedirectToApplicationEvent;
+
             _isLoading = false;
+        }
+
+        private void EventSystem_RedirectToApplicationEvent(object sender, EventArgs e)
+        {
+            EventSystemRedirectArgs args = e as EventSystemRedirectArgs;
+
+            // Change view
+            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == args.Application);
+
+            // Crate a new tab / perform action
+            switch (args.Application)
+            {
+                case ApplicationViewManager.Name.PortScanner:
+                    portScannerHostView.AddTab(args.Data);
+                    break;
+                case ApplicationViewManager.Name.Ping:
+                    pingHostView.AddTab(args.Data);
+                    break;
+                case ApplicationViewManager.Name.Traceroute:
+                    tracerouteHostView.AddTab(args.Data);
+                    break;
+                case ApplicationViewManager.Name.DNSLookup:
+                    dnsLookupHostView.AddTab(args.Data);
+                    break;
+            }
         }
 
         // Hide window after it shows up... not nice, but otherwise the hotkeys do not work
@@ -415,7 +443,7 @@ namespace NETworkManager
 
         private ApplicationViewManager.Name? currentApplicationViewName = null;
 
-        private void ChangeApplicationView(ApplicationViewManager.Name name)
+        private void ChangeApplicationView(ApplicationViewManager.Name name, EventSystemRedirectArgs args = null)
         {
             if (currentApplicationViewName == name)
                 return;
@@ -437,6 +465,10 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.PortScanner:
                     if (portScannerHostView == null)
                         portScannerHostView = new PortScannerHostView();
+
+                    // Create a new tab
+                    if (args != null)
+                        portScannerHostView.AddTab(args.Data);
 
                     contentControlApplication.Content = portScannerHostView;
                     break;
@@ -989,6 +1021,6 @@ namespace NETworkManager
             if (e.ChangedButton == MouseButton.Left)
                 DragMove();
         }
-        #endregion       
+        #endregion
     }
 }

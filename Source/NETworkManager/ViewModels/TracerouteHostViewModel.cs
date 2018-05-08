@@ -373,11 +373,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void AddTab(string host = null)
+        public void AddTab(string host = null)
         {
             _tabId++;
 
-            TabItems.Add(new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new TracerouteView(_tabId, host), _tabId));
+            TabItems.Add(new DragablzTabItem(host ?? LocalizationManager.GetStringByKey("String_Header_NewTab"), new TracerouteView(_tabId, host), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

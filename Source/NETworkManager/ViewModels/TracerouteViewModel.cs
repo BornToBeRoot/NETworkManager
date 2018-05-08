@@ -26,7 +26,7 @@ namespace NETworkManager.ViewModels
 
         private int _tabId;
         private bool _firstLoad = true;
-        
+
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         Stopwatch stopwatch = new Stopwatch();
 
@@ -373,7 +373,7 @@ namespace NETworkManager.ViewModels
             }
 
             cancellationTokenSource = new CancellationTokenSource();
-            
+
             // Try to parse the string into an IP-Address
             IPAddress.TryParse(Host, out IPAddress ipAddress);
 
@@ -408,7 +408,7 @@ namespace NETworkManager.ViewModels
                         }
                     }
                 }
-                
+
                 TracerouteOptions tracerouteOptions = new TracerouteOptions
                 {
                     Timeout = SettingsManager.Current.Traceroute_Timeout,
@@ -488,7 +488,8 @@ namespace NETworkManager.ViewModels
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
             {
-                TraceResult.Add(tracerouteInfo);
+                lock (TraceResult)
+                    TraceResult.Add(tracerouteInfo);
             }));
 
             Hops++;

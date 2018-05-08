@@ -8,7 +8,6 @@ using NETworkManager.Models.Settings;
 using System.ComponentModel;
 using System;
 using System.Windows.Data;
-using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.ViewModels
@@ -363,11 +362,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void AddTab(string host = null, string ports = null)
+        public void AddTab(string host = null, string ports = null)
         {
             _tabId++;
 
-            TabItems.Add(new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new PortScannerView(_tabId, host, ports), _tabId));
+            TabItems.Add(new DragablzTabItem(host ?? LocalizationManager.GetStringByKey("String_Header_NewTab"), new PortScannerView(_tabId, host, ports), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

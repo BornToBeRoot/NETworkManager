@@ -487,7 +487,8 @@ namespace NETworkManager.ViewModels
             // Add the result to the collection
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
             {
-                PingResult.Add(pingInfo);
+                lock (PingResult)
+                    PingResult.Add(pingInfo);
             }));
 
             // Calculate statistics
@@ -510,9 +511,11 @@ namespace NETworkManager.ViewModels
                     if (MaximumTime < pingInfo.Time)
                         MaximumTime = pingInfo.Time;
 
-                    // I don't know if this can slow my application if the collection is to large
-                    AverageTime = (int)PingResult.Select(s => s.Time).Average();
-                }                                
+                    // lock, because the collection is changed from another thread...
+                    // I hope this won't slow the application or causes a hight cpu load
+                    lock (PingResult)
+                        AverageTime = (int)PingResult.Average(s => s.Time);
+                }
             }
             else
             {

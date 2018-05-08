@@ -21,10 +21,11 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private int _tabId;
+        private bool _firstLoad = true;
 
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         Stopwatch stopwatch = new Stopwatch();
-                
+
         private bool _isLoading = true;
 
         private string _host;
@@ -202,9 +203,10 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public DNSLookupViewModel(int tabId)
+        public DNSLookupViewModel(int tabId, string host)
         {
             _tabId = tabId;
+            Host = host;
 
             _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_HostHistory);
             _lookupResultView = CollectionViewSource.GetDefaultView(LookupResult);
@@ -213,6 +215,17 @@ namespace NETworkManager.ViewModels
             LoadSettings();
 
             _isLoading = false;
+        }
+
+        public void OnLoaded()
+        {
+            if (_firstLoad)
+            {
+                if (!string.IsNullOrEmpty(Host))
+                    StartLookup();
+
+                _firstLoad = false;
+            }
         }
 
         private void LoadSettings()
@@ -395,7 +408,8 @@ namespace NETworkManager.ViewModels
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
             {
-                LookupResult.Add(DNSLookupRecordInfo);
+                lock (LookupResult)
+                    LookupResult.Add(DNSLookupRecordInfo);
             }));
         }
 
@@ -422,7 +436,7 @@ namespace NETworkManager.ViewModels
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             Duration = stopwatch.Elapsed;
-        }                
+        }
         #endregion
     }
 }

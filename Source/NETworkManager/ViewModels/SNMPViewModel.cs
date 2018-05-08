@@ -26,7 +26,7 @@ namespace NETworkManager.ViewModels
         Stopwatch stopwatch = new Stopwatch();
 
         private int _tabId;
-        
+
         private bool _isLoading = true;
 
         private string _host;
@@ -628,7 +628,8 @@ namespace NETworkManager.ViewModels
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
             {
-                QueryResult.Add(snmpReceivedInfo);
+                lock (QueryResult)
+                    QueryResult.Add(snmpReceivedInfo);
             }));
 
             Responses++;

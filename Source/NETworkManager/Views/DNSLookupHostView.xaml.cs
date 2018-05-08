@@ -1,4 +1,5 @@
 ﻿using NETworkManager.ViewModels;
+using System;
 using System.Windows.Controls;
 
 namespace NETworkManager.Views
@@ -11,6 +12,11 @@ namespace NETworkManager.Views
         {
             InitializeComponent();
             DataContext = viewModel;
+        }
+
+        public void AddTab(string data)
+        {
+            viewModel.AddTab(data);
         }
     }
 }

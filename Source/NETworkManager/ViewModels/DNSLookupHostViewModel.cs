@@ -68,11 +68,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void AddTab()
+        public void AddTab(string host = null)
         {
             _tabId++;
 
-            TabItems.Add(new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new DNSLookupView(_tabId), _tabId));
+            TabItems.Add(new DragablzTabItem(host ?? LocalizationManager.GetStringByKey("String_Header_NewTab"), new DNSLookupView(_tabId, host), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

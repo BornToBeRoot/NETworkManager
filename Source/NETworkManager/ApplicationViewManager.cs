@@ -19,14 +19,14 @@ namespace NETworkManager
                     new ApplicationViewInfo(Name.Ping, new PackIconMaterial() { Kind = PackIconMaterialKind.LanConnect }),
                     new ApplicationViewInfo(Name.Traceroute,  new PackIconModern() { Kind = PackIconModernKind.TransitConnection }),
                     new ApplicationViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.Dna }),
-                    new ApplicationViewInfo(Name.RemoteDesktop, new PackIconOcticons() { Kind = PackIconOcticonsKind.DeviceDesktop}),                    
+                    new ApplicationViewInfo(Name.RemoteDesktop, new PackIconMaterial() { Kind = PackIconMaterialKind.RemoteDesktop}),                    
                     new ApplicationViewInfo(Name.PuTTY, new PackIconOcticons() {Kind = PackIconOcticonsKind.Terminal}),
                     new ApplicationViewInfo(Name.SNMP, new PackIconMaterial() {Kind = PackIconMaterialKind.Switch }),
                     new ApplicationViewInfo(Name.WakeOnLAN, new PackIconMaterial() { Kind = PackIconMaterialKind.Power }),           
                     new ApplicationViewInfo(Name.HTTPHeaders, new PackIconMaterial() {Kind = PackIconMaterialKind.Web }),
                     new ApplicationViewInfo(Name.SubnetCalculator, new PackIconModern() { Kind = PackIconModernKind.Calculator }),
                     new ApplicationViewInfo(Name.Lookup, new PackIconMaterial() { Kind = PackIconMaterialKind.Magnify }),
-                    new ApplicationViewInfo(Name.ARPTable, new PackIconMaterial() { Kind = PackIconMaterialKind.FormatListBulleted})
+                    new ApplicationViewInfo(Name.ARPTable, new PackIconMaterial() { Kind = PackIconMaterialKind.TableOfContents})
                 };
             }
         }

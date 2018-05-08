@@ -318,6 +318,56 @@ namespace NETworkManager.ViewModels
                 StartScan();
         }
 
+        public ICommand PerformPortScanCommand
+        {
+            get { return new RelayCommand(p => PerformPortScanAction()); }
+        }
+
+        private void PerformPortScanAction()
+        {
+            EventSystem.RedirectToApplication(ApplicationViewManager.Name.PortScanner, SelectedIPScanResult.PingInfo.IPAddress.ToString());
+        }
+
+        public ICommand PerformPingCommand
+        {
+            get { return new RelayCommand(p => PerformPingAction()); }
+        }
+
+        private void PerformPingAction()
+        {
+            EventSystem.RedirectToApplication(ApplicationViewManager.Name.Ping, SelectedIPScanResult.PingInfo.IPAddress.ToString());
+        }
+
+        public ICommand PerformTracerouteCommand
+        {
+            get { return new RelayCommand(p => PerformTracerouteAction()); }
+        }
+
+        private void PerformTracerouteAction()
+        {
+            EventSystem.RedirectToApplication(ApplicationViewManager.Name.Traceroute, SelectedIPScanResult.PingInfo.IPAddress.ToString());
+        }
+
+        public ICommand PerformDNSLookupIPAddressCommand
+        {
+            get { return new RelayCommand(p => PerformDNSLookupIPAddressAction()); }
+        }
+
+        private void PerformDNSLookupIPAddressAction()
+        {
+            EventSystem.RedirectToApplication(ApplicationViewManager.Name.DNSLookup, SelectedIPScanResult.PingInfo.IPAddress.ToString());
+        }
+
+        public ICommand PerformDNSLookupHostnameCommand
+        {
+            get { return new RelayCommand(p => PerformDNSLookupHostnameAction()); }
+        }
+
+        private void PerformDNSLookupHostnameAction()
+        {
+            EventSystem.RedirectToApplication(ApplicationViewManager.Name.DNSLookup, SelectedIPScanResult.Hostname);
+        }
+
         public ICommand CopySelectedIPAddressCommand
         {
             get { return new RelayCommand(p => CopySelectedIPAddressAction()); }
@@ -521,7 +571,8 @@ namespace NETworkManager.ViewModels
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
             {
-                IPScanResult.Add(ipScannerHostInfo);
+                lock (IPScanResult)
+                    IPScanResult.Add(ipScannerHostInfo);
             }));
 
             HostsFound++;

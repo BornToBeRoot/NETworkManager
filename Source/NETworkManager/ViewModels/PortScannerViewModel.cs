@@ -284,7 +284,7 @@ namespace NETworkManager.ViewModels
             _tabId = tabId;
             Host = host;
             Port = port;
-            
+
             // Set collection view
             _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_HostHistory);
             _portHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortHistory);
@@ -299,7 +299,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            ExpandStatistics = SettingsManager.Current.PortScanner_ExpandStatistics;            
+            ExpandStatistics = SettingsManager.Current.PortScanner_ExpandStatistics;
         }
 
         public void OnLoaded()
@@ -403,7 +403,7 @@ namespace NETworkManager.ViewModels
         private void CopySelectedDescriptionAction()
         {
             Clipboard.SetText(SelectedScanResult.LookupInfo.Description);
-        }       
+        }
         #endregion
 
         #region Methods
@@ -628,7 +628,8 @@ namespace NETworkManager.ViewModels
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
             {
-                PortScanResult.Add(portInfo);
+                lock (PortScanResult)
+                    PortScanResult.Add(portInfo);
             }));
 
             if (portInfo.Status == PortInfo.PortStatus.Open)

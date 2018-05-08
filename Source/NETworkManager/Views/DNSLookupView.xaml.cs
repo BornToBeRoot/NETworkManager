@@ -8,13 +8,18 @@ namespace NETworkManager.Views
     {
         DNSLookupViewModel viewModel;
 
-        public DNSLookupView(int tabId)
+        public DNSLookupView(int tabId, string host = null)
         {
             InitializeComponent();
 
-            viewModel = new DNSLookupViewModel(tabId);
+            viewModel = new DNSLookupViewModel(tabId, host);
 
             DataContext = viewModel;
+        }
+
+        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            viewModel.OnLoaded();
         }
 
         public void CloseTab()
@@ -27,7 +32,5 @@ namespace NETworkManager.Views
             ContextMenu menu = sender as ContextMenu;
             menu.DataContext = viewModel;
         }
-
-
     }
 }

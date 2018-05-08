@@ -249,6 +249,8 @@
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\StringIsNotNullOrEmptyToBoolConverter.cs" />
+    <Compile Include="Converters\StringIsNotNullOrEmptyToVisibilityConverter.cs" />
     <Compile Include="Converters\NullOrEmptyToBoolConverter.cs" />
     <Compile Include="Converters\TimestampToStringConverter.cs" />
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
@@ -264,6 +266,8 @@
     <Compile Include="Models\Settings\PingProfileInfo.cs" />
     <Compile Include="Models\Settings\PingProfileManager.cs" />
     <Compile Include="Utilities\ArrayHelper.cs" />
+    <Compile Include="Utilities\EventSystemRedirectArgs.cs" />
+    <Compile Include="Utilities\EventSystem.cs" />
     <Compile Include="Utilities\NativeMethods.cs" />
     <Compile Include="Utilities\PowerShellHelper.cs" />
     <Compile Include="Utilities\SecureStringHelper.cs" />
