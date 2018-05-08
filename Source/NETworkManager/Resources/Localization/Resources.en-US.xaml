@@ -408,9 +408,12 @@
     <system:String x:Key="String_AddATabToPerformAnSNMPAction">Add a tab to perform an SNMP action...</system:String>
     <system:String x:Key="String_AddATabToQueryTheHTTPHeaders">Add a tab to query the HTTP headers...</system:String>
     <system:String x:Key="String_AddATabToOpenANewConnection">Add a tab to open a new connection...</system:String>
-    <system:String x:Key="String_PortScan">Port scan</system:String>
-    <system:String x:Key="String_DNSLookupDots">DNS lookup...</system:String>
-    <system:String x:Key="String_Traceroute">Traceroute</system:String>    
+    <system:String x:Key="String_PortScanner">Port Scanner</system:String>
+    <system:String x:Key="String_DNSLookupDots">DNS Lookup...</system:String>
+    <system:String x:Key="String_Traceroute">Traceroute</system:String>
+    <system:String x:Key="String_RemoteDesktop">Remote Desktop</system:String>
+    <system:String x:Key="String_PuTTY">PuTTY</system:String>
+    <system:String x:Key="String_SNMP">SNMP</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
