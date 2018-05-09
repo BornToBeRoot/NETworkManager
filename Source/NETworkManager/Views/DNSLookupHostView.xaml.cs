@@ -14,9 +14,9 @@ namespace NETworkManager.Views
             DataContext = viewModel;
         }
 
-        public void AddTab(string data)
+        public void AddTab(string host)
         {
-            viewModel.AddTab(data);
+            viewModel.AddTab(host);
         }
     }
 }

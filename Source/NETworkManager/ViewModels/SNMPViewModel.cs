@@ -384,9 +384,10 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public SNMPViewModel(int tabId)
+        public SNMPViewModel(int tabId, string host)
         {
             _tabId = tabId;
+            Host = host;
 
             // Set collection view
             _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_HostHistory);

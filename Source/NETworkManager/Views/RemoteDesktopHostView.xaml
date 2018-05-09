@@ -10,7 +10,8 @@
         xmlns:Documentation="clr-namespace:NETworkManager.Models.Documentation"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         Dialog:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d">
+        Loaded="UserControl_Loaded"
+             mc:Ignorable="d">
     <UserControl.Resources>
         <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />

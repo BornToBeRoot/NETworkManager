@@ -56,7 +56,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
+                
         #region Sessions
         ICollectionView _puTTYSessions;
         public ICollectionView PuTTYSessions
@@ -189,54 +189,11 @@ namespace NETworkManager.ViewModels
             get { return new RelayCommand(p => ConnectNewSessionAction()); }
         }
 
-        private async void ConnectNewSessionAction()
+        private void ConnectNewSessionAction()
         {
-            CustomDialog customDialog = new CustomDialog()
-            {
-                Title = LocalizationManager.GetStringByKey("String_Header_Connect")
-            };
-
-            PuTTYSessionConnectViewModel puTTYSessionConnectViewModel = new PuTTYSessionConnectViewModel(instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
-
-                // Add host to history
-                AddHostToHistory(instance.Host);
-                AddSerialLineToHistory(instance.SerialLine);
-                AddPortToHistory(instance.Port.ToString());
-                AddBaudToHistory(instance.Baud.ToString());
-                AddUsernameToHistory(instance.Username);
-                AddProfileToHistory(instance.Profile);
-
-                // Create session info
-                Models.PuTTY.PuTTYSessionInfo puTTYSessionInfo = new Models.PuTTY.PuTTYSessionInfo
-                {
-                    HostOrSerialLine = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
-                    Mode = instance.ConnectionMode,
-                    PortOrBaud = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port,
-                    Username = instance.Username,
-                    Profile = instance.Profile,
-                    AdditionalCommandLine = instance.AdditionalCommandLine
-                };
-
-                // Connect
-                ConnectSession(puTTYSessionInfo);
-            }, instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
-            });
-
-            customDialog.Content = new PuTTYSessionConnectDialog
-            {
-                DataContext = puTTYSessionConnectViewModel
-            };
-
-            ConfigurationManager.Current.FixAirspace = true;
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            ConnectNewSession();
         }
-
+                
         public ICommand AddSessionCommand
         {
             get { return new RelayCommand(p => AddSessionAction()); }
@@ -277,9 +234,10 @@ namespace NETworkManager.ViewModels
 
         private void ConnectSessionAction()
         {
-            // Connect
-            ConnectSession(Models.PuTTY.PuTTYSessionInfo.Parse(SelectedSession), SelectedSession.Name);
+            ConnectSession();
         }
+
+      
 
         public ICommand ConnectSessionExternalCommand
         {
@@ -288,15 +246,9 @@ namespace NETworkManager.ViewModels
 
         private void ConnectSessionExternalAction()
         {
-            ProcessStartInfo info = new ProcessStartInfo
-            {
-                FileName = SettingsManager.Current.PuTTY_PuTTYLocation,
-                Arguments = PuTTY.BuildCommandLine(Models.PuTTY.PuTTYSessionInfo.Parse(SelectedSession))
-            };
-
-            Process.Start(info);
+            ConnectSessionExternal();
         }
-
+                        
         public ICommand EditSessionCommand
         {
             get { return new RelayCommand(p => EditSessionAction()); }
@@ -453,7 +405,74 @@ namespace NETworkManager.ViewModels
                 IsPuTTYConfigured = false;
         }
 
-        private void ConnectSession(Models.PuTTY.PuTTYSessionInfo sessionInfo, string Header = null)
+        private async void ConnectNewSession(string host = null)
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = LocalizationManager.GetStringByKey("String_Header_Connect")
+            };
+
+            PuTTYSessionConnectViewModel puTTYSessionConnectViewModel = new PuTTYSessionConnectViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ConfigurationManager.Current.FixAirspace = false;
+
+                // Add host to history
+                AddHostToHistory(instance.Host);
+                AddSerialLineToHistory(instance.SerialLine);
+                AddPortToHistory(instance.Port.ToString());
+                AddBaudToHistory(instance.Baud.ToString());
+                AddUsernameToHistory(instance.Username);
+                AddProfileToHistory(instance.Profile);
+
+                // Create session info
+                Models.PuTTY.PuTTYSessionInfo puTTYSessionInfo = new Models.PuTTY.PuTTYSessionInfo
+                {
+                    HostOrSerialLine = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
+                    Mode = instance.ConnectionMode,
+                    PortOrBaud = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port,
+                    Username = instance.Username,
+                    Profile = instance.Profile,
+                    AdditionalCommandLine = instance.AdditionalCommandLine
+                };
+
+                // Connect
+                Connect(puTTYSessionInfo);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ConfigurationManager.Current.FixAirspace = false;
+            })
+            {
+                Host = host
+            };
+
+            customDialog.Content = new PuTTYSessionConnectDialog
+            {
+                DataContext = puTTYSessionConnectViewModel
+            };
+
+            ConfigurationManager.Current.FixAirspace = true;
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        private void ConnectSession()
+        {
+            Connect(Models.PuTTY.PuTTYSessionInfo.Parse(SelectedSession), SelectedSession.Name);
+        }
+
+        private void ConnectSessionExternal()
+        {
+            ProcessStartInfo info = new ProcessStartInfo
+            {
+                FileName = SettingsManager.Current.PuTTY_PuTTYLocation,
+                Arguments = PuTTY.BuildCommandLine(Models.PuTTY.PuTTYSessionInfo.Parse(SelectedSession))
+            };
+
+            Process.Start(info);
+        }
+
+        private void Connect(Models.PuTTY.PuTTYSessionInfo sessionInfo, string Header = null)
         {
             // Add PuTTY path here...
             sessionInfo.PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
@@ -461,6 +480,11 @@ namespace NETworkManager.ViewModels
             TabItems.Add(new DragablzTabItem(Header ?? sessionInfo.HostOrSerialLine, new PuTTYControl(sessionInfo)));
 
             SelectedTabIndex = TabItems.Count - 1;
+        }
+
+        public void AddTab(string host)
+        {
+            ConnectNewSession(host);
         }
 
         // Modify history list

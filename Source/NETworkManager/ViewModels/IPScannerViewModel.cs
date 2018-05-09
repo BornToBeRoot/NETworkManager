@@ -368,6 +368,36 @@ namespace NETworkManager.ViewModels
             EventSystem.RedirectToApplication(ApplicationViewManager.Name.DNSLookup, SelectedIPScanResult.Hostname);
         }
 
+        public ICommand ConnectRemoteDesktopCommand
+        {
+            get { return new RelayCommand(p => ConnectRemoteDesktopAction()); }
+        }
+
+        private void ConnectRemoteDesktopAction()
+        {
+            EventSystem.RedirectToApplication(ApplicationViewManager.Name.RemoteDesktop, SelectedIPScanResult.PingInfo.IPAddress.ToString());
+        }
+
+        public ICommand ConnectPuTTYCommand
+        {
+            get { return new RelayCommand(p => ConnectPuTTYAction()); }
+        }
+
+        private void ConnectPuTTYAction()
+        {
+            EventSystem.RedirectToApplication(ApplicationViewManager.Name.PuTTY, SelectedIPScanResult.PingInfo.IPAddress.ToString());
+        }
+
+        public ICommand PerformSNMPCommand
+        {
+            get { return new RelayCommand(p => PerformSNMPAction()); }
+        }
+
+        private void PerformSNMPAction()
+        {
+            EventSystem.RedirectToApplication(ApplicationViewManager.Name.SNMP, SelectedIPScanResult.PingInfo.IPAddress.ToString());
+        }
+
         public ICommand CopySelectedIPAddressCommand
         {
             get { return new RelayCommand(p => CopySelectedIPAddressAction()); }

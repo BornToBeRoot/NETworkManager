@@ -8,11 +8,11 @@ namespace NETworkManager.Views
     {
         SNMPViewModel viewModel;
 
-        public SNMPView(int tabId)
+        public SNMPView(int tabId, string host = null)
         {
             InitializeComponent();
 
-            viewModel = new SNMPViewModel(tabId);
+            viewModel = new SNMPViewModel(tabId, host);
 
             DataContext = viewModel;
         }

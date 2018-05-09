@@ -297,31 +297,6 @@ namespace NETworkManager
             _isLoading = false;
         }
 
-        private void EventSystem_RedirectToApplicationEvent(object sender, EventArgs e)
-        {
-            EventSystemRedirectArgs args = e as EventSystemRedirectArgs;
-
-            // Change view
-            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == args.Application);
-
-            // Crate a new tab / perform action
-            switch (args.Application)
-            {
-                case ApplicationViewManager.Name.PortScanner:
-                    portScannerHostView.AddTab(args.Data);
-                    break;
-                case ApplicationViewManager.Name.Ping:
-                    pingHostView.AddTab(args.Data);
-                    break;
-                case ApplicationViewManager.Name.Traceroute:
-                    tracerouteHostView.AddTab(args.Data);
-                    break;
-                case ApplicationViewManager.Name.DNSLookup:
-                    dnsLookupHostView.AddTab(args.Data);
-                    break;
-            }
-        }
-
         // Hide window after it shows up... not nice, but otherwise the hotkeys do not work
         protected override void OnContentRendered(EventArgs e)
         {
@@ -558,6 +533,40 @@ namespace NETworkManager
 
             // Scroll into view
             listViewApplication.ScrollIntoView(SelectedApplication);
+        }
+
+        private void EventSystem_RedirectToApplicationEvent(object sender, EventArgs e)
+        {
+            EventSystemRedirectArgs args = e as EventSystemRedirectArgs;
+
+            // Change view
+            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == args.Application);
+
+            // Crate a new tab / perform action
+            switch (args.Application)
+            {
+                case ApplicationViewManager.Name.PortScanner:
+                    portScannerHostView.AddTab(args.Data);
+                    break;
+                case ApplicationViewManager.Name.Ping:
+                    pingHostView.AddTab(args.Data);
+                    break;
+                case ApplicationViewManager.Name.Traceroute:
+                    tracerouteHostView.AddTab(args.Data);
+                    break;
+                case ApplicationViewManager.Name.DNSLookup:
+                    dnsLookupHostView.AddTab(args.Data);
+                    break;
+                case ApplicationViewManager.Name.RemoteDesktop:
+                    remoteDesktopHostView.AddTab(args.Data);
+                    break;
+                case ApplicationViewManager.Name.PuTTY:
+                    puTTYHostView.AddTab(args.Data);
+                    break;
+                case ApplicationViewManager.Name.SNMP:
+                    snmpHostView.AddTab(args.Data);
+                    break;
+            }
         }
         #endregion
 

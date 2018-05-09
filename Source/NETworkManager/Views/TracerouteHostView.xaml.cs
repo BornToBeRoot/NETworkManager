@@ -28,9 +28,9 @@ namespace NETworkManager.Views
                 viewModel.TraceProfileCommand.Execute(null);
         }
 
-        public void AddTab(string data)
+        public void AddTab(string host)
         {
-            viewModel.AddTab(data);
+            viewModel.AddTab(host);
         }
     }
 }
