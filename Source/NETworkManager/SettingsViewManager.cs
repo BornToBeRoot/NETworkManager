@@ -29,7 +29,7 @@ namespace NETworkManager
                     new SettingsViewInfo(Name.PortScanner, new PackIconModern() {Kind = PackIconModernKind.NetworkPort }, Group.Applications),
                     new SettingsViewInfo(Name.Ping, new PackIconMaterial() { Kind = PackIconMaterialKind.LanConnect }, Group.Applications),
                     new SettingsViewInfo(Name.Traceroute, new PackIconModern() {Kind = PackIconModernKind.TransitConnection}, Group.Applications),
-                    new SettingsViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.Dna }, Group.Applications ),
+                    new SettingsViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.SearchWeb }, Group.Applications ),
                     new SettingsViewInfo(Name.RemoteDesktop, new PackIconMaterial() { Kind = PackIconMaterialKind.RemoteDesktop}, Group.Applications),
                     new SettingsViewInfo(Name.PuTTY, new PackIconOcticons() {Kind = PackIconOcticonsKind.Terminal}, Group.Applications),
                     new SettingsViewInfo(Name.SNMP,new PackIconMaterial() {Kind = PackIconMaterialKind.Switch }, Group.Applications),

@@ -18,7 +18,7 @@ namespace NETworkManager
                     new ApplicationViewInfo(Name.PortScanner, new PackIconModern() { Kind = PackIconModernKind.NetworkPort}),
                     new ApplicationViewInfo(Name.Ping, new PackIconMaterial() { Kind = PackIconMaterialKind.LanConnect }),
                     new ApplicationViewInfo(Name.Traceroute,  new PackIconModern() { Kind = PackIconModernKind.TransitConnection }),
-                    new ApplicationViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.Dna }),
+                    new ApplicationViewInfo(Name.DNSLookup, new PackIconMaterial() { Kind= PackIconMaterialKind.SearchWeb }),
                     new ApplicationViewInfo(Name.RemoteDesktop, new PackIconMaterial() { Kind = PackIconMaterialKind.RemoteDesktop}),                    
                     new ApplicationViewInfo(Name.PuTTY, new PackIconOcticons() {Kind = PackIconOcticonsKind.Terminal}),
                     new ApplicationViewInfo(Name.SNMP, new PackIconMaterial() {Kind = PackIconMaterialKind.Switch }),
