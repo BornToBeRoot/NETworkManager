@@ -18,5 +18,13 @@ namespace NETworkManager.Views
             ContextMenu menu = sender as ContextMenu;
             menu.DataContext = viewModel;
         }
+
+        // Fix mouse wheel when using DataGrid (https://stackoverflow.com/a/16235785/4986782)
+        private void ScrollViewer_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            ScrollViewer scv = (ScrollViewer)sender;
+            scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
+            e.Handled = true;
+        }
     }
 }

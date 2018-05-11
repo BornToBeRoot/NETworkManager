@@ -106,6 +106,7 @@
     <system:String x:Key="String_Header_EditGroup">Gruppe bearbeiten</system:String>
     <system:String x:Key="String_Header_Overwrite">Überschreiben?</system:String>
     <system:String x:Key="String_Header_NewTab">Neuer Tab</system:String>
+    <system:String x:Key="String_Header_Resources">Ressourcen</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -414,7 +415,8 @@
     <system:String x:Key="String_RemoteDesktop">Remote Desktop</system:String>
     <system:String x:Key="String_PuTTY">PuTTY</system:String>
     <system:String x:Key="String_SNMP">SNMP</system:String>
-    
+    <system:String x:Key="String_OpenWebsite">Webseite öffnen</system:String>
+        
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">Wie erstelle ich ein benutzerdefiniertes Thema und Akzent?</system:String>

@@ -131,6 +131,26 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private ICollectionView _resourcesView;
+        public ICollectionView ResourcesView
+        {
+            get { return _resourcesView; }
+        }
+
+        private ResourceInfo _selectedResourceInfo;
+        public ResourceInfo SelectedResourceInfo
+        {
+            get { return _selectedResourceInfo; }
+            set
+            {
+                if (value == _selectedResourceInfo)
+                    return;
+
+                _selectedResourceInfo = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor
@@ -140,6 +160,9 @@ namespace NETworkManager.ViewModels
 
             _librariesView = CollectionViewSource.GetDefaultView(LibraryManager.List);
             _librariesView.SortDescriptions.Add(new SortDescription(nameof(LibraryInfo.Library), ListSortDirection.Ascending));
+
+            _resourcesView = CollectionViewSource.GetDefaultView(ResourceManager.List);
+            _resourcesView.SortDescriptions.Add(new SortDescription(nameof(ResourceInfo.Resource), ListSortDirection.Ascending));
         }
         #endregion
 
@@ -162,26 +185,6 @@ namespace NETworkManager.ViewModels
         private void OpenWebsiteAction(object url)
         {
             Process.Start((string)url);
-        }
-
-        public ICommand OpenLibaryWebsiteCommand
-        {
-            get { return new RelayCommand(p => OpenLibaryWebsiteAction()); }
-        }
-
-        private void OpenLibaryWebsiteAction()
-        {
-            Process.Start(SelectedLibraryInfo.LibraryUrl);
-        }
-
-        public ICommand OpenLibaryLicenseCommand
-        {
-            get { return new RelayCommand(p => OpenLibaryLicenseAction()); }
-        }
-
-        private void OpenLibaryLicenseAction()
-        {
-            Process.Start(SelectedLibraryInfo.LicenseUrl);
         }
         #endregion
 

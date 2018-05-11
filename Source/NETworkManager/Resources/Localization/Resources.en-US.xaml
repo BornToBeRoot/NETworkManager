@@ -106,7 +106,8 @@
     <system:String x:Key="String_Header_EditGroup">Edit group</system:String>
     <system:String x:Key="String_Header_Overwrite">Overwrite?</system:String>
     <system:String x:Key="String_Header_NewTab">New tab</system:String>
-
+    <system:String x:Key="String_Header_Resources">Resources</system:String>
+    
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">A powerful tool for managing networks and troubleshoot network problems!</system:String>
@@ -414,6 +415,7 @@
     <system:String x:Key="String_RemoteDesktop">Remote Desktop</system:String>
     <system:String x:Key="String_PuTTY">PuTTY</system:String>
     <system:String x:Key="String_SNMP">SNMP</system:String>
+    <system:String x:Key="String_OpenWebsite">Open website</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>

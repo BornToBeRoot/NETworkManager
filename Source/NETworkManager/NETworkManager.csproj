@@ -257,6 +257,8 @@
     <Compile Include="Converters\ValidateNetworkInterfaceProfileConverter.cs" />
     <Compile Include="Converters\ValidateSubnetCalculatorIPv4SplitterConverter.cs" />
     <Compile Include="Models\Documentation\CommunityManager.cs" />
+    <Compile Include="Models\Documentation\ResourceInfo.cs" />
+    <Compile Include="Models\Documentation\ResourceManager.cs" />
     <Compile Include="Models\PuTTY\PuTTYSessionInfo.cs" />
     <Compile Include="Models\PuTTY\PuTTY.cs" />
     <Compile Include="Models\Settings\TracerouteProfileManager.cs" />
