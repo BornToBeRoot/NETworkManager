@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -128,12 +129,12 @@ namespace NETworkManager.Models.Settings
             Current.SettingsChanged = false;
         }
 
-        public static Task MoveSettingsAsync(string sourceLocation, string targedLocation, bool overwrite)
+        public static Task MoveSettingsAsync(string sourceLocation, string targedLocation, bool overwrite, string[] filesTargedLocation)
         {
-            return Task.Run(() => MoveSettings(sourceLocation, targedLocation, overwrite));
+            return Task.Run(() => MoveSettings(sourceLocation, targedLocation, overwrite, filesTargedLocation));
         }
 
-        private static void MoveSettings(string sourceLocation, string targedLocation, bool overwrite)
+        private static void MoveSettings(string sourceLocation, string targedLocation, bool overwrite, string[] filesTargedLocation = null)
         {
             string[] sourceFiles = Directory.GetFiles(sourceLocation);
 
@@ -143,9 +144,9 @@ namespace NETworkManager.Models.Settings
             foreach (string file in sourceFiles)
             {
                 // Skip if file exists and user don't want to overwrite it
-                if (!overwrite && File.Exists(file))
+                if (!overwrite && ((filesTargedLocation.Any(x => Path.GetFileName(x) == Path.GetFileName(file)))))
                     continue;
-
+                
                 File.Copy(file, Path.Combine(targedLocation, Path.GetFileName(file)), overwrite);
             }
 

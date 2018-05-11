@@ -429,8 +429,10 @@ namespace NETworkManager.ViewModels
             bool overwrite = false;
             bool forceRestart = false;
 
+            string[] filesTargedLocation = Directory.GetFiles(LocationSelectedPath);
+
             // Check if there are any settings files in the folder...
-            if (FilesContainsSettingsFiles(Directory.GetFiles(LocationSelectedPath)))
+            if (FilesContainsSettingsFiles(filesTargedLocation))
             {
                 MetroDialogSettings settings = AppearanceManager.MetroDialog;
 
@@ -459,7 +461,7 @@ namespace NETworkManager.ViewModels
             // Try moving files (permissions, file is in use...)
             try
             {
-                await SettingsManager.MoveSettingsAsync(SettingsManager.GetSettingsLocation(), LocationSelectedPath, overwrite);
+                await SettingsManager.MoveSettingsAsync(SettingsManager.GetSettingsLocation(), LocationSelectedPath, overwrite, filesTargedLocation);
 
                 Properties.Settings.Default.Settings_CustomSettingsLocation = LocationSelectedPath;
 
@@ -468,7 +470,11 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error") as string, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                MetroDialogSettings settings = AppearanceManager.MetroDialog;
+
+                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
+
+               await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error") as string, ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
             LocationSelectedPath = string.Empty;
