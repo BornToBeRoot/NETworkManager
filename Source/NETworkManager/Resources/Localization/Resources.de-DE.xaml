@@ -481,6 +481,7 @@
     <system:String x:Key="String_Button_No">Nein</system:String>
     <system:String x:Key="String_Button_Overwrite">Überschreiben</system:String>
     <system:String x:Key="String_Button_MoveAndRestart">Verschieben &amp; neu starten</system:String>
+    <system:String x:Key="String_Button_OpenLocation">Speicherort öffnen</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Ausschneiden</system:String>

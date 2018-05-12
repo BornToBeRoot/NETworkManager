@@ -2,6 +2,7 @@
 using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -378,6 +379,16 @@ namespace NETworkManager.ViewModels
 
             if (dialogResult == System.Windows.Forms.DialogResult.OK)
                 LocationSelectedPath = dialog.SelectedPath;
+        }
+
+        public ICommand OpenLocationCommand
+        {
+            get { return new RelayCommand(p => OpenLocationAction()); }
+        }
+
+        private void OpenLocationAction()
+        {
+            Process.Start("explorer.exe", SettingsManager.GetSettingsLocation());
         }
 
         public ICommand ChangeSettingsCommand

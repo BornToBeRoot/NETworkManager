@@ -7,6 +7,7 @@
         xmlns:Validator="clr-namespace:NETworkManager.Validators"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"      
+        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" Loaded="UserControl_Loaded">
@@ -41,46 +42,69 @@
             </TextBox.Style>
         </TextBox>
         <StackPanel Margin="0,0,0,20">
-            <StackPanel Orientation="Horizontal">
-                <Button Content="{DynamicResource String_Button_Default}" Command="{Binding RestoreDefaultSettingsLocationCommand}" Margin="0,0,10,0">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
-                            <Setter Property="IsEnabled" Value="False" />
-                            <Setter Property="Visibility" Value="Collapsed" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=toggleSwitchIsPortable,Path=IsChecked}" Value="False" >
-                                    <Setter Property="IsEnabled" Value="True" />
-                                </DataTrigger>
-                                <DataTrigger Value="False">
-                                    <DataTrigger.Binding>
-                                        <Binding Converter="{StaticResource IsDefaultSettingsLocationToBoolConverter}" ElementName="txtLocation" Path="Text"/>
-                                    </DataTrigger.Binding>
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <Button Content="{DynamicResource String_Button_Default}" Command="{Binding RestoreDefaultSettingsLocationCommand}" Margin="0,0,10,0">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
+                                <Setter Property="IsEnabled" Value="False" />
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=toggleSwitchIsPortable,Path=IsChecked}" Value="False" >
+                                        <Setter Property="IsEnabled" Value="True" />
+                                    </DataTrigger>
+                                    <DataTrigger Value="False">
+                                        <DataTrigger.Binding>
+                                            <Binding Converter="{StaticResource IsDefaultSettingsLocationToBoolConverter}" ElementName="txtLocation" Path="Text"/>
+                                        </DataTrigger.Binding>
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Content="{DynamicResource String_Button_Change}" Command="{Binding ChangeSettingsCommand}">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
+                                <Setter Property="IsEnabled" Value="False" />
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ElementName=toggleSwitchIsPortable, Path=IsChecked}" Value="False" />
+                                            <Condition Binding="{Binding ElementName=txtLocation, Path=(Validation.HasError)}" Value="False" />
+                                            <Condition Binding="{Binding ElementName=txtLocation, Path=Text, Converter={StaticResource IsSettingsLocationToBoolConverter}}" Value="False" />
+                                            <Condition Binding="{Binding MovingFiles}" Value="False" />
+                                            <Condition Binding="{Binding MakingPortable}" Value="False" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="IsEnabled" Value="True" />
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+                <Button Grid.Column="2" Command="{Binding OpenLocationCommand}" Style="{StaticResource ImageWithTextButton}">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=FolderOpen}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_OpenLocation}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                        </Grid>
+                    </Button.Content>
                 </Button>
-                <Button Content="{DynamicResource String_Button_Change}" Command="{Binding ChangeSettingsCommand}">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
-                            <Setter Property="IsEnabled" Value="False" />
-                            <Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding ElementName=toggleSwitchIsPortable, Path=IsChecked}" Value="False" />
-                                        <Condition Binding="{Binding ElementName=txtLocation, Path=(Validation.HasError)}" Value="False" />
-                                        <Condition Binding="{Binding ElementName=txtLocation, Path=Text, Converter={StaticResource IsSettingsLocationToBoolConverter}}" Value="False" />
-                                        <Condition Binding="{Binding MovingFiles}" Value="False" />
-                                        <Condition Binding="{Binding MakingPortable}" Value="False" />
-                                    </MultiDataTrigger.Conditions>
-                                    <Setter Property="IsEnabled" Value="True" />
-                                </MultiDataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
-            </StackPanel>
+            </Grid>
             <Controls:MetroProgressBar IsIndeterminate="True" Foreground="{DynamicResource AccentColorBrush}"  Visibility="{Binding MovingFiles, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,10,0,0"/>
         </StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Portable}" />
@@ -121,7 +145,7 @@
             <StackPanel>
                 <CheckBox Content="{DynamicResource String_ApplicationSettings}" IsEnabled="{Binding ApplicationSettingsExists}" IsChecked="{Binding ResetApplicationSettings}" Margin="0,0,0,10" />
                 <CheckBox Content="{DynamicResource String_NetworkInterfaceProfiles}" IsEnabled="{Binding NetworkInterfaceProfilesExists}" IsChecked="{Binding ResetNetworkInterfaceProfiles}" Margin="0,0,0,10" />
-                <CheckBox Content="{DynamicResource String_IPScannerProfiles}" IsEnabled="{Binding IPScannerProfilesExists}" IsChecked="{Binding ResetIPScannerProfiles}" Margin="0,0,0,10" />                
+                <CheckBox Content="{DynamicResource String_IPScannerProfiles}" IsEnabled="{Binding IPScannerProfilesExists}" IsChecked="{Binding ResetIPScannerProfiles}" Margin="0,0,0,10" />
                 <CheckBox Content="{DynamicResource String_PortScannerProfiles}" IsEnabled="{Binding PortScannerProfilesExists}" IsChecked="{Binding ResetPortScannerProfiles}" Margin="0,0,0,10" />
                 <CheckBox Content="{DynamicResource String_PingProfiles}" IsEnabled="{Binding PingProfilesExists}" IsChecked="{Binding ResetPingProfiles}" Margin="0,0,0,10" />
                 <CheckBox Content="{DynamicResource String_TracerouteProfiles}" IsEnabled="{Binding TracerouteProfilesExists}" IsChecked="{Binding ResetTracerouteProfiles}" Margin="0,0,0,10" />
@@ -158,6 +182,6 @@
                     </Style.Triggers>
                 </Style>
             </Button.Style>
-        </Button>        
+        </Button>
     </StackPanel>
 </UserControl>
