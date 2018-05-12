@@ -46,7 +46,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
+              
         private bool _isPortable;
         public bool IsPortable
         {
@@ -649,6 +649,13 @@ namespace NETworkManager.ViewModels
             RemoteDesktopSessionsExists = File.Exists(RemoteDesktopSessionManager.GetSessionsFilePath());
             PuTTYSessionsExists = File.Exists(PuTTYSessionManager.GetSessionsFilePath());
             WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
+        }
+
+        public void SetLocationPathFromDragDrop(string path)
+        {
+            LocationSelectedPath = path;
+
+            OnPropertyChanged(nameof(LocationSelectedPath));
         }
         #endregion
     }

@@ -21,7 +21,7 @@
     </UserControl.Resources>
     <StackPanel >
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Location}" />
-        <TextBox x:Name="txtLocation" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EnterLocation}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFolderCommand}" Margin="0,0,0,10">
+        <TextBox x:Name="txtLocation" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EnterLocation}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFolderCommand}" AllowDrop="True" Drop="txtLocation_Drop" PreviewDragOver="txtLocation_PreviewDragOver" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="LocationSelectedPath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>

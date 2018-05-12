@@ -19,18 +19,18 @@ namespace NETworkManager.ViewModels.Settings
 
         #region Variables
         #region Import
-        private string _importLocationSelectedPath;
-        public string ImportLocationSelectedPath
+        private string _importFilePath;
+        public string ImportFilePath
         {
-            get { return _importLocationSelectedPath; }
+            get { return _importFilePath; }
             set
             {
-                if (value == _importLocationSelectedPath)
+                if (value == _importFilePath)
                     return;
 
                 ImportFileIsValid = false;
 
-                _importLocationSelectedPath = value;
+                _importFilePath = value;
                 OnPropertyChanged();
             }
         }
@@ -48,7 +48,7 @@ namespace NETworkManager.ViewModels.Settings
                 OnPropertyChanged();
             }
         }
-
+                
         public bool _importEverything = true;
         public bool ImportEverything
         {
@@ -718,7 +718,7 @@ namespace NETworkManager.ViewModels.Settings
             };
 
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                ImportLocationSelectedPath = openFileDialog.FileName;
+                ImportFilePath = openFileDialog.FileName;
         }
 
         public ICommand ValidateImportSettingsCommand
@@ -730,7 +730,7 @@ namespace NETworkManager.ViewModels.Settings
         {
             try
             {
-                List<ImportExportManager.ImportExportOptions> importOptions = ImportExportManager.ValidateImportFile(ImportLocationSelectedPath);
+                List<ImportExportManager.ImportExportOptions> importOptions = ImportExportManager.ValidateImportFile(ImportFilePath);
 
                 ImportFileIsValid = true;
                 ImportApplicationSettingsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.ApplicationSettings);
@@ -848,7 +848,7 @@ namespace NETworkManager.ViewModels.Settings
                 }
 
                 // Import (copy) files from zip archive
-                ImportExportManager.Import(ImportLocationSelectedPath, importOptions);
+                ImportExportManager.Import(ImportFilePath, importOptions);
 
                 // Do the import (replace or add)
                 if (importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles))
@@ -1012,6 +1012,13 @@ namespace NETworkManager.ViewModels.Settings
             RemoteDesktopSessionsExists = File.Exists(RemoteDesktopSessionManager.GetSessionsFilePath());
             PuTTYSessionsExists = File.Exists(PuTTYSessionManager.GetSessionsFilePath());
             WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
+        }
+
+        public void SetImportLocationFilePathFromDragDrop(string filePath)
+        {
+            ImportFilePath = filePath;
+                        
+            OnPropertyChanged(nameof(ImportFilePath));
         }
         #endregion
     }

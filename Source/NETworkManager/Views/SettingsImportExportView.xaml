@@ -18,9 +18,9 @@
     </UserControl.Resources>
     <StackPanel >
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Import}" />
-        <TextBox x:Name="txtImportLocation" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_LocationOfTheImport}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" Margin="0,0,0,10">
+        <TextBox x:Name="txtImportFilePath" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_LocationOfTheImport}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" AllowDrop="True" Drop="txtImportFilePath_Drop" PreviewDragOver="txtImportFilePath_PreviewDragOver" Margin="0,0,0,10">
             <TextBox.Text>
-                <Binding Path="ImportLocationSelectedPath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="ImportFilePath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                         <Validator:FileExistsValidator ValidatesOnTargetUpdated="True" />
@@ -33,7 +33,7 @@
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
                     <Setter Property="IsEnabled" Value="False" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=txtImportLocation, Path=(Validation.HasError)}" Value="False">
+                        <DataTrigger Binding="{Binding ElementName=txtImportFilePath, Path=(Validation.HasError)}" Value="False">
                             <Setter Property="IsEnabled" Value="True" />
                         </DataTrigger>
                     </Style.Triggers>

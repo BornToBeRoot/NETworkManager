@@ -25,5 +25,21 @@ namespace NETworkManager.Views
         {
             viewModel.SaveAndCheckSettings();
         }
+
+        private void txtLocation_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                viewModel.SetLocationPathFromDragDrop(files[0]);
+            }
+        }
+
+        private void txtLocation_PreviewDragOver(object sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.Copy;
+            e.Handled = true;
+        }
     }
 }
