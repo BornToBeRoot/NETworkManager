@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26228.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager", "NETworkManager\NETworkManager.csproj", "{E825EC30-AFA2-476A-AC2C-7537630A645B}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "NETworkManager.Setup", "NETworkManager.Setup\NETworkManager.Setup.vdproj", "{2D5FFBD6-4992-4839-8C7F-6FA361893F2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,6 +24,11 @@ Global
 		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Release|x64.ActiveCfg = Release|x64
 		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Release|x64.Build.0 = Release|x64
+		{2D5FFBD6-4992-4839-8C7F-6FA361893F2D}.Debug|Any CPU.ActiveCfg = Debug
+		{2D5FFBD6-4992-4839-8C7F-6FA361893F2D}.Debug|x64.ActiveCfg = Debug
+		{2D5FFBD6-4992-4839-8C7F-6FA361893F2D}.Release|Any CPU.ActiveCfg = Release
+		{2D5FFBD6-4992-4839-8C7F-6FA361893F2D}.Release|Any CPU.Build.0 = Release
+		{2D5FFBD6-4992-4839-8C7F-6FA361893F2D}.Release|x64.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

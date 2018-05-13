@@ -605,45 +605,45 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <None Include="Licenses\ControlsEx.txt">
+    <Content Include="Licenses\ControlsEx.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Licenses\Dragablz.txt">
+    </Content>
+    <Content Include="Licenses\Dragablz.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Licenses\Heijden.DNS.htm">
+    </Content>
+    <Content Include="Licenses\Heijden.DNS.htm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Licenses\MahApps.Metro.txt">
+    </Content>
+    <Content Include="Licenses\MahApps.Metro.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Licenses\MahApps.Metro.IconPack.txt">
+    </Content>
+    <Content Include="Licenses\MahApps.Metro.IconPack.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Licenses\NETworkManager.txt">
+    </Content>
+    <Content Include="Licenses\NETworkManager.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Licenses\Octokit.txt">
+    </Content>
+    <Content Include="Licenses\Octokit.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Licenses\SharpSnmpLib.txt">
+    </Content>
+    <Content Include="Licenses\SharpSnmpLib.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Themes\Black.Accent.xaml">
+    </Content>
+    <Content Include="Themes\Black.Accent.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Themes\Black.Theme.xaml">
+    </Content>
+    <Content Include="Themes\Black.Theme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Themes\White.Theme.xaml">
+    </Content>
+    <Content Include="Themes\White.Theme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Page Include="Views\PortScannerHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1198,14 +1198,14 @@
     <Resource Include="3rdParty\Heijden.DNS\Root\named_root.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Ports.xml">
+    <Content Include="Resources\Ports.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\OUI.xml">
+    <Content Include="Resources\OUI.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\NETworkManager.ico" />
