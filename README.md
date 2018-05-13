@@ -25,7 +25,7 @@
 
 <div align="center"> 
   <p>
-      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.1.0/NETworkManager_v1.6.1.0.zip">:package: Download</a>
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/latest">:package: Download</a>
   </p>
   <p>
     <a href="https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog">:page_facing_up: Changelog</a>
@@ -34,12 +34,6 @@
 </div>
 
 <img alt="NETworkManager" src="NETworkManager.gif" />
-
-The software is portable by default, simply unpack the ZIP archive and save it in a folder you have write permissions on.
-
-_On Windows 10 systems, SmartScreen may prevent the execution of the_ `NETworkManger.exe` _, because the binary is not digitaly signed. To open it anyway, click in the dialog on "More info" then click the button "Run anyway"._
-
-SHA256: `E911F59EB8137FC88CDCFCC5741FBD1FB7C87FF4CC403C1BE0C506F57C3465FA`
 
 <h2>Features</h2>
 
