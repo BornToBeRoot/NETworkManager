@@ -698,7 +698,7 @@
             "{1525181F-901A-416C-8A58-119130FE478E}:_EC8D1876085B42DE966689AC5A122D37"
             {
             "Name" = "8:#1919"
-            "AlwaysCreate" = "11:FALSE"
+            "AlwaysCreate" = "11:TRUE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:ProgramMenuFolder"
@@ -734,7 +734,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:NETworkManager"
         "ProductCode" = "8:{A0A04793-60BD-4350-AFAA-94776FE1AE55}"
-        "PackageCode" = "8:{FBF8925C-3428-45FA-B5F0-AB4F8991B515}"
+        "PackageCode" = "8:{7B466A31-3B03-4F14-8BEE-7D63B5D79FCF}"
         "UpgradeCode" = "8:{FBE04B49-929D-4FB1-9A85-4F83A13E2E10}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
