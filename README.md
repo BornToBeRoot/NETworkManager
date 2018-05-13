@@ -25,7 +25,10 @@
 
 <div align="center"> 
   <p>
-      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/latest">:package: Download</a>
+      :package: Download: 
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.2.0/NETworkManager_v1.6.2.0_Portable.zip">Portable</a>
+      ,
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.2.0/NETworkManager_v1.6.2.0_Setup.msi">MSI</a>
   </p>
   <p>
     <a href="https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog">:page_facing_up: Changelog</a>
