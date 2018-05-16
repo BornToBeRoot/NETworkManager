@@ -34,7 +34,7 @@ This is a nuspec. It mostly adheres to https://docs.nuget.org/create/Nuspec-Refe
 
     <!-- == SOFTWARE SPECIFIC SECTION == -->
     <!-- This section is about the software itself -->
-    <title>NETworkManager (Install)</title>
+    <title>NETworkManager</title>
     <authors>BornToBeRoot</authors>
     <!-- projectUrl is required for the community feed -->
     <projectUrl>https://github.com/BornToBeRoot/NETworkManager</projectUrl>
@@ -42,26 +42,13 @@ This is a nuspec. It mostly adheres to https://docs.nuget.org/create/Nuspec-Refe
     <!-- <copyright>Year Software Vendor</copyright> -->
     <!-- If there is a license Url available, it is required for the community feed -->
     <licenseUrl>https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE</licenseUrl>
-    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectSourceUrl>https://github.com/BornToBeRoot/NETworkManager</projectSourceUrl>
     <docsUrl>https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</docsUrl>
     <!--<mailingListUrl></mailingListUrl>-->
     <bugTrackerUrl>https://github.com/BornToBeRoot/NETworkManager/issues</bugTrackerUrl>
     <tags>networkmanager networkinterface ipscanner portscanner wakeonlan traceroute tracert trace ping icmp dns dnslookup subnet calculator httpheader snmp rdp remotedesktop putty ssh</tags>
-    <summary>Network Interface (Information, Configure)
-IP-Scanner
-Port-Scanner
-Ping
-Traceroute
-DNS Lookup
-Remote Desktop (with Tabs)
-PuTTY (with Tabs)
-SNMP - Get/Walk/Set (v1, v2c, v3)
-Wake on LAN
-HTTP Headers
-Subnet-Calculator
-Lokup (OUI, Port)
-ARP Table</summary>
+    <summary></summary>
     <description>A powerful tool for managing networks and troubleshoot network problems!</description>
     <!-- <releaseNotes>__REPLACE_OR_REMOVE__MarkDown_Okay</releaseNotes> -->
     <!-- =============================== -->      
