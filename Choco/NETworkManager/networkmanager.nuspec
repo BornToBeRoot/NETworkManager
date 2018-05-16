@@ -38,7 +38,7 @@ This is a nuspec. It mostly adheres to https://docs.nuget.org/create/Nuspec-Refe
     <authors>BornToBeRoot</authors>
     <!-- projectUrl is required for the community feed -->
     <projectUrl>https://github.com/BornToBeRoot/NETworkManager</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/BornToBeRoot/NETworkManager/master/Icon/NETworkManager.ico</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/BornToBeRoot/NETworkManager/master/Icon/NETworkManager.svg</iconUrl>
     <!-- <copyright>Year Software Vendor</copyright> -->
     <!-- If there is a license Url available, it is required for the community feed -->
     <licenseUrl>https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE</licenseUrl>
