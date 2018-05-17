@@ -33,7 +33,7 @@ namespace NETworkManager.Utilities
                     continue;
                 }
 
-                // Match 192.168.0.0/24
+                // Match 192.168.0.0/24 or 192.168.0.0/255.255.255.0
                 if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressCidrRegex) || Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressSubnetmaskRegex))
                 {
                     string[] subnet = ipOrRange.Split('/');

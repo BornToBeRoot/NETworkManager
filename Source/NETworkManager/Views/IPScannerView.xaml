@@ -51,7 +51,6 @@
                         <Binding Path="IPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                <Validator:IPScanRangeValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.Text>
