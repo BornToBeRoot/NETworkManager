@@ -416,6 +416,7 @@
     <system:String x:Key="String_PuTTY">PuTTY</system:String>
     <system:String x:Key="String_SNMP">SNMP</system:String>
     <system:String x:Key="String_OpenWebsite">Open website</system:String>
+    <system:String x:Key="String_TheFollowingHostnamesCouldNotBeResolved">The following hostnames could not be resolved:</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>

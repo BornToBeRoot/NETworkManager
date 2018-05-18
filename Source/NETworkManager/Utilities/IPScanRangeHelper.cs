@@ -1,7 +1,10 @@
 ﻿using NETworkManager.Models.Network;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,12 +13,12 @@ namespace NETworkManager.Utilities
 {
     public static class IPScanRangeHelper
     {
-        public static Task<IPAddress[]> ConvertIPRangeToIPAddressesAsync(string ipRange, CancellationToken cancellationToken)
+        public static Task<IPAddress[]> ConvertIPRangeToIPAddressesAsync(string[] ipRanges, CancellationToken cancellationToken)
         {
-            return Task.Run(() => ConvertIPRangeToIPAddresses(ipRange, cancellationToken), cancellationToken);
+            return Task.Run(() => ConvertIPRangeToIPAddresses(ipRanges, cancellationToken), cancellationToken);
         }
 
-        public static IPAddress[] ConvertIPRangeToIPAddresses(string ipRange, CancellationToken cancellationToken)
+        public static IPAddress[] ConvertIPRangeToIPAddresses(string[] ipRanges, CancellationToken cancellationToken)
         {
             ConcurrentBag<IPAddress> bag = new ConcurrentBag<IPAddress>();
 
@@ -24,7 +27,7 @@ namespace NETworkManager.Utilities
                 CancellationToken = cancellationToken
             };
 
-            foreach (string ipOrRange in ipRange.Replace(" ", "").Split(';'))
+            foreach (string ipOrRange in ipRanges)
             {
                 // Match 192.168.0.1
                 if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressRegex))
@@ -130,6 +133,72 @@ namespace NETworkManager.Utilities
             }
 
             return bag.ToArray();
+        }
+
+        public static Task<List<string>> ResolveHostnamesInIPRangeAsync(string[] ipHostOrRanges, CancellationToken cancellationToken)
+        {
+            return Task.Run(() => ResolveHostnamesInIPRange(ipHostOrRanges, cancellationToken), cancellationToken);
+        }
+
+        public static List<string> ResolveHostnamesInIPRange(string[] ipHostOrRanges, CancellationToken cancellationToken)
+        {
+            ConcurrentBag<string> bag = new ConcurrentBag<string>();
+
+            ParallelOptions parallelOptions = new ParallelOptions()
+            {
+                CancellationToken = cancellationToken
+            };
+
+            ConcurrentQueue<HostNotFoundException> exceptions = new ConcurrentQueue<HostNotFoundException>();
+
+            Parallel.ForEach(ipHostOrRanges, new ParallelOptions() { CancellationToken = cancellationToken }, ipHostOrRange =>
+            {
+                // like 192.168.0.1, 192.168.0.0/24, 192.168.0.0/255.255.255.0, 192.168.0.0 - 192.168.0.100, 192.168.[50-100].1
+                if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressCidrRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSubnetmaskRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRangeRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSpecialRangeRegex))
+                {
+                    bag.Add(ipHostOrRange);
+                } // like fritz.box, fritz.box/24 or fritz.box/255.255.255.128
+                else if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameCidrRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameSubnetmaskRegex))
+                {
+                    IPHostEntry ipHostEntrys = null;
+
+                    string[] hostAndSubnet = ipHostOrRange.Split('/');
+
+                    try
+                    {
+                        ipHostEntrys = Dns.GetHostEntry(hostAndSubnet[0]);
+                    }
+                    catch (SocketException)
+                    {
+                        exceptions.Enqueue(new HostNotFoundException(hostAndSubnet[0]));
+                        return;
+                    }
+
+                    IPAddress ipAddress = null;
+
+                    foreach (IPAddress ip in ipHostEntrys.AddressList)
+                    {
+                        if (ip.AddressFamily == AddressFamily.InterNetwork)
+                        {
+                            ipAddress = ip;
+                            break;
+                        }
+                    }
+
+                    if (ipAddress == null)
+                        exceptions.Enqueue(new HostNotFoundException(hostAndSubnet[0]));
+
+                    if (ipHostOrRange.Contains('/'))
+                        bag.Add(string.Format("{0}/{1}",ipAddress.ToString(), hostAndSubnet[1]));
+                    else
+                        bag.Add(ipAddress.ToString());
+                }
+            });
+
+            if (exceptions.Count > 0)
+                throw new AggregateException(exceptions);
+
+            return bag.ToList();
         }
     }
 }

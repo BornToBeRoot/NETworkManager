@@ -15,8 +15,6 @@ using System.Linq;
 using NETworkManager.Utilities;
 using Dragablz;
 using NETworkManager.Controls;
-using System.Text.RegularExpressions;
-using System.Net.Sockets;
 
 namespace NETworkManager.ViewModels
 {
@@ -510,59 +508,34 @@ namespace NETworkManager.ViewModels
                 }
             }
 
-           
-            string ipRange = string.Empty;
-
-            // Resolve any hostnames
-            foreach (string ipHostOrRange in IPRange.Replace(" ", "").Split(';'))
-            {
-                if (!string.IsNullOrEmpty(ipRange))
-                    ipRange += ";";
-
-                if (!Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressCidrRegex) && !Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSubnetmaskRegex) && !Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRangeRegex) && !Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSpecialRangeRegex))
-                {
-                    string host = string.Empty;
-
-                    if (ipHostOrRange.Contains('/'))
-                        host = ipHostOrRange.Split('/')[0];
-                    else
-                        host = ipHostOrRange;
-
-                    IPHostEntry ipHostEntrys = await Dns.GetHostEntryAsync(host);
-                    IPAddress ipAddress = null;
-
-                    foreach (IPAddress ip in ipHostEntrys.AddressList)
-                    {
-                        if (ip.AddressFamily == AddressFamily.InterNetwork)
-                        {
-                            ipAddress = ip;
-                            continue;
-                        }
-                    }
-
-                    if (ipAddress == null)
-                        throw new Exception();
-
-                    if (ipHostOrRange.Contains('/'))
-                        ipRange = ipAddress.ToString() + "/" + ipHostOrRange.Split('/')[1];
-                    else
-                        ipRange = ipAddress.ToString();
-
-                }
-                else
-                {
-                    ipRange += ipHostOrRange;
-                }
-            }
-
             cancellationTokenSource = new CancellationTokenSource();
+
+            string[] ipHostOrRanges = IPRange.Replace(" ", "").Split(';');
+
+            // Resolve hostnames
+            List<string> ipRanges = new List<string>();
+
+            try
+            {
+                ipRanges = await IPScanRangeHelper.ResolveHostnamesInIPRangeAsync(ipHostOrRanges, cancellationTokenSource.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                IpScanner_UserHasCanceled(this, EventArgs.Empty);
+                return;
+            }
+            catch (AggregateException exceptions) // DNS error (could not resolve hostname...)
+            {
+                IpScanner_DnsResolveFailed(this, exceptions);
+                return;
+            }
 
             IPAddress[] ipAddresses;
 
             try
             {
                 // Create a list of all ip addresses
-                ipAddresses = await IPScanRangeHelper.ConvertIPRangeToIPAddressesAsync(ipRange, cancellationTokenSource.Token);
+                ipAddresses = await IPScanRangeHelper.ConvertIPRangeToIPAddressesAsync(ipRanges.ToArray(), cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
             {
@@ -663,6 +636,14 @@ namespace NETworkManager.ViewModels
         private void IpScanner_ProgressChanged(object sender, ProgressChangedArgs e)
         {
             IPAddressesScanned = e.Value;
+        }
+
+        private void IpScanner_DnsResolveFailed(object sender, AggregateException e)
+        {
+            StatusMessage = string.Format("{0} {1}", LocalizationManager.GetStringByKey("String_TheFollowingHostnamesCouldNotBeResolved"), string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message)));
+            DisplayStatusMessage = true;
+
+            ScanFinished();
         }
 
         private void IpScanner_UserHasCanceled(object sender, EventArgs e)
