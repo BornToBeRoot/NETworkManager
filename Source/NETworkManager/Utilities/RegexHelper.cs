@@ -3,7 +3,7 @@
     public static class RegexHelper
     {
         // Match IPv4-Address like 192.168.178.1
-        private const string IPv4AddressValues = @"(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+        private const string IPv4AddressValues = @"(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])";
         public const string IPv4AddressRegex = "^" + IPv4AddressValues + "$";
 
         // Match IPv6-Address
@@ -18,28 +18,42 @@
         // Matche the first 3 bytes of a MAC-Address 000000, 00:00:00, 00-00-00
         public const string MACAddressFirst3BytesRegex = @"^[A-Fa-f0-9]{6}$|^[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}$|^[A-Fa-f0-9]{4}.[A-Fa-f0-9]{2}$";
 
+        // Private subnetmask / cidr values
+        private const string SubnetmaskValues = @"(((255\.){3}(255|254|252|248|240|224|192|128|0+))|((255\.){2}(255|254|252|248|240|224|192|128|0+)\.0)|((255\.)(255|254|252|248|240|224|192|128|0+)(\.0+){2})|((255|254|252|248|240|224|192|128|0+)(\.0+){3}))";
+        private const string CidrRegex = @"([1-9]|[1-2][0-9]|3[0-2])";
+
         // Match a Subnetmask like 255.255.255.0
-        private const string SubnetmaskValuesFirstOctet = "(255|254|252|248|240|224|192|128)";
-        private const string SubnetmaskValues = "(255|254|252|248|240|224|192|128|0)";
-        public const string SubnetmaskRegex = "^(" + SubnetmaskValuesFirstOctet + ".0.0.0)|(255." + SubnetmaskValues + ".0.0)|(255.255." + SubnetmaskValues + ".0)|(255.255.255." + SubnetmaskValues + ")$";
+        public const string SubnetmaskRegex = @"^" + SubnetmaskValues + @"&"; 
 
         // Match a subnet from 192.168.178.0/1 to 192.168.178.0/32
-        public const string IPv4AddressCidrRegex = @"^" + IPv4AddressValues + @"\/([1-9]|[1-2][0-9]|3[0-2])$";
+        public const string IPv4AddressCidrRegex = @"^" + IPv4AddressValues + @"\/" + CidrRegex + @"$";
 
         // Match a subnet from 192.168.178.0/0 to 192.168.178.0/32
-        public const string SubnetCalculatorIPv4AddressCidrRegex = @"^" + IPv4AddressValues + @"\/([0-9]|[1-2][0-9]|3[0-2])$";
+        public const string SubnetCalculatorIPv4AddressCidrRegex = @"^" + IPv4AddressValues + @"\/" + CidrRegex + @"$";
 
         // Match a subnet from 192.168.178.0/192.0.0.0 to 192.168.178.0/255.255.255.255
-        public const string IPv4AddressSubnetmaskRegex = "^" + IPv4AddressValues + @"\/(" + SubnetmaskValuesFirstOctet + ".0.0.0)|(255." + SubnetmaskValues + ".0.0)|(255.255." + SubnetmaskValues + ".0)|(255.255.255." + SubnetmaskValues + ")$";
+        public const string IPv4AddressSubnetmaskRegex = @"^" + IPv4AddressValues + @"\/" + SubnetmaskValues + @"$";
 
         // Match a subnet from 192.168.178.0/0.0.0.0 to 192.168.178.0/255.255.255.255
-        public const string SubnetCalculatorIPv4AddressSubnetmaskRegex = "^" + IPv4AddressValues + @"\/(" + SubnetmaskValues + ".0.0.0)|(255." + SubnetmaskValues + ".0.0)|(255.255." + SubnetmaskValues + ".0)|(255.255.255." + SubnetmaskValues + ")$";
+        public const string SubnetCalculatorIPv4AddressSubnetmaskRegex = "^" + IPv4AddressValues + @"\/" + SubnetmaskValues + @"$";
 
         // Match a range like [0-255], [0,2,4] and [2,4-6]
         public const string SpecialRangeRegex = @"\[((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)-(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)))([,]((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)-(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))))*\]";
 
         // Match a IPv4-Address like 192.168.[50-100].1
         public const string IPv4AddressSpecialRangeRegex = @"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|" + SpecialRangeRegex + @")\.){3}((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|" + SpecialRangeRegex + @")$";
+
+        // Private hostname values
+        private const string HostnameValues = @"(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])";
+
+        // Hostname regex
+        public const string HostnameRegex = @"^" + HostnameValues + @"$";
+
+        // Match a hostname with cidr like server-01.example.com/24
+        public const string HostnameCidrRegex = @"^" + HostnameValues + @"\/" + CidrRegex + @"$";
+
+        // Match a hostname with subnetmask like server-01.example.com/255.255.255.0
+        public const string HostnameSubnetmaskRegex = @"^" + HostnameValues + @"\/" + SubnetmaskValues + @"$";
 
         // Test for http|https uris
         public const string httpAndHttpsUriRegex = @"^http(s)?:\/\/([\w-]+.)+[\w-]+(\/[\w- ./?%&=])?$";

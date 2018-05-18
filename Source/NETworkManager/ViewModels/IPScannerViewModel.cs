@@ -510,12 +510,32 @@ namespace NETworkManager.ViewModels
 
             cancellationTokenSource = new CancellationTokenSource();
 
+            string[] ipHostOrRanges = IPRange.Replace(" ", "").Split(';');
+
+            // Resolve hostnames
+            List<string> ipRanges = new List<string>();
+
+            try
+            {
+                ipRanges = await IPScanRangeHelper.ResolveHostnamesInIPRangeAsync(ipHostOrRanges, cancellationTokenSource.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                IpScanner_UserHasCanceled(this, EventArgs.Empty);
+                return;
+            }
+            catch (AggregateException exceptions) // DNS error (could not resolve hostname...)
+            {
+                IpScanner_DnsResolveFailed(this, exceptions);
+                return;
+            }
+
             IPAddress[] ipAddresses;
 
             try
             {
                 // Create a list of all ip addresses
-                ipAddresses = await IPScanRangeHelper.ConvertIPRangeToIPAddressesAsync(IPRange, cancellationTokenSource.Token);
+                ipAddresses = await IPScanRangeHelper.ConvertIPRangeToIPAddressesAsync(ipRanges.ToArray(), cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
             {
@@ -616,6 +636,14 @@ namespace NETworkManager.ViewModels
         private void IpScanner_ProgressChanged(object sender, ProgressChangedArgs e)
         {
             IPAddressesScanned = e.Value;
+        }
+
+        private void IpScanner_DnsResolveFailed(object sender, AggregateException e)
+        {
+            StatusMessage = string.Format("{0} {1}", LocalizationManager.GetStringByKey("String_TheFollowingHostnamesCouldNotBeResolved"), string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message)));
+            DisplayStatusMessage = true;
+
+            ScanFinished();
         }
 
         private void IpScanner_UserHasCanceled(object sender, EventArgs e)

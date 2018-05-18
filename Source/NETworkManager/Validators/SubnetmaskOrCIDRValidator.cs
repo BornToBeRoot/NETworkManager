@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Windows;
 using System.Windows.Controls;
 using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;

@@ -13,24 +13,24 @@ namespace NETworkManager.Validators
         {
             bool isValid = true;
 
-            foreach (string ipOrRange in (value as string).Replace(" ", "").Split(';'))
+            foreach (string ipHostOrRange in (value as string).Replace(" ", "").Split(';'))
             {
                 // like 192.168.0.1
-                if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressRegex))
+                if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRegex))
                     continue;
 
                 // like 192.168.0.0/24
-                if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressCidrRegex))
+                if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressCidrRegex))
                     continue;
 
                 // like 192.168.0.0/255.255.255.0
-                if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressSubnetmaskRegex))
+                if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSubnetmaskRegex))
                     continue;
 
                 // like 192.168.0.0 - 192.168.0.100
-                if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressRangeRegex))
+                if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRangeRegex))
                 {
-                    string[] range = ipOrRange.Split('-');
+                    string[] range = ipHostOrRange.Split('-');
 
                     if (IPv4AddressHelper.ConvertToInt32(IPAddress.Parse(range[0])) >= IPv4AddressHelper.ConvertToInt32(IPAddress.Parse(range[1])))
                         isValid = false;
@@ -39,9 +39,9 @@ namespace NETworkManager.Validators
                 }
 
                 // like 192.168.[50-100].1
-                if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressSpecialRangeRegex))
+                if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSpecialRangeRegex))
                 {
-                    string[] octets = ipOrRange.Split('.');
+                    string[] octets = ipHostOrRange.Split('.');
 
                     foreach (string octet in octets)
                     {
@@ -64,6 +64,18 @@ namespace NETworkManager.Validators
 
                     continue;
                 }
+
+                // like server-01.example.com
+                if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameRegex))
+                    continue;
+
+                // like server-01.example.com/24
+                if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameCidrRegex))
+                    continue;
+
+                // like server-01.example.com/255.255.255.0
+                if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameSubnetmaskRegex))
+                    continue;
 
                 isValid = false;
             }
