@@ -44,7 +44,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style x:Key="DefaultTabablzControl" TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MahAppsTabablzControlStyle}" >
         <Setter Property="BorderThickness" Value="0,1,0,0" />
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
@@ -60,8 +60,8 @@
                                 <MouseBinding Command="dragablz:TabablzControl.CloseItemCommand" Gesture="MiddleClick" />
                             </Grid.InputBindings>
                             <StackPanel Orientation="Horizontal">
-                                <Grid>
-                                    <TextBlock Text="{Binding Header}" VerticalAlignment="Center" MinWidth="150" Margin="10">
+                                <Grid ToolTip="{Binding Header}">
+                                    <TextBlock Text="{Binding Header}" VerticalAlignment="Center" Width="150" Margin="10">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                                 <Setter Property="FontSize" Value="18" />
