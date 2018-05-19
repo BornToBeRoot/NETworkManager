@@ -6,8 +6,9 @@ namespace NETworkManager.Models.Settings
     public class LocalizationInfo
     {
         public string Name { get; set; }
+        public string NativeName { get; set; }
         public string Path { get; set; }
-        public BitmapImage Icon { get; set; }
+        public BitmapImage Flag { get; set; }
         public string Translator { get; set; }
         public string Code { get; set; }
 
@@ -21,16 +22,17 @@ namespace NETworkManager.Models.Settings
             Code = code;
         }
 
-        public LocalizationInfo(string name, string path, BitmapImage icon, string translator, string code)
+        public LocalizationInfo(string name, string nativeName, string path, BitmapImage flag, string translator, string code)
         {
             Name = name;
+            NativeName = nativeName;
             Path = path;
-            Icon = icon;
+            Flag = flag;
             Translator = translator;
             Code = code;
         }
 
-        public LocalizationInfo(string name, string path, Uri iconPath, string translator, string code) : this(name, path, new BitmapImage(iconPath), translator, code)
+        public LocalizationInfo(string name, string nativeName, string path, Uri flagPath, string translator, string code) : this(name, nativeName, path, new BitmapImage(flagPath), translator, code)
         {
 
         }

@@ -11,6 +11,10 @@
         <Setter Property="Margin" Value="0,0,0,10" />
     </Style>
 
+    <Style x:Key="AccentTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+    </Style>
+
     <Style x:Key="MessageTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource HeaderFontFamily}" />
         <Setter Property="FontSize" Value="18" />

@@ -3,10 +3,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Converter="clr-namespace:NETworkManager.Converters"
+        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d">
-    <StackPanel>
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Language}" />
-        <ListView ItemsSource="{Binding LanguageCollection}" SelectedItem="{Binding LocalizationSelectedItem}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
+    <UserControl.Resources>
+        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Language}" Margin="0,0,0,0" />
+            <TextBox x:Name="txtSearch" Grid.Column="2" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+        </Grid>
+        <ListView Grid.Row="2" ItemsSource="{Binding Localizations}" SelectedItem="{Binding LocalizationSelectedItem}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="5">
@@ -14,14 +33,35 @@
                             <ColumnDefinition Width="48" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Width="48" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Icon}" />
+                        <Image Grid.Column="0" Width="Auto" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Flag}" />
                         <StackPanel Grid.Column="1" Margin="10,5,0,5" Orientation="Vertical">
-                            <TextBlock Text="{Binding Name}" FontWeight="Bold" Style="{StaticResource DefaultTextBlock}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="5" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Name}" FontWeight="Bold" Style="{StaticResource DefaultTextBlock}" />
+                                <TextBlock Grid.Column="2" Text="{Binding NativeName, StringFormat={}({0})}" Style="{StaticResource DefaultTextBlock}" />
+                            </Grid>
                             <TextBlock Text="{Binding Translator}" Style="{StaticResource DefaultTextBlock}" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </StackPanel>
+        <Grid Grid.Row="3" Visibility="{Binding RestartRequired, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Rectangle Width="24" Height="24" Fill="{DynamicResource AccentColorBrush}">
+                <Rectangle.OpacityMask>
+                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=InformationVariant}" />
+                </Rectangle.OpacityMask>
+            </Rectangle>
+            <TextBlock Grid.Column="2" Text="{DynamicResource String_RestartTheApplicationSoThatAllChangesAreApplied}" VerticalAlignment="Center" Style="{StaticResource AccentTextBlock}" />
+        </Grid>        
+    </Grid>
 </UserControl>

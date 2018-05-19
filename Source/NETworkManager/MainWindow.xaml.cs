@@ -315,8 +315,8 @@ namespace NETworkManager
         {
             _applications = CollectionViewSource.GetDefaultView(ApplicationViewManager.List);
 
-            Applications.SortDescriptions.Add(new SortDescription(nameof(ApplicationViewInfo.Name), ListSortDirection.Ascending)); // Always have the same order, even if it is translated
-            Applications.Filter = o =>
+            _applications.SortDescriptions.Add(new SortDescription(nameof(ApplicationViewInfo.Name), ListSortDirection.Ascending)); // Always have the same order, even if it is translated...
+            _applications.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
                     return true;
@@ -413,8 +413,8 @@ namespace NETworkManager
         WakeOnLANView wakeOnLANView;
         SubnetCalculatorHostView subnetCalculatorHostView;
         HTTPHeadersHostView httpHeadersHostView;
-        ARPTableView arpTableView;
         LookupHostView lookupHostView;
+        ARPTableView arpTableView;
 
         private ApplicationViewManager.Name? currentApplicationViewName = null;
 
@@ -489,29 +489,30 @@ namespace NETworkManager
 
                     contentControlApplication.Content = wakeOnLANView;
                     break;
-                case ApplicationViewManager.Name.SubnetCalculator:
-                    if (subnetCalculatorHostView == null)
-                        subnetCalculatorHostView = new SubnetCalculatorHostView();
 
-                    contentControlApplication.Content = subnetCalculatorHostView;
-                    break;
                 case ApplicationViewManager.Name.HTTPHeaders:
                     if (httpHeadersHostView == null)
                         httpHeadersHostView = new HTTPHeadersHostView();
 
                     contentControlApplication.Content = httpHeadersHostView;
                     break;
-                case ApplicationViewManager.Name.ARPTable:
-                    if (arpTableView == null)
-                        arpTableView = new ARPTableView();
+                case ApplicationViewManager.Name.SubnetCalculator:
+                    if (subnetCalculatorHostView == null)
+                        subnetCalculatorHostView = new SubnetCalculatorHostView();
 
-                    contentControlApplication.Content = arpTableView;
+                    contentControlApplication.Content = subnetCalculatorHostView;
                     break;
                 case ApplicationViewManager.Name.Lookup:
                     if (lookupHostView == null)
                         lookupHostView = new LookupHostView();
 
                     contentControlApplication.Content = lookupHostView;
+                    break;
+                case ApplicationViewManager.Name.ARPTable:
+                    if (arpTableView == null)
+                        arpTableView = new ARPTableView();
+
+                    contentControlApplication.Content = arpTableView;
                     break;
             }
 

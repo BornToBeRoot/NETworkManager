@@ -417,7 +417,8 @@
     <system:String x:Key="String_SNMP">SNMP</system:String>
     <system:String x:Key="String_OpenWebsite">Webseite öffnen</system:String>
     <system:String x:Key="String_TheFollowingHostnamesCouldNotBeResolved">Die folgenden Hostnamen konnten nicht aufgelöst werden:</system:String>
-
+    <system:String x:Key="String_RestartTheApplicationSoThatAllChangesAreApplied">Starten Sie die Anwendung neu, damit alle Änderungen übernommen werden!</system:String>
+    
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">Wie erstelle ich ein benutzerdefiniertes Thema und Akzent?</system:String>

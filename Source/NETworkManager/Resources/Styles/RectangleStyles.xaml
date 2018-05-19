@@ -22,7 +22,7 @@
         <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Warning}"/>
+                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Alert}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="ToolTipService.InitialShowDelay" Value="0" />

@@ -534,6 +534,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Localization\Resources.ru-RU.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Styles\RadioButtonStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -630,6 +634,9 @@
     <Content Include="Licenses\SharpSnmpLib.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Localization\Flags\de-DE.png" />
+    <Resource Include="Resources\Localization\Flags\en-US.png" />
+    <Resource Include="Resources\Localization\Flags\ru-RU.png" />
     <Content Include="Themes\Black.Accent.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1169,12 +1176,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Resources\App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Localization\Flags\de-DE.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Localization\Flags\en-US.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
