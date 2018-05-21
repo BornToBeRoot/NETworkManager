@@ -546,6 +546,9 @@ namespace NETworkManager
             // Crate a new tab / perform action
             switch (args.Application)
             {
+                case ApplicationViewManager.Name.IPScanner:
+                    ipScannerHostView.AddTab(args.Data);
+                    break;
                 case ApplicationViewManager.Name.PortScanner:
                     portScannerHostView.AddTab(args.Data);
                     break;

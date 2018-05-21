@@ -277,6 +277,86 @@ namespace NETworkManager.ViewModels
                 StartTrace();
         }
 
+        public ICommand PerformIPScannerCommand
+        {
+            get { return new RelayCommand(p => PerformIPScannerAction()); }
+        }
+
+        private void PerformIPScannerAction()
+        {
+            EventSystem.RedirectToApplication(ApplicationViewManager.Name.IPScanner, SelectedTraceResult.IPAddress.ToString());
+        }
+
+        public ICommand PerformPortScanCommand
+        {
+            get { return new RelayCommand(p => PerformPortScanAction()); }
+        }
+
+        private void PerformPortScanAction()
+        {
+            EventSystem.RedirectToApplication(ApplicationViewManager.Name.PortScanner, SelectedTraceResult.IPAddress.ToString());
+        }
+
+        public ICommand PerformPingCommand
+        {
+            get { return new RelayCommand(p => PerformPingAction()); }
+        }
+
+        private void PerformPingAction()
+        {
+            EventSystem.RedirectToApplication(ApplicationViewManager.Name.Ping, SelectedTraceResult.IPAddress.ToString());
+        }
+
+        public ICommand PerformDNSLookupIPAddressCommand
+        {
+            get { return new RelayCommand(p => PerformDNSLookupIPAddressAction()); }
+        }
+
+        private void PerformDNSLookupIPAddressAction()
+        {
+            EventSystem.RedirectToApplication(ApplicationViewManager.Name.DNSLookup, SelectedTraceResult.IPAddress.ToString());
+        }
+
+        public ICommand PerformDNSLookupHostnameCommand
+        {
+            get { return new RelayCommand(p => PerformDNSLookupHostnameAction()); }
+        }
+
+        private void PerformDNSLookupHostnameAction()
+        {
+            EventSystem.RedirectToApplication(ApplicationViewManager.Name.DNSLookup, SelectedTraceResult.Hostname);
+        }
+
+        public ICommand ConnectRemoteDesktopCommand
+        {
+            get { return new RelayCommand(p => ConnectRemoteDesktopAction()); }
+        }
+
+        private void ConnectRemoteDesktopAction()
+        {
+            EventSystem.RedirectToApplication(ApplicationViewManager.Name.RemoteDesktop, SelectedTraceResult.IPAddress.ToString());
+        }
+
+        public ICommand ConnectPuTTYCommand
+        {
+            get { return new RelayCommand(p => ConnectPuTTYAction()); }
+        }
+
+        private void ConnectPuTTYAction()
+        {
+            EventSystem.RedirectToApplication(ApplicationViewManager.Name.PuTTY, SelectedTraceResult.IPAddress.ToString());
+        }
+
+        public ICommand PerformSNMPCommand
+        {
+            get { return new RelayCommand(p => PerformSNMPAction()); }
+        }
+
+        private void PerformSNMPAction()
+        {
+            EventSystem.RedirectToApplication(ApplicationViewManager.Name.SNMP, SelectedTraceResult.IPAddress.ToString());
+        }
+
         public ICommand CopySelectedHopCommand
         {
             get { return new RelayCommand(p => CopySelectedHopAction()); }

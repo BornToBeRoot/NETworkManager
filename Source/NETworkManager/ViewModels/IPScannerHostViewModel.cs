@@ -359,7 +359,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void AddTab(string host = null)
+        public void AddTab(string host = null)
         {
             _tabId++;
 

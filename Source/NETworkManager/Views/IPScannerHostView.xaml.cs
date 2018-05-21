@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -25,6 +26,11 @@ namespace NETworkManager.Views
         {
             if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
                 viewModel.ScanProfileCommand.Execute(null);
+        }
+
+        public void AddTab(string host)
+        {
+            viewModel.AddTab(host);
         }
     }
 }

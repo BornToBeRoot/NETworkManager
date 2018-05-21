@@ -409,6 +409,7 @@
     <system:String x:Key="String_AddATabToPerformAnSNMPAction">Füge eine Registerkarte hinzu, um eine SNMP-Aktion auszuführen...</system:String>
     <system:String x:Key="String_AddATabToQueryTheHTTPHeaders">Füge eine Registerkarte hinzu, um die HTTP Headers abzufragen...</system:String>
     <system:String x:Key="String_AddATabToOpenANewConnection">Füge eine Registerkarte hinzu, um eine neue Verbindung herzustellen...</system:String>
+    <system:String x:Key="String_IPScanner">IP-Scanner</system:String>
     <system:String x:Key="String_PortScanner">Port-Scanner</system:String>
     <system:String x:Key="String_DNSLookupDots">DNS-Lookup...</system:String>
     <system:String x:Key="String_Traceroute">Traceroute</system:String>
