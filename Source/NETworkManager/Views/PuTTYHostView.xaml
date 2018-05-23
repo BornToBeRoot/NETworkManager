@@ -34,7 +34,7 @@
                         <Setter Property="HeaderSuffixContent" >
                             <Setter.Value>
                                 <Grid HorizontalAlignment="Left" Width="40" Height="40">
-                                    <Button ToolTip="{DynamicResource String_NewSession}" Command="{Binding ConnectNewSessionCommand}" Style="{StaticResource CleanButton}">
+                                    <Button Command="{Binding ConnectNewSessionCommand}" ToolTip="{DynamicResource String_NewSession}" Style="{StaticResource CleanButton}">
                                         <Rectangle Width="20" Height="20">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />

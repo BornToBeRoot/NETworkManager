@@ -419,6 +419,7 @@
     <system:String x:Key="String_OpenWebsite">Open website</system:String>
     <system:String x:Key="String_TheFollowingHostnamesCouldNotBeResolved">The following hostnames could not be resolved:</system:String>
     <system:String x:Key="String_RestartTheApplicationSoThatAllChangesAreApplied">Restart the application so that all settings are applied!</system:String>
+    <system:String x:Key="String_NewTab">New Tab</system:String>
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
@@ -451,8 +452,8 @@
     <system:String x:Key="String_Button_Scan">Scan</system:String>
     <system:String x:Key="String_Button_Trace">Trace</system:String>
     <system:String x:Key="String_Button_Close">Close</system:String>
-    <system:String x:Key="String_Button_Import">Importieren</system:String>
-    <system:String x:Key="String_Button_Export">Exportieren</system:String>
+    <system:String x:Key="String_Button_Import">Import</system:String>
+    <system:String x:Key="String_Button_Export">Export</system:String>
     <system:String x:Key="String_Button_Reset">Reset</system:String>
     <system:String x:Key="String_Button_Continue">Continue</system:String>
     <system:String x:Key="String_Button_Validate">Validate</system:String>

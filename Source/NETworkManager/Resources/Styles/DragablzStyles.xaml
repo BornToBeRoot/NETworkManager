@@ -76,7 +76,7 @@
                                     </TextBlock>
                                     <Thumb Style="{DynamicResource InvisibleThumbStyle}" dragablz:DragablzItem.IsCustomThumb="True" />
                                 </Grid>
-                                <Button Style="{StaticResource CleanButton}" Command="dragablz:TabablzControl.CloseItemCommand" Margin="0,0,10,0">
+                                <Button Style="{StaticResource CleanButton}" Command="dragablz:TabablzControl.CloseItemCommand" ToolTip="{DynamicResource String_Close}" Margin="0,0,10,0">
                                     <Rectangle Width="16" Height="16">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=WindowClose}" />
@@ -102,7 +102,7 @@
         <Setter Property="HeaderSuffixContent">
             <Setter.Value>
                 <Grid HorizontalAlignment="Left" Width="40" Height="40">
-                    <Button Style="{StaticResource CleanButton}" Command="dragablz:TabablzControl.AddItemCommand" Focusable="False">
+                    <Button Style="{StaticResource CleanButton}" Command="dragablz:TabablzControl.AddItemCommand" ToolTip="{DynamicResource String_NewTab}" Focusable="False">
                         <Rectangle Width="20" Height="20">
                             <Rectangle.OpacityMask>
                                 <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />

@@ -283,7 +283,7 @@ namespace NETworkManager
                 Title = string.Format("[{0}] {1}", LocalizationManager.GetStringByKey("String_Administrator"), Title);
 
             // Set the version text
-            Version = string.Format("Version {0}", AssemblyManager.Current.Version);
+            Version = string.Format("{0} {1}", LocalizationManager.GetStringByKey("String_Version"), AssemblyManager.Current.Version);
 
             // Load application list, filter, sort
             LoadApplicationList();
