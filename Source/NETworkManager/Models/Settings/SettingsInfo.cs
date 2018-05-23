@@ -111,6 +111,23 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private bool _window_ShowCurrentApplicationTitle = true;
+        public bool Window_ShowCurrentApplicationTitle
+        {
+            get { return _window_ShowCurrentApplicationTitle; }
+            set
+            {
+                if (value == _window_ShowCurrentApplicationTitle)
+                    return;
+
+                _window_ShowCurrentApplicationTitle = value;
+
+                OnPropertyChanged();
+                
+                SettingsChanged = true;
+            }
+        }
+
         // TrayIcon
         private bool _trayIcon_AlwaysShowIcon;
         public bool TrayIcon_AlwaysShowIcon

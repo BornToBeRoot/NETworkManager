@@ -34,7 +34,7 @@
                     <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">
                         <Setter Property="HeaderSuffixContent" >
                             <Setter.Value>
-                                <Grid HorizontalAlignment="Left" Width="40" Height="40">
+                                <Grid HorizontalAlignment="Left" Width="40" Height="44">
                                     <Button Command="{Binding ConnectNewSessionCommand}" ToolTip="{DynamicResource String_NewSession}" Style="{StaticResource CleanButton}" >
                                         <Rectangle Width="20" Height="20">
                                             <Rectangle.OpacityMask>

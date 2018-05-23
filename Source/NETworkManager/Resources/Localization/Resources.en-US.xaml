@@ -420,7 +420,8 @@
     <system:String x:Key="String_TheFollowingHostnamesCouldNotBeResolved">The following hostnames could not be resolved:</system:String>
     <system:String x:Key="String_RestartTheApplicationSoThatAllChangesAreApplied">Restart the application so that all settings are applied!</system:String>
     <system:String x:Key="String_NewTab">New Tab</system:String>
-
+    <system:String x:Key="String_ShowCurrentApplicationTitle">Show current application title</system:String>
+    
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">How to create a custom theme and accent?</system:String>

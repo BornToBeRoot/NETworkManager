@@ -420,6 +420,7 @@
     <system:String x:Key="String_TheFollowingHostnamesCouldNotBeResolved">Die folgenden Hostnamen konnten nicht aufgelöst werden:</system:String>
     <system:String x:Key="String_RestartTheApplicationSoThatAllChangesAreApplied">Starten Sie die Anwendung neu, damit alle Änderungen übernommen werden!</system:String>
     <system:String x:Key="String_NewTab">Neuer Tab</system:String>
+    <system:String x:Key="String_ShowCurrentApplicationTitle">Zeige Titel der aktuellen Anwendung</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>

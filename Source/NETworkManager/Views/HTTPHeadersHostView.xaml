@@ -23,7 +23,7 @@
                 <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">
                     <Setter Property="HeaderSuffixContent" >
                         <Setter.Value>
-                            <Grid HorizontalAlignment="Left" Width="40" Height="40">
+                            <Grid HorizontalAlignment="Left" Width="40" Height="44">
                                 <Button Style="{StaticResource CleanButton}" Command="{Binding AddTabCommand}" ToolTip="{DynamicResource String_NewTab}" Focusable="False">
                                     <Rectangle Width="20" Height="20">
                                         <Rectangle.OpacityMask>

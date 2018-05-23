@@ -253,6 +253,11 @@ namespace NETworkManager
                 OnPropertyChanged();
             }
         }
+
+        public bool ShowCurrentApplicationTitle
+        {
+            get { return SettingsManager.Current.Window_ShowCurrentApplicationTitle; }
+        }
         #endregion
 
         #region Constructor, window load and close events
@@ -292,11 +297,12 @@ namespace NETworkManager
             ApplicationView_Expand = SettingsManager.Current.ApplicationView_Expand;
 
             // Register some events
+            SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
             EventSystem.RedirectToApplicationEvent += EventSystem_RedirectToApplicationEvent;
 
             _isLoading = false;
         }
-
+             
         // Hide window after it shows up... not nice, but otherwise the hotkeys do not work
         protected override void OnContentRendered(EventArgs e)
         {
@@ -1017,6 +1023,14 @@ namespace NETworkManager
         private void ClearSearchAction()
         {
             Search = string.Empty;
+        }
+        #endregion
+
+        #region Events
+        private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SettingsInfo.Window_ShowCurrentApplicationTitle))
+                OnPropertyChanged(nameof(ShowCurrentApplicationTitle));
         }
         #endregion
 

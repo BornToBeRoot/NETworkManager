@@ -575,9 +575,28 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Border x:Name="HeaderBorder" Grid.Row="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,0,1" MouseDown="HeaderBorder_MouseDown">
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ShowCurrentApplicationTitle}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
                     <TextBlock VerticalAlignment="Center" Height="48" TextAlignment="Center" FontSize="22" Style="{StaticResource HeaderTextBlock}" Text="{Binding SelectedApplication.TranslatedName}" Foreground="{DynamicResource GrayBrush3}" Margin="0" />
                 </Border>
-                <ContentControl x:Name="contentControlApplication" Grid.Row="1" Focusable="False" />
+                <ContentControl x:Name="contentControlApplication" Grid.Row="1" Focusable="False">
+                    <ContentControl.Style>
+                        <Style TargetType="{x:Type ContentControl}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ShowCurrentApplicationTitle}" Value="False">
+                                    <Setter Property="Margin" Value="0,5,0,0" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                </ContentControl>
             </Grid>
         </Grid>
         <Grid Grid.Row="0">
