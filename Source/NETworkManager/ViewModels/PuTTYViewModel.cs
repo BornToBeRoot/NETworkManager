@@ -235,9 +235,7 @@ namespace NETworkManager.ViewModels
         private void ConnectSessionAction()
         {
             ConnectSession();
-        }
-
-      
+        }            
 
         public ICommand ConnectSessionExternalCommand
         {
@@ -393,6 +391,16 @@ namespace NETworkManager.ViewModels
         private void ClearSearchAction()
         {
             Search = string.Empty;
+        }
+
+        public ICommand OpenSettingsCommand
+        {
+            get { return new RelayCommand(p => OpenSettingsAction()); }
+        }
+
+        private void OpenSettingsAction()
+        {
+            EventSystem.RedirectToSettings();
         }
         #endregion
 

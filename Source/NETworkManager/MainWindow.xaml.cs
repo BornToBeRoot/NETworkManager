@@ -299,10 +299,11 @@ namespace NETworkManager
             // Register some events
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
             EventSystem.RedirectToApplicationEvent += EventSystem_RedirectToApplicationEvent;
+            EventSystem.RedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
 
             _isLoading = false;
         }
-             
+              
         // Hide window after it shows up... not nice, but otherwise the hotkeys do not work
         protected override void OnContentRendered(EventArgs e)
         {
@@ -424,7 +425,7 @@ namespace NETworkManager
 
         private ApplicationViewManager.Name? currentApplicationViewName = null;
 
-        private void ChangeApplicationView(ApplicationViewManager.Name name, EventSystemRedirectArgs args = null)
+        private void ChangeApplicationView(ApplicationViewManager.Name name, EventSystemRedirectApplicationArgs args = null)
         {
             if (currentApplicationViewName == name)
                 return;
@@ -544,7 +545,7 @@ namespace NETworkManager
 
         private void EventSystem_RedirectToApplicationEvent(object sender, EventArgs e)
         {
-            EventSystemRedirectArgs args = e as EventSystemRedirectArgs;
+            EventSystemRedirectApplicationArgs args = e as EventSystemRedirectApplicationArgs;
 
             // Change view
             SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == args.Application);
@@ -577,6 +578,98 @@ namespace NETworkManager
                     snmpHostView.AddTab(args.Data);
                     break;
             }
+        }             
+        #endregion
+
+        #region Settings
+        private void OpenSettings()
+        {
+            // Save current language code
+            if (string.IsNullOrEmpty(_cultureCode))
+                _cultureCode = SettingsManager.Current.Localization_CultureCode;
+
+            // Init settings view
+            if (_settingsView == null)
+            {
+                _settingsView = new SettingsView(SelectedApplication.Name);
+                contentControlSettings.Content = _settingsView;
+            }
+            else // Change view
+            {
+                _settingsView.ChangeSettingsView(SelectedApplication.Name);
+            }
+
+            // Show the view (this will hide other content)
+            ShowSettingsView = true;
+
+            // Bring window to front
+            ShowWindowAction();
+        }
+
+        private void EventSystem_RedirectToSettingsEvent(object sender, EventArgs e)
+        {
+            OpenSettings();
+        }
+
+        private async void CloseSettings()
+        {
+            ShowSettingsView = false;
+
+            // Enable/disable tray icon
+            if (!_isInTray)
+            {
+                if (SettingsManager.Current.TrayIcon_AlwaysShowIcon && notifyIcon == null)
+                    InitNotifyIcon();
+
+                if (notifyIcon != null)
+                    notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
+
+                MetroWindowMain.HideOverlay();
+            }
+
+            // Ask the user to restart (if he has changed the language)
+            if ((_cultureCode != SettingsManager.Current.Localization_CultureCode) || (AllowsTransparency != SettingsManager.Current.Appearance_EnableTransparency))
+            {
+                ShowWindowAction();
+
+                MetroDialogSettings settings = AppearanceManager.MetroDialog;
+
+                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_RestartNow");
+                settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
+                settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
+
+                ConfigurationManager.Current.FixAirspace = true;
+
+                if (await this.ShowMessageAsync(LocalizationManager.GetStringByKey("String_RestartRequired"), LocalizationManager.GetStringByKey("String_RestartRequiredAfterSettingsChanged"), MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
+                {
+                    RestartApplication();
+                    return;
+                }
+
+                ConfigurationManager.Current.FixAirspace = false;
+            }
+
+            // Change the transparency
+            if ((AllowsTransparency != SettingsManager.Current.Appearance_EnableTransparency) || (Opacity != SettingsManager.Current.Appearance_Opacity))
+            {
+                if (!AllowsTransparency || !SettingsManager.Current.Appearance_EnableTransparency)
+                    Opacity = 1;
+                else
+                    Opacity = SettingsManager.Current.Appearance_Opacity;
+            }
+
+            // Change HotKeys
+            if (SettingsManager.HotKeysChanged)
+            {
+                UnregisterHotKeys();
+                RegisterHotKeys();
+
+                SettingsManager.HotKeysChanged = false;
+            }
+
+            // Save the settings
+            if (SettingsManager.Current.SettingsChanged)
+                SettingsManager.Save();
         }
         #endregion
 
@@ -837,93 +930,18 @@ namespace NETworkManager
 
         private void OpenSettingsAction()
         {
-            // Save current language code
-            if (string.IsNullOrEmpty(_cultureCode))
-                _cultureCode = SettingsManager.Current.Localization_CultureCode;
-
-            // Init settings view
-            if (_settingsView == null)
-            {
-                _settingsView = new SettingsView(SelectedApplication.Name);
-                contentControlSettings.Content = _settingsView;
-            }
-            else // Change view
-            {
-                _settingsView.ChangeSettingsView(SelectedApplication.Name);
-            }
-
-            // Show the view (this will hide other content)
-            ShowSettingsView = true;
-
-            // Bring window to front
-            ShowWindowAction();
+            OpenSettings();
         }
-
+             
         public ICommand CloseSettingsCommand
         {
             get { return new RelayCommand(p => CloseSettingsAction()); }
         }
 
-        private async void CloseSettingsAction()
+        private void CloseSettingsAction()
         {
-            ShowSettingsView = false;
-
-            // Enable/disable tray icon
-            if (!_isInTray)
-            {
-                if (SettingsManager.Current.TrayIcon_AlwaysShowIcon && notifyIcon == null)
-                    InitNotifyIcon();
-
-                if (notifyIcon != null)
-                    notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
-
-                MetroWindowMain.HideOverlay();
-            }
-
-            // Ask the user to restart (if he has changed the language)
-            if ((_cultureCode != SettingsManager.Current.Localization_CultureCode) || (AllowsTransparency != SettingsManager.Current.Appearance_EnableTransparency))
-            {
-                ShowWindowAction();
-
-                MetroDialogSettings settings = AppearanceManager.MetroDialog;
-
-                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_RestartNow");
-                settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
-                settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
-
-                ConfigurationManager.Current.FixAirspace = true;
-
-                if (await this.ShowMessageAsync(LocalizationManager.GetStringByKey("String_RestartRequired"), LocalizationManager.GetStringByKey("String_RestartRequiredAfterSettingsChanged"), MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
-                {
-                    RestartApplication();
-                    return;
-                }
-
-                ConfigurationManager.Current.FixAirspace = false;
-            }
-
-            // Change the transparency
-            if ((AllowsTransparency != SettingsManager.Current.Appearance_EnableTransparency) || (Opacity != SettingsManager.Current.Appearance_Opacity))
-            {
-                if (!AllowsTransparency || !SettingsManager.Current.Appearance_EnableTransparency)
-                    Opacity = 1;
-                else
-                    Opacity = SettingsManager.Current.Appearance_Opacity;
-            }
-
-            // Change HotKeys
-            if (SettingsManager.HotKeysChanged)
-            {
-                UnregisterHotKeys();
-                RegisterHotKeys();
-
-                SettingsManager.HotKeysChanged = false;
-            }
-
-            // Save the settings
-            if (SettingsManager.Current.SettingsChanged)
-                SettingsManager.Save();
-        }
+            CloseSettings();
+        }              
 
         public ICommand ShowWindowCommand
         {
@@ -1031,7 +1049,7 @@ namespace NETworkManager
         {
             if (e.PropertyName == nameof(SettingsInfo.Window_ShowCurrentApplicationTitle))
                 OnPropertyChanged(nameof(ShowCurrentApplicationTitle));
-        }
+        }               
         #endregion
 
         #region Bugfixes
