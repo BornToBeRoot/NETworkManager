@@ -447,9 +447,23 @@ namespace NETworkManager.Models.Settings
             set
             {
                 if (value == _ipScanner_ExpandProfileView)
-
                     return;
+
                 _ipScanner_ExpandProfileView = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private double _ipScanner_ProfileWidth = 250;
+        public double IPScanner_ProfileWidth
+        {
+            get { return _ipScanner_ProfileWidth; }
+            set
+            {
+                if (value == _ipScanner_ProfileWidth)
+                    return;
+
+                _ipScanner_ProfileWidth = value;
                 SettingsChanged = true;
             }
         }

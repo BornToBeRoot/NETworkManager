@@ -9,6 +9,8 @@ using System.ComponentModel;
 using System;
 using System.Windows.Data;
 using MahApps.Metro.Controls.Dialogs;
+using System.Diagnostics;
+using System.Windows;
 
 namespace NETworkManager.ViewModels
 {
@@ -61,23 +63,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _expandProfileView;
-        public bool ExpandProfileView
-        {
-            get { return _expandProfileView; }
-            set
-            {
-                if (value == _expandProfileView)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.IPScanner_ExpandProfileView = value;
-
-                _expandProfileView = value;
-                OnPropertyChanged();
-            }
-        }
-
         private string _search;
         public string Search
         {
@@ -93,6 +78,83 @@ namespace NETworkManager.ViewModels
 
                 OnPropertyChanged();
             }
+        }
+
+        private bool _expandProfileView;
+        public bool ExpandProfileView
+        {
+            get { return _expandProfileView; }
+            set
+            {
+                if (value == _expandProfileView)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.IPScanner_ExpandProfileView = value;
+
+                _expandProfileView = value;
+
+                if (!_lockProfileSize)
+                    ResizeProfileBool();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private GridLength _profileWidth;
+        public GridLength ProfileWidth
+        {
+            get { return _profileWidth; }
+            set
+            {
+                if (value == _profileWidth)
+                    return;
+
+                if (!_isLoading && value.Value != 40)
+                    SettingsManager.Current.IPScanner_ProfileWidth = value.Value;
+
+                _profileWidth = value;
+
+                if (!_lockProfileSize)
+                    ResizeProfileSize();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _lockProfileSize;
+        private double _tmpGridLength;
+
+        private void ResizeProfileBool()
+        {
+            _lockProfileSize = true;
+
+            if (ExpandProfileView)
+            {
+                if (_tmpGridLength == 40)
+                    ProfileWidth = new GridLength(250);
+                else
+                    ProfileWidth = new GridLength(_tmpGridLength);
+            }
+            else
+            {
+                _tmpGridLength = ProfileWidth.Value;
+                ProfileWidth = new GridLength(40);
+            }
+
+            _lockProfileSize = false;
+        }
+
+        private void ResizeProfileSize()
+        {
+            _lockProfileSize = true;
+
+            if (ProfileWidth.Value == 40)
+                ExpandProfileView = false;
+            else
+                ExpandProfileView = true;
+
+            _lockProfileSize = false;
         }
         #endregion
         #endregion
@@ -138,6 +200,13 @@ namespace NETworkManager.ViewModels
         private void LoadSettings()
         {
             ExpandProfileView = SettingsManager.Current.IPScanner_ExpandProfileView;
+
+            if (ExpandProfileView)
+                ProfileWidth = new GridLength(SettingsManager.Current.IPScanner_ProfileWidth);
+            else
+                ProfileWidth = new GridLength(40);
+
+            _tmpGridLength = SettingsManager.Current.IPScanner_ProfileWidth;
         }
         #endregion
 

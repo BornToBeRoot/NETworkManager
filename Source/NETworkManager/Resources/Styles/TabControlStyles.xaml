@@ -42,7 +42,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
                     <DockPanel LastChildFill="True">
-                        <Grid x:Name="HeaderGrid" DockPanel.Dock="Left">
+                        <Grid x:Name="HeaderGrid" DockPanel.Dock="Left" Margin="0,-3,0,0">
                             <UniformGrid x:Name="HeaderPanel" HorizontalAlignment="Stretch" Columns="{Binding Items.Count, RelativeSource={RelativeSource FindAncestor,AncestorType=TabControl}}" Panel.ZIndex="1" IsItemsHost="True" KeyboardNavigation.TabIndex="1" />
                         </Grid>
                         <Border x:Name="ContentPanel" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" KeyboardNavigation.DirectionalNavigation="Contained" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">

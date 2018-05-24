@@ -15,7 +15,7 @@
         <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding AddTabCommand}" />
     </UserControl.InputBindings>
     <Grid>
-        <dragablz:TabablzControl Focusable="False" Margin="-0,-2,0,0" FixedHeaderCount="1" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" >
+        <dragablz:TabablzControl Focusable="False" FixedHeaderCount="1" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" >
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" Partition="65F3827B-9222-48CF-A49A-FCE0841D836D" />
             </dragablz:TabablzControl.InterTabController>

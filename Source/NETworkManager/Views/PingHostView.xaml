@@ -21,7 +21,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <dragablz:TabablzControl Focusable="False" Grid.Column="0" Grid.Row="0" Margin="-0,-2,0,0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" >
+        <dragablz:TabablzControl Focusable="False" Grid.Column="0" Grid.Row="0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" >
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" Partition="DF0DC56F-0C28-4917-B1B1-5DA7A9C8FFA5" />
             </dragablz:TabablzControl.InterTabController>
