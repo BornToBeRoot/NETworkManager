@@ -26,12 +26,9 @@
 <div align="center"> 
   <p>      
     :package: Download:
-      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.2.0/NETworkManager_v1.6.2.0_Portable.zip">Portable</a> or
-      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.2.0/NETworkManager_v1.6.2.0_Setup.msi">MSI</a>
-  </p>
-  <p>
-    :package: Packet Manager:
-      <a href="https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/en-US/HowTo/Use_Chocolatey_to_install_and_upgrade.md">Chocolatey</a>
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.2.0/NETworkManager_v1.6.2.0_Portable.zip">Portable</a>, 
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.2.0/NETworkManager_v1.6.2.0_Setup.msi">MSI</a> or
+      <a href="https://chocolatey.org/packages/networkmanager">Chocolatey</a>
   </p>
   <p>
     <a href="https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog">:page_facing_up: Changelog</a>
