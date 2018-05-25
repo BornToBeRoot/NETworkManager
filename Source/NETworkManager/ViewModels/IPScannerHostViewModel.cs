@@ -9,7 +9,6 @@ using System.ComponentModel;
 using System;
 using System.Windows.Data;
 using MahApps.Metro.Controls.Dialogs;
-using System.Diagnostics;
 using System.Windows;
 
 namespace NETworkManager.ViewModels
@@ -43,6 +42,8 @@ namespace NETworkManager.ViewModels
         }
 
         #region Profiles
+
+
         ICollectionView _ipScannerProfiles;
         public ICollectionView IPScannerProfiles
         {
@@ -80,6 +81,9 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _canProfileWidthChange = true;
+        private double _tempProfileWidth;
+
         private bool _expandProfileView;
         public bool ExpandProfileView
         {
@@ -94,8 +98,8 @@ namespace NETworkManager.ViewModels
 
                 _expandProfileView = value;
 
-                if (!_lockProfileSize)
-                    ResizeProfileBool();
+                if (_canProfileWidthChange)
+                    ResizeProfile(dueTochangedSize: false);
 
                 OnPropertyChanged();
             }
@@ -110,51 +114,16 @@ namespace NETworkManager.ViewModels
                 if (value == _profileWidth)
                     return;
 
-                if (!_isLoading && value.Value != 40)
+                if (!_isLoading && value.Value != 40) // Do not save the size when collapsed
                     SettingsManager.Current.IPScanner_ProfileWidth = value.Value;
 
                 _profileWidth = value;
 
-                if (!_lockProfileSize)
-                    ResizeProfileSize();
+                if (_canProfileWidthChange)
+                    ResizeProfile(dueTochangedSize: true);
 
                 OnPropertyChanged();
             }
-        }
-
-        private bool _lockProfileSize;
-        private double _tmpGridLength;
-
-        private void ResizeProfileBool()
-        {
-            _lockProfileSize = true;
-
-            if (ExpandProfileView)
-            {
-                if (_tmpGridLength == 40)
-                    ProfileWidth = new GridLength(250);
-                else
-                    ProfileWidth = new GridLength(_tmpGridLength);
-            }
-            else
-            {
-                _tmpGridLength = ProfileWidth.Value;
-                ProfileWidth = new GridLength(40);
-            }
-
-            _lockProfileSize = false;
-        }
-
-        private void ResizeProfileSize()
-        {
-            _lockProfileSize = true;
-
-            if (ProfileWidth.Value == 40)
-                ExpandProfileView = false;
-            else
-                ExpandProfileView = true;
-
-            _lockProfileSize = false;
         }
         #endregion
         #endregion
@@ -206,7 +175,7 @@ namespace NETworkManager.ViewModels
             else
                 ProfileWidth = new GridLength(40);
 
-            _tmpGridLength = SettingsManager.Current.IPScanner_ProfileWidth;
+            _tempProfileWidth = SettingsManager.Current.IPScanner_ProfileWidth;
         }
         #endregion
 
@@ -428,6 +397,36 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
+        private void ResizeProfile(bool dueTochangedSize)
+        {
+            _canProfileWidthChange = false;
+
+            if (dueTochangedSize)
+            {
+                if (ProfileWidth.Value == 40)
+                    ExpandProfileView = false;
+                else
+                    ExpandProfileView = true;
+            }
+            else
+            {
+                if (ExpandProfileView)
+                {
+                    if (_tempProfileWidth == 40)
+                        ProfileWidth = new GridLength(250);
+                    else
+                        ProfileWidth = new GridLength(_tempProfileWidth);
+                }
+                else
+                {
+                    _tempProfileWidth = ProfileWidth.Value;
+                    ProfileWidth = new GridLength(40);
+                }
+            }
+
+            _canProfileWidthChange = true;
+        }
+
         public void AddTab(string host = null)
         {
             _tabId++;

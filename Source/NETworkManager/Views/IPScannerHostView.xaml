@@ -20,7 +20,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition MinWidth="40" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="350" />
         </Grid.ColumnDefinitions>
         <dragablz:TabablzControl Focusable="False" Grid.Column="0" Grid.Row="0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" >
@@ -94,7 +94,7 @@
                 <TextBlock Text="{DynamicResource String_AddATabToPerformANetworkScan}" Style="{StaticResource MessageTextBlock}" />
             </StackPanel>
         </Grid>
-        <GridSplitter Grid.Column="1" Width="1" ShowsPreview="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource GrayBrush8}" />
+        <GridSplitter x:Name="GridSplitter" Width="1" Grid.Column="1" ShowsPreview="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Background="{DynamicResource GrayBrush8}" />
         <Expander Grid.Column="2" x:Name="expanderProfiles" Header="{DynamicResource String_Header_Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
             <Grid>
                 <Grid.RowDefinitions>
