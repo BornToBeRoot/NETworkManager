@@ -269,7 +269,7 @@
     <Compile Include="Models\Settings\PingProfileInfo.cs" />
     <Compile Include="Models\Settings\PingProfileManager.cs" />
     <Compile Include="Utilities\ArrayHelper.cs" />
-    <Compile Include="Utilities\EventSystemRedirectArgs.cs" />
+    <Compile Include="Utilities\EventSystemRedirectApplicationArgs.cs" />
     <Compile Include="Utilities\EventSystem.cs" />
     <Compile Include="Utilities\NativeMethods.cs" />
     <Compile Include="Utilities\PowerShellHelper.cs" />

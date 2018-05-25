@@ -487,6 +487,7 @@
     <system:String x:Key="String_Button_Overwrite">Overwrite</system:String>
     <system:String x:Key="String_Button_MoveAndRestart">Move &amp; Restart</system:String>
     <system:String x:Key="String_Button_OpenLocation">Open location</system:String>
+    <system:String x:Key="String_Button_OpenSettings">Open settings</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Cut</system:String>

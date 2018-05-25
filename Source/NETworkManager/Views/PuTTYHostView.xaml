@@ -290,7 +290,23 @@
             </Border>
         </Grid>
         <StackPanel VerticalAlignment="Center" Visibility="{Binding IsPuTTYConfigured, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Margin="10">
-            <TextBlock Text="{DynamicResource String_ConfigureThePathToPuTTYInTheSettings}" Style="{StaticResource MessageTextBlock}" />
+            <TextBlock Text="{DynamicResource String_ConfigureThePathToPuTTYInTheSettings}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+            <Button HorizontalAlignment="Center" Command="{Binding OpenSettingsCommand}" Style="{StaticResource ImageWithTextButton}">
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Settings}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_OpenSettings}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                    </Grid>
+                </Button.Content>
+            </Button>
         </StackPanel>
     </Grid>
 </UserControl>
