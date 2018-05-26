@@ -312,7 +312,7 @@
     <Compile Include="ViewModels\SNMPHostViewModel.cs" />
     <Compile Include="ViewModels\TracerouteProfileViewModel.cs" />
     <Compile Include="ViewModels\TracerouteHostViewModel.cs" />
-    <Compile Include="ViewModels\PuTTYViewModel.cs" />
+    <Compile Include="ViewModels\PuTTYHostViewModel.cs" />
     <Compile Include="ViewModels\PingHostViewModel.cs" />
     <Compile Include="ViewModels\PingProfileViewModel.cs" />
     <Compile Include="ViewModels\SNMPViewModel.cs" />
@@ -350,7 +350,7 @@
     <Compile Include="ViewModels\DNSLookupViewModel.cs" />
     <Compile Include="ViewModels\SubnetCalculatorIPv4SplitterViewModel.cs" />
     <Compile Include="ViewModels\LookupOUILookupViewModel.cs" />
-    <Compile Include="ViewModels\RemoteDesktopViewModel.cs" />
+    <Compile Include="ViewModels\RemoteDesktopHostViewModel.cs" />
     <Compile Include="ViewModels\CommandLineHelpViewModel.cs" />
     <Compile Include="ViewModels\CredentialsViewModel.cs" />
     <Compile Include="ViewModels\HTTPHeadersSettingsViewModel.cs" />
@@ -535,6 +535,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Localization\Resources.ru-RU.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\GridSplitterStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -21,8 +21,9 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition MinWidth="40" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="350" />
         </Grid.ColumnDefinitions>
-        <dragablz:TabablzControl Focusable="False" Grid.Column="0" Grid.Row="0" Margin="-0,-2,0,0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" >
+        <dragablz:TabablzControl Focusable="False" Grid.Column="0" Grid.Row="0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" >
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" Partition="8BB70C7B-7473-4A28-89A1-BAA205D6A39D" />
             </dragablz:TabablzControl.InterTabController>
@@ -61,7 +62,7 @@
                 </Style>
             </dragablz:TabablzControl.Style>
         </dragablz:TabablzControl>
-        <Grid Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">
+        <Grid Grid.Column="0" VerticalAlignment="Center">
             <Grid.Style>
                 <Style TargetType="{x:Type Grid}">
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -93,188 +94,187 @@
                 <TextBlock Text="{DynamicResource String_AddATabToPerformANetworkScan}" Style="{StaticResource MessageTextBlock}" />
             </StackPanel>
         </Grid>
-        <Border Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource GrayBrush8}">
-            <Expander x:Name="expanderProfiles" Header="{DynamicResource String_Header_Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
-                <Grid Width="250">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <TextBox x:Name="txtSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
-                    <ListBox Grid.Column="0" Grid.Row="2" x:Name="listBoxProfiles" ItemsSource="{Binding IPScannerProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
-                        <ListBox.Resources>
-                            <ContextMenu x:Key="ProfileContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                                <MenuItem Header="{DynamicResource String_Scan}" Command="{Binding ScanProfileCommand}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}">
-                                    <MenuItem.Icon>
-                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Play}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="{DynamicResource String_Edit}" Command="{Binding EditProfileCommand}">
-                                    <MenuItem.Icon>
-                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="{DynamicResource String_CopyAs}" Command="{Binding CopyAsProfileCommand}">
-                                    <MenuItem.Icon>
-                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentDuplicate}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteProfileCommand}">
-                                    <MenuItem.Icon>
-                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </ContextMenu>
-                        </ListBox.Resources>
-                        <ListBox.InputBindings>
-                            <KeyBinding Command="{Binding EditProfileCommand}" Key="F2" />
-                            <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
-                        </ListBox.InputBindings>
-                        <ListBox.GroupStyle>
-                            <GroupStyle>
-                                <GroupStyle.ContainerStyle>
-                                    <Style TargetType="{x:Type GroupItem}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate>
-                                                    <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}">
-                                                        <Expander.Header>
-                                                            <Grid>
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="*" />
-                                                                    <ColumnDefinition Width="Auto" />
-                                                                </Grid.ColumnDefinitions>
-                                                                <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{DynamicResource DefaultTextBlock}"/>
-                                                                <Button Grid.Column="1" ToolTip="{DynamicResource String_EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource CleanButton}">
-                                                                    <Rectangle Width="16" Height="16">
-                                                                        <Rectangle.OpacityMask>
-                                                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
-                                                                        </Rectangle.OpacityMask>
-                                                                        <Rectangle.Style>
-                                                                            <Style TargetType="{x:Type Rectangle}">
-                                                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                                                                <Style.Triggers>
-                                                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
-                                                                                    </DataTrigger>
-                                                                                </Style.Triggers>
-                                                                            </Style>
-                                                                        </Rectangle.Style>
-                                                                    </Rectangle>
-                                                                </Button>
-                                                            </Grid>
-                                                        </Expander.Header>
-                                                        <ItemsPresenter />
-                                                    </Expander>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </GroupStyle.ContainerStyle>
-                            </GroupStyle>
-                        </ListBox.GroupStyle>
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
-                                <Setter Property="ContextMenu" Value="{StaticResource ProfileContextMenu}" />
-                                <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick" />
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                    </ListBox>
-                    <Grid Grid.Row="2" VerticalAlignment="Center">
-                        <Grid.Style>
-                            <Style TargetType="{x:Type Grid}">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IPScannerProfiles.Count}" Value="0">
-                                        <Setter Property="Visibility" Value="Visible" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Grid.Style>
-                        <StackPanel>
-                            <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
-                                <Button.Style>
-                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
-                                        <Setter Property="Command" Value="{Binding AddProfileCommand}" />
+        <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
+        <Expander Grid.Column="2" x:Name="expanderProfiles" Header="{DynamicResource String_Header_Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBox x:Name="txtSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+                <ListBox Grid.Column="0" Grid.Row="2" x:Name="listBoxProfiles" ItemsSource="{Binding IPScannerProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
+                    <ListBox.Resources>
+                        <ContextMenu x:Key="ProfileContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                            <MenuItem Header="{DynamicResource String_Scan}" Command="{Binding ScanProfileCommand}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Play}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{DynamicResource String_Edit}" Command="{Binding EditProfileCommand}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{DynamicResource String_CopyAs}" Command="{Binding CopyAsProfileCommand}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentDuplicate}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteProfileCommand}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </ListBox.Resources>
+                    <ListBox.InputBindings>
+                        <KeyBinding Command="{Binding EditProfileCommand}" Key="F2" />
+                        <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
+                    </ListBox.InputBindings>
+                    <ListBox.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.ContainerStyle>
+                                <Style TargetType="{x:Type GroupItem}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}">
+                                                    <Expander.Header>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{DynamicResource DefaultTextBlock}"/>
+                                                            <Button Grid.Column="1" ToolTip="{DynamicResource String_EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource CleanButton}">
+                                                                <Rectangle Width="16" Height="16">
+                                                                    <Rectangle.OpacityMask>
+                                                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
+                                                                    </Rectangle.OpacityMask>
+                                                                    <Rectangle.Style>
+                                                                        <Style TargetType="{x:Type Rectangle}">
+                                                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </Rectangle.Style>
+                                                                </Rectangle>
+                                                            </Button>
+                                                        </Grid>
+                                                    </Expander.Header>
+                                                    <ItemsPresenter />
+                                                </Expander>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </GroupStyle.ContainerStyle>
+                        </GroupStyle>
+                    </ListBox.GroupStyle>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
+                            <Setter Property="ContextMenu" Value="{StaticResource ProfileContextMenu}" />
+                            <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+                <Grid Grid.Row="2" VerticalAlignment="Center">
+                    <Grid.Style>
+                        <Style TargetType="{x:Type Grid}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IPScannerProfiles.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <StackPanel>
+                        <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
+                                    <Setter Property="Command" Value="{Binding AddProfileCommand}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                            <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <Rectangle Width="20" Height="20">
+                                <Rectangle.Resources>
+                                    <VisualBrush x:Key="VisualPlus" Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}"/>
+                                    <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{IconPacks:Material Kind=FilterRemoveOutline}" />
+                                </Rectangle.Resources>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="OpacityMask" Value="{StaticResource VisualPlus}" />
+                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
                                         <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                            </DataTrigger>
                                             <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
-                                                <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
+                                                <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
-                                </Button.Style>
-                                <Rectangle Width="20" Height="20">
-                                    <Rectangle.Resources>
-                                        <VisualBrush x:Key="VisualPlus" Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}"/>
-                                        <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{IconPacks:Material Kind=FilterRemoveOutline}" />
-                                    </Rectangle.Resources>
-                                    <Rectangle.Style>
-                                        <Style TargetType="{x:Type Rectangle}">
-                                            <Setter Property="OpacityMask" Value="{StaticResource VisualPlus}" />
-                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
-                                                    <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Rectangle.Style>
-                                </Rectangle>
-                            </Button>
-                            <TextBlock>
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
-                                        <Setter Property="Text" Value="{DynamicResource String_NoProfilesFoundCreateOne}" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
-                                                <Setter Property="Text" Value="{DynamicResource String_NothingFound}" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </StackPanel>
-                    </Grid>
-                    <Button x:Name="btnAddProfile" Grid.Column="0" Grid.Row="4" Command="{Binding AddProfileCommand}" Style="{StaticResource ImageWithTextButton}">
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
-                            </Grid>
-                        </Button.Content>
-                    </Button>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Button>
+                        <TextBlock>
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+                                    <Setter Property="Text" Value="{DynamicResource String_NoProfilesFoundCreateOne}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                            <Setter Property="Text" Value="{DynamicResource String_NothingFound}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </StackPanel>
                 </Grid>
-            </Expander>
-        </Border>
+                <Button x:Name="btnAddProfile" Grid.Column="0" Grid.Row="4" Command="{Binding AddProfileCommand}" Style="{StaticResource ImageWithTextButton}">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+            </Grid>
+        </Expander>
     </Grid>
 </UserControl>

@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System;
 using System.Windows.Data;
 using MahApps.Metro.Controls.Dialogs;
+using System.Windows;
 
 namespace NETworkManager.ViewModels
 {
@@ -61,23 +62,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _expandProfileView;
-        public bool ExpandProfileView
-        {
-            get { return _expandProfileView; }
-            set
-            {
-                if (value == _expandProfileView)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.IPScanner_ExpandProfileView = value;
-
-                _expandProfileView = value;
-                OnPropertyChanged();
-            }
-        }
-
         private string _search;
         public string Search
         {
@@ -94,10 +78,55 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private bool _canProfileWidthChange = true;
+        private double _tempProfileWidth;
+
+        private bool _expandProfileView;
+        public bool ExpandProfileView
+        {
+            get { return _expandProfileView; }
+            set
+            {
+                if (value == _expandProfileView)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.IPScanner_ExpandProfileView = value;
+
+                _expandProfileView = value;
+
+                if (_canProfileWidthChange)
+                    ResizeProfile(dueToChangedSize: false);
+
+                OnPropertyChanged();
+            }
+        }
+
+        private GridLength _profileWidth;
+        public GridLength ProfileWidth
+        {
+            get { return _profileWidth; }
+            set
+            {
+                if (value == _profileWidth)
+                    return;
+
+                if (!_isLoading && value.Value != 40) // Do not save the size when collapsed
+                    SettingsManager.Current.IPScanner_ProfileWidth = value.Value;
+
+                _profileWidth = value;
+
+                if (_canProfileWidthChange)
+                    ResizeProfile(dueToChangedSize: true);
+
+                OnPropertyChanged();
+            }
+        }
         #endregion
         #endregion
 
-        #region Constructor
+        #region Constructor, load settings
         public IPScannerHostViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
@@ -138,6 +167,13 @@ namespace NETworkManager.ViewModels
         private void LoadSettings()
         {
             ExpandProfileView = SettingsManager.Current.IPScanner_ExpandProfileView;
+
+            if (ExpandProfileView)
+                ProfileWidth = new GridLength(SettingsManager.Current.IPScanner_ProfileWidth);
+            else
+                ProfileWidth = new GridLength(40);
+
+            _tempProfileWidth = SettingsManager.Current.IPScanner_ProfileWidth;
         }
         #endregion
 
@@ -359,6 +395,36 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
+        private void ResizeProfile(bool dueToChangedSize)
+        {
+            _canProfileWidthChange = false;
+
+            if (dueToChangedSize)
+            {
+                if (ProfileWidth.Value == 40)
+                    ExpandProfileView = false;
+                else
+                    ExpandProfileView = true;
+            }
+            else
+            {
+                if (ExpandProfileView)
+                {
+                    if (_tempProfileWidth == 40)
+                        ProfileWidth = new GridLength(250);
+                    else
+                        ProfileWidth = new GridLength(_tempProfileWidth);
+                }
+                else
+                {
+                    _tempProfileWidth = ProfileWidth.Value;
+                    ProfileWidth = new GridLength(40);
+                }
+            }
+
+            _canProfileWidthChange = true;
+        }
+
         public void AddTab(string host = null)
         {
             _tabId++;

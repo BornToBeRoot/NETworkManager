@@ -12,7 +12,7 @@ using System.Linq;
 using System.Diagnostics;
 using NETworkManager.Utilities;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace NETworkManager.ViewModels
 {
@@ -77,23 +77,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _expandSessionView;
-        public bool ExpandSessionView
-        {
-            get { return _expandSessionView; }
-            set
-            {
-                if (value == _expandSessionView)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.RemoteDesktop_ExpandSessionView = value;
-
-                _expandSessionView = value;
-                OnPropertyChanged();
-            }
-        }
-
         private string _search;
         public string Search
         {
@@ -110,10 +93,55 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private bool _canSessionWidthChange = true;
+        private double _tempSessionWidth;
+
+        private bool _expandSessionView;
+        public bool ExpandSessionView
+        {
+            get { return _expandSessionView; }
+            set
+            {
+                if (value == _expandSessionView)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_ExpandSessionView = value;
+
+                _expandSessionView = value;
+
+                if (_canSessionWidthChange)
+                    ResizeSession(dueToChangedSize: false);
+
+                OnPropertyChanged();
+            }
+        }
+
+        private GridLength _sessionWidth;
+        public GridLength SessionWidth
+        {
+            get { return _sessionWidth; }
+            set
+            {
+                if (value == _sessionWidth)
+                    return;
+
+                if (!_isLoading && value.Value != 40) // Do not save the size when collapsed
+                    SettingsManager.Current.RemoteDesktop_SessionWidth = value.Value;
+
+                _sessionWidth = value;
+
+                if (_canSessionWidthChange)
+                    ResizeSession(dueToChangedSize: true);
+
+                OnPropertyChanged();
+            }
+        }
         #endregion
         #endregion
 
-        #region Constructor
+        #region Constructor, load settings
         public RemoteDesktopHostViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
@@ -166,6 +194,13 @@ namespace NETworkManager.ViewModels
         private void LoadSettings()
         {
             ExpandSessionView = SettingsManager.Current.RemoteDesktop_ExpandSessionView;
+
+            if (ExpandSessionView)
+                SessionWidth = new GridLength(SettingsManager.Current.RemoteDesktop_SessionWidth);
+            else
+                SessionWidth = new GridLength(40);
+
+            _tempSessionWidth = SettingsManager.Current.RemoteDesktop_SessionWidth;
         }
         #endregion
 
@@ -691,6 +726,36 @@ namespace NETworkManager.ViewModels
 
             // Fill with the new items
             list.ForEach(x => SettingsManager.Current.RemoteDesktop_HostHistory.Add(x));
+        }
+
+        private void ResizeSession(bool dueToChangedSize)
+        {
+            _canSessionWidthChange = false;
+
+            if (dueToChangedSize)
+            {
+                if (SessionWidth.Value == 40)
+                    ExpandSessionView = false;
+                else
+                    ExpandSessionView = true;
+            }
+            else
+            {
+                if (ExpandSessionView)
+                {
+                    if (_tempSessionWidth == 40)
+                        SessionWidth = new GridLength(250);
+                    else
+                        SessionWidth = new GridLength(_tempSessionWidth);
+                }
+                else
+                {
+                    _tempSessionWidth = SessionWidth.Value;
+                    SessionWidth = new GridLength(40);
+                }
+            }
+
+            _canSessionWidthChange = true;
         }
         #endregion
     }

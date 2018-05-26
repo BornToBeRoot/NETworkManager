@@ -11,7 +11,7 @@
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         Dialog:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
-             mc:Ignorable="d">
+        mc:Ignorable="d">
     <UserControl.Resources>
         <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -25,8 +25,9 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition MinWidth="40" Width="{Binding SessionWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="350" />
             </Grid.ColumnDefinitions>
-            <dragablz:TabablzControl Focusable="False" Grid.Column="0" Grid.Row="0" Margin="-0,-2,0,0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
+            <dragablz:TabablzControl Focusable="False" Grid.Column="0" Grid.Row="0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
                 <dragablz:TabablzControl.InterTabController>
                     <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" Partition="3D21565B-3E97-42F1-B0B9-CCA7DA63EFB2"/>
                 </dragablz:TabablzControl.InterTabController>
@@ -97,9 +98,9 @@
                     <TextBlock Text="{DynamicResource String_AddATabToOpenANewConnection}" Style="{StaticResource MessageTextBlock}" />
                 </StackPanel>
             </Grid>
-            <Border Grid.Column="1" Grid.Row="0" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource GrayBrush8}">
-                <Expander Header="{DynamicResource String_Header_Sessions}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandSessionView}">
-                    <Grid Width="250">
+            <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
+            <Expander Grid.Column="2" Header="{DynamicResource String_Header_Sessions}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandSessionView}">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="10" />
@@ -297,7 +298,6 @@
                         </Button>
                     </Grid>
                 </Expander>
-            </Border>
         </Grid>
         <StackPanel VerticalAlignment="Center" Visibility="{Binding IsRDP8dot1Available, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Margin="10">
             <TextBlock Text="{DynamicResource String_InstallRDP8dot1Message}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />

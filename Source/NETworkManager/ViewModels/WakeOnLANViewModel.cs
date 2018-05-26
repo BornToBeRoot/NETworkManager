@@ -10,6 +10,7 @@ using System.Windows.Data;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace NETworkManager.ViewModels
 {
@@ -174,6 +175,26 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private string _search;
+        public string Search
+        {
+            get { return _search; }
+            set
+            {
+                if (value == _search)
+                    return;
+
+                _search = value;
+
+                WakeOnLANClients.Refresh();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _canProfileWidthChange = true;
+        private double _tempClientWidth;
+
         private bool _expandClientView;
         public bool ExpandClientView
         {
@@ -187,22 +208,30 @@ namespace NETworkManager.ViewModels
                     SettingsManager.Current.WakeOnLAN_ExpandClientView = value;
 
                 _expandClientView = value;
+
+                if (_canProfileWidthChange)
+                    ResizeClient(dueToChangedSize: false);
+
                 OnPropertyChanged();
             }
         }
 
-        private string _search;
-        public string Search
+        private GridLength _clientWidth;
+        public GridLength ClientWidth
         {
-            get { return _search; }
+            get { return _clientWidth; }
             set
             {
-                if (value == _search)
+                if (value == _clientWidth)
                     return;
 
-                _search = value;
+                if (!_isLoading && value.Value != 40) // Do not save the size when collapsed
+                    SettingsManager.Current.WakeOnLAN_ClientWidth = value.Value;
 
-                WakeOnLANClients.Refresh();
+                _clientWidth = value;
+
+                if (_canProfileWidthChange)
+                    ResizeClient(dueToChangedSize: true);
 
                 OnPropertyChanged();
             }
@@ -237,13 +266,20 @@ namespace NETworkManager.ViewModels
 
             LoadSettings();
 
-            _isLoading = true;
+            _isLoading = false;
         }
 
         private void LoadSettings()
         {
             Port = SettingsManager.Current.WakeOnLAN_DefaultPort;
             ExpandClientView = SettingsManager.Current.WakeOnLAN_ExpandClientView;
+
+            if (ExpandClientView)
+                ClientWidth = new GridLength(SettingsManager.Current.WakeOnLAN_ClientWidth);
+            else
+                ClientWidth = new GridLength(40);
+
+            _tempClientWidth = SettingsManager.Current.WakeOnLAN_ClientWidth;
         }
         #endregion
 
@@ -503,6 +539,36 @@ namespace NETworkManager.ViewModels
             {
                 IsSending = false;
             }
+        }
+
+        private void ResizeClient(bool dueToChangedSize)
+        {
+            _canProfileWidthChange = false;
+
+            if (dueToChangedSize)
+            {
+                if (ClientWidth.Value == 40)
+                    ExpandClientView = false;
+                else
+                    ExpandClientView = true;
+            }
+            else
+            {
+                if (ExpandClientView)
+                {
+                    if (_tempClientWidth == 40)
+                        ClientWidth = new GridLength(250);
+                    else
+                        ClientWidth = new GridLength(_tempClientWidth);
+                }
+                else
+                {
+                    _tempClientWidth = ClientWidth.Value;
+                    ClientWidth = new GridLength(40);
+                }
+            }
+
+            _canProfileWidthChange = true;
         }
         #endregion
     }
