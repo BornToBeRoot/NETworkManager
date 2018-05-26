@@ -62,7 +62,7 @@
                 </Style>
             </dragablz:TabablzControl.Style>
         </dragablz:TabablzControl>
-        <Grid Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">
+        <Grid Grid.Column="0" VerticalAlignment="Center">
             <Grid.Style>
                 <Style TargetType="{x:Type Grid}">
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -94,7 +94,7 @@
                 <TextBlock Text="{DynamicResource String_AddATabToPerformANetworkScan}" Style="{StaticResource MessageTextBlock}" />
             </StackPanel>
         </Grid>
-        <GridSplitter x:Name="GridSplitter" Width="1" Grid.Column="1" ShowsPreview="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Background="{DynamicResource GrayBrush8}" />
+        <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
         <Expander Grid.Column="2" x:Name="expanderProfiles" Header="{DynamicResource String_Header_Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
             <Grid>
                 <Grid.RowDefinitions>

@@ -20,6 +20,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition MinWidth="40" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="350" />
         </Grid.ColumnDefinitions>
         <dragablz:TabablzControl Focusable="False" Grid.Column="0" Grid.Row="0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" >
             <dragablz:TabablzControl.InterTabController>
@@ -92,9 +93,9 @@
                 <TextBlock Text="{DynamicResource String_AddATabToPerformAPing}" Style="{StaticResource MessageTextBlock}" />
             </StackPanel>
         </Grid>
-        <Border Grid.Column="1" Grid.Row="0" BorderThickness="1,0,0,0" BorderBrush="{DynamicResource GrayBrush8}">
-            <Expander Header="{DynamicResource String_Header_Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
-                <Grid Width="250">
+        <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
+        <Expander Grid.Column="2" Header="{DynamicResource String_Header_Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="10" />
@@ -274,6 +275,5 @@
                     </Button>
                 </Grid>
             </Expander>
-        </Border>
     </Grid>
 </UserControl>

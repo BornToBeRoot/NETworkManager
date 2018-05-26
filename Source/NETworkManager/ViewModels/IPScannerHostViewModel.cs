@@ -42,8 +42,6 @@ namespace NETworkManager.ViewModels
         }
 
         #region Profiles
-
-
         ICollectionView _ipScannerProfiles;
         public ICollectionView IPScannerProfiles
         {
@@ -99,7 +97,7 @@ namespace NETworkManager.ViewModels
                 _expandProfileView = value;
 
                 if (_canProfileWidthChange)
-                    ResizeProfile(dueTochangedSize: false);
+                    ResizeProfile(dueToChangedSize: false);
 
                 OnPropertyChanged();
             }
@@ -120,7 +118,7 @@ namespace NETworkManager.ViewModels
                 _profileWidth = value;
 
                 if (_canProfileWidthChange)
-                    ResizeProfile(dueTochangedSize: true);
+                    ResizeProfile(dueToChangedSize: true);
 
                 OnPropertyChanged();
             }
@@ -128,7 +126,7 @@ namespace NETworkManager.ViewModels
         #endregion
         #endregion
 
-        #region Constructor
+        #region Constructor, load settings
         public IPScannerHostViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
@@ -397,11 +395,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void ResizeProfile(bool dueTochangedSize)
+        private void ResizeProfile(bool dueToChangedSize)
         {
             _canProfileWidthChange = false;
 
-            if (dueTochangedSize)
+            if (dueToChangedSize)
             {
                 if (ProfileWidth.Value == 40)
                     ExpandProfileView = false;

@@ -3,6 +3,7 @@ using Lextm.SharpSnmpLib.Messaging;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using static NETworkManager.Models.Network.SNMP;
@@ -123,7 +124,7 @@ namespace NETworkManager.Models.Settings
                 _window_ShowCurrentApplicationTitle = value;
 
                 OnPropertyChanged();
-                
+
                 SettingsChanged = true;
             }
         }
@@ -307,6 +308,50 @@ namespace NETworkManager.Models.Settings
 
         #endregion
 
+        #region NetworkInterface        
+        private string _networkInterface_SelectedInterfaceId;
+        public string NetworkInterface_SelectedInterfaceId
+        {
+            get { return _networkInterface_SelectedInterfaceId; }
+            set
+            {
+                if (value == _networkInterface_SelectedInterfaceId)
+                    return;
+
+                _networkInterface_SelectedInterfaceId = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _networkInterface_ExpandProfileView = true;
+        public bool NetworkInterface_ExpandProfileView
+        {
+            get { return _networkInterface_ExpandProfileView; }
+            set
+            {
+                if (value == _networkInterface_ExpandProfileView)
+                    return;
+
+                _networkInterface_ExpandProfileView = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private double _networkInterface_ProfileWidth = 250;
+        public double NetworkInterface_ProfileWidth
+        {
+            get { return _networkInterface_ProfileWidth; }
+            set
+            {
+                if (value == _networkInterface_ProfileWidth)
+                    return;
+
+                _networkInterface_ProfileWidth = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
         #region IPScanner        
         private int _ipScanner_Attempts = 2;
         public int IPScanner_Attempts
@@ -469,31 +514,129 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
-        #region NetworkInterface        
-        private string _networkInterface_SelectedInterfaceId;
-        public string NetworkInterface_SelectedInterfaceId
+        #region PortScanner
+        private ObservableCollection<string> _portScanner_HostHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PortScanner_HostHistory
         {
-            get { return _networkInterface_SelectedInterfaceId; }
+            get { return _portScanner_HostHistory; }
             set
             {
-                if (value == _networkInterface_SelectedInterfaceId)
+                if (value == _portScanner_HostHistory)
                     return;
 
-                _networkInterface_SelectedInterfaceId = value;
+                _portScanner_HostHistory = value;
                 SettingsChanged = true;
             }
         }
 
-        private bool _networkInterface_ExpandProfileView = true;
-        public bool NetworkInterface_ExpandProfileView
+        private ObservableCollection<string> _portScanner_PortHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PortScanner_PortHistory
         {
-            get { return _networkInterface_ExpandProfileView; }
+            get { return _portScanner_PortHistory; }
             set
             {
-                if (value == _networkInterface_ExpandProfileView)
+                if (value == _portScanner_PortHistory)
                     return;
 
-                _networkInterface_ExpandProfileView = value;
+                _portScanner_PortHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _portScanner_Threads = 100;
+        public int PortScanner_Threads
+        {
+            get { return _portScanner_Threads; }
+            set
+            {
+                if (value == _portScanner_Threads)
+                    return;
+
+                _portScanner_Threads = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _portScanner_ShowClosed;
+        public bool PortScanner_ShowClosed
+        {
+            get { return _portScanner_ShowClosed; }
+            set
+            {
+                if (value == _portScanner_ShowClosed)
+                    return;
+
+                _portScanner_ShowClosed = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _portScanner_Timeout = 4000;
+        public int PortScanner_Timeout
+        {
+            get { return _portScanner_Timeout; }
+            set
+            {
+                if (value == _portScanner_Timeout)
+                    return;
+
+                _portScanner_Timeout = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _portScanner_ResolveHostnamePreferIPv4 = true;
+        public bool PortScanner_ResolveHostnamePreferIPv4
+        {
+            get { return _portScanner_ResolveHostnamePreferIPv4; }
+            set
+            {
+                if (value == _portScanner_ResolveHostnamePreferIPv4)
+                    return;
+
+                _portScanner_ResolveHostnamePreferIPv4 = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _portScanner_ExpandStatistics = true;
+        public bool PortScanner_ExpandStatistics
+        {
+            get { return _portScanner_ExpandStatistics; }
+            set
+            {
+                if (value == _portScanner_ExpandStatistics)
+                    return;
+
+                _portScanner_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _portScanner_ExpandProfileView = true;
+        public bool PortScanner_ExpandProfileView
+        {
+            get { return _portScanner_ExpandProfileView; }
+            set
+            {
+                if (value == _portScanner_ExpandProfileView)
+                    return;
+
+                _portScanner_ExpandProfileView = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private double _portScanner_ProfileWidth = 250;
+        public double PortScanner_ProfileWidth
+        {
+            get { return _portScanner_ProfileWidth; }
+            set
+            {
+                if (value == _portScanner_ProfileWidth)
+                    return;
+
+                _portScanner_ProfileWidth = value;
                 SettingsChanged = true;
             }
         }
@@ -653,6 +796,20 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private double _ping_ProfileWidth = 250;
+        public double Ping_ProfileWidth
+        {
+            get { return _ping_ProfileWidth; }
+            set
+            {
+                if (value == _ping_ProfileWidth)
+                    return;
+
+                _ping_ProfileWidth = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Traceroute
@@ -770,177 +927,17 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
-        #endregion
 
-        #region Lookup
-        private ObservableCollection<string> _lookup_OUI_MACAddressOrVendorHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> Lookup_OUI_MACAddressOrVendorHistory
+        private double _traceroute_ProfileWidth = 250;
+        public double Traceroute_ProfileWidth
         {
-            get { return _lookup_OUI_MACAddressOrVendorHistory; }
+            get { return _traceroute_ProfileWidth; }
             set
             {
-                if (value == _lookup_OUI_MACAddressOrVendorHistory)
+                if (value == _traceroute_ProfileWidth)
                     return;
 
-                _lookup_OUI_MACAddressOrVendorHistory = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private ObservableCollection<string> _lookup_Port_PortsHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> Lookup_Port_PortsHistory
-        {
-            get { return _lookup_Port_PortsHistory; }
-            set
-            {
-                if (value == _lookup_Port_PortsHistory)
-                    return;
-
-                _lookup_Port_PortsHistory = value;
-                SettingsChanged = true;
-            }
-        }
-        #endregion
-
-        #region PortScanner
-        private ObservableCollection<string> _portScanner_HostHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> PortScanner_HostHistory
-        {
-            get { return _portScanner_HostHistory; }
-            set
-            {
-                if (value == _portScanner_HostHistory)
-                    return;
-
-                _portScanner_HostHistory = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private ObservableCollection<string> _portScanner_PortHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> PortScanner_PortHistory
-        {
-            get { return _portScanner_PortHistory; }
-            set
-            {
-                if (value == _portScanner_PortHistory)
-                    return;
-
-                _portScanner_PortHistory = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private int _portScanner_Threads = 100;
-        public int PortScanner_Threads
-        {
-            get { return _portScanner_Threads; }
-            set
-            {
-                if (value == _portScanner_Threads)
-                    return;
-
-                _portScanner_Threads = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _portScanner_ShowClosed;
-        public bool PortScanner_ShowClosed
-        {
-            get { return _portScanner_ShowClosed; }
-            set
-            {
-                if (value == _portScanner_ShowClosed)
-                    return;
-
-                _portScanner_ShowClosed = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private int _portScanner_Timeout = 4000;
-        public int PortScanner_Timeout
-        {
-            get { return _portScanner_Timeout; }
-            set
-            {
-                if (value == _portScanner_Timeout)
-                    return;
-
-                _portScanner_Timeout = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _portScanner_ResolveHostnamePreferIPv4 = true;
-        public bool PortScanner_ResolveHostnamePreferIPv4
-        {
-            get { return _portScanner_ResolveHostnamePreferIPv4; }
-            set
-            {
-                if (value == _portScanner_ResolveHostnamePreferIPv4)
-                    return;
-
-                _portScanner_ResolveHostnamePreferIPv4 = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _portScanner_ExpandStatistics = true;
-        public bool PortScanner_ExpandStatistics
-        {
-            get { return _portScanner_ExpandStatistics; }
-            set
-            {
-                if (value == _portScanner_ExpandStatistics)
-                    return;
-
-                _portScanner_ExpandStatistics = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _portScanner_ExpandProfileView = true;
-        public bool PortScanner_ExpandProfileView
-        {
-            get { return _portScanner_ExpandProfileView; }
-            set
-            {
-                if (value == _portScanner_ExpandProfileView)
-                    return;
-
-                _portScanner_ExpandProfileView = value;
-                SettingsChanged = true;
-            }
-        }
-        #endregion
-
-        #region WakeOnLAN
-        private int _wakeOnLAN_DefaultPort = 7;
-        public int WakeOnLAN_DefaultPort
-        {
-            get { return _wakeOnLAN_DefaultPort; }
-            set
-            {
-                if (value == _wakeOnLAN_DefaultPort)
-                    return;
-
-                _wakeOnLAN_DefaultPort = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _wakeOnLAN_ExpandClientView = true;
-        public bool WakeOnLAN_ExpandClientView
-        {
-            get { return _wakeOnLAN_ExpandClientView; }
-            set
-            {
-                if (value == _wakeOnLAN_ExpandClientView)
-                    return;
-
-                _wakeOnLAN_ExpandClientView = value;
+                _traceroute_ProfileWidth = value;
                 SettingsChanged = true;
             }
         }
@@ -1170,54 +1167,6 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
-        #endregion
-
-        #region Subnet Calculator
-        #region IPv4 Calculator
-        private ObservableCollection<string> _subnetCalculator_IPv4Calculator_SubnetHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> SubnetCalculator_IPv4Calculator_SubnetHistory
-        {
-            get { return _subnetCalculator_IPv4Calculator_SubnetHistory; }
-            set
-            {
-                if (value == _subnetCalculator_IPv4Calculator_SubnetHistory)
-                    return;
-
-                _subnetCalculator_IPv4Calculator_SubnetHistory = value;
-                SettingsChanged = true;
-            }
-        }
-        #endregion
-
-        #region IPv4 Splitter
-        private List<string> _subnetCalculator_IPv4Splitter_SubnetHistory = new List<string>();
-        public List<string> SubnetCalculator_IPv4Splitter_SubnetHistory
-        {
-            get { return _subnetCalculator_IPv4Splitter_SubnetHistory; }
-            set
-            {
-                if (value == _subnetCalculator_IPv4Splitter_SubnetHistory)
-                    return;
-
-                _subnetCalculator_IPv4Splitter_SubnetHistory = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private List<string> _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory = new List<string>();
-        public List<string> SubnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory
-        {
-            get { return _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory; }
-            set
-            {
-                if (value == _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory)
-                    return;
-
-                _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory = value;
-                SettingsChanged = true;
-            }
-        }
-        #endregion
         #endregion
 
         #region RemoteDesktop 
@@ -1500,6 +1449,20 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private double _remoteDesktop_SessionWidth = 250;
+        public double RemoteDesktop_SessionWidth
+        {
+            get { return _remoteDesktop_SessionWidth; }
+            set
+            {
+                if (value == _remoteDesktop_SessionWidth)
+                    return;
+
+                _remoteDesktop_SessionWidth = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region PuTTY
@@ -1601,6 +1564,20 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private double _puTTY_SessionWidth = 250;
+        public double PuTTY_SessionWidth
+        {
+            get { return _puTTY_SessionWidth; }
+            set
+            {
+                if (value == _puTTY_SessionWidth)
+                    return;
+
+                _puTTY_SessionWidth = value;
+                SettingsChanged = true;
+            }
+        }
+
         private string _puTTY_PuTTYLocation;
         public string PuTTY_PuTTYLocation
         {
@@ -1698,50 +1675,6 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_BaudRate = value;
-                SettingsChanged = true;
-            }
-        }
-        #endregion
-
-        #region HTTP Headers
-        private ObservableCollection<string> _httpHeaders_WebsiteUriHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> HTTPHeaders_WebsiteUriHistory
-        {
-            get { return _httpHeaders_WebsiteUriHistory; }
-            set
-            {
-                if (value == _httpHeaders_WebsiteUriHistory)
-                    return;
-
-                _httpHeaders_WebsiteUriHistory = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private int _httpHeaders_Timeout = 10000;
-        public int HTTPHeaders_Timeout
-        {
-            get { return _httpHeaders_Timeout; }
-            set
-            {
-                if (value == _httpHeaders_Timeout)
-                    return;
-
-                _httpHeaders_Timeout = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _httpHeaders_ExpandStatistics = true;
-        public bool HTTPHeaders_ExpandStatistics
-        {
-            get { return _httpHeaders_ExpandStatistics; }
-            set
-            {
-                if (value == _httpHeaders_ExpandStatistics)
-                    return;
-
-                _httpHeaders_ExpandStatistics = value;
                 SettingsChanged = true;
             }
         }
@@ -1917,6 +1850,174 @@ namespace NETworkManager.Models.Settings
             }
         }
         #endregion
+
+        #region WakeOnLAN
+        private int _wakeOnLAN_DefaultPort = 7;
+        public int WakeOnLAN_DefaultPort
+        {
+            get { return _wakeOnLAN_DefaultPort; }
+            set
+            {
+                if (value == _wakeOnLAN_DefaultPort)
+                    return;
+
+                _wakeOnLAN_DefaultPort = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _wakeOnLAN_ExpandClientView = true;
+        public bool WakeOnLAN_ExpandClientView
+        {
+            get { return _wakeOnLAN_ExpandClientView; }
+            set
+            {
+                if (value == _wakeOnLAN_ExpandClientView)
+                    return;
+
+                _wakeOnLAN_ExpandClientView = value;
+                SettingsChanged = true;
+            }
+        }
+
+
+        private double _wakeOnLAN_ClientWidth = 250;
+        public double WakeOnLAN_ClientWidth
+        {
+            get { return _wakeOnLAN_ClientWidth; }
+            set
+            {
+                if (value == _wakeOnLAN_ClientWidth)
+                    return;
+
+                _wakeOnLAN_ClientWidth = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
+        #region HTTP Headers
+        private ObservableCollection<string> _httpHeaders_WebsiteUriHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> HTTPHeaders_WebsiteUriHistory
+        {
+            get { return _httpHeaders_WebsiteUriHistory; }
+            set
+            {
+                if (value == _httpHeaders_WebsiteUriHistory)
+                    return;
+
+                _httpHeaders_WebsiteUriHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _httpHeaders_Timeout = 10000;
+        public int HTTPHeaders_Timeout
+        {
+            get { return _httpHeaders_Timeout; }
+            set
+            {
+                if (value == _httpHeaders_Timeout)
+                    return;
+
+                _httpHeaders_Timeout = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _httpHeaders_ExpandStatistics = true;
+        public bool HTTPHeaders_ExpandStatistics
+        {
+            get { return _httpHeaders_ExpandStatistics; }
+            set
+            {
+                if (value == _httpHeaders_ExpandStatistics)
+                    return;
+
+                _httpHeaders_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
+        #region Subnet Calculator
+        #region IPv4 Calculator
+        private ObservableCollection<string> _subnetCalculator_IPv4Calculator_SubnetHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> SubnetCalculator_IPv4Calculator_SubnetHistory
+        {
+            get { return _subnetCalculator_IPv4Calculator_SubnetHistory; }
+            set
+            {
+                if (value == _subnetCalculator_IPv4Calculator_SubnetHistory)
+                    return;
+
+                _subnetCalculator_IPv4Calculator_SubnetHistory = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
+        #region IPv4 Splitter
+        private List<string> _subnetCalculator_IPv4Splitter_SubnetHistory = new List<string>();
+        public List<string> SubnetCalculator_IPv4Splitter_SubnetHistory
+        {
+            get { return _subnetCalculator_IPv4Splitter_SubnetHistory; }
+            set
+            {
+                if (value == _subnetCalculator_IPv4Splitter_SubnetHistory)
+                    return;
+
+                _subnetCalculator_IPv4Splitter_SubnetHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private List<string> _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory = new List<string>();
+        public List<string> SubnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory
+        {
+            get { return _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory; }
+            set
+            {
+                if (value == _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory)
+                    return;
+
+                _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+        #endregion
+
+        #region Lookup
+        private ObservableCollection<string> _lookup_OUI_MACAddressOrVendorHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> Lookup_OUI_MACAddressOrVendorHistory
+        {
+            get { return _lookup_OUI_MACAddressOrVendorHistory; }
+            set
+            {
+                if (value == _lookup_OUI_MACAddressOrVendorHistory)
+                    return;
+
+                _lookup_OUI_MACAddressOrVendorHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _lookup_Port_PortsHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> Lookup_Port_PortsHistory
+        {
+            get { return _lookup_Port_PortsHistory; }
+            set
+            {
+                if (value == _lookup_Port_PortsHistory)
+                    return;
+
+                _lookup_Port_PortsHistory = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
         #endregion
 
         #region Constructor

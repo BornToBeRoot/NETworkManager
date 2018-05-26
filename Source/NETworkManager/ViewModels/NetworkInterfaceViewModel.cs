@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
+using System.Windows;
 
 namespace NETworkManager.ViewModels
 {
@@ -616,6 +617,26 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private string _search;
+        public string Search
+        {
+            get { return _search; }
+            set
+            {
+                if (value == _search)
+                    return;
+
+                _search = value;
+
+                NetworkInterfaceProfiles.Refresh();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _canProfileWidthChange = true;
+        private double _tempProfileWidth;
+
         private bool _expandProfileView;
         public bool ExpandProfileView
         {
@@ -629,22 +650,30 @@ namespace NETworkManager.ViewModels
                     SettingsManager.Current.NetworkInterface_ExpandProfileView = value;
 
                 _expandProfileView = value;
+
+                if (_canProfileWidthChange)
+                    ResizeProfile(dueToChangedSize: false);
+
                 OnPropertyChanged();
             }
         }
 
-        private string _search;
-        public string Search
+        private GridLength _profileWidth;
+        public GridLength ProfileWidth
         {
-            get { return _search; }
+            get { return _profileWidth; }
             set
             {
-                if (value == _search)
+                if (value == _profileWidth)
                     return;
 
-                _search = value;
+                if (!_isLoading && value.Value != 40) // Do not save the size when collapsed
+                    SettingsManager.Current.NetworkInterface_ProfileWidth = value.Value;
 
-                NetworkInterfaceProfiles.Refresh();
+                _profileWidth = value;
+
+                if (_canProfileWidthChange)
+                    ResizeProfile(dueToChangedSize: true);
 
                 OnPropertyChanged();
             }
@@ -709,6 +738,13 @@ namespace NETworkManager.ViewModels
         private void LoadSettings()
         {
             ExpandProfileView = SettingsManager.Current.NetworkInterface_ExpandProfileView;
+
+            if (ExpandProfileView)
+                ProfileWidth = new GridLength(SettingsManager.Current.NetworkInterface_ProfileWidth);
+            else
+                ProfileWidth = new GridLength(40);
+
+            _tempProfileWidth = SettingsManager.Current.NetworkInterface_ProfileWidth;
         }
         #endregion
 
@@ -1117,6 +1153,36 @@ namespace NETworkManager.ViewModels
             Models.Network.NetworkInterface.FlushDnsResolverCache();
 
             IsConfigurationRunning = false;
+        }
+
+        private void ResizeProfile(bool dueToChangedSize)
+        {
+            _canProfileWidthChange = false;
+
+            if (dueToChangedSize)
+            {
+                if (ProfileWidth.Value == 40)
+                    ExpandProfileView = false;
+                else
+                    ExpandProfileView = true;
+            }
+            else
+            {
+                if (ExpandProfileView)
+                {
+                    if (_tempProfileWidth == 40)
+                        ProfileWidth = new GridLength(250);
+                    else
+                        ProfileWidth = new GridLength(_tempProfileWidth);
+                }
+                else
+                {
+                    _tempProfileWidth = ProfileWidth.Value;
+                    ProfileWidth = new GridLength(40);
+                }
+            }
+
+            _canProfileWidthChange = true;
         }
         #endregion
 
