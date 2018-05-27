@@ -554,10 +554,15 @@ namespace NETworkManager.ViewModels
             IPScannerOptions ipScannerOptions = new IPScannerOptions
             {
                 Threads = SettingsManager.Current.IPScanner_Threads,
-                Timeout = SettingsManager.Current.IPScanner_ICMPTimeout,
-                Buffer = new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
-                Attempts = SettingsManager.Current.IPScanner_ICMPAttempts,
+                ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout,
+                ICMPBuffer = new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
+                ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,
                 ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname,
+                UseCustomDNSServer = SettingsManager.Current.IPScanner_UseCustomDNSServer,
+                CustomDNSServer = SettingsManager.Current.IPScanner_CustomDNSServer,
+                DNSPort = SettingsManager.Current.IPScanner_DNSPort,
+                DNSAttempts = SettingsManager.Current.IPScanner_DNSAttempts,
+                DNSTimeout = SettingsManager.Current.IPScanner_DNSTimeout,
                 ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
                 ShowScanResultForAllIPAddresses = SettingsManager.Current.IPScanner_ShowScanResultForAllIPAddresses
             };

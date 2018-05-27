@@ -1,5 +1,7 @@
-﻿using NETworkManager.Models.Lookup;
+﻿using Heijden.DNS;
+using NETworkManager.Models.Lookup;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -74,11 +76,11 @@ namespace NETworkManager.Models.Network
                         // PING
                         using (System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping())
                         {
-                            for (int i = 0; i < ipScannerOptions.Attempts; i++)
+                            for (int i = 0; i < ipScannerOptions.ICMPAttempts; i++)
                             {
                                 try
                                 {
-                                    PingReply pingReply = ping.Send(ipAddress, ipScannerOptions.Timeout, ipScannerOptions.Buffer);
+                                    PingReply pingReply = ping.Send(ipAddress, ipScannerOptions.ICMPTimeout, ipScannerOptions.ICMPBuffer);
 
                                     if (IPStatus.Success == pingReply.Status)
                                     {
@@ -110,11 +112,25 @@ namespace NETworkManager.Models.Network
 
                             if (ipScannerOptions.ResolveHostname)
                             {
-                                try
+                                Resolver dnsResolver;
+
+                                if (ipScannerOptions.UseCustomDNSServer)
+                                    dnsResolver = new Resolver(ipScannerOptions.CustomDNSServer, ipScannerOptions.DNSPort);
+                                else
+                                    dnsResolver = new Resolver();
+
+                                dnsResolver.Retries = ipScannerOptions.DNSAttempts;
+                                dnsResolver.TimeOut = ipScannerOptions.DNSTimeout;
+
+                                string name = Resolver.GetArpaFromIp(ipAddress);
+
+                                Response dnsResonse = dnsResolver.Query(name, QType.PTR);
+
+                                foreach(RecordPTR test in dnsResonse.RecordsPTR)
                                 {
-                                    hostname = Dns.GetHostEntry(ipAddress).HostName;
+                                    hostname = test.PTRDNAME;
+                                    break;
                                 }
-                                catch (SocketException) { } // Couldn't resolve hostname
                             }
 
                             // ARP
