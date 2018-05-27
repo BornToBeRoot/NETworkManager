@@ -212,40 +212,11 @@
     <Compile Include="3rdParty\Heijden.DNS\Response.cs" />
     <Compile Include="3rdParty\Heijden.DNS\RR.cs" />
     <Compile Include="3rdParty\Heijden.DNS\Structs.cs" />
-    <Compile Include="Controls\DragablzPortScannerInterTabClient.cs" />
-    <Compile Include="Controls\DragablzIPScannerInterTabClient.cs" />
-    <Compile Include="Controls\DragablzPortScannerTabHostWindow.xaml.cs">
-      <DependentUpon>DragablzPortScannerTabHostWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DragablzIPScannerTabHostWindow.xaml.cs">
-      <DependentUpon>DragablzIPScannerTabHostWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DragablzDNSLookupInterTabClient.cs" />
-    <Compile Include="Controls\DragablzSNMPInterTabClient.cs" />
-    <Compile Include="Controls\DragablzDNSLookupTabHostWindow.xaml.cs">
-      <DependentUpon>DragablzDNSLookupTabHostWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DragablzHTTPHeadersInterTabClient.cs" />
-    <Compile Include="Controls\DragablzTracerouteInterTabClient.cs" />
-    <Compile Include="Controls\DragablzSNMPTabHostWindow.xaml.cs">
-      <DependentUpon>DragablzSNMPTabHostWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DragablzHTTPHeadersTabHostWindow.xaml.cs">
-      <DependentUpon>DragablzHTTPHeadersTabHostWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DragablzTracerouteTabHostWindow.xaml.cs">
-      <DependentUpon>DragablzTracerouteTabHostWindow.xaml</DependentUpon>
+    <Compile Include="Controls\DragablzInterTabClient.cs" />
+    <Compile Include="Controls\DragablzTabHostWindow.xaml.cs">
+      <DependentUpon>DragablzTabHostWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DragablzTabItem.cs" />
-    <Compile Include="Controls\DragablzPuTTYInterTabClient.cs" />
-    <Compile Include="Controls\DragablzPuTTYTabHostWindow.xaml.cs">
-      <DependentUpon>DragablzPuTTYTabHostWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DragablzRemoteDesktopTabHostWindow.xaml.cs">
-      <DependentUpon>DragablzRemoteDesktopTabHostWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DragablzRemoteDesktopInterTabClient.cs" />
-    <Compile Include="Controls\DragablzPingInterTabClient.cs" />
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
@@ -305,6 +276,8 @@
     <Compile Include="Validators\MultipleHostsValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\SubnetCalculatorSubnetValidator.cs" />
+    <Compile Include="ViewModels\SubnetCalculatorHostViewModel.cs" />
+    <Compile Include="ViewModels\LookupHostViewModel.cs" />
     <Compile Include="ViewModels\PortScannerHostViewModel.cs" />
     <Compile Include="ViewModels\IPScannerHostViewModel.cs" />
     <Compile Include="ViewModels\DNSLookupHostViewModel.cs" />
@@ -420,9 +393,6 @@
     <Compile Include="Views\RemoteDesktopHostView.xaml.cs">
       <DependentUpon>RemoteDesktopHostView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DragablzPingTabHostWindow.xaml.cs">
-      <DependentUpon>DragablzPingTabHostWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\CredentialDialog.xaml.cs">
       <DependentUpon>CredentialDialog.xaml</DependentUpon>
     </Compile>
@@ -494,35 +464,7 @@
     </Compile>
     <Compile Include="WpfHelper\PasswordBoxBindingBehavior.cs" />
     <Compile Include="WpfHelper\ProtocolSettingsLayout.cs" />
-    <Page Include="Controls\DragablzPortScannerTabHostWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\DragablzIPScannerTabHostWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\DragablzDNSLookupTabHostWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\DragablzSNMPTabHostWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\DragablzHTTPHeadersTabHostWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\DragablzTracerouteTabHostWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\DragablzPuTTYTabHostWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\DragablzRemoteDesktopTabHostWindow.xaml">
+    <Page Include="Controls\DragablzTabHostWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -755,10 +697,6 @@
     <Page Include="Views\IPScannerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\DragablzPingTabHostWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CredentialDialog.xaml">
       <Generator>MSBuild:Compile</Generator>

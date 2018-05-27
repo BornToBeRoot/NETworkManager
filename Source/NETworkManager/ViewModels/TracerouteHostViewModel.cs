@@ -132,7 +132,7 @@ namespace NETworkManager.ViewModels
         {
             dialogCoordinator = instance;
 
-            InterTabClient = new DragablzTracerouteInterTabClient();
+            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.Traceroute);
 
             TabItems = new ObservableCollection<DragablzTabItem>()
             {

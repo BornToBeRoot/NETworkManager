@@ -116,7 +116,7 @@ namespace NETworkManager.Controls
 
         private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
         {
-            OnClose();
+            CloseTab();
         }
         #endregion
 
@@ -210,7 +210,7 @@ namespace NETworkManager.Controls
                 rdpClient.Disconnect();
         }
 
-        public void OnClose()
+        public void CloseTab()
         {
             Disconnect();
         }

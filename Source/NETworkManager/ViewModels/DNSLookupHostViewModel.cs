@@ -36,7 +36,7 @@ namespace NETworkManager.ViewModels
         #region Constructor
         public DNSLookupHostViewModel()
         {
-            InterTabClient = new DragablzDNSLookupInterTabClient();
+            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.DNSLookup);
 
             TabItems = new ObservableCollection<DragablzTabItem>()
             {

@@ -17,23 +17,23 @@ namespace NETworkManager
         public ApplicationViewInfo(ApplicationViewManager.Name name, Canvas icon)
         {
             Name = name;
-            TranslatedName = ApplicationViewManager.TranslateName(name);
+            TranslatedName = ApplicationViewManager.GetTranslatedNameByName(name);
             Icon = icon;
         }
 
         public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconModern packIconModern)
         {
             Name = name;
-            TranslatedName = ApplicationViewManager.TranslateName(name);
+            TranslatedName = ApplicationViewManager.GetTranslatedNameByName(name);
             Canvas canvas = new Canvas();
             canvas.Children.Add(packIconModern);
             Icon = canvas;
         }
-                
+
         public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconMaterial packIconMaterial)
         {
             Name = name;
-            TranslatedName = ApplicationViewManager.TranslateName(name);
+            TranslatedName = ApplicationViewManager.GetTranslatedNameByName(name);
             Canvas canvas = new Canvas();
             canvas.Children.Add(packIconMaterial);
             Icon = canvas;
@@ -42,7 +42,7 @@ namespace NETworkManager
         public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconMaterialLight packIconMaterialLight)
         {
             Name = name;
-            TranslatedName = ApplicationViewManager.TranslateName(name);
+            TranslatedName = ApplicationViewManager.GetTranslatedNameByName(name);
             Canvas canvas = new Canvas();
             canvas.Children.Add(packIconMaterialLight);
             Icon = canvas;
@@ -51,7 +51,7 @@ namespace NETworkManager
         public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconFontAwesome packIconFontAwesome)
         {
             Name = name;
-            TranslatedName = ApplicationViewManager.TranslateName(name);
+            TranslatedName = ApplicationViewManager.GetTranslatedNameByName(name);
             Canvas canvas = new Canvas();
             canvas.Children.Add(packIconFontAwesome);
             Icon = canvas;
@@ -60,7 +60,7 @@ namespace NETworkManager
         public ApplicationViewInfo(ApplicationViewManager.Name name, PackIconOcticons packIconOcticons)
         {
             Name = name;
-            TranslatedName = ApplicationViewManager.TranslateName(name);
+            TranslatedName = ApplicationViewManager.GetTranslatedNameByName(name);
             Canvas canvas = new Canvas();
             canvas.Children.Add(packIconOcticons);
             Icon = canvas;

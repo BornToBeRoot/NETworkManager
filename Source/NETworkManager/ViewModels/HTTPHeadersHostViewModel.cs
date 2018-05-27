@@ -36,7 +36,7 @@ namespace NETworkManager.ViewModels
         #region Constructor
         public HTTPHeadersHostViewModel()
         {
-            InterTabClient = new DragablzHTTPHeadersInterTabClient();
+            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.HTTPHeaders);
 
             TabItems = new ObservableCollection<DragablzTabItem>()
             {

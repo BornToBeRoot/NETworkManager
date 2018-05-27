@@ -16,6 +16,8 @@ namespace NETworkManager.Views
         {
             InitializeComponent();
             DataContext = viewModel;
+
+            InterTabController.Partition = ApplicationViewManager.Name.PuTTY.ToString();
         }
 
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)

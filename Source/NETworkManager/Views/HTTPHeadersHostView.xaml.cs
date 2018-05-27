@@ -11,6 +11,8 @@ namespace NETworkManager.Views
         {
             InitializeComponent();
             DataContext = viewModel;
-        }               
+
+            InterTabController.Partition = ApplicationViewManager.Name.HTTPHeaders.ToString();
+        }
     }
 }

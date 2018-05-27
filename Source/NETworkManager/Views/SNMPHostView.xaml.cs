@@ -1,5 +1,4 @@
 ﻿using NETworkManager.ViewModels;
-using System;
 using System.Windows.Controls;
 
 namespace NETworkManager.Views
@@ -12,6 +11,8 @@ namespace NETworkManager.Views
         {
             InitializeComponent();
             DataContext = viewModel;
+
+            InterTabController.Partition = ApplicationViewManager.Name.SNMP.ToString();
         }
 
         public void AddTab(string host)

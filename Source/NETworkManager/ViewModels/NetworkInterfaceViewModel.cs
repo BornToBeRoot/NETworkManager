@@ -99,6 +99,11 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        public bool ShowCurrentApplicationTitle
+        {
+            get { return SettingsManager.Current.Window_ShowCurrentApplicationTitle; }
+        }
+
         #region NetworkInterfaces, SelectedNetworkInterface
         private List<NetworkInterfaceInfo> _networkInterfaces;
         public List<NetworkInterfaceInfo> NetworkInterfaces
@@ -681,7 +686,7 @@ namespace NETworkManager.ViewModels
         #endregion               
         #endregion
 
-        #region Constructor, LoadTemplates, LoadSettings, OnShutdown
+        #region Constructor, LoadSettings, OnShutdown
         public NetworkInterfaceViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
@@ -712,6 +717,8 @@ namespace NETworkManager.ViewModels
 
             LoadSettings();
 
+            SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
+            
             _isLoading = false;
         }
 
@@ -1191,6 +1198,12 @@ namespace NETworkManager.ViewModels
         {
             StatusMessage = LocalizationManager.GetStringByKey("String_CanceledByUser");
             DisplayStatusMessage = true;
+        }
+
+        private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SettingsInfo.Window_ShowCurrentApplicationTitle))
+                OnPropertyChanged(nameof(ShowCurrentApplicationTitle));
         }
         #endregion
     }

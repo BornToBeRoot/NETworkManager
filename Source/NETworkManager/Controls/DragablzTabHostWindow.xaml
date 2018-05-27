@@ -1,12 +1,16 @@
-﻿<Controls:MetroWindow x:Class="NETworkManager.Controls.DragablzSNMPTabHostWindow"
+﻿<Controls:MetroWindow x:Class="NETworkManager.Controls.DragablzTabHostWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+        xmlns:Converter="clr-namespace:NETworkManager.Converters"
         mc:Ignorable="d"
         Title="{DynamicResource String_ProductName}" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" TitleAlignment="Left">
+    <Controls:MetroWindow.Resources>
+        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Controls:MetroWindow.Resources>
     <Controls:MetroWindow.WindowButtonCommands>
         <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </Controls:MetroWindow.WindowButtonCommands>
@@ -15,12 +19,12 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border x:Name="HeaderBorder" Grid.Row="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,0,1" MouseDown="HeaderBorder_MouseDown">
-            <TextBlock VerticalAlignment="Center" Height="48" TextAlignment="Center" FontSize="22" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_ApplicationName_SNMP}" Foreground="{DynamicResource GrayBrush3}" Margin="0" />
+        <Border x:Name="HeaderBorder" Grid.Row="0" Visibility="{Binding ShowCurrentApplicationTitle, Converter={StaticResource BooleanToVisibilityConverter}}" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,0,1" MouseDown="HeaderBorder_MouseDown">
+            <TextBlock VerticalAlignment="Center" Height="48" TextAlignment="Center" FontSize="22" Style="{StaticResource HeaderTextBlock}" Text="{Binding ApplicationTitle}" Foreground="{DynamicResource GrayBrush3}" Margin="0" />
         </Border>
         <dragablz:TabablzControl Focusable="False" Grid.Row="1" Name="TabsContainer" ClosingItemCallback="{Binding CloseItemCommand}">
             <dragablz:TabablzControl.InterTabController>
-                <dragablz:InterTabController Partition="E0CC5984-5233-46D1-BC01-FDB61FACDFFD" />
+                <dragablz:InterTabController x:Name="InterTabController" />
             </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.Style>
                 <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">                

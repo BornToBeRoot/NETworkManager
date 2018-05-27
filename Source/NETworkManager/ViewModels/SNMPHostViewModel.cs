@@ -36,7 +36,7 @@ namespace NETworkManager.ViewModels
         #region Constructor
         public SNMPHostViewModel()
         {
-            InterTabClient = new DragablzSNMPInterTabClient();
+            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.SNMP);
 
             TabItems = new ObservableCollection<DragablzTabItem>()
             {

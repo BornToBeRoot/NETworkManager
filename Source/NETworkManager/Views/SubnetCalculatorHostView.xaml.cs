@@ -5,7 +5,7 @@ namespace NETworkManager.Views
 {
     public partial class SubnetCalculatorHostView : UserControl
     {
-        private SubnetCalculatorIPv4CalculatorViewModel viewModel = new SubnetCalculatorIPv4CalculatorViewModel();
+        SubnetCalculatorHostViewModel viewModel = new SubnetCalculatorHostViewModel();
 
         public SubnetCalculatorHostView()
         {

@@ -9,6 +9,7 @@
         xmlns:Validator="clr-namespace:NETworkManager.Validators"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:SettingsManager="clr-namespace:NETworkManager.Models.Settings"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
@@ -47,7 +48,16 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <TabControl Style="{StaticResource DefaultTabControl}">
+    <TabControl>
+        <TabControl.Style>
+            <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource DefaultTabControl}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ShowCurrentApplicationTitle}" Value="False">
+                        <Setter Property="Margin" Value="0,-2,0,0" />
+                    </DataTrigger>
+                </Style.Triggers> 
+            </Style>
+        </TabControl.Style>
         <TabItem Header="{DynamicResource String_Header_Information}">
             <ScrollViewer Margin="10" Style="{StaticResource DefaultScrollViewer}">
                 <Grid>

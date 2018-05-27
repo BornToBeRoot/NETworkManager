@@ -13,6 +13,8 @@ namespace NETworkManager.Views
         {
             InitializeComponent();
             DataContext = viewModel;
+
+            InterTabController.Partition = ApplicationViewManager.Name.Ping.ToString();
         }
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)

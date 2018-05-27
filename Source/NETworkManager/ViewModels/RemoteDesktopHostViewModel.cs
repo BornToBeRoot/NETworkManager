@@ -151,7 +151,8 @@ namespace NETworkManager.ViewModels
 
             if (IsRDP8dot1Available)
             {
-                InterTabClient = new DragablzRemoteDesktopInterTabClient();
+                InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.RemoteDesktop);
+
                 TabItems = new ObservableCollection<DragablzTabItem>();
 
                 // Load sessions
@@ -462,7 +463,7 @@ namespace NETworkManager.ViewModels
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzTabItem).View as RemoteDesktopControl).OnClose();
+            ((args.DragablzItem.Content as DragablzTabItem).View as RemoteDesktopControl).CloseTab();
         }
         #endregion
 

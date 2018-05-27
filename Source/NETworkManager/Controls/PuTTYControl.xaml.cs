@@ -80,7 +80,7 @@ namespace NETworkManager.Controls
 
         private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
         {
-            OnClose();
+            CloseTab();
         }
         #endregion
 
@@ -165,7 +165,7 @@ namespace NETworkManager.Controls
                 PuTTYProcess.Kill();
         }
 
-        public void OnClose()
+        public void CloseTab()
         {
             Disconnect();
         }

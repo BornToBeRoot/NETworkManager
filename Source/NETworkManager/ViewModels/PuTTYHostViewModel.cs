@@ -151,7 +151,8 @@ namespace NETworkManager.ViewModels
             // Check if putty is available...
             CheckIfPuTTYConfigured();
 
-            InterTabClient = new DragablzPuTTYInterTabClient();
+            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.PuTTY);
+
             TabItems = new ObservableCollection<DragablzTabItem>();
 
             // Load sessions
@@ -217,7 +218,7 @@ namespace NETworkManager.ViewModels
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzTabItem).View as PuTTYControl).OnClose();
+            ((args.DragablzItem.Content as DragablzTabItem).View as PuTTYControl).CloseTab();
         }
 
         public ICommand ConnectNewSessionCommand
