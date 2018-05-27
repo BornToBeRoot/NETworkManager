@@ -253,9 +253,9 @@ namespace NETworkManager.ViewModels
             if (SettingsManager.Current.DNSLookup_CustomDNSServer != null)
                 CustomDNSServer = string.Join("; ", SettingsManager.Current.DNSLookup_CustomDNSServer);
 
+            Port = SettingsManager.Current.DNSLookup_Port;
             AddDNSSuffix = SettingsManager.Current.DNSLookup_AddDNSSuffix;
             UseCustomDNSSuffix = SettingsManager.Current.DNSLookup_UseCustomDNSSuffix;
-            Port = SettingsManager.Current.DNSLookup_Port;
             CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix;
             ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME;
             Recursion = SettingsManager.Current.DNSLookup_Recursion;

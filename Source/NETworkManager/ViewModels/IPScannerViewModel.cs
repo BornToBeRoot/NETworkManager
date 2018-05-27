@@ -554,9 +554,9 @@ namespace NETworkManager.ViewModels
             IPScannerOptions ipScannerOptions = new IPScannerOptions
             {
                 Threads = SettingsManager.Current.IPScanner_Threads,
-                Timeout = SettingsManager.Current.IPScanner_Timeout,
-                Buffer = new byte[SettingsManager.Current.IPScanner_Buffer],
-                Attempts = SettingsManager.Current.IPScanner_Attempts,
+                Timeout = SettingsManager.Current.IPScanner_ICMPTimeout,
+                Buffer = new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
+                Attempts = SettingsManager.Current.IPScanner_ICMPAttempts,
                 ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname,
                 ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
                 ShowScanResultForAllIPAddresses = SettingsManager.Current.IPScanner_ShowScanResultForAllIPAddresses

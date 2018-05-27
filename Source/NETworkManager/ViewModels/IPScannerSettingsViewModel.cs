@@ -11,7 +11,7 @@ namespace NETworkManager.ViewModels
         private bool _showScanResultForAllIPAddresses;
         public bool ShowScanResultForAllIPAddresses
         {
-            get { return _showScanResultForAllIPAddresses;}
+            get { return _showScanResultForAllIPAddresses; }
             set
             {
                 if (value == _showScanResultForAllIPAddresses)
@@ -42,53 +42,53 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private int _timeout;
-        public int Timeout
+        private int _icmpTimeout;
+        public int ICMPTimeout
         {
-            get { return _timeout; }
+            get { return _icmpTimeout; }
             set
             {
-                if (value == _timeout)
+                if (value == _icmpTimeout)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.IPScanner_Timeout = value;
+                    SettingsManager.Current.IPScanner_ICMPTimeout = value;
 
-                _timeout = value;
+                _icmpTimeout = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _buffer;
-        public int Buffer
+        private int _icmpBuffer;
+        public int ICMPBuffer
         {
-            get { return _buffer; }
+            get { return _icmpBuffer; }
             set
             {
-                if (value == _buffer)
+                if (value == _icmpBuffer)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.IPScanner_Buffer = value;
+                    SettingsManager.Current.IPScanner_ICMPBuffer = value;
 
-                _buffer = value;
+                _icmpBuffer = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _Attempts;
-        public int Attempts
+        private int _icmpAttempts;
+        public int ICMPAttempts
         {
-            get { return _Attempts; }
+            get { return _icmpAttempts; }
             set
             {
-                if (value == _Attempts)
+                if (value == _icmpAttempts)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.IPScanner_Attempts = value;
+                    SettingsManager.Current.IPScanner_ICMPAttempts = value;
 
-                _Attempts = value;
+                _icmpAttempts = value;
                 OnPropertyChanged();
             }
         }
@@ -106,6 +106,91 @@ namespace NETworkManager.ViewModels
                     SettingsManager.Current.IPScanner_ResolveHostname = value;
 
                 _resolveHostname = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _useCustomDNSServer;
+        public bool UseCustomDNSServer
+        {
+            get { return _useCustomDNSServer; }
+            set
+            {
+                if (value == _useCustomDNSServer)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.IPScanner_UseCustomDNSServer = value;
+
+                _useCustomDNSServer = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _customDNSServer;
+        public string CustomDNSServer
+        {
+            get { return _customDNSServer; }
+            set
+            {
+                if (value == _customDNSServer)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.IPScanner_CustomDNSServer = value;
+
+                _customDNSServer = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _dnsPort;
+        public int DNSPort
+        {
+            get { return _dnsPort; }
+            set
+            {
+                if (value == _dnsPort)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.IPScanner_DNSPort = value;
+
+                _dnsPort = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _dnsAttempts;
+        public int DNSAttempts
+        {
+            get { return _dnsAttempts; }
+            set
+            {
+                if (value == _dnsAttempts)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.IPScanner_DNSAttempts = value;
+
+                _dnsAttempts = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _dnsTimeout;
+        public int DNSTimeout
+        {
+            get { return _dnsTimeout; }
+            set
+            {
+                if (value == _dnsTimeout)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.IPScanner_DNSTimeout = value;
+
+                _dnsTimeout = value;
                 OnPropertyChanged();
             }
         }
@@ -138,11 +223,17 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            Timeout = SettingsManager.Current.IPScanner_Timeout;
-            Buffer = SettingsManager.Current.IPScanner_Buffer;
-            Attempts = SettingsManager.Current.IPScanner_Attempts;
+            ShowScanResultForAllIPAddresses = SettingsManager.Current.IPScanner_ShowScanResultForAllIPAddresses;
             Threads = SettingsManager.Current.IPScanner_Threads;
+            ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout;
+            ICMPBuffer = SettingsManager.Current.IPScanner_ICMPBuffer;
+            ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts;
             ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname;
+            UseCustomDNSServer = SettingsManager.Current.IPScanner_UseCustomDNSServer;
+            CustomDNSServer = SettingsManager.Current.IPScanner_CustomDNSServer;
+            DNSPort = SettingsManager.Current.IPScanner_DNSPort;
+            DNSAttempts = SettingsManager.Current.IPScanner_DNSAttempts;
+            DNSTimeout = SettingsManager.Current.IPScanner_DNSTimeout;
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
         }
         #endregion

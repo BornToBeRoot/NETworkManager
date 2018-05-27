@@ -352,34 +352,6 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region IPScanner        
-        private int _ipScanner_Attempts = 2;
-        public int IPScanner_Attempts
-        {
-            get { return _ipScanner_Attempts; }
-            set
-            {
-                if (value == _ipScanner_Attempts)
-                    return;
-
-                _ipScanner_Attempts = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private int _ipScanner_Buffer = 32;
-        public int IPScanner_Buffer
-        {
-            get { return _ipScanner_Buffer; }
-            set
-            {
-                if (value == _ipScanner_Buffer)
-                    return;
-
-                _ipScanner_Buffer = value;
-                SettingsChanged = true;
-            }
-        }
-
         private bool _ipScanner_ShowScanResultForAllIPAddresses;
         public bool IPScanner_ShowScanResultForAllIPAddresses
         {
@@ -408,6 +380,34 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private int _ipScanner_ICMPAttempts = 2;
+        public int IPScanner_ICMPAttempts
+        {
+            get { return _ipScanner_ICMPAttempts; }
+            set
+            {
+                if (value == _ipScanner_ICMPAttempts)
+                    return;
+
+                _ipScanner_ICMPAttempts = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _ipScanner_ICMPBuffer = 32;
+        public int IPScanner_ICMPBuffer
+        {
+            get { return _ipScanner_ICMPBuffer; }
+            set
+            {
+                if (value == _ipScanner_ICMPBuffer)
+                    return;
+
+                _ipScanner_ICMPBuffer = value;
+                SettingsChanged = true;
+            }
+        }
+                
         private ObservableCollection<string> _ipScanner_IPRangeHistory = new ObservableCollection<string>();
         public ObservableCollection<string> IPScanner_IPRangeHistory
         {
@@ -439,6 +439,76 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private bool _ipScanner_UseCustomDNSServer;
+        public bool IPScanner_UseCustomDNSServer
+        {
+            get { return _ipScanner_UseCustomDNSServer; }
+            set
+            {
+                if (value == _ipScanner_UseCustomDNSServer)
+                    return;
+
+                _ipScanner_UseCustomDNSServer = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private string _ipScanner_CustomDNSServer;
+        public string IPScanner_CustomDNSServer
+        {
+            get { return _ipScanner_CustomDNSServer; }
+            set
+            {
+                if (value == _ipScanner_CustomDNSServer)
+                    return;
+
+                _ipScanner_CustomDNSServer = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _ipScanner_DNSPort = 53;
+        public int IPScanner_DNSPort
+        {
+            get { return _ipScanner_DNSPort; }
+            set
+            {
+                if (value == _ipScanner_DNSPort)
+                    return;
+
+                _ipScanner_DNSPort = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _ipScanner_DNSAttempts = 2;
+        public int IPScanner_DNSAttempts
+        {
+            get { return _ipScanner_DNSAttempts; }
+            set
+            {
+                if (value == _ipScanner_DNSAttempts)
+                    return;
+
+                _ipScanner_DNSAttempts = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _ipScanner_DNSTimeout = 2000;
+        public int IPScanner_DNSTimeout
+        {
+            get { return _ipScanner_DNSTimeout; }
+            set
+            {
+                if (value == _ipScanner_DNSTimeout)
+                    return;
+
+                _ipScanner_DNSTimeout = value;
+                SettingsChanged = true;
+            }
+        }
+
         private bool _ipScanner_ResolveMACAddress;
         public bool IPScanner_ResolveMACAddress
         {
@@ -456,16 +526,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _ipScanner_Timeout = 4000;
-        public int IPScanner_Timeout
+        private int _ipScanner_ICMPTimeout = 4000;
+        public int IPScanner_ICMPTimeout
         {
-            get { return _ipScanner_Timeout; }
+            get { return _ipScanner_ICMPTimeout; }
             set
             {
-                if (value == _ipScanner_Timeout)
+                if (value == _ipScanner_ICMPTimeout)
                     return;
 
-                _ipScanner_Timeout = value;
+                _ipScanner_ICMPTimeout = value;
                 SettingsChanged = true;
             }
         }
