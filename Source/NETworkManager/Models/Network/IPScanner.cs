@@ -1,11 +1,9 @@
-﻿using Heijden.DNS;
-using NETworkManager.Models.Lookup;
+﻿using NETworkManager.Models.Lookup;
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 namespace NETworkManager.Models.Network
@@ -112,25 +110,19 @@ namespace NETworkManager.Models.Network
 
                             if (ipScannerOptions.ResolveHostname)
                             {
-                                Resolver dnsResolver;
-
-                                if (ipScannerOptions.UseCustomDNSServer)
-                                    dnsResolver = new Resolver(ipScannerOptions.CustomDNSServer, ipScannerOptions.DNSPort);
-                                else
-                                    dnsResolver = new Resolver();
-
-                                dnsResolver.Retries = ipScannerOptions.DNSAttempts;
-                                dnsResolver.TimeOut = ipScannerOptions.DNSTimeout;
-
-                                string name = Resolver.GetArpaFromIp(ipAddress);
-
-                                Response dnsResonse = dnsResolver.Query(name, QType.PTR);
-
-                                foreach(RecordPTR test in dnsResonse.RecordsPTR)
+                                DNSLookupOptions options = new DNSLookupOptions()
                                 {
-                                    hostname = test.PTRDNAME;
-                                    break;
-                                }
+                                    UseCustomDNSServer = ipScannerOptions.UseCustomDNSServer,
+                                    CustomDNSServers = ipScannerOptions.CustomDNSServer,
+                                    Port = ipScannerOptions.DNSPort,
+                                    Attempts = ipScannerOptions.DNSAttempts,
+                                    Timeout = ipScannerOptions.DNSTimeout,
+                                    TransportType = ipScannerOptions.DNSTransportType,
+                                    UseResolverCache = ipScannerOptions.DNSUseResolverCache,
+                                    Recursion = ipScannerOptions.DNSRecursion,
+                                };
+
+                                hostname = DNSLookup.ResolvePTR(ipAddress, options).Item2.FirstOrDefault();
                             }
 
                             // ARP

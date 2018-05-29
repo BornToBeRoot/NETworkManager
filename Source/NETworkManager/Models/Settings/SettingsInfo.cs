@@ -453,8 +453,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private string _ipScanner_CustomDNSServer;
-        public string IPScanner_CustomDNSServer
+        private List<string> _ipScanner_CustomDNSServer;
+        public List<string> IPScanner_CustomDNSServer
         {
             get { return _ipScanner_CustomDNSServer; }
             set
@@ -477,6 +477,48 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_DNSPort = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _ipScanner_DNSRecursion = true;
+        public bool IPScanner_DNSRecursion
+        {
+            get { return _ipScanner_DNSRecursion; }
+            set
+            {
+                if (value == _ipScanner_DNSRecursion)
+                    return;
+
+                _ipScanner_DNSRecursion = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _ipScanner_DNSUseResolverCache = false;
+        public bool IPScanner_DNSUseResolverCache
+        {
+            get { return _ipScanner_DNSUseResolverCache; }
+            set
+            {
+                if (value == _ipScanner_DNSUseResolverCache)
+                    return;
+
+                _ipScanner_DNSUseResolverCache = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private TransportType _ipScanner_DNSTransportType = TransportType.Udp;
+        public TransportType IPScanner_DNSTransportType
+        {
+            get { return _ipScanner_DNSTransportType; }
+            set
+            {
+                if (value == _ipScanner_DNSTransportType)
+                    return;
+
+                _ipScanner_DNSTransportType = value;
                 SettingsChanged = true;
             }
         }

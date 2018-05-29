@@ -1,5 +1,9 @@
-﻿using NETworkManager.Models.Settings;
+﻿using Heijden.DNS;
+using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
@@ -137,7 +141,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.IPScanner_CustomDNSServer = value;
+                    SettingsManager.Current.IPScanner_CustomDNSServer = value.Split(';').ToList();
 
                 _customDNSServer = value;
                 OnPropertyChanged();
@@ -157,6 +161,59 @@ namespace NETworkManager.ViewModels
                     SettingsManager.Current.IPScanner_DNSPort = value;
 
                 _dnsPort = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _dnsRecursion;
+        public bool DNSRecursion
+        {
+            get { return _dnsRecursion; }
+            set
+            {
+                if (value == _dnsRecursion)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.IPScanner_DNSRecursion = value;
+
+                _dnsRecursion = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _dnsUseResolverCache;
+        public bool DNSUseResolverCache
+        {
+            get { return _dnsUseResolverCache; }
+            set
+            {
+                if (value == _dnsUseResolverCache)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.IPScanner_DNSUseResolverCache = value;
+
+                _dnsUseResolverCache = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<TransportType> DNSTransportTypes { get; set; }
+
+        private TransportType _dnsTransportType;
+        public TransportType DNSTransportType
+        {
+            get { return _dnsTransportType; }
+            set
+            {
+                if (value == _dnsTransportType)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.IPScanner_DNSTransportType = value;
+
+                _dnsTransportType = value;
                 OnPropertyChanged();
             }
         }
@@ -230,8 +287,15 @@ namespace NETworkManager.ViewModels
             ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts;
             ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname;
             UseCustomDNSServer = SettingsManager.Current.IPScanner_UseCustomDNSServer;
-            CustomDNSServer = SettingsManager.Current.IPScanner_CustomDNSServer;
+
+            if (SettingsManager.Current.IPScanner_CustomDNSServer != null)
+                CustomDNSServer = string.Join("; ", SettingsManager.Current.IPScanner_CustomDNSServer);
+
             DNSPort = SettingsManager.Current.IPScanner_DNSPort;
+            DNSRecursion = SettingsManager.Current.IPScanner_DNSRecursion;
+            DNSUseResolverCache = SettingsManager.Current.IPScanner_DNSUseResolverCache;
+            DNSTransportTypes = Enum.GetValues(typeof(TransportType)).Cast<TransportType>().OrderBy(x => x.ToString()).ToList();
+            DNSTransportType = DNSTransportTypes.First(x => x == SettingsManager.Current.IPScanner_DNSTransportType);
             DNSAttempts = SettingsManager.Current.IPScanner_DNSAttempts;
             DNSTimeout = SettingsManager.Current.IPScanner_DNSTimeout;
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
