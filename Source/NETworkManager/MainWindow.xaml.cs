@@ -421,6 +421,7 @@ namespace NETworkManager
         SubnetCalculatorHostView subnetCalculatorHostView;
         HTTPHeadersHostView httpHeadersHostView;
         LookupHostView lookupHostView;
+        ConnectionsView connectionsView;
         ARPTableView arpTableView;
 
         private ApplicationViewManager.Name? currentApplicationViewName = null;
@@ -514,6 +515,12 @@ namespace NETworkManager
                         lookupHostView = new LookupHostView();
 
                     contentControlApplication.Content = lookupHostView;
+                    break;
+                case ApplicationViewManager.Name.Connections:
+                    if (connectionsView == null)
+                        connectionsView = new ConnectionsView();
+
+                    contentControlApplication.Content = connectionsView;
                     break;
                 case ApplicationViewManager.Name.ARPTable:
                     if (arpTableView == null)

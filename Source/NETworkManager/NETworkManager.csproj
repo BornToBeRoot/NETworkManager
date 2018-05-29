@@ -220,6 +220,7 @@
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\TcpStateToStringConverter.cs" />
     <Compile Include="Converters\StringIsNotNullOrEmptyToBoolConverter.cs" />
     <Compile Include="Converters\StringIsNotNullOrEmptyToVisibilityConverter.cs" />
     <Compile Include="Converters\NullOrEmptyToBoolConverter.cs" />
@@ -230,6 +231,8 @@
     <Compile Include="Models\Documentation\CommunityManager.cs" />
     <Compile Include="Models\Documentation\ResourceInfo.cs" />
     <Compile Include="Models\Documentation\ResourceManager.cs" />
+    <Compile Include="Models\Network\Connection.cs" />
+    <Compile Include="Models\Network\ConnectionInfo.cs" />
     <Compile Include="Models\Network\HostNotFoundException.cs" />
     <Compile Include="Models\PuTTY\PuTTYSessionInfo.cs" />
     <Compile Include="Models\PuTTY\PuTTY.cs" />
@@ -276,6 +279,7 @@
     <Compile Include="Validators\MultipleHostsValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\SubnetCalculatorSubnetValidator.cs" />
+    <Compile Include="ViewModels\ConnectionsViewModel.cs" />
     <Compile Include="ViewModels\SubnetCalculatorHostViewModel.cs" />
     <Compile Include="ViewModels\LookupHostViewModel.cs" />
     <Compile Include="ViewModels\PortScannerHostViewModel.cs" />
@@ -336,6 +340,9 @@
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
+    <Compile Include="Views\ConnectionsView.xaml.cs">
+      <DependentUpon>ConnectionsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PortScannerHostView.xaml.cs">
       <DependentUpon>PortScannerHostView.xaml</DependentUpon>
     </Compile>
@@ -598,6 +605,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Page Include="Views\ConnectionsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\PortScannerHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

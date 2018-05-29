@@ -421,7 +421,12 @@
     <system:String x:Key="String_RestartTheApplicationSoThatAllChangesAreApplied">Restart the application so that all settings are applied!</system:String>
     <system:String x:Key="String_NewTab">New Tab</system:String>
     <system:String x:Key="String_ShowCurrentApplicationTitle">Show current application title</system:String>
-    
+    <system:String x:Key="String_LocalIPAddress">Local IP Address</system:String>
+    <system:String x:Key="String_LocalPort">Local Port</system:String>
+    <system:String x:Key="String_RemoteIPAddress">Remote IP Address</system:String>
+    <system:String x:Key="String_RemotePort">Remote Port</system:String>
+    <system:String x:Key="String_State">Zustand</system:String>
+
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">How to create a custom theme and accent?</system:String>
@@ -598,6 +603,7 @@
     <system:String x:Key="String_ApplicationName_HTTPHeaders">HTTP Headers</system:String>
     <system:String x:Key="String_ApplicationName_ARPTable">ARP Table</system:String>
     <system:String x:Key="String_ApplicationName_Lookup">Lookup</system:String>
+    <system:String x:Key="String_ApplicationName_Connections">Connections</system:String>
     
     <!-- SettingsView.Name -->
     <system:String x:Key="String_SettingsName_General">General</system:String>
@@ -653,6 +659,21 @@
     <system:String x:Key="String_IPStatus_DestinationPortUnreachable">Destination port unreachable.</system:String>
     <system:String x:Key="String_IPStatus_TimedOut">Request timed out.</system:String>
     <system:String x:Key="String_IPStatus_TtlExpired">TTL expired in transit.</system:String>
+    
+    <!-- TcpStatus -->
+    <system:String x:Key="String_TcpState_Closed">Closed</system:String>
+    <system:String x:Key="String_TcpState_CloseWait">CloseWait</system:String>
+    <system:String x:Key="String_TcpState_Closing">Closing</system:String>
+    <system:String x:Key="String_TcpState_DeleteTcb">DeleteTcb</system:String>
+    <system:String x:Key="String_TcpState_Established">Established</system:String>
+    <system:String x:Key="String_TcpState_FinWait1">FinWait1</system:String>
+    <system:String x:Key="String_TcpState_FinWait2">FinWait2</system:String>
+    <system:String x:Key="String_TcpState_LastAck">LastAck</system:String>
+    <system:String x:Key="String_TcpState_Listen">Listen</system:String>
+    <system:String x:Key="String_TcpState_SynReceived">SynReceived</system:String>
+    <system:String x:Key="String_TcpState_SynSent">SynSent</system:String>
+    <system:String x:Key="String_TcpState_TimeWait">TimeWait</system:String>
+    <system:String x:Key="String_TcpState_Unknown">Unknown</system:String>
     
     <!-- PortStatus -->
     <system:String x:Key="String_PortStatus_Closed">Closed</system:String>

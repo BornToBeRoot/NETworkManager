@@ -419,8 +419,13 @@
     <system:String x:Key="String_OpenWebsite">Webseite öffnen</system:String>
     <system:String x:Key="String_TheFollowingHostnamesCouldNotBeResolved">Die folgenden Hostnamen konnten nicht aufgelöst werden:</system:String>
     <system:String x:Key="String_RestartTheApplicationSoThatAllChangesAreApplied">Starten Sie die Anwendung neu, damit alle Änderungen übernommen werden!</system:String>
-    <system:String x:Key="String_NewTab">Neuer Tab</system:String>
+    <system:String x:Key="String_NewTab">Neuer Tab</system:String>    
     <system:String x:Key="String_ShowCurrentApplicationTitle">Zeige Titel der aktuellen Anwendung</system:String>
+    <system:String x:Key="String_LocalIPAddress">Lokale IP-Adresse</system:String>
+    <system:String x:Key="String_LocalPort">Lokaler Port</system:String>
+    <system:String x:Key="String_RemoteIPAddress">Remote IP-Adresse</system:String>
+    <system:String x:Key="String_RemotePort">Remote Port</system:String>
+    <system:String x:Key="String_State">Zustand</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
@@ -598,7 +603,8 @@
     <system:String x:Key="String_ApplicationName_HTTPHeaders">HTTP-Headers</system:String>
     <system:String x:Key="String_ApplicationName_ARPTable">ARP-Tabelle</system:String>
     <system:String x:Key="String_ApplicationName_Lookup">Lookup</system:String>
-
+    <system:String x:Key="String_ApplicationName_Connections">Verbindungen</system:String>
+    
     <!-- SettingsView.Name -->
     <system:String x:Key="String_SettingsName_General">Allgemein</system:String>
     <system:String x:Key="String_SettingsName_Window">Fenster</system:String>
@@ -653,6 +659,21 @@
     <system:String x:Key="String_IPStatus_DestinationPortUnreachable">Zielport nicht erreichbar</system:String>
     <system:String x:Key="String_IPStatus_TimedOut">Zeitüberschreitung der Anforderung.</system:String>
     <system:String x:Key="String_IPStatus_TtlExpired">Die Gültigkeitsdauer wurde bei der Übertragung überschritten.</system:String>
+    
+    <!-- TcpStatus -->
+    <system:String x:Key="String_TcpState_Closed">Closed</system:String>
+    <system:String x:Key="String_TcpState_CloseWait">CloseWait</system:String>
+    <system:String x:Key="String_TcpState_Closing">Closing</system:String>
+    <system:String x:Key="String_TcpState_DeleteTcb">DeleteTcb</system:String>
+    <system:String x:Key="String_TcpState_Established">Established</system:String>
+    <system:String x:Key="String_TcpState_FinWait1">FinWait1</system:String>
+    <system:String x:Key="String_TcpState_FinWait2">FinWait2</system:String>
+    <system:String x:Key="String_TcpState_LastAck">LastAck</system:String>
+    <system:String x:Key="String_TcpState_Listen">Listen</system:String>
+    <system:String x:Key="String_TcpState_SynReceived">SynReceived</system:String>
+    <system:String x:Key="String_TcpState_SynSent">SynSent</system:String>
+    <system:String x:Key="String_TcpState_TimeWait">TimeWait</system:String>
+    <system:String x:Key="String_TcpState_Unknown">Unknown</system:String>
 
     <!-- PortStatus -->
     <system:String x:Key="String_PortStatus_Closed">Geschlossen</system:String>

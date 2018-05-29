@@ -1,0 +1,137 @@
+﻿<UserControl x:Class="NETworkManager.Views.ConnectionsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Converter="clr-namespace:NETworkManager.Converters"
+        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Dialog:DialogParticipation.Register="{Binding}"
+        mc:Ignorable="d">
+    <UserControl.Resources>
+        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Converter:BooleanToStringConverter x:Key="BooleanToStringConverter" />
+        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <Converter:TcpStateToStringConverter x:Key="TcpStateToStringConverter" />
+    </UserControl.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="txtSearch" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+        <DataGrid x:Name="dataGridConnection" Grid.Row="2" ItemsSource="{Binding ConnectionsView}" SelectedItem="{Binding SelectedConnectionInfo}">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
+                <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
+                    <MenuItem Header="{DynamicResource String_CopyDots}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                        <MenuItem Header="{DynamicResource String_LocalIPAddress}" Command="{Binding CopySelectedLocalIPAddressCommand}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{DynamicResource String_LocalPort}" Command="{Binding CopySelectedLocalPortCommand}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{DynamicResource String_RemoteIPAddress}" Command="{Binding CopySelectedRemoteIPAddressCommand}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{DynamicResource String_RemotePort}" Command="{Binding CopySelectedRemotePortCommand}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{DynamicResource String_State}" Command="{Binding CopySelectedStateCommand}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                </ContextMenu>
+            </DataGrid.Resources>
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1" >
+                            <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{DynamicResource String_LocalIPAddress}" Binding="{Binding LocalIPAddress}" SortMemberPath="IPAddressInt32" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_LocalPort}" Binding="{Binding LocalPort}" MinWidth="100" />
+                <DataGridTextColumn Header="{DynamicResource String_RemoteIPAddress}" Binding="{Binding RemoteIPAddress}" MinWidth="150"/>
+                <DataGridTextColumn Header="{DynamicResource String_RemotePort}" Binding="{Binding RemotePort}" MinWidth="100" />
+                <DataGridTextColumn Header="{DynamicResource String_State}" Binding="{Binding State, Converter={StaticResource TcpStateToStringConverter}}" MinWidth="150" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+        <Controls:MetroProgressBar Grid.Row="4" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
+            <Controls:MetroProgressBar.Style>
+                <Style TargetType="{x:Type  Controls:MetroProgressBar}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsRefreshing}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Controls:MetroProgressBar.Style>
+        </Controls:MetroProgressBar>
+        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Command="{Binding RefreshCommand}" Style="{StaticResource ImageWithTextButton}" IsEnabled="{Binding IsRefreshing, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Refresh}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Refresh}" TextAlignment="Center" Margin="10,5" />
+                    </Grid>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>
