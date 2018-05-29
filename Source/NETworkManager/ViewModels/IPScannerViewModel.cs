@@ -554,10 +554,18 @@ namespace NETworkManager.ViewModels
             IPScannerOptions ipScannerOptions = new IPScannerOptions
             {
                 Threads = SettingsManager.Current.IPScanner_Threads,
-                Timeout = SettingsManager.Current.IPScanner_Timeout,
-                Buffer = new byte[SettingsManager.Current.IPScanner_Buffer],
-                Attempts = SettingsManager.Current.IPScanner_Attempts,
+                ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout,
+                ICMPBuffer = new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
+                ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,
                 ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname,
+                UseCustomDNSServer = SettingsManager.Current.IPScanner_UseCustomDNSServer,
+                CustomDNSServer = SettingsManager.Current.IPScanner_CustomDNSServer.Select(x => x.Trim()).ToList(),
+                DNSPort = SettingsManager.Current.IPScanner_DNSPort,
+                DNSTransportType = SettingsManager.Current.IPScanner_DNSTransportType,
+                DNSRecursion = SettingsManager.Current.IPScanner_DNSRecursion,
+                DNSUseResolverCache = SettingsManager.Current.IPScanner_DNSUseResolverCache,
+                DNSAttempts = SettingsManager.Current.IPScanner_DNSAttempts,
+                DNSTimeout = SettingsManager.Current.IPScanner_DNSTimeout,
                 ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
                 ShowScanResultForAllIPAddresses = SettingsManager.Current.IPScanner_ShowScanResultForAllIPAddresses
             };

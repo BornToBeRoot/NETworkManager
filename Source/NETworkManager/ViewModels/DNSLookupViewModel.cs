@@ -364,7 +364,7 @@ namespace NETworkManager.ViewModels
             DNSLookup.LookupError += DNSLookup_LookupError;
             DNSLookup.LookupComplete += DNSLookup_LookupComplete; ;
 
-            DNSLookup.LookupAsync(Host.Split(';').Select(x => x.Trim()).ToList(), dnsLookupOptions);
+            DNSLookup.ResolveAsync(Host.Split(';').Select(x => x.Trim()).ToList(), dnsLookupOptions);
         }
 
         private void LookupFinished()
