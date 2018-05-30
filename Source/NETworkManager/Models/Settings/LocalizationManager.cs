@@ -15,7 +15,7 @@ namespace NETworkManager.Models.Settings
                 return new List<LocalizationInfo> {
                     new LocalizationInfo("English", "English", "/Resources/Localization/Resources.en-US.xaml", new Uri("/Resources/Localization/Flags/en-US.png", UriKind.Relative), "BornToBeRoot", "en-US"),
                     new LocalizationInfo("German", "Deutsch", "/Resources/Localization/Resources.de-DE.xaml", new Uri("/Resources/Localization/Flags/de-DE.png", UriKind.Relative), "BornToBeRoot", "de-DE"),
-                    new LocalizationInfo("Russian", "Русский", "/Resources/Localization/Resources.ru-RU.xaml", new Uri("/Resources/Localization/Flags/ru-RU.png", UriKind.Relative), "", "ru-RU")
+                    new LocalizationInfo("Russian", "Русский", "/Resources/Localization/Resources.ru-RU.xaml", new Uri("/Resources/Localization/Flags/ru-RU.png", UriKind.Relative), "LaXe", "ru-RU")
                 };
             }
         }
