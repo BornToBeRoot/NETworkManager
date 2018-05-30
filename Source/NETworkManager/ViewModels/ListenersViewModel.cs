@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
-    public class ConnectionsViewModel : ViewModelBase
+    public class ListenersViewModel : ViewModelBase
     {
         #region Variables
         private bool _isLoading = true;
@@ -29,42 +29,42 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                ConnectionsView.Refresh();
+                ListenersView.Refresh();
 
                 OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<ConnectionInfo> _connections = new ObservableCollection<ConnectionInfo>();
-        public ObservableCollection<ConnectionInfo> Connections
+        private ObservableCollection<ListenerInfo> _listeners = new ObservableCollection<ListenerInfo>();
+        public ObservableCollection<ListenerInfo> Listeners
         {
-            get { return _connections; }
+            get { return _listeners; }
             set
             {
-                if (value == _connections)
+                if (value == _listeners)
                     return;
 
-                _connections = value;
+                _listeners = value;
                 OnPropertyChanged();
             }
         }
 
-        private ICollectionView _connectionsView;
-        public ICollectionView ConnectionsView
+        private ICollectionView _listenersView;
+        public ICollectionView ListenersView
         {
-            get { return _connectionsView; }
+            get { return _listenersView; }
         }
 
-        private ConnectionInfo _selectedConnectionInfo;
-        public ConnectionInfo SelectedConnectionInfo
+        private ListenerInfo _selectedListenerInfo;
+        public ListenerInfo SelectedListenerInfo
         {
-            get { return _selectedConnectionInfo; }
+            get { return _selectedListenerInfo; }
             set
             {
-                if (value == _selectedConnectionInfo)
+                if (value == _selectedListenerInfo)
                     return;
 
-                _selectedConnectionInfo = value;
+                _selectedListenerInfo = value;
                 OnPropertyChanged();
             }
         }
@@ -79,7 +79,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Connections_AutoRefresh = value;
+                    SettingsManager.Current.Listeners_AutoRefresh = value;
 
                 _autoRefresh = value;
 
@@ -112,7 +112,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Connections_AutoRefreshTime = value;
+                    SettingsManager.Current.Listeners_AutoRefreshTime = value;
 
                 _selectedAutoRefreshTime = value;
 
@@ -167,25 +167,26 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public ConnectionsViewModel()
+        public ListenersViewModel()
         {
-            _connectionsView = CollectionViewSource.GetDefaultView(Connections);
-            _connectionsView.SortDescriptions.Add(new SortDescription(nameof(ConnectionInfo.LocalIPAddressInt32), ListSortDirection.Ascending));
-            _connectionsView.Filter = o =>
+            _listenersView = CollectionViewSource.GetDefaultView(Listeners);
+            _listenersView.SortDescriptions.Add(new SortDescription(nameof(ListenerInfo.Protocol), ListSortDirection.Ascending));
+            _listenersView.SortDescriptions.Add(new SortDescription(nameof(ListenerInfo.IPAddressInt32), ListSortDirection.Ascending));
+            _listenersView.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
                     return true;
 
-                ConnectionInfo info = o as ConnectionInfo;
+                ListenerInfo info = o as ListenerInfo;
 
                 string filter = Search.Replace(" ", "").Replace("-", "").Replace(":", "");
 
-                // Search by local/remote IP Address, local/remote Port, Protocol and State
-                return info.LocalIPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.LocalPort.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteIPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.RemotePort.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || LocalizationManager.GetStringByKey("String_TcpState_" + info.State.ToString()).IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1;
+                // Search by IP Address, Port and Protocol
+                return info.IPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.Port.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
             _autoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);
-            SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.Connections_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.Connections_AutoRefreshTime.TimeUnit));
+            SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.Listeners_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.Listeners_AutoRefreshTime.TimeUnit));
 
             _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
 
@@ -201,7 +202,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            AutoRefresh = SettingsManager.Current.Connections_AutoRefresh;
+            AutoRefresh = SettingsManager.Current.Listeners_AutoRefresh;
         }
         #endregion
 
@@ -218,46 +219,6 @@ namespace NETworkManager.ViewModels
             Refresh();
         }
 
-        public ICommand CopySelectedLocalIPAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedLocalIPAddressAction()); }
-        }
-
-        private void CopySelectedLocalIPAddressAction()
-        {
-            Clipboard.SetText(SelectedConnectionInfo.LocalIPAddress.ToString());
-        }
-
-        public ICommand CopySelectedLocalPortCommand
-        {
-            get { return new RelayCommand(p => CopySelectedLocalPortAction()); }
-        }
-
-        private void CopySelectedLocalPortAction()
-        {
-            Clipboard.SetText(SelectedConnectionInfo.LocalPort.ToString());
-        }
-
-        public ICommand CopySelectedRemoteIPAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedRemoteIPAddressAction()); }
-        }
-
-        private void CopySelectedRemoteIPAddressAction()
-        {
-            Clipboard.SetText(SelectedConnectionInfo.RemoteIPAddress.ToString());
-        }
-
-        public ICommand CopySelectedRemotePortCommand
-        {
-            get { return new RelayCommand(p => CopySelectedRemotePortAction()); }
-        }
-
-        private void CopySelectedRemotePortAction()
-        {
-            Clipboard.SetText(SelectedConnectionInfo.RemotePort.ToString());
-        }
-
         public ICommand CopySelectedProtocolCommand
         {
             get { return new RelayCommand(p => CopySelectedProtocolAction()); }
@@ -265,18 +226,27 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedProtocolAction()
         {
-            Clipboard.SetText(SelectedConnectionInfo.Protocol.ToString());
+            Clipboard.SetText(SelectedListenerInfo.Protocol.ToString());
+        }
+        
+        public ICommand CopySelectedIPAddressCommand
+        {
+            get { return new RelayCommand(p => CopySelectedIPAddressAction()); }
         }
 
-        public ICommand CopySelectedStateCommand
+        private void CopySelectedIPAddressAction()
         {
-            get { return new RelayCommand(p => CopySelectedStateAction()); }
+            Clipboard.SetText(SelectedListenerInfo.IPAddress.ToString());
         }
 
-        private void CopySelectedStateAction()
+        public ICommand CopySelectedPortCommand
         {
-            Clipboard.SetText(LocalizationManager.GetStringByKey("String_TcpState_" + SelectedConnectionInfo.State.ToString()));
+            get { return new RelayCommand(p => CopySelectedPortAction()); }
+        }
 
+        private void CopySelectedPortAction()
+        {
+            Clipboard.SetText(SelectedListenerInfo.Port.ToString());
         }
         #endregion
 
@@ -285,9 +255,9 @@ namespace NETworkManager.ViewModels
         {
             IsRefreshing = true;
 
-            Connections.Clear();
+            Listeners.Clear();
 
-            (await Connection.GetActiveTcpConnectionsAsync()).ForEach(x => Connections.Add(x));
+            (await Listener.GetAllActiveListenersAsync()).ForEach(x => Listeners.Add(x));
 
             IsRefreshing = false;
         }

@@ -66,7 +66,7 @@
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Settings}" />
+                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:MaterialLight Kind=Cog}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>
@@ -508,7 +508,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Grid.Column="0" Width="24" Height="24">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Settings}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:MaterialLight Kind=Cog}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">

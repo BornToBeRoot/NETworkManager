@@ -27,6 +27,7 @@ namespace NETworkManager
                     new ApplicationViewInfo(Name.SubnetCalculator, new PackIconModern() { Kind = PackIconModernKind.Calculator }),
                     new ApplicationViewInfo(Name.Lookup, new PackIconMaterial() { Kind = PackIconMaterialKind.Magnify }),
                     new ApplicationViewInfo(Name.Connections, new PackIconModern() {Kind = PackIconModernKind.Connect }),
+                    new ApplicationViewInfo(Name.Listeners, new PackIconMaterial() {Kind = PackIconMaterialKind.Wan}),
                     new ApplicationViewInfo(Name.ARPTable, new PackIconMaterial() { Kind = PackIconMaterialKind.TableOfContents })
                 };
             }
@@ -54,6 +55,7 @@ namespace NETworkManager
             SubnetCalculator,
             Lookup,
             Connections,
+            Listeners,
             ARPTable
         }
     }

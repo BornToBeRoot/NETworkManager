@@ -48,6 +48,17 @@ namespace NETworkManager
             TranslatedGroup = SettingsViewManager.TranslateGroup(group);
         }
 
+        public SettingsViewInfo(SettingsViewManager.Name name, PackIconMaterialLight packIconMaterialLight, SettingsViewManager.Group group)
+        {
+            Name = name;
+            TranslatedName = SettingsViewManager.TranslateName(name, group);
+            Canvas canvas = new Canvas();
+            canvas.Children.Add(packIconMaterialLight);
+            Icon = canvas;
+            Group = group;
+            TranslatedGroup = SettingsViewManager.TranslateGroup(group);
+        }
+
         public SettingsViewInfo(SettingsViewManager.Name name, PackIconEntypo packIconEntypo, SettingsViewManager.Group group)
         {
             Name = name;

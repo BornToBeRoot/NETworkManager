@@ -232,7 +232,9 @@
     <Compile Include="Models\Documentation\CommunityManager.cs" />
     <Compile Include="Models\Documentation\ResourceInfo.cs" />
     <Compile Include="Models\Documentation\ResourceManager.cs" />
+    <Compile Include="Models\Network\Listener.cs" />
     <Compile Include="Models\Network\Connection.cs" />
+    <Compile Include="Models\Network\ListenerInfo.cs" />
     <Compile Include="Models\Network\ConnectionInfo.cs" />
     <Compile Include="Models\Network\HostNotFoundException.cs" />
     <Compile Include="Models\PuTTY\PuTTYSessionInfo.cs" />
@@ -282,6 +284,7 @@
     <Compile Include="Validators\MultipleHostsValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\SubnetCalculatorSubnetValidator.cs" />
+    <Compile Include="ViewModels\ListenersViewModel.cs" />
     <Compile Include="ViewModels\ConnectionsViewModel.cs" />
     <Compile Include="ViewModels\SubnetCalculatorHostViewModel.cs" />
     <Compile Include="ViewModels\LookupHostViewModel.cs" />
@@ -343,6 +346,9 @@
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
+    <Compile Include="Views\ListenersView.xaml.cs">
+      <DependentUpon>ListenersView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConnectionsView.xaml.cs">
       <DependentUpon>ConnectionsView.xaml</DependentUpon>
     </Compile>
@@ -608,6 +614,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Page Include="Views\ListenersView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ConnectionsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

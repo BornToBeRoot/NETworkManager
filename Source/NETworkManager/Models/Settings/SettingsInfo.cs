@@ -2161,6 +2161,36 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
+        #region Listeners
+        private bool _listeners_AutoRefresh;
+        public bool Listeners_AutoRefresh
+        {
+            get { return _listeners_AutoRefresh; }
+            set
+            {
+                if (value == _listeners_AutoRefresh)
+                    return;
+
+                _listeners_AutoRefresh = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private AutoRefreshTimeInfo _listeners_AutoRefreshTime = AutoRefreshTime.Defaults.First(x => (x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second));
+        public AutoRefreshTimeInfo Listeners_AutoRefreshTime
+        {
+            get { return _listeners_AutoRefreshTime; }
+            set
+            {
+                if (value == _listeners_AutoRefreshTime)
+                    return;
+
+                _listeners_AutoRefreshTime = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
         #endregion
 
         #region Constructor

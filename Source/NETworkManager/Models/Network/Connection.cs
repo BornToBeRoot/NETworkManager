@@ -6,13 +6,13 @@ namespace NETworkManager.Models.Network
 {
     public class Connection
     {
-        #region Variables
-        public static Task<List<ConnectionInfo>> GetActiveTCPConnectionsAsync()
+        #region Methods
+        public static Task<List<ConnectionInfo>> GetActiveTcpConnectionsAsync()
         {
-            return Task.Run(() => GetActiveTCPConnections());
+            return Task.Run(() => GetActiveTcpConnections());
         }
 
-        public static List<ConnectionInfo> GetActiveTCPConnections()
+        public static List<ConnectionInfo> GetActiveTcpConnections()
         {
             List<ConnectionInfo> list = new List<ConnectionInfo>();
 
@@ -23,7 +23,7 @@ namespace NETworkManager.Models.Network
         }
         #endregion
 
-        #region
+        #region Enum
         public enum Protocol
         {
             TCP

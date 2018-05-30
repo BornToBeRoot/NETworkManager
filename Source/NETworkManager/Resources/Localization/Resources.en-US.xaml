@@ -605,6 +605,7 @@
     <system:String x:Key="String_ApplicationName_ARPTable">ARP Table</system:String>
     <system:String x:Key="String_ApplicationName_Lookup">Lookup</system:String>
     <system:String x:Key="String_ApplicationName_Connections">Connections</system:String>
+    <system:String x:Key="String_ApplicationName_Listeners">Listeners</system:String>
     
     <!-- SettingsView.Name -->
     <system:String x:Key="String_SettingsName_General">General</system:String>
