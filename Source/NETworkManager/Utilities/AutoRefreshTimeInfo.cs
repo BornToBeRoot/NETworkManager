@@ -2,7 +2,7 @@
 
 namespace NETworkManager.Utilities
 {
-    class AutoRefreshTimeInfo
+    public class AutoRefreshTimeInfo
     {
         public int Value { get; set; }
         public TimeUnit TimeUnit { get; set; }

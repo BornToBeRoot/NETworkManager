@@ -8,7 +8,7 @@ using NETworkManager.Utilities;
 using System.Windows;
 using NETworkManager.Models.Settings;
 using System.Windows.Threading;
-using System.Diagnostics;
+using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
@@ -79,6 +79,12 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
+                    SettingsManager.Current.Connections_AutoRefresh = value;
+
+                _autoRefresh = value;
+
+                // Start timer to refresh automatically
+                if (!_isLoading)
                 {
                     if (value)
                         StartAutoRefreshTimer();
@@ -86,7 +92,33 @@ namespace NETworkManager.ViewModels
                         StopAutoRefreshTimer();
                 }
 
-                _autoRefresh = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ICollectionView _autoRefreshTimes;
+        public ICollectionView AutoRefreshTimes
+        {
+            get { return _autoRefreshTimes; }
+        }
+
+        private AutoRefreshTimeInfo _selectedAutoRefreshTime;
+        public AutoRefreshTimeInfo SelectedAutoRefreshTime
+        {
+            get { return _selectedAutoRefreshTime; }
+            set
+            {
+                if (value == _selectedAutoRefreshTime)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.Connections_AutoRefreshTime = value;
+
+                _selectedAutoRefreshTime = value;
+
+                if (AutoRefresh)
+                    ChangeAutoRefreshTimerInterval(AutoRefreshTime.CalculateTimeSpan(value));
+
                 OnPropertyChanged();
             }
         }
@@ -149,19 +181,27 @@ namespace NETworkManager.ViewModels
                 string filter = Search.Replace(" ", "").Replace("-", "").Replace(":", "");
 
                 // Search by IPAddress and MACAddress
-                return info.LocalIPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.LocalPort.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteIPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.RemotePort.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.State.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1;
+                return info.LocalIPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.LocalPort.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteIPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.RemotePort.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || LocalizationManager.GetStringByKey("String_TcpState_" + info.State.ToString()).IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1;
             };
+
+            _autoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);
+            SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.Connections_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.Connections_AutoRefreshTime.TimeUnit));
+
+            _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
 
             LoadSettings();
 
             _isLoading = false;
 
             Refresh();
+
+            if (AutoRefresh)
+                StartAutoRefreshTimer();
         }
 
         private void LoadSettings()
         {
-
+            AutoRefresh = SettingsManager.Current.Connections_AutoRefresh;
         }
         #endregion
 
@@ -218,6 +258,16 @@ namespace NETworkManager.ViewModels
             Clipboard.SetText(SelectedConnectionInfo.RemotePort.ToString());
         }
 
+        public ICommand CopySelectedProtocolCommand
+        {
+            get { return new RelayCommand(p => CopySelectedProtocolAction()); }
+        }
+
+        private void CopySelectedProtocolAction()
+        {
+            Clipboard.SetText(SelectedConnectionInfo.Protocol.ToString());
+        }
+
         public ICommand CopySelectedStateCommand
         {
             get { return new RelayCommand(p => CopySelectedStateAction()); }
@@ -247,10 +297,15 @@ namespace NETworkManager.ViewModels
             Refresh();
         }
 
+        private void ChangeAutoRefreshTimerInterval(TimeSpan timeSpan)
+        {
+            _autoRefreshTimer.Interval = timeSpan;
+        }
+
         private void StartAutoRefreshTimer()
         {
-            _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
-            _autoRefreshTimer.Interval = new TimeSpan(0, 0, 5);
+            ChangeAutoRefreshTimerInterval(AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime));
+
             _autoRefreshTimer.Start();
         }
 

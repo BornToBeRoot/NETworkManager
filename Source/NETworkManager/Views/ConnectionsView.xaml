@@ -14,6 +14,7 @@
         <Converter:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <Converter:TcpStateToStringConverter x:Key="TcpStateToStringConverter" />
+        <Converter:AutoRefreshTimeToStringConverter x:Key="AutoRefreshTimeToStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -74,6 +75,15 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
+                        <MenuItem Header="{DynamicResource String_Protocol}" Command="{Binding CopySelectedProtocolCommand}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
                         <MenuItem Header="{DynamicResource String_State}" Command="{Binding CopySelectedStateCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
@@ -95,10 +105,11 @@
                     </Style.Triggers>
                 </Style>
             </DataGrid.RowStyle>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_LocalIPAddress}" Binding="{Binding LocalIPAddress}" SortMemberPath="IPAddressInt32" MinWidth="150" />
+            <DataGrid.Columns>       
+                <DataGridTextColumn Header="{DynamicResource String_Protocol}" Binding="{Binding Protocol}" MinWidth="100" />
+                <DataGridTextColumn Header="{DynamicResource String_LocalIPAddress}" Binding="{Binding LocalIPAddress}" SortMemberPath="LocalIPAddressInt32" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_LocalPort}" Binding="{Binding LocalPort}" MinWidth="100" />
-                <DataGridTextColumn Header="{DynamicResource String_RemoteIPAddress}" Binding="{Binding RemoteIPAddress}" MinWidth="150"/>
+                <DataGridTextColumn Header="{DynamicResource String_RemoteIPAddress}" Binding="{Binding RemoteIPAddress}" SortMemberPath="RemoteIPAddressInt32" MinWidth="150"/>
                 <DataGridTextColumn Header="{DynamicResource String_RemotePort}" Binding="{Binding RemotePort}" MinWidth="100" />
                 <DataGridTextColumn Header="{DynamicResource String_State}" Binding="{Binding State, Converter={StaticResource TcpStateToStringConverter}}" MinWidth="150" Width="*" />
             </DataGrid.Columns>
@@ -121,16 +132,37 @@
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal">
-                <CheckBox IsChecked="{Binding AutoRefresh}" VerticalAlignment="Center" Content="Automatically update every" />
-                <ComboBox Margin="10,0,0,0">
-                    <ComboBoxItem Content="5 Sekunden" />
-                    <ComboBoxItem Content="15 Sekunden" />
-                    <ComboBoxItem Content="30 Sekunden" />
-                    <ComboBoxItem Content="1 Minute" />
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+                <CheckBox IsChecked="{Binding AutoRefresh}" Content="{DynamicResource String_AutomaticallyUpdateEvery}" />
+                <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150" Margin="10,0,0,0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="Value" />
+                                        <Binding Path="TimeUnit" Converter="{StaticResource AutoRefreshTimeToStringConverter}" />                                        
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
                 </ComboBox>
             </StackPanel>
-            <Button Grid.Column="2" Command="{Binding RefreshCommand}" Style="{StaticResource ImageWithTextButton}" IsEnabled="{Binding IsRefreshing, Converter={StaticResource BooleanReverseConverter}}">
+            <Button Grid.Column="2" Command="{Binding RefreshCommand}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                        
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsRefreshing}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding AutoRefresh}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>

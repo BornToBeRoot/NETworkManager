@@ -220,6 +220,7 @@
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\AutoRefreshTimeToStringConverter.cs" />
     <Compile Include="Converters\TcpStateToStringConverter.cs" />
     <Compile Include="Converters\StringIsNotNullOrEmptyToBoolConverter.cs" />
     <Compile Include="Converters\StringIsNotNullOrEmptyToVisibilityConverter.cs" />

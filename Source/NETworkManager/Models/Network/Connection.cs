@@ -17,10 +17,18 @@ namespace NETworkManager.Models.Network
             List<ConnectionInfo> list = new List<ConnectionInfo>();
 
             foreach (TcpConnectionInformation tcpInfo in IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpConnections())
-                list.Add(new ConnectionInfo(tcpInfo.LocalEndPoint.Address, tcpInfo.LocalEndPoint.Port, tcpInfo.RemoteEndPoint.Address, tcpInfo.RemoteEndPoint.Port, tcpInfo.State));
+                list.Add(new ConnectionInfo(Protocol.TCP, tcpInfo.LocalEndPoint.Address, tcpInfo.LocalEndPoint.Port, tcpInfo.RemoteEndPoint.Address, tcpInfo.RemoteEndPoint.Port, tcpInfo.State));
 
             return list;
         }
+        #endregion
+
+        #region
+        public enum Protocol
+        {
+            TCP
+        }
+
         #endregion
     }
 }

@@ -426,7 +426,8 @@
     <system:String x:Key="String_RemoteIPAddress">Remote IP Address</system:String>
     <system:String x:Key="String_RemotePort">Remote Port</system:String>
     <system:String x:Key="String_State">Zustand</system:String>
-
+    <system:String x:Key="String_AutomaticallyUpdateEvery">Automatically update every</system:String>
+    
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">How to create a custom theme and accent?</system:String>
@@ -674,6 +675,11 @@
     <system:String x:Key="String_TcpState_SynSent">SynSent</system:String>
     <system:String x:Key="String_TcpState_TimeWait">TimeWait</system:String>
     <system:String x:Key="String_TcpState_Unknown">Unknown</system:String>
+    
+    <!-- TimeUnit -->
+    <system:String x:Key="String_TimeUnit_Second">Second(s)</system:String>
+    <system:String x:Key="String_TimeUnit_Minute">Minute(s)</system:String>
+    <system:String x:Key="String_TimeUnit_Hour">Hour(s)</system:String>
     
     <!-- PortStatus -->
     <system:String x:Key="String_PortStatus_Closed">Closed</system:String>
