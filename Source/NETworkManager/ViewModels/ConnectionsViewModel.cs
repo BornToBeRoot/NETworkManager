@@ -7,12 +7,17 @@ using System.Collections.ObjectModel;
 using NETworkManager.Utilities;
 using System.Windows;
 using NETworkManager.Models.Settings;
+using System.Windows.Threading;
+using System.Diagnostics;
 
 namespace NETworkManager.ViewModels
 {
     public class ConnectionsViewModel : ViewModelBase
     {
         #region Variables
+        private bool _isLoading = true;
+        private DispatcherTimer _autoRefreshTimer = new DispatcherTimer();
+
         private string _search;
         public string Search
         {
@@ -60,6 +65,28 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _selectedConnectionInfo = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _autoRefresh;
+        public bool AutoRefresh
+        {
+            get { return _autoRefresh; }
+            set
+            {
+                if (value == _autoRefresh)
+                    return;
+
+                if (!_isLoading)
+                {
+                    if (value)
+                        StartAutoRefreshTimer();
+                    else
+                        StopAutoRefreshTimer();
+                }
+
+                _autoRefresh = value;
                 OnPropertyChanged();
             }
         }
@@ -125,7 +152,16 @@ namespace NETworkManager.ViewModels
                 return info.LocalIPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.LocalPort.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteIPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.RemotePort.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.State.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
+            LoadSettings();
+
+            _isLoading = false;
+
             Refresh();
+        }
+
+        private void LoadSettings()
+        {
+
         }
         #endregion
 
@@ -204,6 +240,23 @@ namespace NETworkManager.ViewModels
             (await Connection.GetActiveTCPConnectionsAsync()).ForEach(x => Connections.Add(x));
 
             IsRefreshing = false;
+        }
+
+        private void AutoRefreshTimer_Tick(object sender, EventArgs e)
+        {
+            Refresh();
+        }
+
+        private void StartAutoRefreshTimer()
+        {
+            _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
+            _autoRefreshTimer.Interval = new TimeSpan(0, 0, 5);
+            _autoRefreshTimer.Start();
+        }
+
+        private void StopAutoRefreshTimer()
+        {
+            _autoRefreshTimer.Stop();
         }
         #endregion
     }

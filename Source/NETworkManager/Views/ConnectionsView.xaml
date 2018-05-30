@@ -115,8 +115,22 @@
                 </Style>
             </Controls:MetroProgressBar.Style>
         </Controls:MetroProgressBar>
-        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Command="{Binding RefreshCommand}" Style="{StaticResource ImageWithTextButton}" IsEnabled="{Binding IsRefreshing, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
+        <Grid Grid.Row="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding AutoRefresh}" VerticalAlignment="Center" Content="Automatically update every" />
+                <ComboBox Margin="10,0,0,0">
+                    <ComboBoxItem Content="5 Sekunden" />
+                    <ComboBoxItem Content="15 Sekunden" />
+                    <ComboBoxItem Content="30 Sekunden" />
+                    <ComboBoxItem Content="1 Minute" />
+                </ComboBox>
+            </StackPanel>
+            <Button Grid.Column="2" Command="{Binding RefreshCommand}" Style="{StaticResource ImageWithTextButton}" IsEnabled="{Binding IsRefreshing, Converter={StaticResource BooleanReverseConverter}}">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -132,6 +146,6 @@
                     </Grid>
                 </Button.Content>
             </Button>
-        </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>
