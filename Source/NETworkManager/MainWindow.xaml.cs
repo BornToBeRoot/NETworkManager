@@ -421,11 +421,13 @@ namespace NETworkManager
         SubnetCalculatorHostView subnetCalculatorHostView;
         HTTPHeadersHostView httpHeadersHostView;
         LookupHostView lookupHostView;
+        ConnectionsView connectionsView;
+        ListenersView listenersView;
         ARPTableView arpTableView;
 
         private ApplicationViewManager.Name? currentApplicationViewName = null;
 
-        private void ChangeApplicationView(ApplicationViewManager.Name name, EventSystemRedirectApplicationArgs args = null)
+        private void ChangeApplicationView(ApplicationViewManager.Name name)
         {
             if (currentApplicationViewName == name)
                 return;
@@ -447,10 +449,6 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.PortScanner:
                     if (portScannerHostView == null)
                         portScannerHostView = new PortScannerHostView();
-
-                    // Create a new tab
-                    if (args != null)
-                        portScannerHostView.AddTab(args.Data);
 
                     contentControlApplication.Content = portScannerHostView;
                     break;
@@ -514,6 +512,18 @@ namespace NETworkManager
                         lookupHostView = new LookupHostView();
 
                     contentControlApplication.Content = lookupHostView;
+                    break;
+                case ApplicationViewManager.Name.Connections:
+                    if (connectionsView == null)
+                        connectionsView = new ConnectionsView();
+
+                    contentControlApplication.Content = connectionsView;
+                    break;
+                case ApplicationViewManager.Name.Listeners:
+                    if (listenersView == null)
+                        listenersView = new ListenersView();
+
+                    contentControlApplication.Content = listenersView;
                     break;
                 case ApplicationViewManager.Name.ARPTable:
                     if (arpTableView == null)

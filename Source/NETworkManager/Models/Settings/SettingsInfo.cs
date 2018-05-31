@@ -1,8 +1,10 @@
 ﻿using Heijden.DNS;
 using Lextm.SharpSnmpLib.Messaging;
+using NETworkManager.Utilities;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using static NETworkManager.Models.Network.SNMP;
@@ -407,7 +409,7 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
-                
+
         private ObservableCollection<string> _ipScanner_IPRangeHistory = new ObservableCollection<string>();
         public ObservableCollection<string> IPScanner_IPRangeHistory
         {
@@ -2124,6 +2126,66 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _lookup_Port_PortsHistory = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
+        #region Connections
+        private bool _connections_AutoRefresh;
+        public bool Connections_AutoRefresh
+        {
+            get { return _connections_AutoRefresh; }
+            set
+            {
+                if (value == _connections_AutoRefresh)
+                    return;
+
+                _connections_AutoRefresh = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private AutoRefreshTimeInfo _connections_AutoRefreshTime = AutoRefreshTime.Defaults.First(x => (x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second));
+        public AutoRefreshTimeInfo Connections_AutoRefreshTime
+        {
+            get { return _connections_AutoRefreshTime; }
+            set
+            {
+                if (value == _connections_AutoRefreshTime)
+                    return;
+
+                _connections_AutoRefreshTime = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
+        #region Listeners
+        private bool _listeners_AutoRefresh;
+        public bool Listeners_AutoRefresh
+        {
+            get { return _listeners_AutoRefresh; }
+            set
+            {
+                if (value == _listeners_AutoRefresh)
+                    return;
+
+                _listeners_AutoRefresh = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private AutoRefreshTimeInfo _listeners_AutoRefreshTime = AutoRefreshTime.Defaults.First(x => (x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second));
+        public AutoRefreshTimeInfo Listeners_AutoRefreshTime
+        {
+            get { return _listeners_AutoRefreshTime; }
+            set
+            {
+                if (value == _listeners_AutoRefreshTime)
+                    return;
+
+                _listeners_AutoRefreshTime = value;
                 SettingsChanged = true;
             }
         }

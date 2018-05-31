@@ -22,7 +22,7 @@ namespace NETworkManager
                     new SettingsViewInfo(Name.Autostart, new PackIconMaterial() { Kind = PackIconMaterialKind.Power }, Group.General),
                     new SettingsViewInfo(Name.Update, new PackIconMaterial() {Kind = PackIconMaterialKind.Download }, Group.General),
                     new SettingsViewInfo(Name.ImportExport, new PackIconMaterial() { Kind = PackIconMaterialKind.Import}, Group.General),
-                    new SettingsViewInfo(Name.Settings, new PackIconModern() { Kind = PackIconModernKind.Settings }, Group.General),
+                    new SettingsViewInfo(Name.Settings, new PackIconMaterialLight() { Kind = PackIconMaterialLightKind.Cog }, Group.General),
 
                     // Applications
                     new SettingsViewInfo(Name.IPScanner, new PackIconMaterial() {Kind = PackIconMaterialKind.Sitemap }, Group.Applications),

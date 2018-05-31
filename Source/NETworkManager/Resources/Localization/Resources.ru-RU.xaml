@@ -106,7 +106,7 @@
     <system:String x:Key="String_Header_EditGroup">Изменить группу</system:String>
     <system:String x:Key="String_Header_Overwrite">Изменить</system:String>
     <system:String x:Key="String_Header_NewTab">Новая вкладка</system:String>
-    <system:String x:Key="String_Header_Resources">Ресурсы</system:String> <!-- new string -->
+    <system:String x:Key="String_Header_Resources">Ресурсы</system:String>
 
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -416,12 +416,18 @@
     <system:String x:Key="String_RemoteDesktop">Remote Desktop</system:String>
     <system:String x:Key="String_PuTTY">PuTTY</system:String>
     <system:String x:Key="String_SNMP">SNMP</system:String>
-    <system:String x:Key="String_OpenWebsite">Открыть сайт</system:String>
-    <system:String x:Key="String_TheFollowingHostnamesCouldNotBeResolved">Не удалось разрешить следующие имена узлов:</system:String>
-    <system:String x:Key="String_RestartTheApplicationSoThatAllChangesAreApplied">Перезапустите приложение, чтобы все настройки были применены!</system:String>
-    <system:String x:Key="String_NewTab">Новая вкладка</system:String>
-    <system:String x:Key="String_ShowCurrentApplicationTitle">Показать заголовок текущего приложения</system:String>
-    
+    <system:String x:Key="String_OpenWebsite">Open website</system:String>
+    <system:String x:Key="String_TheFollowingHostnamesCouldNotBeResolved">The following hostnames could not be resolved:</system:String>
+    <system:String x:Key="String_RestartTheApplicationSoThatAllChangesAreApplied">Restart the application so that all settings are applied!</system:String>
+    <system:String x:Key="String_NewTab">New Tab</system:String>
+    <system:String x:Key="String_ShowCurrentApplicationTitle">Show current application title</system:String>
+    <system:String x:Key="String_LocalIPAddress">Local IP Address</system:String>
+    <system:String x:Key="String_LocalPort">Local Port</system:String>
+    <system:String x:Key="String_RemoteIPAddress">Remote IP Address</system:String>
+    <system:String x:Key="String_RemotePort">Remote Port</system:String>
+    <system:String x:Key="String_State">State</system:String>
+    <system:String x:Key="String_AutomaticallyUpdateEvery">Automatically update every</system:String>
+
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Как установить RDP 8.1 на Windows 7 / Server 2008 R2</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">Как создать пользовательскую тему и оттенок?</system:String>
@@ -598,6 +604,8 @@
     <system:String x:Key="String_ApplicationName_HTTPHeaders">HTTP Headers</system:String>
     <system:String x:Key="String_ApplicationName_ARPTable">ARP Table</system:String>
     <system:String x:Key="String_ApplicationName_Lookup">Lookup</system:String>
+    <system:String x:Key="String_ApplicationName_Connections">Connections</system:String>
+    <system:String x:Key="String_ApplicationName_Listeners">Listeners</system:String>
     
     <!-- SettingsView.Name -->
     <system:String x:Key="String_SettingsName_General">Общие</system:String>
@@ -653,6 +661,26 @@
     <system:String x:Key="String_IPStatus_DestinationPortUnreachable">Порт назначения недоступен.</system:String>
     <system:String x:Key="String_IPStatus_TimedOut">Время ожидания запроса.</system:String>
     <system:String x:Key="String_IPStatus_TtlExpired">TTL просроченным транзитом.</system:String>
+
+    <!-- TcpStatus -->
+    <system:String x:Key="String_TcpState_Closed">Closed</system:String>
+    <system:String x:Key="String_TcpState_CloseWait">CloseWait</system:String>
+    <system:String x:Key="String_TcpState_Closing">Closing</system:String>
+    <system:String x:Key="String_TcpState_DeleteTcb">DeleteTcb</system:String>
+    <system:String x:Key="String_TcpState_Established">Established</system:String>
+    <system:String x:Key="String_TcpState_FinWait1">FinWait1</system:String>
+    <system:String x:Key="String_TcpState_FinWait2">FinWait2</system:String>
+    <system:String x:Key="String_TcpState_LastAck">LastAck</system:String>
+    <system:String x:Key="String_TcpState_Listen">Listen</system:String>
+    <system:String x:Key="String_TcpState_SynReceived">SynReceived</system:String>
+    <system:String x:Key="String_TcpState_SynSent">SynSent</system:String>
+    <system:String x:Key="String_TcpState_TimeWait">TimeWait</system:String>
+    <system:String x:Key="String_TcpState_Unknown">Unknown</system:String>
+
+    <!-- TimeUnit -->
+    <system:String x:Key="String_TimeUnit_Second">Second(s)</system:String>
+    <system:String x:Key="String_TimeUnit_Minute">Minute(s)</system:String>
+    <system:String x:Key="String_TimeUnit_Hour">Hour(s)</system:String>
     
     <!-- PortStatus -->
     <system:String x:Key="String_PortStatus_Closed">Закрытый</system:String>
