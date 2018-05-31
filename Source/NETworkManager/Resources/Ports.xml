@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Service Name and Transport Protocol Port Number Registry
-Generated 12/29/2017 20:38:04-->
+Generated 05/31/2018 02:04:19-->
 <Ports>
   <Port>
     <Number>0</Number>
@@ -4921,7 +4921,7 @@ Generated 12/29/2017 20:38:04-->
     <Number>465</Number>
     <Protocol>tcp</Protocol>
     <Name>urd</Name>
-    <Description>URL Rendesvous Directory for SSM</Description>
+    <Description>URL Rendezvous Directory for SSM</Description>
   </Port>
   <Port>
     <Number>465</Number>
@@ -22387,14 +22387,14 @@ Generated 12/29/2017 20:38:04-->
   <Port>
     <Number>2114</Number>
     <Protocol>tcp</Protocol>
-    <Name>newheights</Name>
-    <Description>NEWHEIGHTS</Description>
+    <Name>ariascribe</Name>
+    <Description>Classical Music Meta-Data Access and Enhancement</Description>
   </Port>
   <Port>
     <Number>2114</Number>
     <Protocol>udp</Protocol>
-    <Name>newheights</Name>
-    <Description>NEWHEIGHTS</Description>
+    <Name>ariascribe</Name>
+    <Description>Classical Music Meta-Data Access and Enhancement</Description>
   </Port>
   <Port>
     <Number>2115</Number>
@@ -48725,13 +48725,13 @@ Generated 12/29/2017 20:38:04-->
   <Port>
     <Number>4420</Number>
     <Protocol>tcp</Protocol>
-    <Name>nvm-express</Name>
+    <Name>nvme</Name>
     <Description>NVM Express over Fabrics storage access</Description>
   </Port>
   <Port>
     <Number>4420</Number>
     <Protocol>udp</Protocol>
-    <Name>nvm-express</Name>
+    <Name>nvme</Name>
     <Description>NVM Express over Fabrics storage access</Description>
   </Port>
   <Port>
@@ -50784,13 +50784,13 @@ Generated 12/29/2017 20:38:04-->
     <Number>4840</Number>
     <Protocol>tcp</Protocol>
     <Name>opcua-tcp</Name>
-    <Description>OPC UA TCP Protocol</Description>
+    <Description>OPC UA Connection Protocol</Description>
   </Port>
   <Port>
     <Number>4840</Number>
     <Protocol>udp</Protocol>
     <Name>opcua-udp</Name>
-    <Description>OPC UA TCP Protocol</Description>
+    <Description>OPC UA Multicast Datagram Protocol</Description>
   </Port>
   <Port>
     <Number>4841</Number>
@@ -52815,8 +52815,8 @@ Generated 12/29/2017 20:38:04-->
   <Port>
     <Number>5153</Number>
     <Protocol>tcp</Protocol>
-    <Name>toruxserver</Name>
-    <Description>ToruX Game Server</Description>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>5153</Number>
@@ -60881,6 +60881,18 @@ Generated 12/29/2017 20:38:04-->
     <Description>Vormetric Service II</Description>
   </Port>
   <Port>
+    <Number>7026</Number>
+    <Protocol>tcp</Protocol>
+    <Name>loreji-panel</Name>
+    <Description>Loreji Webhosting Panel</Description>
+  </Port>
+  <Port>
+    <Number>7026</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>7030</Number>
     <Protocol>tcp</Protocol>
     <Name>op-probe</Name>
@@ -60939,6 +60951,18 @@ Generated 12/29/2017 20:38:04-->
     <Protocol>udp</Protocol>
     <Name>iwg1</Name>
     <Description>IWGADTS Aircraft Housekeeping Message</Description>
+  </Port>
+  <Port>
+    <Number>7072</Number>
+    <Protocol>tcp</Protocol>
+    <Name>iba-cfg</Name>
+    <Description>iba Device Configuration Protocol</Description>
+  </Port>
+  <Port>
+    <Number>7072</Number>
+    <Protocol>udp</Protocol>
+    <Name>iba-cfg-disc</Name>
+    <Description>iba Device Configuration Protocol</Description>
   </Port>
   <Port>
     <Number>7073</Number>
@@ -61709,6 +61733,18 @@ Generated 12/29/2017 20:38:04-->
     <Description>Streaming of measurement data</Description>
   </Port>
   <Port>
+    <Number>7420</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>7420</Number>
+    <Protocol>udp</Protocol>
+    <Name>ipluminary</Name>
+    <Description>Multichannel real-time lighting control</Description>
+  </Port>
+  <Port>
     <Number>7421</Number>
     <Protocol>tcp</Protocol>
     <Name>mtportmon</Name>
@@ -62277,6 +62313,18 @@ Generated 12/29/2017 20:38:04-->
     <Protocol>udp</Protocol>
     <Name>cuseeme</Name>
     <Description>bonjour-cuseeme</Description>
+  </Port>
+  <Port>
+    <Number>7663</Number>
+    <Protocol>tcp</Protocol>
+    <Name>rome</Name>
+    <Description>Proprietary immutable distributed data storage</Description>
+  </Port>
+  <Port>
+    <Number>7663</Number>
+    <Protocol>udp</Protocol>
+    <Name>rome</Name>
+    <Description>Proprietary immutable distributed data storage</Description>
   </Port>
   <Port>
     <Number>7672</Number>
@@ -63191,6 +63239,18 @@ Generated 12/29/2017 20:38:04-->
     <Description>Mulberry Connect Reporting Service</Description>
   </Port>
   <Port>
+    <Number>8004</Number>
+    <Protocol>tcp</Protocol>
+    <Name>p2pevolvenet</Name>
+    <Description>Opensource Evolv Enterprise Platform P2P Network Node Connection Protocol</Description>
+  </Port>
+  <Port>
+    <Number>8004</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>8005</Number>
     <Protocol>tcp</Protocol>
     <Name>mxi</Name>
@@ -63237,6 +63297,18 @@ Generated 12/29/2017 20:38:04-->
     <Protocol>udp</Protocol>
     <Name>http-alt</Name>
     <Description>HTTP Alternate</Description>
+  </Port>
+  <Port>
+    <Number>8009</Number>
+    <Protocol>tcp</Protocol>
+    <Name>nvme-disc</Name>
+    <Description>NVMe over Fabrics Discovery Service</Description>
+  </Port>
+  <Port>
+    <Number>8009</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>8019</Number>
@@ -65643,6 +65715,18 @@ Generated 12/29/2017 20:38:04-->
     <Protocol>udp</Protocol>
     <Name>record</Name>
     <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>9011</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>9011</Number>
+    <Protocol>udp</Protocol>
+    <Name>d-star</Name>
+    <Description>D-Star Routing digital voice+data for amateur radio</Description>
   </Port>
   <Port>
     <Number>9020</Number>
@@ -74215,6 +74299,18 @@ Generated 12/29/2017 20:38:04-->
     <Description>Shaper Automation Server Management Discovery</Description>
   </Port>
   <Port>
+    <Number>43438</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>43438</Number>
+    <Protocol>udp</Protocol>
+    <Name>hmip-routing</Name>
+    <Description>HmIP LAN Routing</Description>
+  </Port>
+  <Port>
     <Number>43439</Number>
     <Protocol>tcp</Protocol>
     <Name>eq3-update</Name>
@@ -74702,6 +74798,18 @@ Generated 12/29/2017 20:38:04-->
   </Port>
   <Port>
     <Number>48005</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>48048</Number>
+    <Protocol>tcp</Protocol>
+    <Name>juliar</Name>
+    <Description>Juliar Programming Language Protocol</Description>
+  </Port>
+  <Port>
+    <Number>48048</Number>
     <Protocol>udp</Protocol>
     <Name>record</Name>
     <Description>Reserved</Description>
