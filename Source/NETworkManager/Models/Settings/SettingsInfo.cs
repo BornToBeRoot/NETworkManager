@@ -2142,7 +2142,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _connections_AutoRefresh = value;
-                OnPropertyChanged();
+                SettingsChanged = true;
             }
         }
 
@@ -2172,7 +2172,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _listeners_AutoRefresh = value;
-                OnPropertyChanged();
+                SettingsChanged = true;
             }
         }
 
