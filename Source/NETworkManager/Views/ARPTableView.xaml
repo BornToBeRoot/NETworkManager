@@ -10,9 +10,10 @@
         Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
     <UserControl.Resources>
+        <Converter:AutoRefreshTimeToStringConverter x:Key="AutoRefreshTimeToStringConverter" />
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Converter:BooleanToStringConverter x:Key="BooleanToStringConverter" />
-        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />        
         <Converter:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
@@ -104,81 +105,117 @@
                 </Style>
             </Controls:MetroProgressBar.Style>
         </Controls:MetroProgressBar>
-        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Command="{Binding AddEntryCommand}" Style="{StaticResource ImageWithTextButton}">
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddEntry}" TextAlignment="Center" Margin="10,5" />
-                    </Grid>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding DeleteEntryCommand}" Margin="10,0,0,0">
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_DeleteEntry}" TextAlignment="Center" Margin="10,5" />
-                    </Grid>
-                </Button.Content>
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                        <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=dataGridArpTable, Path=SelectedItems.Count}" Value="1" >
-                                <Setter Property="IsEnabled" Value="True" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <Button Command="{Binding DeleteTableCommand}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_DeleteTable}" TextAlignment="Center" Margin="10,5" />
-                    </Grid>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding RefreshCommand}" Style="{StaticResource ImageWithTextButton}" IsEnabled="{Binding IsRefreshing, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Refresh}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Refresh}" TextAlignment="Center" Margin="10,5" />
-                    </Grid>
-                </Button.Content>
-            </Button>
-        </StackPanel>
+        <Grid Grid.Row="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Bottom">
+                <CheckBox IsChecked="{Binding AutoRefresh}" Content="{DynamicResource String_AutomaticallyUpdateEvery}" />
+                <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150" Margin="10,0,0,0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="Value" />
+                                        <Binding Path="TimeUnit" Converter="{StaticResource AutoRefreshTimeToStringConverter}" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Command="{Binding AddEntryCommand}" Style="{StaticResource ImageWithTextButton}">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddEntry}" TextAlignment="Center" Margin="10,5" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+                <Button Command="{Binding DeleteEntryCommand}" Margin="10,0,0,0">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_DeleteEntry}" TextAlignment="Center" Margin="10,5" />
+                        </Grid>
+                    </Button.Content>
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=dataGridArpTable, Path=SelectedItems.Count}" Value="1" >
+                                    <Setter Property="IsEnabled" Value="True" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Command="{Binding DeleteTableCommand}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_DeleteTable}" TextAlignment="Center" Margin="10,5" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+                <Button Command="{Binding RefreshCommand}" Margin="10,0,0,0">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsRefreshing}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AutoRefresh}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Refresh}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Refresh}" TextAlignment="Center" Margin="10,5" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

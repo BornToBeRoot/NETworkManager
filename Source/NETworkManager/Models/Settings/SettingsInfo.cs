@@ -2191,6 +2191,36 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
+        #region ARPTable
+        private bool _arpTable_AutoRefresh;
+        public bool ARPTable_AutoRefresh
+        {
+            get { return _arpTable_AutoRefresh; }
+            set
+            {
+                if (value == _arpTable_AutoRefresh)
+                    return;
+
+                _arpTable_AutoRefresh = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private AutoRefreshTimeInfo _arpTable_AutoRefreshTime = AutoRefreshTime.Defaults.First(x => (x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second));
+        public AutoRefreshTimeInfo ARPTable_AutoRefreshTime
+        {
+            get { return _arpTable_AutoRefreshTime; }
+            set
+            {
+                if (value == _arpTable_AutoRefreshTime)
+                    return;
+
+                _arpTable_AutoRefreshTime = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
         #endregion
 
         #region Constructor

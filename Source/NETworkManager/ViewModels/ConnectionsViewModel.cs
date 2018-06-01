@@ -290,12 +290,7 @@ namespace NETworkManager.ViewModels
             (await Connection.GetActiveTcpConnectionsAsync()).ForEach(x => Connections.Add(x));
 
             IsRefreshing = false;
-        }
-
-        private void AutoRefreshTimer_Tick(object sender, EventArgs e)
-        {
-            Refresh();
-        }
+        }         
 
         private void ChangeAutoRefreshTimerInterval(TimeSpan timeSpan)
         {
@@ -312,6 +307,13 @@ namespace NETworkManager.ViewModels
         private void StopAutoRefreshTimer()
         {
             _autoRefreshTimer.Stop();
+        }
+        #endregion
+
+        #region Events
+        private void AutoRefreshTimer_Tick(object sender, EventArgs e)
+        {
+            Refresh();
         }
         #endregion
     }

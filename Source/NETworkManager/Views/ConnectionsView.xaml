@@ -132,7 +132,7 @@
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Bottom">
                 <CheckBox IsChecked="{Binding AutoRefresh}" Content="{DynamicResource String_AutomaticallyUpdateEvery}" />
                 <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150" Margin="10,0,0,0">
                     <ComboBox.ItemTemplate>
@@ -151,8 +151,7 @@
             </StackPanel>
             <Button Grid.Column="2" Command="{Binding RefreshCommand}">
                 <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                        
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">                        
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsRefreshing}" Value="True">
                                 <Setter Property="IsEnabled" Value="False" />

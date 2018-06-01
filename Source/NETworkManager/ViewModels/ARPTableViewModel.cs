@@ -9,6 +9,8 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
 using NETworkManager.Models.Settings;
+using System.Windows.Threading;
+using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
@@ -16,6 +18,9 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private IDialogCoordinator dialogCoordinator;
+
+        private bool _isLoading = true;
+        private DispatcherTimer _autoRefreshTimer = new DispatcherTimer();
 
         private string _search;
         public string Search
@@ -64,6 +69,60 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _selectedARPTableInfo = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _autoRefresh;
+        public bool AutoRefresh
+        {
+            get { return _autoRefresh; }
+            set
+            {
+                if (value == _autoRefresh)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.ARPTable_AutoRefresh = value;
+
+                _autoRefresh = value;
+
+                // Start timer to refresh automatically
+                if (!_isLoading)
+                {
+                    if (value)
+                        StartAutoRefreshTimer();
+                    else
+                        StopAutoRefreshTimer();
+                }
+
+                OnPropertyChanged();
+            }
+        }
+
+        private ICollectionView _autoRefreshTimes;
+        public ICollectionView AutoRefreshTimes
+        {
+            get { return _autoRefreshTimes; }
+        }
+
+        private AutoRefreshTimeInfo _selectedAutoRefreshTime;
+        public AutoRefreshTimeInfo SelectedAutoRefreshTime
+        {
+            get { return _selectedAutoRefreshTime; }
+            set
+            {
+                if (value == _selectedAutoRefreshTime)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.ARPTable_AutoRefreshTime = value;
+
+                _selectedAutoRefreshTime = value;
+
+                if (AutoRefresh)
+                    ChangeAutoRefreshTimerInterval(AutoRefreshTime.CalculateTimeSpan(value));
+
                 OnPropertyChanged();
             }
         }
@@ -128,10 +187,27 @@ namespace NETworkManager.ViewModels
                 string filter = Search.Replace(" ", "").Replace("-", "").Replace(":", "");
 
                 // Search by IPAddress and MACAddress
-                return info.IPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1;
+                return info.IPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || (info.IsMulticast ? LocalizationManager.GetStringByKey("String_Yes") : LocalizationManager.GetStringByKey("String_No")).IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
+            _autoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);
+            SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.ARPTable_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.ARPTable_AutoRefreshTime.TimeUnit));
+
+            _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
+
+            LoadSettings();
+
+            _isLoading = false;
+
             Refresh();
+
+            if (AutoRefresh)
+                StartAutoRefreshTimer();
+        }
+
+        private void LoadSettings()
+        {
+            AutoRefresh = SettingsManager.Current.ARPTable_AutoRefresh;
         }
         #endregion
 
@@ -288,6 +364,23 @@ namespace NETworkManager.ViewModels
 
             IsRefreshing = false;
         }
+
+        private void ChangeAutoRefreshTimerInterval(TimeSpan timeSpan)
+        {
+            _autoRefreshTimer.Interval = timeSpan;
+        }
+
+        private void StartAutoRefreshTimer()
+        {
+            ChangeAutoRefreshTimerInterval(AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime));
+
+            _autoRefreshTimer.Start();
+        }
+
+        private void StopAutoRefreshTimer()
+        {
+            _autoRefreshTimer.Stop();
+        }
         #endregion
 
         #region Events
@@ -295,6 +388,11 @@ namespace NETworkManager.ViewModels
         {
             StatusMessage = LocalizationManager.GetStringByKey("String_CanceledByUser");
             DisplayStatusMessage = true;
+        }
+
+        private void AutoRefreshTimer_Tick(object sender, EventArgs e)
+        {
+            Refresh();
         }
         #endregion
     }

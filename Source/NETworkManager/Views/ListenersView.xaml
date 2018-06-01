@@ -122,7 +122,6 @@
             <Button Grid.Column="2" Command="{Binding RefreshCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                        
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsRefreshing}" Value="True">
                                 <Setter Property="IsEnabled" Value="False" />
