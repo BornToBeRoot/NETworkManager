@@ -439,7 +439,7 @@
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Отображает это диалоговое окно.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Сбросить все настройки.</system:String>
-    <system:String x:Key="String_HelpMessage_Tags">Теги помогают организовать сеансы по темам / проектам. Несколько тегов могут быть использованы с ";" быть разделены. Поиск по тегам с "tag=xxx".</system:String>
+    <system:String x:Key="String_HelpMessage_Tags">Теги помогают организовать профили/сеансы по темам/проектам. Несколько тегов могут быть использованы с ";" быть разделены. Поиск по тегам с "tag=xxx".</system:String>
     <system:String x:Key="String_HelpMessage_Credentials">Расшифруйте и загрузите свои учетные данные, чтобы выбрать их.</system:String>
     <system:String x:Key="String_HelpMessage_PasswordNotDisplayedCanBeOverwritten">Пароль не отображается при редактировании, но может быть перезаписан.</system:String>
     <system:String x:Key="String_HelpMessage_RDPAuthenticationLevel">[0] При сбое проверки подлинности сервера, подключитесь к компьютеру без предупреждения.\n[1] Если проверка подлинности сервера завершается неудачно, не устанавливайте соединение.\n[2] Если аутентификация сервера не удалась, откроется предупреждение и посволит мне соединиться или отказаться.\n[3] Требование аутентификации не указано.</system:String>

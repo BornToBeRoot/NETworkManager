@@ -439,7 +439,7 @@
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Zeigt diesen Dialog an.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Setzt alle Einstellungen zurück.</system:String>
-    <system:String x:Key="String_HelpMessage_Tags">Mit Tags können Sie Sitzungen nach Themen/Projekten organisieren. Mehrere Tags können mit ";" getrennt sein. Suche nach Tags mit "tag=xxx".</system:String>
+    <system:String x:Key="String_HelpMessage_Tags">Mit Tags können Sie Profile/Sitzungen nach Themen/Projekten organisieren. Mehrere Tags können mit ";" getrennt sein. Suche nach Tags mit "tag=xxx".</system:String>
     <system:String x:Key="String_HelpMessage_Credentials">Entschlüsseln und laden Sie Ihre Anmeldedaten, um sie auszuwählen.</system:String>
     <system:String x:Key="String_HelpMessage_PasswordNotDisplayedCanBeOverwritten">Das Passwort wird bei der Bearbeitung nicht angezeigt, kann jedoch überschrieben werden.</system:String>
     <system:String x:Key="String_HelpMessage_RDPAuthenticationLevel">[0] Wenn die Serverauthentifizierung fehlschlägt, wird ohne Warnung eine Verbindung zum Computer hergestellt.\n[1] Wenn die Serverauthentifizierung fehlschlägt, wird keine Verbindung hergestellt.\n[2] Wenn die Server-Authentifizierung fehlschlägt, wird eine Warnung und ein Dialog angezeigt, um die Verbindung herzustellen oder abzulehnen.\n[3] Es ist keine Authentifizierungsanforderung angegeben.</system:String>
