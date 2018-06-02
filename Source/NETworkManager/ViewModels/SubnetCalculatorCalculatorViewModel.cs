@@ -180,7 +180,7 @@ namespace NETworkManager.ViewModels
         private void CalculateIPv4SubnetAction()
         {
             IsDetailsVisible = false;
-           
+
             IPNetwork network = IPNetwork.Parse(Subnet);
 
             NetworkAddress = network.Network;
@@ -190,7 +190,8 @@ namespace NETworkManager.ViewModels
             IPAddresses = network.Total;
             FirstIPAddress = network.FirstUsable;
             LastIPAddress = network.LastUsable;
-            Hosts = CIDR == 32 ? 0 : network.Total - 2;
+            Hosts = ((network.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && CIDR == 32) || (network.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6 && CIDR == 128)) ? 0 : network.Total - 2;
+
 
             IsDetailsVisible = true;
 
