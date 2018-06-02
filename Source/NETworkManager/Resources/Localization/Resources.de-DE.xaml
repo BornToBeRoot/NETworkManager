@@ -494,6 +494,7 @@
     <system:String x:Key="String_Button_MoveAndRestart">Verschieben &amp; neu starten</system:String>
     <system:String x:Key="String_Button_OpenLocation">Speicherort öffnen</system:String>
     <system:String x:Key="String_Button_OpenSettings">Einstellungen öffnen</system:String>
+    <system:String x:Key="String_Button_ShowLocalLicenses">Lokale Lizenzen anzeigen</system:String>
     
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Ausschneiden</system:String>

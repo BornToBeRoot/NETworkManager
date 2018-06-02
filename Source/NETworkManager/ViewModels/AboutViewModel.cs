@@ -186,6 +186,16 @@ namespace NETworkManager.ViewModels
         {
             Process.Start((string)url);
         }
+
+        public ICommand OpenLicenseFolderCommand
+        {
+            get { return new RelayCommand(p => OpenLicenseFolderAction()); }
+        }
+
+        private void OpenLicenseFolderAction()
+        {
+            OpenLicenseFolder();
+        }
         #endregion
 
         #region Methods
@@ -203,6 +213,11 @@ namespace NETworkManager.ViewModels
             updater.Error += Updater_Error;
 
             updater.Check();
+        }
+
+        private void OpenLicenseFolder()
+        {
+            Process.Start(LibraryManager.GetLicenseLocation());
         }
         #endregion
 

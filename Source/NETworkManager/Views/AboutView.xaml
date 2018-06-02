@@ -25,6 +25,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Margin="0,0,0,20">
                 <Grid.ColumnDefinitions>
@@ -123,7 +124,7 @@
                 <TextBlock Grid.Column="2" Text="{Binding UpdaterMessage}" Visibility="{Binding ShowUpdaterMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource CenterTextBlock}" Margin="10,0,0,0" />
             </Grid>
             <TextBlock Grid.Row="5" Text="{DynamicResource String_Header_Libraries}" Style="{StaticResource HeaderTextBlock}"/>
-            <DataGrid x:Name="dataGridLibaries" Grid.Row="6" ItemsSource="{Binding LibrariesView}" SelectedItem="{Binding SelectedLibraryInfo}" Margin="0,0,0,20">
+            <DataGrid x:Name="dataGridLibaries" Grid.Row="6" ItemsSource="{Binding LibrariesView}" SelectedItem="{Binding SelectedLibraryInfo}" Margin="0,0,0,10">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -168,8 +169,24 @@
                     <DataGridTextColumn Header="{DynamicResource String_License}" Binding="{Binding License}" MinWidth="150" />
                 </DataGrid.Columns>
             </DataGrid>
-            <TextBlock Grid.Row="7" Text="{DynamicResource String_Header_Resources}" Style="{StaticResource HeaderTextBlock}"/>
-            <DataGrid x:Name="dataGridResources" Grid.Row="8" ItemsSource="{Binding ResourcesView}" SelectedItem="{Binding SelectedResourceInfo}">
+            <Button Grid.Row="7" Command="{Binding OpenLicenseFolderCommand}" HorizontalAlignment="Right" Style="{StaticResource ImageWithTextButton}" Margin="0,0,0,20">
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=FolderOpen}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_ShowLocalLicenses}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <TextBlock Grid.Row="8" Text="{DynamicResource String_Header_Resources}" Style="{StaticResource HeaderTextBlock}"/>
+            <DataGrid x:Name="dataGridResources" Grid.Row="9" ItemsSource="{Binding ResourcesView}" SelectedItem="{Binding SelectedResourceInfo}">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">

@@ -1,9 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 namespace NETworkManager.Models.Documentation
 {
     public static class LibraryManager
     {
+        private const string LicenseFolderName = "Licenses";
+
+        public static string GetLicenseLocation()
+        {
+            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), LicenseFolderName);
+        }
+
         public static List<LibraryInfo> List
         {
             get

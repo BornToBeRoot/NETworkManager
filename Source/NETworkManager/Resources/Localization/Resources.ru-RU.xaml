@@ -494,6 +494,7 @@
     <system:String x:Key="String_Button_MoveAndRestart">Двигать &amp; Перезапуск</system:String>
     <system:String x:Key="String_Button_OpenLocation">Open location</system:String>
     <system:String x:Key="String_Button_OpenSettings">Open settings</system:String>
+    <system:String x:Key="String_Button_ShowLocalLicenses">Show local licenses</system:String>
 
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Вырезать</system:String>
