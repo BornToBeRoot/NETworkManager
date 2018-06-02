@@ -395,7 +395,7 @@
     <system:String x:Key="String_AdditionalCommandLine">Additional command line</system:String>
     <system:String x:Key="String_PuTTYProcessHasEnded">PuTTY process has ended!</system:String>
     <system:String x:Key="String_EditGroup">Edit group</system:String>
-    <system:String x:Key="String_NewSession">New session</system:String>
+    <system:String x:Key="String_NewSessionDots">New session...</system:String>
     <system:String x:Key="String_Gitter">Gitter</system:String>
     <system:String x:Key="String_GitHub">GitHub</system:String>
     <system:String x:Key="String_OverwriteSettingsInTheDestinationFolder">Overwrite settings in the destination folder?\n\nIf you click "Move &amp; Restart", the remaining files will be copied and the application will be restarted with the new settings!</system:String>
@@ -427,6 +427,10 @@
     <system:String x:Key="String_RemotePort">Remote Port</system:String>
     <system:String x:Key="String_State">Zustand</system:String>
     <system:String x:Key="String_AutomaticallyUpdateEvery">Automatically update every</system:String>
+    <system:String x:Key="String_ClearFilter">Clear filter</system:String>
+    <system:String x:Key="String_AddProfileDots">Add profile...</system:String>
+    <system:String x:Key="String_AddSessionDots">Add session...</system:String>
+    <system:String x:Key="String_AddClientDots">Add client...</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>

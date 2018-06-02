@@ -395,7 +395,7 @@
     <system:String x:Key="String_AdditionalCommandLine">Zusätzliche Kommandozeile</system:String>
     <system:String x:Key="String_PuTTYProcessHasEnded">PuTTY-Prozess wurde beendet!</system:String>
     <system:String x:Key="String_EditGroup">Gruppe bearbeiten</system:String>
-    <system:String x:Key="String_NewSession">Neue Sitzung</system:String>
+    <system:String x:Key="String_NewSessionDots">Neue Sitzung...</system:String>
     <system:String x:Key="String_Gitter">Gitter</system:String>
     <system:String x:Key="String_GitHub">GitHub</system:String>
     <system:String x:Key="String_OverwriteSettingsInTheDestinationFolder">Einstellungen im Zielordner überschreiben?\n\nWenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Dateien kopiert und die Anwendung danach mit den neuen Einstellungen neu gestartet!</system:String>
@@ -427,7 +427,11 @@
     <system:String x:Key="String_RemotePort">Remote Port</system:String>
     <system:String x:Key="String_State">Zustand</system:String>
     <system:String x:Key="String_AutomaticallyUpdateEvery">Automatisch aktualisieren alle</system:String>
-
+    <system:String x:Key="String_AddProfileDots">Profil hinzufügen...</system:String>
+    <system:String x:Key="String_ClearFilter">Filter löschen</system:String>
+    <system:String x:Key="String_AddSessionDots">Sitzung hinzufügen...</system:String>
+    <system:String x:Key="String_AddClientDots">Client hinzufügen...</system:String>
+    
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">Wie erstelle ich ein benutzerdefiniertes Thema und Akzent?</system:String>

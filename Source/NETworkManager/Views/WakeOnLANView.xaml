@@ -255,9 +255,11 @@
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                     <Setter Property="Command" Value="{Binding AddClientCommand}" />
+                                    <Setter Property="ToolTip" Value="{DynamicResource String_AddClientDots}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
                                             <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
+                                            <Setter Property="ToolTip" Value="{DynamicResource String_ClearFilter}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>

@@ -395,7 +395,7 @@
     <system:String x:Key="String_AdditionalCommandLine">Дополнительная командная строка</system:String>
     <system:String x:Key="String_PuTTYProcessHasEnded">PuTTY процесс завершился!</system:String>
     <system:String x:Key="String_EditGroup">Изменить группу</system:String>
-    <system:String x:Key="String_NewSession">Новый сеанс</system:String>
+    <system:String x:Key="String_NewSessionDots">Новый сеанс...</system:String>
     <system:String x:Key="String_Gitter">Gitter</system:String>
     <system:String x:Key="String_GitHub">GitHub</system:String>
     <system:String x:Key="String_OverwriteSettingsInTheDestinationFolder">Перезаписать настройки в папке назначения?\n\nЕсли Вы нажмете "Move &amp; Restart", остальные файлы будут скопированы и приложение будет перезапущено с новыми настройками!</system:String>
@@ -427,6 +427,10 @@
     <system:String x:Key="String_RemotePort">Remote Port</system:String>
     <system:String x:Key="String_State">State</system:String>
     <system:String x:Key="String_AutomaticallyUpdateEvery">Automatically update every</system:String>
+    <system:String x:Key="String_ClearFilter">Clear filter</system:String>
+    <system:String x:Key="String_AddProfileDots">Add profile...</system:String>
+    <system:String x:Key="String_AddSessionDots">Add session...</system:String>
+    <system:String x:Key="String_AddClientDots">Add client...</system:String>
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Как установить RDP 8.1 на Windows 7 / Server 2008 R2</system:String>

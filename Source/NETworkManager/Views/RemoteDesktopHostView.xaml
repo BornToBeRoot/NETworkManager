@@ -36,7 +36,7 @@
                         <Setter Property="HeaderSuffixContent" >
                             <Setter.Value>
                                 <Grid HorizontalAlignment="Left" Width="40" Height="44">
-                                    <Button Command="{Binding ConnectNewSessionCommand}" ToolTip="{DynamicResource String_NewSession}" Style="{StaticResource CleanButton}" >
+                                    <Button Command="{Binding ConnectNewSessionCommand}" ToolTip="{DynamicResource String_NewSessionDots}" Style="{StaticResource CleanButton}" >
                                         <Rectangle Width="20" Height="20">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
@@ -78,7 +78,7 @@
                     </Style>
                 </Grid.Style>
                 <StackPanel>
-                    <Button HorizontalAlignment="Center" Focusable="False" Command="{Binding ConnectNewSessionCommand}" Style="{StaticResource CleanButton}" Margin="0,0,0,10">
+                    <Button HorizontalAlignment="Center" Focusable="False" Command="{Binding ConnectNewSessionCommand}" ToolTip="{DynamicResource String_NewSessionDots}" Style="{StaticResource CleanButton}" Margin="0,0,0,10">
                         <Rectangle Width="20" Height="20">
                             <Rectangle.OpacityMask>
                                 <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
@@ -238,10 +238,12 @@
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                             <Setter Property="Command" Value="{Binding AddSessionCommand}" />
-                                            <Style.Triggers>
+                                        <Setter Property="ToolTip" Value="{DynamicResource String_AddSessionDots}" />
+                                        <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
                                                     <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
-                                                </DataTrigger>
+                                                <Setter Property="ToolTip" Value="{DynamicResource String_ClearFilter}" />
+                                            </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </Button.Style>
