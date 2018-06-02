@@ -158,7 +158,13 @@
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{DynamicResource String_Name}" Binding="{Binding Library}" MinWidth="150" />
-                    <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding Description}" MinWidth="300" Width="*" />
+                    <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding Description}" MinWidth="300" Width="*" >
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Header="{DynamicResource String_License}" Binding="{Binding License}" MinWidth="150" />
                 </DataGrid.Columns>
             </DataGrid>
@@ -189,7 +195,13 @@
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{DynamicResource String_Name}" Binding="{Binding Resource}" MinWidth="150" />
-                    <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding Description}" MinWidth="300" Width="*" />
+                    <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding Description}" MinWidth="300" Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

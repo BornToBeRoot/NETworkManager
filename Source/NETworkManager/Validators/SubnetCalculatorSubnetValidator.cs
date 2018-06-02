@@ -18,6 +18,9 @@ namespace NETworkManager.Validators
             if (Regex.IsMatch(subnet, RegexHelper.SubnetCalculatorIPv4AddressSubnetmaskRegex))
                 return ValidationResult.ValidResult;
 
+            if (Regex.IsMatch(subnet, RegexHelper.IPv6AddressCidrRegex))
+                return ValidationResult.ValidResult;
+
             return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidSubnet"));
         }
     }

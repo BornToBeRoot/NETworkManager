@@ -15,8 +15,8 @@
                 </Style.Triggers>
             </Style>
         </TabControl.Style>
-        <TabItem Header="{DynamicResource String_Header_IPv4Calculator}">
-            <Views:SubnetCalculatorIPv4CalculatorView Margin="10" />
+        <TabItem Header="{DynamicResource String_Header_IPCalculator}">
+            <Views:SubnetCalculatorCalculatorView Margin="10" />
         </TabItem>
         <TabItem Header="{DynamicResource String_Header_IPv4Splitter}">
             <Views:SubnetCalculatorIPv4SplitterView Margin="10" />

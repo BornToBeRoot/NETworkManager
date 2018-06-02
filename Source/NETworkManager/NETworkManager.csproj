@@ -110,8 +110,8 @@
     <Reference Include="Octokit, Version=0.29.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Octokit.0.29.0\lib\net45\Octokit.dll</HintPath>
     </Reference>
-    <Reference Include="SharpSnmpLib, Version=10.0.6.0, Culture=neutral, PublicKeyToken=4c00852d3788e005, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lextm.SharpSnmpLib.10.0.6\lib\net452\SharpSnmpLib.dll</HintPath>
+    <Reference Include="SharpSnmpLib, Version=10.0.7.0, Culture=neutral, PublicKeyToken=4c00852d3788e005, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lextm.SharpSnmpLib.10.0.7\lib\net452\SharpSnmpLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -120,6 +120,10 @@
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Net.IPNetwork, Version=2.1.2.0, Culture=neutral, PublicKeyToken=717343cc2c25edcf, processorArchitecture=MSIL">
+      <HintPath>..\packages\IPNetwork2.2.1.2\lib\net46\System.Net.IPNetwork.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -221,6 +225,7 @@
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\AutoRefreshTimeToStringConverter.cs" />
+    <Compile Include="Converters\BigIntegerToStringConverter.cs" />
     <Compile Include="Converters\TcpStateToStringConverter.cs" />
     <Compile Include="Converters\StringIsNotNullOrEmptyToBoolConverter.cs" />
     <Compile Include="Converters\StringIsNotNullOrEmptyToVisibilityConverter.cs" />
@@ -581,6 +586,9 @@
     <Content Include="Licenses\Heijden.DNS.htm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Licenses\IPNetwork.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Licenses\MahApps.Metro.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -874,7 +882,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SubnetCalculatorIPv4CalculatorView.xaml">
+    <Page Include="Views\SubnetCalculatorCalculatorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -981,7 +989,7 @@
     <Compile Include="ViewModels\IPScannerViewModel.cs" />
     <Compile Include="ViewModels\NetworkInterfaceViewModel.cs" />
     <Compile Include="ViewModels\PingViewModel.cs" />
-    <Compile Include="ViewModels\SubnetCalculatorIPv4CalculatorViewModel.cs" />
+    <Compile Include="ViewModels\SubnetCalculatorCalculatorViewModel.cs" />
     <Compile Include="ViewModels\TracerouteViewModel.cs" />
     <Compile Include="ViewModels\WakeOnLANViewModel.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
@@ -1086,8 +1094,8 @@
     <Compile Include="Views\WakeOnLANView.xaml.cs">
       <DependentUpon>WakeOnLANView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SubnetCalculatorIPv4CalculatorView.xaml.cs">
-      <DependentUpon>SubnetCalculatorIPv4CalculatorView.xaml</DependentUpon>
+    <Compile Include="Views\SubnetCalculatorCalculatorView.xaml.cs">
+      <DependentUpon>SubnetCalculatorCalculatorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

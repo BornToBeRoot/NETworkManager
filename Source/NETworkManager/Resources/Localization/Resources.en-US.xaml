@@ -67,7 +67,7 @@
     <system:String x:Key="String_Header_Scan">Scan</system:String>
     <system:String x:Key="String_Header_Lookup">Lookup</system:String>
     <system:String x:Key="String_Header_Subnet">Subnet</system:String>
-    <system:String x:Key="String_Header_IPv4Calculator">IPv4 Calculator</system:String>
+    <system:String x:Key="String_Header_IPCalculator">IP Calculator</system:String>
     <system:String x:Key="String_Header_IPv4Splitter">IPv4 Splitter</system:String>
     <system:String x:Key="String_Header_Connect">Connect</system:String>
     <system:String x:Key="String_Header_AddSession">Add session</system:String>
@@ -535,6 +535,7 @@
     <system:String x:Key="String_Watermark_ExampleIPv4DNSServers">192.168.178.1; 8.8.8.8; 8.8.4.4</system:String>
     <system:String x:Key="String_Watermark_ExamplePortPortRangeOrService">22; 80; https; ldaps; 777 - 999; 8080</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnet">192.168.178.133/22 or 192.168.178.133/255.255.252.0</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPv4OrIPv6Subnet">192.168.178.133/22 or 2001:0db8::/64</system:String>
     <system:String x:Key="String_Watermark_Filter">Filter...</system:String>
     <system:String x:Key="String_Watermark_ExampleWebsiteUri">http(s)://example.com/index.html</system:String>
     <system:String x:Key="String_Watermark_ExampleSubnetWithCIDR">192.168.100.0/24</system:String>

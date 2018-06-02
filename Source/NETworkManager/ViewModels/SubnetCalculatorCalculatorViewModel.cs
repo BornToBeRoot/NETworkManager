@@ -1,5 +1,4 @@
-﻿using NETworkManager.Models.Network;
-using NETworkManager.Models.Settings;
+﻿using NETworkManager.Models.Settings;
 using System.Collections.Generic;
 using System.Net;
 using System.Windows.Input;
@@ -7,10 +6,11 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System.Linq;
 using NETworkManager.Utilities;
+using System.Numerics;
 
 namespace NETworkManager.ViewModels
 {
-    public class SubnetCalculatorIPv4CalculatorViewModel : ViewModelBase
+    public class SubnetCalculatorCalculatorViewModel : ViewModelBase
     {
         #region Variables
         private string _subnet;
@@ -48,121 +48,121 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private IPAddress _detailsNetworkAddress;
-        public IPAddress DetailsNetworkAddress
+        private IPAddress _networkAddress;
+        public IPAddress NetworkAddress
         {
-            get { return _detailsNetworkAddress; }
+            get { return _networkAddress; }
             set
             {
-                if (value == _detailsNetworkAddress)
+                if (value == _networkAddress)
                     return;
 
-                _detailsNetworkAddress = value;
+                _networkAddress = value;
                 OnPropertyChanged();
             }
         }
 
-        private IPAddress _detailsBroadcast;
-        public IPAddress DetailsBroadcast
+        private IPAddress _broadcast;
+        public IPAddress Broadcast
         {
-            get { return _detailsBroadcast; }
+            get { return _broadcast; }
             set
             {
-                if (value == _detailsBroadcast)
+                if (value == _broadcast)
                     return;
 
-                _detailsBroadcast = value;
+                _broadcast = value;
                 OnPropertyChanged();
             }
         }
 
-        private long _detailsIPAddresses;
-        public long DetailsIPAddresses
+        private BigInteger _ipAddresses;
+        public BigInteger IPAddresses
         {
-            get { return _detailsIPAddresses; }
+            get { return _ipAddresses; }
             set
             {
-                if (value == _detailsIPAddresses)
+                if (value == _ipAddresses)
                     return;
 
-                _detailsIPAddresses = value;
+                _ipAddresses = value;
                 OnPropertyChanged();
             }
         }
 
-        private IPAddress _detailsSubnetmask;
-        public IPAddress DetailsSubnetmask
+        private IPAddress _subnetmask;
+        public IPAddress Subnetmask
         {
-            get { return _detailsSubnetmask; }
+            get { return _subnetmask; }
             set
             {
-                if (value == _detailsSubnetmask)
+                if (value == _subnetmask)
                     return;
 
-                _detailsSubnetmask = value;
+                _subnetmask = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _detailsCIDR;
-        public int DetailsCIDR
+        private int _cidr;
+        public int CIDR
         {
-            get { return _detailsCIDR; }
+            get { return _cidr; }
             set
             {
-                if (value == _detailsCIDR)
+                if (value == _cidr)
                     return;
 
-                _detailsCIDR = value;
+                _cidr = value;
                 OnPropertyChanged();
             }
         }
 
-        private IPAddress _detailsFirstIPAddress;
-        public IPAddress DetailsFirstIPAddress
+        private IPAddress _firstIPAddress;
+        public IPAddress FirstIPAddress
         {
-            get { return _detailsFirstIPAddress; }
+            get { return _firstIPAddress; }
             set
             {
-                if (value == _detailsFirstIPAddress)
+                if (value == _firstIPAddress)
                     return;
 
-                _detailsFirstIPAddress = value;
+                _firstIPAddress = value;
                 OnPropertyChanged();
             }
         }
 
-        private IPAddress _detailsLastIPAddress;
-        public IPAddress DetailsLastIPAddress
+        private IPAddress _lastIPAddress;
+        public IPAddress LastIPAddress
         {
-            get { return _detailsLastIPAddress; }
+            get { return _lastIPAddress; }
             set
             {
-                if (value == _detailsLastIPAddress)
+                if (value == _lastIPAddress)
                     return;
 
-                _detailsLastIPAddress = value;
+                _lastIPAddress = value;
                 OnPropertyChanged();
             }
         }
 
-        private long _detailsHosts;
-        public long DetailsHosts
+        private BigInteger _hosts;
+        public BigInteger Hosts
         {
-            get { return _detailsHosts; }
+            get { return _hosts; }
             set
             {
-                if (value == _detailsHosts)
+                if (value == _hosts)
                     return;
 
-                _detailsHosts = value;
+                _hosts = value;
                 OnPropertyChanged();
             }
         }
         #endregion
 
         #region Constructor, load settings
-        public SubnetCalculatorIPv4CalculatorViewModel()
+        public SubnetCalculatorCalculatorViewModel()
         {
             // Set collection view
             _subnetHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_IPv4Calculator_SubnetHistory);
@@ -180,25 +180,17 @@ namespace NETworkManager.ViewModels
         private void CalculateIPv4SubnetAction()
         {
             IsDetailsVisible = false;
+           
+            IPNetwork network = IPNetwork.Parse(Subnet);
 
-            string[] subnet = Subnet.Trim().Split('/');
-
-            string subnetmask = subnet[1];
-
-            // Convert CIDR to subnetmask
-            if (subnetmask.Length < 3)
-                subnetmask = Subnetmask.GetFromCidr(int.Parse(subnet[1])).Subnetmask;
-
-            SubnetInfo subnetInfo = Models.Network.Subnet.CalculateIPv4Subnet(IPAddress.Parse(subnet[0]), IPAddress.Parse(subnetmask));
-
-            DetailsNetworkAddress = subnetInfo.NetworkAddress;
-            DetailsBroadcast = subnetInfo.Broadcast;
-            DetailsSubnetmask = subnetInfo.Subnetmask;
-            DetailsCIDR = subnetInfo.CIDR;
-            DetailsIPAddresses = subnetInfo.IPAddresses;
-            DetailsFirstIPAddress = subnetInfo.HostFirstIP;
-            DetailsLastIPAddress = subnetInfo.HostLastIP;
-            DetailsHosts = subnetInfo.Hosts;
+            NetworkAddress = network.Network;
+            Broadcast = network.Broadcast;
+            Subnetmask = network.Netmask;
+            CIDR = network.Cidr;
+            IPAddresses = network.Total;
+            FirstIPAddress = network.FirstUsable;
+            LastIPAddress = network.LastUsable;
+            Hosts = CIDR == 32 ? 0 : network.Total - 2;
 
             IsDetailsVisible = true;
 
