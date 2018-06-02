@@ -35,6 +35,8 @@ namespace NETworkManager.Models.Documentation
                     new DocumentationInfo(DocumentationIdentifier.Application_HTTPHeaders, @"/Application/HTTPHeaders.md", GetLocalizationInfoList("en-US", "de-DE")),
                     new DocumentationInfo(DocumentationIdentifier.Application_SubnetCalculator, @"/Application/SubnetCalculator.md", GetLocalizationInfoList("en-US", "de-DE")),
                     new DocumentationInfo(DocumentationIdentifier.Application_Lookup, @"/Application/Lookup.md", GetLocalizationInfoList("en-US", "de-DE")),
+                    new DocumentationInfo(DocumentationIdentifier.Application_Connections, @"/Application/Connections.md", GetLocalizationInfoList("en-US", "de-DE")),
+                    new DocumentationInfo(DocumentationIdentifier.Application_Listeners, @"/Application/Listeners.md", GetLocalizationInfoList("en-US", "de-DE")),
                     new DocumentationInfo(DocumentationIdentifier.Application_ARPTable, @"/Application/ARPTable.md", GetLocalizationInfoList("en-US", "de-DE")),
                     new DocumentationInfo(DocumentationIdentifier.HowTo_InstallRDP8dot1onWindows6dot1, @"/HowTo/Install_RDP_8dot1_on_Windows6dot1.md", GetLocalizationInfoList("en-US", "de-DE")),
                     new DocumentationInfo(DocumentationIdentifier.HowTo_CreateCustomThemeAndAccent, @"/HowTo/Create_custom_theme_and_accent.md", GetLocalizationInfoList("en-US", "de-DE"))
@@ -58,7 +60,9 @@ namespace NETworkManager.Models.Documentation
             Application_HTTPHeaders,
             Application_SubnetCalculator,
             Application_Lookup,
-            Application_ARPTable,
+            Application_Connections,
+            Application_Listeners,
+            Application_ARPTable,            
             HowTo_InstallRDP8dot1onWindows6dot1,
             HowTo_CreateCustomThemeAndAccent,
         }

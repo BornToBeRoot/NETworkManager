@@ -303,7 +303,7 @@ namespace NETworkManager
 
             _isLoading = false;
         }
-              
+
         // Hide window after it shows up... not nice, but otherwise the hotkeys do not work
         protected override void OnContentRendered(EventArgs e)
         {
@@ -405,9 +405,9 @@ namespace NETworkManager
             if (notifyIcon != null)
                 notifyIcon.Dispose();
         }
-#endregion
+        #endregion
 
-#region Application Views
+        #region Application Views
         NetworkInterfaceView networkInterfaceView;
         IPScannerHostView ipScannerHostView;
         PortScannerHostView portScannerHostView;
@@ -588,10 +588,10 @@ namespace NETworkManager
                     snmpHostView.AddTab(args.Data);
                     break;
             }
-        }             
-#endregion
+        }
+        #endregion
 
-#region Settings
+        #region Settings
         private void OpenSettings()
         {
             // Save current language code
@@ -681,9 +681,9 @@ namespace NETworkManager
             if (SettingsManager.Current.SettingsChanged)
                 SettingsManager.Save();
         }
-#endregion
+        #endregion
 
-#region Handle WndProc messages (Single instance, handle HotKeys)
+        #region Handle WndProc messages (Single instance, handle HotKeys)
         private HwndSource hwndSoure;
 
         // This is called after MainWindow() and before OnContentRendered() --> to register hotkeys...
@@ -720,9 +720,9 @@ namespace NETworkManager
 
             return IntPtr.Zero;
         }
-#endregion
+        #endregion
 
-#region Update check
+        #region Update check
         private void CheckForUpdates()
         {
             Updater updater = new Updater();
@@ -742,9 +742,9 @@ namespace NETworkManager
             UpdateText = string.Format(LocalizationManager.GetStringByKey("String_VersionxxAvailable"), e.Version);
             UpdateAvailable = true;
         }
-#endregion
+        #endregion
 
-#region HotKeys (Register / Unregister)
+        #region HotKeys (Register / Unregister)
         [DllImport("user32.dll")]
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
         [DllImport("user32.dll")]
@@ -777,9 +777,9 @@ namespace NETworkManager
             // Clear list
             RegisteredHotKeys.Clear();
         }
-#endregion
+        #endregion
 
-#region NotifyIcon
+        #region NotifyIcon
         private void InitNotifyIcon()
         {
             notifyIcon = new NotifyIcon();
@@ -853,9 +853,9 @@ namespace NETworkManager
 
             Activate();
         }
-#endregion
+        #endregion
 
-#region ICommands & Actions
+        #region ICommands & Actions
         public ICommand OpenWebsiteCommand
         {
             get { return new RelayCommand(p => OpenWebsiteAction(p)); }
@@ -914,6 +914,12 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.Lookup:
                     DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_Lookup);
                     break;
+                case ApplicationViewManager.Name.Connections:
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_Connections);
+                    break;
+                case ApplicationViewManager.Name.Listeners:
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_Listeners);
+                    break;
                 case ApplicationViewManager.Name.ARPTable:
                     DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_ARPTable);
                     break;
@@ -942,7 +948,7 @@ namespace NETworkManager
         {
             OpenSettings();
         }
-             
+
         public ICommand CloseSettingsCommand
         {
             get { return new RelayCommand(p => CloseSettingsAction()); }
@@ -951,7 +957,7 @@ namespace NETworkManager
         private void CloseSettingsAction()
         {
             CloseSettings();
-        }              
+        }
 
         public ICommand ShowWindowCommand
         {
@@ -1052,30 +1058,30 @@ namespace NETworkManager
         {
             Search = string.Empty;
         }
-#endregion
+        #endregion
 
-#region Events
+        #region Events
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(SettingsInfo.Window_ShowCurrentApplicationTitle))
                 OnPropertyChanged(nameof(ShowCurrentApplicationTitle));
-        }               
-#endregion
+        }
+        #endregion
 
-#region Bugfixes
+        #region Bugfixes
         private void ScrollViewer_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
         {
             e.Handled = true;
         }
-#endregion
+        #endregion
 
-#region Window helper
+        #region Window helper
         // Move the window when the user hold the title...
         private void HeaderBorder_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
                 DragMove();
         }
-#endregion
+        #endregion
     }
 }

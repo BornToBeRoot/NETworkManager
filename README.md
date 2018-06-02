@@ -51,7 +51,7 @@
 - SNMP - Get/Walk/Set (v1, v2c, v3)
 - Wake on LAN
 - HTTP Headers
-- Subnet-Calculator
+- Subnet Calculator
 - Lokup (OUI, Port)
 - ARP Table
 

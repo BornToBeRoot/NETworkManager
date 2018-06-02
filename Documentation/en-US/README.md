@@ -14,6 +14,8 @@
 - [HTTP Headers](Application/HTTPHeaders.md)
 - [Subnet Calculator](Application/SubnetCalculator.md)
 - [Lookup](Application/Lookup.md)
+- [Connections](Application/Connections.md)
+- [Listeners](Application/Listeners.md)
 - [ARP Table](Application/ARPTable.md)
 
 ## HowTo
