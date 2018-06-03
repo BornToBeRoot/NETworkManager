@@ -264,6 +264,11 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public bool HideStatistics
+        {
+            get { return SettingsManager.Current.IPScanner_HideStatistics; }
+        }
         #endregion
 
         #region Constructor, load settings, shutdown
@@ -674,6 +679,9 @@ namespace NETworkManager.ViewModels
 
             if (e.PropertyName == nameof(SettingsInfo.IPScanner_ResolveHostname))
                 OnPropertyChanged(nameof(ResolveHostname));
+
+            if (e.PropertyName == nameof(SettingsInfo.IPScanner_HideStatistics))
+                OnPropertyChanged(nameof(HideStatistics));
         }
         #endregion
     }

@@ -625,6 +625,23 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _ipScanner_HideStatistics;
+        public bool IPScanner_HideStatistics
+        {
+            get { return _ipScanner_HideStatistics; }
+            set
+            {
+                if (value == _ipScanner_HideStatistics)
+                    return;
+
+                _ipScanner_HideStatistics = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region PortScanner

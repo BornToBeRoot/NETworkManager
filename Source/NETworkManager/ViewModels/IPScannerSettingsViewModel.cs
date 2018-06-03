@@ -268,6 +268,23 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private bool _hideStatistics;
+        public bool HideStatistics
+        {
+            get { return _hideStatistics; }
+            set
+            {
+                if (value == _hideStatistics)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.IPScanner_HideStatistics = value;
+
+                _hideStatistics = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, load settings
@@ -299,6 +316,7 @@ namespace NETworkManager.ViewModels
             DNSAttempts = SettingsManager.Current.IPScanner_DNSAttempts;
             DNSTimeout = SettingsManager.Current.IPScanner_DNSTimeout;
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
+            HideStatistics = SettingsManager.Current.IPScanner_HideStatistics;
         }
         #endregion
     }
