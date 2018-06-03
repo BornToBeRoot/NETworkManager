@@ -106,6 +106,23 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private bool _hideStatistics;
+        public bool HideStatistics
+        {
+            get { return _hideStatistics; }
+            set
+            {
+                if (value == _hideStatistics)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.Traceroute_HideStatistics = value;
+
+                _hideStatistics = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, load settings
@@ -127,6 +144,8 @@ namespace NETworkManager.ViewModels
                 ResolveHostnamePreferIPv4 = true;
             else
                 ResolveHostnamePreferIPv6 = true;
+
+            HideStatistics = SettingsManager.Current.Traceroute_HideStatistics;
         }
         #endregion
     }

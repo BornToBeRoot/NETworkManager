@@ -218,6 +218,11 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public bool HideStatistics
+        {
+            get { return SettingsManager.Current.Traceroute_HideStatistics; }
+        }
         #endregion
 
         #region Constructor, load settings
@@ -238,13 +243,7 @@ namespace NETworkManager.ViewModels
             SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
 
             _isLoading = false;
-        }
-
-        private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(SettingsInfo.Traceroute_ResolveHostname))
-                OnPropertyChanged(nameof(ResolveHostname));
-        }
+        } 
 
         public void OnLoaded()
         {
@@ -599,6 +598,15 @@ namespace NETworkManager.ViewModels
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             Duration = stopwatch.Elapsed;
+        }
+
+        private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SettingsInfo.Traceroute_ResolveHostname))
+                OnPropertyChanged(nameof(ResolveHostname));
+
+            if (e.PropertyName == nameof(SettingsInfo.Traceroute_HideStatistics))
+                OnPropertyChanged(nameof(HideStatistics));
         }
         #endregion               
     }

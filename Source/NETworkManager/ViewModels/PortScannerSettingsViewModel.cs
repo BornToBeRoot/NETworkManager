@@ -88,7 +88,24 @@ namespace NETworkManager.ViewModels
                 _resolveHostnamePreferIPv6 = value;
                 OnPropertyChanged();
             }
-        }     
+        }
+
+        private bool _hideStatistics;
+        public bool HideStatistics
+        {
+            get { return _hideStatistics; }
+            set
+            {
+                if (value == _hideStatistics)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.PortScanner_HideStatistics = value;
+
+                _hideStatistics = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, load settings
@@ -109,6 +126,8 @@ namespace NETworkManager.ViewModels
                 ResolveHostnamePreferIPv4 = true;
             else
                 ResolveHostnamePreferIPv6 = true;
+
+            HideStatistics = SettingsManager.Current.PortScanner_HideStatistics;
         }
         #endregion
     }

@@ -770,6 +770,23 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _portScanner_HideStatistics;
+        public bool PortScanner_HideStatistics
+        {
+            get { return _portScanner_HideStatistics; }
+            set
+            {
+                if (value == _portScanner_HideStatistics)
+                    return;
+
+                _portScanner_HideStatistics = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Ping
@@ -940,6 +957,23 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _ping_HideStatistics;
+        public bool Ping_HideStatistics
+        {
+            get { return _ping_HideStatistics; }
+            set
+            {
+                if (value == _ping_HideStatistics)
+                    return;
+
+                _ping_HideStatistics = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Traceroute
@@ -1068,6 +1102,23 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ProfileWidth = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _traceroute_HideStatistics;
+        public bool Traceroute_HideStatistics
+        {
+            get { return _traceroute_HideStatistics; }
+            set
+            {
+                if (value == _traceroute_HideStatistics)
+                    return;
+
+                _traceroute_HideStatistics = value;
+
+                OnPropertyChanged();
+
                 SettingsChanged = true;
             }
         }
