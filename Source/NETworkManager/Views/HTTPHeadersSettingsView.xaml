@@ -8,6 +8,8 @@
     <StackPanel>
         <TextBlock Text="{DynamicResource String_Header_HTTPHeaders}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{DynamicResource String_Timeout}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding Timeout}" Maximum="100000" Minimum="1000" Interval="1000" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding Timeout}" Maximum="100000" Minimum="1000" Interval="1000" Margin="0,0,0,20" />
+        <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{DynamicResource String_ShowStatistics}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ShowStatistics}" />
     </StackPanel>
 </UserControl>

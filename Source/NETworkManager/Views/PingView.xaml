@@ -13,6 +13,7 @@
         mc:Ignorable="d">
     <UserControl.Resources>
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
         <Converter:IntToStringConverter x:Key="IntToStringConverter" />
         <Converter:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
         <Converter:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
@@ -119,7 +120,7 @@
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Status}" Style="{StaticResource HeaderTextBlock}" />
-        <Control:ScrollingDataGrid Grid.Row="3" ItemsSource="{Binding PingResultView}" Margin="0,0,0,20">
+        <Control:ScrollingDataGrid Grid.Row="3" ItemsSource="{Binding PingResultView}">
             <Control:ScrollingDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollingDataGridScrollBar}" />
             </Control:ScrollingDataGrid.Resources>
@@ -139,7 +140,7 @@
                 <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding Status, Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150" Width="*" />
             </Control:ScrollingDataGrid.Columns>
         </Control:ScrollingDataGrid>
-        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}">
+        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">
             <Expander.Header>
                 <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>

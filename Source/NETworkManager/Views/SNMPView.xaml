@@ -10,6 +10,7 @@
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d">
     <UserControl.Resources>
+        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <Converter:IntToStringConverter x:Key="IntToStringConverter" />
@@ -29,7 +30,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="20" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_SNMP}" />
@@ -563,7 +563,7 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <Expander Grid.Row="8" Grid.ColumnSpan="3" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}">
+        <Expander Grid.Row="7" Grid.ColumnSpan="3" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">
             <Expander.Header>
                 <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>

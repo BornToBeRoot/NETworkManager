@@ -276,6 +276,11 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public bool ShowStatistics
+        {
+            get { return SettingsManager.Current.PortScanner_ShowStatistics; }
+        }
         #endregion
 
         #region Constructor, load settings, shutdown
@@ -293,6 +298,9 @@ namespace NETworkManager.ViewModels
             _portScanResultView = CollectionViewSource.GetDefaultView(PortScanResult);
 
             LoadSettings();
+
+            // Detect if settings have changed...
+            SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
             _isLoading = false;
         }
@@ -640,6 +648,12 @@ namespace NETworkManager.ViewModels
         {
             Duration = stopwatch.Elapsed;
         }
-        #endregion               
+
+        private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SettingsInfo.PortScanner_ShowStatistics))
+                OnPropertyChanged(nameof(ShowStatistics));
+        }
+        #endregion
     }
 }

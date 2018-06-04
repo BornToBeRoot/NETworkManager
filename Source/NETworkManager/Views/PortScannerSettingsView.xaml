@@ -16,7 +16,9 @@
         <mah:NumericUpDown  Value="{Binding Timeout}" Maximum="10000" Minimum="100" Interval="100" Margin="0,0,0,20" />
         <TextBlock Text="{DynamicResource String_Header_DNS}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_PreferredProtocolWhenResolvingHostname}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,0,10" />
-        <RadioButton Content="{DynamicResource String_IPv4}" FontSize="14" IsChecked="{Binding ResolveHostnamePreferIPv4}" Margin="0,0,0,10" />
-        <RadioButton Content="{DynamicResource String_IPv6}" FontSize="14" IsChecked="{Binding ResolveHostnamePreferIPv6}" />
+        <RadioButton Content="{DynamicResource String_IPv4}" IsChecked="{Binding ResolveHostnamePreferIPv4}" Margin="0,0,0,10" />
+        <RadioButton Content="{DynamicResource String_IPv6}" IsChecked="{Binding ResolveHostnamePreferIPv6}" Margin="0,0,0,20" />
+        <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{DynamicResource String_ShowStatistics}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ShowStatistics}" />
     </StackPanel>
 </UserControl>

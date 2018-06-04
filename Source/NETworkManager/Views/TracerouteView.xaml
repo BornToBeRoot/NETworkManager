@@ -13,7 +13,8 @@
         mc:Ignorable="d">
     <UserControl.Resources>
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />        
+        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
         <Converter:IntToStringConverter x:Key="IntToStringConverter" />
         <Converter:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
         <Converter:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
@@ -112,7 +113,7 @@
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Route}" Style="{StaticResource HeaderTextBlock}" />
-        <DataGrid Grid.Row="3" ItemsSource="{Binding TraceResultView}" SelectedItem="{Binding SelectedTraceResult}" CanUserSortColumns="False" Margin="0,0,0,20">
+        <DataGrid Grid.Row="3" ItemsSource="{Binding TraceResultView}" SelectedItem="{Binding SelectedTraceResult}" CanUserSortColumns="False">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <WpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
@@ -303,7 +304,7 @@
                 <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityConverter}}" MinWidth="150" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}">
+        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">
             <Expander.Header>
                 <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>

@@ -625,6 +625,23 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _ipScanner_ShowStatistics = true;
+        public bool IPScanner_ShowStatistics
+        {
+            get { return _ipScanner_ShowStatistics; }
+            set
+            {
+                if (value == _ipScanner_ShowStatistics)
+                    return;
+
+                _ipScanner_ShowStatistics = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region PortScanner
@@ -750,6 +767,23 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_ProfileWidth = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _portScanner_ShowStatistics = true;
+        public bool PortScanner_ShowStatistics
+        {
+            get { return _portScanner_ShowStatistics; }
+            set
+            {
+                if (value == _portScanner_ShowStatistics)
+                    return;
+
+                _portScanner_ShowStatistics = value;
+
+                OnPropertyChanged();
+
                 SettingsChanged = true;
             }
         }
@@ -923,6 +957,23 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _ping_ShowStatistics = true;
+        public bool Ping_ShowStatistics
+        {
+            get { return _ping_ShowStatistics; }
+            set
+            {
+                if (value == _ping_ShowStatistics)
+                    return;
+
+                _ping_ShowStatistics = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Traceroute
@@ -1051,6 +1102,23 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ProfileWidth = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _traceroute_ShowStatistics = true;
+        public bool Traceroute_ShowStatistics
+        {
+            get { return _traceroute_ShowStatistics; }
+            set
+            {
+                if (value == _traceroute_ShowStatistics)
+                    return;
+
+                _traceroute_ShowStatistics = value;
+
+                OnPropertyChanged();
+
                 SettingsChanged = true;
             }
         }
@@ -1277,6 +1345,23 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _dnsLookup_ShowStatistics = true;
+        public bool DNSLookup_ShowStatistics
+        {
+            get { return _dnsLookup_ShowStatistics; }
+            set
+            {
+                if (value == _dnsLookup_ShowStatistics)
+                    return;
+
+                _dnsLookup_ShowStatistics = value;
+
+                OnPropertyChanged();
+
                 SettingsChanged = true;
             }
         }
@@ -1962,6 +2047,23 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _snmp_ShowStatistics = true;
+        public bool SNMP_ShowStatistics
+        {
+            get { return _snmp_ShowStatistics; }
+            set
+            {
+                if (value == _snmp_ShowStatistics)
+                    return;
+
+                _snmp_ShowStatistics = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region WakeOnLAN
@@ -2048,6 +2150,23 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _httpHeaders_ShowStatistics = true;
+        public bool HTTPHeaders_ShowStatistics
+        {
+            get { return _httpHeaders_ShowStatistics; }
+            set
+            {
+                if (value == _httpHeaders_ShowStatistics)
+                    return;
+
+                _httpHeaders_ShowStatistics = value;
+
+                OnPropertyChanged();
+
                 SettingsChanged = true;
             }
         }

@@ -431,6 +431,7 @@
     <system:String x:Key="String_AddProfileDots">Add profile...</system:String>
     <system:String x:Key="String_AddSessionDots">Add session...</system:String>
     <system:String x:Key="String_AddClientDots">Add client...</system:String>
+    <system:String x:Key="String_ShowStatistics">Show statistics</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>

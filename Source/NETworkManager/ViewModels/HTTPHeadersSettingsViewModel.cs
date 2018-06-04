@@ -24,6 +24,23 @@ namespace NETworkManager.ViewModels.Settings
                 OnPropertyChanged();
             }
         }
+
+        private bool _showStatistics;
+        public bool ShowStatistics
+        {
+            get { return _showStatistics; }
+            set
+            {
+                if (value == _showStatistics)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.HTTPHeaders_ShowStatistics = value;
+
+                _showStatistics = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Contructor, load settings
@@ -37,6 +54,7 @@ namespace NETworkManager.ViewModels.Settings
         private void LoadSettings()
         {
             Timeout = SettingsManager.Current.HTTPHeaders_Timeout;
+            ShowStatistics = SettingsManager.Current.HTTPHeaders_ShowStatistics;
         }
         #endregion
     }
