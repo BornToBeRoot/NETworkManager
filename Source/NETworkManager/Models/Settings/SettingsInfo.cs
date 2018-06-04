@@ -1348,6 +1348,23 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _dnsLookup_HideStatistics;
+        public bool DNSLookup_HideStatistics
+        {
+            get { return _dnsLookup_HideStatistics; }
+            set
+            {
+                if (value == _dnsLookup_HideStatistics)
+                    return;
+
+                _dnsLookup_HideStatistics = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region RemoteDesktop 
@@ -2030,6 +2047,23 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _snmp_HideStatistics;
+        public bool SNMP_HideStatistics
+        {
+            get { return _snmp_HideStatistics; }
+            set
+            {
+                if (value == _snmp_HideStatistics)
+                    return;
+
+                _snmp_HideStatistics = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region WakeOnLAN
@@ -2116,6 +2150,23 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _httpHeaders_HideStatistics;
+        public bool HTTPHeaders_HideStatistics
+        {
+            get { return _httpHeaders_HideStatistics; }
+            set
+            {
+                if (value == _httpHeaders_HideStatistics)
+                    return;
+
+                _httpHeaders_HideStatistics = value;
+
+                OnPropertyChanged();
+
                 SettingsChanged = true;
             }
         }

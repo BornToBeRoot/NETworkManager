@@ -236,6 +236,23 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private bool _hideStatistics;
+        public bool HideStatistics
+        {
+            get { return _hideStatistics; }
+            set
+            {
+                if (value == _hideStatistics)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.DNSLookup_HideStatistics = value;
+
+                _hideStatistics = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, load settings
@@ -266,6 +283,7 @@ namespace NETworkManager.ViewModels
             TransportType = TransportTypes.First(x => x == SettingsManager.Current.DNSLookup_TransportType);
             Attempts = SettingsManager.Current.DNSLookup_Attempts;
             Timeout = SettingsManager.Current.DNSLookup_Timeout;
+            HideStatistics = SettingsManager.Current.DNSLookup_HideStatistics;
         }
         #endregion
     }

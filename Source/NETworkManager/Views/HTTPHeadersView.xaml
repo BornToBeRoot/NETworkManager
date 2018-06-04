@@ -10,6 +10,7 @@
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d">
     <UserControl.Resources>
+        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <Converter:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
@@ -99,8 +100,8 @@
                 <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
             </Grid>
             <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Headers}" />
-            <TextBox Grid.Row="3" Text="{Binding Headers}" Style="{StaticResource ConsoleTextBox}" IsReadOnly="True" ContextMenu="{StaticResource CopyContextMenu}" Margin="0,0,0,20"/>
-            <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}">
+            <TextBox Grid.Row="3" Text="{Binding Headers}" Style="{StaticResource ConsoleTextBox}" IsReadOnly="True" ContextMenu="{StaticResource CopyContextMenu}"/>
+            <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding HideStatistics, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">
                 <Expander.Header>
                     <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
                 </Expander.Header>

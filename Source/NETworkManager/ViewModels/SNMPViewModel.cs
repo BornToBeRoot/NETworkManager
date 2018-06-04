@@ -381,6 +381,11 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public bool HideStatistics
+        {
+            get { return SettingsManager.Current.SNMP_HideStatistics; }
+        }
         #endregion
 
         #region Contructor, load settings
@@ -411,6 +416,9 @@ namespace NETworkManager.ViewModels
             PrivacyProviders = new List<SNMPv3PrivacyProvider>() { SNMPv3PrivacyProvider.DES, SNMPv3PrivacyProvider.AES };
 
             LoadSettings();
+
+            // Detect if settings have changed...
+            SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
             _isLoading = false;
         }
@@ -678,6 +686,12 @@ namespace NETworkManager.ViewModels
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             Duration = stopwatch.Elapsed;
+        }
+
+        private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SettingsInfo.SNMP_HideStatistics))
+                OnPropertyChanged(nameof(HideStatistics));
         }
         #endregion
     }

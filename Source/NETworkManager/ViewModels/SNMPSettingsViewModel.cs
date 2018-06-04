@@ -94,6 +94,23 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private bool _hideStatistics;
+        public bool HideStatistics
+        {
+            get { return _hideStatistics; }
+            set
+            {
+                if (value == _hideStatistics)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.SNMP_HideStatistics = value;
+
+                _hideStatistics = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Contructor, load settings
@@ -115,6 +132,8 @@ namespace NETworkManager.ViewModels
                 ResolveHostnamePreferIPv4 = true;
             else
                 ResolveHostnamePreferIPv6 = true;
+
+            HideStatistics = SettingsManager.Current.SNMP_HideStatistics;
         }
         #endregion
     }
