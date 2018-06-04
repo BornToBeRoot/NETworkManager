@@ -432,7 +432,7 @@ namespace NETworkManager.ViewModels
         {
             _tabId++;
 
-            TabItems.Add(new DragablzTabItem(host ?? LocalizationManager.GetStringByKey("String_Header_NewTab"), new PortScannerView(_tabId, host, ports), _tabId));
+            TabItems.Add(new DragablzTabItem(string.IsNullOrEmpty(host) ? LocalizationManager.GetStringByKey("String_Header_NewTab") : host, new PortScannerView(_tabId, host, ports), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }
