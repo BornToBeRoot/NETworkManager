@@ -140,7 +140,7 @@
                 <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding Status, Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150" Width="*" />
             </Control:ScrollingDataGrid.Columns>
         </Control:ScrollingDataGrid>
-        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding HideStatistics, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">
+        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">
             <Expander.Header>
                 <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>

@@ -70,6 +70,6 @@
         <TextBlock Text="{DynamicResource String_Timeout}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Timeout}" Maximum="10000" Minimum="100" Interval="100" Margin="0,0,0,20" />
         <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{DynamicResource String_HideStatistics}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding HideStatistics}" />
+        <mah:ToggleSwitch Header="{DynamicResource String_ShowStatistics}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ShowStatistics}" />
     </StackPanel>
 </UserControl>

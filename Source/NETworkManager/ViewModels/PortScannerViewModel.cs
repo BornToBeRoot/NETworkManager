@@ -277,9 +277,9 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public bool HideStatistics
+        public bool ShowStatistics
         {
-            get { return SettingsManager.Current.PortScanner_HideStatistics; }
+            get { return SettingsManager.Current.PortScanner_ShowStatistics; }
         }
         #endregion
 
@@ -651,8 +651,8 @@ namespace NETworkManager.ViewModels
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.PortScanner_HideStatistics))
-                OnPropertyChanged(nameof(HideStatistics));
+            if (e.PropertyName == nameof(SettingsInfo.PortScanner_ShowStatistics))
+                OnPropertyChanged(nameof(ShowStatistics));
         }
         #endregion
     }

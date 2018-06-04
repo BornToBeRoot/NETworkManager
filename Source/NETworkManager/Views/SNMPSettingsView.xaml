@@ -28,6 +28,6 @@
         <RadioButton Content="{DynamicResource String_IPv4}" IsChecked="{Binding ResolveHostnamePreferIPv4}" Margin="0,0,0,10" />
         <RadioButton Content="{DynamicResource String_IPv6}" IsChecked="{Binding ResolveHostnamePreferIPv6}" Margin="0,0,0,20" />
         <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{DynamicResource String_HideStatistics}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding HideStatistics}" />
+        <mah:ToggleSwitch Header="{DynamicResource String_ShowStatistics}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ShowStatistics}" />
     </StackPanel>
 </UserControl>

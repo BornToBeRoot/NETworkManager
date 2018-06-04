@@ -25,19 +25,19 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-        private bool _hideStatistics;
-        public bool HideStatistics
+        private bool _showStatistics;
+        public bool ShowStatistics
         {
-            get { return _hideStatistics; }
+            get { return _showStatistics; }
             set
             {
-                if (value == _hideStatistics)
+                if (value == _showStatistics)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.HTTPHeaders_HideStatistics = value;
+                    SettingsManager.Current.HTTPHeaders_ShowStatistics = value;
 
-                _hideStatistics = value;
+                _showStatistics = value;
                 OnPropertyChanged();
             }
         }
@@ -54,7 +54,7 @@ namespace NETworkManager.ViewModels.Settings
         private void LoadSettings()
         {
             Timeout = SettingsManager.Current.HTTPHeaders_Timeout;
-            HideStatistics = SettingsManager.Current.HTTPHeaders_HideStatistics;
+            ShowStatistics = SettingsManager.Current.HTTPHeaders_ShowStatistics;
         }
         #endregion
     }

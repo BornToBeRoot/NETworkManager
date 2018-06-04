@@ -201,9 +201,9 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public bool HideStatistics
+        public bool ShowStatistics
         {
-            get { return SettingsManager.Current.DNSLookup_HideStatistics; }
+            get { return SettingsManager.Current.DNSLookup_ShowStatistics; }
         }
         #endregion
 
@@ -448,8 +448,8 @@ namespace NETworkManager.ViewModels
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.DNSLookup_HideStatistics))
-                OnPropertyChanged(nameof(HideStatistics));
+            if (e.PropertyName == nameof(SettingsInfo.DNSLookup_ShowStatistics))
+                OnPropertyChanged(nameof(ShowStatistics));
         }
         #endregion
     }

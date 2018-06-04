@@ -269,19 +269,19 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _hideStatistics;
-        public bool HideStatistics
+        private bool _showStatistics;
+        public bool ShowStatistics
         {
-            get { return _hideStatistics; }
+            get { return _showStatistics; }
             set
             {
-                if (value == _hideStatistics)
+                if (value == _showStatistics)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.IPScanner_HideStatistics = value;
+                    SettingsManager.Current.IPScanner_ShowStatistics = value;
 
-                _hideStatistics = value;
+                _showStatistics = value;
                 OnPropertyChanged();
             }
         }
@@ -316,7 +316,7 @@ namespace NETworkManager.ViewModels
             DNSAttempts = SettingsManager.Current.IPScanner_DNSAttempts;
             DNSTimeout = SettingsManager.Current.IPScanner_DNSTimeout;
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
-            HideStatistics = SettingsManager.Current.IPScanner_HideStatistics;
+            ShowStatistics = SettingsManager.Current.IPScanner_ShowStatistics;
         }
         #endregion
     }

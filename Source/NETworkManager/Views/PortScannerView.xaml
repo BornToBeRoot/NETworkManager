@@ -274,7 +274,7 @@
                 <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding LookupInfo.Description}" MinWidth="200" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}" Visibility="{Binding HideStatistics, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Margin="0,20,0,0">
+        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,20,0,0">
             <Expander.Header>
                 <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>

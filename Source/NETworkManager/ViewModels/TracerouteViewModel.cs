@@ -219,9 +219,9 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public bool HideStatistics
+        public bool ShowStatistics
         {
-            get { return SettingsManager.Current.Traceroute_HideStatistics; }
+            get { return SettingsManager.Current.Traceroute_ShowStatistics; }
         }
         #endregion
 
@@ -605,8 +605,8 @@ namespace NETworkManager.ViewModels
             if (e.PropertyName == nameof(SettingsInfo.Traceroute_ResolveHostname))
                 OnPropertyChanged(nameof(ResolveHostname));
 
-            if (e.PropertyName == nameof(SettingsInfo.Traceroute_HideStatistics))
-                OnPropertyChanged(nameof(HideStatistics));
+            if (e.PropertyName == nameof(SettingsInfo.Traceroute_ShowStatistics))
+                OnPropertyChanged(nameof(ShowStatistics));
         }
         #endregion               
     }

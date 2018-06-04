@@ -158,19 +158,19 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _hideStatistics;
-        public bool HideStatistics
+        private bool _showStatistics;
+        public bool ShowStatistics
         {
-            get { return _hideStatistics; }
+            get { return _showStatistics; }
             set
             {
-                if (value == _hideStatistics)
+                if (value == _showStatistics)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Ping_HideStatistics = value;
+                    SettingsManager.Current.Ping_ShowStatistics = value;
 
-                _hideStatistics = value;
+                _showStatistics = value;
                 OnPropertyChanged();
             }
         }
@@ -199,7 +199,7 @@ namespace NETworkManager.ViewModels
             else
                 ResolveHostnamePreferIPv6 = true;
 
-            HideStatistics = SettingsManager.Current.Ping_HideStatistics;
+            ShowStatistics = SettingsManager.Current.Ping_ShowStatistics;
         }
         #endregion
     }

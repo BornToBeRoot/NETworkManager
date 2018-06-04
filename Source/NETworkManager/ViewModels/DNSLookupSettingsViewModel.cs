@@ -237,19 +237,19 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _hideStatistics;
-        public bool HideStatistics
+        private bool _showStatistics;
+        public bool ShowStatistics
         {
-            get { return _hideStatistics; }
+            get { return _showStatistics; }
             set
             {
-                if (value == _hideStatistics)
+                if (value == _showStatistics)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_HideStatistics = value;
+                    SettingsManager.Current.DNSLookup_ShowStatistics = value;
 
-                _hideStatistics = value;
+                _showStatistics = value;
                 OnPropertyChanged();
             }
         }
@@ -283,7 +283,7 @@ namespace NETworkManager.ViewModels
             TransportType = TransportTypes.First(x => x == SettingsManager.Current.DNSLookup_TransportType);
             Attempts = SettingsManager.Current.DNSLookup_Attempts;
             Timeout = SettingsManager.Current.DNSLookup_Timeout;
-            HideStatistics = SettingsManager.Current.DNSLookup_HideStatistics;
+            ShowStatistics = SettingsManager.Current.DNSLookup_ShowStatistics;
         }
         #endregion
     }

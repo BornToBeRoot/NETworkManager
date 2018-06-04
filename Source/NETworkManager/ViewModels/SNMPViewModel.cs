@@ -382,9 +382,9 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public bool HideStatistics
+        public bool ShowStatistics
         {
-            get { return SettingsManager.Current.SNMP_HideStatistics; }
+            get { return SettingsManager.Current.SNMP_ShowStatistics; }
         }
         #endregion
 
@@ -690,8 +690,8 @@ namespace NETworkManager.ViewModels
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.SNMP_HideStatistics))
-                OnPropertyChanged(nameof(HideStatistics));
+            if (e.PropertyName == nameof(SettingsInfo.SNMP_ShowStatistics))
+                OnPropertyChanged(nameof(ShowStatistics));
         }
         #endregion
     }

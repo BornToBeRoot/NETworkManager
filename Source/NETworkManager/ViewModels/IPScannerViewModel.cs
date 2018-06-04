@@ -265,9 +265,9 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public bool HideStatistics
+        public bool ShowStatistics
         {
-            get { return SettingsManager.Current.IPScanner_HideStatistics; }
+            get { return SettingsManager.Current.IPScanner_ShowStatistics; }
         }
         #endregion
 
@@ -680,8 +680,8 @@ namespace NETworkManager.ViewModels
             if (e.PropertyName == nameof(SettingsInfo.IPScanner_ResolveHostname))
                 OnPropertyChanged(nameof(ResolveHostname));
 
-            if (e.PropertyName == nameof(SettingsInfo.IPScanner_HideStatistics))
-                OnPropertyChanged(nameof(HideStatistics));
+            if (e.PropertyName == nameof(SettingsInfo.IPScanner_ShowStatistics))
+                OnPropertyChanged(nameof(ShowStatistics));
         }
         #endregion
     }

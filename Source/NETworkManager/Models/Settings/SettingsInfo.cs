@@ -626,16 +626,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _ipScanner_HideStatistics;
-        public bool IPScanner_HideStatistics
+        private bool _ipScanner_ShowStatistics = true;
+        public bool IPScanner_ShowStatistics
         {
-            get { return _ipScanner_HideStatistics; }
+            get { return _ipScanner_ShowStatistics; }
             set
             {
-                if (value == _ipScanner_HideStatistics)
+                if (value == _ipScanner_ShowStatistics)
                     return;
 
-                _ipScanner_HideStatistics = value;
+                _ipScanner_ShowStatistics = value;
 
                 OnPropertyChanged();
 
@@ -771,16 +771,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _portScanner_HideStatistics;
-        public bool PortScanner_HideStatistics
+        private bool _portScanner_ShowStatistics = true;
+        public bool PortScanner_ShowStatistics
         {
-            get { return _portScanner_HideStatistics; }
+            get { return _portScanner_ShowStatistics; }
             set
             {
-                if (value == _portScanner_HideStatistics)
+                if (value == _portScanner_ShowStatistics)
                     return;
 
-                _portScanner_HideStatistics = value;
+                _portScanner_ShowStatistics = value;
 
                 OnPropertyChanged();
 
@@ -958,16 +958,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _ping_HideStatistics;
-        public bool Ping_HideStatistics
+        private bool _ping_ShowStatistics = true;
+        public bool Ping_ShowStatistics
         {
-            get { return _ping_HideStatistics; }
+            get { return _ping_ShowStatistics; }
             set
             {
-                if (value == _ping_HideStatistics)
+                if (value == _ping_ShowStatistics)
                     return;
 
-                _ping_HideStatistics = value;
+                _ping_ShowStatistics = value;
 
                 OnPropertyChanged();
 
@@ -1106,16 +1106,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _traceroute_HideStatistics;
-        public bool Traceroute_HideStatistics
+        private bool _traceroute_ShowStatistics = true;
+        public bool Traceroute_ShowStatistics
         {
-            get { return _traceroute_HideStatistics; }
+            get { return _traceroute_ShowStatistics; }
             set
             {
-                if (value == _traceroute_HideStatistics)
+                if (value == _traceroute_ShowStatistics)
                     return;
 
-                _traceroute_HideStatistics = value;
+                _traceroute_ShowStatistics = value;
 
                 OnPropertyChanged();
 
@@ -1349,16 +1349,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _dnsLookup_HideStatistics;
-        public bool DNSLookup_HideStatistics
+        private bool _dnsLookup_ShowStatistics = true;
+        public bool DNSLookup_ShowStatistics
         {
-            get { return _dnsLookup_HideStatistics; }
+            get { return _dnsLookup_ShowStatistics; }
             set
             {
-                if (value == _dnsLookup_HideStatistics)
+                if (value == _dnsLookup_ShowStatistics)
                     return;
 
-                _dnsLookup_HideStatistics = value;
+                _dnsLookup_ShowStatistics = value;
 
                 OnPropertyChanged();
 
@@ -2048,16 +2048,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _snmp_HideStatistics;
-        public bool SNMP_HideStatistics
+        private bool _snmp_ShowStatistics = true;
+        public bool SNMP_ShowStatistics
         {
-            get { return _snmp_HideStatistics; }
+            get { return _snmp_ShowStatistics; }
             set
             {
-                if (value == _snmp_HideStatistics)
+                if (value == _snmp_ShowStatistics)
                     return;
 
-                _snmp_HideStatistics = value;
+                _snmp_ShowStatistics = value;
 
                 OnPropertyChanged();
 
@@ -2154,16 +2154,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _httpHeaders_HideStatistics;
-        public bool HTTPHeaders_HideStatistics
+        private bool _httpHeaders_ShowStatistics = true;
+        public bool HTTPHeaders_ShowStatistics
         {
-            get { return _httpHeaders_HideStatistics; }
+            get { return _httpHeaders_ShowStatistics; }
             set
             {
-                if (value == _httpHeaders_HideStatistics)
+                if (value == _httpHeaders_ShowStatistics)
                     return;
 
-                _httpHeaders_HideStatistics = value;
+                _httpHeaders_ShowStatistics = value;
 
                 OnPropertyChanged();
 
