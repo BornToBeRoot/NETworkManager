@@ -89,7 +89,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-
         private ObservableCollection<SubnetInfo> _splitResult = new ObservableCollection<SubnetInfo>();
         public ObservableCollection<SubnetInfo> SplitResult
         {

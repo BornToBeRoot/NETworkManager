@@ -455,7 +455,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private List<string> _ipScanner_CustomDNSServer;
+        private List<string> _ipScanner_CustomDNSServer = new List<string>();
         public List<string> IPScanner_CustomDNSServer
         {
             get { return _ipScanner_CustomDNSServer; }
@@ -977,7 +977,7 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region Traceroute
-        private ObservableCollection<string> _traceroute_HostHistory;
+        private ObservableCollection<string> _traceroute_HostHistory = new ObservableCollection<string>();
         public ObservableCollection<string> Traceroute_HostHistory
         {
             get { return _traceroute_HostHistory; }
@@ -1153,7 +1153,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private List<string> _dnsLookup_CustomDNSServer;
+        private List<string> _dnsLookup_CustomDNSServer = new List<string>();
         public List<string> DNSLookup_CustomDNSServer
         {
             get { return _dnsLookup_CustomDNSServer; }
@@ -2173,7 +2173,7 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region Subnet Calculator
-        #region IPv4 Calculator
+        #region Calculator
         private ObservableCollection<string> _subnetCalculator_IPv4Calculator_SubnetHistory = new ObservableCollection<string>();
         public ObservableCollection<string> SubnetCalculator_IPv4Calculator_SubnetHistory
         {
@@ -2189,9 +2189,9 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
-        #region IPv4 Splitter
-        private List<string> _subnetCalculator_IPv4Splitter_SubnetHistory = new List<string>();
-        public List<string> SubnetCalculator_IPv4Splitter_SubnetHistory
+        #region Splitter
+        private ObservableCollection<string> _subnetCalculator_IPv4Splitter_SubnetHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> SubnetCalculator_IPv4Splitter_SubnetHistory
         {
             get { return _subnetCalculator_IPv4Splitter_SubnetHistory; }
             set
@@ -2204,8 +2204,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private List<string> _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory = new List<string>();
-        public List<string> SubnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory
+        private ObservableCollection<string> _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> SubnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory
         {
             get { return _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory; }
             set
