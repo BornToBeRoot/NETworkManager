@@ -4,11 +4,11 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class SubnetCalculatorIPv4SplitterView : UserControl
+    public partial class SubnetCalculatorSubnettingView : UserControl
     {
-        private SubnetCalculatorIPv4SplitterViewModel viewModel = new SubnetCalculatorIPv4SplitterViewModel(DialogCoordinator.Instance);
+        private SubnetCalculatorSubnettingViewModel viewModel = new SubnetCalculatorSubnettingViewModel(DialogCoordinator.Instance);
 
-        public SubnetCalculatorIPv4SplitterView()
+        public SubnetCalculatorSubnettingView()
         {
             InitializeComponent();
             DataContext = viewModel;

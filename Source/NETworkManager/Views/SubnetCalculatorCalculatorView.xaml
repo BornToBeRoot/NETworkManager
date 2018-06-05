@@ -35,12 +35,12 @@
                     <Binding Path="Subnet" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                         <Binding.ValidationRules>
                             <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <Validator:SubnetCalculatorSubnetValidator ValidatesOnTargetUpdated="True" />
+                            <Validator:IPv4IPv6SubnetValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <Button Grid.Column="4" Command="{Binding CalculateIPv4SubnetCommand}" HorizontalAlignment="Right" IsDefault="True">
+            <Button Grid.Column="4" Command="{Binding CalculateCommand}" HorizontalAlignment="Right" IsDefault="True">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>

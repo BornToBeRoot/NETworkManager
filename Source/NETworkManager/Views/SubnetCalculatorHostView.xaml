@@ -15,11 +15,11 @@
                 </Style.Triggers>
             </Style>
         </TabControl.Style>
-        <TabItem Header="{DynamicResource String_Header_IPCalculator}">
+        <TabItem Header="{DynamicResource String_Header_Calculator}">
             <Views:SubnetCalculatorCalculatorView Margin="10" />
         </TabItem>
-        <TabItem Header="{DynamicResource String_Header_IPv4Splitter}">
-            <Views:SubnetCalculatorIPv4SplitterView Margin="10" />
+        <TabItem Header="{DynamicResource String_Header_Subnetting}">
+            <Views:SubnetCalculatorSubnettingView Margin="10" />
         </TabItem>
     </TabControl>
 </UserControl>

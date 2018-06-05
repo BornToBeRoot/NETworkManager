@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NETworkManager.Views.SubnetCalculatorIPv4SplitterView"
+﻿<UserControl x:Class="NETworkManager.Views.SubnetCalculatorSubnettingView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,11 +12,12 @@
         Dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" >
     <UserControl.Resources>
+        <Converter:BigIntegerToStringConverter x:Key="BigIntegerToStringConverter" />
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Converter:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
-        <Converter:ValidateSubnetCalculatorIPv4SplitterConverter x:Key="ValidateSubnetCalculatorIPv4SplitterConverter" />
+        <Converter:ValidateSubnetCalculatorSubnettingConverter x:Key="ValidateSubnetCalculatorSubnettingConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -32,48 +33,48 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Margin="0,0,0,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_Subnet}" />
+            <Grid Grid.Row="0" Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_Subnet}" />
                 <ComboBox Grid.Column="2" Grid.Row="0" x:Name="cbSubnet" Height="{Binding ElementName=cbNewSubnetmaskOrCIDR, Path=ActualHeight}" ItemsSource="{Binding SubnetHistoryView}" IsEnabled="{Binding IsSplitRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnet}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Style="{StaticResource HistoryComboBox}">
-                        <ComboBox.Text>
-                            <Binding Path="Subnet" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
-                                <Binding.ValidationRules>
-                                    <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                    <Validator:SubnetValidator ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.Text>
-                    </ComboBox>
-                    <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_NewSubnetmaskOrCIDR}" />
+                    <ComboBox.Text>
+                        <Binding Path="Subnet" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
+                            <Binding.ValidationRules>
+                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                <Validator:IPv4IPv6SubnetValidator ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </ComboBox.Text>
+                </ComboBox>
+                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_NewSubnetmaskOrCIDR}" />
                 <ComboBox x:Name="cbNewSubnetmaskOrCIDR" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding NewSubnetmaskOrCIDRHistoryView}" IsEnabled="{Binding IsSplitRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnetmaskOrCIDR}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Style="{StaticResource HistoryComboBox}">
-                        <ComboBox.Text>
-                            <Binding Path="NewSubnetmaskOrCIDR" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
-                                <Binding.ValidationRules>
-                                    <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                    <Validator:SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.Text>
-                    </ComboBox>
-                <Button Grid.Column="4" Grid.Row="4" Command="{Binding SplitIPv4SubnetCommand}" IsDefault="{Binding IsSplitRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsSplitRunning}" HorizontalAlignment="Right">
+                    <ComboBox.Text>
+                        <Binding Path="NewSubnetmaskOrCIDR" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
+                            <Binding.ValidationRules>
+                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                <Validator:IPv4IPv6SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </ComboBox.Text>
+                </ComboBox>
+                <Button Grid.Column="4" Grid.Row="4" Command="{Binding SubnettingCommand}" IsDefault="{Binding IsSplitRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsSplitRunning}" HorizontalAlignment="Right">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Style.Triggers>
                                 <DataTrigger Value="False">
                                     <DataTrigger.Binding>
-                                        <MultiBinding Converter="{StaticResource ValidateSubnetCalculatorIPv4SplitterConverter}">
+                                        <MultiBinding Converter="{StaticResource ValidateSubnetCalculatorSubnettingConverter}">
                                             <Binding ElementName="cbSubnet" Path="(Validation.HasError)" />
                                             <Binding ElementName="cbNewSubnetmaskOrCIDR" Path="(Validation.HasError)" />
                                             <Binding Path="Subnet" />
@@ -126,7 +127,7 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-            </Grid>                         
+            </Grid>
             <Controls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
                 <Controls:MetroProgressBar.Style>
                     <Style TargetType="{x:Type  Controls:MetroProgressBar}">
@@ -141,7 +142,7 @@
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
-        <DataGrid Grid.Row="3" ItemsSource="{Binding SplitResultView}" SelectedItem="{Binding SelectedSplitResult}">
+        <DataGrid Grid.Row="3" ItemsSource="{Binding SubnetsResultView}" SelectedItem="{Binding SelectedSubnetResult}">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -238,14 +239,14 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_NetworkAddress}" Binding="{Binding NetworkAddress, Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="NetworkAddressInt32" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Broadcast}" Binding="{Binding Broadcast, Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="BroadcastInt32" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_IPAddresses}" Binding="{Binding IPAddresses}" MinWidth="80" />
-                <DataGridTextColumn Header="{DynamicResource String_Subnetmask}" Binding="{Binding Subnetmask}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_CIDR}" Binding="{Binding CIDR}" MinWidth="80" />
-                <DataGridTextColumn Header="{DynamicResource String_FirstIPAddress}" Binding="{Binding HostFirstIP, Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="HostFirstIPInt32" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_LastIPAddress}" Binding="{Binding HostLastIP, Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="HostLastIPInt32" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Hosts}" Binding="{Binding Hosts}" MinWidth="80" Width="*" />
+                <DataGridTextColumn Header="{DynamicResource String_NetworkAddress}" Binding="{Binding Network, Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
+                <DataGridTextColumn Header="{DynamicResource String_Broadcast}" Binding="{Binding Broadcast, Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
+                <DataGridTextColumn Header="{DynamicResource String_IPAddresses}" Binding="{Binding Total, Converter={StaticResource BigIntegerToStringConverter}}" MinWidth="150"  Width="Auto" />
+                <DataGridTextColumn Header="{DynamicResource String_Subnetmask}" Binding="{Binding Netmask, Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150"  Width="Auto" />
+                <DataGridTextColumn Header="{DynamicResource String_CIDR}" Binding="{Binding Cidr}" MinWidth="80" Width="Auto" />
+                <DataGridTextColumn Header="{DynamicResource String_FirstIPAddress}" Binding="{Binding FirstUsable, Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
+                <DataGridTextColumn Header="{DynamicResource String_LastIPAddress}" Binding="{Binding LastUsable, Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
+                <DataGridTextColumn Header="{DynamicResource String_Hosts}" Binding="{Binding Usable, Converter={StaticResource BigIntegerToStringConverter}}" MinWidth="80" Width="Auto" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

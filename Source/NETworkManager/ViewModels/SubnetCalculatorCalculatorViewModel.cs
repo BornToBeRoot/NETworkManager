@@ -165,19 +165,24 @@ namespace NETworkManager.ViewModels
         public SubnetCalculatorCalculatorViewModel()
         {
             // Set collection view
-            _subnetHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_IPv4Calculator_SubnetHistory);
+            _subnetHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Calculator_SubnetHistory);
         }
         #endregion
 
         #region ICommands
-        public ICommand CalculateIPv4SubnetCommand
+        public ICommand CalculateCommand
         {
-            get { return new RelayCommand(p => CalculateIPv4SubnetAction()); }
+            get { return new RelayCommand(p => CalcualateAction()); }
+        }
+
+        private void CalcualateAction()
+        {
+            Calculate();
         }
         #endregion
 
         #region Methods
-        private void CalculateIPv4SubnetAction()
+        private void Calculate()
         {
             IsDetailsVisible = false;
 
@@ -190,9 +195,8 @@ namespace NETworkManager.ViewModels
             IPAddresses = network.Total;
             FirstIPAddress = network.FirstUsable;
             LastIPAddress = network.LastUsable;
-            Hosts = ((network.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && CIDR == 32) || (network.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6 && CIDR == 128)) ? 0 : network.Total - 2;
-
-
+            Hosts = network.Usable;
+            
             IsDetailsVisible = true;
 
             AddSubnetToHistory(Subnet);
@@ -201,14 +205,14 @@ namespace NETworkManager.ViewModels
         private void AddSubnetToHistory(string subnet)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_IPv4Calculator_SubnetHistory.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Calculator_SubnetHistory.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
-            SettingsManager.Current.SubnetCalculator_IPv4Calculator_SubnetHistory.Clear();
+            SettingsManager.Current.SubnetCalculator_Calculator_SubnetHistory.Clear();
             OnPropertyChanged(nameof(Subnet)); // Raise property changed again, after the collection has been cleared
 
             // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.SubnetCalculator_IPv4Calculator_SubnetHistory.Add(x));
+            list.ForEach(x => SettingsManager.Current.SubnetCalculator_Calculator_SubnetHistory.Add(x));
         }
         #endregion
     }

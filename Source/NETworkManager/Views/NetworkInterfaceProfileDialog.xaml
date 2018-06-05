@@ -79,7 +79,7 @@
                         <Binding Path="SubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                <Validator:SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True" />
+                                <Validator:IPv4SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.Text>

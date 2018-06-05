@@ -67,8 +67,7 @@
     <system:String x:Key="String_Header_Scan">Scan</system:String>
     <system:String x:Key="String_Header_Lookup">Lookup</system:String>
     <system:String x:Key="String_Header_Subnet">Subnet</system:String>
-    <system:String x:Key="String_Header_IPCalculator">IP Calculator</system:String>
-    <system:String x:Key="String_Header_IPv4Splitter">IPv4 Splitter</system:String>
+    <system:String x:Key="String_Header_Calculator">Calculator</system:String>
     <system:String x:Key="String_Header_Connect">Connect</system:String>
     <system:String x:Key="String_Header_AddSession">Add session</system:String>
     <system:String x:Key="String_Header_EditSession">Edit session</system:String>
@@ -107,6 +106,7 @@
     <system:String x:Key="String_Header_Overwrite">Overwrite?</system:String>
     <system:String x:Key="String_Header_NewTab">New tab</system:String>
     <system:String x:Key="String_Header_Resources">Resources</system:String>
+    <system:String x:Key="String_Header_Subnetting">Subnetting</system:String>
     
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
