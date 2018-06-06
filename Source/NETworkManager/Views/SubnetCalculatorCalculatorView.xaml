@@ -71,13 +71,13 @@
             </Button>
         </Grid>
         <StackPanel Grid.Row="2">
-            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Details}" Visibility="{Binding IsDetailsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <ScrollViewer Style="{DynamicResource DefaultScrollViewer}" Visibility="{Binding IsDetailsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <ScrollViewer Style="{DynamicResource DefaultScrollViewer}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Grid>
                     <Grid.Resources>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />
                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
-                            <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />                            
+                            <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
                         </Style>
                     </Grid.Resources>
                     <Grid.ColumnDefinitions>
@@ -115,6 +115,6 @@
                 </Grid>
             </ScrollViewer>
         </StackPanel>
-        <TextBlock Grid.Row="2" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_EnterASubnetToCalculateIt}" Visibility="{Binding IsDetailsVisible, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
+        <TextBlock Grid.Row="2" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_EnterASubnetToCalculateIt}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
     </Grid>
 </UserControl>

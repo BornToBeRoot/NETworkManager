@@ -107,6 +107,7 @@
     <system:String x:Key="String_Header_NewTab">New tab</system:String>
     <system:String x:Key="String_Header_Resources">Resources</system:String>
     <system:String x:Key="String_Header_Subnetting">Subnetting</system:String>
+    <system:String x:Key="String_Header_Supernetting">Supernetting</system:String>
     
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -432,6 +433,9 @@
     <system:String x:Key="String_AddSessionDots">Add session...</system:String>
     <system:String x:Key="String_AddClientDots">Add client...</system:String>
     <system:String x:Key="String_ShowStatistics">Show statistics</system:String>
+    <system:String x:Key="String_Subnet1">Subnet 1</system:String>
+    <system:String x:Key="String_Subnet2">Subnet 2</system:String>
+    <system:String x:Key="String_EnterSubnetsToCreateASupernet">Enter subnets to create a supernet...</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
@@ -564,7 +568,8 @@
     <system:String x:Key="String_Watermark_ExampleBaud9600">9600</system:String>
     <system:String x:Key="String_Watermark_ExampleSerialLine">COM5</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4SubnetmaskIPv6CIDR">255.255.255.0 or /64</system:String>
-
+    <system:String x:Key="String_Watermark_ExampleIPv4IPv6Subnet2">192.168.178.134/255.255.255.0 or 2001:0db9::/64</system:String>
+    
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Set static IP address and gateway...</system:String>
     <system:String x:Key="String_Progress_SetDynamicIPAddress">Set dynamic IP address...</system:String>

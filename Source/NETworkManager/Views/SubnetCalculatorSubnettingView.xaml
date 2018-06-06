@@ -47,7 +47,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_Subnet}" />
-                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="cbSubnet" Height="{Binding ElementName=cbNewSubnetmaskOrCIDR, Path=ActualHeight}" ItemsSource="{Binding SubnetHistoryView}" IsEnabled="{Binding IsSplitRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4IPv6Subnet}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="cbSubnet" Height="{Binding ElementName=cbNewSubnetmaskOrCIDR, Path=ActualHeight}" ItemsSource="{Binding SubnetHistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4IPv6Subnet}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Subnet" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>
@@ -58,7 +58,7 @@
                     </ComboBox.Text>
                 </ComboBox>
                 <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_NewSubnetmaskOrCIDR}" />
-                <ComboBox x:Name="cbNewSubnetmaskOrCIDR" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding NewSubnetmaskOrCIDRHistoryView}" IsEnabled="{Binding IsSplitRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetmaskIPv6CIDR}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox x:Name="cbNewSubnetmaskOrCIDR" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding NewSubnetmaskOrCIDRHistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetmaskIPv6CIDR}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="NewSubnetmaskOrCIDR" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>
@@ -68,7 +68,7 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <Button Grid.Column="4" Grid.Row="4" Command="{Binding SubnettingCommand}" IsDefault="{Binding IsSplitRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsSplitRunning}" HorizontalAlignment="Right">
+                <Button Grid.Column="4" Grid.Row="2" Command="{Binding SubnettingCommand}" IsDefault="True" HorizontalAlignment="Right">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Style.Triggers>
@@ -83,7 +83,7 @@
                                     </DataTrigger.Binding>
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding CancelSplit}" Value="True">
+                                <DataTrigger Binding="{Binding IsCalculationRunning}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -98,17 +98,11 @@
                             <Rectangle Width="20" Height="20" Margin="10,5,0,5">
                                 <Rectangle.Resources>
                                     <VisualBrush x:Key="VisualCalculator" Stretch="Uniform" Visual="{IconPacks:Material Kind=Calculator}"/>
-                                    <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
                                 </Rectangle.Resources>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
                                         <Setter Property="OpacityMask" Value="{StaticResource VisualCalculator}" />
                                         <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsSplitRunning}" Value="True">
-                                                <Setter Property="OpacityMask" Value="{StaticResource VisualClose}" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
                                     </Style>
                                 </Rectangle.Style>
                             </Rectangle>
@@ -116,11 +110,6 @@
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Text" Value="{DynamicResource String_Button_Calculate}"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsSplitRunning}" Value="True" >
-                                                <Setter Property="Text" Value="{DynamicResource String_Button_Cancel}"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
@@ -132,7 +121,7 @@
                 <Controls:MetroProgressBar.Style>
                     <Style TargetType="{x:Type  Controls:MetroProgressBar}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsSplitRunning}" Value="False">
+                            <DataTrigger Binding="{Binding IsCalculationRunning}" Value="False">
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
                         </Style.Triggers>

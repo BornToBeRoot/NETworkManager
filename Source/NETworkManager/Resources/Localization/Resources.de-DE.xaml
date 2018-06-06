@@ -107,7 +107,8 @@
     <system:String x:Key="String_Header_NewTab">Neuer Tab</system:String>
     <system:String x:Key="String_Header_Resources">Ressourcen</system:String>
     <system:String x:Key="String_Header_Subnetting">Subnetting</system:String>
-    
+    <system:String x:Key="String_Header_Supernetting">Supernetting</system:String>
+
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Ein leistungsstarkes Tool zum Verwalten von Netzwerken und zur Behebung von Netzwerkproblemen!</system:String>
@@ -432,7 +433,10 @@
     <system:String x:Key="String_AddSessionDots">Sitzung hinzufügen...</system:String>
     <system:String x:Key="String_AddClientDots">Client hinzufügen...</system:String>
     <system:String x:Key="String_ShowStatistics">Statistiken anzeigen</system:String>
-    
+    <system:String x:Key="String_Subnet1">Subnetz 1</system:String>
+    <system:String x:Key="String_Subnet2">Subnetz 2</system:String>
+    <system:String x:Key="String_EnterSubnetsToCreateASupernet">Geben Sie Subnetze ein, um ein Supernet zu erstellen...</system:String>
+
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">Wie erstelle ich ein benutzerdefiniertes Thema und Akzent?</system:String>
@@ -564,6 +568,7 @@
     <system:String x:Key="String_Watermark_ExampleBaud9600">9600</system:String>
     <system:String x:Key="String_Watermark_ExampleSerialLine">COM5</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4SubnetmaskIPv6CIDR">255.255.255.0 or /64</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPv4IPv6Subnet2">192.168.178.134/255.255.255.0 or 2001:0db9::/64</system:String>
 
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Setze statische IP-Adresse und Gateway...</system:String>

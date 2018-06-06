@@ -2189,7 +2189,7 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
-        #region Splitter
+        #region Subnetting
         private ObservableCollection<string> _subnetCalculator_Subnetting_SubnetHistory = new ObservableCollection<string>();
         public ObservableCollection<string> SubnetCalculator_Subnetting_SubnetHistory
         {
@@ -2217,6 +2217,36 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+        #endregion
+        private ObservableCollection<string> _subnetCalculator_Supernetting_Subnet1 = new ObservableCollection<string>();
+        public ObservableCollection<string> SubnetCalculator_Supernetting_Subnet1
+        {
+            get { return _subnetCalculator_Supernetting_Subnet1; }
+            set
+            {
+                if (value == _subnetCalculator_Supernetting_Subnet1)
+                    return;
+
+                _subnetCalculator_Supernetting_Subnet1 = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _subnetCalculator_Supernetting_Subnet2 = new ObservableCollection<string>();
+        public ObservableCollection<string> SubnetCalculator_Supernetting_Subnet2
+        {
+            get { return _subnetCalculator_Supernetting_Subnet2; }
+            set
+            {
+                if (value == _subnetCalculator_Supernetting_Subnet2)
+                    return;
+
+                _subnetCalculator_Supernetting_Subnet2 = value;
+                SettingsChanged = true;
+            }
+        }
+        #region Supernetting
+
         #endregion
         #endregion
 

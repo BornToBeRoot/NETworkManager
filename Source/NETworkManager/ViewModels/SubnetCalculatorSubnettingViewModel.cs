@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Collections.Specialized;
 using System;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -60,30 +61,16 @@ namespace NETworkManager.ViewModels
             get { return _newSubnetmaskOrCIDRHistoryView; }
         }
 
-        private bool _isSplitRunning;
-        public bool IsSplitRunning
+        private bool _isCalculationRunning;
+        public bool IsCalculationRunning
         {
-            get { return _isSplitRunning; }
+            get { return _isCalculationRunning; }
             set
             {
-                if (value == _isSplitRunning)
+                if (value == _isCalculationRunning)
                     return;
 
-                _isSplitRunning = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _cancelSplit;
-        public bool CancelSplit
-        {
-            get { return _cancelSplit; }
-            set
-            {
-                if (value == _cancelSplit)
-                    return;
-
-                _cancelSplit = value;
+                _isCalculationRunning = value;
                 OnPropertyChanged();
             }
         }
@@ -261,7 +248,7 @@ namespace NETworkManager.ViewModels
         private void Subnetting()
         {
             DisplayStatusMessage = false;
-            IsSplitRunning = true;
+            IsCalculationRunning = true;
 
             SubnetsResult.Clear();
 
@@ -274,8 +261,7 @@ namespace NETworkManager.ViewModels
             AddSubnetToHistory(Subnet);
             AddNewSubnetmaskOrCIDRToHistory(NewSubnetmaskOrCIDR);
 
-            CancelSplit = false;
-            IsSplitRunning = false;
+            IsCalculationRunning = false;
         }
 
         private void AddSubnetToHistory(string subnet)

@@ -21,5 +21,8 @@
         <TabItem Header="{DynamicResource String_Header_Subnetting}">
             <Views:SubnetCalculatorSubnettingView Margin="10" />
         </TabItem>
+        <TabItem Header="{DynamicResource String_Header_Supernetting}">
+            <Views:SubnetCalculatorSupernettingView Margin="10" />
+        </TabItem>
     </TabControl>
 </UserControl>
