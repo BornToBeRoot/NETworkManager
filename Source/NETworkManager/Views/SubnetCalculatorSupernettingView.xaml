@@ -56,7 +56,7 @@
                     </ComboBox.Text>
                 </ComboBox>
                 <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_Subnet2}" />
-                <ComboBox x:Name="cbSubnet2" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding Subnet2HistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4IPv6Subnet}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox x:Name="cbSubnet2" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding Subnet2HistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4IPv6Subnet2}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Subnet2" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>
@@ -116,9 +116,9 @@
                 </Button>
             </Grid>
         </Grid>
-        <StackPanel Grid.Row="2">
-            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <ScrollViewer Style="{DynamicResource DefaultScrollViewer}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <StackPanel Grid.Row="2" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
+            <ScrollViewer Style="{DynamicResource DefaultScrollViewer}">
                 <Grid>
                     <Grid.Resources>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />
@@ -152,9 +152,9 @@
                     <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Subnetmask, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_CIDR}" />
                     <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding CIDR, StringFormat='/{0}'}" />
-                    <TextBlock Grid.Column="0" Grid.Row="5" Text="{DynamicResource String_FirstIPAddress}" />
+                    <TextBlock Grid.Column="0" Grid.Row="5" Text="{DynamicResource String_FirstUsableIPAddress}" />
                     <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding FirstIPAddress, Converter={StaticResource IPAddressToStringConverter}}" />
-                    <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_LastIPAddress}" />
+                    <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_LastUsableIPAddress}" />
                     <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding LastIPAddress, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="7" Text="{DynamicResource String_Hosts}" />
                     <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Hosts, Converter={StaticResource BigIntegerToStringConverter}}" />

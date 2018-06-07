@@ -290,8 +290,8 @@
     <system:String x:Key="String_Destination">Ziel</system:String>
     <system:String x:Key="String_EnterASubnetToCalculateIt">Geben Sie ein Subnetz ein, um es zu berechnen...</system:String>
     <system:String x:Key="String_Subnet">Subnetz</system:String>
-    <system:String x:Key="String_FirstIPAddress">Erste IP-Adresse</system:String>
-    <system:String x:Key="String_LastIPAddress">Letzte IP-Adresse</system:String>
+    <system:String x:Key="String_FirstUsableIPAddress">Erste nutzbare IP-Adresse</system:String>
+    <system:String x:Key="String_LastUsableIPAddress">Letzte nutzbare IP-Adresse</system:String>
     <system:String x:Key="String_Hosts">Hosts</system:String>
     <system:String x:Key="String_NoEnabledNetworkAdaptersFound">Keine aktivierten Netzwerkadapter gefunden!</system:String>
     <system:String x:Key="String_Domain">Domäne</system:String>
@@ -436,6 +436,7 @@
     <system:String x:Key="String_Subnet1">Subnetz 1</system:String>
     <system:String x:Key="String_Subnet2">Subnetz 2</system:String>
     <system:String x:Key="String_EnterSubnetsToCreateASupernet">Geben Sie Subnetze ein, um ein Supernet zu erstellen...</system:String>
+    <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Geben Sie das Subnetz und eine neue Subnetzmaske ein, um Subnetze zu erstellen...</system:String>
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>

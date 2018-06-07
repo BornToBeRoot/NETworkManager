@@ -290,8 +290,8 @@
     <system:String x:Key="String_Destination">Назначение</system:String>
     <system:String x:Key="String_EnterASubnetToCalculateIt">Введите подсеть для ее расчета...</system:String>
     <system:String x:Key="String_Subnet">Подсеть</system:String>
-    <system:String x:Key="String_FirstIPAddress">Первый IP-адрес</system:String>
-    <system:String x:Key="String_LastIPAddress">Последний IP-адрес</system:String>
+    <system:String x:Key="String_FirstUsableIPAddress">First usable IP Address</system:String>
+    <system:String x:Key="String_LastUsableIPAddress">First usable IP Address</system:String>
     <system:String x:Key="String_Hosts">Хосты</system:String>
     <system:String x:Key="String_NoEnabledNetworkAdaptersFound">Сетевые адаптеры не найдены!</system:String>
     <system:String x:Key="String_Domain">Домен</system:String>
@@ -436,6 +436,7 @@
     <system:String x:Key="String_Subnet1">Subnet 1</system:String>
     <system:String x:Key="String_Subnet2">Subnet 2</system:String>
     <system:String x:Key="String_EnterSubnetsToCreateASupernet">Enter subnets to create a supernet...</system:String>
+    <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Enter subnet and a new subnet mask to create subnets...</system:String>
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Как установить RDP 8.1 на Windows 7 / Server 2008 R2</system:String>

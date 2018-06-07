@@ -1,5 +1,4 @@
-﻿using NETworkManager.Models.Network;
-using NETworkManager.Models.Settings;
+﻿using NETworkManager.Models.Settings;
 using System.Collections.Generic;
 using System.Windows.Input;
 using NETworkManager.Utilities;
@@ -10,9 +9,9 @@ using System.ComponentModel;
 using MahApps.Metro.Controls.Dialogs;
 using System.Linq;
 using System.Net;
-using System.Collections.Specialized;
 using System;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels
 {
@@ -71,6 +70,21 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _isCalculationRunning = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isResultVisible;
+        public bool IsResultVisible
+        {
+            get { return _isResultVisible; }
+            set
+            {
+                if (value == _isResultVisible)
+                    return;
+
+
+                _isResultVisible = value;
                 OnPropertyChanged();
             }
         }
@@ -245,7 +259,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void Subnetting()
+        private async void Subnetting()
         {
             DisplayStatusMessage = false;
             IsCalculationRunning = true;
@@ -253,10 +267,42 @@ namespace NETworkManager.ViewModels
             SubnetsResult.Clear();
 
             IPNetwork subnet = IPNetwork.Parse(Subnet);
-            int.TryParse(NewSubnetmaskOrCIDR.TrimStart('/'), out int newCidr);
+            byte.TryParse(NewSubnetmaskOrCIDR.TrimStart('/'), out byte newCidr);
 
-            foreach (IPNetwork network in subnet.Subnet((byte)newCidr))
-                SubnetsResult.Add(network);
+            // Ask the user if there is a large calculation...
+            int baseCidr = subnet.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? 32 : 128;
+
+            if (65535 < (Math.Pow(2, (baseCidr - subnet.Cidr)) / Math.Pow(2, (baseCidr - newCidr))))
+            {
+                MetroDialogSettings settings = AppearanceManager.MetroDialog;
+
+                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_Continue");
+                settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_Cancel");
+
+                settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
+
+                if (await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_AreYouSure"), LocalizationManager.GetStringByKey("String_TheProcessCanTakeUpSomeTimeAndResources"), MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+                {
+                    IsCalculationRunning = false;
+
+                    return;
+                }
+            }
+
+            // This still slows the application / freezes the ui... there are to many updates to the ui thread...
+            await Task.Run(() =>
+            {
+                foreach (IPNetwork network in subnet.Subnet(newCidr))
+                {
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
+                    {
+                        lock (SubnetsResult)
+                            SubnetsResult.Add(network);
+                    }));
+                }
+            });
+
+            IsResultVisible = true;
 
             AddSubnetToHistory(Subnet);
             AddNewSubnetmaskOrCIDRToHistory(NewSubnetmaskOrCIDR);
