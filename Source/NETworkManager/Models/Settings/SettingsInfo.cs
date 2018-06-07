@@ -2375,7 +2375,61 @@ namespace NETworkManager.Models.Settings
         #region Constructor
         public SettingsInfo()
         {
+            // IP Scanner
+            IPScanner_IPRangeHistory.CollectionChanged += CollectionChanged;
 
+            // Port Scanner
+            PortScanner_HostHistory.CollectionChanged += CollectionChanged;
+            PortScanner_PortHistory.CollectionChanged += CollectionChanged;
+
+            // Ping
+            Ping_HostHistory.CollectionChanged += CollectionChanged;
+
+            // Traceroute
+            Traceroute_HostHistory.CollectionChanged += CollectionChanged;
+
+            // DNS Lookup
+            DNSLookup_HostHistory.CollectionChanged += CollectionChanged;
+
+            // Remote Desktop
+            RemoteDesktop_HostHistory.CollectionChanged += CollectionChanged;
+
+            // PuTTY
+            PuTTY_HostHistory.CollectionChanged += CollectionChanged;
+            PuTTY_SerialLineHistory.CollectionChanged += CollectionChanged;
+            PuTTY_PortHistory.CollectionChanged += CollectionChanged;
+            PuTTY_BaudHistory.CollectionChanged += CollectionChanged;
+            PuTTY_UsernameHistory.CollectionChanged += CollectionChanged;
+            PuTTY_ProfileHistory.CollectionChanged += CollectionChanged;
+
+            // SNMP
+            SNMP_HostHistory.CollectionChanged += CollectionChanged;
+            SNMP_OIDHistory.CollectionChanged += CollectionChanged;
+
+            // HTTP Header
+            HTTPHeaders_WebsiteUriHistory.CollectionChanged += CollectionChanged;
+
+            // Subnet Calculator / Calculator
+            SubnetCalculator_Calculator_SubnetHistory.CollectionChanged += CollectionChanged;
+
+            // Subnet Calculator / Subnetting
+            SubnetCalculator_Subnetting_SubnetHistory.CollectionChanged += CollectionChanged;
+            SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory.CollectionChanged += CollectionChanged;
+
+            // Subnet Calculator / Supernetting
+            SubnetCalculator_Supernetting_Subnet1.CollectionChanged += CollectionChanged;
+            SubnetCalculator_Supernetting_Subnet2.CollectionChanged += CollectionChanged;
+
+            // Lookup / OUI
+            Lookup_OUI_MACAddressOrVendorHistory.CollectionChanged += CollectionChanged;
+
+            // Lookup / Port
+            Lookup_Port_PortsHistory.CollectionChanged += CollectionChanged;
+        }
+
+        private void CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            SettingsChanged = true;
         }
         #endregion
     }
