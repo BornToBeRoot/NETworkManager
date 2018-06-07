@@ -233,7 +233,8 @@
     <Compile Include="Converters\TimestampToStringConverter.cs" />
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
     <Compile Include="Converters\ValidateNetworkInterfaceProfileConverter.cs" />
-    <Compile Include="Converters\ValidateSubnetCalculatorIPv4SplitterConverter.cs" />
+    <Compile Include="Converters\ValidateSubnetCalculatorSupernettingConverter.cs" />
+    <Compile Include="Converters\ValidateSubnetCalculatorSubnettingConverter.cs" />
     <Compile Include="Models\Documentation\CommunityManager.cs" />
     <Compile Include="Models\Documentation\ResourceInfo.cs" />
     <Compile Include="Models\Documentation\ResourceManager.cs" />
@@ -280,6 +281,7 @@
     <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Models\Update\UpdateAvailableArgs.cs" />
     <Compile Include="Models\Update\Updater.cs" />
+    <Compile Include="Validators\IPv4IPv6SubnetmaskOrCIDRValidator.cs" />
     <Compile Include="Validators\NoSpacesValidator.cs" />
     <Compile Include="Validators\BaudValidator.cs" />
     <Compile Include="Validators\PrivacyAESValidator.cs" />
@@ -288,7 +290,7 @@
     <Compile Include="Validators\MultipleIPAddressesValidator.cs" />
     <Compile Include="Validators\MultipleHostsValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
-    <Compile Include="Validators\SubnetCalculatorSubnetValidator.cs" />
+    <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="ViewModels\ListenersViewModel.cs" />
     <Compile Include="ViewModels\ConnectionsViewModel.cs" />
     <Compile Include="ViewModels\SubnetCalculatorHostViewModel.cs" />
@@ -298,6 +300,7 @@
     <Compile Include="ViewModels\DNSLookupHostViewModel.cs" />
     <Compile Include="ViewModels\HTTPHeadersHostViewModel.cs" />
     <Compile Include="ViewModels\SNMPHostViewModel.cs" />
+    <Compile Include="ViewModels\SubnetCalculatorSupernettingViewModel.cs" />
     <Compile Include="ViewModels\TracerouteProfileViewModel.cs" />
     <Compile Include="ViewModels\TracerouteHostViewModel.cs" />
     <Compile Include="ViewModels\PuTTYHostViewModel.cs" />
@@ -333,10 +336,10 @@
     <Compile Include="Models\Settings\PortScannerProfileManager.cs" />
     <Compile Include="Validators\IPAddressValidator.cs" />
     <Compile Include="Validators\EmptyOrIPv4AddressValidator.cs" />
-    <Compile Include="Validators\SubnetValidator.cs" />
+    <Compile Include="Validators\IPv4SubnetValidator.cs" />
     <Compile Include="Validators\OpacityTextboxValidator.cs" />
     <Compile Include="ViewModels\DNSLookupViewModel.cs" />
-    <Compile Include="ViewModels\SubnetCalculatorIPv4SplitterViewModel.cs" />
+    <Compile Include="ViewModels\SubnetCalculatorSubnettingViewModel.cs" />
     <Compile Include="ViewModels\LookupOUILookupViewModel.cs" />
     <Compile Include="ViewModels\RemoteDesktopHostViewModel.cs" />
     <Compile Include="ViewModels\CommandLineHelpViewModel.cs" />
@@ -372,6 +375,9 @@
     <Compile Include="Views\SNMPHostView.xaml.cs">
       <DependentUpon>SNMPHostView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SubnetCalculatorSupernettingView.xaml.cs">
+      <DependentUpon>SubnetCalculatorSupernettingView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TracerouteProfileDialog.xaml.cs">
       <DependentUpon>TracerouteProfileDialog.xaml</DependentUpon>
     </Compile>
@@ -399,8 +405,8 @@
     <Compile Include="Views\ARPTableView.xaml.cs">
       <DependentUpon>ARPTableView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SubnetCalculatorIPv4SplitterView.xaml.cs">
-      <DependentUpon>SubnetCalculatorIPv4SplitterView.xaml</DependentUpon>
+    <Compile Include="Views\SubnetCalculatorSubnettingView.xaml.cs">
+      <DependentUpon>SubnetCalculatorSubnettingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SubnetCalculatorHostView.xaml.cs">
       <DependentUpon>SubnetCalculatorHostView.xaml</DependentUpon>
@@ -650,6 +656,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\SubnetCalculatorSupernettingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\TracerouteProfileDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -686,7 +696,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SubnetCalculatorIPv4SplitterView.xaml">
+    <Page Include="Views\SubnetCalculatorSubnettingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1086,7 +1096,7 @@
     </Compile>
     <Compile Include="Validators\SettingsFolderExistsValidator.cs" />
     <Compile Include="Validators\SubnetmaskValidator.cs" />
-    <Compile Include="Validators\SubnetmaskOrCIDRValidator.cs" />
+    <Compile Include="Validators\IPv4SubnetmaskOrCIDRValidator.cs" />
     <Compile Include="Validators\IPv4AddressValidator.cs" />
     <Compile Include="Validators\EmptyValidator.cs" />
     <Compile Include="Validators\PortValidator.cs" />

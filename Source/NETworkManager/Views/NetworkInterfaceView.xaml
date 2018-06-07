@@ -460,12 +460,12 @@
                                             </TextBox.Text>
                                         </TextBox>
                                         <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_SubnetmaskOrCIDR}" />
-                                        <ComboBox x:Name="cbConfigSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnetmaskOrCIDR}" ItemsSource="{x:Static Network:Subnetmask.List}">
+                                        <ComboBox x:Name="cbConfigSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetmaskIPv4CIDR}" ItemsSource="{x:Static Network:Subnetmask.List}">
                                             <ComboBox.Text>
                                                 <Binding Path="ConfigSubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
                                                         <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                        <Validator:SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True"/>
+                                                        <Validator:IPv4SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True"/>
                                                     </Binding.ValidationRules>
                                                 </Binding>
                                             </ComboBox.Text>

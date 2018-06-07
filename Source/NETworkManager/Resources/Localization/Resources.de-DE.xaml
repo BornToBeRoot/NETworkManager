@@ -67,8 +67,7 @@
     <system:String x:Key="String_Header_Scan">Scannen</system:String>
     <system:String x:Key="String_Header_Lookup">Lookup</system:String>
     <system:String x:Key="String_Header_Subnet">Subnetz</system:String>
-    <system:String x:Key="String_Header_IPCalculator">IP-Rechner</system:String>
-    <system:String x:Key="String_Header_IPv4Splitter">IPv4-Splitter</system:String>
+    <system:String x:Key="String_Header_Calculator">Rechner</system:String>
     <system:String x:Key="String_Header_Connect">Verbinden</system:String>
     <system:String x:Key="String_Header_AddSession">Sitzung hinzufügen</system:String>
     <system:String x:Key="String_Header_EditSession">Sitzung bearbeiten</system:String>
@@ -107,7 +106,9 @@
     <system:String x:Key="String_Header_Overwrite">Überschreiben?</system:String>
     <system:String x:Key="String_Header_NewTab">Neuer Tab</system:String>
     <system:String x:Key="String_Header_Resources">Ressourcen</system:String>
-    
+    <system:String x:Key="String_Header_Subnetting">Subnetting</system:String>
+    <system:String x:Key="String_Header_Supernetting">Supernetting</system:String>
+
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Ein leistungsstarkes Tool zum Verwalten von Netzwerken und zur Behebung von Netzwerkproblemen!</system:String>
@@ -289,8 +290,8 @@
     <system:String x:Key="String_Destination">Ziel</system:String>
     <system:String x:Key="String_EnterASubnetToCalculateIt">Geben Sie ein Subnetz ein, um es zu berechnen...</system:String>
     <system:String x:Key="String_Subnet">Subnetz</system:String>
-    <system:String x:Key="String_FirstIPAddress">Erste IP-Adresse</system:String>
-    <system:String x:Key="String_LastIPAddress">Letzte IP-Adresse</system:String>
+    <system:String x:Key="String_FirstUsableIPAddress">Erste nutzbare IP-Adresse</system:String>
+    <system:String x:Key="String_LastUsableIPAddress">Letzte nutzbare IP-Adresse</system:String>
     <system:String x:Key="String_Hosts">Hosts</system:String>
     <system:String x:Key="String_NoEnabledNetworkAdaptersFound">Keine aktivierten Netzwerkadapter gefunden!</system:String>
     <system:String x:Key="String_Domain">Domäne</system:String>
@@ -432,7 +433,11 @@
     <system:String x:Key="String_AddSessionDots">Sitzung hinzufügen...</system:String>
     <system:String x:Key="String_AddClientDots">Client hinzufügen...</system:String>
     <system:String x:Key="String_ShowStatistics">Statistiken anzeigen</system:String>
-    
+    <system:String x:Key="String_Subnet1">Subnetz 1</system:String>
+    <system:String x:Key="String_Subnet2">Subnetz 2</system:String>
+    <system:String x:Key="String_EnterSubnetsToCreateASupernet">Geben Sie Subnetze ein, um ein Supernet zu erstellen...</system:String>
+    <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Geben Sie das Subnetz und eine neue Subnetzmaske ein, um Subnetze zu erstellen...</system:String>
+
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">Wie erstelle ich ein benutzerdefiniertes Thema und Akzent?</system:String>
@@ -528,23 +533,23 @@
     <system:String x:Key="String_Watermark_ExamplePort513">513</system:String>
     <system:String x:Key="String_Watermark_ExamplePort3389">3389</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Address">192.168.178.55</system:String>
-    <system:String x:Key="String_Watermark_ExampleSubnetmask">255.255.255.0</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPv4Subnetmask">255.255.255.0</system:String>
     <system:String x:Key="String_Watermark_ExampleHostnameOrIPAddress">fritz.box or 192.168.178.1</system:String>
     <system:String x:Key="String_Watermark_ExampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150; server-01/24</system:String>
     <system:String x:Key="String_Watermark_LocationOfTheImport">Speicherort der Importdatei...</system:String>
     <system:String x:Key="String_Watermark_ExampleMACAddressesOrVendor">01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5; Intel Corp; Asus</system:String>
     <system:String x:Key="String_Watermark_ExamplePortScanRange">22; 80; 443; 500 - 999; 8080</system:String>
     <system:String x:Key="String_Watermark_ExampleHostnameAndOrIPAddress">192.168.178.1; fritz.box; localhost</system:String>
-    <system:String x:Key="String_Watermark_ExampleSubnetmaskOrCIDR">/24 oder 255.255.255.0</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPv4SubnetmaskIPv4CIDR">/24 oder 255.255.255.0</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Gateway">192.168.178.1</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4DNSServer">8.8.8.8</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4DNSServers">192.168.178.1; 8.8.8.8; 8.8.4.4</system:String>
     <system:String x:Key="String_Watermark_ExamplePortPortRangeOrService">22; 80; https; ldaps; 777 - 999; 8080</system:String>
-    <system:String x:Key="String_Watermark_ExampleSubnet">192.168.178.133/22 oder 192.168.178.133/255.255.252.0</system:String>
-    <system:String x:Key="String_Watermark_ExampleIPv4OrIPv6Subnet">192.168.178.133/22 oder 2001:0db8::/64</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPv4Subnet">192.168.178.133/22 oder 192.168.178.133/255.255.252.0</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPv4IPv6Subnet">192.168.178.133/255.255.255.0 or 2001:0db8::/64</system:String>
     <system:String x:Key="String_Watermark_Filter">Filter...</system:String>
     <system:String x:Key="String_Watermark_ExampleWebsiteUri">http(s)://example.com/index.html</system:String>
-    <system:String x:Key="String_Watermark_ExampleSubnetWithCIDR">192.168.100.0/24</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPv4SubnetWithCIDR">192.168.100.0/24</system:String>
     <system:String x:Key="String_Watermark_ExampleIPScannerProfileName">Switche (Zuhause)</system:String>
     <system:String x:Key="String_Watermark_ExampleGroupSwitche">Switche</system:String>
     <system:String x:Key="String_Watermark_ExampleGroupServers">Server</system:String>
@@ -563,7 +568,9 @@
     <system:String x:Key="String_Watermark_PuTTYLocation">PuTTY Speicherort...</system:String>
     <system:String x:Key="String_Watermark_ExampleBaud9600">9600</system:String>
     <system:String x:Key="String_Watermark_ExampleSerialLine">COM5</system:String>
-    
+    <system:String x:Key="String_Watermark_ExampleIPv4SubnetmaskIPv6CIDR">255.255.255.0 or /64</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPv4IPv6Subnet2">192.168.178.134/255.255.255.0 or 2001:0db9::/64</system:String>
+
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Setze statische IP-Adresse und Gateway...</system:String>
     <system:String x:Key="String_Progress_SetDynamicIPAddress">Setze dynamische IP-Adresse...</system:String>

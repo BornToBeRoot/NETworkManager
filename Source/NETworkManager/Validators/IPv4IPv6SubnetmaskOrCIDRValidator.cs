@@ -6,7 +6,7 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators
 {
-    public class SubnetmaskOrCIDRValidator : ValidationRule
+    public class IPv4IPv6SubnetmaskOrCIDRValidator : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -19,7 +19,7 @@ namespace NETworkManager.Validators
             {
                 if (int.TryParse(subnetmaskOrCidr.TrimStart('/'), out int cidr))
                 {
-                    if (cidr >= 0 && cidr < 33)
+                    if (cidr >= 0 && cidr < 129)
                         return ValidationResult.ValidResult;
                 }
             }

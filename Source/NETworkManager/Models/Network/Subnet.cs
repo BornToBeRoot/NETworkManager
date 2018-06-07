@@ -11,6 +11,7 @@ namespace NETworkManager.Models.Network
     {
         #region Static methods
         // Source: https://blogs.msdn.microsoft.com/knom/2008/12/31/ip-address-calculations-with-c-subnetmasks-networks/
+        [Obsolete("Use IPNetwork for calculation...")]
         public static IPAddress GetIPv4NetworkAddress(IPAddress ipv4Address, IPAddress subnetmask)
         {
             byte[] ipv4AdressBytes = ipv4Address.GetAddressBytes();
@@ -25,6 +26,7 @@ namespace NETworkManager.Models.Network
         }
 
         // Source: https://blogs.msdn.microsoft.com/knom/2008/12/31/ip-address-calculations-with-c-subnetmasks-networks/
+        [Obsolete("Use IPNetwork for calculation...")]
         public static IPAddress GetIPv4Broadcast(IPAddress ipv4Address, IPAddress subnetmask)
         {
             byte[] ipv4AddressBytes = ipv4Address.GetAddressBytes();
@@ -38,6 +40,7 @@ namespace NETworkManager.Models.Network
             return new IPAddress(broadcastBytes);
         }
 
+        [Obsolete("Use IPNetwork for calculation...")]
         public static SubnetInfo CalculateIPv4Subnet(IPAddress ipv4Address, IPAddress subnetmask)
         {
             IPAddress networkAddress = GetIPv4NetworkAddress(ipv4Address, subnetmask);
@@ -78,11 +81,13 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Methods
+        [Obsolete("Use IPNetwork for calculation...")]
         public static Task<SubnetInfo[]> SplitIPv4SubnetAsync(IPAddress ipv4Address, IPAddress subnetmask, IPAddress newSubnetmask, CancellationToken cancellationToken)
         {
             return Task.Run(() => SplitIPv4Subnet(ipv4Address, subnetmask, newSubnetmask, cancellationToken), cancellationToken);
         }
 
+        [Obsolete("Use IPNetwork for calculation...")]
         public static SubnetInfo[] SplitIPv4Subnet(IPAddress ipv4Address, IPAddress subnetmask, IPAddress newSubnetmask, CancellationToken cancellationToken)
         {
             ConcurrentBag<SubnetInfo> bag = new ConcurrentBag<SubnetInfo>();

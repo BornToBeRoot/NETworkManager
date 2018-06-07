@@ -1,36 +1,71 @@
 ﻿using NETworkManager.Models.Settings;
 using System.Collections.Generic;
-using System.Net;
 using System.Windows.Input;
-using System.ComponentModel;
-using System.Windows.Data;
-using System.Linq;
 using NETworkManager.Utilities;
+using System.Windows.Data;
+using System.ComponentModel;
+using System.Linq;
+using System.Net;
 using System.Numerics;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
-    public class SubnetCalculatorCalculatorViewModel : ViewModelBase
+    public class SubnetCalculatorSupernettingViewModel : ViewModelBase
     {
         #region Variables
-        private string _subnet;
-        public string Subnet
+        private string _subnet1;
+        public string Subnet1
         {
-            get { return _subnet; }
+            get { return _subnet1; }
             set
             {
-                if (value == _subnet)
+                if (value == _subnet1)
                     return;
 
-                _subnet = value;
+                _subnet1 = value;
                 OnPropertyChanged();
             }
         }
 
-        private ICollectionView _subnetHistoryView;
-        public ICollectionView SubnetHistoryView
+        private ICollectionView _subnet1HistoryView;
+        public ICollectionView Subnet1HistoryView
         {
-            get { return _subnetHistoryView; }
+            get { return _subnet1HistoryView; }
+        }
+
+        private string _subnet2;
+        public string Subnet2
+        {
+            get { return _subnet2; }
+            set
+            {
+                if (value == _subnet2)
+                    return;
+
+                _subnet2 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ICollectionView _subnet2HistoryView;
+        public ICollectionView Subnet2HistoryView
+        {
+            get { return _subnet2HistoryView; }
+        }
+
+        private bool _isCalculationRunning;
+        public bool IsCalculationRunning
+        {
+            get { return _isCalculationRunning; }
+            set
+            {
+                if (value == _isCalculationRunning)
+                    return;
+
+                _isCalculationRunning = value;
+                OnPropertyChanged();
+            }
         }
 
         private bool _isResultVisible;
@@ -162,20 +197,21 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings
-        public SubnetCalculatorCalculatorViewModel()
+        public SubnetCalculatorSupernettingViewModel()
         {
             // Set collection view
-            _subnetHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Calculator_SubnetHistory);
+            _subnet1HistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Supernetting_Subnet1);
+            _subnet2HistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Supernetting_Subnet2);
         }
         #endregion
 
-        #region ICommands
+        #region ICommands & Actions
         public ICommand CalculateCommand
         {
-            get { return new RelayCommand(p => CalcualateAction()); }
+            get { return new RelayCommand(p => CalculateAction()); }
         }
 
-        private void CalcualateAction()
+        private void CalculateAction()
         {
             Calculate();
         }
@@ -184,9 +220,12 @@ namespace NETworkManager.ViewModels
         #region Methods
         private void Calculate()
         {
-            IsResultVisible = false;
+            IsCalculationRunning = true;
 
-            IPNetwork subnet = IPNetwork.Parse(Subnet);
+            IPNetwork subnet1 = IPNetwork.Parse(Subnet1);
+            IPNetwork subnet2 = IPNetwork.Parse(Subnet2);
+
+            IPNetwork subnet = subnet1.Supernet(subnet2);
 
             NetworkAddress = subnet.Network;
             Broadcast = subnet.Broadcast;
@@ -196,23 +235,44 @@ namespace NETworkManager.ViewModels
             FirstIPAddress = subnet.FirstUsable;
             LastIPAddress = subnet.LastUsable;
             Hosts = subnet.Usable;
-            
+
             IsResultVisible = true;
 
-            AddSubnetToHistory(Subnet);
+            AddSubnet1ToHistory(Subnet1);
+            AddSubnet2ToHistory(Subnet2);
+
+            IsCalculationRunning = false;
         }
 
-        private void AddSubnetToHistory(string subnet)
+        private void AddSubnet1ToHistory(string subnet)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Calculator_SubnetHistory.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Supernetting_Subnet1.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
-            SettingsManager.Current.SubnetCalculator_Calculator_SubnetHistory.Clear();
-            OnPropertyChanged(nameof(Subnet)); // Raise property changed again, after the collection has been cleared
+            SettingsManager.Current.SubnetCalculator_Supernetting_Subnet1.Clear();
+            OnPropertyChanged(nameof(Subnet1)); // Raise property changed again, after the collection has been cleared
 
             // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.SubnetCalculator_Calculator_SubnetHistory.Add(x));
+            list.ForEach(x => SettingsManager.Current.SubnetCalculator_Supernetting_Subnet1.Add(x));
+        }
+
+        private void AddSubnet2ToHistory(string subnet)
+        {
+            // Create the new list
+            List<string> list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Supernetting_Subnet2.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.SubnetCalculator_Supernetting_Subnet2.Clear();
+            OnPropertyChanged(nameof(Subnet2)); // Raise property changed again, after the collection has been cleared
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.SubnetCalculator_Supernetting_Subnet2.Add(x));
+        }
+
+        public void OnShutdown()
+        {
+
         }
         #endregion
     }

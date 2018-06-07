@@ -40,7 +40,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_IPRange}" />
-            <TextBox x:Name="txtIPRange" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSubnetWithCIDR}">
+            <TextBox x:Name="txtIPRange" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetWithCIDR}">
                 <TextBox.Text>
                     <Binding Path="IPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

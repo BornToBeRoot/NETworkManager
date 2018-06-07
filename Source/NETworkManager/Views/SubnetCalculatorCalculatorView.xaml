@@ -30,17 +30,17 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="{DynamicResource String_Subnet}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-            <ComboBox Grid.Column="2" x:Name="cbSubnet" ItemsSource="{Binding SubnetHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4OrIPv6Subnet}" Style="{StaticResource HistoryComboBox}" >
+            <ComboBox Grid.Column="2" x:Name="cbSubnet" ItemsSource="{Binding SubnetHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4IPv6Subnet}" Style="{StaticResource HistoryComboBox}" >
                 <ComboBox.Text>
                     <Binding Path="Subnet" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                         <Binding.ValidationRules>
                             <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <Validator:SubnetCalculatorSubnetValidator ValidatesOnTargetUpdated="True" />
+                            <Validator:IPv4IPv6SubnetValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <Button Grid.Column="4" Command="{Binding CalculateIPv4SubnetCommand}" HorizontalAlignment="Right" IsDefault="True">
+            <Button Grid.Column="4" Command="{Binding CalculateCommand}" HorizontalAlignment="Right" IsDefault="True">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -71,13 +71,13 @@
             </Button>
         </Grid>
         <StackPanel Grid.Row="2">
-            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Details}" Visibility="{Binding IsDetailsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <ScrollViewer Style="{DynamicResource DefaultScrollViewer}" Visibility="{Binding IsDetailsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <ScrollViewer Style="{DynamicResource DefaultScrollViewer}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Grid>
                     <Grid.Resources>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />
                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
-                            <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />                            
+                            <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
                         </Style>
                     </Grid.Resources>
                     <Grid.ColumnDefinitions>
@@ -106,15 +106,15 @@
                     <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Subnetmask, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_CIDR}" />
                     <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding CIDR, StringFormat='/{0}'}" />
-                    <TextBlock Grid.Column="0" Grid.Row="5" Text="{DynamicResource String_FirstIPAddress}" />
+                    <TextBlock Grid.Column="0" Grid.Row="5" Text="{DynamicResource String_FirstUsableIPAddress}" />
                     <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding FirstIPAddress, Converter={StaticResource IPAddressToStringConverter}}" />
-                    <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_LastIPAddress}" />
+                    <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_LastUsableIPAddress}" />
                     <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding LastIPAddress, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="7" Text="{DynamicResource String_Hosts}" />
                     <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Hosts, Converter={StaticResource BigIntegerToStringConverter}}" />
                 </Grid>
             </ScrollViewer>
         </StackPanel>
-        <TextBlock Grid.Row="2" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_EnterASubnetToCalculateIt}" Visibility="{Binding IsDetailsVisible, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
+        <TextBlock Grid.Row="2" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_EnterASubnetToCalculateIt}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
     </Grid>
 </UserControl>

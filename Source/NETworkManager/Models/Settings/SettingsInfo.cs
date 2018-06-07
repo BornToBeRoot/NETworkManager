@@ -2174,49 +2174,79 @@ namespace NETworkManager.Models.Settings
 
         #region Subnet Calculator
         #region Calculator
-        private ObservableCollection<string> _subnetCalculator_IPv4Calculator_SubnetHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> SubnetCalculator_IPv4Calculator_SubnetHistory
+        private ObservableCollection<string> _subnetCalculator_Calculator_SubnetHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> SubnetCalculator_Calculator_SubnetHistory
         {
-            get { return _subnetCalculator_IPv4Calculator_SubnetHistory; }
+            get { return _subnetCalculator_Calculator_SubnetHistory; }
             set
             {
-                if (value == _subnetCalculator_IPv4Calculator_SubnetHistory)
+                if (value == _subnetCalculator_Calculator_SubnetHistory)
                     return;
 
-                _subnetCalculator_IPv4Calculator_SubnetHistory = value;
+                _subnetCalculator_Calculator_SubnetHistory = value;
                 SettingsChanged = true;
             }
         }
         #endregion
 
-        #region Splitter
-        private ObservableCollection<string> _subnetCalculator_IPv4Splitter_SubnetHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> SubnetCalculator_IPv4Splitter_SubnetHistory
+        #region Subnetting
+        private ObservableCollection<string> _subnetCalculator_Subnetting_SubnetHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> SubnetCalculator_Subnetting_SubnetHistory
         {
-            get { return _subnetCalculator_IPv4Splitter_SubnetHistory; }
+            get { return _subnetCalculator_Subnetting_SubnetHistory; }
             set
             {
-                if (value == _subnetCalculator_IPv4Splitter_SubnetHistory)
+                if (value == _subnetCalculator_Subnetting_SubnetHistory)
                     return;
 
-                _subnetCalculator_IPv4Splitter_SubnetHistory = value;
+                _subnetCalculator_Subnetting_SubnetHistory = value;
                 SettingsChanged = true;
             }
         }
 
-        private ObservableCollection<string> _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> SubnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory
+        private ObservableCollection<string> _subnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory
         {
-            get { return _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory; }
+            get { return _subnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory; }
             set
             {
-                if (value == _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory)
+                if (value == _subnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory)
                     return;
 
-                _subnetCalculator_IPv4Splitter_NewSubnetmaskOrCIDRHistory = value;
+                _subnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory = value;
                 SettingsChanged = true;
             }
         }
+        #endregion
+        private ObservableCollection<string> _subnetCalculator_Supernetting_Subnet1 = new ObservableCollection<string>();
+        public ObservableCollection<string> SubnetCalculator_Supernetting_Subnet1
+        {
+            get { return _subnetCalculator_Supernetting_Subnet1; }
+            set
+            {
+                if (value == _subnetCalculator_Supernetting_Subnet1)
+                    return;
+
+                _subnetCalculator_Supernetting_Subnet1 = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _subnetCalculator_Supernetting_Subnet2 = new ObservableCollection<string>();
+        public ObservableCollection<string> SubnetCalculator_Supernetting_Subnet2
+        {
+            get { return _subnetCalculator_Supernetting_Subnet2; }
+            set
+            {
+                if (value == _subnetCalculator_Supernetting_Subnet2)
+                    return;
+
+                _subnetCalculator_Supernetting_Subnet2 = value;
+                SettingsChanged = true;
+            }
+        }
+        #region Supernetting
+
         #endregion
         #endregion
 
