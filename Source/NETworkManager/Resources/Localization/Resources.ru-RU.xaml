@@ -106,8 +106,8 @@
     <system:String x:Key="String_Header_Overwrite">Изменить</system:String>
     <system:String x:Key="String_Header_NewTab">Новая вкладка</system:String>
     <system:String x:Key="String_Header_Resources">Ресурсы</system:String>
-    <system:String x:Key="String_Header_Subnetting">Subnetting</system:String>
-    <system:String x:Key="String_Header_Supernetting">Supernetting</system:String>
+    <system:String x:Key="String_Header_Subnetting">Subnetting</system:String> <!-- new/updated -->
+    <system:String x:Key="String_Header_Supernetting">Supernetting</system:String> <!-- new/updated -->
 
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -290,8 +290,8 @@
     <system:String x:Key="String_Destination">Назначение</system:String>
     <system:String x:Key="String_EnterASubnetToCalculateIt">Введите подсеть для ее расчета...</system:String>
     <system:String x:Key="String_Subnet">Подсеть</system:String>
-    <system:String x:Key="String_FirstUsableIPAddress">First usable IP Address</system:String>
-    <system:String x:Key="String_LastUsableIPAddress">First usable IP Address</system:String>
+    <system:String x:Key="String_FirstUsableIPAddress">First usable IP Address</system:String> <!-- new/updated -->
+    <system:String x:Key="String_LastUsableIPAddress">First usable IP Address</system:String> <!-- new/updated -->
     <system:String x:Key="String_Hosts">Хосты</system:String>
     <system:String x:Key="String_NoEnabledNetworkAdaptersFound">Сетевые адаптеры не найдены!</system:String>
     <system:String x:Key="String_Domain">Домен</system:String>
@@ -417,26 +417,26 @@
     <system:String x:Key="String_RemoteDesktop">Remote Desktop</system:String>
     <system:String x:Key="String_PuTTY">PuTTY</system:String>
     <system:String x:Key="String_SNMP">SNMP</system:String>
-    <system:String x:Key="String_OpenWebsite">Open website</system:String>
-    <system:String x:Key="String_TheFollowingHostnamesCouldNotBeResolved">The following hostnames could not be resolved:</system:String>
-    <system:String x:Key="String_RestartTheApplicationSoThatAllChangesAreApplied">Restart the application so that all settings are applied!</system:String>
-    <system:String x:Key="String_NewTab">New Tab</system:String>
-    <system:String x:Key="String_ShowCurrentApplicationTitle">Show current application title</system:String>
-    <system:String x:Key="String_LocalIPAddress">Local IP Address</system:String>
-    <system:String x:Key="String_LocalPort">Local Port</system:String>
-    <system:String x:Key="String_RemoteIPAddress">Remote IP Address</system:String>
-    <system:String x:Key="String_RemotePort">Remote Port</system:String>
-    <system:String x:Key="String_State">State</system:String>
-    <system:String x:Key="String_AutomaticallyUpdateEvery">Automatically update every</system:String>
-    <system:String x:Key="String_ClearFilter">Clear filter</system:String>
-    <system:String x:Key="String_AddProfileDots">Add profile...</system:String>
-    <system:String x:Key="String_AddSessionDots">Add session...</system:String>
-    <system:String x:Key="String_AddClientDots">Add client...</system:String>
-    <system:String x:Key="String_ShowStatistics">Show statistics</system:String>
-    <system:String x:Key="String_Subnet1">Subnet 1</system:String>
-    <system:String x:Key="String_Subnet2">Subnet 2</system:String>
-    <system:String x:Key="String_EnterSubnetsToCreateASupernet">Enter subnets to create a supernet...</system:String>
-    <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Enter subnet and a new subnet mask to create subnets...</system:String>
+    <system:String x:Key="String_OpenWebsite">Open website</system:String> <!-- new/updated -->
+    <system:String x:Key="String_TheFollowingHostnamesCouldNotBeResolved">The following hostnames could not be resolved:</system:String> <!-- new/updated -->
+    <system:String x:Key="String_RestartTheApplicationSoThatAllChangesAreApplied">Restart the application so that all settings are applied!</system:String> <!-- new/updated -->
+    <system:String x:Key="String_NewTab">New Tab</system:String> <!-- new/updated -->
+    <system:String x:Key="String_ShowCurrentApplicationTitle">Show current application title</system:String> <!-- new/updated -->
+    <system:String x:Key="String_LocalIPAddress">Local IP Address</system:String> <!-- new/updated -->
+    <system:String x:Key="String_LocalPort">Local Port</system:String> <!-- new/updated -->
+    <system:String x:Key="String_RemoteIPAddress">Remote IP Address</system:String> <!-- new/updated -->
+    <system:String x:Key="String_RemotePort">Remote Port</system:String> <!-- new/updated -->
+    <system:String x:Key="String_State">State</system:String> <!-- new/updated -->
+    <system:String x:Key="String_AutomaticallyUpdateEvery">Automatically update every</system:String> <!-- new/updated -->
+    <system:String x:Key="String_ClearFilter">Clear filter</system:String> <!-- new/updated -->
+    <system:String x:Key="String_AddProfileDots">Add profile...</system:String> <!-- new/updated -->
+    <system:String x:Key="String_AddSessionDots">Add session...</system:String> <!-- new/updated -->
+    <system:String x:Key="String_AddClientDots">Add client...</system:String> <!-- new/updated -->
+    <system:String x:Key="String_ShowStatistics">Show statistics</system:String> <!-- new/updated -->
+    <system:String x:Key="String_Subnet1">Subnet 1</system:String> <!-- new/updated -->
+    <system:String x:Key="String_Subnet2">Subnet 2</system:String> <!-- new/updated -->
+    <system:String x:Key="String_EnterSubnetsToCreateASupernet">Enter subnets to create a supernet...</system:String> <!-- new/updated -->
+    <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Enter subnet and a new subnet mask to create subnets...</system:String> <!-- new/updated -->
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Как установить RDP 8.1 на Windows 7 / Server 2008 R2</system:String>
@@ -502,9 +502,9 @@
     <system:String x:Key="String_Button_No">Нет</system:String>
     <system:String x:Key="String_Button_Overwrite">Перезаписать</system:String>
     <system:String x:Key="String_Button_MoveAndRestart">Двигать &amp; Перезапуск</system:String>
-    <system:String x:Key="String_Button_OpenLocation">Open location</system:String>
-    <system:String x:Key="String_Button_OpenSettings">Open settings</system:String>
-    <system:String x:Key="String_Button_ShowLocalLicenses">Show local licenses</system:String>
+    <system:String x:Key="String_Button_OpenLocation">Open location</system:String> <!-- new/updated -->
+    <system:String x:Key="String_Button_OpenSettings">Open settings</system:String> <!-- new/updated -->
+    <system:String x:Key="String_Button_ShowLocalLicenses">Show local licenses</system:String> <!-- new/updated -->
 
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Вырезать</system:String>
@@ -618,9 +618,9 @@
     <system:String x:Key="String_ApplicationName_HTTPHeaders">HTTP Headers</system:String>
     <system:String x:Key="String_ApplicationName_ARPTable">ARP Table</system:String>
     <system:String x:Key="String_ApplicationName_Lookup">Lookup</system:String>
-    <system:String x:Key="String_ApplicationName_Connections">Connections</system:String>
-    <system:String x:Key="String_ApplicationName_Listeners">Listeners</system:String>
-    
+    <system:String x:Key="String_ApplicationName_Connections">Connections</system:String> <!-- new/updated -->
+    <system:String x:Key="String_ApplicationName_Listeners">Listeners</system:String> <!-- new/updated -->
+
     <!-- SettingsView.Name -->
     <system:String x:Key="String_SettingsName_General">Общие</system:String>
     <system:String x:Key="String_SettingsName_Window">Окно</system:String>
