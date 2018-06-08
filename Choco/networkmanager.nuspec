@@ -26,7 +26,7 @@ This is a nuspec. It mostly adheres to https://docs.nuget.org/create/Nuspec-Refe
     <!-- version should MATCH as closely as possible with the underlying software -->
     <!-- Is the version a prerelease of a version? https://docs.nuget.org/create/versioning#creating-prerelease-packages -->
     <!-- Note that unstable versions like 0.0.1 can be considered a released version, but it's possible that one can release a 0.0.1-beta before you release a 0.0.1 version. If the version number is final, that is considered a released version and not a prerelease. -->
-    <version>1.6.2</version>
+    <version>1.6.3</version>
     <!-- <packageSourceUrl>Where is this Chocolatey package located (think GitHub)? packageSourceUrl is highly recommended for the community feed</packageSourceUrl>-->
     <!-- owners is a poor name for maintainers of the package. It sticks around by this name for compatibility reasons. It basically means you. -->
     <owners>BornToBeRoot</owners>
@@ -47,7 +47,7 @@ This is a nuspec. It mostly adheres to https://docs.nuget.org/create/Nuspec-Refe
     <docsUrl>https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</docsUrl>
     <!--<mailingListUrl></mailingListUrl>-->
     <bugTrackerUrl>https://github.com/BornToBeRoot/NETworkManager/issues</bugTrackerUrl>
-    <tags>networkmanager networkinterface ipscanner portscanner wakeonlan traceroute tracert trace ping icmp dns dnslookup subnet calculator httpheader snmp rdp remotedesktop putty ssh</tags>
+    <tags>networkmanager networkinterface network ipscanner ip scan portscanner port wakeonlan wol traceroute tracert trace ping icmp dns dnslookup subnet calculator subnetting supernetting httpheader snmp walk get set v2c v1 v3 rdp remotedesktop putty ssh arp table listeners connections</tags>
     <summary></summary>
     <description>A powerful tool for managing networks and troubleshoot network problems!</description>
     <!-- <releaseNotes>__REPLACE_OR_REMOVE__MarkDown_Okay</releaseNotes> -->
