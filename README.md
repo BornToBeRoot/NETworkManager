@@ -26,8 +26,8 @@
 <div align="center"> 
   <p>      
     :package: Download:
-      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.2.0/NETworkManager_v1.6.2.0_Portable.zip">Portable</a>, 
-      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.2.0/NETworkManager_v1.6.2.0_Setup.msi">MSI</a> or
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.3.0/NETworkManager_v1.6.3.0_Portable.zip">Portable</a>, 
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.3.0/NETworkManager_v1.6.3.0_Setup.msi">MSI</a> or
       <a href="https://chocolatey.org/packages/networkmanager">Chocolatey</a>
   </p>
   <p>
