@@ -15,7 +15,7 @@
     <system:String x:Key="String_Header_Configure">Конфигурация</system:String>
     <system:String x:Key="String_Header_Statistics">Статистика</system:String>
     <system:String x:Key="String_Header_About">Справка</system:String>
-    <system:String x:Key="String_Header_Window">Window</system:String>
+    <system:String x:Key="String_Header_Window">Окно</system:String>
     <system:String x:Key="String_Header_Language">Язык</system:String>
     <system:String x:Key="String_Header_Autostart">Автозапуск</system:String>
     <system:String x:Key="String_Header_Theme">Тема</system:String>
@@ -106,8 +106,8 @@
     <system:String x:Key="String_Header_Overwrite">Изменить</system:String>
     <system:String x:Key="String_Header_NewTab">Новая вкладка</system:String>
     <system:String x:Key="String_Header_Resources">Ресурсы</system:String>
-    <system:String x:Key="String_Header_Subnetting">Subnetting</system:String> <!-- new/updated -->
-    <system:String x:Key="String_Header_Supernetting">Supernetting</system:String> <!-- new/updated -->
+    <system:String x:Key="String_Header_Subnetting">Разбиение на подсети</system:String>
+    <system:String x:Key="String_Header_Supernetting">Супер плетение</system:String>
 
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -153,8 +153,8 @@
     <system:String x:Key="String_UseTheFollowingIPAddress">Использовать следующий IP-адрес:</system:String>
     <system:String x:Key="String_ObtainDNSServerAddressAutomatically">Получить адрес DNS-сервера автоматически </system:String>
     <system:String x:Key="String_UseTheFollowingDNSServerAddresses">Использовать следующие адреса DNS-серверов :</system:String>    
-    <system:String x:Key="String_PrimaryDNSServer">Primary DNS-сервер</system:String>
-    <system:String x:Key="String_SecondaryDNSServer">Secondary DNS-сервер</system:String>
+    <system:String x:Key="String_PrimaryDNSServer">Первичный DNS-сервер</system:String>
+    <system:String x:Key="String_SecondaryDNSServer">Вторичный DNS-сервер</system:String>
     <system:String x:Key="String_Yes">Да</system:String>
     <system:String x:Key="String_No">Нет</system:String>
     <system:String x:Key="String_DNSSuffix">DNS-суффикс</system:String>
@@ -290,8 +290,8 @@
     <system:String x:Key="String_Destination">Назначение</system:String>
     <system:String x:Key="String_EnterASubnetToCalculateIt">Введите подсеть для ее расчета...</system:String>
     <system:String x:Key="String_Subnet">Подсеть</system:String>
-    <system:String x:Key="String_FirstUsableIPAddress">First usable IP Address</system:String> <!-- new/updated -->
-    <system:String x:Key="String_LastUsableIPAddress">First usable IP Address</system:String> <!-- new/updated -->
+    <system:String x:Key="String_FirstUsableIPAddress">Первый используемый IP-адрес</system:String>
+    <system:String x:Key="String_LastUsableIPAddress">Последний используемый IP-адрес</system:String>
     <system:String x:Key="String_Hosts">Хосты</system:String>
     <system:String x:Key="String_NoEnabledNetworkAdaptersFound">Сетевые адаптеры не найдены!</system:String>
     <system:String x:Key="String_Domain">Домен</system:String>
@@ -417,26 +417,26 @@
     <system:String x:Key="String_RemoteDesktop">Remote Desktop</system:String>
     <system:String x:Key="String_PuTTY">PuTTY</system:String>
     <system:String x:Key="String_SNMP">SNMP</system:String>
-    <system:String x:Key="String_OpenWebsite">Open website</system:String> <!-- new/updated -->
-    <system:String x:Key="String_TheFollowingHostnamesCouldNotBeResolved">The following hostnames could not be resolved:</system:String> <!-- new/updated -->
-    <system:String x:Key="String_RestartTheApplicationSoThatAllChangesAreApplied">Restart the application so that all settings are applied!</system:String> <!-- new/updated -->
-    <system:String x:Key="String_NewTab">New Tab</system:String> <!-- new/updated -->
-    <system:String x:Key="String_ShowCurrentApplicationTitle">Show current application title</system:String> <!-- new/updated -->
-    <system:String x:Key="String_LocalIPAddress">Local IP Address</system:String> <!-- new/updated -->
-    <system:String x:Key="String_LocalPort">Local Port</system:String> <!-- new/updated -->
-    <system:String x:Key="String_RemoteIPAddress">Remote IP Address</system:String> <!-- new/updated -->
-    <system:String x:Key="String_RemotePort">Remote Port</system:String> <!-- new/updated -->
-    <system:String x:Key="String_State">State</system:String> <!-- new/updated -->
-    <system:String x:Key="String_AutomaticallyUpdateEvery">Automatically update every</system:String> <!-- new/updated -->
-    <system:String x:Key="String_ClearFilter">Clear filter</system:String> <!-- new/updated -->
-    <system:String x:Key="String_AddProfileDots">Add profile...</system:String> <!-- new/updated -->
-    <system:String x:Key="String_AddSessionDots">Add session...</system:String> <!-- new/updated -->
-    <system:String x:Key="String_AddClientDots">Add client...</system:String> <!-- new/updated -->
-    <system:String x:Key="String_ShowStatistics">Show statistics</system:String> <!-- new/updated -->
-    <system:String x:Key="String_Subnet1">Subnet 1</system:String> <!-- new/updated -->
-    <system:String x:Key="String_Subnet2">Subnet 2</system:String> <!-- new/updated -->
-    <system:String x:Key="String_EnterSubnetsToCreateASupernet">Enter subnets to create a supernet...</system:String> <!-- new/updated -->
-    <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Enter subnet and a new subnet mask to create subnets...</system:String> <!-- new/updated -->
+    <system:String x:Key="String_OpenWebsite">Открыть сайт</system:String>
+    <system:String x:Key="String_TheFollowingHostnamesCouldNotBeResolved">Не удалось разрешить следующие имена узлов:</system:String>
+    <system:String x:Key="String_RestartTheApplicationSoThatAllChangesAreApplied">Перезапустите приложение, чтобы все настройки были применены!</system:String>
+    <system:String x:Key="String_NewTab">Новая вкладка</system:String>
+    <system:String x:Key="String_ShowCurrentApplicationTitle">Показать заголовок текущего приложения</system:String>
+    <system:String x:Key="String_LocalIPAddress">Локальный IP адрес</system:String>
+    <system:String x:Key="String_LocalPort">Локальный порт</system:String>
+    <system:String x:Key="String_RemoteIPAddress">Удаленный IP адрес</system:String>
+    <system:String x:Key="String_RemotePort">Удаленный порт</system:String>
+    <system:String x:Key="String_State">Состояние</system:String>
+    <system:String x:Key="String_AutomaticallyUpdateEvery">Автоматически обновлять всегда</system:String>
+    <system:String x:Key="String_ClearFilter">Очистить фильтр</system:String>
+    <system:String x:Key="String_AddProfileDots">Добавить профиль...</system:String>
+    <system:String x:Key="String_AddSessionDots">Добавить сеанс...</system:String>
+    <system:String x:Key="String_AddClientDots">Добавить клиент...</system:String>
+    <system:String x:Key="String_ShowStatistics">Показать статистику</system:String>
+    <system:String x:Key="String_Subnet1">Подсеть 1</system:String>
+    <system:String x:Key="String_Subnet2">Подсеть 2</system:String>
+    <system:String x:Key="String_EnterSubnetsToCreateASupernet">Введите подсети для создания суперсети...</system:String>
+    <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Введите подсеть и новую маску подсети для создания подсетей...</system:String>
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Как установить RDP 8.1 на Windows 7 / Server 2008 R2</system:String>
@@ -502,9 +502,9 @@
     <system:String x:Key="String_Button_No">Нет</system:String>
     <system:String x:Key="String_Button_Overwrite">Перезаписать</system:String>
     <system:String x:Key="String_Button_MoveAndRestart">Двигать &amp; Перезапуск</system:String>
-    <system:String x:Key="String_Button_OpenLocation">Open location</system:String> <!-- new/updated -->
-    <system:String x:Key="String_Button_OpenSettings">Open settings</system:String> <!-- new/updated -->
-    <system:String x:Key="String_Button_ShowLocalLicenses">Show local licenses</system:String> <!-- new/updated -->
+    <system:String x:Key="String_Button_OpenLocation">Открыть местоположение</system:String>
+    <system:String x:Key="String_Button_OpenSettings">Открыть настройки</system:String>
+    <system:String x:Key="String_Button_ShowLocalLicenses">Показать локальные лицензии</system:String>
 
     <!-- ContextMenuItem.Header -->
     <system:String x:Key="String_ContextMenu_Cut">Вырезать</system:String>
@@ -600,7 +600,7 @@
     <system:String x:Key="String_ValidationError_EnterOneOrMoreValidIPAddresses">Введите один или несколько действительных IP-адресов!</system:String>
     <system:String x:Key="String_ValidationError_EnterValidOID">Введите допустимое OID!</system:String>
     <system:String x:Key="String_ValidationError_KeyMustHave8CharactersOrMore">Ключ должен иметь 8 символов и более!</system:String>
-    <system:String x:Key="String_ValidationError_EnterValidBaud">Enter a valid baud.</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidBaud">Введите допустимый бод.</system:String>
     <system:String x:Key="String_ValidationError_SpacesAreNotAllowed">Пробелы не допускаются!</system:String>
     
     <!-- ApplicationView.Name -->
@@ -618,8 +618,8 @@
     <system:String x:Key="String_ApplicationName_HTTPHeaders">HTTP Headers</system:String>
     <system:String x:Key="String_ApplicationName_ARPTable">ARP Table</system:String>
     <system:String x:Key="String_ApplicationName_Lookup">Lookup</system:String>
-    <system:String x:Key="String_ApplicationName_Connections">Connections</system:String> <!-- new/updated -->
-    <system:String x:Key="String_ApplicationName_Listeners">Listeners</system:String> <!-- new/updated -->
+    <system:String x:Key="String_ApplicationName_Connections">Соединения</system:String>
+    <system:String x:Key="String_ApplicationName_Listeners">Приемники</system:String>
 
     <!-- SettingsView.Name -->
     <system:String x:Key="String_SettingsName_General">Общие</system:String>
@@ -677,9 +677,9 @@
     <system:String x:Key="String_IPStatus_TtlExpired">TTL просроченным транзитом.</system:String>
 
     <!-- TcpStatus -->
-    <system:String x:Key="String_TcpState_Closed">Closed</system:String>
-    <system:String x:Key="String_TcpState_CloseWait">CloseWait</system:String>
-    <system:String x:Key="String_TcpState_Closing">Closing</system:String>
+    <system:String x:Key="String_TcpState_Closed">Закрытый</system:String>
+    <system:String x:Key="String_TcpState_CloseWait">Закрыть Ожидание</system:String>
+    <system:String x:Key="String_TcpState_Closing">Закрытие</system:String>
     <system:String x:Key="String_TcpState_DeleteTcb">DeleteTcb</system:String>
     <system:String x:Key="String_TcpState_Established">Established</system:String>
     <system:String x:Key="String_TcpState_FinWait1">FinWait1</system:String>
@@ -688,13 +688,13 @@
     <system:String x:Key="String_TcpState_Listen">Listen</system:String>
     <system:String x:Key="String_TcpState_SynReceived">SynReceived</system:String>
     <system:String x:Key="String_TcpState_SynSent">SynSent</system:String>
-    <system:String x:Key="String_TcpState_TimeWait">TimeWait</system:String>
-    <system:String x:Key="String_TcpState_Unknown">Unknown</system:String>
+    <system:String x:Key="String_TcpState_TimeWait">Время Ожидания</system:String>
+    <system:String x:Key="String_TcpState_Unknown">Неизвестный</system:String>
 
     <!-- TimeUnit -->
-    <system:String x:Key="String_TimeUnit_Second">Second(s)</system:String>
-    <system:String x:Key="String_TimeUnit_Minute">Minute(s)</system:String>
-    <system:String x:Key="String_TimeUnit_Hour">Hour(s)</system:String>
+    <system:String x:Key="String_TimeUnit_Second">Секунда(ы)</system:String>
+    <system:String x:Key="String_TimeUnit_Minute">Минута(ы)</system:String>
+    <system:String x:Key="String_TimeUnit_Hour">Час(ы)</system:String>
     
     <!-- PortStatus -->
     <system:String x:Key="String_PortStatus_Closed">Закрытый</system:String>

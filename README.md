@@ -40,25 +40,28 @@
 
 <h2>Features</h2>
 
-- Network Interface (Information, Configure)
+- Network Interface - Information, Configure
 - IP-Scanner
 - Port-Scanner
 - Ping
 - Traceroute
 - DNS Lookup
-- Remote Desktop (with Tabs)
-- PuTTY (with Tabs)
-- SNMP - Get/Walk/Set (v1, v2c, v3)
+- Remote Desktop
+- PuTTY
+- SNMP - Get, Walk, Set (v1, v2c, v3)
 - Wake on LAN
 - HTTP Headers
-- Subnet Calculator
-- Lokup (OUI, Port)
+- Subnet Calculator - Calculator, Subnetting, Supernetting
+- Lookup - OUI, Port
+- Connections
+- Listeners
 - ARP Table
 
 <h2>Languages</h2>
 
 - English
 - German
+- Russian
 
 <h2>System requirements</h2>
 
@@ -74,11 +77,9 @@ The more information you can provide me, the quicker I can reproduce and solve t
 
 You can also fork the repository, fix the issue by yourself and send me a pull request.
 
-<h2>Suggestions?</h2>
+<h2>Feature request are welcome!</h2>
 
-You have an idea how the NETworkManager can be improved? Great!
-
-Let me know it by submitting a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new) with your feature request. I will check whether it is useful and feasible.
+Please submit your feature request as Github issue: [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new)
 
 You can also help developing! Fork the repository, do your changes and send me a pull request. 
 
