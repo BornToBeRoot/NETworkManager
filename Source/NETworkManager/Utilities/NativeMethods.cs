@@ -8,11 +8,12 @@ namespace NETworkManager.Utilities
     class NativeMethods
     {
         #region Win32 Constants/Enums
-        public const int WS_BORDER = 0x00800000;
         public const int GWL_STYLE = -16;
         public const int WS_THICKFRAME = 0x00040000;
         public const int SWP_NOZORDER = 0x0004;
         public const int SWP_NOACTIVATE = 0x0010;
+        public const long WS_POPUP = 0x80000000L;
+        public const long WS_CAPTION = 0x00C00000L;
         #endregion
 
         #region Enum

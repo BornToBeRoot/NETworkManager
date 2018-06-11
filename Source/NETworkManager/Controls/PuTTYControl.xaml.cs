@@ -99,8 +99,6 @@ namespace NETworkManager.Controls
         #region Methods       
         private async void Connect()
         {
-
-
             ProcessStartInfo info = new ProcessStartInfo
             {
                 FileName = _puTTYSessionInfo.PuTTYLocation,
@@ -125,8 +123,8 @@ namespace NETworkManager.Controls
                 NativeMethods.ShowWindow(AppWin, NativeMethods.WindowShowStyle.Maximize);
 
                 // Remove border etc.
-                int style = (int)NativeMethods.GetWindowLong(AppWin, NativeMethods.GWL_STYLE);
-                style &= ~(NativeMethods.WS_BORDER | NativeMethods.WS_THICKFRAME);
+                long style = (int)NativeMethods.GetWindowLong(AppWin, NativeMethods.GWL_STYLE);
+                style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME);
                 NativeMethods.SetWindowLongPtr(AppWin, NativeMethods.GWL_STYLE, new IntPtr(style));
 
                 // Resize embedded application & refresh       
