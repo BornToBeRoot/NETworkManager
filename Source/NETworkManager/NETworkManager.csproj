@@ -954,8 +954,6 @@
     <Compile Include="Models\Network\PingReceivedArgs.cs" />
     <Compile Include="Models\Network\PingInfo.cs" />
     <Compile Include="Models\Network\PingOptions.cs" />
-    <Compile Include="Models\Network\Subnet.cs" />
-    <Compile Include="Models\Network\SubnetInfo.cs" />
     <Compile Include="Models\Network\Subnetmask.cs" />
     <Compile Include="Models\Network\SubnetmaskInfo.cs" />
     <Compile Include="Models\Network\Traceroute.cs" />

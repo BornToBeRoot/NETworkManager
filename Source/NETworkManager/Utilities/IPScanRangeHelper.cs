@@ -39,15 +39,9 @@ namespace NETworkManager.Utilities
                 // Match 192.168.0.0/24 or 192.168.0.0/255.255.255.0
                 if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressCidrRegex) || Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressSubnetmaskRegex))
                 {
-                    string[] subnet = ipOrRange.Split('/');
+                    IPNetwork network = IPNetwork.Parse(ipOrRange);
 
-                    IPAddress ip = IPAddress.Parse(subnet[0]);
-                    IPAddress subnetmask = int.TryParse(subnet[1], out int cidr) ? IPAddress.Parse(Subnetmask.ConvertCidrToSubnetmask(cidr)) : IPAddress.Parse(subnet[1]);
-
-                    IPAddress networkAddress = Subnet.GetIPv4NetworkAddress(ip, subnetmask);
-                    IPAddress broadcast = Subnet.GetIPv4Broadcast(ip, subnetmask);
-
-                    Parallel.For(IPv4AddressHelper.ConvertToInt32(networkAddress), IPv4AddressHelper.ConvertToInt32(broadcast) + 1, parallelOptions, i =>
+                    Parallel.For(IPv4AddressHelper.ConvertToInt32(network.Network), IPv4AddressHelper.ConvertToInt32(network.Broadcast) + 1, parallelOptions, i =>
                     {
                         bag.Add(IPv4AddressHelper.ConvertFromInt32(i));
 

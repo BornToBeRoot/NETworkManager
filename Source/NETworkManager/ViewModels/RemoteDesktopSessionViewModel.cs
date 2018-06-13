@@ -33,7 +33,7 @@ namespace NETworkManager.ViewModels
             {
                 if (value == _name)
                     return;
-
+                                
                 _name = value;
 
                 if (!_isLoading)
