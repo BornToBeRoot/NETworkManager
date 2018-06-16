@@ -20,7 +20,7 @@ namespace NETworkManager.Controls
 
         public TabEmptiedResponse TabEmptiedHandler(TabablzControl tabControl, Window window)
         {
-            return TabEmptiedResponse.DoNothing;
+            return window is MainWindow ? TabEmptiedResponse.DoNothing : TabEmptiedResponse.CloseWindowOrLayoutBranch;
         }
     }
 }

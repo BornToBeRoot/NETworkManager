@@ -1,5 +1,6 @@
 ﻿using Dragablz;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Settings;
 using NETworkManager.Views;
 using System.ComponentModel;
@@ -21,6 +22,7 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Variables
+        public IInterTabClient InterTabClient { get; private set; }
         private ApplicationViewManager.Name _applicationName;
 
         private string _applicationTitle;
@@ -50,6 +52,9 @@ namespace NETworkManager.Controls
             DataContext = this;
 
             _applicationName = applicationName;
+
+            InterTabClient = new DragablzInterTabClient(applicationName);
+
 
             InterTabController.Partition = applicationName.ToString();
 

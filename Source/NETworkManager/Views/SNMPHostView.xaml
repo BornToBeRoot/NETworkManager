@@ -17,7 +17,7 @@
     <Grid>
         <dragablz:TabablzControl Focusable="False" Margin="0,-2,0,0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" >
             <dragablz:TabablzControl.InterTabController>
-                <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" x:Name="InterTabController" />
+                <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" MoveWindowWithSolitaryTabs="False" x:Name="InterTabController" />
             </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.Style>
                 <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">

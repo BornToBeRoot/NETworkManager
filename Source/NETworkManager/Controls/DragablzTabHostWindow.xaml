@@ -24,7 +24,7 @@
         </Border>
         <dragablz:TabablzControl Focusable="False" Grid.Row="1" Name="TabsContainer" ClosingItemCallback="{Binding CloseItemCommand}">
             <dragablz:TabablzControl.InterTabController>
-                <dragablz:InterTabController x:Name="InterTabController" />
+                <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" x:Name="InterTabController" />
             </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.Style>
                 <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">                
