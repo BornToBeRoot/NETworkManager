@@ -50,6 +50,9 @@
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource CustomHeaderItemTemplate}" />
         <Setter Property="AdjacentHeaderItemOffset" Value="0" />
+        <Setter Property="Margin" Value="0,-2,0,0" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="EmptyHeaderSizingHint" Value="PreviousTab" />
         <Setter Property="ContentTemplateSelector" Value="{x:Null}" />
         <Setter Property="HeaderItemTemplate">
             <Setter.Value>
@@ -101,8 +104,8 @@
         </Setter>
         <Setter Property="HeaderSuffixContent">
             <Setter.Value>
-                <Grid HorizontalAlignment="Left" Width="40" Height="44">
-                    <Button Style="{StaticResource CleanButton}" Command="dragablz:TabablzControl.AddItemCommand" ToolTip="{DynamicResource String_NewTab}" Focusable="False">
+                <Grid HorizontalAlignment="Right" Width="40" Height="44">
+                    <Button Style="{StaticResource CleanButton}" Command="{Binding AddTabCommand}" ToolTip="{DynamicResource String_NewTab}" Focusable="False">
                         <Rectangle Width="20" Height="20">
                             <Rectangle.OpacityMask>
                                 <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
@@ -125,9 +128,11 @@
         <Setter Property="ContentTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <ContentControl Content="{Binding Content}" />
+                    <ContentControl Content="{Binding View}" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}" />
 </ResourceDictionary>

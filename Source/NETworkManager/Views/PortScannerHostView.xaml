@@ -23,44 +23,10 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition MinWidth="40" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="350" />
         </Grid.ColumnDefinitions>
-        <dragablz:TabablzControl Focusable="False" Grid.Column="0" Grid.Row="0" Margin="0,-2,0,0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" >
+        <dragablz:TabablzControl Grid.Column="0" Grid.Row="0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" MoveWindowWithSolitaryTabs="False" x:Name="InterTabController" />
             </dragablz:TabablzControl.InterTabController>
-            <dragablz:TabablzControl.Style>
-                <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">
-                    <Setter Property="HeaderSuffixContent" >
-                        <Setter.Value>
-                            <Grid HorizontalAlignment="Left" Width="40" Height="44">
-                                <Button Style="{StaticResource CleanButton}" Command="{Binding AddTabCommand}" ToolTip="{DynamicResource String_NewTab}" Focusable="False">
-                                    <Rectangle Width="20" Height="20">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
-                                        </Rectangle.OpacityMask>
-                                        <Rectangle.Style>
-                                            <Style TargetType="{x:Type Rectangle}">
-                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Rectangle.Style>
-                                    </Rectangle>
-                                </Button>
-                            </Grid>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate>
-                                <ContentPresenter Content="{Binding View}" />
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </dragablz:TabablzControl.Style>
         </dragablz:TabablzControl>
         <Grid Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">
             <Grid.Style>
