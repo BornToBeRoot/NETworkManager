@@ -17,9 +17,12 @@
             <RowDefinition Height="10" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ScrollViewer Grid.Row="0" Style="{StaticResource DefaultScrollViewer}">
-            <StackPanel>
-                <Grid Margin="0,0,0,20">
+        <TabControl Margin="0,0,0,20">
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource ProfileTabItem}" />
+            </TabControl.Resources>
+            <TabItem Header="General">
+                <Grid Margin="0,20,0,0">
                     <Grid.Resources>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
@@ -78,57 +81,64 @@
                         </Rectangle.Resources>
                     </Rectangle>
                 </Grid>
-                <TextBlock Text="Select where the profile should appear and set advanced settings:" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
-                <Expander Style="{StaticResource HeaderExpander}" IsExpanded="{Binding ElementName=cbIPScanner, Path=IsChecked}" Margin="0,0,0,20">
-                    <Expander.Header>
-                        <CheckBox Content="IP Scanner" x:Name="cbIPScanner"/>
-                    </Expander.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="10" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Host}" />
-                        <TextBox x:Name="txtIPScannerIPRange" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
-                            <TextBox.Text>
-                                <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                        <Validator:NoSpacesValidator ValidatesOnTargetUpdated="True" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                    </Grid>
-                    
-                </Expander>
-                <Expander Style="{StaticResource HeaderExpander}" IsExpanded="{Binding ElementName=cbPortScanner, Path=IsChecked}" Margin="0,0,0,20">
-                    <Expander.Header>
-                        <CheckBox Content="Port Scanner" x:Name="cbPortScanner"/>
-                    </Expander.Header>
-                    <StackPanel>
-                        <TextBlock Text="Test" />
-                        <TextBlock Text="Test" />
-                        <TextBlock Text="Test" />
-                        <TextBlock Text="Test" />
-                    </StackPanel>
-                </Expander>
-                <Expander Style="{StaticResource HeaderExpander}" IsExpanded="{Binding ElementName=cbTraceroute, Path=IsChecked}" Margin="0,0,0,20">
-                    <Expander.Header>
-                        <CheckBox Content="Traceroute" x:Name="cbTraceroute"/>
-                    </Expander.Header>
-                    <StackPanel>
-                        <TextBlock Text="Test" />
-                        <TextBlock Text="Test" />
-                        <TextBlock Text="Test" />
-                        <TextBlock Text="Test" />
-                    </StackPanel>
-                </Expander>
-            </StackPanel>
+            </TabItem>
+            <TabItem Header="{DynamicResource String_Header_IPScanner}">
+                <Grid Margin="0,20,0,0">
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Enable" />
+                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" />
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Inherit Hostname from General" />
+                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OnLabel="" OffLabel="" IsChecked="True" />
+                    <TextBlock Grid.Column="0" Grid.Row="4" Text="IP Range" />
+                    <TextBox x:Name="txtIPRange" Grid.Column="2" Grid.Row="4" IsEnabled="False" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetWithCIDR}">
+                        <TextBox.Text>
+                            <Binding Path="IPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                    <Validator:IPScanRangeValidator ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{DynamicResource String_Header_PortScanner}">
 
-        </ScrollViewer>
+            </TabItem>
+            <TabItem Header="{DynamicResource String_Header_Traceroute}">
 
+            </TabItem>
+            <TabItem Header="{DynamicResource String_Header_Ping}">
+
+            </TabItem>
+            <TabItem Header="{DynamicResource String_Header_RemoteDesktop}">
+
+            </TabItem>
+            <TabItem Header="{DynamicResource String_Header_PuTTY}">
+
+            </TabItem>
+            <TabItem Header="{DynamicResource String_Header_WakeOnLAN}">
+
+            </TabItem>
+        </TabControl>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{DynamicResource String_Button_Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
             <Button Content="{DynamicResource String_Button_Save}" Command="{Binding SaveCommand}" IsDefault="True" Margin="10,0,0,0">
