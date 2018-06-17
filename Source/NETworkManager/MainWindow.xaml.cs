@@ -21,6 +21,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using NETworkManager.Models.Update;
 using NETworkManager.Models.Documentation;
+using NETworkManager.ViewModels;
 
 namespace NETworkManager
 {
@@ -305,7 +306,7 @@ namespace NETworkManager
         }
 
         // Hide window after it shows up... not nice, but otherwise the hotkeys do not work
-        protected override void OnContentRendered(EventArgs e)
+        protected async override void OnContentRendered(EventArgs e)
         {
             base.OnContentRendered(e);
 
@@ -316,6 +317,33 @@ namespace NETworkManager
             // Chech for updates...
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
                 CheckForUpdates();
+
+
+
+
+
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
+            };
+
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            {
+                this.HideMetroDialogAsync(customDialog);
+            }, instance =>
+            {
+                this.HideMetroDialogAsync(customDialog);
+            }, new List<string>() { "test" });
+
+            customDialog.Content = new ProfileDialog
+            {
+                DataContext = profileViewModel
+            };
+
+            await this.ShowMetroDialogAsync(customDialog);
+
+
+
         }
 
         private void LoadApplicationList()
