@@ -409,12 +409,6 @@ namespace NETworkManager.ViewModels
                 if (NetworkInterfaceProfileManager.ProfilesFileName == fileName)
                     return true;
 
-                if (IPScannerProfileManager.ProfilesFileName == fileName)
-                    return true;
-
-                if (PortScannerProfileManager.ProfilesFileName == fileName)
-                    return true;
-
                 if (PingProfileManager.ProfilesFileName == fileName)
                     return true;
 
@@ -546,12 +540,6 @@ namespace NETworkManager.ViewModels
             if (NetworkInterfaceProfilesExists && (ResetEverything || ResetNetworkInterfaceProfiles))
                 NetworkInterfaceProfileManager.Reset();
 
-            if (IPScannerProfilesExists && (ResetEverything || ResetIPScannerProfiles))
-                IPScannerProfileManager.Reset();
-                        
-            if (PortScannerProfilesExists && (ResetEverything || ResetPortScannerProfiles))
-                PortScannerProfileManager.Reset();
-
             if (PingProfilesExists && (ResetEverything || ResetPingProfiles))
                 PingProfileManager.Reset();
 
@@ -615,15 +603,12 @@ namespace NETworkManager.ViewModels
             if (SettingsManager.Current.SettingsChanged)
                 SettingsManager.Save();
 
+            if (ProfileManager.ProfilesChanged)
+                ProfileManager.Save();
+
             if (NetworkInterfaceProfileManager.ProfilesChanged)
                 NetworkInterfaceProfileManager.Save();
-
-            if (IPScannerProfileManager.ProfilesChanged)
-                IPScannerProfileManager.Save();
                         
-            if (PortScannerProfileManager.ProfilesChanged)
-                PortScannerProfileManager.Save();
-
             if (PingProfileManager.ProfilesChanged)
                 PingProfileManager.Save();
 
@@ -642,8 +627,6 @@ namespace NETworkManager.ViewModels
             // Check if files exist
             ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
             NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
-            IPScannerProfilesExists = File.Exists(IPScannerProfileManager.GetProfilesFilePath());
-            PortScannerProfilesExists = File.Exists(PortScannerProfileManager.GetProfilesFilePath());
             PingProfilesExists = File.Exists(PingProfileManager.GetProfilesFilePath());
             TracerouteProfilesExists = File.Exists(TracerouteProfileManager.GetProfilesFilePath());
             RemoteDesktopSessionsExists = File.Exists(RemoteDesktopSessionManager.GetSessionsFilePath());

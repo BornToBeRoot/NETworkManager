@@ -784,15 +784,6 @@ namespace NETworkManager.ViewModels.Settings
                         NetworkInterfaceProfileManager.Load(!ImportOverrideNetworkInterfaceProfiles);
                 }
 
-                if (ImportIPScannerProfilesExists && (ImportEverything || ImportIPScannerProfiles))
-                {
-                    importOptions.Add(ImportExportManager.ImportExportOptions.IPScannerProfiles);
-
-                    // Load ip scanner profiles (option: add)
-                    if (IPScannerProfileManager.Profiles == null)
-                        IPScannerProfileManager.Load(!ImportOverrideIPScannerProfiles);
-                }
-
                 if (ImportPingProfilesExists && (ImportEverything || ImportPingProfiles))
                 {
                     importOptions.Add(ImportExportManager.ImportExportOptions.PingProfiles);
@@ -809,15 +800,6 @@ namespace NETworkManager.ViewModels.Settings
                     // Load traceroute profiles (option: add)
                     if (TracerouteProfileManager.Profiles == null)
                         TracerouteProfileManager.Load(!ImportOverrideTracerouteProfiles);
-                }
-
-                if (ImportPortScannerProfilesExists && (ImportEverything || ImportPortScannerProfiles))
-                {
-                    importOptions.Add(ImportExportManager.ImportExportOptions.PortScannerProfiles);
-
-                    // Load port scanner profiles (option: add)
-                    if (PortScannerProfileManager.Profiles == null)
-                        PortScannerProfileManager.Load(!ImportOverridePortScannerProfiles);
                 }
 
                 if (ImportRemoteDesktopSessionsExists && (ImportEverything || ImportRemoteDesktopSessions))
@@ -853,12 +835,6 @@ namespace NETworkManager.ViewModels.Settings
                 // Do the import (replace or add)
                 if (importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles))
                     NetworkInterfaceProfileManager.Import(ImportEverything || ImportOverrideNetworkInterfaceProfiles);
-
-                if (importOptions.Contains(ImportExportManager.ImportExportOptions.IPScannerProfiles))
-                    IPScannerProfileManager.Import(ImportEverything || ImportOverrideIPScannerProfiles);
-
-                if (importOptions.Contains(ImportExportManager.ImportExportOptions.PortScannerProfiles))
-                    PortScannerProfileManager.Import(ImportEverything || ImportOverridePortScannerProfiles);
 
                 if (importOptions.Contains(ImportExportManager.ImportExportOptions.PingProfiles))
                     PingProfileManager.Import(ImportEverything || ImportOverridePingProfiles);
@@ -978,14 +954,11 @@ namespace NETworkManager.ViewModels.Settings
             if (SettingsManager.Current.SettingsChanged)
                 SettingsManager.Save();
 
+            if (ProfileManager.ProfilesChanged)
+                ProfileManager.Save();
+
             if (NetworkInterfaceProfileManager.ProfilesChanged)
                 NetworkInterfaceProfileManager.Save();
-
-            if (IPScannerProfileManager.ProfilesChanged)
-                IPScannerProfileManager.Save();
-
-            if (PortScannerProfileManager.ProfilesChanged)
-                PortScannerProfileManager.Save();
 
             if (PingProfileManager.ProfilesChanged)
                 PingProfileManager.Save();
@@ -1005,8 +978,6 @@ namespace NETworkManager.ViewModels.Settings
             // Check if files exist
             ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
             NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
-            IPScannerProfilesExists = File.Exists(IPScannerProfileManager.GetProfilesFilePath());
-            PortScannerProfilesExists = File.Exists(PortScannerProfileManager.GetProfilesFilePath());
             PingProfilesExists = File.Exists(PingProfileManager.GetProfilesFilePath());
             TracerouteProfilesExists = File.Exists(TracerouteProfileManager.GetProfilesFilePath());
             RemoteDesktopSessionsExists = File.Exists(RemoteDesktopSessionManager.GetSessionsFilePath());

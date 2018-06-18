@@ -108,6 +108,8 @@
     <system:String x:Key="String_Header_Resources">Ressourcen</system:String>
     <system:String x:Key="String_Header_Subnetting">Subnetting</system:String>
     <system:String x:Key="String_Header_Supernetting">Supernetting</system:String>
+    <system:String x:Key="String_Header_NetworkInterface">Netzwerkinterface</system:String>
+    <system:String x:Key="String_Header_General">Allgemein</system:String> <!-- new updated -->
 
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>

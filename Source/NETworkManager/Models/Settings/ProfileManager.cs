@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Xml.Serialization;
+using NETworkManager.ViewModels;
 
 namespace NETworkManager.Models.Settings
 {
-    public static class IPScannerProfileManager
+    public static class ProfileManager
     {
-        public const string ProfilesFileName = "IPScanner.profiles";
+        public const string ProfilesFileName = "Profiles.xml";
 
-        public static ObservableCollection<IPScannerProfileInfo> Profiles { get; set; }
+        public static ObservableCollection<ProfileInfo> Profiles { get; set; }
         public static bool ProfilesChanged { get; set; }
 
         public static string GetProfilesFilePath()
@@ -22,7 +22,7 @@ namespace NETworkManager.Models.Settings
         {
             List<string> list = new List<string>();
 
-            foreach (IPScannerProfileInfo profile in Profiles)
+            foreach (ProfileInfo profile in Profiles)
             {
                 if (!list.Contains(profile.Group))
                     list.Add(profile.Group);
@@ -33,12 +33,12 @@ namespace NETworkManager.Models.Settings
 
         public static void Load(bool deserialize = true)
         {
-            Profiles = new ObservableCollection<IPScannerProfileInfo>();
+            Profiles = new ObservableCollection<ProfileInfo>();
 
             if (deserialize)
                 DeserializeFromFile();
 
-            Profiles.CollectionChanged += Templates_CollectionChanged;
+            Profiles.CollectionChanged += Profiles_CollectionChanged; ;
         }
 
         public static void Import(bool overwrite)
@@ -53,16 +53,16 @@ namespace NETworkManager.Models.Settings
         {
             if (File.Exists(GetProfilesFilePath()))
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<IPScannerProfileInfo>));
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<ProfileInfo>));
 
                 using (FileStream fileStream = new FileStream(GetProfilesFilePath(), FileMode.Open))
                 {
-                    ((List<IPScannerProfileInfo>)(xmlSerializer.Deserialize(fileStream))).ForEach(profile => AddProfile(profile));
+                    ((List<ProfileInfo>)(xmlSerializer.Deserialize(fileStream))).ForEach(profile => AddProfile(profile));
                 }
             }
         }
 
-        private static void Templates_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private static void Profiles_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             ProfilesChanged = true;
         }
@@ -76,11 +76,11 @@ namespace NETworkManager.Models.Settings
 
         private static void SerializeToFile()
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<IPScannerProfileInfo>));
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<ProfileInfo>));
 
             using (FileStream fileStream = new FileStream(GetProfilesFilePath(), FileMode.Create))
             {
-                xmlSerializer.Serialize(fileStream, new List<IPScannerProfileInfo>(Profiles));
+                xmlSerializer.Serialize(fileStream, new List<ProfileInfo>(Profiles));
             }
         }
 
@@ -97,12 +97,32 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        public static void AddProfile(IPScannerProfileInfo profile)
+        public static void AddProfile(ProfileInfo profile)
         {
             Profiles.Add(profile);
         }
 
-        public static void RemoveProfile(IPScannerProfileInfo profile)
+        public static void AddProfile(ProfileViewModel instance)
+        {
+            AddProfile(new ProfileInfo()
+            {
+                Name = instance.Name,
+                Host = instance.Host,
+                Group = instance.Group,
+                Tags = instance.Tags,
+
+                IPScanner_Enabled = instance.IPScanner_Enabled,
+                IPScanner_InheritHost = instance.IPScanner_InheritHost,
+                IPScanner_IPRange = instance.IPScanner_InheritHost ? instance.Host : instance.IPScanner_IPRange,
+
+                PortScanner_Enabled = instance.PortScanner_Enabled,
+                PortScanner_InheritHost = instance.PortScanner_InheritHost,
+                PortScanner_Host = instance.PortScanner_InheritHost ? instance.Host : instance.PortScanner_Host,
+                PortScanner_Ports = instance.PortScanner_Ports
+            });
+        }
+
+        public static void RemoveProfile(ProfileInfo profile)
         {
             Profiles.Remove(profile);
         }
@@ -110,7 +130,7 @@ namespace NETworkManager.Models.Settings
         public static void RenameGroup(string oldGroup, string group)
         {
             // Go through all groups
-            for(int i=0; i < Profiles.Count; i++ )
+            for (int i = 0; i < Profiles.Count; i++)
             {
                 // Find specific group
                 if (Profiles[i].Group == oldGroup)

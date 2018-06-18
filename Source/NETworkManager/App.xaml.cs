@@ -101,9 +101,13 @@ namespace NETworkManager
                 if (SettingsManager.Current.SettingsChanged) // This will also create the "Settings" folder, if it does not exist
                     SettingsManager.Save();
 
+                if (ProfileManager.ProfilesChanged)
+                    ProfileManager.Save();
+
                 if (CredentialManager.CredentialsChanged)
                     CredentialManager.Save();
 
+                /*
                 if (NetworkInterfaceProfileManager.ProfilesChanged)
                     NetworkInterfaceProfileManager.Save();
 
@@ -127,7 +131,7 @@ namespace NETworkManager
 
                 if (WakeOnLANClientManager.ClientsChanged)
                     WakeOnLANClientManager.Save();
-
+                */
             }
         }
     }

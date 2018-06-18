@@ -99,12 +99,6 @@ namespace NETworkManager.Models.Settings
             if (fileName == NetworkInterfaceProfileManager.ProfilesFileName)
                 return ImportExportOptions.NetworkInterfaceProfiles;
 
-            if (fileName == IPScannerProfileManager.ProfilesFileName)
-                return ImportExportOptions.IPScannerProfiles;
-                        
-            if (fileName == PortScannerProfileManager.ProfilesFileName)
-                return ImportExportOptions.PortScannerProfiles;
-
             if (fileName == PingProfileManager.ProfilesFileName)
                 return ImportExportOptions.PingProfiles;
 
@@ -131,10 +125,6 @@ namespace NETworkManager.Models.Settings
                     return SettingsManager.GetSettingsFileName();
                 case ImportExportOptions.NetworkInterfaceProfiles:
                     return NetworkInterfaceProfileManager.ProfilesFileName;
-                case ImportExportOptions.IPScannerProfiles:
-                    return IPScannerProfileManager.ProfilesFileName;
-                case ImportExportOptions.PortScannerProfiles:
-                    return PortScannerProfileManager.ProfilesFileName;
                 case ImportExportOptions.PingProfiles:
                     return PingProfileManager.ProfilesFileName;
                 case ImportExportOptions.TracerouteProfiles:
@@ -158,10 +148,6 @@ namespace NETworkManager.Models.Settings
                     return SettingsManager.GetSettingsFilePath();
                 case ImportExportOptions.NetworkInterfaceProfiles:
                     return NetworkInterfaceProfileManager.GetProfilesFilePath();
-                case ImportExportOptions.IPScannerProfiles:
-                    return IPScannerProfileManager.GetProfilesFilePath();
-                case ImportExportOptions.PortScannerProfiles:
-                    return PortScannerProfileManager.GetProfilesFilePath();
                 case ImportExportOptions.PingProfiles:
                     return PingProfileManager.GetProfilesFilePath();
                 case ImportExportOptions.TracerouteProfiles:
