@@ -70,7 +70,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBox x:Name="txtSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}"/>
-                <ListBox Grid.Row="2" ItemsSource="{Binding TracerouteProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
+                <ListBox Grid.Row="2" ItemsSource="{Binding Profiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                     <ListBox.Resources>
                         <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{DynamicResource String_Trace}" Command="{Binding TraceProfileCommand}">
@@ -170,7 +170,7 @@
                         <Style TargetType="{x:Type Grid}">
                             <Setter Property="Visibility" Value="Collapsed" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding TracerouteProfiles.Count}" Value="0">
+                                <DataTrigger Binding="{Binding Profiles.Count}" Value="0">
                                     <Setter Property="Visibility" Value="Visible" />
                                 </DataTrigger>
                             </Style.Triggers>

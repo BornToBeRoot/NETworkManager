@@ -149,8 +149,8 @@
                 <CheckBox Content="{DynamicResource String_PortScannerProfiles}" IsEnabled="{Binding PortScannerProfilesExists}" IsChecked="{Binding ResetPortScannerProfiles}" Margin="0,0,0,10" />
                 <CheckBox Content="{DynamicResource String_PingProfiles}" IsEnabled="{Binding PingProfilesExists}" IsChecked="{Binding ResetPingProfiles}" Margin="0,0,0,10" />
                 <CheckBox Content="{DynamicResource String_TracerouteProfiles}" IsEnabled="{Binding TracerouteProfilesExists}" IsChecked="{Binding ResetTracerouteProfiles}" Margin="0,0,0,10" />
-                <CheckBox Content="{DynamicResource String_RemoteDesktopSessions}" IsEnabled="{Binding RemoteDesktopSessionsExists}" IsChecked="{Binding ResetRemoteDesktopSessions}" Margin="0,0,0,10" />
-                <CheckBox Content="{DynamicResource String_PuTTYSessions}" IsEnabled="{Binding PuTTYSessionsExists}" IsChecked="{Binding ResetPuTTYSessions}" Margin="0,0,0,10" />
+                <CheckBox Content="{DynamicResource String_RemoteDesktopProfiles}" IsEnabled="{Binding RemoteDesktopProfilesExists}" IsChecked="{Binding ResetRemoteDesktopProfiles}" Margin="0,0,0,10" />
+                <CheckBox Content="{DynamicResource String_PuTTYProfiles}" IsEnabled="{Binding PuTTYProfilesExists}" IsChecked="{Binding ResetPuTTYProfiles}" Margin="0,0,0,10" />
                 <CheckBox Content="{DynamicResource String_WakeOnLANClients}" IsEnabled="{Binding WakeOnLANClientsExists}" IsChecked="{Binding ResetWakeOnLANClients}" />
             </StackPanel>
         </GroupBox>
@@ -172,8 +172,8 @@
                                     <Binding Path="ResetPortScannerProfiles" />
                                     <Binding Path="ResetPingProfiles" />
                                     <Binding Path="ResetTracerouteProfiles" />
-                                    <Binding Path="ResetRemoteDesktopSessions" />
-                                    <Binding Path="ResetPuTTYSessions" />
+                                    <Binding Path="ResetRemoteDesktopProfiles" />
+                                    <Binding Path="ResetPuTTYProfiles" />
                                     <Binding Path="ResetWakeOnLANClients" />
                                 </MultiBinding>
                             </DataTrigger.Binding>

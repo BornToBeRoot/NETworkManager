@@ -260,58 +260,58 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _remoteDesktopSessionsExists;
-        public bool RemoteDesktopSessionsExists
+        private bool _remoteDesktopProfilesExists;
+        public bool RemoteDesktopProfilesExists
         {
-            get { return _remoteDesktopSessionsExists; }
+            get { return _remoteDesktopProfilesExists; }
             set
             {
-                if (value == _remoteDesktopSessionsExists)
+                if (value == _remoteDesktopProfilesExists)
                     return;
 
-                _remoteDesktopSessionsExists = value;
+                _remoteDesktopProfilesExists = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _resetRemoteDesktopSessions;
-        public bool ResetRemoteDesktopSessions
+        private bool _resetRemoteDesktopProfiles;
+        public bool ResetRemoteDesktopProfiles
         {
-            get { return _resetRemoteDesktopSessions; }
+            get { return _resetRemoteDesktopProfiles; }
             set
             {
-                if (value == _resetRemoteDesktopSessions)
+                if (value == _resetRemoteDesktopProfiles)
                     return;
 
-                _resetRemoteDesktopSessions = value;
+                _resetRemoteDesktopProfiles = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _puTTYSessionsExists;
-        public bool PuTTYSessionsExists
+        private bool _puTTYProfilesExists;
+        public bool PuTTYProfilesExists
         {
-            get { return _puTTYSessionsExists; }
+            get { return _puTTYProfilesExists; }
             set
             {
-                if (value == _puTTYSessionsExists)
+                if (value == _puTTYProfilesExists)
                     return;
 
-                _puTTYSessionsExists = value;
+                _puTTYProfilesExists = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _resetPuTTYSessions;
-        public bool ResetPuTTYSessions
+        private bool _resetPuTTYProfiles;
+        public bool ResetPuTTYProfiles
         {
-            get { return _resetPuTTYSessions; }
+            get { return _resetPuTTYProfiles; }
             set
             {
-                if (value == _resetPuTTYSessions)
+                if (value == _resetPuTTYProfiles)
                     return;
 
-                _resetPuTTYSessions = value;
+                _resetPuTTYProfiles = value;
                 OnPropertyChanged();
             }
         }
@@ -409,19 +409,7 @@ namespace NETworkManager.ViewModels
                 if (NetworkInterfaceProfileManager.ProfilesFileName == fileName)
                     return true;
 
-                if (PingProfileManager.ProfilesFileName == fileName)
-                    return true;
-
-                if (PingProfileManager.ProfilesFileName == fileName)
-                    return true;
-
-                if (RemoteDesktopSessionManager.SessionsFileName == fileName)
-                    return true;
-
-                if (PuTTYSessionManager.SessionsFileName == fileName)
-                    return true;
-
-                if (WakeOnLANClientManager.ClientsFileName == fileName)
+                if (PuTTYProfileManager.ProfilesFileName == fileName)
                     return true;
             }
 
@@ -540,20 +528,8 @@ namespace NETworkManager.ViewModels
             if (NetworkInterfaceProfilesExists && (ResetEverything || ResetNetworkInterfaceProfiles))
                 NetworkInterfaceProfileManager.Reset();
 
-            if (PingProfilesExists && (ResetEverything || ResetPingProfiles))
-                PingProfileManager.Reset();
-
-            if (TracerouteProfilesExists && (ResetEverything || ResetTracerouteProfiles))
-                TracerouteProfileManager.Reset();
-
-            if (RemoteDesktopSessionsExists && (ResetEverything || ResetRemoteDesktopSessions))
-                RemoteDesktopSessionManager.Reset();
-
-            if (PuTTYSessionsExists && (ResetEverything || ResetPuTTYSessions))
-                PuTTYSessionManager.Reset();
-
-            if (WakeOnLANClientsExists && (ResetEverything || ResetWakeOnLANClients))
-                WakeOnLANClientManager.Reset();
+            if (PuTTYProfilesExists && (ResetEverything || ResetPuTTYProfiles))
+                PuTTYProfileManager.Reset();
 
             // Restart after reset or show a completed message
             if (forceRestart)
@@ -609,29 +585,13 @@ namespace NETworkManager.ViewModels
             if (NetworkInterfaceProfileManager.ProfilesChanged)
                 NetworkInterfaceProfileManager.Save();
                         
-            if (PingProfileManager.ProfilesChanged)
-                PingProfileManager.Save();
+            if (PuTTYProfileManager.ProfilesChanged)
+                PuTTYProfileManager.Save();
 
-            if (TracerouteProfileManager.ProfilesChanged)
-                TracerouteProfileManager.Save();
-
-            if (RemoteDesktopSessionManager.SessionsChanged)
-                RemoteDesktopSessionManager.Save();
-
-            if (PuTTYSessionManager.SessionsChanged)
-                PuTTYSessionManager.Save();
-
-            if (WakeOnLANClientManager.ClientsChanged)
-                WakeOnLANClientManager.Save();
-            
             // Check if files exist
             ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
             NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
-            PingProfilesExists = File.Exists(PingProfileManager.GetProfilesFilePath());
-            TracerouteProfilesExists = File.Exists(TracerouteProfileManager.GetProfilesFilePath());
-            RemoteDesktopSessionsExists = File.Exists(RemoteDesktopSessionManager.GetSessionsFilePath());
-            PuTTYSessionsExists = File.Exists(PuTTYSessionManager.GetSessionsFilePath());
-            WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
+            PuTTYProfilesExists = File.Exists(PuTTYProfileManager.GetProfilesFilePath());
         }
 
         public void SetLocationPathFromDragDrop(string path)

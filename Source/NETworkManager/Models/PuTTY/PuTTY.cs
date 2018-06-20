@@ -2,12 +2,12 @@
 {
     public class PuTTY
     {
-        public static string BuildCommandLine(PuTTYSessionInfo sessionInfo)
+        public static string BuildCommandLine(PuTTYProfileInfo ProfileInfo)
         {
             string command = string.Empty;
 
             // Protocol
-            switch (sessionInfo.Mode)
+            switch (ProfileInfo.Mode)
             {
                 case ConnectionMode.SSH:
                     command += string.Format("-ssh");
@@ -27,24 +27,24 @@
             }
 
             // Profile
-            if (!string.IsNullOrEmpty(sessionInfo.Profile))
-                command += string.Format(" -load {0}{1}{0}", '"', sessionInfo.Profile);
+            if (!string.IsNullOrEmpty(ProfileInfo.Profile))
+                command += string.Format(" -load {0}{1}{0}", '"', ProfileInfo.Profile);
 
             // Username
-            if (!string.IsNullOrEmpty(sessionInfo.Username))
-                command += string.Format(" -l {0}", sessionInfo.Username);
+            if (!string.IsNullOrEmpty(ProfileInfo.Username))
+                command += string.Format(" -l {0}", ProfileInfo.Username);
 
             // Additional commands
-            if (!string.IsNullOrEmpty(sessionInfo.AdditionalCommandLine))
-                command += string.Format(" {0}", sessionInfo.AdditionalCommandLine);
+            if (!string.IsNullOrEmpty(ProfileInfo.AdditionalCommandLine))
+                command += string.Format(" {0}", ProfileInfo.AdditionalCommandLine);
 
             // SerialLine, Baud
-            if (sessionInfo.Mode == ConnectionMode.Serial)
-                command += string.Format(" {0} -sercfg {1}", sessionInfo.HostOrSerialLine, sessionInfo.PortOrBaud);
+            if (ProfileInfo.Mode == ConnectionMode.Serial)
+                command += string.Format(" {0} -sercfg {1}", ProfileInfo.HostOrSerialLine, ProfileInfo.PortOrBaud);
 
             // Port, Host
-            if (sessionInfo.Mode != ConnectionMode.Serial)
-                command += string.Format(" -P {0} {1}", sessionInfo.PortOrBaud, sessionInfo.HostOrSerialLine);
+            if (ProfileInfo.Mode != ConnectionMode.Serial)
+                command += string.Format(" -P {0} {1}", ProfileInfo.PortOrBaud, ProfileInfo.HostOrSerialLine);
 
             return command;
         }

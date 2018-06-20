@@ -2,9 +2,9 @@
 
 namespace NETworkManager.Views
 {
-    public partial class RemoteDesktopSessionConnectDialog : UserControl
+    public partial class PuTTYConnectDialog : UserControl
     {
-        public RemoteDesktopSessionConnectDialog()
+        public PuTTYConnectDialog()
         {
             InitializeComponent();
         }

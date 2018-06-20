@@ -10,8 +10,10 @@ namespace NETworkManager.Models.Settings
     public static class SettingsManager
     {
         private const string SettingsFolderName = "Settings";
-        private const string SettingsFileExtension = ".settings";
-        private const string IsPortableFileName = "IsPortable" + SettingsFileExtension;
+        private const string SettingsFileName = "Settings";
+        private const string SettingsFileExtension = "xml";
+        private const string IsPortableFileName = "IsPortable";
+        private const string IsPortableExtension = "settings";
 
         public static SettingsInfo Current { get; set; }
 
@@ -30,7 +32,12 @@ namespace NETworkManager.Models.Settings
 
         public static string GetSettingsFileName()
         {
-            return string.Format("{0}{1}", GetApplicationName(), SettingsFileExtension);
+            return string.Format("{0}.{1}", SettingsFileName, SettingsFileExtension);
+        }
+
+        public static string GetIsPortableFileName()
+        {
+            return string.Format("{0}.{1}", IsPortableFileName, IsPortableExtension);
         }
 
         #region Settings locations (default, custom, portable)
@@ -54,7 +61,7 @@ namespace NETworkManager.Models.Settings
         #region File paths
         private static string GetIsPortableFilePath()
         {
-            return Path.Combine(GetApplicationLocation(), IsPortableFileName);
+            return Path.Combine(GetApplicationLocation(), GetSettingsFileName());
         }
 
         public static string GetSettingsFilePath()

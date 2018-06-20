@@ -131,25 +131,25 @@
                         <RadioButton Grid.Column="0" Grid.Row="0" GroupName="ImportTracerouteProfiles" Content="{DynamicResource String_Override}" IsChecked="{Binding ImportOverrideTracerouteProfiles}" />
                         <RadioButton Grid.Column="2" Grid.Row="0" GroupName="ImportTracerouteProfiles" Content="{DynamicResource String_Add}" />
                     </Grid>
-                    <CheckBox Grid.Column="0" Grid.Row="12" Content="{DynamicResource String_RemoteDesktopSessions}" IsEnabled="{Binding ImportRemoteDesktopSessionsExists}" IsChecked="{Binding ImportRemoteDesktopSessions}" />
-                    <Grid Grid.Column="2" Grid.Row="12" IsEnabled="{Binding ImportRemoteDesktopSessionsExists}">
+                    <CheckBox Grid.Column="0" Grid.Row="12" Content="{DynamicResource String_RemoteDesktopProfiles}" IsEnabled="{Binding ImportRemoteDesktopProfilesExists}" IsChecked="{Binding ImportRemoteDesktopProfiles}" />
+                    <Grid Grid.Column="2" Grid.Row="12" IsEnabled="{Binding ImportRemoteDesktopProfilesExists}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition MinWidth="100" />
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition MinWidth="100" />
                         </Grid.ColumnDefinitions>
-                        <RadioButton Grid.Column="0" Grid.Row="0" GroupName="ImportRemoteDesktopSessions" Content="{DynamicResource String_Override}" IsChecked="{Binding ImportOverrideRemoteDesktopSessions}" />
-                        <RadioButton Grid.Column="2" Grid.Row="0" GroupName="ImportRemoteDesktopSessions" Content="{DynamicResource String_Add}" />
+                        <RadioButton Grid.Column="0" Grid.Row="0" GroupName="ImportRemoteDesktopProfiles" Content="{DynamicResource String_Override}" IsChecked="{Binding ImportOverrideRemoteDesktopProfiles}" />
+                        <RadioButton Grid.Column="2" Grid.Row="0" GroupName="ImportRemoteDesktopProfiles" Content="{DynamicResource String_Add}" />
                     </Grid>
-                    <CheckBox Grid.Column="0" Grid.Row="14" Content="{DynamicResource String_PuTTYSessions}" IsEnabled="{Binding ImportPuTTYSessionsExists}" IsChecked="{Binding ImportPuTTYSessions}" />
-                    <Grid Grid.Column="2" Grid.Row="14" IsEnabled="{Binding ImportPuTTYSessionsExists}">
+                    <CheckBox Grid.Column="0" Grid.Row="14" Content="{DynamicResource String_PuTTYProfiles}" IsEnabled="{Binding ImportPuTTYProfilesExists}" IsChecked="{Binding ImportPuTTYProfiles}" />
+                    <Grid Grid.Column="2" Grid.Row="14" IsEnabled="{Binding ImportPuTTYProfilesExists}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition MinWidth="100" />
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition MinWidth="100" />
                         </Grid.ColumnDefinitions>
-                        <RadioButton Grid.Column="0" Grid.Row="0" GroupName="ImportPuTTYSessions" Content="{DynamicResource String_Override}" IsChecked="{Binding ImportOverridePuTTYSessions}" />
-                        <RadioButton Grid.Column="2" Grid.Row="0" GroupName="ImportPuTTYSessions" Content="{DynamicResource String_Add}" />
+                        <RadioButton Grid.Column="0" Grid.Row="0" GroupName="ImportPuTTYProfiles" Content="{DynamicResource String_Override}" IsChecked="{Binding ImportOverridePuTTYProfiles}" />
+                        <RadioButton Grid.Column="2" Grid.Row="0" GroupName="ImportPuTTYProfiles" Content="{DynamicResource String_Add}" />
                     </Grid>
                     <CheckBox Grid.Column="0" Grid.Row="16" Content="{DynamicResource String_WakeOnLANClients}" IsEnabled="{Binding ImportWakeOnLANClientsExists}" IsChecked="{Binding ImportWakeOnLANClients}" />
                     <Grid Grid.Column="2" Grid.Row="16" IsEnabled="{Binding ImportWakeOnLANClientsExists}">
@@ -181,8 +181,8 @@
                                         <Binding Path="ImportPortScannerProfiles" />
                                         <Binding Path="ImportPingProfiles" />
                                         <Binding Path="ImportTracerouteProfiles" />
-                                        <Binding Path="ImportRemoteDesktopSessions" />
-                                        <Binding Path="ImportPuTTYSessions" />
+                                        <Binding Path="ImportRemoteDesktopProfiles" />
+                                        <Binding Path="ImportPuTTYProfiles" />
                                         <Binding Path="ImportWakeOnLANClients" />
                                     </MultiBinding>
                                 </DataTrigger.Binding>
@@ -215,8 +215,8 @@
                 <CheckBox Content="{DynamicResource String_PortScannerProfiles}" IsEnabled="{Binding PortScannerProfilesExists}" IsChecked="{Binding ExportPortScannerProfiles}" Margin="0,0,0,10" />
                 <CheckBox Content="{DynamicResource String_PingProfiles}" IsEnabled="{Binding PingProfilesExists}" IsChecked="{Binding ExportPingProfiles}" Margin="0,0,0,10" />
                 <CheckBox Content="{DynamicResource String_TracerouteProfiles}" IsEnabled="{Binding TracerouteProfilesExists}" IsChecked="{Binding ExportTracerouteProfiles}" Margin="0,0,0,10" />
-                <CheckBox Content="{DynamicResource String_RemoteDesktopSessions}" IsEnabled="{Binding RemoteDesktopSessionsExists}" IsChecked="{Binding ExportRemoteDesktopSessions}" Margin="0,0,0,10" />
-                <CheckBox Content="{DynamicResource String_PuTTYSessions}" IsEnabled="{Binding PuTTYSessionsExists}" IsChecked="{Binding ExportPuTTYSessions}" Margin="0,0,0,10" />
+                <CheckBox Content="{DynamicResource String_RemoteDesktopProfiles}" IsEnabled="{Binding RemoteDesktopProfilesExists}" IsChecked="{Binding ExportRemoteDesktopProfiles}" Margin="0,0,0,10" />
+                <CheckBox Content="{DynamicResource String_PuTTYProfiles}" IsEnabled="{Binding PuTTYProfilesExists}" IsChecked="{Binding ExportPuTTYProfiles}" Margin="0,0,0,10" />
                 <CheckBox Content="{DynamicResource String_WakeOnLANClients}" IsEnabled="{Binding WakeOnLANClientsExists}" IsChecked="{Binding ExportWakeOnLANClients}" />
             </StackPanel>
         </GroupBox>
@@ -238,8 +238,8 @@
                                     <Binding Path="ExportPingProfiles" />
                                     <Binding Path="ExportTracerouteProfiles" />
                                     <Binding Path="ExportPortScannerProfiles" />
-                                    <Binding Path="ExportRemoteDesktopSessions" />
-                                    <Binding Path="ExportPuTTYSessions" />
+                                    <Binding Path="ExportRemoteDesktopProfiles" />
+                                    <Binding Path="ExportPuTTYProfiles" />
                                     <Binding Path="ExportWakeOnLANClients" />
                                 </MultiBinding>
                             </DataTrigger.Binding>

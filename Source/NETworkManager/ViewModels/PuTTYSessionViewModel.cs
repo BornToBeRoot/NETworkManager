@@ -11,7 +11,7 @@ using static NETworkManager.Models.PuTTY.PuTTY;
 
 namespace NETworkManager.ViewModels
 {
-    public class PuTTYSessionViewModel : ViewModelBase
+    public class PuTTYProfileViewModel : ViewModelBase
     {
         private bool _isLoading = true;
 
@@ -39,7 +39,7 @@ namespace NETworkManager.ViewModels
                 _name = value;
 
                 if (!_isLoading)
-                    HasSessionInfoChanged();
+                    HasProfileInfoChanged();
 
                 OnPropertyChanged();
             }
@@ -157,7 +157,7 @@ namespace NETworkManager.ViewModels
                 _host = value;
 
                 if (!_isLoading)
-                    HasSessionInfoChanged();
+                    HasProfileInfoChanged();
 
                 OnPropertyChanged();
             }
@@ -175,7 +175,7 @@ namespace NETworkManager.ViewModels
                 _serialLine = value;
 
                 if (!_isLoading)
-                    HasSessionInfoChanged();
+                    HasProfileInfoChanged();
 
                 OnPropertyChanged();
             }
@@ -193,7 +193,7 @@ namespace NETworkManager.ViewModels
                 _port = value;
 
                 if (!_isLoading)
-                    HasSessionInfoChanged();
+                    HasProfileInfoChanged();
 
                 OnPropertyChanged();
             }
@@ -211,7 +211,7 @@ namespace NETworkManager.ViewModels
                 _baud = value;
 
                 if (!_isLoading)
-                    HasSessionInfoChanged();
+                    HasProfileInfoChanged();
 
                 OnPropertyChanged();
             }
@@ -229,7 +229,7 @@ namespace NETworkManager.ViewModels
                 _username = value;
 
                 if (!_isLoading)
-                    HasSessionInfoChanged();
+                    HasProfileInfoChanged();
 
                 OnPropertyChanged();
             }
@@ -247,7 +247,7 @@ namespace NETworkManager.ViewModels
                 _profile = value;
 
                 if (!_isLoading)
-                    HasSessionInfoChanged();
+                    HasProfileInfoChanged();
 
                 OnPropertyChanged();
             }
@@ -265,7 +265,7 @@ namespace NETworkManager.ViewModels
                 _additionalCommandLine = value;
 
                 if (!_isLoading)
-                    HasSessionInfoChanged();
+                    HasProfileInfoChanged();
 
                 OnPropertyChanged();
             }
@@ -283,7 +283,7 @@ namespace NETworkManager.ViewModels
                 _group = value;
 
                 if (!_isLoading)
-                    HasSessionInfoChanged();
+                    HasProfileInfoChanged();
 
                 OnPropertyChanged();
             }
@@ -307,7 +307,7 @@ namespace NETworkManager.ViewModels
                 _tags = value;
 
                 if (!_isLoading)
-                    HasSessionInfoChanged();
+                    HasProfileInfoChanged();
 
                 OnPropertyChanged();
             }
@@ -325,36 +325,36 @@ namespace NETworkManager.ViewModels
                 _connectionMode = value;
 
                 if (!_isLoading)
-                    HasSessionInfoChanged();
+                    HasProfileInfoChanged();
             }
         }
 
-        private PuTTYSessionInfo _sessionInfo;
+        private PuTTYProfileInfo _ProfileInfo;
 
-        private bool _sessionInfoChanged;
-        public bool SessionInfoChanged
+        private bool _ProfileInfoChanged;
+        public bool ProfileInfoChanged
         {
-            get { return _sessionInfoChanged; }
+            get { return _ProfileInfoChanged; }
             set
             {
-                if (value == _sessionInfoChanged)
+                if (value == _ProfileInfoChanged)
                     return;
 
-                _sessionInfoChanged = value;
+                _ProfileInfoChanged = value;
                 OnPropertyChanged();
             }
         }
 
-        public PuTTYSessionViewModel(Action<PuTTYSessionViewModel> saveCommand, Action<PuTTYSessionViewModel> cancelHandler, List<string> groups, PuTTYSessionInfo sessionInfo = null)
+        public PuTTYProfileViewModel(Action<PuTTYProfileViewModel> saveCommand, Action<PuTTYProfileViewModel> cancelHandler, List<string> groups, PuTTYProfileInfo ProfileInfo = null)
         {
             _saveCommand = new RelayCommand(p => saveCommand(this));
             _cancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            _sessionInfo = sessionInfo ?? new PuTTYSessionInfo();
+            _ProfileInfo = ProfileInfo ?? new PuTTYProfileInfo();
 
-            Name = _sessionInfo.Name;
+            Name = _ProfileInfo.Name;
 
-            switch (_sessionInfo.ConnectionMode)
+            switch (_ProfileInfo.ConnectionMode)
             {
                 // SSH is default
                 case ConnectionMode.SSH:
@@ -374,24 +374,24 @@ namespace NETworkManager.ViewModels
                     break;
             }
 
-            if (_sessionInfo.ConnectionMode == ConnectionMode.Serial)
+            if (_ProfileInfo.ConnectionMode == ConnectionMode.Serial)
             {
-                SerialLine = sessionInfo.HostOrSerialLine;
-                Baud = sessionInfo.PortOrBaud;
+                SerialLine = ProfileInfo.HostOrSerialLine;
+                Baud = ProfileInfo.PortOrBaud;
             }
             else
             {
-                Host = _sessionInfo.HostOrSerialLine;
-                Port = _sessionInfo.PortOrBaud == 0 ? SettingsManager.Current.PuTTY_SSHPort : _sessionInfo.PortOrBaud; // Default SSH port
+                Host = _ProfileInfo.HostOrSerialLine;
+                Port = _ProfileInfo.PortOrBaud == 0 ? SettingsManager.Current.PuTTY_SSHPort : _ProfileInfo.PortOrBaud; // Default SSH port
             }
 
-            Username = _sessionInfo.Username;
-            Profile = _sessionInfo.Profile;
-            AdditionalCommandLine = _sessionInfo.AdditionalCommandLine;
+            Username = _ProfileInfo.Username;
+            Profile = _ProfileInfo.Profile;
+            AdditionalCommandLine = _ProfileInfo.AdditionalCommandLine;
 
             // Get the group, if not --> get the first group (ascending), fallback --> default group 
-            Group = string.IsNullOrEmpty(_sessionInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : LocalizationManager.GetStringByKey("String_Default")) : _sessionInfo.Group;
-            Tags = _sessionInfo.Tags;
+            Group = string.IsNullOrEmpty(_ProfileInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : LocalizationManager.GetStringByKey("String_Default")) : _ProfileInfo.Group;
+            Tags = _ProfileInfo.Tags;
 
             _groups = CollectionViewSource.GetDefaultView(groups);
             _groups.SortDescriptions.Add(new SortDescription());
@@ -399,12 +399,12 @@ namespace NETworkManager.ViewModels
             _isLoading = false;
         }
 
-        private void HasSessionInfoChanged()
+        private void HasProfileInfoChanged()
         {
             if (ConnectionMode == ConnectionMode.Serial)
-                SessionInfoChanged = (_sessionInfo.Name != Name) || (_sessionInfo.ConnectionMode != ConnectionMode) || (_sessionInfo.HostOrSerialLine != SerialLine) || (_sessionInfo.PortOrBaud != Baud) || (_sessionInfo.Username != Username) || (_sessionInfo.Profile != Profile) || (_sessionInfo.AdditionalCommandLine != AdditionalCommandLine) || (_sessionInfo.Group != Group) || (_sessionInfo.Tags != Tags);
+                ProfileInfoChanged = (_ProfileInfo.Name != Name) || (_ProfileInfo.ConnectionMode != ConnectionMode) || (_ProfileInfo.HostOrSerialLine != SerialLine) || (_ProfileInfo.PortOrBaud != Baud) || (_ProfileInfo.Username != Username) || (_ProfileInfo.Profile != Profile) || (_ProfileInfo.AdditionalCommandLine != AdditionalCommandLine) || (_ProfileInfo.Group != Group) || (_ProfileInfo.Tags != Tags);
             else
-                SessionInfoChanged = (_sessionInfo.Name != Name) || (_sessionInfo.ConnectionMode != ConnectionMode) || (_sessionInfo.HostOrSerialLine != Host) || (_sessionInfo.PortOrBaud != Port) || (_sessionInfo.Username != Username) || (_sessionInfo.Profile != Profile) || (_sessionInfo.AdditionalCommandLine != AdditionalCommandLine) || (_sessionInfo.Group != Group) || (_sessionInfo.Tags != Tags);
+                ProfileInfoChanged = (_ProfileInfo.Name != Name) || (_ProfileInfo.ConnectionMode != ConnectionMode) || (_ProfileInfo.HostOrSerialLine != Host) || (_ProfileInfo.PortOrBaud != Port) || (_ProfileInfo.Username != Username) || (_ProfileInfo.Profile != Profile) || (_ProfileInfo.AdditionalCommandLine != AdditionalCommandLine) || (_ProfileInfo.Group != Group) || (_ProfileInfo.Tags != Tags);
         }
     }
 }

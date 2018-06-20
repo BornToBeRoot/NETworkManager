@@ -2,9 +2,9 @@
 
 namespace NETworkManager.Views
 {
-    public partial class PuTTYSessionDialog : UserControl
+    public partial class PuTTYProfileDialog : UserControl
     {
-        public PuTTYSessionDialog()
+        public PuTTYProfileDialog()
         {
             InitializeComponent();
         }

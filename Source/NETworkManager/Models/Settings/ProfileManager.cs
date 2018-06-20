@@ -4,6 +4,17 @@ using System.IO;
 using System.Xml.Serialization;
 using NETworkManager.ViewModels;
 
+/*
+    ToDo: 
+    - Credentials mapping
+    - PuTTY
+    - Validation
+    - Settings/Profile add view
+    - Cleanup import/export 
+    - Cleanup reset
+    - Refresh view after renaming a group
+*/
+
 namespace NETworkManager.Models.Settings
 {
     public static class ProfileManager
@@ -18,7 +29,7 @@ namespace NETworkManager.Models.Settings
             return Path.Combine(SettingsManager.GetSettingsLocation(), ProfilesFileName);
         }
 
-        public static List<string> GetProfileGroups()
+        public static List<string> GetGroups()
         {
             List<string> list = new List<string>();
 
@@ -108,6 +119,7 @@ namespace NETworkManager.Models.Settings
             {
                 Name = instance.Name,
                 Host = instance.Host,
+                CredentialID = instance.CredentialID,
                 Group = instance.Group,
                 Tags = instance.Tags,
 
@@ -118,7 +130,24 @@ namespace NETworkManager.Models.Settings
                 PortScanner_Enabled = instance.PortScanner_Enabled,
                 PortScanner_InheritHost = instance.PortScanner_InheritHost,
                 PortScanner_Host = instance.PortScanner_InheritHost ? instance.Host : instance.PortScanner_Host,
-                PortScanner_Ports = instance.PortScanner_Ports
+                PortScanner_Ports = instance.PortScanner_Ports,
+
+                Ping_Enabled = instance.Ping_Enabled,
+                Ping_InheritHost = instance.Ping_InheritHost,
+                Ping_Host = instance.Ping_Host,
+
+                Traceroute_Enabled = instance.Traceroute_Enabled,
+                Traceroute_InheritHost = instance.Traceroute_InheritHost,
+                Traceroute_Host = instance.Traceroute_InheritHost ? instance.Host : instance.Traceroute_Host,
+
+                RemoteDesktop_Enabled = instance.RemoteDesktop_Enabled,
+                RemoteDesktop_InheritHost = instance.RemoteDesktop_InheritHost,
+                RemoteDesktop_Host = instance.RemoteDesktop_InheritHost ? instance.Host : instance.RemoteDesktop_Host,
+
+                WakeOnLAN_Enabled = instance.WakeOnLAN_Enabled,
+                WakeOnLAN_MACAddress = instance.WakeOnLAN_MACAddress,
+                WakeOnLAN_Broadcast = instance.WakeOnLAN_Broadcast,
+                WakeOnLAN_Port = instance.WakeOnLAN_Port
             });
         }
 

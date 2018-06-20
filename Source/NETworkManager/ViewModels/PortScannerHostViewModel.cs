@@ -10,6 +10,8 @@ using System;
 using System.Windows.Data;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
+using System.Diagnostics;
+using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
@@ -56,6 +58,8 @@ namespace NETworkManager.ViewModels
             {
                 if (value == _selectedProfile)
                     return;
+
+                Debug.Write(value);
 
                 _selectedProfile = value;
                 OnPropertyChanged();
@@ -155,6 +159,9 @@ namespace NETworkManager.ViewModels
                 return (info.PortScanner_Enabled && info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
+            // This will select the first entry as selected item...
+            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.PortScanner_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+
             LoadSettings();
 
             _isLoading = false;
@@ -214,7 +221,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetProfileGroups());
+            }, ProfileManager.GetGroups());
 
             customDialog.Content = new ProfileDialog
             {
@@ -246,7 +253,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetProfileGroups(), SelectedProfile);
+            }, ProfileManager.GetGroups(), SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -276,7 +283,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetProfileGroups(), SelectedProfile);
+            }, ProfileManager.GetGroups(), SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {

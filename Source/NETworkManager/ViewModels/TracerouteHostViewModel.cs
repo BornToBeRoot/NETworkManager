@@ -43,14 +43,14 @@ namespace NETworkManager.ViewModels
         }
 
         #region Profiles
-        ICollectionView _tracerouteProfiles;
-        public ICollectionView TracerouteProfiles
+        ICollectionView _profiles;
+        public ICollectionView Profiles
         {
-            get { return _tracerouteProfiles; }
+            get { return _profiles; }
         }
 
-        private TracerouteProfileInfo _selectedProfile = new TracerouteProfileInfo();
-        public TracerouteProfileInfo SelectedProfile
+        private ProfileInfo _selectedProfile = new ProfileInfo();
+        public ProfileInfo SelectedProfile
         {
             get { return _selectedProfile; }
             set
@@ -74,7 +74,7 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                TracerouteProfiles.Refresh();
+                Profiles.Refresh();
 
                 OnPropertyChanged();
             }
@@ -139,36 +139,25 @@ namespace NETworkManager.ViewModels
                 new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new TracerouteView(_tabId), _tabId)
             };
 
-            // Load profiles
-            if (TracerouteProfileManager.Profiles == null)
-                TracerouteProfileManager.Load();
-
-            _tracerouteProfiles = CollectionViewSource.GetDefaultView(TracerouteProfileManager.Profiles);
-            _tracerouteProfiles.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
-            _tracerouteProfiles.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
-            _tracerouteProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            _tracerouteProfiles.Filter = o =>
+            _profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
+            _profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
+            _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
+            _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
+            _profiles.Filter = o =>
             {
-                if (string.IsNullOrEmpty(Search))
-                    return true;
+                ProfileInfo info = o as ProfileInfo;
 
-                TracerouteProfileInfo info = o as TracerouteProfileInfo;
+                if (string.IsNullOrEmpty(Search))
+                    return info.Traceroute_Enabled;
 
                 string search = Search.Trim();
 
-                // Search by: Tag
-                if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (string.IsNullOrEmpty(info.Tags))
-                        return false;
-                    else
-                        return info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).IndexOf(str, StringComparison.OrdinalIgnoreCase) > -1);
-                }
-                else // Search by: Name, Hostname
-                {
-                    return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-                }
+                // Search by: Name
+                return (info.Traceroute_Enabled && info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
+
+            // This will select the first entry as selected item...
+            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.Traceroute_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
 
             LoadSettings();
 
@@ -199,6 +188,16 @@ namespace NETworkManager.ViewModels
             AddTab();
         }
 
+        public ICommand TraceProfileCommand
+        {
+            get { return new RelayCommand(p => TraceProfileAction()); }
+        }
+
+        private void TraceProfileAction()
+        {
+            AddTab(SelectedProfile.Traceroute_Host);
+        }
+
         public ICommand AddProfileCommand
         {
             get { return new RelayCommand(p => AddProfileAction()); }
@@ -211,40 +210,22 @@ namespace NETworkManager.ViewModels
                 Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
             };
 
-            TracerouteProfileViewModel tracerouteProfileViewModel = new TracerouteProfileViewModel(instance =>
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                TracerouteProfileInfo tracerouteProfileInfo = new TracerouteProfileInfo
-                {
-                    Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
-                };
-
-                TracerouteProfileManager.AddProfile(tracerouteProfileInfo);
+                ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, TracerouteProfileManager.GetProfileGroups());
+            }, ProfileManager.GetGroups());
 
-            customDialog.Content = new TracerouteProfileDialog
+            customDialog.Content = new ProfileDialog
             {
-                DataContext = tracerouteProfileViewModel
+                DataContext = profileViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand TraceProfileCommand
-        {
-            get { return new RelayCommand(p => TraceProfileAction()); }
-        }
-
-        private void TraceProfileAction()
-        {
-            AddTab(SelectedProfile.Host);
         }
 
         public ICommand EditProfileCommand
@@ -259,29 +240,21 @@ namespace NETworkManager.ViewModels
                 Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
             };
 
-            TracerouteProfileViewModel tracerouteProfileViewModel = new TracerouteProfileViewModel(instance =>
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                TracerouteProfileManager.RemoveProfile(SelectedProfile);
+                ProfileManager.RemoveProfile(SelectedProfile);
 
-                TracerouteProfileInfo tracerouteProfileInfo = new TracerouteProfileInfo
-                {
-                    Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
-                };
-
-                TracerouteProfileManager.AddProfile(tracerouteProfileInfo);
+                ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, TracerouteProfileManager.GetProfileGroups(), SelectedProfile);
+            }, ProfileManager.GetGroups(), SelectedProfile);
 
-            customDialog.Content = new TracerouteProfileDialog
+            customDialog.Content = new ProfileDialog
             {
-                DataContext = tracerouteProfileViewModel
+                DataContext = profileViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
@@ -299,27 +272,19 @@ namespace NETworkManager.ViewModels
                 Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
             };
 
-            TracerouteProfileViewModel tracerouteProfileViewModel = new TracerouteProfileViewModel(instance =>
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                TracerouteProfileInfo tracerouteProfileInfo = new TracerouteProfileInfo
-                {
-                    Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
-                };
-
-                TracerouteProfileManager.AddProfile(tracerouteProfileInfo);
+                ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, TracerouteProfileManager.GetProfileGroups(), SelectedProfile);
+            }, ProfileManager.GetGroups(), SelectedProfile);
 
-            customDialog.Content = new TracerouteProfileDialog
+            customDialog.Content = new ProfileDialog
             {
-                DataContext = tracerouteProfileViewModel
+                DataContext = profileViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
@@ -341,7 +306,7 @@ namespace NETworkManager.ViewModels
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                TracerouteProfileManager.RemoveProfile(SelectedProfile);
+                ProfileManager.RemoveProfile(SelectedProfile);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -371,9 +336,7 @@ namespace NETworkManager.ViewModels
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                TracerouteProfileManager.RenameGroup(instance.OldGroup, instance.Group);
-
-                _tracerouteProfiles.Refresh();
+                ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);

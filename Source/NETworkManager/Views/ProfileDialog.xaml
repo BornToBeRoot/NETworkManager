@@ -48,7 +48,7 @@
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Name}" />
-                            <TextBox x:Name="txtName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleRemoteDesktopSessionName}">
+                            <TextBox x:Name="txtName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleRemoteDesktopProfileName}">
                                 <TextBox.Text>
                                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -332,31 +332,6 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="{DynamicResource String_Header_Traceroute}">
-                <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
-                    <StackPanel>
-                        <Grid Margin="0,0,0,10">
-                            <Grid.Resources>
-                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                            </Grid.Resources>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="10" />
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="34" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Enable" />
-                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding NetworkInterface_Enable}" />
-                        </Grid>
-                        <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
-
-                    </StackPanel>
-                </ScrollViewer>
-            </TabItem>
             <TabItem Header="{DynamicResource String_Header_Ping}">
                 <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
                     <StackPanel>
@@ -375,12 +350,95 @@
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Grid.Row="0" Text="Enable" />
-                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding NetworkInterface_Enable}" />
+                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Ping_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
-
-
-
+                        <StackPanel IsEnabled="{Binding Ping_Enabled}">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Inherit Host" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Ping_InheritHost}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
+                                <TextBox x:Name="txtPingHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Ping_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                    <TextBox.Text>
+                                        <Binding Path="Ping_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="{DynamicResource String_Header_Traceroute}">
+                <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,10">
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="34" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Enable" />
+                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Traceroute_Enabled}" />
+                        </Grid>
+                        <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
+                        <StackPanel IsEnabled="{Binding Traceroute_Enabled}">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Inherit Host" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Traceroute_InheritHost}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
+                                <TextBox x:Name="txtTracerouteHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Traceroute_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                    <TextBox.Text>
+                                        <Binding Path="Traceroute_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
@@ -402,17 +460,45 @@
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Grid.Row="0" Text="Enable" />
-                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding NetworkInterface_Enable}" />
+                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding RemoteDesktop_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
-
-
-
+                        <StackPanel IsEnabled="{Binding RemoteDesktop_Enabled}">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Inherit Host" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding RemoteDesktop_InheritHost}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
+                                <TextBox x:Name="txtRemoteDesktopHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding RemoteDesktop_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                    <TextBox.Text>
+                                        <Binding Path="RemoteDesktop_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="{DynamicResource String_Header_PuTTY}">
-                <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
+                <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0" HorizontalScrollBarVisibility="Disabled">
                     <StackPanel>
                         <Grid Margin="0,0,0,10">
                             <Grid.Resources>
@@ -429,12 +515,139 @@
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Grid.Row="0" Text="Enable" />
-                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding NetworkInterface_Enable}" />
+                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding PuTTY_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
-
-
-
+                        <StackPanel IsEnabled="{Binding PuTTY_Enabled}">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Mode}" />
+                                <WrapPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal">
+                                    <WrapPanel.Resources>
+                                        <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource DefaultRadioButton}">
+                                            <Setter Property="Margin" Value="0,5,10,5" />
+                                        </Style>
+                                    </WrapPanel.Resources>
+                                    <RadioButton Content="{DynamicResource String_SSH}" IsChecked="{Binding UseSSH}" />
+                                    <RadioButton Content="{DynamicResource String_Telnet}" IsChecked="{Binding UseTelnet}" />
+                                    <RadioButton Content="{DynamicResource String_Serial}" IsChecked="{Binding UseSerial}" />
+                                    <RadioButton Content="{DynamicResource String_Rlogin}" IsChecked="{Binding UseRlogin}" />
+                                    <RadioButton Content="{DynamicResource String_RAW}" IsChecked="{Binding UseRAW}" />
+                                </WrapPanel>
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="Inherit Host" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OnLabel="" OffLabel="" IsChecked="{Binding PuTTY_InheritHost}" />
+                                <TextBlock Grid.Column="0" Grid.Row="4">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
+                                            <Setter Property="Text" Value="{StaticResource String_Host}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding UseSerial}" Value="True">
+                                                    <Setter Property="Text" Value="{StaticResource String_SerialLine}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBox x:Name="txtPuTTYHost" Grid.Column="2" Grid.Row="4" IsEnabled="{Binding PuTTY_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                    <TextBox.Text>
+                                        <Binding Path="PuTTY_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <Validator:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBox x:Name="txtPuTTYSerialLine" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSerialLine}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <TextBox.Text>
+                                        <Binding Path="PuTTY_SerialLine" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <Validator:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="6">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
+                                            <Setter Property="Text" Value="{DynamicResource String_Port}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding UseSerial}" Value="True">
+                                                    <Setter Property="Text" Value="{DynamicResource String_Baud}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBox x:Name="txtPuTTYPort" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort22}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
+                                    <TextBox.Text>
+                                        <Binding Path="PuTTY_Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <Validator:PortValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBox x:Name="txtPuTTYBaud" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleBaud9600}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <TextBox.Text>
+                                        <Binding Path="PuTTY_Baud" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <Validator:BaudValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="8" Text="{DynamicResource String_Username}" />
+                                <TextBox Grid.Column="2" Grid.Row="8" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleUsername}">
+                                    <TextBox.Text>
+                                        <Binding Path="PuTTY_Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="10" Text="{DynamicResource String_Profile}" />
+                                <TextBox Grid.Column="2" Grid.Row="10">
+                                    <TextBox.Text>
+                                        <Binding Path="PuTTY_Profile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="12" Text="{DynamicResource String_AdditionalCommandLine}" />
+                                <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding PuTTY_AdditionalCommandLine}" Style="{StaticResource DefaultTextBox}" />
+                            </Grid>
+                        </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
@@ -456,12 +669,63 @@
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Grid.Row="0" Text="Enable" />
-                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding NetworkInterface_Enable}" />
+                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding WakeOnLAN_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
-
-
-
+                        <StackPanel IsEnabled="{Binding WakeOnLAN_Enabled}">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_MACAddress}" />
+                                <TextBox x:Name="txtWakeOnLANMACAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddress}">
+                                    <TextBox.Text>
+                                        <Binding Path="WakeOnLAN_MACAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <Validator:MACAddressValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Broadcast}" />
+                                <TextBox x:Name="txtWakeOnLANBroadcast" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Broadcast}">
+                                    <TextBox.Text>
+                                        <Binding Path="WakeOnLAN_Broadcast" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Port}" />
+                                <TextBox x:Name="txtWakeOnLANPort" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort7}">
+                                    <TextBox.Text>
+                                        <Binding Path="WakeOnLAN_Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <Validator:PortValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

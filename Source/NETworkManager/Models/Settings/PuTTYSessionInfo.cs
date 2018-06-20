@@ -2,7 +2,7 @@
 
 namespace NETworkManager.Models.Settings
 {
-    public class PuTTYSessionInfo
+    public class PuTTYProfileInfo
     {
         public string Name { get; set; }
         public ConnectionMode ConnectionMode { get; set; }
@@ -14,12 +14,12 @@ namespace NETworkManager.Models.Settings
         public string Group { get; set; }
         public string Tags { get; set; }
 
-        public PuTTYSessionInfo()
+        public PuTTYProfileInfo()
         {
 
         }
 
-        public PuTTYSessionInfo(string name, ConnectionMode connectionMode, string hostOrSerialLine, int portOrBaud, string username, string profile, string additionalCommandLine, string group, string tags)
+        public PuTTYProfileInfo(string name, ConnectionMode connectionMode, string hostOrSerialLine, int portOrBaud, string username, string profile, string additionalCommandLine, string group, string tags)
         {
             Name = name;
             ConnectionMode = connectionMode;

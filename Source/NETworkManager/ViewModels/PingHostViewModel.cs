@@ -43,14 +43,14 @@ namespace NETworkManager.ViewModels
         }
 
         #region Profiles
-        ICollectionView _pingProfiles;
-        public ICollectionView PingProfiles
+        ICollectionView _profiles;
+        public ICollectionView Profiles
         {
-            get { return _pingProfiles; }
+            get { return _profiles; }
         }
 
-        private PingProfileInfo _selectedProfile = new PingProfileInfo();
-        public PingProfileInfo SelectedProfile
+        private ProfileInfo _selectedProfile = new ProfileInfo();
+        public ProfileInfo SelectedProfile
         {
             get { return _selectedProfile; }
             set
@@ -74,7 +74,7 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                PingProfiles.Refresh();
+                Profiles.Refresh();
 
                 OnPropertyChanged();
             }
@@ -139,36 +139,25 @@ namespace NETworkManager.ViewModels
                 new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new PingView(_tabId), _tabId)
             };
 
-            // Load profiles
-            if (PingProfileManager.Profiles == null)
-                PingProfileManager.Load();
-
-            _pingProfiles = CollectionViewSource.GetDefaultView(PingProfileManager.Profiles);
-            _pingProfiles.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
-            _pingProfiles.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
-            _pingProfiles.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            _pingProfiles.Filter = o =>
+            _profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
+            _profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
+            _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
+            _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
+            _profiles.Filter = o =>
             {
-                if (string.IsNullOrEmpty(Search))
-                    return true;
+                ProfileInfo info = o as ProfileInfo;
 
-                PingProfileInfo info = o as PingProfileInfo;
+                if (string.IsNullOrEmpty(Search))
+                    return info.Ping_Enabled;
 
                 string search = Search.Trim();
 
-                // Search by: Tag
-                if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (string.IsNullOrEmpty(info.Tags))
-                        return false;
-                    else
-                        return info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).IndexOf(str, StringComparison.OrdinalIgnoreCase) > -1);
-                }
-                else // Search by: Name, Hostname
-                {
-                    return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-                }
+                // Search by: Name
+                return (info.Ping_Enabled && info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
+
+            // This will select the first entry as selected item...
+            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.Ping_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
 
             LoadSettings();
 
@@ -199,6 +188,16 @@ namespace NETworkManager.ViewModels
             AddTab();
         }
 
+        public ICommand PingProfileCommand
+        {
+            get { return new RelayCommand(p => PingProfileAction()); }
+        }
+
+        private void PingProfileAction()
+        {
+            AddTab(SelectedProfile.Ping_Host);
+        }
+
         public ICommand AddProfileCommand
         {
             get { return new RelayCommand(p => AddProfileAction()); }
@@ -211,40 +210,22 @@ namespace NETworkManager.ViewModels
                 Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
             };
 
-            PingProfileViewModel pingProfileViewModel = new PingProfileViewModel(instance =>
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                PingProfileInfo pingProfileInfo = new PingProfileInfo
-                {
-                    Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
-                };
-
-                PingProfileManager.AddProfile(pingProfileInfo);
+                ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, PingProfileManager.GetProfileGroups());
+            }, ProfileManager.GetGroups());
 
-            customDialog.Content = new PingProfileDialog
+            customDialog.Content = new ProfileDialog
             {
-                DataContext = pingProfileViewModel
+                DataContext = profileViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand PingProfileCommand
-        {
-            get { return new RelayCommand(p => PingProfileAction()); }
-        }
-
-        private void PingProfileAction()
-        {
-            AddTab(SelectedProfile.Host);
         }
 
         public ICommand EditProfileCommand
@@ -259,29 +240,21 @@ namespace NETworkManager.ViewModels
                 Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
             };
 
-            PingProfileViewModel pingProfileViewModel = new PingProfileViewModel(instance =>
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                PingProfileManager.RemoveProfile(SelectedProfile);
+                ProfileManager.RemoveProfile(SelectedProfile);
 
-                PingProfileInfo pingProfileInfo = new PingProfileInfo
-                {
-                    Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
-                };
-
-                PingProfileManager.AddProfile(pingProfileInfo);
+                ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, PingProfileManager.GetProfileGroups(), SelectedProfile);
+            }, ProfileManager.GetGroups(), SelectedProfile);
 
-            customDialog.Content = new PingProfileDialog
+            customDialog.Content = new ProfileDialog
             {
-                DataContext = pingProfileViewModel
+                DataContext = profileViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
@@ -299,27 +272,19 @@ namespace NETworkManager.ViewModels
                 Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
             };
 
-            PingProfileViewModel pingProfileViewModel = new PingProfileViewModel(instance =>
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                PingProfileInfo pingProfileInfo = new PingProfileInfo
-                {
-                    Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
-                };
-
-                PingProfileManager.AddProfile(pingProfileInfo);
+                ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, PingProfileManager.GetProfileGroups(), SelectedProfile);
+            }, ProfileManager.GetGroups(), SelectedProfile);
 
-            customDialog.Content = new PingProfileDialog
+            customDialog.Content = new ProfileDialog
             {
-                DataContext = pingProfileViewModel
+                DataContext = profileViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
@@ -341,7 +306,7 @@ namespace NETworkManager.ViewModels
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                PingProfileManager.RemoveProfile(SelectedProfile);
+                ProfileManager.RemoveProfile(SelectedProfile);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -371,9 +336,7 @@ namespace NETworkManager.ViewModels
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                PingProfileManager.RenameGroup(instance.OldGroup, instance.Group);
-
-                _pingProfiles.Refresh();
+                ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);

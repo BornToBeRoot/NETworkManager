@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NETworkManager.Views.RemoteDesktopSessionConnectDialog"
+﻿<UserControl x:Class="NETworkManager.Views.RemoteDesktopConnectDialog"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -40,7 +40,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Name}" Visibility="{Binding ConnectAs, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,0,0,10" />
-            <TextBox x:Name="txtName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleRemoteDesktopSessionName}" Visibility="{Binding ConnectAs, Converter={StaticResource BooleanToVisibilityConverter}}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}" Margin="0,0,0,10">
+            <TextBox x:Name="txtName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleRemoteDesktopProfileName}" Visibility="{Binding ConnectAs, Converter={StaticResource BooleanToVisibilityConverter}}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}" Margin="0,0,0,10">
                 <TextBox.Text>
                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

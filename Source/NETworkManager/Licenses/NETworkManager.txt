@@ -220,7 +220,7 @@ terms of section 4, provided that you also meet all of these conditions:
     "keep intact all notices".
 
     c) You must license the entire work, as a whole, under this
-    License to anyone who comes into possession of a copy.  This
+    License to anyone who comes into posProfile of a copy.  This
     License will therefore apply, along with any applicable section 7
     additional terms, to the whole of the work, and all its parts,
     regardless of how they are packaged.  This License gives no
@@ -317,7 +317,7 @@ modification has been made.
 
   If you convey an object code work under this section in, or with, or
 specifically for use in, a User Product, and the conveying occurs as
-part of a transaction in which the right of possession and use of the
+part of a transaction in which the right of posProfile and use of the
 User Product is transferred to the recipient in perpetuity or for a
 fixed term (regardless of how the transaction is characterized), the
 Corresponding Source conveyed under this section must be accompanied
@@ -456,7 +456,7 @@ organization, or merging organizations.  If propagation of a covered
 work results from an entity transaction, each party to that
 transaction who receives a copy of the work also receives whatever
 licenses to the work the party's predecessor in interest had or could
-give under the previous paragraph, plus a right to possession of the
+give under the previous paragraph, plus a right to posProfile of the
 Corresponding Source of the work from the predecessor in interest, if
 the predecessor has it or can get it with reasonable efforts.
 

@@ -240,12 +240,8 @@
     <Compile Include="Models\PuTTY\PuTTY.cs" />
     <Compile Include="Models\Settings\ProfileInfo.cs" />
     <Compile Include="Models\Settings\ProfileManager.cs" />
-    <Compile Include="Models\Settings\TracerouteProfileManager.cs" />
-    <Compile Include="Models\Settings\TracerouteProfileInfo.cs" />
     <Compile Include="Models\Settings\PuTTYSessionInfo.cs" />
     <Compile Include="Models\Settings\PuTTYSessionManager.cs" />
-    <Compile Include="Models\Settings\PingProfileInfo.cs" />
-    <Compile Include="Models\Settings\PingProfileManager.cs" />
     <Compile Include="Utilities\ArrayHelper.cs" />
     <Compile Include="Utilities\AutoRefreshTime.cs" />
     <Compile Include="Utilities\AutoRefreshTimeInfo.cs" />
@@ -272,8 +268,6 @@
     <Compile Include="Models\Settings\CredentialInfoSerializable.cs" />
     <Compile Include="Models\Settings\CredentialInfo.cs" />
     <Compile Include="Models\Settings\CredentialManager.cs" />
-    <Compile Include="Models\Settings\RemoteDesktopSessionManager.cs" />
-    <Compile Include="Models\Settings\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Models\Update\UpdateAvailableArgs.cs" />
     <Compile Include="Models\Update\Updater.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetmaskOrCIDRValidator.cs" />
@@ -297,11 +291,9 @@
     <Compile Include="ViewModels\SNMPHostViewModel.cs" />
     <Compile Include="ViewModels\SubnetCalculatorSupernettingViewModel.cs" />
     <Compile Include="ViewModels\ProfileViewModel.cs" />
-    <Compile Include="ViewModels\TracerouteProfileViewModel.cs" />
     <Compile Include="ViewModels\TracerouteHostViewModel.cs" />
     <Compile Include="ViewModels\PuTTYHostViewModel.cs" />
     <Compile Include="ViewModels\PingHostViewModel.cs" />
-    <Compile Include="ViewModels\PingProfileViewModel.cs" />
     <Compile Include="ViewModels\SNMPViewModel.cs" />
     <Compile Include="ViewModels\HTTPHeadersViewModel.cs" />
     <Compile Include="ViewModels\ARPTableViewModel.cs" />
@@ -312,11 +304,9 @@
     <Compile Include="ViewModels\NetworkInterfaceProfileViewModel.cs" />
     <Compile Include="ViewModels\ConfirmRemoveViewModel.cs" />
     <Compile Include="ViewModels\ARPTableAddEntryViewModel.cs" />
-    <Compile Include="ViewModels\PuTTYSessionConnectViewModel.cs" />
+    <Compile Include="ViewModels\PuTTYSConnectViewModel.cs" />
     <Compile Include="ViewModels\PuTTYSessionViewModel.cs" />
-    <Compile Include="ViewModels\WakeOnLANClientViewModel.cs" />
-    <Compile Include="ViewModels\RemoteDesktopSessionViewModel.cs" />
-    <Compile Include="ViewModels\RemoteDesktopSessionConnectViewModel.cs" />
+    <Compile Include="ViewModels\RemoteDesktopConnectViewModel.cs" />
     <Compile Include="Models\Network\DNSLookup.cs" />
     <Compile Include="Models\Network\DNSLookupCompleteArgs.cs" />
     <Compile Include="Models\Network\DNSLookupOptions.cs" />
@@ -371,9 +361,6 @@
     <Compile Include="Views\ProfileDialog.xaml.cs">
       <DependentUpon>ProfileDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TracerouteProfileDialog.xaml.cs">
-      <DependentUpon>TracerouteProfileDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\TracerouteHostView.xaml.cs">
       <DependentUpon>TracerouteHostView.xaml</DependentUpon>
     </Compile>
@@ -385,9 +372,6 @@
     </Compile>
     <Compile Include="Views\PingSettingsView.xaml.cs">
       <DependentUpon>PingSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PingProfileDialog.xaml.cs">
-      <DependentUpon>PingProfileDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SNMPView.xaml.cs">
       <DependentUpon>SNMPView.xaml</DependentUpon>
@@ -434,20 +418,14 @@
     <Compile Include="Views\ARPTableAddEntryDialog.xaml.cs">
       <DependentUpon>ARPTableAddEntryDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PuTTYSessionConnectDialog.xaml.cs">
-      <DependentUpon>PuTTYSessionConnectDialog.xaml</DependentUpon>
+    <Compile Include="Views\PuTTYConnectDialog.xaml.cs">
+      <DependentUpon>PuTTYConnectDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PuTTYSessionDialog.xaml.cs">
       <DependentUpon>PuTTYSessionDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WakeOnLANClientDialog.xaml.cs">
-      <DependentUpon>WakeOnLANClientDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\RemoteDesktopSessionDialog.xaml.cs">
-      <DependentUpon>RemoteDesktopSessionDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\RemoteDesktopSessionConnectDialog.xaml.cs">
-      <DependentUpon>RemoteDesktopSessionConnectDialog.xaml</DependentUpon>
+    <Compile Include="Views\RemoteDesktopConnectDialog.xaml.cs">
+      <DependentUpon>RemoteDesktopConnectDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CredentialsView.xaml.cs">
       <DependentUpon>CredentialsView.xaml</DependentUpon>
@@ -651,10 +629,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\TracerouteProfileDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\TracerouteHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -668,10 +642,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\PingSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PingProfileDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -759,7 +729,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\PuTTYSessionConnectDialog.xaml">
+    <Page Include="Views\PuTTYConnectDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -767,15 +737,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\WakeOnLANClientDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\RemoteDesktopSessionDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\RemoteDesktopSessionConnectDialog.xaml">
+    <Page Include="Views\RemoteDesktopConnectDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -964,9 +926,7 @@
     <Compile Include="Models\Settings\SettingsManager.cs" />
     <Compile Include="SettingsViewInfo.cs" />
     <Compile Include="SettingsViewManager.cs" />
-    <Compile Include="Models\Settings\WakeOnLANClientManager.cs" />
     <Compile Include="Models\Settings\NetworkInterfaceProfileInfo.cs" />
-    <Compile Include="Models\Settings\WakeOnLANClientInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>
       <AutoGen>True</AutoGen>
