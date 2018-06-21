@@ -406,8 +406,8 @@ namespace NETworkManager.ViewModels
                 if (SettingsManager.GetSettingsFileName() == fileName)
                     return true;
 
-                if (PuTTYProfileManager.ProfilesFileName == fileName)
-                    return true;
+                //if (PuTTYProfileManager.ProfilesFileName == fileName)
+                //    return true;
             }
 
             return false;
@@ -522,8 +522,8 @@ namespace NETworkManager.ViewModels
                 forceRestart = true;
             }
 
-            if (PuTTYProfilesExists && (ResetEverything || ResetPuTTYProfiles))
-                PuTTYProfileManager.Reset();
+            //if (PuTTYProfilesExists && (ResetEverything || ResetPuTTYProfiles))
+            //    PuTTYProfileManager.Reset();
 
             // Restart after reset or show a completed message
             if (forceRestart)
@@ -576,12 +576,12 @@ namespace NETworkManager.ViewModels
             if (ProfileManager.ProfilesChanged)
                 ProfileManager.Save();
                         
-            if (PuTTYProfileManager.ProfilesChanged)
-                PuTTYProfileManager.Save();
+            //if (PuTTYProfileManager.ProfilesChanged)
+            //    PuTTYProfileManager.Save();
 
             // Check if files exist
             ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
-            PuTTYProfilesExists = File.Exists(PuTTYProfileManager.GetProfilesFilePath());
+            //PuTTYProfilesExists = File.Exists(PuTTYProfileManager.GetProfilesFilePath());
         }
 
         public void SetLocationPathFromDragDrop(string path)

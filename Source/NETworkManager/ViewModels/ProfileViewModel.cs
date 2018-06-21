@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
+using static NETworkManager.Models.PuTTY.PuTTY;
 
 namespace NETworkManager.ViewModels
 {
@@ -133,8 +134,6 @@ namespace NETworkManager.ViewModels
             }
         }
         #endregion
-
-
 
         #region Network Interface
         private bool _networkInterface_Enabled;
@@ -621,6 +620,286 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
+        #region PuTTY 
+        private bool _puTTY_Enabled;
+        public bool PuTTY_Enabled
+        {
+            get { return _puTTY_Enabled; }
+            set
+            {
+                if (value == _puTTY_Enabled)
+                    return;
+
+                _puTTY_Enabled = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _puTTY_InheritHost;
+        public bool PuTTY_InheritHost
+        {
+            get { return _puTTY_InheritHost; }
+            set
+            {
+                if (value == _puTTY_InheritHost)
+                    return;
+
+                _puTTY_InheritHost = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _puTTY_UseSSH; // Default is SSH
+        public bool PuTTY_UseSSH
+        {
+            get { return _puTTY_UseSSH; }
+            set
+            {
+                if (value == _puTTY_UseSSH)
+                    return;
+
+                if (value)
+                {
+                    PuTTY_Port = SettingsManager.Current.PuTTY_SSHPort;
+                    PuTTY_ConnectionMode = ConnectionMode.SSH;
+                }
+
+                _puTTY_UseSSH = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _puTTY_UseTelnet;
+        public bool PuTTY_UseTelnet
+        {
+            get { return _puTTY_UseTelnet; }
+            set
+            {
+                if (value == _puTTY_UseTelnet)
+                    return;
+
+                if (value)
+                {
+                    PuTTY_Port = SettingsManager.Current.PuTTY_TelnetPort;
+                    PuTTY_ConnectionMode = ConnectionMode.Telnet;
+                }
+
+                _puTTY_UseTelnet = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _puTTY_UseSerial;
+        public bool PuTTY_UseSerial
+        {
+            get { return _puTTY_UseSerial; }
+            set
+            {
+                if (value == _puTTY_UseSerial)
+                    return;
+
+                if (value)
+                {
+                    PuTTY_Baud = SettingsManager.Current.PuTTY_BaudRate;
+                    PuTTY_ConnectionMode = ConnectionMode.Serial;
+                }
+
+                _puTTY_UseSerial = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _puTTY_UseRlogin;
+        public bool PuTTY_UseRlogin
+        {
+            get { return _puTTY_UseRlogin; }
+            set
+            {
+                if (value == _puTTY_UseRlogin)
+                    return;
+
+                if (value)
+                {
+                    PuTTY_Port = SettingsManager.Current.PuTTY_RloginPort;
+                    PuTTY_ConnectionMode = ConnectionMode.Rlogin;
+                }
+
+                _puTTY_UseRlogin = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _puTTY_UseRAW;
+        public bool PuTTY_UseRAW
+        {
+            get { return _puTTY_UseRAW; }
+            set
+            {
+                if (value == _puTTY_UseRAW)
+                    return;
+
+                if (value)
+                {
+                    PuTTY_Port = 0;
+                    PuTTY_ConnectionMode = ConnectionMode.RAW;
+                }
+
+                _puTTY_UseRAW = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _puTTY_Host;
+        public string PuTTY_Host
+        {
+            get { return _puTTY_Host; }
+            set
+            {
+                if (value == _puTTY_Host)
+                    return;
+
+                _puTTY_Host = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _puTTY_SerialLine;
+        public string PuTTY_SerialLine
+        {
+            get { return _puTTY_SerialLine; }
+            set
+            {
+                if (value == _puTTY_SerialLine)
+                    return;
+
+                _puTTY_SerialLine = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private int _puTTY_Port;
+        public int PuTTY_Port
+        {
+            get { return _puTTY_Port; }
+            set
+            {
+                if (value == _puTTY_Port)
+                    return;
+
+                _puTTY_Port = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private int _puTTY_Baud;
+        public int PuTTY_Baud
+        {
+            get { return _puTTY_Baud; }
+            set
+            {
+                if (value == _puTTY_Baud)
+                    return;
+
+                _puTTY_Baud = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _puTTY__Username;
+        public string PuTTY_Username
+        {
+            get { return _puTTY__Username; }
+            set
+            {
+                if (value == _puTTY__Username)
+                    return;
+
+                _puTTY__Username = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _puTTY_Profile;
+        public string PuTTY_Profile
+        {
+            get { return _puTTY_Profile; }
+            set
+            {
+                if (value == _puTTY_Profile)
+                    return;
+
+                _puTTY_Profile = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _puTTY_AdditionalCommandLine;
+        public string PuTTY_AdditionalCommandLine
+        {
+            get { return _puTTY_AdditionalCommandLine; }
+            set
+            {
+                if (value == _puTTY_AdditionalCommandLine)
+                    return;
+
+                _puTTY_AdditionalCommandLine = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private ConnectionMode _puTTY_ConnectionMode;
+        public ConnectionMode PuTTY_ConnectionMode
+        {
+            get { return _puTTY_ConnectionMode; }
+            set
+            {
+                if (value == _puTTY_ConnectionMode)
+                    return;
+
+                _puTTY_ConnectionMode = value;
+
+                if (!_isLoading)
+                    Validate();
+            }
+        }
+        #endregion
+
         #region Wake on LAN
         private bool _wakeOnLAN_Enabled;
         public bool WakeOnLAN_Enabled
@@ -711,38 +990,88 @@ namespace NETworkManager.ViewModels
             _groups = CollectionViewSource.GetDefaultView(groups);
             _groups.SortDescriptions.Add(new SortDescription());
 
+            // Network Interface
             NetworkInterface_Enabled = _profileInfo.NetworkInterface_Enabled;
             NetworkInterface_EnableDynamicIPAddress = !_profileInfo.NetworkInterface_EnableStaticIPAddress;
             NetworkInterface_EnableStaticIPAddress = _profileInfo.NetworkInterface_EnableStaticIPAddress;
             NetworkInterface_IPAddress = _profileInfo.NetworkInterface_IPAddress;
             NetworkInterface_Gateway = _profileInfo.NetworkInterface_Gateway;
             NetworkInterface_SubnetmaskOrCidr = _profileInfo.NetworkInterface_SubnetmaskOrCidr;
-                
             NetworkInterface_EnableDynamicDNS = !_profileInfo.NetworkInterface_EnableStaticDNS;
             NetworkInterface_EnableStaticDNS = _profileInfo.NetworkInterface_EnableStaticDNS;
             NetworkInterface_PrimaryDNSServer = _profileInfo.NetworkInterface_PrimaryDNSServer;
             NetworkInterface_SecondaryDNSServer = _profileInfo.NetworkInterface_SecondaryDNSServer;
 
+            // IP Scanner
             IPScanner_Enabled = _profileInfo.IPScanner_Enabled;
             IPScanner_InheritHost = _profileInfo.IPScanner_InheritHost;
             IPScanner_IPRange = _profileInfo.IPScanner_IPRange;
 
+            // Port Scanner
             PortScanner_Enabled = _profileInfo.PortScanner_Enabled;
             PortScanner_InheritHost = _profileInfo.PortScanner_InheritHost;
             PortScanner_Host = _profileInfo.PortScanner_Host;
             PortScanner_Ports = _profileInfo.PortScanner_Ports;
 
+            // Ping
             Ping_Enabled = _profileInfo.Ping_Enabled;
             Ping_InheritHost = _profileInfo.Ping_InheritHost;
             Ping_Host = _profileInfo.Ping_Host;
 
+            // Traceroute
             Traceroute_Enabled = _profileInfo.Traceroute_Enabled;
             Traceroute_InheritHost = _profileInfo.Traceroute_InheritHost;
             Traceroute_Host = _profileInfo.Traceroute_Host;
 
+            // Remote Desktop
             RemoteDesktop_Enabled = _profileInfo.RemoteDesktop_Enabled;
             RemoteDesktop_InheritHost = _profileInfo.RemoteDesktop_InheritHost;
             RemoteDesktop_Host = _profileInfo.RemoteDesktop_Host;
+
+            // PuTTY
+            PuTTY_Enabled = _profileInfo.PuTTY_Enabled;
+
+            switch (_profileInfo.PuTTY_ConnectionMode)
+            {
+                // SSH is default
+                case ConnectionMode.SSH:
+                    PuTTY_UseSSH = true;
+                    break;
+                case ConnectionMode.Telnet:
+                    PuTTY_UseTelnet = true;
+                    break;
+                case ConnectionMode.Serial:
+                    PuTTY_UseSerial = true;
+                    break;
+                case ConnectionMode.Rlogin:
+                    PuTTY_UseRlogin = true;
+                    break;
+                case ConnectionMode.RAW:
+                    PuTTY_UseRAW = true;
+                    break;
+            }
+
+            PuTTY_InheritHost = _profileInfo.PuTTY_InheritHost;
+
+            if (_profileInfo.PuTTY_ConnectionMode == ConnectionMode.Serial)
+            {
+                PuTTY_SerialLine = _profileInfo.PuTTY_HostOrSerialLine;
+                PuTTY_Baud = _profileInfo.PuTTY_PortOrBaud;
+            }
+            else
+            {
+                PuTTY_Host = _profileInfo.PuTTY_HostOrSerialLine;
+                PuTTY_Port = _profileInfo.PuTTY_PortOrBaud == 0 ? SettingsManager.Current.PuTTY_SSHPort : _profileInfo.PuTTY_PortOrBaud; // Default SSH port
+            }
+
+            PuTTY_Username = _profileInfo.PuTTY_Username;
+            PuTTY_Profile = _profileInfo.PuTTY_Profile;
+            PuTTY_AdditionalCommandLine = _profileInfo.PuTTY_AdditionalCommandLine;
+
+            WakeOnLAN_Enabled = _profileInfo.WakeOnLAN_Enabled;
+            WakeOnLAN_MACAddress = _profileInfo.WakeOnLAN_MACAddress;
+            WakeOnLAN_Broadcast = _profileInfo.WakeOnLAN_Broadcast;
+            WakeOnLAN_Port = _profileInfo.WakeOnLAN_Port;
 
             Validate();
 

@@ -1,4 +1,5 @@
-﻿using static NETworkManager.Models.PuTTY.PuTTY;
+﻿using NETworkManager.Models.Settings;
+using static NETworkManager.Models.PuTTY.PuTTY;
 
 namespace NETworkManager.Models.PuTTY
 {
@@ -17,16 +18,17 @@ namespace NETworkManager.Models.PuTTY
 
         }
 
-        public static PuTTYProfileInfo Parse(Settings.PuTTYProfileInfo ProfileInfo)
+        public static PuTTYProfileInfo Parse(ProfileInfo profileInfo)
         {
-            PuTTYProfileInfo info = new PuTTYProfileInfo();
-
-            info.HostOrSerialLine = ProfileInfo.HostOrSerialLine;
-            info.PortOrBaud = ProfileInfo.PortOrBaud;
-            info.Mode = ProfileInfo.ConnectionMode;
-            info.Username = ProfileInfo.Username;
-            info.Profile = ProfileInfo.Profile;
-            info.AdditionalCommandLine = ProfileInfo.AdditionalCommandLine;
+            PuTTYProfileInfo info = new PuTTYProfileInfo
+            {
+                HostOrSerialLine = profileInfo.PuTTY_HostOrSerialLine,
+                PortOrBaud = profileInfo.PuTTY_PortOrBaud,
+                Mode = profileInfo.PuTTY_ConnectionMode,
+                Username = profileInfo.PuTTY_Username,
+                Profile = profileInfo.PuTTY_Profile,
+                AdditionalCommandLine = profileInfo.PuTTY_AdditionalCommandLine
+            };
 
             return info;
         }

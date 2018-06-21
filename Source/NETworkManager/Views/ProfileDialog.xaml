@@ -552,20 +552,20 @@
                                             <Setter Property="Margin" Value="0,5,10,5" />
                                         </Style>
                                     </WrapPanel.Resources>
-                                    <RadioButton Content="{DynamicResource String_SSH}" IsChecked="{Binding UseSSH}" />
-                                    <RadioButton Content="{DynamicResource String_Telnet}" IsChecked="{Binding UseTelnet}" />
-                                    <RadioButton Content="{DynamicResource String_Serial}" IsChecked="{Binding UseSerial}" />
-                                    <RadioButton Content="{DynamicResource String_Rlogin}" IsChecked="{Binding UseRlogin}" />
-                                    <RadioButton Content="{DynamicResource String_RAW}" IsChecked="{Binding UseRAW}" />
+                                    <RadioButton Content="{DynamicResource String_SSH}" IsChecked="{Binding PuTTY_UseSSH}" />
+                                    <RadioButton Content="{DynamicResource String_Telnet}" IsChecked="{Binding PuTTY_UseTelnet}" />
+                                    <RadioButton Content="{DynamicResource String_Serial}" IsChecked="{Binding PuTTY_UseSerial}" />
+                                    <RadioButton Content="{DynamicResource String_Rlogin}" IsChecked="{Binding PuTTY_UseRlogin}" />
+                                    <RadioButton Content="{DynamicResource String_RAW}" IsChecked="{Binding PuTTY_UseRAW}" />
                                 </WrapPanel>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="Inherit Host" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OnLabel="" OffLabel="" IsChecked="{Binding PuTTY_InheritHost}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="Inherit Host" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityConverter}}" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OnLabel="" OffLabel="" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityConverter}}" IsChecked="{Binding PuTTY_InheritHost}" />
                                 <TextBlock Grid.Column="0" Grid.Row="4">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
                                             <Setter Property="Text" Value="{StaticResource String_Host}" />
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding UseSerial}" Value="True">
+                                                <DataTrigger Binding="{Binding PuTTY_UseSerial}" Value="True">
                                                     <Setter Property="Text" Value="{StaticResource String_SerialLine}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -582,7 +582,7 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBox x:Name="txtPuTTYSerialLine" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSerialLine}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <TextBox x:Name="txtPuTTYSerialLine" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSerialLine}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityConverter}}">
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_SerialLine" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -597,14 +597,14 @@
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
                                             <Setter Property="Text" Value="{DynamicResource String_Port}" />
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding UseSerial}" Value="True">
+                                                <DataTrigger Binding="{Binding PuTTY_UseSerial}" Value="True">
                                                     <Setter Property="Text" Value="{DynamicResource String_Baud}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                <TextBox x:Name="txtPuTTYPort" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort22}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
+                                <TextBox x:Name="txtPuTTYPort" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort22}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -614,7 +614,7 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBox x:Name="txtPuTTYBaud" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleBaud9600}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <TextBox x:Name="txtPuTTYBaud" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleBaud9600}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityConverter}}">
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_Baud" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>

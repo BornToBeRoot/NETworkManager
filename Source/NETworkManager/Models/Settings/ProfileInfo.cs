@@ -1,4 +1,6 @@
-﻿namespace NETworkManager.Models.Settings
+﻿using static NETworkManager.Models.PuTTY.PuTTY;
+
+namespace NETworkManager.Models.Settings
 {
     public class ProfileInfo
     {
@@ -37,6 +39,15 @@
         public bool RemoteDesktop_Enabled { get; set; }
         public bool RemoteDesktop_InheritHost { get; set; } = true;
         public string RemoteDesktop_Host { get; set; }
+
+        public bool PuTTY_Enabled { get; set; }
+        public ConnectionMode PuTTY_ConnectionMode { get; set; }
+        public bool PuTTY_InheritHost { get; set; } = true;
+        public string PuTTY_HostOrSerialLine { get; set; }
+        public int PuTTY_PortOrBaud { get; set; }
+        public string PuTTY_Username { get; set; }
+        public string PuTTY_Profile { get; set; }
+        public string PuTTY_AdditionalCommandLine { get; set; }
 
         public bool WakeOnLAN_Enabled { get; set; }
         public string WakeOnLAN_MACAddress { get; set; }

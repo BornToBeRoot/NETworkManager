@@ -789,8 +789,8 @@ namespace NETworkManager.ViewModels.Settings
                 ImportExportManager.Import(ImportFilePath, importOptions);
 
                 // Do the import (replace or add)
-                if (importOptions.Contains(ImportExportManager.ImportExportOptions.PuTTYProfiles))
-                    PuTTYProfileManager.Import(ImportEverything || ImportOverridePuTTYProfiles);
+                //if (importOptions.Contains(ImportExportManager.ImportExportOptions.PuTTYProfiles))
+                //    PuTTYProfileManager.Import(ImportEverything || ImportOverridePuTTYProfiles);
 
                 // Show the user a message what happened
                 if (!ImportExportManager.ForceRestart)
@@ -898,12 +898,12 @@ namespace NETworkManager.ViewModels.Settings
             if (ProfileManager.ProfilesChanged)
                 ProfileManager.Save();
 
-            if (PuTTYProfileManager.ProfilesChanged)
-                PuTTYProfileManager.Save();
+            //if (PuTTYProfileManager.ProfilesChanged)
+            //    PuTTYProfileManager.Save();
 
             // Check if files exist
             ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
-            PuTTYProfilesExists = File.Exists(PuTTYProfileManager.GetProfilesFilePath());
+            //PuTTYProfilesExists = File.Exists(PuTTYProfileManager.GetProfilesFilePath());
         }
 
         public void SetImportLocationFilePathFromDragDrop(string filePath)

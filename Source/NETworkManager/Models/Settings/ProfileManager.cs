@@ -153,6 +153,15 @@ namespace NETworkManager.Models.Settings
                 RemoteDesktop_InheritHost = instance.RemoteDesktop_InheritHost,
                 RemoteDesktop_Host = instance.RemoteDesktop_InheritHost ? instance.Host : instance.RemoteDesktop_Host,
 
+                PuTTY_Enabled = instance.PuTTY_Enabled,
+                PuTTY_ConnectionMode = instance.PuTTY_ConnectionMode,
+                PuTTY_InheritHost = instance.PuTTY_InheritHost,
+                PuTTY_HostOrSerialLine = instance.PuTTY_ConnectionMode == PuTTY.PuTTY.ConnectionMode.Serial ? instance.PuTTY_SerialLine : (instance.PuTTY_InheritHost ? instance.Host : instance.PuTTY_Host),
+                PuTTY_PortOrBaud = instance.PuTTY_ConnectionMode == PuTTY.PuTTY.ConnectionMode.Serial ? instance.PuTTY_Baud : instance.PuTTY_Port,
+                PuTTY_Username = instance.PuTTY_Username,
+                PuTTY_Profile = instance.PuTTY_Profile,
+                PuTTY_AdditionalCommandLine = instance.PuTTY_AdditionalCommandLine,
+
                 WakeOnLAN_Enabled = instance.WakeOnLAN_Enabled,
                 WakeOnLAN_MACAddress = instance.WakeOnLAN_MACAddress,
                 WakeOnLAN_Broadcast = instance.WakeOnLAN_Broadcast,

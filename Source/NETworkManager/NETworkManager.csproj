@@ -240,8 +240,6 @@
     <Compile Include="Models\PuTTY\PuTTY.cs" />
     <Compile Include="Models\Settings\ProfileInfo.cs" />
     <Compile Include="Models\Settings\ProfileManager.cs" />
-    <Compile Include="Models\Settings\PuTTYSessionInfo.cs" />
-    <Compile Include="Models\Settings\PuTTYSessionManager.cs" />
     <Compile Include="Utilities\ArrayHelper.cs" />
     <Compile Include="Utilities\AutoRefreshTime.cs" />
     <Compile Include="Utilities\AutoRefreshTimeInfo.cs" />
@@ -303,8 +301,7 @@
     <Compile Include="ViewModels\CredentialsSetMasterPasswordViewModel.cs" />
     <Compile Include="ViewModels\ConfirmRemoveViewModel.cs" />
     <Compile Include="ViewModels\ARPTableAddEntryViewModel.cs" />
-    <Compile Include="ViewModels\PuTTYSConnectViewModel.cs" />
-    <Compile Include="ViewModels\PuTTYSessionViewModel.cs" />
+    <Compile Include="ViewModels\PuTTYConnectViewModel.cs" />
     <Compile Include="ViewModels\RemoteDesktopConnectViewModel.cs" />
     <Compile Include="Models\Network\DNSLookup.cs" />
     <Compile Include="Models\Network\DNSLookupCompleteArgs.cs" />
@@ -415,9 +412,6 @@
     </Compile>
     <Compile Include="Views\PuTTYConnectDialog.xaml.cs">
       <DependentUpon>PuTTYConnectDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PuTTYSessionDialog.xaml.cs">
-      <DependentUpon>PuTTYSessionDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RemoteDesktopConnectDialog.xaml.cs">
       <DependentUpon>RemoteDesktopConnectDialog.xaml</DependentUpon>
@@ -721,10 +715,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\PuTTYConnectDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PuTTYSessionDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
