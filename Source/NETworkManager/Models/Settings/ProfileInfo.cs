@@ -9,6 +9,13 @@
         public string Tags { get; set; }
         
         public bool NetworkInterface_Enabled { get; set; }
+        public bool NetworkInterface_EnableStaticIPAddress { get; set; }
+        public string NetworkInterface_IPAddress { get; set; }
+        public string NetworkInterface_SubnetmaskOrCidr { get; set; }
+        public string NetworkInterface_Gateway { get; set; }
+        public bool NetworkInterface_EnableStaticDNS { get; set; }
+        public string NetworkInterface_PrimaryDNSServer { get; set; }
+        public string NetworkInterface_SecondaryDNSServer { get; set; }
 
         public bool IPScanner_Enabled { get; set; }
         public bool IPScanner_InheritHost { get; set; } = true;

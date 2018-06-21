@@ -775,6 +775,7 @@ namespace NETworkManager.ViewModels.Settings
                 if (ImportApplicationSettingsExists && (ImportEverything || ImportApplicationSettings))
                     importOptions.Add(ImportExportManager.ImportExportOptions.ApplicationSettings);
 
+                /*
                 if (ImportNetworkInterfaceProfilesExists && (ImportEverything || ImportNetworkInterfaceProfiles))
                 {
                     importOptions.Add(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
@@ -782,15 +783,12 @@ namespace NETworkManager.ViewModels.Settings
                     // Load network interface profile (option: add)
                     if (NetworkInterfaceProfileManager.Profiles == null)
                         NetworkInterfaceProfileManager.Load(!ImportOverrideNetworkInterfaceProfiles);
-                }
+                }*/
 
                 // Import (copy) files from zip archive
                 ImportExportManager.Import(ImportFilePath, importOptions);
 
                 // Do the import (replace or add)
-                if (importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles))
-                    NetworkInterfaceProfileManager.Import(ImportEverything || ImportOverrideNetworkInterfaceProfiles);
-
                 if (importOptions.Contains(ImportExportManager.ImportExportOptions.PuTTYProfiles))
                     PuTTYProfileManager.Import(ImportEverything || ImportOverridePuTTYProfiles);
 
@@ -900,15 +898,11 @@ namespace NETworkManager.ViewModels.Settings
             if (ProfileManager.ProfilesChanged)
                 ProfileManager.Save();
 
-            if (NetworkInterfaceProfileManager.ProfilesChanged)
-                NetworkInterfaceProfileManager.Save();
-
             if (PuTTYProfileManager.ProfilesChanged)
                 PuTTYProfileManager.Save();
 
             // Check if files exist
             ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
-            NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
             PuTTYProfilesExists = File.Exists(PuTTYProfileManager.GetProfilesFilePath());
         }
 

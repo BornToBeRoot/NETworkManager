@@ -589,14 +589,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Profiles
-        ICollectionView _networkInterfaceProfiles;
-        public ICollectionView NetworkInterfaceProfiles
+        ICollectionView _profiles;
+        public ICollectionView Profiles
         {
-            get { return _networkInterfaceProfiles; }
+            get { return _profiles; }
         }
 
-        private NetworkInterfaceProfileInfo _selectedProfile = new NetworkInterfaceProfileInfo();
-        public NetworkInterfaceProfileInfo SelectedProfile
+        private ProfileInfo _selectedProfile = new ProfileInfo();
+        public ProfileInfo SelectedProfile
         {
             get { return _selectedProfile; }
             set
@@ -606,15 +606,15 @@ namespace NETworkManager.ViewModels
 
                 if (value != null)
                 {
-                    ConfigEnableDynamicIPAddress = !value.EnableStaticIPAddress;
-                    ConfigEnableStaticIPAddress = value.EnableStaticIPAddress;
-                    ConfigIPAddress = value.IPAddress;
-                    ConfigGateway = value.Gateway;
-                    ConfigSubnetmaskOrCidr = value.Subnetmask;
-                    ConfigEnableDynamicDNS = !value.EnableStaticDNS;
-                    ConfigEnableStaticDNS = value.EnableStaticDNS;
-                    ConfigPrimaryDNSServer = value.PrimaryDNSServer;
-                    ConfigSecondaryDNSServer = value.SecondaryDNSServer;
+                    ConfigEnableDynamicIPAddress = !value.NetworkInterface_EnableStaticIPAddress;
+                    ConfigEnableStaticIPAddress = value.NetworkInterface_EnableStaticIPAddress;
+                    ConfigIPAddress = value.NetworkInterface_IPAddress;
+                    ConfigGateway = value.NetworkInterface_Gateway;
+                    ConfigSubnetmaskOrCidr = value.NetworkInterface_SubnetmaskOrCidr;
+                    ConfigEnableDynamicDNS = !value.NetworkInterface_EnableStaticDNS;
+                    ConfigEnableStaticDNS = value.NetworkInterface_EnableStaticDNS;
+                    ConfigPrimaryDNSServer = value.NetworkInterface_PrimaryDNSServer;
+                    ConfigSecondaryDNSServer = value.NetworkInterface_SecondaryDNSServer;
                 }
 
                 _selectedProfile = value;
@@ -633,7 +633,7 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                NetworkInterfaceProfiles.Refresh();
+                Profiles.Refresh();
 
                 OnPropertyChanged();
             }
@@ -694,26 +694,25 @@ namespace NETworkManager.ViewModels
             // Load network interfaces
             LoadNetworkInterfaces();
 
-            // Load profiles
-            if (NetworkInterfaceProfileManager.Profiles == null)
-                NetworkInterfaceProfileManager.Load();
-
-            _networkInterfaceProfiles = CollectionViewSource.GetDefaultView(NetworkInterfaceProfileManager.Profiles);
-            _networkInterfaceProfiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(NetworkInterfaceProfileInfo.Group)));
-            _networkInterfaceProfiles.SortDescriptions.Add(new SortDescription(nameof(NetworkInterfaceProfileInfo.Group), ListSortDirection.Ascending));
-            _networkInterfaceProfiles.SortDescriptions.Add(new SortDescription(nameof(NetworkInterfaceProfileInfo.Name), ListSortDirection.Ascending));
-            _networkInterfaceProfiles.Filter = o =>
+            _profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
+            _profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
+            _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
+            _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
+            _profiles.Filter = o =>
             {
-                if (string.IsNullOrEmpty(Search))
-                    return true;
+                ProfileInfo info = o as ProfileInfo;
 
-                NetworkInterfaceProfileInfo info = o as NetworkInterfaceProfileInfo;
+                if (string.IsNullOrEmpty(Search))
+                    return info.NetworkInterface_Enabled;
 
                 string search = Search.Trim();
 
                 // Search by: Name
-                return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+                return (info.NetworkInterface_Enabled && info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
+
+            // This will select the first entry as selected item...
+            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.NetworkInterface_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
 
             LoadSettings();
 
@@ -834,32 +833,19 @@ namespace NETworkManager.ViewModels
                 Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
             };
 
-            NetworkInterfaceProfileViewModel networkInterfaceProfileViewModel = new NetworkInterfaceProfileViewModel(instance =>
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                NetworkInterfaceProfileInfo networkInterfaceProfileInfo = new NetworkInterfaceProfileInfo
-                {
-                    Name = instance.Name,
-                    EnableStaticIPAddress = instance.EnableStaticIPAddress,
-                    IPAddress = instance.IPAddress,
-                    Subnetmask = instance.SubnetmaskOrCidr,
-                    Gateway = instance.Gateway,
-                    EnableStaticDNS = instance.EnableStaticDNS,
-                    PrimaryDNSServer = instance.PrimaryDNSServer,
-                    SecondaryDNSServer = instance.SecondaryDNSServer,
-                    Group = instance.Group
-                };
-
-                NetworkInterfaceProfileManager.AddProfile(networkInterfaceProfileInfo);
+                ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, NetworkInterfaceProfileManager.GetProfileGroups(), new NetworkInterfaceProfileInfo() { EnableStaticIPAddress = ConfigEnableStaticIPAddress, IPAddress = ConfigIPAddress, Subnetmask = ConfigSubnetmaskOrCidr, Gateway = ConfigGateway, EnableStaticDNS = ConfigEnableStaticDNS, PrimaryDNSServer = ConfigPrimaryDNSServer, SecondaryDNSServer = ConfigSecondaryDNSServer });
+            }, ProfileManager.GetGroups());
 
-            customDialog.Content = new NetworkInterfaceProfileDialog
+            customDialog.Content = new ProfileDialog
             {
-                DataContext = networkInterfaceProfileViewModel
+                DataContext = profileViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
@@ -877,34 +863,21 @@ namespace NETworkManager.ViewModels
                 Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
             };
 
-            NetworkInterfaceProfileViewModel networkInterfaceProfileViewModel = new NetworkInterfaceProfileViewModel(instance =>
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                NetworkInterfaceProfileManager.RemoveProfile(SelectedProfile);
+                ProfileManager.RemoveProfile(SelectedProfile);
 
-                NetworkInterfaceProfileInfo networkInterfaceProfileInfo = new NetworkInterfaceProfileInfo
-                {
-                    Name = instance.Name,
-                    EnableStaticIPAddress = instance.EnableStaticIPAddress,
-                    IPAddress = instance.IPAddress,
-                    Subnetmask = instance.SubnetmaskOrCidr,
-                    Gateway = instance.Gateway,
-                    EnableStaticDNS = instance.EnableStaticDNS,
-                    PrimaryDNSServer = instance.PrimaryDNSServer,
-                    SecondaryDNSServer = instance.SecondaryDNSServer,
-                    Group = instance.Group
-                };
-
-                NetworkInterfaceProfileManager.AddProfile(networkInterfaceProfileInfo);
+                ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, NetworkInterfaceProfileManager.GetProfileGroups(), SelectedProfile);
+            }, ProfileManager.GetGroups(), SelectedProfile);
 
-            customDialog.Content = new NetworkInterfaceProfileDialog
+            customDialog.Content = new ProfileDialog
             {
-                DataContext = networkInterfaceProfileViewModel
+                DataContext = profileViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
@@ -922,32 +895,19 @@ namespace NETworkManager.ViewModels
                 Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
             };
 
-            NetworkInterfaceProfileViewModel networkInterfaceProfileViewModel = new NetworkInterfaceProfileViewModel(instance =>
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                NetworkInterfaceProfileInfo networkInterfaceProfileInfo = new NetworkInterfaceProfileInfo
-                {
-                    Name = instance.Name,
-                    EnableStaticIPAddress = instance.EnableStaticIPAddress,
-                    IPAddress = instance.IPAddress,
-                    Subnetmask = instance.SubnetmaskOrCidr,
-                    Gateway = instance.Gateway,
-                    EnableStaticDNS = instance.EnableStaticDNS,
-                    PrimaryDNSServer = instance.PrimaryDNSServer,
-                    SecondaryDNSServer = instance.SecondaryDNSServer,
-                    Group = instance.Group
-                };
-
-                NetworkInterfaceProfileManager.AddProfile(networkInterfaceProfileInfo);
+                ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, NetworkInterfaceProfileManager.GetProfileGroups(), SelectedProfile);
+            }, ProfileManager.GetGroups(), SelectedProfile);
 
-            customDialog.Content = new NetworkInterfaceProfileDialog
+            customDialog.Content = new ProfileDialog
             {
-                DataContext = networkInterfaceProfileViewModel
+                DataContext = profileViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
@@ -969,7 +929,7 @@ namespace NETworkManager.ViewModels
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                NetworkInterfaceProfileManager.RemoveProfile(SelectedProfile);
+                ProfileManager.RemoveProfile(SelectedProfile);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -999,9 +959,7 @@ namespace NETworkManager.ViewModels
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                NetworkInterfaceProfileManager.RenameGroup(instance.OldGroup, instance.Group);
-
-                _networkInterfaceProfiles.Refresh();
+                ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -1097,23 +1055,23 @@ namespace NETworkManager.ViewModels
             IsConfigurationRunning = true;
             DisplayStatusMessage = false;
 
-            string subnetmask = SelectedProfile.Subnetmask;
+            string subnetmask = SelectedProfile.NetworkInterface_SubnetmaskOrCidr;
 
             // CIDR to subnetmask
-            if (SelectedProfile.EnableStaticIPAddress && subnetmask.StartsWith("/"))
+            if (SelectedProfile.NetworkInterface_EnableStaticIPAddress && subnetmask.StartsWith("/"))
                 subnetmask = Subnetmask.GetFromCidr(int.Parse(subnetmask.TrimStart('/'))).Subnetmask;
 
-            bool enableStaticDNS = SelectedProfile.EnableStaticDNS;
+            bool enableStaticDNS = SelectedProfile.NetworkInterface_EnableStaticDNS;
 
-            string primaryDNSServer = SelectedProfile.PrimaryDNSServer;
-            string secondaryDNSServer = SelectedProfile.SecondaryDNSServer;
+            string primaryDNSServer = SelectedProfile.NetworkInterface_PrimaryDNSServer;
+            string secondaryDNSServer = SelectedProfile.NetworkInterface_SecondaryDNSServer;
 
             // If primary and secondary DNS are empty --> autoconfiguration
             if (enableStaticDNS && string.IsNullOrEmpty(primaryDNSServer) && string.IsNullOrEmpty(secondaryDNSServer))
                 enableStaticDNS = false;
 
             // When primary DNS is empty, swap it with secondary (if not empty)
-            if (SelectedProfile.EnableStaticDNS && string.IsNullOrEmpty(primaryDNSServer) && !string.IsNullOrEmpty(secondaryDNSServer))
+            if (SelectedProfile.NetworkInterface_EnableStaticDNS && string.IsNullOrEmpty(primaryDNSServer) && !string.IsNullOrEmpty(secondaryDNSServer))
             {
                 primaryDNSServer = secondaryDNSServer;
                 secondaryDNSServer = string.Empty;
@@ -1122,10 +1080,10 @@ namespace NETworkManager.ViewModels
             NetworkInterfaceConfig config = new NetworkInterfaceConfig
             {
                 Name = SelectedNetworkInterface.Name,
-                EnableStaticIPAddress = SelectedProfile.EnableStaticIPAddress,
-                IPAddress = SelectedProfile.IPAddress,
+                EnableStaticIPAddress = SelectedProfile.NetworkInterface_EnableStaticIPAddress,
+                IPAddress = SelectedProfile.NetworkInterface_IPAddress,
                 Subnetmask = subnetmask,
-                Gateway = SelectedProfile.Gateway,
+                Gateway = SelectedProfile.NetworkInterface_Gateway,
                 EnableStaticDNS = enableStaticDNS,
                 PrimaryDNSServer = primaryDNSServer,
                 SecondaryDNSServer = secondaryDNSServer

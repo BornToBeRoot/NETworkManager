@@ -123,6 +123,15 @@ namespace NETworkManager.Models.Settings
                 Group = instance.Group,
                 Tags = instance.Tags,
 
+                NetworkInterface_Enabled = instance.NetworkInterface_Enabled,
+                NetworkInterface_EnableStaticIPAddress = instance.NetworkInterface_EnableStaticIPAddress,
+                NetworkInterface_IPAddress = instance.NetworkInterface_IPAddress,
+                NetworkInterface_Gateway = instance.NetworkInterface_Gateway,
+                NetworkInterface_SubnetmaskOrCidr = instance.NetworkInterface_SubnetmaskOrCidr,
+                NetworkInterface_EnableStaticDNS = instance.NetworkInterface_EnableStaticDNS,
+                NetworkInterface_PrimaryDNSServer = instance.NetworkInterface_PrimaryDNSServer,
+                NetworkInterface_SecondaryDNSServer = instance.NetworkInterface_SecondaryDNSServer,
+
                 IPScanner_Enabled = instance.IPScanner_Enabled,
                 IPScanner_InheritHost = instance.IPScanner_InheritHost,
                 IPScanner_IPRange = instance.IPScanner_InheritHost ? instance.Host : instance.IPScanner_IPRange,

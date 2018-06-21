@@ -301,7 +301,6 @@
     <Compile Include="ViewModels\CredentialsMasterPasswordViewModel.cs" />
     <Compile Include="ViewModels\CredentialViewModel.cs" />
     <Compile Include="ViewModels\CredentialsSetMasterPasswordViewModel.cs" />
-    <Compile Include="ViewModels\NetworkInterfaceProfileViewModel.cs" />
     <Compile Include="ViewModels\ConfirmRemoveViewModel.cs" />
     <Compile Include="ViewModels\ARPTableAddEntryViewModel.cs" />
     <Compile Include="ViewModels\PuTTYSConnectViewModel.cs" />
@@ -313,7 +312,6 @@
     <Compile Include="Models\Network\DNSLookupErrorArgs.cs" />
     <Compile Include="Models\Network\DNSLookupRecordInfo.cs" />
     <Compile Include="Models\Network\DNSLookupRecordArgs.cs" />
-    <Compile Include="Models\Settings\NetworkInterfaceProfileManager.cs" />
     <Compile Include="Validators\IPAddressValidator.cs" />
     <Compile Include="Validators\EmptyOrIPv4AddressValidator.cs" />
     <Compile Include="Validators\IPv4SubnetValidator.cs" />
@@ -408,9 +406,6 @@
     </Compile>
     <Compile Include="Views\CredentialsSetMasterPasswordDialog.xaml.cs">
       <DependentUpon>CredentialsSetMasterPasswordDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\NetworkInterfaceProfileDialog.xaml.cs">
-      <DependentUpon>NetworkInterfaceProfileDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConfirmRemoveDialog.xaml.cs">
       <DependentUpon>ConfirmRemoveDialog.xaml</DependentUpon>
@@ -717,10 +712,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\NetworkInterfaceProfileDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\ConfirmRemoveDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -926,7 +917,6 @@
     <Compile Include="Models\Settings\SettingsManager.cs" />
     <Compile Include="SettingsViewInfo.cs" />
     <Compile Include="SettingsViewManager.cs" />
-    <Compile Include="Models\Settings\NetworkInterfaceProfileInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>
       <AutoGen>True</AutoGen>

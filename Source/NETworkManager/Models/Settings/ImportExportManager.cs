@@ -96,9 +96,6 @@ namespace NETworkManager.Models.Settings
             if (fileName == SettingsManager.GetSettingsFileName())
                 return ImportExportOptions.ApplicationSettings;
 
-            if (fileName == NetworkInterfaceProfileManager.ProfilesFileName)
-                return ImportExportOptions.NetworkInterfaceProfiles;
-
             if (fileName == PuTTYProfileManager.ProfilesFileName)
                 return ImportExportOptions.PuTTYProfiles;
 
@@ -111,8 +108,6 @@ namespace NETworkManager.Models.Settings
             {
                 case ImportExportOptions.ApplicationSettings:
                     return SettingsManager.GetSettingsFileName();
-                case ImportExportOptions.NetworkInterfaceProfiles:
-                    return NetworkInterfaceProfileManager.ProfilesFileName;
                 case ImportExportOptions.PuTTYProfiles:
                     return PuTTYProfileManager.ProfilesFileName;
             }
@@ -126,8 +121,6 @@ namespace NETworkManager.Models.Settings
             {
                 case ImportExportOptions.ApplicationSettings:
                     return SettingsManager.GetSettingsFilePath();
-                case ImportExportOptions.NetworkInterfaceProfiles:
-                    return NetworkInterfaceProfileManager.GetProfilesFilePath();
                 case ImportExportOptions.PuTTYProfiles:
                     return PuTTYProfileManager.GetProfilesFilePath();
             }

@@ -134,6 +134,8 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
+
+
         #region Network Interface
         private bool _networkInterface_Enabled;
         public bool NetworkInterface_Enabled
@@ -145,6 +147,173 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_Enabled = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _networkInterface_EnableDynamicIPAddress = true;
+        public bool NetworkInterface_EnableDynamicIPAddress
+        {
+            get { return _networkInterface_EnableDynamicIPAddress; }
+            set
+            {
+                if (value == _networkInterface_EnableDynamicIPAddress)
+                    return;
+
+                _networkInterface_EnableDynamicIPAddress = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _networkInterface_EnableStaticIPAddress;
+        public bool NetworkInterface_EnableStaticIPAddress
+        {
+            get { return _networkInterface_EnableStaticIPAddress; }
+            set
+            {
+                if (value == _networkInterface_EnableStaticIPAddress)
+                    return;
+
+                if (value)
+                    NetworkInterface_EnableStaticDNS = true;
+                else
+                    NetworkInterface_EnableStaticDNS = true;
+
+                _networkInterface_EnableStaticIPAddress = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _networkInterface_IPAddress;
+        public string NetworkInterface_IPAddress
+        {
+            get { return _networkInterface_IPAddress; }
+            set
+            {
+                if (value == _networkInterface_IPAddress)
+                    return;
+
+                _networkInterface_IPAddress = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _networkInterface_SubnetmaskOrCidr;
+        public string NetworkInterface_SubnetmaskOrCidr
+        {
+            get { return _networkInterface_SubnetmaskOrCidr; }
+            set
+            {
+                if (value == _networkInterface_SubnetmaskOrCidr)
+                    return;
+
+                _networkInterface_SubnetmaskOrCidr = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _networkInterface_Gateway;
+        public string NetworkInterface_Gateway
+        {
+            get { return _networkInterface_Gateway; }
+            set
+            {
+                if (value == _networkInterface_Gateway)
+                    return;
+
+                _networkInterface_Gateway = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _networkInterface_EnableDynamicDNS = true;
+        public bool NetworkInterface_EnableDynamicDNS
+        {
+            get { return _networkInterface_EnableDynamicDNS; }
+            set
+            {
+                if (value == _networkInterface_EnableDynamicDNS)
+                    return;
+
+                _networkInterface_EnableDynamicDNS = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _networkInterface_EnableStaticDNS;
+        public bool NetworkInterface_EnableStaticDNS
+        {
+            get { return _networkInterface_EnableStaticDNS; }
+            set
+            {
+                if (value == _networkInterface_EnableStaticDNS)
+                    return;
+
+                _networkInterface_EnableStaticDNS = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _networkInterface_PrimaryDNSServer;
+        public string NetworkInterface_PrimaryDNSServer
+        {
+            get { return _networkInterface_PrimaryDNSServer; }
+            set
+            {
+                if (value == _networkInterface_PrimaryDNSServer)
+                    return;
+
+                _networkInterface_PrimaryDNSServer = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _networkInterface_SecondaryDNSServer;
+        public string NetworkInterface_SecondaryDNSServer
+        {
+            get { return _networkInterface_SecondaryDNSServer; }
+            set
+            {
+                if (value == _networkInterface_SecondaryDNSServer)
+                    return;
+
+                _networkInterface_SecondaryDNSServer = value;
 
                 if (!_isLoading)
                     Validate();
@@ -541,6 +710,18 @@ namespace NETworkManager.ViewModels
 
             _groups = CollectionViewSource.GetDefaultView(groups);
             _groups.SortDescriptions.Add(new SortDescription());
+
+            NetworkInterface_Enabled = _profileInfo.NetworkInterface_Enabled;
+            NetworkInterface_EnableDynamicIPAddress = !_profileInfo.NetworkInterface_EnableStaticIPAddress;
+            NetworkInterface_EnableStaticIPAddress = _profileInfo.NetworkInterface_EnableStaticIPAddress;
+            NetworkInterface_IPAddress = _profileInfo.NetworkInterface_IPAddress;
+            NetworkInterface_Gateway = _profileInfo.NetworkInterface_Gateway;
+            NetworkInterface_SubnetmaskOrCidr = _profileInfo.NetworkInterface_SubnetmaskOrCidr;
+                
+            NetworkInterface_EnableDynamicDNS = !_profileInfo.NetworkInterface_EnableStaticDNS;
+            NetworkInterface_EnableStaticDNS = _profileInfo.NetworkInterface_EnableStaticDNS;
+            NetworkInterface_PrimaryDNSServer = _profileInfo.NetworkInterface_PrimaryDNSServer;
+            NetworkInterface_SecondaryDNSServer = _profileInfo.NetworkInterface_SecondaryDNSServer;
 
             IPScanner_Enabled = _profileInfo.IPScanner_Enabled;
             IPScanner_InheritHost = _profileInfo.IPScanner_InheritHost;

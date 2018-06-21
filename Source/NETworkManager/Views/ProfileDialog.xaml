@@ -112,9 +112,9 @@
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
                         <StackPanel IsEnabled="{Binding NetworkInterface_Enabled}">
-                            <RadioButton x:Name="radioButtonEnableDynamicIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding EnableDynamicIPAddress}" Content="{DynamicResource String_ObtainAnIPAddressAutomatically}" Margin="0,0,0,10"/>
-                            <RadioButton x:Name="radioButtonEnableStaticIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding EnableStaticIPAddress}" Content="{DynamicResource String_UseTheFollowingIPAddress}" Margin="0,0,0,10"/>
-                            <Grid IsEnabled="{Binding EnableStaticIPAddress}" Margin="0,0,0,10">
+                            <RadioButton x:Name="radioButtonEnableDynamicIPAddress" GroupName="NetworkInterface_IPAddressConfig" IsChecked="{Binding NetworkInterface_EnableDynamicIPAddress}" Content="{DynamicResource String_ObtainAnIPAddressAutomatically}" Margin="0,0,0,10"/>
+                            <RadioButton x:Name="radioButtonEnableStaticIPAddress" GroupName="NetworkInterface_IPAddressConfig" IsChecked="{Binding NetworkInterface_EnableStaticIPAddress}" Content="{DynamicResource String_UseTheFollowingIPAddress}" Margin="0,0,0,10"/>
+                            <Grid IsEnabled="{Binding NetworkInterface_EnableStaticIPAddress}" Margin="0,0,0,10">
                                 <Grid.Resources>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
@@ -133,9 +133,9 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_IPv4Address}" />
-                                <TextBox x:Name="txtIPAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}" >
+                                <TextBox x:Name="txtNetworkInterfaceIPAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}" >
                                     <TextBox.Text>
-                                        <Binding Path="IPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding Path="NetworkInterface_IPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                                                 <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
@@ -144,9 +144,9 @@
                                     </TextBox.Text>
                                 </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_SubnetmaskOrCIDR}" />
-                                <ComboBox x:Name="cbSubnetmaskOrCidr" Grid.Column="2" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetmaskIPv4CIDR}" ItemsSource="{x:Static Network:Subnetmask.List}">
+                                <ComboBox x:Name="cbNetworkInterfaceSubnetmaskOrCidr" Grid.Column="2" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetmaskIPv4CIDR}" ItemsSource="{x:Static Network:Subnetmask.List}">
                                     <ComboBox.Text>
-                                        <Binding Path="SubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding Path="NetworkInterface_SubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
                                                 <Validator:IPv4SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True" />
@@ -155,9 +155,9 @@
                                     </ComboBox.Text>
                                 </ComboBox>
                                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_DefaultGateway}" />
-                                <TextBox x:Name="txtGateway" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" >
+                                <TextBox x:Name="txtNetworkInterfaceGateway" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" >
                                     <TextBox.Text>
-                                        <Binding Path="Gateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding Path="NetworkInterface_Gateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
@@ -165,9 +165,9 @@
                                     </TextBox.Text>
                                 </TextBox>
                             </Grid>
-                            <RadioButton x:Name="radioButtonEnableDynamicDNS" GroupName="DNSServerConfig" Content="{DynamicResource String_ObtainDNSServerAddressAutomatically}" IsChecked="{Binding EnableDynamicDNS}" Margin="0,0,0,10" IsEnabled="{Binding EnableDynamicIPAddress}" />
-                            <RadioButton x:Name="radioButtonEnableStaticDNS" GroupName="DNSServerConfig" Content="{DynamicResource String_UseTheFollowingDNSServerAddresses}" IsChecked="{Binding EnableStaticDNS}" Margin="0,0,0,10"/>
-                            <Grid IsEnabled="{Binding EnableStaticDNS}">
+                            <RadioButton x:Name="radioButtonEnableDynamicDNS" GroupName="NetworkInterface_DNSServerConfig" Content="{DynamicResource String_ObtainDNSServerAddressAutomatically}" IsChecked="{Binding NetworkInterface_EnableDynamicDNS}" Margin="0,0,0,10" IsEnabled="{Binding NetworkInterface_EnableDynamicIPAddress}" />
+                            <RadioButton x:Name="radioButtonEnableStaticDNS" GroupName="NetworkInterface_DNSServerConfig" Content="{DynamicResource String_UseTheFollowingDNSServerAddresses}" IsChecked="{Binding NetworkInterface_EnableStaticDNS}" Margin="0,0,0,10"/>
+                            <Grid IsEnabled="{Binding NetworkInterface_EnableStaticDNS}">
                                 <Grid.Resources>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
@@ -184,9 +184,9 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_PrimaryDNSServer}" />
-                                <TextBox x:Name="txtPrimaryDNSServer" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" >
+                                <TextBox x:Name="txtNetworkInterfacePrimaryDNSServer" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" >
                                     <TextBox.Text>
-                                        <Binding Path="PrimaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding Path="NetworkInterface_PrimaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
@@ -194,9 +194,9 @@
                                     </TextBox.Text>
                                 </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_SecondaryDNSServer}" />
-                                <TextBox x:Name="txtSecondaryDNSServer" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNSServer}" >
+                                <TextBox x:Name="txtNetworkInterfaceSecondaryDNSServer" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNSServer}" >
                                     <TextBox.Text>
-                                        <Binding Path="SecondaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding Path="NetworkInterface_SecondaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>

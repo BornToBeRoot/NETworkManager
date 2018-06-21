@@ -406,9 +406,6 @@ namespace NETworkManager.ViewModels
                 if (SettingsManager.GetSettingsFileName() == fileName)
                     return true;
 
-                if (NetworkInterfaceProfileManager.ProfilesFileName == fileName)
-                    return true;
-
                 if (PuTTYProfileManager.ProfilesFileName == fileName)
                     return true;
             }
@@ -525,9 +522,6 @@ namespace NETworkManager.ViewModels
                 forceRestart = true;
             }
 
-            if (NetworkInterfaceProfilesExists && (ResetEverything || ResetNetworkInterfaceProfiles))
-                NetworkInterfaceProfileManager.Reset();
-
             if (PuTTYProfilesExists && (ResetEverything || ResetPuTTYProfiles))
                 PuTTYProfileManager.Reset();
 
@@ -581,16 +575,12 @@ namespace NETworkManager.ViewModels
 
             if (ProfileManager.ProfilesChanged)
                 ProfileManager.Save();
-
-            if (NetworkInterfaceProfileManager.ProfilesChanged)
-                NetworkInterfaceProfileManager.Save();
                         
             if (PuTTYProfileManager.ProfilesChanged)
                 PuTTYProfileManager.Save();
 
             // Check if files exist
             ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
-            NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
             PuTTYProfilesExists = File.Exists(PuTTYProfileManager.GetProfilesFilePath());
         }
 
