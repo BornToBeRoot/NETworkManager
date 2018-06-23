@@ -1071,7 +1071,7 @@ namespace NETworkManager.ViewModels
             WakeOnLAN_Enabled = _profileInfo.WakeOnLAN_Enabled;
             WakeOnLAN_MACAddress = _profileInfo.WakeOnLAN_MACAddress;
             WakeOnLAN_Broadcast = _profileInfo.WakeOnLAN_Broadcast;
-            WakeOnLAN_Port = _profileInfo.WakeOnLAN_Port;
+            WakeOnLAN_Port = _profileInfo.WakeOnLAN_Port == 0 ? SettingsManager.Current.WakeOnLAN_DefaultPort : _profileInfo.WakeOnLAN_Port;
 
             Validate();
 
