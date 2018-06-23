@@ -120,16 +120,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _displayNote;
-        public bool DisplayNote
+        private bool _noTabEnabled;
+        public bool NoTabEnabled
         {
-            get { return _displayNote; }
+            get { return _noTabEnabled; }
             set
             {
-                if (value == _displayNote)
+                if (value == _noTabEnabled)
                     return;
 
-                _displayNote = value;
+                _noTabEnabled = value;
                 OnPropertyChanged();
             }
         }
@@ -1081,7 +1081,7 @@ namespace NETworkManager.ViewModels
         private void Validate()
         {
             // Note
-            DisplayNote = (NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || RemoteDesktop_Enabled || WakeOnLAN_Enabled);
+            NoTabEnabled = (NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || RemoteDesktop_Enabled || WakeOnLAN_Enabled);
         }
 
         #region ICommands & Actions

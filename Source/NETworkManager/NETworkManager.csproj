@@ -225,7 +225,6 @@
     <Compile Include="Converters\NullOrEmptyToBoolConverter.cs" />
     <Compile Include="Converters\TimestampToStringConverter.cs" />
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
-    <Compile Include="Converters\ValidateNetworkInterfaceProfileConverter.cs" />
     <Compile Include="Converters\ValidateSubnetCalculatorSupernettingConverter.cs" />
     <Compile Include="Converters\ValidateSubnetCalculatorSubnettingConverter.cs" />
     <Compile Include="Models\Documentation\CommunityManager.cs" />

@@ -86,7 +86,7 @@
                                 </Rectangle.Resources>
                             </Rectangle>
                         </Grid>
-                        <TextBlock Text="Select at least one node, where the profile should appear! Click on a tab and select enable..." Visibility="{Binding DisplayNote, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{DynamicResource AccentTextBlock}" Margin="0,20,0,0"/>
+                        <TextBlock Text="Select at least one node, where the profile should appear! Click on a tab and select enable..." Visibility="{Binding NoTabEnabled, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{DynamicResource AccentTextBlock}" Margin="0,20,0,0"/>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
@@ -732,7 +732,162 @@
         </TabControl>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{DynamicResource String_Button_Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
-            <Button Content="{DynamicResource String_Button_Save}" Command="{Binding SaveCommand}" IsDefault="True" Margin="10,0,0,0" Style="{StaticResource HighlightedButton}" />
+            <Button Content="{DynamicResource String_Button_Save}" Command="{Binding SaveCommand}" IsDefault="True" Margin="10,0,0,0">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
+                        <Style.Triggers>
+                            <!-- General -->
+                            <DataTrigger Binding="{Binding ElementName=txtName,Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=txtHost,Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=cbGroup,Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <!-- No tab enabled -->
+                            <DataTrigger Binding="{Binding NoTabEnabled}" Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <!-- IP Scanner -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IPScanner_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding IPScanner_InheritHost}" Value="False"/>
+                                    <Condition Binding="{Binding ElementName=txtIPScannerIPRange, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- Port Scanner -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding PortScanner_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding PortScanner_InheritHost}" Value="False"/>
+                                    <Condition Binding="{Binding ElementName=txtPortScannerHost, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding PortScanner_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding ElementName=txtPortScannerPorts, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- Ping -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Ping_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding Ping_InheritHost}" Value="False"/>
+                                    <Condition Binding="{Binding ElementName=txtPingHost, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- Traceroute -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Traceroute_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding Traceroute_InheritHost}" Value="False"/>
+                                    <Condition Binding="{Binding ElementName=txtTracerouteHost, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- Remote Desktop -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding RemoteDesktop_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding RemoteDesktop_InheritHost}" Value="False"/>
+                                    <Condition Binding="{Binding ElementName=txtRemoteDesktopHost, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- PuTTY -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding PuTTY_UseSerial}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=txtPuTTYSerialLine, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding PuTTY_UseSerial}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=txtPuTTYBaud, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding PuTTY_UseSerial}" Value="False" />
+                                    <Condition Binding="{Binding PuTTY_InheritHost}" Value="False" />
+                                    <Condition Binding="{Binding ElementName=txtPuTTYHost, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding PuTTY_UseSerial}" Value="False" />
+                                    <Condition Binding="{Binding ElementName=txtPuTTYPort, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- Wake on LAN -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding WakeOnLAN_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding ElementName=txtWakeOnLANMACAddress, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding WakeOnLAN_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding ElementName=txtWakeOnLANBroadcast, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding WakeOnLAN_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding ElementName=txtWakeOnLANPort, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </StackPanel>
     </Grid>
 </UserControl>
