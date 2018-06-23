@@ -104,7 +104,7 @@
     <system:String x:Key="String_Header_Subnetting">Subnetting</system:String>
     <system:String x:Key="String_Header_Supernetting">Supernetting</system:String>
     <system:String x:Key="String_Header_NetworkInterface">Netzwerkinterface</system:String>
-    <system:String x:Key="String_Header_General">Allgemein</system:String> <!-- new updated -->
+    <system:String x:Key="String_Header_General">Allgemein</system:String>
 
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -431,7 +431,9 @@
     <system:String x:Key="String_Subnet2">Subnetz 2</system:String>
     <system:String x:Key="String_EnterSubnetsToCreateASupernet">Geben Sie Subnetze ein, um ein Supernet zu erstellen...</system:String>
     <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Geben Sie das Subnetz und eine neue Subnetzmaske ein, um Subnetze zu erstellen...</system:String>
-
+    <system:String x:Key="String_Enable">Aktivieren</system:String>
+    <system:String x:Key="String_SelectAtLeastOneNodeWhereTheProfileShouldAppear">Select at least one node, where the profile should appear! Click on a tab and select enable...</system:String>
+    
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">Wie erstelle ich ein benutzerdefiniertes Thema und Akzent?</system:String>

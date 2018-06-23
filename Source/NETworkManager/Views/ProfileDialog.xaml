@@ -25,7 +25,7 @@
                 <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource ProfileTabItem}" />
             </TabControl.Resources>
             <TabItem Header="{DynamicResource String_Header_General}">
-                <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
+                <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0" HorizontalScrollBarVisibility="Disabled">
                     <StackPanel>
                         <Grid>
                             <Grid.Resources>
@@ -86,7 +86,7 @@
                                 </Rectangle.Resources>
                             </Rectangle>
                         </Grid>
-                        <TextBlock Text="Select at least one node, where the profile should appear! Click on a tab and select enable..." Visibility="{Binding NoTabEnabled, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{DynamicResource AccentTextBlock}" Margin="0,20,0,0"/>
+                        <TextBlock Text="{DynamicResource String_SelectAtLeastOneNodeWhereTheProfileShouldAppear}" TextWrapping="Wrap" Visibility="{Binding NoTabEnabled, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{DynamicResource AccentTextBlock}" Margin="0,20,0,0"/>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
@@ -107,7 +107,7 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Enable" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
                             <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding NetworkInterface_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
@@ -225,7 +225,7 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Enable" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
                             <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding IPScanner_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
@@ -281,7 +281,7 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Enable" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
                             <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding PortScanner_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
@@ -349,7 +349,7 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Enable" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
                             <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Ping_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
@@ -404,7 +404,7 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Enable" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
                             <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Traceroute_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
@@ -459,7 +459,7 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Enable" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
                             <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding RemoteDesktop_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
@@ -514,7 +514,7 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Enable" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
                             <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding PuTTY_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
@@ -668,7 +668,7 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="Enable" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
                             <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding WakeOnLAN_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />

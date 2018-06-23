@@ -103,8 +103,8 @@
     <system:String x:Key="String_Header_Resources">Ресурсы</system:String>
     <system:String x:Key="String_Header_Subnetting">Разбиение на подсети</system:String>
     <system:String x:Key="String_Header_Supernetting">Супер плетение</system:String>
-    <system:String x:Key="String_Header_NetworkInterface">Netzwerkinterface</system:String> <!-- new/updated -->
-    <system:String x:Key="String_Header_General">General</system:String> <!-- new updated -->
+    <system:String x:Key="String_Header_NetworkInterface">Network Interface</system:String> <!-- new / updated -->
+    <system:String x:Key="String_Header_General">General</system:String> <!-- new / updated -->
     
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -431,7 +431,9 @@
     <system:String x:Key="String_Subnet2">Подсеть 2</system:String>
     <system:String x:Key="String_EnterSubnetsToCreateASupernet">Введите подсети для создания суперсети...</system:String>
     <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Введите подсеть и новую маску подсети для создания подсетей...</system:String>
-
+    <system:String x:Key="String_Enable">Enable</system:String> <!-- new / updated -->
+    <system:String x:Key="String_SelectAtLeastOneNodeWhereTheProfileShouldAppear">Select at least one node, where the profile should appear! Click on a tab and select enable...</system:String> <!-- new / updated -->
+    
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Как установить RDP 8.1 на Windows 7 / Server 2008 R2</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">Как создать пользовательскую тему и оттенок?</system:String>

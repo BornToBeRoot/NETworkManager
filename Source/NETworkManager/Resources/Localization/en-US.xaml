@@ -103,8 +103,8 @@
     <system:String x:Key="String_Header_Resources">Resources</system:String>
     <system:String x:Key="String_Header_Subnetting">Subnetting</system:String>
     <system:String x:Key="String_Header_Supernetting">Supernetting</system:String>
-    <system:String x:Key="String_Header_NetworkInterface">Network Interface</system:String> <!-- new/updated -->
-    <system:String x:Key="String_Header_General">General</system:String> <!-- new updated -->
+    <system:String x:Key="String_Header_NetworkInterface">Network Interface</system:String>
+    <system:String x:Key="String_Header_General">General</system:String>
 
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -431,7 +431,9 @@
     <system:String x:Key="String_Subnet2">Subnet 2</system:String>
     <system:String x:Key="String_EnterSubnetsToCreateASupernet">Enter subnets to create a supernet...</system:String>
     <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Enter subnet and a new subnet mask to create subnets...</system:String>
-        
+    <system:String x:Key="String_Enable">Enable</system:String>
+    <system:String x:Key="String_SelectAtLeastOneNodeWhereTheProfileShouldAppear">Select at least one node, where the profile should appear! Click on a tab and select enable...</system:String>
+    
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">How to create a custom theme and accent?</system:String>

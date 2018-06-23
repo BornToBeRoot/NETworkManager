@@ -277,6 +277,7 @@
     <Compile Include="Validators\MultipleHostsValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
+    <Compile Include="ViewModels\ProfilesViewModel.cs" />
     <Compile Include="ViewModels\ListenersViewModel.cs" />
     <Compile Include="ViewModels\ConnectionsViewModel.cs" />
     <Compile Include="ViewModels\SubnetCalculatorHostViewModel.cs" />
@@ -328,6 +329,9 @@
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
+    <Compile Include="Views\ProfilesView.xaml.cs">
+      <DependentUpon>ProfilesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ListenersView.xaml.cs">
       <DependentUpon>ListenersView.xaml</DependentUpon>
     </Compile>
@@ -581,6 +585,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Page Include="Views\ProfilesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ListenersView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

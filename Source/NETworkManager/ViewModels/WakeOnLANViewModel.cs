@@ -416,12 +416,12 @@ namespace NETworkManager.ViewModels
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand DeleteClientCommand
+        public ICommand DeleteProfileCommand
         {
-            get { return new RelayCommand(p => DeleteClientAction()); }
+            get { return new RelayCommand(p => DeleteProfileAction()); }
         }
 
-        private async void DeleteClientAction()
+        private async void DeleteProfileAction()
         {
             CustomDialog customDialog = new CustomDialog()
             {
