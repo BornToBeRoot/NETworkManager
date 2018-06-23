@@ -1081,7 +1081,7 @@ namespace NETworkManager.ViewModels
         private void Validate()
         {
             // Note
-            NoTabEnabled = (NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || RemoteDesktop_Enabled || WakeOnLAN_Enabled);
+            NoTabEnabled = (NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || RemoteDesktop_Enabled || PuTTY_Enabled || WakeOnLAN_Enabled);
         }
 
         #region ICommands & Actions
