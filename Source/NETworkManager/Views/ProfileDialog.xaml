@@ -750,6 +750,57 @@
                             <DataTrigger Binding="{Binding NoTabEnabled}" Value="False">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
+                            <!-- Network Interface -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding NetworkInterface_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding NetworkInterface_EnableStaticIPAddress}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=txtNetworkInterfaceIPAddress, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding NetworkInterface_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding NetworkInterface_EnableStaticIPAddress}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=cbNetworkInterfaceSubnetmaskOrCidr, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding NetworkInterface_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding NetworkInterface_EnableStaticIPAddress}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=txtNetworkInterfaceGateway, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding NetworkInterface_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding NetworkInterface_EnableStaticDNS}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=txtNetworkInterfacePrimaryDNSServer, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding NetworkInterface_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding NetworkInterface_EnableStaticDNS}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=txtNetworkInterfaceSecondaryDNSServer, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
                             <!-- IP Scanner -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
