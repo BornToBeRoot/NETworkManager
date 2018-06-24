@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
@@ -92,254 +91,58 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _applicationSettingsExists;
-        public bool ApplicationSettingsExists
+        private bool _settingsExists;
+        public bool SettingsExists
         {
-            get { return _applicationSettingsExists; }
+            get { return _settingsExists; }
             set
             {
-                if (value == _applicationSettingsExists)
+                if (value == _settingsExists)
                     return;
 
-                _applicationSettingsExists = value;
+                _settingsExists = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _resetApplicationSettings;
-        public bool ResetApplicationSettings
+        private bool _resetSettings;
+        public bool ResetSettings
         {
-            get { return _resetApplicationSettings; }
+            get { return _resetSettings; }
             set
             {
-                if (value == _resetApplicationSettings)
+                if (value == _resetSettings)
                     return;
 
-                _resetApplicationSettings = value;
+                _resetSettings = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _networkInterfaceProfilesExists;
-        public bool NetworkInterfaceProfilesExists
+        private bool _profilesExists;
+        public bool ProfilesExists
         {
-            get { return _networkInterfaceProfilesExists; }
+            get { return _profilesExists; }
             set
             {
-                if (value == _networkInterfaceProfilesExists)
+                if (value == _profilesExists)
                     return;
 
-                _networkInterfaceProfilesExists = value;
+                _profilesExists = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _resetNetworkInterfaceProfiles;
-        public bool ResetNetworkInterfaceProfiles
+        private bool _resetProfiles;
+        public bool ResetProfiles
         {
-            get { return _resetNetworkInterfaceProfiles; }
+            get { return _resetProfiles; }
             set
             {
-                if (value == _resetNetworkInterfaceProfiles)
+                if (value == _resetProfiles)
                     return;
 
-                _resetNetworkInterfaceProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _ipScannerProfilesExists;
-        public bool IPScannerProfilesExists
-        {
-            get { return _ipScannerProfilesExists; }
-            set
-            {
-                if (value == _ipScannerProfilesExists)
-                    return;
-
-                _ipScannerProfilesExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resetIPScannerProfiles;
-        public bool ResetIPScannerProfiles
-        {
-            get { return _resetIPScannerProfiles; }
-            set
-            {
-                if (value == _resetIPScannerProfiles)
-                    return;
-
-                _resetIPScannerProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-                
-        private bool _portScannerProfilesExists;
-        public bool PortScannerProfilesExists
-        {
-            get { return _portScannerProfilesExists; }
-            set
-            {
-                if (value == _portScannerProfilesExists)
-                    return;
-
-                _portScannerProfilesExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resetPortScannerProfiles;
-        public bool ResetPortScannerProfiles
-        {
-            get { return _resetPortScannerProfiles; }
-            set
-            {
-                if (value == _resetPortScannerProfiles)
-                    return;
-
-                _resetPortScannerProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _pingProfilesExists;
-        public bool PingProfilesExists
-        {
-            get { return _pingProfilesExists; }
-            set
-            {
-                if (value == _pingProfilesExists)
-                    return;
-
-                _pingProfilesExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resetPingProfiles;
-        public bool ResetPingProfiles
-        {
-            get { return _resetPingProfiles; }
-            set
-            {
-                if (value == _resetPingProfiles)
-                    return;
-
-                _resetPingProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _tracerouteProfilesExists;
-        public bool TracerouteProfilesExists
-        {
-            get { return _tracerouteProfilesExists; }
-            set
-            {
-                if (value == _tracerouteProfilesExists)
-                    return;
-
-                _tracerouteProfilesExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resetTracerouteProfiles;
-        public bool ResetTracerouteProfiles
-        {
-            get { return _resetTracerouteProfiles; }
-            set
-            {
-                if (value == _resetTracerouteProfiles)
-                    return;
-
-                _resetTracerouteProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _remoteDesktopProfilesExists;
-        public bool RemoteDesktopProfilesExists
-        {
-            get { return _remoteDesktopProfilesExists; }
-            set
-            {
-                if (value == _remoteDesktopProfilesExists)
-                    return;
-
-                _remoteDesktopProfilesExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resetRemoteDesktopProfiles;
-        public bool ResetRemoteDesktopProfiles
-        {
-            get { return _resetRemoteDesktopProfiles; }
-            set
-            {
-                if (value == _resetRemoteDesktopProfiles)
-                    return;
-
-                _resetRemoteDesktopProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _puTTYProfilesExists;
-        public bool PuTTYProfilesExists
-        {
-            get { return _puTTYProfilesExists; }
-            set
-            {
-                if (value == _puTTYProfilesExists)
-                    return;
-
-                _puTTYProfilesExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resetPuTTYProfiles;
-        public bool ResetPuTTYProfiles
-        {
-            get { return _resetPuTTYProfiles; }
-            set
-            {
-                if (value == _resetPuTTYProfiles)
-                    return;
-
-                _resetPuTTYProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _wakeOnLANClientsExists;
-        public bool WakeOnLANClientsExists
-        {
-            get { return _wakeOnLANClientsExists; }
-            set
-            {
-                if (value == _wakeOnLANClientsExists)
-                    return;
-
-                _wakeOnLANClientsExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resetWakeOnLANClients;
-        public bool ResetWakeOnLANClients
-        {
-            get { return _resetWakeOnLANClients; }
-            set
-            {
-                if (value == _resetWakeOnLANClients)
-                    return;
-
-                _resetWakeOnLANClients = value;
+                _resetProfiles = value;
                 OnPropertyChanged();
             }
         }
@@ -406,8 +209,8 @@ namespace NETworkManager.ViewModels
                 if (SettingsManager.GetSettingsFileName() == fileName)
                     return true;
 
-                //if (PuTTYProfileManager.ProfilesFileName == fileName)
-                //    return true;
+                if (ProfileManager.ProfilesFileName == fileName)
+                    return true;
             }
 
             return false;
@@ -505,7 +308,7 @@ namespace NETworkManager.ViewModels
 
             string message = LocalizationManager.GetStringByKey("String_SelectedSettingsAreReset");
 
-            if (ResetEverything || ResetApplicationSettings)
+            if (ResetEverything || ResetSettings)
             {
                 message += Environment.NewLine + Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_TheSettingsLocationIsNotAffected"));
                 message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_ApplicationIsRestartedAfterwards"));
@@ -516,14 +319,14 @@ namespace NETworkManager.ViewModels
 
             bool forceRestart = false;
 
-            if (ApplicationSettingsExists && (ResetEverything || ResetApplicationSettings))
+            if (SettingsExists && (ResetEverything || ResetSettings))
             {
                 SettingsManager.Reset();
                 forceRestart = true;
             }
 
-            //if (PuTTYProfilesExists && (ResetEverything || ResetPuTTYProfiles))
-            //    PuTTYProfileManager.Reset();
+            if (ProfilesExists && (ResetEverything || ResetProfiles))
+                ProfileManager.Reset();
 
             // Restart after reset or show a completed message
             if (forceRestart)
@@ -575,13 +378,10 @@ namespace NETworkManager.ViewModels
 
             if (ProfileManager.ProfilesChanged)
                 ProfileManager.Save();
-                        
-            //if (PuTTYProfileManager.ProfilesChanged)
-            //    PuTTYProfileManager.Save();
 
             // Check if files exist
-            ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
-            //PuTTYProfilesExists = File.Exists(PuTTYProfileManager.GetProfilesFilePath());
+            SettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
+            ProfilesExists = File.Exists(ProfileManager.GetProfilesFilePath());
         }
 
         public void SetLocationPathFromDragDrop(string path)

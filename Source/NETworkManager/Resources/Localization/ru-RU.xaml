@@ -198,13 +198,6 @@
     <system:String x:Key="String_UntrayBringWindowToFront">Untray / окно в фронте</system:String>
     <system:String x:Key="String_MaximumNumberOfHopsReached">Достигнуто Максимальное число ({0}) прыжков/маршрутизатора!</system:String>
     <system:String x:Key="String_CanceledByUser">Операция отменена пользователем!</system:String>
-    <system:String x:Key="String_ApplicationSettings">Настройки программы</system:String>
-    <system:String x:Key="String_NetworkInterfaceProfiles">Профили сетевого интерфейса</system:String>
-    <system:String x:Key="String_PingProfiles">Ping Профили</system:String>
-    <system:String x:Key="String_TracerouteProfiles">Профили трассировки</system:String>
-    <system:String x:Key="String_PortScannerProfiles">Профили сканера портов</system:String>
-    <system:String x:Key="String_WakeOnLANClients">Пробуждение по клиентам локальной сети</system:String>
-    <system:String x:Key="String_RemoteDesktopProfiles">Сеансы удаленного рабочего стола</system:String>
     <system:String x:Key="String_SelectedSettingsAreReset">Выбранные настройки будут сброшены.</system:String>
     <system:String x:Key="String_TheSettingsLocationIsNotAffected">На расположение параметры не влияет</system:String>
     <system:String x:Key="String_ApplicationIsRestartedAfterwards">Приложения после перезагрузки</system:String>
@@ -263,14 +256,7 @@
     <system:String x:Key="String_AddDNSSuffixToHostname">Добавить DNS-суффикс (основной) к имени хоста</system:String>
     <system:String x:Key="String_UseCustomDNSSuffix">Использовать пользовательский DNS-суффикс</system:String>
     <system:String x:Key="String_SettingsSuccessfullyImported">Параметры успешно импортированы!</system:String>
-    <system:String x:Key="String_IPScannerProfilesReloaded">Перезагрузка профилей сканера IP</system:String>
-    <system:String x:Key="String_PingProfilesReloaded">Ping профили перезагрузка</system:String>
-    <system:String x:Key="String_TracerouteProfilesReloaded">Профили трассировки перезагружены</system:String>
-    <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Перезагрузка профилей сетевого интерфейса</system:String>
-    <system:String x:Key="String_PortScannerProfilesReloaded">Перезагрузка профилей сканера портов</system:String>
-    <system:String x:Key="String_RemoteDesktopProfilesReloaded">Перезагрузка сеансов удаленного рабочего стола</system:String>
-    <system:String x:Key="String_PuTTYProfilesReloaded">PuTTY перезагрузка сеансов</system:String>
-    <system:String x:Key="String_WakeOnLANClientsReloaded">Wake on LAN перезагрузка клиентов</system:String>
+    <system:String x:Key="String_ProfilesReloaded">Profiles reloaded</system:String> <!-- new / updated -->
     <system:String x:Key="String_ComingSoon">В ближайшее время!</system:String>
     <system:String x:Key="String_Override">перезаписать</system:String>
     <system:String x:Key="String_Add">добавить</system:String>
@@ -374,7 +360,6 @@
     <system:String x:Key="String_ErrorInResponseCheckIfYouHaveWritePermissions">Ошибка в ответе! Проверьте, есть ли у вас разрешения на запись.</system:String>
     <system:String x:Key="String_ShowScanResultForAllIPAddresses">Показать результат сканирования, для всех IP-адресов</system:String>
     <system:String x:Key="String_ConfigureThePathToPuTTYInTheSettings">Настройте путь к PuTTY в настройках...</system:String>
-    <system:String x:Key="String_PuTTYProfiles">PuTTY сессия</system:String>
     <system:String x:Key="String_SSH">SSH</system:String>
     <system:String x:Key="String_Telnet">Telnet</system:String>
     <system:String x:Key="String_Rlogin">Rlogin</system:String>
@@ -433,6 +418,7 @@
     <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Введите подсеть и новую маску подсети для создания подсетей...</system:String>
     <system:String x:Key="String_Enable">Enable</system:String> <!-- new / updated -->
     <system:String x:Key="String_SelectAtLeastOneNodeWhereTheProfileShouldAppear">Select at least one node, where the profile should appear! Click on a tab and select enable...</system:String> <!-- new / updated -->
+    <system:String x:Key="String_Profiles">Profiles</system:String> <!-- new / updated -->
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Как установить RDP 8.1 на Windows 7 / Server 2008 R2</system:String>

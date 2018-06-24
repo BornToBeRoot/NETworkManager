@@ -50,7 +50,7 @@ namespace NETworkManager.Models.Settings
             }
 
             // Restart, when application settings are changed
-            if (importOptions.Contains(ImportExportOptions.ApplicationSettings))
+            if (importOptions.Contains(ImportExportOptions.Settings))
                 ForceRestart = true;
         }
 
@@ -80,24 +80,17 @@ namespace NETworkManager.Models.Settings
         public enum ImportExportOptions
         {
             None,
-            ApplicationSettings,
-            NetworkInterfaceProfiles,
-            IPScannerProfiles,
-            PortScannerProfiles,
-            PingProfiles,
-            TracerouteProfiles,
-            RemoteDesktopProfiles,
-            PuTTYProfiles,
-            WakeOnLANClients
+            Settings,
+            Profiles,
         }
 
         public static ImportExportOptions GetImportExportOption(string fileName)
         {
             if (fileName == SettingsManager.GetSettingsFileName())
-                return ImportExportOptions.ApplicationSettings;
+                return ImportExportOptions.Settings;
 
-            //if (fileName == PuTTYProfileManager.ProfilesFileName)
-            //    return ImportExportOptions.PuTTYProfiles;
+            if (fileName == ProfileManager.ProfilesFileName)
+                return ImportExportOptions.Profiles;
 
             return ImportExportOptions.None;
         }
@@ -106,10 +99,10 @@ namespace NETworkManager.Models.Settings
         {
             switch (importExportOption)
             {
-                case ImportExportOptions.ApplicationSettings:
+                case ImportExportOptions.Settings:
                     return SettingsManager.GetSettingsFileName();
-                //case ImportExportOptions.PuTTYProfiles:
-                //    return PuTTYProfileManager.ProfilesFileName;
+                case ImportExportOptions.Profiles:
+                    return ProfileManager.ProfilesFileName;
             }
 
             return string.Empty;
@@ -119,10 +112,10 @@ namespace NETworkManager.Models.Settings
         {
             switch (importExportOption)
             {
-                case ImportExportOptions.ApplicationSettings:
+                case ImportExportOptions.Settings:
                     return SettingsManager.GetSettingsFilePath();
-                //case ImportExportOptions.PuTTYProfiles:
-                //    return PuTTYProfileManager.GetProfilesFilePath();
+                case ImportExportOptions.Profiles:
+                    return ProfileManager.GetProfilesFilePath();
             }
 
             return string.Empty;

@@ -198,13 +198,6 @@
     <system:String x:Key="String_UntrayBringWindowToFront">Untray / Fenster in den Vordergrund bringen</system:String>
     <system:String x:Key="String_MaximumNumberOfHopsReached">Maximale Anzahl ({0}) an Hops/Router erreicht!</system:String>
     <system:String x:Key="String_CanceledByUser">Der Vorgang wurde vom Benutzer abgebrochen!</system:String>
-    <system:String x:Key="String_ApplicationSettings">Anwendungseinstellungen</system:String>
-    <system:String x:Key="String_NetworkInterfaceProfiles">Netzwerkinterface Profile</system:String>
-    <system:String x:Key="String_PingProfiles">Ping Profile</system:String>
-    <system:String x:Key="String_TracerouteProfiles">Traceroute profiles</system:String>
-    <system:String x:Key="String_PortScannerProfiles">Port-Scanner Profile</system:String>
-    <system:String x:Key="String_WakeOnLANClients">Wake on LAN Clients</system:String>
-    <system:String x:Key="String_RemoteDesktopProfiles">Remote Desktop Sitzungen</system:String>
     <system:String x:Key="String_SelectedSettingsAreReset">Die ausgewählten Einstellungen werden zurückgesetzt.</system:String>
     <system:String x:Key="String_TheSettingsLocationIsNotAffected">Der Speicherpfad ist hiervon nicht betroffen</system:String>
     <system:String x:Key="String_ApplicationIsRestartedAfterwards">Die Anwendung wird danach neu gestartet</system:String>
@@ -263,14 +256,7 @@
     <system:String x:Key="String_AddDNSSuffixToHostname">DNS-Suffix (primär) zum Hostnamen hinzufügen</system:String>
     <system:String x:Key="String_UseCustomDNSSuffix">Verwende benutzerdefinierten DNS-Suffix</system:String>
     <system:String x:Key="String_SettingsSuccessfullyImported">Einstellungen erfolgreich importiert!</system:String>
-    <system:String x:Key="String_IPScannerProfilesReloaded">IP-Scanner Profile neu geladen</system:String>
-    <system:String x:Key="String_PingProfilesReloaded">Ping Profile neu geladen</system:String>
-    <system:String x:Key="String_TracerouteProfilesReloaded">Traceroute Profile neu geladen</system:String>
-    <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Netzwerkinterface Profile neu geladen</system:String>
-    <system:String x:Key="String_PortScannerProfilesReloaded">Port-Scanner Profile neu geladen</system:String>
-    <system:String x:Key="String_RemoteDesktopProfilesReloaded">Remote Desktop Sitzungen neu geladen</system:String>
-    <system:String x:Key="String_PuTTYProfilesReloaded">PuTTY Sitzungen neu geladen</system:String>
-    <system:String x:Key="String_WakeOnLANClientsReloaded">Wake on LAN Clients neu geladen</system:String>
+    <system:String x:Key="String_ProfilesReloaded">Profile neu geladen</system:String>
     <system:String x:Key="String_ComingSoon">Kommt demnächst!</system:String>
     <system:String x:Key="String_Override">überschreiben</system:String>
     <system:String x:Key="String_Add">hinzufügen</system:String>
@@ -374,7 +360,6 @@
     <system:String x:Key="String_ErrorInResponseCheckIfYouHaveWritePermissions">Fehler in Antwort! Prüfen Sie, ob Sie Schreibrechte haben.</system:String>
     <system:String x:Key="String_ShowScanResultForAllIPAddresses">Zeige Scan-Ergebnis für alle IP-Adressen</system:String>
     <system:String x:Key="String_ConfigureThePathToPuTTYInTheSettings">Konfiguriere den Pfad zu PuTTY in den Einstellungen...</system:String>
-    <system:String x:Key="String_PuTTYProfiles">PuTTY Sitzungen</system:String>
     <system:String x:Key="String_SSH">SSH</system:String>
     <system:String x:Key="String_Telnet">Telnet</system:String>
     <system:String x:Key="String_Rlogin">Rlogin</system:String>
@@ -433,6 +418,7 @@
     <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Geben Sie das Subnetz und eine neue Subnetzmaske ein, um Subnetze zu erstellen...</system:String>
     <system:String x:Key="String_Enable">Aktivieren</system:String>
     <system:String x:Key="String_SelectAtLeastOneNodeWhereTheProfileShouldAppear">Select at least one node, where the profile should appear! Click on a tab and select enable...</system:String>
+    <system:String x:Key="String_Profiles">Profile</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>

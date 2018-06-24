@@ -198,13 +198,6 @@
     <system:String x:Key="String_UntrayBringWindowToFront">Untray / Bring window to front</system:String>
     <system:String x:Key="String_MaximumNumberOfHopsReached">Maximum number ({0}) of hops/router reached!</system:String>
     <system:String x:Key="String_CanceledByUser">The operation has been canceled by the user!</system:String>
-    <system:String x:Key="String_ApplicationSettings">Application settings</system:String>
-    <system:String x:Key="String_NetworkInterfaceProfiles">Network interface profiles</system:String>
-    <system:String x:Key="String_PingProfiles">Ping profiles</system:String>
-    <system:String x:Key="String_TracerouteProfiles">Traceroute profiles</system:String>
-    <system:String x:Key="String_PortScannerProfiles">Port Scanner profiles</system:String>
-    <system:String x:Key="String_WakeOnLANClients">Wake on LAN clients</system:String>
-    <system:String x:Key="String_RemoteDesktopProfiles">Remote Desktop Profiles</system:String>
     <system:String x:Key="String_SelectedSettingsAreReset">The selected settings are reset.</system:String>
     <system:String x:Key="String_TheSettingsLocationIsNotAffected">The settings location is not affected</system:String>
     <system:String x:Key="String_ApplicationIsRestartedAfterwards">Application is restarted afterwards</system:String>
@@ -263,14 +256,7 @@
     <system:String x:Key="String_AddDNSSuffixToHostname">Add DNS suffix (primary) to hostname</system:String>
     <system:String x:Key="String_UseCustomDNSSuffix">Use custom DNS suffix</system:String>
     <system:String x:Key="String_SettingsSuccessfullyImported">Settings successfully imported!</system:String>
-    <system:String x:Key="String_IPScannerProfilesReloaded">IP Scanner profiles reloaded</system:String>
-    <system:String x:Key="String_PingProfilesReloaded">Ping profiles reloaded</system:String>
-    <system:String x:Key="String_TracerouteProfilesReloaded">Traceroute profiles reloaded</system:String>
-    <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Network interface profiles reloaded</system:String>
-    <system:String x:Key="String_PortScannerProfilesReloaded">Port Scanner profiles reloaded</system:String>
-    <system:String x:Key="String_RemoteDesktopProfilesReloaded">Remote Desktop Profiles reloaded</system:String>
-    <system:String x:Key="String_PuTTYProfilesReloaded">PuTTY Profiles reloaded</system:String>
-    <system:String x:Key="String_WakeOnLANClientsReloaded">Wake on LAN clients reloaded</system:String>
+    <system:String x:Key="String_ProfilesReloaded">Profiles reloaded</system:String>
     <system:String x:Key="String_ComingSoon">Coming Soon!</system:String>
     <system:String x:Key="String_Override">override</system:String>
     <system:String x:Key="String_Add">add</system:String>
@@ -374,7 +360,6 @@
     <system:String x:Key="String_ErrorInResponseCheckIfYouHaveWritePermissions">Error in response! Check if you have write permissions.</system:String>
     <system:String x:Key="String_ShowScanResultForAllIPAddresses">Show scan result for all IP addresses</system:String>
     <system:String x:Key="String_ConfigureThePathToPuTTYInTheSettings">Configure the path to PuTTY in the settings...</system:String>
-    <system:String x:Key="String_PuTTYProfiles">PuTTY Profiles</system:String>
     <system:String x:Key="String_SSH">SSH</system:String>
     <system:String x:Key="String_Telnet">Telnet</system:String>
     <system:String x:Key="String_Rlogin">Rlogin</system:String>
@@ -433,6 +418,7 @@
     <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Enter subnet and a new subnet mask to create subnets...</system:String>
     <system:String x:Key="String_Enable">Enable</system:String>
     <system:String x:Key="String_SelectAtLeastOneNodeWhereTheProfileShouldAppear">Select at least one node, where the profile should appear! Click on a tab and select enable...</system:String>
+    <system:String x:Key="String_Profiles">Profiles</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
