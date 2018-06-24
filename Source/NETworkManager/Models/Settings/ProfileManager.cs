@@ -7,11 +7,6 @@ using NETworkManager.ViewModels;
 /*
     ToDo: 
     - Credentials mapping
-    - PuTTY
-    - Validation
-    - Settings/Profile add view
-    - Cleanup import/export 
-    - Cleanup reset
     - Refresh view after renaming a group
 */
 
@@ -119,7 +114,7 @@ namespace NETworkManager.Models.Settings
             {
                 Name = instance.Name,
                 Host = instance.Host,
-                CredentialID = instance.CredentialID,
+                CredentialID = instance.Credential?.ID,
                 Group = instance.Group,
                 Tags = instance.Tags,
 

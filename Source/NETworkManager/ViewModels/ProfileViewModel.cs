@@ -3,6 +3,7 @@ using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -54,16 +55,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private int? _credentialID = null;
-        public int? CredentialID
+        private CredentialInfo _credential = null;
+        public CredentialInfo Credential
         {
-            get { return _credentialID; }
+            get { return _credential; }
             set
             {
-                if (value == _credentialID)
+                if (value == _credential)
                     return;
 
-                _credentialID = value;
+                _credential = value;
 
                 if (!_isLoading)
                     Validate();
@@ -133,6 +134,21 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private bool _showUnlockCredentialsHint;
+        public bool ShowUnlockCredentialsHint
+        {
+            get { return _showUnlockCredentialsHint; }
+            set
+            {
+                if (value == _showUnlockCredentialsHint)
+                    return;
+
+                _showUnlockCredentialsHint = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Network Interface
@@ -984,6 +1000,23 @@ namespace NETworkManager.ViewModels
 
             Name = _profileInfo.Name;
             Host = _profileInfo.Host;
+
+            if (CredentialManager.Loaded)
+            {
+                _credentials = new CollectionViewSource { Source = CredentialManager.CredentialInfoList }.View;
+            }
+            else
+            {
+                ShowUnlockCredentialsHint = true;
+
+                if (_profileInfo.CredentialID == null)
+                    _credentials = new CollectionViewSource { Source = new List<CredentialInfo>() }.View;
+                else
+                    _credentials = new CollectionViewSource { Source = new List<CredentialInfo>() { new CredentialInfo((int)_profileInfo.CredentialID) } }.View;
+            }
+
+            Credential = Credentials.SourceCollection.Cast<CredentialInfo>().FirstOrDefault(x => x.ID == _profileInfo.CredentialID);
+
             Group = string.IsNullOrEmpty(_profileInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : LocalizationManager.GetStringByKey("String_Default")) : _profileInfo.Group;
             Tags = _profileInfo.Tags;
 
@@ -1095,6 +1128,16 @@ namespace NETworkManager.ViewModels
         public ICommand CancelCommand
         {
             get { return _cancelCommand; }
+        }
+
+        public ICommand UnselectCredentialCommand
+        {
+            get { return new RelayCommand(p => UnselectCredentialAction()); }
+        }
+
+        private void UnselectCredentialAction()
+        {
+            Credential = null;
         }
         #endregion
     }

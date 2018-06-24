@@ -40,6 +40,8 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="10" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="10" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*" />
@@ -68,8 +70,28 @@
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>
-                            <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Group}" />
-                            <ComboBox x:Name="cbGroup" Grid.Column="2" Grid.Row="4" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleGroupServers}">
+                            <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Credential}" />
+                            <ComboBox x:Name="cbCredential" Grid.Column="2" Grid.Row="4" SelectedItem="{Binding Credential}" Style="{StaticResource DefaultComboBox}" ItemsSource="{Binding Credentials}">
+                                <ComboBox.InputBindings>
+                                    <KeyBinding Command="{Binding UnselectCredentialCommand}" Key="Delete"/>
+                                </ComboBox.InputBindings>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}[{0}] {1}">
+                                                        <Binding Path="ID" />
+                                                        <Binding Path="Name" />
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_Group}" />
+                            <ComboBox x:Name="cbGroup" Grid.Column="2" Grid.Row="6" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleGroupServers}">
                                 <ComboBox.Text>
                                     <Binding Path="Group" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -78,9 +100,14 @@
                                     </Binding>
                                 </ComboBox.Text>
                             </ComboBox>
-                            <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_Tags}" />
-                            <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Tags, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleTags}"/>
-                            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="6" ToolTip="{DynamicResource String_HelpMessage_Tags}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="4" ToolTip="{DynamicResource String_HelpMessage_Credentials}" Visibility="{Binding ShowUnlockCredentialsHint, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                                <Rectangle.Resources>
+                                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                                </Rectangle.Resources>
+                            </Rectangle>
+                            <TextBlock Grid.Column="0" Grid.Row="8" Text="{DynamicResource String_Tags}" />
+                            <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding Tags, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleTags}"/>
+                            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="8" ToolTip="{DynamicResource String_HelpMessage_Tags}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                                 <Rectangle.Resources>
                                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                                 </Rectangle.Resources>

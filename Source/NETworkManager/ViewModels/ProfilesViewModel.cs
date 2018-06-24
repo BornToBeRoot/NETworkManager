@@ -1,13 +1,10 @@
 ﻿using NETworkManager.Models.Settings;
 using System.Windows.Input;
-using System.Windows;
 using System.ComponentModel;
 using System.Windows.Data;
-using System.IO;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Views;
 using System;
-using System.Windows.Threading;
 using NETworkManager.Utilities;
 using System.Linq;
 
