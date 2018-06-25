@@ -419,7 +419,8 @@
     <system:String x:Key="String_Enable">Enable</system:String>
     <system:String x:Key="String_SelectAtLeastOneNodeWhereTheProfileShouldAppear">Select at least one node, where the profile should appear! Click on a tab and select enable...</system:String>
     <system:String x:Key="String_Profiles">Profiles</system:String>
-    
+    <system:String x:Key="String_ShowOnlyMostCommonQueryTypes">Show only most common query types</system:String>
+
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">How to create a custom theme and accent?</system:String>

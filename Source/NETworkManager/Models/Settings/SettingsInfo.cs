@@ -1195,6 +1195,23 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private bool _dnsLookup_ShowMostCommonQueryTypes = true;
+        public bool DNSLookup_ShowMostCommonQueryTypes
+        {
+            get { return _dnsLookup_ShowMostCommonQueryTypes; }
+            set
+            {
+                if (value == _dnsLookup_ShowMostCommonQueryTypes)
+                    return;
+
+                _dnsLookup_ShowMostCommonQueryTypes = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
+
         private QType _dnsLookup_Type = QType.ANY;
         public QType DNSLookup_Type
         {

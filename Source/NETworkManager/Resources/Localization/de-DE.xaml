@@ -419,6 +419,7 @@
     <system:String x:Key="String_Enable">Aktivieren</system:String>
     <system:String x:Key="String_SelectAtLeastOneNodeWhereTheProfileShouldAppear">Select at least one node, where the profile should appear! Click on a tab and select enable...</system:String>
     <system:String x:Key="String_Profiles">Profile</system:String>
+    <system:String x:Key="String_ShowOnlyMostCommonQueryTypes">Nur die häufigsten Abfragetypen anzeigen</system:String>
     
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
