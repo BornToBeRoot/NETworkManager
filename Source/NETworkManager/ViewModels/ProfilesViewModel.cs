@@ -120,7 +120,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
+                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")                
             };
 
             ProfileViewModel profileViewModel = new ProfileViewModel(instance =>

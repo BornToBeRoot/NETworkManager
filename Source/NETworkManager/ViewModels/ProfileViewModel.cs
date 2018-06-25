@@ -55,16 +55,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private CredentialInfo _credential = null;
-        public CredentialInfo Credential
+        private int _credentialID;
+        public int CredentialID
         {
-            get { return _credential; }
+            get { return _credentialID; }
             set
             {
-                if (value == _credential)
+                if (value == _credentialID)
                     return;
 
-                _credential = value;
+                _credentialID = value;
 
                 if (!_isLoading)
                     Validate();
@@ -121,16 +121,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _noTabEnabled;
-        public bool NoTabEnabled
+        private bool _tabEnabled;
+        public bool TabEnabled
         {
-            get { return _noTabEnabled; }
+            get { return _tabEnabled; }
             set
             {
-                if (value == _noTabEnabled)
+                if (value == _tabEnabled)
                     return;
 
-                _noTabEnabled = value;
+                _tabEnabled = value;
                 OnPropertyChanged();
             }
         }
@@ -149,6 +149,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        public bool CredentialIsNullOnLoad;
         #endregion
 
         #region Network Interface
@@ -1003,19 +1004,19 @@ namespace NETworkManager.ViewModels
 
             if (CredentialManager.Loaded)
             {
-                _credentials = new CollectionViewSource { Source = CredentialManager.CredentialInfoList }.View;
+                _credentials = CollectionViewSource.GetDefaultView(CredentialManager.CredentialInfoList);
             }
             else
             {
                 ShowUnlockCredentialsHint = true;
 
-                if (_profileInfo.CredentialID == null)
+                if (_profileInfo.CredentialID == -1)
                     _credentials = new CollectionViewSource { Source = new List<CredentialInfo>() }.View;
                 else
-                    _credentials = new CollectionViewSource { Source = new List<CredentialInfo>() { new CredentialInfo((int)_profileInfo.CredentialID) } }.View;
+                    _credentials = new CollectionViewSource { Source = new List<CredentialInfo>() { new CredentialInfo(_profileInfo.CredentialID) } }.View;
             }
 
-            Credential = Credentials.SourceCollection.Cast<CredentialInfo>().FirstOrDefault(x => x.ID == _profileInfo.CredentialID);
+            CredentialID = _profileInfo.CredentialID;
 
             Group = string.IsNullOrEmpty(_profileInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : LocalizationManager.GetStringByKey("String_Default")) : _profileInfo.Group;
             Tags = _profileInfo.Tags;
@@ -1114,7 +1115,7 @@ namespace NETworkManager.ViewModels
         private void Validate()
         {
             // Note
-            NoTabEnabled = (NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || RemoteDesktop_Enabled || PuTTY_Enabled || WakeOnLAN_Enabled);
+            TabEnabled = (NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || RemoteDesktop_Enabled || PuTTY_Enabled || WakeOnLAN_Enabled);
         }
 
         #region ICommands & Actions
@@ -1137,7 +1138,7 @@ namespace NETworkManager.ViewModels
 
         private void UnselectCredentialAction()
         {
-            Credential = null;
+            CredentialID = -1;
         }
         #endregion
     }

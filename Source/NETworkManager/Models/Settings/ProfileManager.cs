@@ -4,12 +4,6 @@ using System.IO;
 using System.Xml.Serialization;
 using NETworkManager.ViewModels;
 
-/*
-    ToDo: 
-    - Credentials mapping
-    - Refresh view after renaming a group
-*/
-
 namespace NETworkManager.Models.Settings
 {
     public static class ProfileManager
@@ -114,7 +108,7 @@ namespace NETworkManager.Models.Settings
             {
                 Name = instance.Name,
                 Host = instance.Host,
-                CredentialID = instance.Credential?.ID,
+                CredentialID = instance.CredentialID,
                 Group = instance.Group,
                 Tags = instance.Tags,
 

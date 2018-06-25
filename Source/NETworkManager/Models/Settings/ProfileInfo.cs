@@ -6,7 +6,7 @@ namespace NETworkManager.Models.Settings
     {
         public string Name { get; set; }
         public string Host { get; set; }
-        public int? CredentialID { get; set; }
+        public int CredentialID { get; set; } = -1;
         public string Group { get; set; }
         public string Tags { get; set; }
         

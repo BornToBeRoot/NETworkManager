@@ -164,14 +164,14 @@ namespace NETworkManager.ViewModels
         {
             _connectCommand = new RelayCommand(p => connectCommand(this));
             _cancelCommand = new RelayCommand(p => cancelHandler(this));
-             
+
             ConnectAs = connectAs;
 
             if (!ConnectAs)
                 _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.RemoteDesktop_HostHistory);
 
             if (CredentialManager.Loaded)
-                _credentials = CollectionViewSource.GetDefaultView(CredentialManager.CredentialInfoList);
+                _credentials = new CollectionViewSource { Source = CredentialManager.CredentialInfoList }.View;
             else
                 CredentialsLocked = true;
         }
