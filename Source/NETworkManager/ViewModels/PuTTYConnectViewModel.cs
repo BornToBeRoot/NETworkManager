@@ -8,7 +8,7 @@ using static NETworkManager.Models.PuTTY.PuTTY;
 
 namespace NETworkManager.ViewModels
 {
-    public class PuTTYSessionConnectViewModel : ViewModelBase
+    public class PuTTYConnectViewModel : ViewModelBase
     {
         private readonly ICommand _connectCommand;
         public ICommand ConnectCommand
@@ -258,7 +258,7 @@ namespace NETworkManager.ViewModels
             get { return _profileHistoryView; }
         }
 
-        public PuTTYSessionConnectViewModel(Action<PuTTYSessionConnectViewModel> connectCommand, Action<PuTTYSessionConnectViewModel> cancelHandler)
+        public PuTTYConnectViewModel(Action<PuTTYConnectViewModel> connectCommand, Action<PuTTYConnectViewModel> cancelHandler)
         {
             _connectCommand = new RelayCommand(p => connectCommand(this));
             _cancelCommand = new RelayCommand(p => cancelHandler(this));

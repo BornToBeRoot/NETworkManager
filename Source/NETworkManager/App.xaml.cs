@@ -17,7 +17,7 @@ namespace NETworkManager
         // Single instance unique identifier
         private const string Guid = "6A3F34B2-161F-4F70-A8BC-A19C40F79CFB";
         Mutex _mutex;
-        
+
         private bool _singleInstanceClose = false;
 
         public App()
@@ -47,7 +47,7 @@ namespace NETworkManager
             // Get assembly informations   
             AssemblyManager.Load();
 
-            // Load application settings (profiles/sessions/clients are loaded when needed)
+            // Load application settings (profiles/Profiles/clients are loaded when needed)
             SettingsManager.Load();
 
             // Load localization (requires settings to be loaded first)
@@ -62,14 +62,14 @@ namespace NETworkManager
             // Create mutex
             _mutex = new Mutex(true, "{" + Guid + "}");
             bool mutexIsAcquired = _mutex.WaitOne(TimeSpan.Zero, true);
-            
+
             // Release mutex
             if (mutexIsAcquired)
                 _mutex.ReleaseMutex();
 
             if (SettingsManager.Current.Window_MultipleInstances || mutexIsAcquired)
             {
-                StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);                              
+                StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
             }
             else
             {
@@ -91,7 +91,7 @@ namespace NETworkManager
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)
-        {            
+        {
             // Save settings, when the application is normally closed
             if (!_singleInstanceClose && !ImportExportManager.ForceRestart && !CommandLineManager.Current.Help)
             {
@@ -101,33 +101,11 @@ namespace NETworkManager
                 if (SettingsManager.Current.SettingsChanged) // This will also create the "Settings" folder, if it does not exist
                     SettingsManager.Save();
 
+                if (ProfileManager.ProfilesChanged)
+                    ProfileManager.Save();
+
                 if (CredentialManager.CredentialsChanged)
                     CredentialManager.Save();
-
-                if (NetworkInterfaceProfileManager.ProfilesChanged)
-                    NetworkInterfaceProfileManager.Save();
-
-                if (IPScannerProfileManager.ProfilesChanged)
-                    IPScannerProfileManager.Save();
-
-                if (PortScannerProfileManager.ProfilesChanged)
-                    PortScannerProfileManager.Save();
-
-                if (PingProfileManager.ProfilesChanged)
-                    PingProfileManager.Save();
-
-                if (TracerouteProfileManager.ProfilesChanged)
-                    TracerouteProfileManager.Save();
-
-                if (RemoteDesktopSessionManager.SessionsChanged)
-                    RemoteDesktopSessionManager.Save();
-
-                if (PuTTYSessionManager.SessionsChanged)
-                    PuTTYSessionManager.Save();
-
-                if (WakeOnLANClientManager.ClientsChanged)
-                    WakeOnLANClientManager.Save();
-
             }
         }
     }

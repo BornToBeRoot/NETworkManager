@@ -152,6 +152,9 @@
                     </ScrollViewer>
                 </Grid>
             </TabItem>
+            <TabItem Header="{DynamicResource String_Header_Profiles}">
+                <Views:ProfilesView Margin="10" />
+            </TabItem>
             <TabItem Header="{DynamicResource String_Header_Credentials}">
                 <Views:CredentialsView Margin="10" />
             </TabItem>

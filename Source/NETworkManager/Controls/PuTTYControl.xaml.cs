@@ -30,7 +30,7 @@ namespace NETworkManager.Controls
         private bool _initialized = false;
         private IDialogCoordinator dialogCoordinator;
 
-        private Models.PuTTY.PuTTYSessionInfo _puTTYSessionInfo;
+        private Models.PuTTY.PuTTYProfileInfo _puTTYProfileInfo;
 
         Process PuTTYProcess = null;
         IntPtr AppWin;
@@ -53,14 +53,14 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Constructor, load
-        public PuTTYControl(Models.PuTTY.PuTTYSessionInfo info)
+        public PuTTYControl(Models.PuTTY.PuTTYProfileInfo info)
         {
             InitializeComponent();
             DataContext = this;
 
             dialogCoordinator = DialogCoordinator.Instance;
 
-            _puTTYSessionInfo = info;
+            _puTTYProfileInfo = info;
 
             resizeTimer.Tick += ResizeTimer_Tick;
             resizeTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
@@ -101,8 +101,8 @@ namespace NETworkManager.Controls
         {
             ProcessStartInfo info = new ProcessStartInfo
             {
-                FileName = _puTTYSessionInfo.PuTTYLocation,
-                Arguments = PuTTY.BuildCommandLine(_puTTYSessionInfo)
+                FileName = _puTTYProfileInfo.PuTTYLocation,
+                Arguments = PuTTY.BuildCommandLine(_puTTYProfileInfo)
             };
 
             try

@@ -63,366 +63,72 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-        private bool _importApplicationSettingsExists;
-        public bool ImportApplicationSettingsExists
+        private bool _importSettingsExists;
+        public bool ImportSettingsExists
         {
-            get { return _importApplicationSettingsExists; }
+            get { return _importSettingsExists; }
             set
             {
-                if (value == _importApplicationSettingsExists)
+                if (value == _importSettingsExists)
                     return;
 
-                _importApplicationSettingsExists = value;
+                _importSettingsExists = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _importApplicationSettings;
-        public bool ImportApplicationSettings
+        private bool _importSettings;
+        public bool ImportSettings
         {
-            get { return _importApplicationSettings; }
+            get { return _importSettings; }
             set
             {
-                if (value == _importApplicationSettings)
+                if (value == _importSettings)
                     return;
 
-                _importApplicationSettings = value;
+                _importSettings = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _importNetworkInterfaceProfilesExists;
-        public bool ImportNetworkInterfaceProfilesExists
+        private bool _importProfilesExists;
+        public bool ImportProfilesExists
         {
-            get { return _importNetworkInterfaceProfilesExists; }
+            get { return _importProfilesExists; }
             set
             {
-                if (value == _importNetworkInterfaceProfilesExists)
+                if (value == _importProfilesExists)
                     return;
 
-                _importNetworkInterfaceProfilesExists = value;
+                _importProfilesExists = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _importNetworkInterfaceProfiles;
-        public bool ImportNetworkInterfaceProfiles
+        private bool _importProfiles;
+        public bool ImportProfiles
         {
-            get { return _importNetworkInterfaceProfiles; }
+            get { return _importProfiles; }
             set
             {
-                if (value == _importNetworkInterfaceProfiles)
+                if (value == _importProfiles)
                     return;
 
-                _importNetworkInterfaceProfiles = value;
+                _importProfiles = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _importOverrideNetworkInterfaceProfiles = true;
-        public bool ImportOverrideNetworkInterfaceProfiles
+        private bool _importOverrideProfiles = true;
+        public bool ImportOverrideProfiles
         {
-            get { return _importOverrideNetworkInterfaceProfiles; }
+            get { return _importOverrideProfiles; }
             set
             {
-                if (value == _importOverrideNetworkInterfaceProfiles)
+                if (value == _importOverrideProfiles)
                     return;
 
-                _importOverrideNetworkInterfaceProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importIPScannerProfilesExists;
-        public bool ImportIPScannerProfilesExists
-        {
-            get { return _importIPScannerProfilesExists; }
-            set
-            {
-                if (value == _importIPScannerProfilesExists)
-                    return;
-
-                _importIPScannerProfilesExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importIPScannerProfiles;
-        public bool ImportIPScannerProfiles
-        {
-            get { return _importIPScannerProfiles; }
-            set
-            {
-                if (value == _importIPScannerProfiles)
-                    return;
-
-                _importIPScannerProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importOverrideIPScannerProfiles = true;
-        public bool ImportOverrideIPScannerProfiles
-        {
-            get { return _importOverrideIPScannerProfiles; }
-            set
-            {
-                if (value == _importOverrideIPScannerProfiles)
-                    return;
-
-                _importOverrideIPScannerProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importPortScannerProfilesExists;
-        public bool ImportPortScannerProfilesExists
-        {
-            get { return _importPortScannerProfilesExists; }
-            set
-            {
-                if (value == _importPortScannerProfilesExists)
-                    return;
-
-                _importPortScannerProfilesExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importPortScannerProfiles;
-        public bool ImportPortScannerProfiles
-        {
-            get { return _importPortScannerProfiles; }
-            set
-            {
-                if (value == _importPortScannerProfiles)
-                    return;
-
-                _importPortScannerProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importOverridePortScannerProfiles = true;
-        public bool ImportOverridePortScannerProfiles
-        {
-            get { return _importOverridePortScannerProfiles; }
-            set
-            {
-                if (value == _importOverridePortScannerProfiles)
-                    return;
-
-                _importOverridePortScannerProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importPingProfilesExists;
-        public bool ImportPingProfilesExists
-        {
-            get { return _importPingProfilesExists; }
-            set
-            {
-                if (value == _importPingProfilesExists)
-                    return;
-
-                _importPingProfilesExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importPingProfiles;
-        public bool ImportPingProfiles
-        {
-            get { return _importPingProfiles; }
-            set
-            {
-                if (value == _importPingProfiles)
-                    return;
-
-                _importPingProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importOverridePingProfiles = true;
-        public bool ImportOverridePingProfiles
-        {
-            get { return _importOverridePingProfiles; }
-            set
-            {
-                if (value == _importOverridePingProfiles)
-                    return;
-
-                _importOverridePingProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importTracerouteProfilesExists;
-        public bool ImportTracerouteProfilesExists
-        {
-            get { return _importTracerouteProfilesExists; }
-            set
-            {
-                if (value == _importTracerouteProfilesExists)
-                    return;
-
-                _importTracerouteProfilesExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importTracerouteProfiles;
-        public bool ImportTracerouteProfiles
-        {
-            get { return _importTracerouteProfiles; }
-            set
-            {
-                if (value == _importTracerouteProfiles)
-                    return;
-
-                _importTracerouteProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importOverrideTracerouteProfiles = true;
-        public bool ImportOverrideTracerouteProfiles
-        {
-            get { return _importOverrideTracerouteProfiles; }
-            set
-            {
-                if (value == _importOverrideTracerouteProfiles)
-                    return;
-
-                _importOverrideTracerouteProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importRemoteDesktopSessionsExists;
-        public bool ImportRemoteDesktopSessionsExists
-        {
-            get { return _importRemoteDesktopSessionsExists; }
-            set
-            {
-                if (value == _importRemoteDesktopSessionsExists)
-                    return;
-
-                _importRemoteDesktopSessionsExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importRemoteDesktopSessions;
-        public bool ImportRemoteDesktopSessions
-        {
-            get { return _importRemoteDesktopSessions; }
-            set
-            {
-                if (value == _importRemoteDesktopSessions)
-                    return;
-
-                _importRemoteDesktopSessions = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importOverrideRemoteDesktopSessions = true;
-        public bool ImportOverrideRemoteDesktopSessions
-        {
-            get { return _importOverrideRemoteDesktopSessions; }
-            set
-            {
-                if (value == _importOverrideRemoteDesktopSessions)
-                    return;
-
-                _importOverrideRemoteDesktopSessions = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importPuTTYSessionsExists;
-        public bool ImportPuTTYSessionsExists
-        {
-            get { return _importPuTTYSessionsExists; }
-            set
-            {
-                if (value == _importPuTTYSessionsExists)
-                    return;
-
-                _importPuTTYSessionsExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importPuTTYSessions;
-        public bool ImportPuTTYSessions
-        {
-            get { return _importPuTTYSessions; }
-            set
-            {
-                if (value == _importPuTTYSessions)
-                    return;
-
-                _importPuTTYSessions = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importOverridePuTTYSessions = true;
-        public bool ImportOverridePuTTYSessions
-        {
-            get { return _importOverridePuTTYSessions; }
-            set
-            {
-                if (value == _importOverridePuTTYSessions)
-                    return;
-
-                _importOverridePuTTYSessions = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importWakeOnLANClientsExists;
-        public bool ImportWakeOnLANClientsExists
-        {
-            get { return _importWakeOnLANClientsExists; }
-            set
-            {
-                if (value == _importWakeOnLANClientsExists)
-                    return;
-
-                _importWakeOnLANClientsExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importWakeOnLANClients;
-        public bool ImportWakeOnLANClients
-        {
-            get { return _importWakeOnLANClients; }
-            set
-            {
-                if (value == _importWakeOnLANClients)
-                    return;
-
-                _importWakeOnLANClients = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _importOverrideWakeOnLANClients = true;
-        public bool ImportOverrideWakeOnLANClients
-        {
-            get { return _importOverrideWakeOnLANClients; }
-            set
-            {
-                if (value == _importOverrideWakeOnLANClients)
-                    return;
-
-                _importOverrideWakeOnLANClients = value;
+                _importOverrideProfiles = value;
                 OnPropertyChanged();
             }
         }
@@ -443,254 +149,58 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-        private bool _applicationSettingsExists;
-        public bool ApplicationSettingsExists
+        private bool _settingsExists;
+        public bool SettingsExists
         {
-            get { return _applicationSettingsExists; }
+            get { return _settingsExists; }
             set
             {
-                if (value == _applicationSettingsExists)
+                if (value == _settingsExists)
                     return;
 
-                _applicationSettingsExists = value;
+                _settingsExists = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _exportApplicationSettings;
-        public bool ExportApplicationSettings
+        private bool _exportSettings;
+        public bool ExportSettings
         {
-            get { return _exportApplicationSettings; }
+            get { return _exportSettings; }
             set
             {
-                if (value == _exportApplicationSettings)
+                if (value == _exportSettings)
                     return;
 
-                _exportApplicationSettings = value;
+                _exportSettings = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _networkInterfaceProfilesExists;
-        public bool NetworkInterfaceProfilesExists
+        private bool _profilesExists;
+        public bool ProfilesExists
         {
-            get { return _networkInterfaceProfilesExists; }
+            get { return _profilesExists; }
             set
             {
-                if (value == _networkInterfaceProfilesExists)
+                if (value == _profilesExists)
                     return;
 
-                _networkInterfaceProfilesExists = value;
+                _profilesExists = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _exportNetworkInterfaceProfiles;
-        public bool ExportNetworkInterfaceProfiles
+        private bool _exportProfiles;
+        public bool ExportProfiles
         {
-            get { return _exportNetworkInterfaceProfiles; }
+            get { return _exportProfiles; }
             set
             {
-                if (value == _exportNetworkInterfaceProfiles)
+                if (value == _exportProfiles)
                     return;
 
-                _exportNetworkInterfaceProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _ipScannerProfilesExists;
-        public bool IPScannerProfilesExists
-        {
-            get { return _ipScannerProfilesExists; }
-            set
-            {
-                if (value == _ipScannerProfilesExists)
-                    return;
-
-                _ipScannerProfilesExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _exportIPScannerProfiles;
-        public bool ExportIPScannerProfiles
-        {
-            get { return _exportIPScannerProfiles; }
-            set
-            {
-                if (value == _exportIPScannerProfiles)
-                    return;
-
-                _exportIPScannerProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _portScannerProfilesExists;
-        public bool PortScannerProfilesExists
-        {
-            get { return _portScannerProfilesExists; }
-            set
-            {
-                if (value == _portScannerProfilesExists)
-                    return;
-
-                _portScannerProfilesExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _exportPortScannerProfiles;
-        public bool ExportPortScannerProfiles
-        {
-            get { return _exportPortScannerProfiles; }
-            set
-            {
-                if (value == _exportPortScannerProfiles)
-                    return;
-
-                _exportPortScannerProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _pingProfilesExists;
-        public bool PingProfilesExists
-        {
-            get { return _pingProfilesExists; }
-            set
-            {
-                if (value == _pingProfilesExists)
-                    return;
-
-                _pingProfilesExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _exportPingProfiles;
-        public bool ExportPingProfiles
-        {
-            get { return _exportPingProfiles; }
-            set
-            {
-                if (value == _exportPingProfiles)
-                    return;
-
-                _exportPingProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _tracerouteProfilesExists;
-        public bool TracerouteProfilesExists
-        {
-            get { return _tracerouteProfilesExists; }
-            set
-            {
-                if (value == _tracerouteProfilesExists)
-                    return;
-
-                _tracerouteProfilesExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _exportTracerouteProfiles;
-        public bool ExportTracerouteProfiles
-        {
-            get { return _exportTracerouteProfiles; }
-            set
-            {
-                if (value == _exportTracerouteProfiles)
-                    return;
-
-                _exportTracerouteProfiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _remoteDesktopSesionsExists;
-        public bool RemoteDesktopSessionsExists
-        {
-            get { return _remoteDesktopSesionsExists; }
-            set
-            {
-                if (value == _remoteDesktopSesionsExists)
-                    return;
-
-                _remoteDesktopSesionsExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _exportRemoteDesktopSessions;
-        public bool ExportRemoteDesktopSessions
-        {
-            get { return _exportRemoteDesktopSessions; }
-            set
-            {
-                if (value == _exportRemoteDesktopSessions)
-                    return;
-
-                _exportRemoteDesktopSessions = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _puTTYSesionsExists;
-        public bool PuTTYSessionsExists
-        {
-            get { return _puTTYSesionsExists; }
-            set
-            {
-                if (value == _puTTYSesionsExists)
-                    return;
-
-                _puTTYSesionsExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _exportPuTTYSessions;
-        public bool ExportPuTTYSessions
-        {
-            get { return _exportPuTTYSessions; }
-            set
-            {
-                if (value == _exportPuTTYSessions)
-                    return;
-
-                _exportPuTTYSessions = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _wakeOnLANClientsExists;
-        public bool WakeOnLANClientsExists
-        {
-            get { return _wakeOnLANClientsExists; }
-            set
-            {
-                if (value == _wakeOnLANClientsExists)
-                    return;
-
-                _wakeOnLANClientsExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _exportWakeOnLANClients;
-        public bool ExportWakeOnLANClients
-        {
-            get { return _exportWakeOnLANClients; }
-            set
-            {
-                if (value == _exportWakeOnLANClients)
-                    return;
-
-                _exportWakeOnLANClients = value;
+                _exportProfiles = value;
                 OnPropertyChanged();
             }
         }
@@ -733,15 +243,8 @@ namespace NETworkManager.ViewModels.Settings
                 List<ImportExportManager.ImportExportOptions> importOptions = ImportExportManager.ValidateImportFile(ImportFilePath);
 
                 ImportFileIsValid = true;
-                ImportApplicationSettingsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.ApplicationSettings);
-                ImportNetworkInterfaceProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
-                ImportIPScannerProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.IPScannerProfiles);
-                ImportPortScannerProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.PortScannerProfiles);
-                ImportPingProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.PingProfiles);
-                ImportTracerouteProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.TracerouteProfiles);
-                ImportRemoteDesktopSessionsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.RemoteDesktopSessions);
-                ImportPuTTYSessionsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.PuTTYSessions);
-                ImportWakeOnLANClientsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients);
+                ImportSettingsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.Settings);
+                ImportProfilesExists = importOptions.Contains(ImportExportManager.ImportExportOptions.Profiles);
             }
             catch (ImportFileNotValidException)
             {
@@ -765,115 +268,31 @@ namespace NETworkManager.ViewModels.Settings
 
             string message = LocalizationManager.GetStringByKey("String_SelectedSettingsAreOverwritten");
 
-            if (ImportApplicationSettingsExists && (ImportEverything || ImportApplicationSettings))
+            if (ImportSettingsExists && (ImportEverything || ImportSettings))
                 message += Environment.NewLine + Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_ApplicationIsRestartedAfterwards"));
 
             if (await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_AreYouSure"), message, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
             {
                 List<ImportExportManager.ImportExportOptions> importOptions = new List<ImportExportManager.ImportExportOptions>();
 
-                if (ImportApplicationSettingsExists && (ImportEverything || ImportApplicationSettings))
-                    importOptions.Add(ImportExportManager.ImportExportOptions.ApplicationSettings);
-
-                if (ImportNetworkInterfaceProfilesExists && (ImportEverything || ImportNetworkInterfaceProfiles))
+                if (ImportSettingsExists && (ImportEverything || ImportSettings))
+                    importOptions.Add(ImportExportManager.ImportExportOptions.Settings);
+                                
+                if (ImportProfilesExists && (ImportEverything || ImportProfiles))
                 {
-                    importOptions.Add(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
+                    importOptions.Add(ImportExportManager.ImportExportOptions.Profiles);
 
                     // Load network interface profile (option: add)
-                    if (NetworkInterfaceProfileManager.Profiles == null)
-                        NetworkInterfaceProfileManager.Load(!ImportOverrideNetworkInterfaceProfiles);
-                }
-
-                if (ImportIPScannerProfilesExists && (ImportEverything || ImportIPScannerProfiles))
-                {
-                    importOptions.Add(ImportExportManager.ImportExportOptions.IPScannerProfiles);
-
-                    // Load ip scanner profiles (option: add)
-                    if (IPScannerProfileManager.Profiles == null)
-                        IPScannerProfileManager.Load(!ImportOverrideIPScannerProfiles);
-                }
-
-                if (ImportPingProfilesExists && (ImportEverything || ImportPingProfiles))
-                {
-                    importOptions.Add(ImportExportManager.ImportExportOptions.PingProfiles);
-
-                    // Load ping profiles (option: add)
-                    if (PingProfileManager.Profiles == null)
-                        PingProfileManager.Load(!ImportOverridePingProfiles);
-                }
-
-                if (ImportTracerouteProfilesExists && (ImportEverything || ImportTracerouteProfiles))
-                {
-                    importOptions.Add(ImportExportManager.ImportExportOptions.TracerouteProfiles);
-
-                    // Load traceroute profiles (option: add)
-                    if (TracerouteProfileManager.Profiles == null)
-                        TracerouteProfileManager.Load(!ImportOverrideTracerouteProfiles);
-                }
-
-                if (ImportPortScannerProfilesExists && (ImportEverything || ImportPortScannerProfiles))
-                {
-                    importOptions.Add(ImportExportManager.ImportExportOptions.PortScannerProfiles);
-
-                    // Load port scanner profiles (option: add)
-                    if (PortScannerProfileManager.Profiles == null)
-                        PortScannerProfileManager.Load(!ImportOverridePortScannerProfiles);
-                }
-
-                if (ImportRemoteDesktopSessionsExists && (ImportEverything || ImportRemoteDesktopSessions))
-                {
-                    importOptions.Add(ImportExportManager.ImportExportOptions.RemoteDesktopSessions);
-
-                    // Load remote desktop sessions (option: add)
-                    if (RemoteDesktopSessionManager.Sessions == null)
-                        RemoteDesktopSessionManager.Load(!ImportOverrideRemoteDesktopSessions);
-                }
-
-                if (ImportPuTTYSessionsExists && (ImportEverything || ImportPuTTYSessions))
-                {
-                    importOptions.Add(ImportExportManager.ImportExportOptions.PuTTYSessions);
-
-                    // Load remote desktop sessions (option: add)
-                    if (PuTTYSessionManager.Sessions == null)
-                        RemoteDesktopSessionManager.Load(!ImportOverridePuTTYSessions);
-                }
-
-                if (ImportWakeOnLANClientsExists && (ImportEverything || ImportWakeOnLANClients))
-                {
-                    importOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANClients);
-
-                    // Load WoL clients (option: add)
-                    if (WakeOnLANClientManager.Clients == null)
-                        WakeOnLANClientManager.Load(!ImportOverrideWakeOnLANClients);
+                    if (ProfileManager.Profiles == null)
+                        ProfileManager.Load(!ImportOverrideProfiles);
                 }
 
                 // Import (copy) files from zip archive
                 ImportExportManager.Import(ImportFilePath, importOptions);
 
                 // Do the import (replace or add)
-                if (importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles))
-                    NetworkInterfaceProfileManager.Import(ImportEverything || ImportOverrideNetworkInterfaceProfiles);
-
-                if (importOptions.Contains(ImportExportManager.ImportExportOptions.IPScannerProfiles))
-                    IPScannerProfileManager.Import(ImportEverything || ImportOverrideIPScannerProfiles);
-
-                if (importOptions.Contains(ImportExportManager.ImportExportOptions.PortScannerProfiles))
-                    PortScannerProfileManager.Import(ImportEverything || ImportOverridePortScannerProfiles);
-
-                if (importOptions.Contains(ImportExportManager.ImportExportOptions.PingProfiles))
-                    PingProfileManager.Import(ImportEverything || ImportOverridePingProfiles);
-
-                if (importOptions.Contains(ImportExportManager.ImportExportOptions.TracerouteProfiles))
-                    TracerouteProfileManager.Import(ImportEverything || ImportOverrideTracerouteProfiles);
-
-                if (importOptions.Contains(ImportExportManager.ImportExportOptions.RemoteDesktopSessions))
-                    RemoteDesktopSessionManager.Import(ImportEverything || ImportOverrideRemoteDesktopSessions);
-
-                if (importOptions.Contains(ImportExportManager.ImportExportOptions.PuTTYSessions))
-                    PuTTYSessionManager.Import(ImportEverything || ImportOverridePuTTYSessions);
-
-                if (importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients))
-                    WakeOnLANClientManager.Import(ImportEverything || ImportOverrideWakeOnLANClients);
+                if (importOptions.Contains(ImportExportManager.ImportExportOptions.Profiles))
+                   ProfileManager.Import(ImportEverything || ImportOverrideProfiles);
 
                 // Show the user a message what happened
                 if (!ImportExportManager.ForceRestart)
@@ -882,29 +301,8 @@ namespace NETworkManager.ViewModels.Settings
 
                     message = LocalizationManager.GetStringByKey("String_SettingsSuccessfullyImported") + Environment.NewLine;
 
-                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles))
-                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_NetworkInterfaceProfilesReloaded"));
-
-                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.IPScannerProfiles))
-                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_IPScannerProfilesReloaded"));
-
-                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.PortScannerProfiles))
-                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_PortScannerProfilesReloaded"));
-
-                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.PingProfiles))
-                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_PingProfilesReloaded"));
-
-                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.TracerouteProfiles))
-                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_TracerouteProfilesReloaded"));
-
-                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.RemoteDesktopSessions))
-                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_RemoteDesktopSessionsReloaded"));
-
-                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.PuTTYSessions))
-                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_PuTTYSessionsReloaded"));
-
-                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.WakeOnLANClients))
-                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_WakeOnLANClientsReloaded"));
+                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.Profiles))
+                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_ProfilesReloaded"));
 
                     await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Success"), message, MessageDialogStyle.Affirmative, settings);
 
@@ -925,32 +323,11 @@ namespace NETworkManager.ViewModels.Settings
         {
             List<ImportExportManager.ImportExportOptions> exportOptions = new List<ImportExportManager.ImportExportOptions>();
 
-            if (ApplicationSettingsExists && (ExportEverything || ExportApplicationSettings))
-                exportOptions.Add(ImportExportManager.ImportExportOptions.ApplicationSettings);
+            if (SettingsExists && (ExportEverything || ExportSettings))
+                exportOptions.Add(ImportExportManager.ImportExportOptions.Settings);
 
-            if (NetworkInterfaceProfilesExists && (ExportEverything || ExportNetworkInterfaceProfiles))
-                exportOptions.Add(ImportExportManager.ImportExportOptions.NetworkInterfaceProfiles);
-
-            if (IPScannerProfilesExists && (ExportEverything || ExportIPScannerProfiles))
-                exportOptions.Add(ImportExportManager.ImportExportOptions.IPScannerProfiles);
-                        
-            if (PortScannerProfilesExists && (ExportEverything || ExportPortScannerProfiles))
-                exportOptions.Add(ImportExportManager.ImportExportOptions.PortScannerProfiles);
-
-            if (PingProfilesExists && (ExportEverything || ExportPingProfiles))
-                exportOptions.Add(ImportExportManager.ImportExportOptions.PingProfiles);
-
-            if (TracerouteProfilesExists && (ExportEverything || ExportTracerouteProfiles))
-                exportOptions.Add(ImportExportManager.ImportExportOptions.TracerouteProfiles);
-
-            if (RemoteDesktopSessionsExists && (ExportEverything || ExportRemoteDesktopSessions))
-                exportOptions.Add(ImportExportManager.ImportExportOptions.RemoteDesktopSessions);
-
-            if (PuTTYSessionsExists && (ExportEverything || ExportPuTTYSessions))
-                exportOptions.Add(ImportExportManager.ImportExportOptions.PuTTYSessions);
-
-            if (WakeOnLANClientsExists && (ExportEverything || ExportWakeOnLANClients))
-                exportOptions.Add(ImportExportManager.ImportExportOptions.WakeOnLANClients);
+            if (ProfilesExists && (ExportEverything || ExportProfiles))
+                exportOptions.Add(ImportExportManager.ImportExportOptions.Profiles);
 
             System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog()
             {
@@ -978,40 +355,12 @@ namespace NETworkManager.ViewModels.Settings
             if (SettingsManager.Current.SettingsChanged)
                 SettingsManager.Save();
 
-            if (NetworkInterfaceProfileManager.ProfilesChanged)
-                NetworkInterfaceProfileManager.Save();
-
-            if (IPScannerProfileManager.ProfilesChanged)
-                IPScannerProfileManager.Save();
-
-            if (PortScannerProfileManager.ProfilesChanged)
-                PortScannerProfileManager.Save();
-
-            if (PingProfileManager.ProfilesChanged)
-                PingProfileManager.Save();
-
-            if (TracerouteProfileManager.ProfilesChanged)
-                TracerouteProfileManager.Save();
-            
-            if (RemoteDesktopSessionManager.SessionsChanged)
-                RemoteDesktopSessionManager.Save();
-
-            if (PuTTYSessionManager.SessionsChanged)
-                PuTTYSessionManager.Save();
-
-            if (WakeOnLANClientManager.ClientsChanged)
-                WakeOnLANClientManager.Save();
+            if (ProfileManager.ProfilesChanged)
+                ProfileManager.Save();
 
             // Check if files exist
-            ApplicationSettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
-            NetworkInterfaceProfilesExists = File.Exists(NetworkInterfaceProfileManager.GetProfilesFilePath());
-            IPScannerProfilesExists = File.Exists(IPScannerProfileManager.GetProfilesFilePath());
-            PortScannerProfilesExists = File.Exists(PortScannerProfileManager.GetProfilesFilePath());
-            PingProfilesExists = File.Exists(PingProfileManager.GetProfilesFilePath());
-            TracerouteProfilesExists = File.Exists(TracerouteProfileManager.GetProfilesFilePath());
-            RemoteDesktopSessionsExists = File.Exists(RemoteDesktopSessionManager.GetSessionsFilePath());
-            PuTTYSessionsExists = File.Exists(PuTTYSessionManager.GetSessionsFilePath());
-            WakeOnLANClientsExists = File.Exists(WakeOnLANClientManager.GetClientsFilePath());
+            SettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
+            ProfilesExists = File.Exists(ProfileManager.GetProfilesFilePath());
         }
 
         public void SetImportLocationFilePathFromDragDrop(string filePath)

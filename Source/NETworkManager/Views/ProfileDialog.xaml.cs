@@ -1,10 +1,12 @@
-﻿using System.Windows.Controls;
+﻿using NETworkManager.ViewModels;
+using System.Diagnostics;
+using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class PuTTYSessionConnectDialog : UserControl
+    public partial class ProfileDialog : UserControl
     {
-        public PuTTYSessionConnectDialog()
+        public ProfileDialog()
         {
             InitializeComponent();
         }
@@ -12,7 +14,7 @@ namespace NETworkManager.Views
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             // Need to be in loaded event, focusmanger won't work...
-            cbHost.Focus();
+            txtName.Focus();            
         }
     }
 }

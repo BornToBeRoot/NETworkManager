@@ -1634,30 +1634,30 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _remoteDesktop_ExpandSessionView = true;
-        public bool RemoteDesktop_ExpandSessionView
+        private bool _remoteDesktop_ExpandProfileView = true;
+        public bool RemoteDesktop_ExpandProfileView
         {
-            get { return _remoteDesktop_ExpandSessionView; }
+            get { return _remoteDesktop_ExpandProfileView; }
             set
             {
-                if (value == _remoteDesktop_ExpandSessionView)
+                if (value == _remoteDesktop_ExpandProfileView)
                     return;
 
-                _remoteDesktop_ExpandSessionView = value;
+                _remoteDesktop_ExpandProfileView = value;
                 SettingsChanged = true;
             }
         }
 
-        private double _remoteDesktop_SessionWidth = 250;
-        public double RemoteDesktop_SessionWidth
+        private double _remoteDesktop_ProfileWidth = 250;
+        public double RemoteDesktop_ProfileWidth
         {
-            get { return _remoteDesktop_SessionWidth; }
+            get { return _remoteDesktop_ProfileWidth; }
             set
             {
-                if (value == _remoteDesktop_SessionWidth)
+                if (value == _remoteDesktop_ProfileWidth)
                     return;
 
-                _remoteDesktop_SessionWidth = value;
+                _remoteDesktop_ProfileWidth = value;
                 SettingsChanged = true;
             }
         }
@@ -1748,30 +1748,30 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _puTTY_ExpandSessionView = true;
-        public bool PuTTY_ExpandSessionView
+        private bool _puTTY_ExpandProfileView = true;
+        public bool PuTTY_ExpandProfileView
         {
-            get { return _puTTY_ExpandSessionView; }
+            get { return _puTTY_ExpandProfileView; }
             set
             {
-                if (value == _puTTY_ExpandSessionView)
+                if (value == _puTTY_ExpandProfileView)
                     return;
 
-                _puTTY_ExpandSessionView = value;
+                _puTTY_ExpandProfileView = value;
                 SettingsChanged = true;
             }
         }
 
-        private double _puTTY_SessionWidth = 250;
-        public double PuTTY_SessionWidth
+        private double _puTTY_ProfileWidth = 250;
+        public double PuTTY_ProfileWidth
         {
-            get { return _puTTY_SessionWidth; }
+            get { return _puTTY_ProfileWidth; }
             set
             {
-                if (value == _puTTY_SessionWidth)
+                if (value == _puTTY_ProfileWidth)
                     return;
 
-                _puTTY_SessionWidth = value;
+                _puTTY_ProfileWidth = value;
                 SettingsChanged = true;
             }
         }

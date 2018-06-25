@@ -10,7 +10,7 @@ using System.Windows.Data;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
 using System.Threading.Tasks;
-using System.Diagnostics;
+using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
@@ -148,29 +148,29 @@ namespace NETworkManager.ViewModels
         }
 
         #region Clients
-        ICollectionView _wakeOnLANClients;
-        public ICollectionView WakeOnLANClients
+        ICollectionView _profiles;
+        public ICollectionView Profiles
         {
-            get { return _wakeOnLANClients; }
+            get { return _profiles; }
         }
 
-        private WakeOnLANClientInfo _selectedClient;
-        public WakeOnLANClientInfo SelectedClient
+        private ProfileInfo _selectedProfile;
+        public ProfileInfo SelectedProfile
         {
-            get { return _selectedClient; }
+            get { return _selectedProfile; }
             set
             {
-                if (value == _selectedClient)
+                if (value == _selectedProfile)
                     return;
 
                 if (value != null && !IsSending)
                 {
-                    MACAddress = value.MACAddress;
-                    Broadcast = value.Broadcast;
-                    Port = value.Port;
+                    MACAddress = value.WakeOnLAN_MACAddress;
+                    Broadcast = value.WakeOnLAN_Broadcast;
+                    Port = value.WakeOnLAN_Port;
                 }
 
-                _selectedClient = value;
+                _selectedProfile = value;
                 OnPropertyChanged();
             }
         }
@@ -186,28 +186,28 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                WakeOnLANClients.Refresh();
+                Profiles.Refresh();
 
                 OnPropertyChanged();
             }
         }
 
         private bool _canProfileWidthChange = true;
-        private double _tempClientWidth;
+        private double _tempProfileWidth;
 
-        private bool _expandClientView;
-        public bool ExpandClientView
+        private bool _expandProfileView;
+        public bool ExpandProfileView
         {
-            get { return _expandClientView; }
+            get { return _expandProfileView; }
             set
             {
-                if (value == _expandClientView)
+                if (value == _expandProfileView)
                     return;
 
                 if (!_isLoading)
                     SettingsManager.Current.WakeOnLAN_ExpandClientView = value;
 
-                _expandClientView = value;
+                _expandProfileView = value;
 
                 if (_canProfileWidthChange)
                     ResizeClient(dueToChangedSize: false);
@@ -216,19 +216,19 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private GridLength _clientWidth;
-        public GridLength ClientWidth
+        private GridLength _profileWidth;
+        public GridLength ProfileWidth
         {
-            get { return _clientWidth; }
+            get { return _profileWidth; }
             set
             {
-                if (value == _clientWidth)
+                if (value == _profileWidth)
                     return;
 
                 if (!_isLoading && value.Value != 40) // Do not save the size when collapsed
                     SettingsManager.Current.WakeOnLAN_ClientWidth = value.Value;
 
-                _clientWidth = value;
+                _profileWidth = value;
 
                 if (_canProfileWidthChange)
                     ResizeClient(dueToChangedSize: true);
@@ -244,25 +244,26 @@ namespace NETworkManager.ViewModels
         {
             dialogCoordinator = instance;
 
-            if (WakeOnLANClientManager.Clients == null)
-                WakeOnLANClientManager.Load();
-
-            _wakeOnLANClients = CollectionViewSource.GetDefaultView(WakeOnLANClientManager.Clients);
-            _wakeOnLANClients.GroupDescriptions.Add(new PropertyGroupDescription(nameof(WakeOnLANClientInfo.Group)));
-            _wakeOnLANClients.SortDescriptions.Add(new SortDescription(nameof(WakeOnLANClientInfo.Group), ListSortDirection.Ascending));
-            _wakeOnLANClients.SortDescriptions.Add(new SortDescription(nameof(WakeOnLANClientInfo.Name), ListSortDirection.Ascending));
-            _wakeOnLANClients.Filter = o =>
+            _profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
+            _profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
+            _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
+            _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
+            _profiles.Filter = o =>
             {
-                if (string.IsNullOrEmpty(Search))
-                    return true;
+                ProfileInfo info = o as ProfileInfo;
 
-                WakeOnLANClientInfo info = o as WakeOnLANClientInfo;
+                if (string.IsNullOrEmpty(Search))
+                    return info.WakeOnLAN_Enabled;
 
                 string search = Search.Trim();
 
                 // Search by: Name
-                return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+                return (info.WakeOnLAN_Enabled && info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
+
+            // This will select the first entry as selected item...
+            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.WakeOnLAN_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+
 
             LoadSettings();
 
@@ -272,14 +273,14 @@ namespace NETworkManager.ViewModels
         private void LoadSettings()
         {
             Port = SettingsManager.Current.WakeOnLAN_DefaultPort;
-            ExpandClientView = SettingsManager.Current.WakeOnLAN_ExpandClientView;
+            ExpandProfileView = SettingsManager.Current.WakeOnLAN_ExpandClientView;
 
-            if (ExpandClientView)
-                ClientWidth = new GridLength(SettingsManager.Current.WakeOnLAN_ClientWidth);
+            if (ExpandProfileView)
+                ProfileWidth = new GridLength(SettingsManager.Current.WakeOnLAN_ClientWidth);
             else
-                ClientWidth = new GridLength(40);
+                ProfileWidth = new GridLength(40);
 
-            _tempClientWidth = SettingsManager.Current.WakeOnLAN_ClientWidth;
+            _tempProfileWidth = SettingsManager.Current.WakeOnLAN_ClientWidth;
         }
         #endregion
 
@@ -306,104 +307,86 @@ namespace NETworkManager.ViewModels
             WakeUp(info);
         }
 
-        public ICommand WakeUpClientCommand
+        public ICommand WakeUpProfileCommand
         {
-            get { return new RelayCommand(p => WakeUpClientAction()); }
+            get { return new RelayCommand(p => WakeUpProfileAction()); }
         }
 
-        private void WakeUpClientAction()
+        private void WakeUpProfileAction()
         {
             WakeOnLANInfo info = new WakeOnLANInfo
             {
-                MagicPacket = WakeOnLAN.CreateMagicPacket(SelectedClient.MACAddress),
-                Broadcast = IPAddress.Parse(SelectedClient.Broadcast),
-                Port = SelectedClient.Port
+                MagicPacket = WakeOnLAN.CreateMagicPacket(SelectedProfile.WakeOnLAN_MACAddress),
+                Broadcast = IPAddress.Parse(SelectedProfile.WakeOnLAN_Broadcast),
+                Port = SelectedProfile.WakeOnLAN_Port
             };
 
             WakeUp(info);
         }
 
-        public ICommand AddClientCommand
+        public ICommand AddProfileCommand
         {
-            get { return new RelayCommand(p => AddClientAction()); }
+            get { return new RelayCommand(p => AddProfileAction()); }
         }
 
-        private async void AddClientAction()
+        private async void AddProfileAction()
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_AddClient")
+                Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
             };
 
-            WakeOnLANClientViewModel wakeOnLANClientViewModel = new WakeOnLANClientViewModel(instance =>
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                WakeOnLANClientInfo wakeOnLANClientInfo = new WakeOnLANClientInfo
-                {
-                    Name = instance.Name,
-                    MACAddress = instance.MACAddress,
-                    Broadcast = instance.Broadcast,
-                    Port = instance.Port,
-                    Group = instance.Group
-                };
-
-                WakeOnLANClientManager.AddClient(wakeOnLANClientInfo);
+                ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, WakeOnLANClientManager.GetClientGroups(), new WakeOnLANClientInfo() { MACAddress = MACAddress, Broadcast = Broadcast, Port = Port });
+            }, ProfileManager.GetGroups());
 
-            customDialog.Content = new WakeOnLANClientDialog
+            customDialog.Content = new ProfileDialog
             {
-                DataContext = wakeOnLANClientViewModel
+                DataContext = profileViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand EditClientCommand
+        public ICommand EditProfileCommand
         {
-            get { return new RelayCommand(p => EditClientAction()); }
+            get { return new RelayCommand(p => EditProfileAction()); }
         }
 
-        private async void EditClientAction()
+        private async void EditProfileAction()
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditClient")
+                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
             };
 
-            WakeOnLANClientViewModel wakeOnLANClientViewModel = new WakeOnLANClientViewModel(instance =>
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                WakeOnLANClientManager.RemoveClient(SelectedClient);
+                ProfileManager.RemoveProfile(SelectedProfile);
 
-                WakeOnLANClientInfo wakeOnLANClientInfo = new WakeOnLANClientInfo
-                {
-                    Name = instance.Name,
-                    MACAddress = instance.MACAddress,
-                    Broadcast = instance.Broadcast,
-                    Port = instance.Port,
-                    Group = instance.Group
-                };
-
-                WakeOnLANClientManager.AddClient(wakeOnLANClientInfo);
+                ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, WakeOnLANClientManager.GetClientGroups(), SelectedClient);
+            }, ProfileManager.GetGroups(), SelectedProfile);
 
-            customDialog.Content = new WakeOnLANClientDialog
+            customDialog.Content = new ProfileDialog
             {
-                DataContext = wakeOnLANClientViewModel
+                DataContext = profileViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand CopyAsClientCommand
+        public ICommand CopyAsProfileCommand
         {
             get { return new RelayCommand(p => CopyAsProfileAction()); }
         }
@@ -412,57 +395,48 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_CopyClient")
+                Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
             };
 
-            WakeOnLANClientViewModel wakeOnLANClientViewModel = new WakeOnLANClientViewModel(instance =>
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                WakeOnLANClientInfo wakeOnLANClientInfo = new WakeOnLANClientInfo
-                {
-                    Name = instance.Name,
-                    MACAddress = instance.MACAddress,
-                    Broadcast = instance.Broadcast,
-                    Port = instance.Port,
-                    Group = instance.Group
-                };
-
-                WakeOnLANClientManager.AddClient(wakeOnLANClientInfo);
+                ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, WakeOnLANClientManager.GetClientGroups(), SelectedClient);
+            }, ProfileManager.GetGroups(), SelectedProfile);
 
-            customDialog.Content = new WakeOnLANClientDialog
+            customDialog.Content = new ProfileDialog
             {
-                DataContext = wakeOnLANClientViewModel
+                DataContext = profileViewModel
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand DeleteClientCommand
+        public ICommand DeleteProfileCommand
         {
-            get { return new RelayCommand(p => DeleteClientAction()); }
+            get { return new RelayCommand(p => DeleteProfileAction()); }
         }
 
-        private async void DeleteClientAction()
+        private async void DeleteProfileAction()
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_DeleteClient")
+                Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
             };
 
             ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                WakeOnLANClientManager.RemoveClient(SelectedClient);
+                ProfileManager.RemoveProfile(SelectedProfile);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, LocalizationManager.GetStringByKey("String_DeleteClientMessage"));
+            }, LocalizationManager.GetStringByKey("String_DeleteProfileMessage"));
 
             customDialog.Content = new ConfirmRemoveDialog
             {
@@ -488,9 +462,9 @@ namespace NETworkManager.ViewModels
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                WakeOnLANClientManager.RenameGroup(instance.OldGroup, instance.Group);
+                ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
 
-                _wakeOnLANClients.Refresh();
+                _profiles.Refresh();
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -547,24 +521,24 @@ namespace NETworkManager.ViewModels
 
             if (dueToChangedSize)
             {
-                if (ClientWidth.Value == 40)
-                    ExpandClientView = false;
+                if (ProfileWidth.Value == 40)
+                    ExpandProfileView = false;
                 else
-                    ExpandClientView = true;
+                    ExpandProfileView = true;
             }
             else
             {
-                if (ExpandClientView)
+                if (ExpandProfileView)
                 {
-                    if (_tempClientWidth == 40)
-                        ClientWidth = new GridLength(250);
+                    if (_tempProfileWidth == 40)
+                        ProfileWidth = new GridLength(250);
                     else
-                        ClientWidth = new GridLength(_tempClientWidth);
+                        ProfileWidth = new GridLength(_tempProfileWidth);
                 }
                 else
                 {
-                    _tempClientWidth = ClientWidth.Value;
-                    ClientWidth = new GridLength(40);
+                    _tempProfileWidth = ProfileWidth.Value;
+                    ProfileWidth = new GridLength(40);
                 }
             }
 

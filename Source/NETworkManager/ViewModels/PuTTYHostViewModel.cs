@@ -58,23 +58,23 @@ namespace NETworkManager.ViewModels
             }
         }
                 
-        #region Sessions
-        ICollectionView _puTTYSessions;
-        public ICollectionView PuTTYSessions
+        #region Profiles
+        ICollectionView _profiles;
+        public ICollectionView Profiles
         {
-            get { return _puTTYSessions; }
+            get { return _profiles; }
         }
 
-        private Models.Settings.PuTTYSessionInfo _selectedSession = new Models.Settings.PuTTYSessionInfo();
-        public Models.Settings.PuTTYSessionInfo SelectedSession
+        private ProfileInfo _selectedProfile = new ProfileInfo();
+        public ProfileInfo SelectedProfile
         {
-            get { return _selectedSession; }
+            get { return _selectedProfile; }
             set
             {
-                if (value == _selectedSession)
+                if (value == _selectedProfile)
                     return;
 
-                _selectedSession = value;
+                _selectedProfile = value;
                 OnPropertyChanged();
             }
         }
@@ -90,52 +90,52 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                PuTTYSessions.Refresh();
+                Profiles.Refresh();
 
                 OnPropertyChanged();
             }
         }
 
-        private bool _canSessionWidthChange = true;
-        private double _tempSessionWidth;
+        private bool _canProfileWidthChange = true;
+        private double _tempProfileWidth;
 
-        private bool _expandSessionView;
-        public bool ExpandSessionView
+        private bool _expandProfileView;
+        public bool ExpandProfileView
         {
-            get { return _expandSessionView; }
+            get { return _expandProfileView; }
             set
             {
-                if (value == _expandSessionView)
+                if (value == _expandProfileView)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PuTTY_ExpandSessionView = value;
+                    SettingsManager.Current.PuTTY_ExpandProfileView = value;
 
-                _expandSessionView = value;
+                _expandProfileView = value;
 
-                if (_canSessionWidthChange)
-                    ResizeSession(dueToChangedSize: false);
+                if (_canProfileWidthChange)
+                    ResizeProfile(dueToChangedSize: false);
 
                 OnPropertyChanged();
             }
         }
 
-        private GridLength _sessionWidth;
-        public GridLength SessionWidth
+        private GridLength _ProfileWidth;
+        public GridLength ProfileWidth
         {
-            get { return _sessionWidth; }
+            get { return _ProfileWidth; }
             set
             {
-                if (value == _sessionWidth)
+                if (value == _ProfileWidth)
                     return;
 
                 if (!_isLoading && value.Value != 40) // Do not save the size when collapsed
-                    SettingsManager.Current.PuTTY_SessionWidth = value.Value;
+                    SettingsManager.Current.PuTTY_ProfileWidth = value.Value;
 
-                _sessionWidth = value;
+                _ProfileWidth = value;
 
-                if (_canSessionWidthChange)
-                    ResizeSession(dueToChangedSize: true);
+                if (_canProfileWidthChange)
+                    ResizeProfile(dueToChangedSize: true);
 
                 OnPropertyChanged();
             }
@@ -155,37 +155,26 @@ namespace NETworkManager.ViewModels
 
             TabItems = new ObservableCollection<DragablzTabItem>();
 
-            // Load sessions
-            if (PuTTYSessionManager.Sessions == null)
-                PuTTYSessionManager.Load();
-
-            _puTTYSessions = CollectionViewSource.GetDefaultView(PuTTYSessionManager.Sessions);
-            _puTTYSessions.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
-            _puTTYSessions.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
-            _puTTYSessions.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            _puTTYSessions.Filter = o =>
+            _profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
+            _profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
+            _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
+            _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
+            _profiles.Filter = o =>
             {
-                if (string.IsNullOrEmpty(Search))
-                    return true;
+                ProfileInfo info = o as ProfileInfo;
 
-                Models.Settings.PuTTYSessionInfo info = o as Models.Settings.PuTTYSessionInfo;
+                if (string.IsNullOrEmpty(Search))
+                    return info.PuTTY_Enabled;
 
                 string search = Search.Trim();
 
-                // Search by: Tag
-                if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (string.IsNullOrEmpty(info.Tags))
-                        return false;
-                    else
-                        return info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).IndexOf(str, StringComparison.OrdinalIgnoreCase) > -1);
-                }
-                else // Search by: Name, (Hostname || SerialLine)
-                {
-                    return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.HostOrSerialLine.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-                }
+                // Search by: Name
+                return (info.PuTTY_Enabled && info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
+            // This will select the first entry as selected item...
+            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.PuTTY_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+            
             LoadSettings();
 
             SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
@@ -199,14 +188,14 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            ExpandSessionView = SettingsManager.Current.PuTTY_ExpandSessionView;
+            ExpandProfileView = SettingsManager.Current.PuTTY_ExpandProfileView;
 
-            if (ExpandSessionView)
-                SessionWidth = new GridLength(SettingsManager.Current.PuTTY_SessionWidth);
+            if (ExpandProfileView)
+                ProfileWidth = new GridLength(SettingsManager.Current.PuTTY_ProfileWidth);
             else
-                SessionWidth = new GridLength(40);
+                ProfileWidth = new GridLength(40);
 
-            _tempSessionWidth = SettingsManager.Current.PuTTY_SessionWidth;
+            _tempProfileWidth = SettingsManager.Current.PuTTY_ProfileWidth;
         }
         #endregion
 
@@ -221,147 +210,147 @@ namespace NETworkManager.ViewModels
             ((args.DragablzItem.Content as DragablzTabItem).View as PuTTYControl).CloseTab();
         }
 
-        public ICommand ConnectNewSessionCommand
+        public ICommand ConnectCommand
         {
-            get { return new RelayCommand(p => ConnectNewSessionAction()); }
+            get { return new RelayCommand(p => ConnectAction()); }
         }
 
-        private void ConnectNewSessionAction()
+        private void ConnectAction()
         {
-            ConnectNewSession();
+            Connect();
         }
                 
-        public ICommand AddSessionCommand
+        public ICommand ConnectProfileCommand
         {
-            get { return new RelayCommand(p => AddSessionAction()); }
+            get { return new RelayCommand(p => ConnectProfileAction()); }
         }
 
-        private async void AddSessionAction()
+        private void ConnectProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog()
-            {
-                Title = LocalizationManager.GetStringByKey("String_Header_AddSession")
-            };
-
-            PuTTYSessionViewModel puTTYSessionViewModel = new PuTTYSessionViewModel(instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
-
-                PuTTYSessionManager.AddSession(new Models.Settings.PuTTYSessionInfo(instance.Name, instance.ConnectionMode, instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host, instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port, instance.Username, instance.Profile, instance.AdditionalCommandLine, instance.Group, instance.Tags));
-            }, instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
-            }, PuTTYSessionManager.GetSessionGroups());
-
-            customDialog.Content = new PuTTYSessionDialog
-            {
-                DataContext = puTTYSessionViewModel
-            };
-
-            ConfigurationManager.Current.FixAirspace = true;
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand ConnectSessionCommand
-        {
-            get { return new RelayCommand(p => ConnectSessionAction()); }
-        }
-
-        private void ConnectSessionAction()
-        {
-            ConnectSession();
+            ConnectProfile();
         }            
 
-        public ICommand ConnectSessionExternalCommand
+        public ICommand ConnectProfileExternalCommand
         {
-            get { return new RelayCommand(p => ConnectSessionExternalAction()); }
+            get { return new RelayCommand(p => ConnectProfileExternalAction()); }
         }
 
-        private void ConnectSessionExternalAction()
+        private void ConnectProfileExternalAction()
         {
-            ConnectSessionExternal();
-        }
-                        
-        public ICommand EditSessionCommand
-        {
-            get { return new RelayCommand(p => EditSessionAction()); }
+            ConnectProfileExternal();
         }
 
-        private async void EditSessionAction()
+        public ICommand AddProfileCommand
+        {
+            get { return new RelayCommand(p => AddProfileAction()); }
+        }
+
+        private async void AddProfileAction()
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditSession")
+                Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
             };
 
-            PuTTYSessionViewModel puTTYSessionViewModel = new PuTTYSessionViewModel(instance =>
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                PuTTYSessionManager.RemoveSession(SelectedSession);
-
-                PuTTYSessionManager.AddSession(new Models.Settings.PuTTYSessionInfo(instance.Name, instance.ConnectionMode, instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port, instance.Username, instance.Profile, instance.AdditionalCommandLine, instance.Group, instance.Tags));
+                ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            }, PuTTYSessionManager.GetSessionGroups(), SelectedSession);
+            }, ProfileManager.GetGroups());
 
-            customDialog.Content = new PuTTYSessionDialog
+            customDialog.Content = new ProfileDialog
             {
-                DataContext = puTTYSessionViewModel
+                DataContext = profileViewModel
             };
 
             ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand CopyAsSessionCommand
+        public ICommand EditProfileCommand
         {
-            get { return new RelayCommand(p => CopyAsSessionAction()); }
+            get { return new RelayCommand(p => EditProfileAction()); }
         }
 
-        private async void CopyAsSessionAction()
+        private async void EditProfileAction()
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_CopySession")
+                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
             };
 
-            PuTTYSessionViewModel puTTYSessionViewModel = new PuTTYSessionViewModel(instance =>
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                PuTTYSessionManager.AddSession(new Models.Settings.PuTTYSessionInfo(instance.Name, instance.ConnectionMode, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host, instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port, instance.Username, instance.Profile, instance.AdditionalCommandLine, instance.Group, instance.Tags));
+                ProfileManager.RemoveProfile(SelectedProfile);
+
+                ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            }, PuTTYSessionManager.GetSessionGroups(), SelectedSession);
+            }, ProfileManager.GetGroups(), SelectedProfile);
 
-            customDialog.Content = new PuTTYSessionDialog
+            customDialog.Content = new ProfileDialog
             {
-                DataContext = puTTYSessionViewModel
+                DataContext = profileViewModel
             };
 
             ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand DeleteSessionCommand
+        public ICommand CopyAsProfileCommand
         {
-            get { return new RelayCommand(p => DeleteSessionAction()); }
+            get { return new RelayCommand(p => CopyAsProfileAction()); }
         }
 
-        private async void DeleteSessionAction()
+        private async void CopyAsProfileAction()
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_DeleteSession")
+                Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
+            };
+
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ConfigurationManager.Current.FixAirspace = false;
+
+                ProfileManager.AddProfile(instance);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ConfigurationManager.Current.FixAirspace = false;
+            }, ProfileManager.GetGroups(), SelectedProfile);
+
+            customDialog.Content = new ProfileDialog
+            {
+                DataContext = profileViewModel
+            };
+
+            ConfigurationManager.Current.FixAirspace = true;
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand DeleteProfileCommand
+        {
+            get { return new RelayCommand(p => DeleteProfileAction()); }
+        }
+
+        private async void DeleteProfileAction()
+        {
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
             };
 
             ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
@@ -369,12 +358,11 @@ namespace NETworkManager.ViewModels
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                PuTTYSessionManager.RemoveSession(SelectedSession);
+                ProfileManager.RemoveProfile(SelectedProfile);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
-            }, LocalizationManager.GetStringByKey("String_DeleteSessionMessage"));
+            }, LocalizationManager.GetStringByKey("String_DeleteProfileMessage"));
 
             customDialog.Content = new ConfirmRemoveDialog
             {
@@ -402,9 +390,7 @@ namespace NETworkManager.ViewModels
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                PuTTYSessionManager.RenameGroup(instance.OldGroup, instance.Group);
-
-                _puTTYSessions.Refresh();
+                ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -450,14 +436,14 @@ namespace NETworkManager.ViewModels
                 IsPuTTYConfigured = false;
         }
 
-        private async void ConnectNewSession(string host = null)
+        private async void Connect(string host = null)
         {
             CustomDialog customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_Connect")
             };
 
-            PuTTYSessionConnectViewModel puTTYSessionConnectViewModel = new PuTTYSessionConnectViewModel(instance =>
+            PuTTYConnectViewModel puTTYConnectViewModel = new PuTTYConnectViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
@@ -470,8 +456,8 @@ namespace NETworkManager.ViewModels
                 AddUsernameToHistory(instance.Username);
                 AddProfileToHistory(instance.Profile);
 
-                // Create session info
-                Models.PuTTY.PuTTYSessionInfo puTTYSessionInfo = new Models.PuTTY.PuTTYSessionInfo
+                // Create Profile info
+                Models.PuTTY.PuTTYProfileInfo puTTYProfileInfo = new Models.PuTTY.PuTTYProfileInfo
                 {
                     HostOrSerialLine = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
                     Mode = instance.ConnectionMode,
@@ -482,7 +468,7 @@ namespace NETworkManager.ViewModels
                 };
 
                 // Connect
-                Connect(puTTYSessionInfo);
+                Connect(puTTYProfileInfo);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -492,44 +478,44 @@ namespace NETworkManager.ViewModels
                 Host = host
             };
 
-            customDialog.Content = new PuTTYSessionConnectDialog
+            customDialog.Content = new PuTTYConnectDialog
             {
-                DataContext = puTTYSessionConnectViewModel
+                DataContext = puTTYConnectViewModel
             };
 
             ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        private void ConnectSession()
+        private void ConnectProfile()
         {
-            Connect(Models.PuTTY.PuTTYSessionInfo.Parse(SelectedSession), SelectedSession.Name);
+            Connect(Models.PuTTY.PuTTYProfileInfo.Parse(SelectedProfile), SelectedProfile.Name);
         }
 
-        private void ConnectSessionExternal()
+        private void ConnectProfileExternal()
         {
             ProcessStartInfo info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.PuTTY_PuTTYLocation,
-                Arguments = PuTTY.BuildCommandLine(Models.PuTTY.PuTTYSessionInfo.Parse(SelectedSession))
+                Arguments = PuTTY.BuildCommandLine(Models.PuTTY.PuTTYProfileInfo.Parse(SelectedProfile))
             };
 
             Process.Start(info);
         }
 
-        private void Connect(Models.PuTTY.PuTTYSessionInfo sessionInfo, string Header = null)
+        private void Connect(Models.PuTTY.PuTTYProfileInfo ProfileInfo, string Header = null)
         {
             // Add PuTTY path here...
-            sessionInfo.PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
+            ProfileInfo.PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
 
-            TabItems.Add(new DragablzTabItem(Header ?? sessionInfo.HostOrSerialLine, new PuTTYControl(sessionInfo)));
+            TabItems.Add(new DragablzTabItem(Header ?? ProfileInfo.HostOrSerialLine, new PuTTYControl(ProfileInfo)));
 
             SelectedTabIndex = TabItems.Count - 1;
         }
 
         public void AddTab(string host)
         {
-            ConnectNewSession(host);
+            Connect(host);
         }
 
         // Modify history list
@@ -605,34 +591,34 @@ namespace NETworkManager.ViewModels
             list.ForEach(x => SettingsManager.Current.PuTTY_ProfileHistory.Add(x));
         }
 
-        private void ResizeSession(bool dueToChangedSize)
+        private void ResizeProfile(bool dueToChangedSize)
         {
-            _canSessionWidthChange = false;
+            _canProfileWidthChange = false;
 
             if (dueToChangedSize)
             {
-                if (SessionWidth.Value == 40)
-                    ExpandSessionView = false;
+                if (ProfileWidth.Value == 40)
+                    ExpandProfileView = false;
                 else
-                    ExpandSessionView = true;
+                    ExpandProfileView = true;
             }
             else
             {
-                if (ExpandSessionView)
+                if (ExpandProfileView)
                 {
-                    if (_tempSessionWidth == 40)
-                        SessionWidth = new GridLength(250);
+                    if (_tempProfileWidth == 40)
+                        ProfileWidth = new GridLength(250);
                     else
-                        SessionWidth = new GridLength(_tempSessionWidth);
+                        ProfileWidth = new GridLength(_tempProfileWidth);
                 }
                 else
                 {
-                    _tempSessionWidth = SessionWidth.Value;
-                    SessionWidth = new GridLength(40);
+                    _tempProfileWidth = ProfileWidth.Value;
+                    ProfileWidth = new GridLength(40);
                 }
             }
 
-            _canSessionWidthChange = true;
+            _canProfileWidthChange = true;
         }
         #endregion
     }

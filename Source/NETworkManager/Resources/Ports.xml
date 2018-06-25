@@ -1741,13 +1741,13 @@ Generated 05/31/2018 02:04:19-->
     <Number>139</Number>
     <Protocol>tcp</Protocol>
     <Name>netbios-ssn</Name>
-    <Description>NETBIOS Session Service</Description>
+    <Description>NETBIOS Profile Service</Description>
   </Port>
   <Port>
     <Number>139</Number>
     <Protocol>udp</Protocol>
     <Name>netbios-ssn</Name>
-    <Description>NETBIOS Session Service</Description>
+    <Description>NETBIOS Profile Service</Description>
   </Port>
   <Port>
     <Number>140</Number>
@@ -2443,13 +2443,13 @@ Generated 05/31/2018 02:04:19-->
     <Number>196</Number>
     <Protocol>tcp</Protocol>
     <Name>dn6-smm-red</Name>
-    <Description>DNSIX Session Mgt Module Audit Redir</Description>
+    <Description>DNSIX Profile Mgt Module Audit Redir</Description>
   </Port>
   <Port>
     <Number>196</Number>
     <Protocol>udp</Protocol>
     <Name>dn6-smm-red</Name>
-    <Description>DNSIX Session Mgt Module Audit Redir</Description>
+    <Description>DNSIX Profile Mgt Module Audit Redir</Description>
   </Port>
   <Port>
     <Number>197</Number>
@@ -25687,14 +25687,14 @@ Generated 05/31/2018 02:04:19-->
   <Port>
     <Number>2389</Number>
     <Protocol>tcp</Protocol>
-    <Name>ovsessionmgr</Name>
-    <Description>OpenView Session Mgr</Description>
+    <Name>ovProfilemgr</Name>
+    <Description>OpenView Profile Mgr</Description>
   </Port>
   <Port>
     <Number>2389</Number>
     <Protocol>udp</Protocol>
-    <Name>ovsessionmgr</Name>
-    <Description>OpenView Session Mgr</Description>
+    <Name>ovProfilemgr</Name>
+    <Description>OpenView Profile Mgr</Description>
   </Port>
   <Port>
     <Number>2390</Number>
@@ -34302,13 +34302,13 @@ Generated 05/31/2018 02:04:19-->
     <Number>3090</Number>
     <Protocol>tcp</Protocol>
     <Name>stss</Name>
-    <Description>Senforce Session Services</Description>
+    <Description>Senforce Profile Services</Description>
   </Port>
   <Port>
     <Number>3090</Number>
     <Protocol>udp</Protocol>
     <Name>stss</Name>
-    <Description>Senforce Session Services</Description>
+    <Description>Senforce Profile Services</Description>
   </Port>
   <Port>
     <Number>3091</Number>
@@ -36108,13 +36108,13 @@ Generated 05/31/2018 02:04:19-->
     <Number>3242</Number>
     <Protocol>tcp</Protocol>
     <Name>sdp-id-port</Name>
-    <Description>Session Description ID</Description>
+    <Description>Profile Description ID</Description>
   </Port>
   <Port>
     <Number>3242</Number>
     <Protocol>udp</Protocol>
     <Name>sdp-id-port</Name>
-    <Description>Session Description ID</Description>
+    <Description>Profile Description ID</Description>
   </Port>
   <Port>
     <Number>3243</Number>
@@ -36827,26 +36827,26 @@ Generated 05/31/2018 02:04:19-->
   <Port>
     <Number>3303</Number>
     <Protocol>tcp</Protocol>
-    <Name>opsession-clnt</Name>
-    <Description>OP Session Client</Description>
+    <Name>opProfile-clnt</Name>
+    <Description>OP Profile Client</Description>
   </Port>
   <Port>
     <Number>3303</Number>
     <Protocol>udp</Protocol>
-    <Name>opsession-clnt</Name>
-    <Description>OP Session Client</Description>
+    <Name>opProfile-clnt</Name>
+    <Description>OP Profile Client</Description>
   </Port>
   <Port>
     <Number>3304</Number>
     <Protocol>tcp</Protocol>
-    <Name>opsession-srvr</Name>
-    <Description>OP Session Server</Description>
+    <Name>opProfile-srvr</Name>
+    <Description>OP Profile Server</Description>
   </Port>
   <Port>
     <Number>3304</Number>
     <Protocol>udp</Protocol>
-    <Name>opsession-srvr</Name>
-    <Description>OP Session Server</Description>
+    <Name>opProfile-srvr</Name>
+    <Description>OP Profile Server</Description>
   </Port>
   <Port>
     <Number>3305</Number>
@@ -36875,14 +36875,14 @@ Generated 05/31/2018 02:04:19-->
   <Port>
     <Number>3307</Number>
     <Protocol>tcp</Protocol>
-    <Name>opsession-prxy</Name>
-    <Description>OP Session Proxy</Description>
+    <Name>opProfile-prxy</Name>
+    <Description>OP Profile Proxy</Description>
   </Port>
   <Port>
     <Number>3307</Number>
     <Protocol>udp</Protocol>
-    <Name>opsession-prxy</Name>
-    <Description>OP Session Proxy</Description>
+    <Name>opProfile-prxy</Name>
+    <Description>OP Profile Proxy</Description>
   </Port>
   <Port>
     <Number>3308</Number>
@@ -38808,13 +38808,13 @@ Generated 05/31/2018 02:04:19-->
     <Number>3478</Number>
     <Protocol>tcp</Protocol>
     <Name>stun</Name>
-    <Description>Session Traversal Utilities for NAT (STUN) port</Description>
+    <Description>Profile Traversal Utilities for NAT (STUN) port</Description>
   </Port>
   <Port>
     <Number>3478</Number>
     <Protocol>udp</Protocol>
     <Name>stun</Name>
-    <Description>Session Traversal Utilities for NAT (STUN) port</Description>
+    <Description>Profile Traversal Utilities for NAT (STUN) port</Description>
   </Port>
   <Port>
     <Number>3478</Number>
@@ -44555,14 +44555,14 @@ Generated 05/31/2018 02:04:19-->
   <Port>
     <Number>3952</Number>
     <Protocol>tcp</Protocol>
-    <Name>i3-sessionmgr</Name>
-    <Description>I3 Session Manager</Description>
+    <Name>i3-Profilemgr</Name>
+    <Description>I3 Profile Manager</Description>
   </Port>
   <Port>
     <Number>3952</Number>
     <Protocol>udp</Protocol>
-    <Name>i3-sessionmgr</Name>
-    <Description>I3 Session Manager</Description>
+    <Name>i3-Profilemgr</Name>
+    <Description>I3 Profile Manager</Description>
   </Port>
   <Port>
     <Number>3953</Number>
@@ -49565,14 +49565,14 @@ Generated 05/31/2018 02:04:19-->
   <Port>
     <Number>4594</Number>
     <Protocol>tcp</Protocol>
-    <Name>ias-session</Name>
-    <Description>IAS-Session (ANRI-ANRI)</Description>
+    <Name>ias-Profile</Name>
+    <Description>IAS-Profile (ANRI-ANRI)</Description>
   </Port>
   <Port>
     <Number>4594</Number>
     <Protocol>udp</Protocol>
-    <Name>ias-session</Name>
-    <Description>IAS-Session (ANRI-ANRI)</Description>
+    <Name>ias-Profile</Name>
+    <Description>IAS-Profile (ANRI-ANRI)</Description>
   </Port>
   <Port>
     <Number>4595</Number>
@@ -55026,13 +55026,13 @@ Generated 05/31/2018 02:04:19-->
     <Number>5568</Number>
     <Protocol>tcp</Protocol>
     <Name>sdt</Name>
-    <Description>Session Data Transport Multicast</Description>
+    <Description>Profile Data Transport Multicast</Description>
   </Port>
   <Port>
     <Number>5568</Number>
     <Protocol>udp</Protocol>
     <Name>sdt</Name>
-    <Description>Session Data Transport Multicast</Description>
+    <Description>Profile Data Transport Multicast</Description>
   </Port>
   <Port>
     <Number>5569</Number>
@@ -64634,7 +64634,7 @@ Generated 05/31/2018 02:04:19-->
     <Number>8415</Number>
     <Protocol>tcp</Protocol>
     <Name>dlpx-sp</Name>
-    <Description>Delphix Session Protocol</Description>
+    <Description>Delphix Profile Protocol</Description>
   </Port>
   <Port>
     <Number>8415</Number>
@@ -64646,13 +64646,13 @@ Generated 05/31/2018 02:04:19-->
     <Number>8416</Number>
     <Protocol>tcp</Protocol>
     <Name>espeech</Name>
-    <Description>eSpeech Session Protocol</Description>
+    <Description>eSpeech Profile Protocol</Description>
   </Port>
   <Port>
     <Number>8416</Number>
     <Protocol>udp</Protocol>
     <Name>espeech</Name>
-    <Description>eSpeech Session Protocol</Description>
+    <Description>eSpeech Profile Protocol</Description>
   </Port>
   <Port>
     <Number>8417</Number>
@@ -66248,49 +66248,49 @@ Generated 05/31/2018 02:04:19-->
     <Number>9200</Number>
     <Protocol>tcp</Protocol>
     <Name>wap-wsp</Name>
-    <Description>WAP connectionless session service</Description>
+    <Description>WAP connectionless Profile service</Description>
   </Port>
   <Port>
     <Number>9200</Number>
     <Protocol>udp</Protocol>
     <Name>wap-wsp</Name>
-    <Description>WAP connectionless session service</Description>
+    <Description>WAP connectionless Profile service</Description>
   </Port>
   <Port>
     <Number>9201</Number>
     <Protocol>tcp</Protocol>
     <Name>wap-wsp-wtp</Name>
-    <Description>WAP session service</Description>
+    <Description>WAP Profile service</Description>
   </Port>
   <Port>
     <Number>9201</Number>
     <Protocol>udp</Protocol>
     <Name>wap-wsp-wtp</Name>
-    <Description>WAP session service</Description>
+    <Description>WAP Profile service</Description>
   </Port>
   <Port>
     <Number>9202</Number>
     <Protocol>tcp</Protocol>
     <Name>wap-wsp-s</Name>
-    <Description>WAP secure connectionless session service</Description>
+    <Description>WAP secure connectionless Profile service</Description>
   </Port>
   <Port>
     <Number>9202</Number>
     <Protocol>udp</Protocol>
     <Name>wap-wsp-s</Name>
-    <Description>WAP secure connectionless session service</Description>
+    <Description>WAP secure connectionless Profile service</Description>
   </Port>
   <Port>
     <Number>9203</Number>
     <Protocol>tcp</Protocol>
     <Name>wap-wsp-wtp-s</Name>
-    <Description>WAP secure session service</Description>
+    <Description>WAP secure Profile service</Description>
   </Port>
   <Port>
     <Number>9203</Number>
     <Protocol>udp</Protocol>
     <Name>wap-wsp-wtp-s</Name>
-    <Description>WAP secure session service</Description>
+    <Description>WAP secure Profile service</Description>
   </Port>
   <Port>
     <Number>9204</Number>
@@ -67436,19 +67436,19 @@ Generated 05/31/2018 02:04:19-->
     <Number>9875</Number>
     <Protocol>tcp</Protocol>
     <Name>sapv1</Name>
-    <Description>Session Announcement v1</Description>
+    <Description>Profile Announcement v1</Description>
   </Port>
   <Port>
     <Number>9875</Number>
     <Protocol>udp</Protocol>
     <Name>sapv1</Name>
-    <Description>Session Announcement v1</Description>
+    <Description>Profile Announcement v1</Description>
   </Port>
   <Port>
     <Number>9876</Number>
     <Protocol>tcp</Protocol>
     <Name>sd</Name>
-    <Description>Session Director</Description>
+    <Description>Profile Director</Description>
   </Port>
   <Port>
     <Number>9878</Number>
@@ -68414,7 +68414,7 @@ Generated 05/31/2018 02:04:19-->
     <Number>10439</Number>
     <Protocol>udp</Protocol>
     <Name>bngsync</Name>
-    <Description>BalanceNG session table synchronization protocol</Description>
+    <Description>BalanceNG Profile table synchronization protocol</Description>
   </Port>
   <Port>
     <Number>10439</Number>
@@ -69320,13 +69320,13 @@ Generated 05/31/2018 02:04:19-->
     <Number>12121</Number>
     <Protocol>tcp</Protocol>
     <Name>nupaper-ss</Name>
-    <Description>NuPaper Session Service</Description>
+    <Description>NuPaper Profile Service</Description>
   </Port>
   <Port>
     <Number>12121</Number>
     <Protocol>udp</Protocol>
     <Name>nupaper-ss</Name>
-    <Description>NuPaper Session Service</Description>
+    <Description>NuPaper Profile Service</Description>
   </Port>
   <Port>
     <Number>12168</Number>
@@ -69631,14 +69631,14 @@ Generated 05/31/2018 02:04:19-->
   <Port>
     <Number>13819</Number>
     <Protocol>tcp</Protocol>
-    <Name>dsmcc-session</Name>
-    <Description>DSMCC Session Messages</Description>
+    <Name>dsmcc-Profile</Name>
+    <Description>DSMCC Profile Messages</Description>
   </Port>
   <Port>
     <Number>13819</Number>
     <Protocol>udp</Protocol>
-    <Name>dsmcc-session</Name>
-    <Description>DSMCC Session Messages</Description>
+    <Name>dsmcc-Profile</Name>
+    <Description>DSMCC Profile Messages</Description>
   </Port>
   <Port>
     <Number>13820</Number>

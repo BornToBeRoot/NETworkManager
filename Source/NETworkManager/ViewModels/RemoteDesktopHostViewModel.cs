@@ -56,23 +56,23 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        #region Sessions
-        ICollectionView _remoteDesktopSessions;
-        public ICollectionView RemoteDesktopSessions
+        #region Profiles
+        ICollectionView _profiles;
+        public ICollectionView Profiles
         {
-            get { return _remoteDesktopSessions; }
+            get { return _profiles; }
         }
 
-        private RemoteDesktopSessionInfo _selectedSession = new RemoteDesktopSessionInfo();
-        public RemoteDesktopSessionInfo SelectedSession
+        private ProfileInfo _selectedProfile = new ProfileInfo();
+        public ProfileInfo SelectedProfile
         {
-            get { return _selectedSession; }
+            get { return _selectedProfile; }
             set
             {
-                if (value == _selectedSession)
+                if (value == _selectedProfile)
                     return;
 
-                _selectedSession = value;
+                _selectedProfile = value;
                 OnPropertyChanged();
             }
         }
@@ -88,52 +88,52 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                RemoteDesktopSessions.Refresh();
+                Profiles.Refresh();
 
                 OnPropertyChanged();
             }
         }
 
-        private bool _canSessionWidthChange = true;
-        private double _tempSessionWidth;
+        private bool _canProfileWidthChange = true;
+        private double _tempProfileWidth;
 
-        private bool _expandSessionView;
-        public bool ExpandSessionView
+        private bool _expandProfileView;
+        public bool ExpandProfileView
         {
-            get { return _expandSessionView; }
+            get { return _expandProfileView; }
             set
             {
-                if (value == _expandSessionView)
+                if (value == _expandProfileView)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.RemoteDesktop_ExpandSessionView = value;
+                    SettingsManager.Current.RemoteDesktop_ExpandProfileView = value;
 
-                _expandSessionView = value;
+                _expandProfileView = value;
 
-                if (_canSessionWidthChange)
-                    ResizeSession(dueToChangedSize: false);
+                if (_canProfileWidthChange)
+                    ResizeProfile(dueToChangedSize: false);
 
                 OnPropertyChanged();
             }
         }
 
-        private GridLength _sessionWidth;
-        public GridLength SessionWidth
+        private GridLength _profileWidth;
+        public GridLength ProfileWidth
         {
-            get { return _sessionWidth; }
+            get { return _profileWidth; }
             set
             {
-                if (value == _sessionWidth)
+                if (value == _profileWidth)
                     return;
 
                 if (!_isLoading && value.Value != 40) // Do not save the size when collapsed
-                    SettingsManager.Current.RemoteDesktop_SessionWidth = value.Value;
+                    SettingsManager.Current.RemoteDesktop_ProfileWidth = value.Value;
 
-                _sessionWidth = value;
+                _profileWidth = value;
 
-                if (_canSessionWidthChange)
-                    ResizeSession(dueToChangedSize: true);
+                if (_canProfileWidthChange)
+                    ResizeProfile(dueToChangedSize: true);
 
                 OnPropertyChanged();
             }
@@ -155,36 +155,26 @@ namespace NETworkManager.ViewModels
 
                 TabItems = new ObservableCollection<DragablzTabItem>();
 
-                // Load sessions
-                if (RemoteDesktopSessionManager.Sessions == null)
-                    RemoteDesktopSessionManager.Load();
-
-                _remoteDesktopSessions = CollectionViewSource.GetDefaultView(RemoteDesktopSessionManager.Sessions);
-                _remoteDesktopSessions.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
-                _remoteDesktopSessions.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
-                _remoteDesktopSessions.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-                _remoteDesktopSessions.Filter = o =>
+                _profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
+                _profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
+                _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
+                _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
+                _profiles.Filter = o =>
                 {
-                    if (string.IsNullOrEmpty(Search))
-                        return true;
+                    ProfileInfo info = o as ProfileInfo;
 
-                    RemoteDesktopSessionInfo info = o as RemoteDesktopSessionInfo;
+                    if (string.IsNullOrEmpty(Search))
+                        return info.RemoteDesktop_Enabled;
 
                     string search = Search.Trim();
 
-                    // Search by: Tag
-                    if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
-                    {
-                        if (string.IsNullOrEmpty(info.Tags))
-                            return false;
-                        else
-                            return info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).IndexOf(str, StringComparison.OrdinalIgnoreCase) > -1);
-                    }
-                    else // Search by: Name, Hostname
-                    {
-                        return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-                    }
+                    // Search by: Name
+                    return (info.RemoteDesktop_Enabled && info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
                 };
+
+                // This will select the first entry as selected item...
+                SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.RemoteDesktop_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+
 
                 LoadSettings();
             }
@@ -194,200 +184,174 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            ExpandSessionView = SettingsManager.Current.RemoteDesktop_ExpandSessionView;
+            ExpandProfileView = SettingsManager.Current.RemoteDesktop_ExpandProfileView;
 
-            if (ExpandSessionView)
-                SessionWidth = new GridLength(SettingsManager.Current.RemoteDesktop_SessionWidth);
+            if (ExpandProfileView)
+                ProfileWidth = new GridLength(SettingsManager.Current.RemoteDesktop_ProfileWidth);
             else
-                SessionWidth = new GridLength(40);
+                ProfileWidth = new GridLength(40);
 
-            _tempSessionWidth = SettingsManager.Current.RemoteDesktop_SessionWidth;
+            _tempProfileWidth = SettingsManager.Current.RemoteDesktop_ProfileWidth;
         }
         #endregion
 
         #region ICommand & Actions        
-        public ICommand ConnectNewSessionCommand
+        public ICommand ConnectCommand
         {
-            get { return new RelayCommand(p => ConnectNewSessionAction(), ConnectNewSession_CanExecute); }
+            get { return new RelayCommand(p => ConnectAction(), Connect_CanExecute); }
         }
 
-        private bool ConnectNewSession_CanExecute(object parameter)
+        private bool Connect_CanExecute(object parameter)
         {
             return IsRDP8dot1Available;
         }
 
-        private void ConnectNewSessionAction()
+        private void ConnectAction()
         {
-            ConnectNewSession();
+            Connect();
         }
 
-        public ICommand AddSessionCommand
+        public ICommand ConnectProfileCommand
         {
-            get { return new RelayCommand(p => AddSessionAction()); }
+            get { return new RelayCommand(p => ConnectProfileAction()); }
         }
 
-        private async void AddSessionAction()
+        private void ConnectProfileAction()
+        {
+            ConnectProfile();
+        }
+
+        public ICommand ConnectProfileAsCommand
+        {
+            get { return new RelayCommand(p => ConnectProfileAsAction()); }
+        }
+
+        private void ConnectProfileAsAction()
+        {
+            ConnectProfileAs();
+        }
+
+        public ICommand ConnectProfileExternalCommand
+        {
+            get { return new RelayCommand(p => ConnectProfileExternalAction()); }
+        }
+
+        private void ConnectProfileExternalAction()
+        {
+            Process.Start("mstsc.exe", string.Format("/V:{0}", SelectedProfile.RemoteDesktop_Host));
+        }
+
+        public ICommand AddProfileCommand
+        {
+            get { return new RelayCommand(p => AddProfileAction()); }
+        }
+
+        private async void AddProfileAction()
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_AddSession")
+                Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
             };
 
-            RemoteDesktopSessionViewModel remoteDesktopSessionViewModel = new RemoteDesktopSessionViewModel(instance =>
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                RemoteDesktopSessionInfo remoteDesktopSessionInfo = new RemoteDesktopSessionInfo
-                {
-                    Name = instance.Name,
-                    Host = instance.Host,
-                    CredentialID = instance.CredentialID,
-                    Group = instance.Group,
-                    Tags = instance.Tags
-                };
-
-                RemoteDesktopSessionManager.AddSession(remoteDesktopSessionInfo);
+                ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            }, RemoteDesktopSessionManager.GetSessionGroups());
+            }, ProfileManager.GetGroups());
 
-            customDialog.Content = new RemoteDesktopSessionDialog
+            customDialog.Content = new ProfileDialog
             {
-                DataContext = remoteDesktopSessionViewModel
+                DataContext = profileViewModel
             };
 
             ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand ConnectSessionCommand
+        public ICommand EditProfileCommand
         {
-            get { return new RelayCommand(p => ConnectSessionAction()); }
+            get { return new RelayCommand(p => EditProfileAction()); }
         }
 
-        private void ConnectSessionAction()
-        {
-            ConnectSession();
-        }
-
-        public ICommand ConnectSessionAsCommand
-        {
-            get { return new RelayCommand(p => ConnectSessionAsAction()); }
-        }
-
-        private void ConnectSessionAsAction()
-        {
-            ConnectSessionAs();
-        }
-
-        public ICommand ConnectSessionExternalCommand
-        {
-            get { return new RelayCommand(p => ConnectSessionExternalAction()); }
-        }
-
-        private void ConnectSessionExternalAction()
-        {
-            Process.Start("mstsc.exe", string.Format("/V:{0}", SelectedSession.Host));
-        }
-
-        public ICommand EditSessionCommand
-        {
-            get { return new RelayCommand(p => EditSessionAction()); }
-        }
-
-        private async void EditSessionAction()
+        private async void EditProfileAction()
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditSession")
+                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
             };
 
-            RemoteDesktopSessionViewModel remoteDesktopSessionViewModel = new RemoteDesktopSessionViewModel(instance =>
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                RemoteDesktopSessionManager.RemoveSession(SelectedSession);
+                ProfileManager.RemoveProfile(SelectedProfile);
 
-                RemoteDesktopSessionInfo remoteDesktopSessionInfo = new RemoteDesktopSessionInfo
-                {
-                    Name = instance.Name,
-                    Host = instance.Host,
-                    CredentialID = instance.CredentialID,
-                    Group = instance.Group,
-                    Tags = instance.Tags
-                };
-
-                RemoteDesktopSessionManager.AddSession(remoteDesktopSessionInfo);
+                ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            }, RemoteDesktopSessionManager.GetSessionGroups(), SelectedSession);
+            }, ProfileManager.GetGroups(), SelectedProfile);
 
-            customDialog.Content = new RemoteDesktopSessionDialog
+            customDialog.Content = new ProfileDialog
             {
-                DataContext = remoteDesktopSessionViewModel
+                DataContext = profileViewModel
             };
 
             ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand CopyAsSessionCommand
+        public ICommand CopyAsProfileCommand
         {
-            get { return new RelayCommand(p => CopyAsSessionAction()); }
+            get { return new RelayCommand(p => CopyAsProfileAction()); }
         }
 
-        private async void CopyAsSessionAction()
+        private async void CopyAsProfileAction()
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_CopySession")
+                Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
             };
 
-            RemoteDesktopSessionViewModel remoteDesktopSessionViewModel = new RemoteDesktopSessionViewModel(instance =>
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                RemoteDesktopSessionInfo remoteDesktopSessionInfo = new RemoteDesktopSessionInfo
-                {
-                    Name = instance.Name,
-                    Host = instance.Host,
-                    Group = instance.Group,
-                    Tags = instance.Tags
-                };
-
-                RemoteDesktopSessionManager.AddSession(remoteDesktopSessionInfo);
+                ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            }, RemoteDesktopSessionManager.GetSessionGroups(), SelectedSession);
+            }, ProfileManager.GetGroups(), SelectedProfile);
 
-            customDialog.Content = new RemoteDesktopSessionDialog
+            customDialog.Content = new ProfileDialog
             {
-                DataContext = remoteDesktopSessionViewModel
+                DataContext = profileViewModel
             };
 
             ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand DeleteSessionCommand
+        public ICommand DeleteProfileCommand
         {
-            get { return new RelayCommand(p => DeleteSessionAction()); }
+            get { return new RelayCommand(p => DeleteProfileAction()); }
         }
 
-        private async void DeleteSessionAction()
+        private async void DeleteProfileAction()
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_DeleteSession")
+                Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
             };
 
             ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
@@ -395,12 +359,12 @@ namespace NETworkManager.ViewModels
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                RemoteDesktopSessionManager.RemoveSession(SelectedSession);
+                ProfileManager.RemoveProfile(SelectedProfile);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            }, LocalizationManager.GetStringByKey("String_DeleteSessionMessage"));
+            }, LocalizationManager.GetStringByKey("String_DeleteProfileMessage"));
 
             customDialog.Content = new ConfirmRemoveDialog
             {
@@ -428,9 +392,9 @@ namespace NETworkManager.ViewModels
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                RemoteDesktopSessionManager.RenameGroup(instance.OldGroup, instance.Group);
+                ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
 
-                _remoteDesktopSessions.Refresh();
+                _profiles.Refresh();
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -468,14 +432,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private async void ConnectNewSession(string host = null)
+        private async void Connect(string host = null)
         {
             CustomDialog customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_Connect")
             };
 
-            RemoteDesktopSessionConnectViewModel remoteDesktopSessionConnectViewModel = new RemoteDesktopSessionConnectViewModel(instance =>
+            RemoteDesktopConnectViewModel remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
@@ -483,31 +447,31 @@ namespace NETworkManager.ViewModels
                 // Add host to history
                 AddHostToHistory(instance.Host);
 
-                // Create new remote desktop session info
-                Models.RemoteDesktop.RemoteDesktopSessionInfo remoteDesktopSessionInfo = new Models.RemoteDesktop.RemoteDesktopSessionInfo
+                // Create new remote desktop Profile info
+                Models.RemoteDesktop.RemoteDesktopSessionInfo session = new Models.RemoteDesktop.RemoteDesktopSessionInfo
                 {
                     Hostname = instance.Host
                 };
 
                 if (instance.UseCredentials)
                 {
-                    remoteDesktopSessionInfo.CustomCredentials = true;
+                    session.CustomCredentials = true;
 
                     if (instance.CustomCredentials)
                     {
-                        remoteDesktopSessionInfo.Username = instance.Username;
-                        remoteDesktopSessionInfo.Password = instance.Password;
+                        session.Username = instance.Username;
+                        session.Password = instance.Password;
                     }
                     else
                     {
                         CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)instance.CredentialID);
 
-                        remoteDesktopSessionInfo.Username = credentialInfo.Username;
-                        remoteDesktopSessionInfo.Password = credentialInfo.Password;
+                        session.Username = credentialInfo.Username;
+                        session.Password = credentialInfo.Password;
                     }
                 }
 
-                Connect(remoteDesktopSessionInfo);
+                Connect(session);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -517,23 +481,23 @@ namespace NETworkManager.ViewModels
                 Host = host
             };
 
-            customDialog.Content = new RemoteDesktopSessionConnectDialog
+            customDialog.Content = new RemoteDesktopConnectDialog
             {
-                DataContext = remoteDesktopSessionConnectViewModel
+                DataContext = remoteDesktopConnectViewModel
             };
 
             ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        private async void ConnectSession()
+        private async void ConnectProfile()
         {
-            Models.RemoteDesktop.RemoteDesktopSessionInfo sessionInfo = new Models.RemoteDesktop.RemoteDesktopSessionInfo
+            Models.RemoteDesktop.RemoteDesktopSessionInfo session = new Models.RemoteDesktop.RemoteDesktopSessionInfo
             {
-                Hostname = SelectedSession.Host
+                Hostname = SelectedProfile.RemoteDesktop_Host
             };
 
-            if (SelectedSession.CredentialID != null) // Credentials need to be unlocked first
+            if (SelectedProfile.CredentialID != null) // Credentials need to be unlocked first
             {
                 if (!CredentialManager.Loaded)
                 {
@@ -548,7 +512,7 @@ namespace NETworkManager.ViewModels
 
                         if (CredentialManager.Load(instance.Password))
                         {
-                            CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)SelectedSession.CredentialID);
+                            CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)SelectedProfile.CredentialID);
 
                             if (credentialInfo == null)
                             {
@@ -557,11 +521,11 @@ namespace NETworkManager.ViewModels
                                 return;
                             }
 
-                            sessionInfo.CustomCredentials = true;
-                            sessionInfo.Username = credentialInfo.Username;
-                            sessionInfo.Password = credentialInfo.Password;
+                            session.CustomCredentials = true;
+                            session.Username = credentialInfo.Username;
+                            session.Password = credentialInfo.Password;
 
-                            Connect(sessionInfo, SelectedSession.Name);
+                            Connect(session, SelectedProfile.Name);
                         }
                         else
                         {
@@ -581,7 +545,7 @@ namespace NETworkManager.ViewModels
                 }
                 else // Connect already unlocked
                 {
-                    CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)SelectedSession.CredentialID);
+                    CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)SelectedProfile.CredentialID);
 
                     if (credentialInfo == null)
                     {
@@ -590,55 +554,55 @@ namespace NETworkManager.ViewModels
                         return;
                     }
 
-                    sessionInfo.CustomCredentials = true;
-                    sessionInfo.Username = credentialInfo.Username;
-                    sessionInfo.Password = credentialInfo.Password;
+                    session.CustomCredentials = true;
+                    session.Username = credentialInfo.Username;
+                    session.Password = credentialInfo.Password;
 
-                    Connect(sessionInfo, SelectedSession.Name);
+                    Connect(session, SelectedProfile.Name);
                 }
             }
             else // Connect without credentials
             {
-                Connect(sessionInfo, SelectedSession.Name);
+                Connect(session, SelectedProfile.Name);
             }
         }
 
-        private async void ConnectSessionAs()
+        private async void ConnectProfileAs()
         {
             CustomDialog customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_ConnectAs")
             };
 
-            RemoteDesktopSessionConnectViewModel connectRemoteDesktopSessionViewModel = new RemoteDesktopSessionConnectViewModel(instance =>
+            RemoteDesktopConnectViewModel remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                Models.RemoteDesktop.RemoteDesktopSessionInfo remoteDesktopSessionInfo = new Models.RemoteDesktop.RemoteDesktopSessionInfo
+                Models.RemoteDesktop.RemoteDesktopSessionInfo session = new Models.RemoteDesktop.RemoteDesktopSessionInfo
                 {
                     Hostname = instance.Host
                 };
 
                 if (instance.UseCredentials)
                 {
-                    remoteDesktopSessionInfo.CustomCredentials = true;
+                    session.CustomCredentials = true;
 
                     if (instance.CustomCredentials)
                     {
-                        remoteDesktopSessionInfo.Username = instance.Username;
-                        remoteDesktopSessionInfo.Password = instance.Password;
+                        session.Username = instance.Username;
+                        session.Password = instance.Password;
                     }
                     else
                     {
                         CredentialInfo credentialInfo = CredentialManager.GetCredentialByID((int)instance.CredentialID);
 
-                        remoteDesktopSessionInfo.Username = credentialInfo.Username;
-                        remoteDesktopSessionInfo.Password = credentialInfo.Password;
+                        session.Username = credentialInfo.Username;
+                        session.Password = credentialInfo.Password;
                     }
                 }
 
-                Connect(remoteDesktopSessionInfo, instance.Name);
+                Connect(session, instance.Name);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -646,74 +610,56 @@ namespace NETworkManager.ViewModels
             }, true)
             {
                 // Set name, hostname
-                Name = SelectedSession.Name,
-                Host = SelectedSession.Host,
+                Name = SelectedProfile.Name,
+                Host = SelectedProfile.RemoteDesktop_Host,
 
                 // Request credentials
                 UseCredentials = true
             };
 
-            customDialog.Content = new RemoteDesktopSessionConnectDialog
+            customDialog.Content = new RemoteDesktopConnectDialog
             {
-                DataContext = connectRemoteDesktopSessionViewModel
+                DataContext = remoteDesktopConnectViewModel
             };
 
             ConfigurationManager.Current.FixAirspace = true;
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        private void Connect(Models.RemoteDesktop.RemoteDesktopSessionInfo sessionInfo, string Header = null)
+        private void Connect(Models.RemoteDesktop.RemoteDesktopSessionInfo ProfileInfo, string Header = null)
         {
             // Add global settings...
-            sessionInfo.AdjustScreenAutomatically = SettingsManager.Current.RemoteDesktop_AdjustScreenAutomatically;
-            sessionInfo.UseCurrentViewSize = SettingsManager.Current.RemoteDesktop_UseCurrentViewSize;
+            ProfileInfo.AdjustScreenAutomatically = SettingsManager.Current.RemoteDesktop_AdjustScreenAutomatically;
+            ProfileInfo.UseCurrentViewSize = SettingsManager.Current.RemoteDesktop_UseCurrentViewSize;
 
             if (SettingsManager.Current.RemoteDesktop_UseCustomScreenSize)
             {
-                sessionInfo.DesktopWidth = SettingsManager.Current.RemoteDesktop_CustomScreenWidth;
-                sessionInfo.DesktopHeight = SettingsManager.Current.RemoteDesktop_CustomScreenHeight;
+                ProfileInfo.DesktopWidth = SettingsManager.Current.RemoteDesktop_CustomScreenWidth;
+                ProfileInfo.DesktopHeight = SettingsManager.Current.RemoteDesktop_CustomScreenHeight;
             }
             else
             {
-                sessionInfo.DesktopWidth = SettingsManager.Current.RemoteDesktop_ScreenWidth;
-                sessionInfo.DesktopHeight = SettingsManager.Current.RemoteDesktop_ScreenHeight;
+                ProfileInfo.DesktopWidth = SettingsManager.Current.RemoteDesktop_ScreenWidth;
+                ProfileInfo.DesktopHeight = SettingsManager.Current.RemoteDesktop_ScreenHeight;
             }
 
-            sessionInfo.ColorDepth = SettingsManager.Current.RemoteDesktop_ColorDepth;
-            sessionInfo.Port = SettingsManager.Current.RemoteDesktop_Port;
-            sessionInfo.EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport;
-            sessionInfo.AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;
-            sessionInfo.RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;
-            sessionInfo.RedirectDevices = SettingsManager.Current.RemoteDesktop_RedirectDevices;
-            sessionInfo.RedirectDrives = SettingsManager.Current.RemoteDesktop_RedirectDrives;
-            sessionInfo.RedirectPorts = SettingsManager.Current.RemoteDesktop_RedirectPorts;
-            sessionInfo.RedirectSmartCards = SettingsManager.Current.RemoteDesktop_RedirectSmartCards;
+            ProfileInfo.ColorDepth = SettingsManager.Current.RemoteDesktop_ColorDepth;
+            ProfileInfo.Port = SettingsManager.Current.RemoteDesktop_Port;
+            ProfileInfo.EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport;
+            ProfileInfo.AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;
+            ProfileInfo.RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;
+            ProfileInfo.RedirectDevices = SettingsManager.Current.RemoteDesktop_RedirectDevices;
+            ProfileInfo.RedirectDrives = SettingsManager.Current.RemoteDesktop_RedirectDrives;
+            ProfileInfo.RedirectPorts = SettingsManager.Current.RemoteDesktop_RedirectPorts;
+            ProfileInfo.RedirectSmartCards = SettingsManager.Current.RemoteDesktop_RedirectSmartCards;
 
-            TabItems.Add(new DragablzTabItem(Header ?? sessionInfo.Hostname, new RemoteDesktopControl(sessionInfo)));
+            TabItems.Add(new DragablzTabItem(Header ?? ProfileInfo.Hostname, new RemoteDesktopControl(ProfileInfo)));
             SelectedTabIndex = TabItems.Count - 1;
         }
 
         public void AddTab(string host)
         {
-            ConnectNewSession(host);
-        }
-
-        private void RemoteDesktopSession_Search(object sender, FilterEventArgs e)
-        {
-            if (string.IsNullOrEmpty(Search))
-            {
-                e.Accepted = true;
-                return;
-            }
-
-            RemoteDesktopSessionInfo info = e.Item as RemoteDesktopSessionInfo;
-
-            string search = Search.Trim();
-
-            if (info.Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0)
-                e.Accepted = true;
-            else
-                e.Accepted = false;
+            Connect(host);
         }
 
         // Modify history list
@@ -729,34 +675,34 @@ namespace NETworkManager.ViewModels
             list.ForEach(x => SettingsManager.Current.RemoteDesktop_HostHistory.Add(x));
         }
 
-        private void ResizeSession(bool dueToChangedSize)
+        private void ResizeProfile(bool dueToChangedSize)
         {
-            _canSessionWidthChange = false;
+            _canProfileWidthChange = false;
 
             if (dueToChangedSize)
             {
-                if (SessionWidth.Value == 40)
-                    ExpandSessionView = false;
+                if (ProfileWidth.Value == 40)
+                    ExpandProfileView = false;
                 else
-                    ExpandSessionView = true;
+                    ExpandProfileView = true;
             }
             else
             {
-                if (ExpandSessionView)
+                if (ExpandProfileView)
                 {
-                    if (_tempSessionWidth == 40)
-                        SessionWidth = new GridLength(250);
+                    if (_tempProfileWidth == 40)
+                        ProfileWidth = new GridLength(250);
                     else
-                        SessionWidth = new GridLength(_tempSessionWidth);
+                        ProfileWidth = new GridLength(_tempProfileWidth);
                 }
                 else
                 {
-                    _tempSessionWidth = SessionWidth.Value;
-                    SessionWidth = new GridLength(40);
+                    _tempProfileWidth = ProfileWidth.Value;
+                    ProfileWidth = new GridLength(40);
                 }
             }
 
-            _canSessionWidthChange = true;
+            _canProfileWidthChange = true;
         }
         #endregion
     }

@@ -69,11 +69,6 @@
     <system:String x:Key="String_Header_Subnet">Subnet</system:String>
     <system:String x:Key="String_Header_Calculator">Calculator</system:String>
     <system:String x:Key="String_Header_Connect">Connect</system:String>
-    <system:String x:Key="String_Header_AddSession">Add session</system:String>
-    <system:String x:Key="String_Header_EditSession">Edit session</system:String>
-    <system:String x:Key="String_Header_CopySession">Copy session</system:String>
-    <system:String x:Key="String_Header_DeleteSession">Delete session</system:String>
-    <system:String x:Key="String_Header_Sessions">Sessions</system:String>
     <system:String x:Key="String_Header_RemoteDesktop">Remote Desktop</system:String>
     <system:String x:Key="String_Header_Disconnected">Disconnected</system:String>
     <system:String x:Key="String_Header_LocalDevicesAndResources">Local devices and resources</system:String>
@@ -108,7 +103,9 @@
     <system:String x:Key="String_Header_Resources">Resources</system:String>
     <system:String x:Key="String_Header_Subnetting">Subnetting</system:String>
     <system:String x:Key="String_Header_Supernetting">Supernetting</system:String>
-    
+    <system:String x:Key="String_Header_NetworkInterface">Network Interface</system:String>
+    <system:String x:Key="String_Header_General">General</system:String>
+
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">A powerful tool for managing networks and troubleshoot network problems!</system:String>
@@ -201,13 +198,6 @@
     <system:String x:Key="String_UntrayBringWindowToFront">Untray / Bring window to front</system:String>
     <system:String x:Key="String_MaximumNumberOfHopsReached">Maximum number ({0}) of hops/router reached!</system:String>
     <system:String x:Key="String_CanceledByUser">The operation has been canceled by the user!</system:String>
-    <system:String x:Key="String_ApplicationSettings">Application settings</system:String>
-    <system:String x:Key="String_NetworkInterfaceProfiles">Network interface profiles</system:String>
-    <system:String x:Key="String_PingProfiles">Ping profiles</system:String>
-    <system:String x:Key="String_TracerouteProfiles">Traceroute profiles</system:String>
-    <system:String x:Key="String_PortScannerProfiles">Port Scanner profiles</system:String>
-    <system:String x:Key="String_WakeOnLANClients">Wake on LAN clients</system:String>
-    <system:String x:Key="String_RemoteDesktopSessions">Remote Desktop sessions</system:String>
     <system:String x:Key="String_SelectedSettingsAreReset">The selected settings are reset.</system:String>
     <system:String x:Key="String_TheSettingsLocationIsNotAffected">The settings location is not affected</system:String>
     <system:String x:Key="String_ApplicationIsRestartedAfterwards">Application is restarted afterwards</system:String>
@@ -258,7 +248,6 @@
     <system:String x:Key="String_Open">Open</system:String>
     <system:String x:Key="String_EnterNameForProfile">Enter a name under which you want to save the profile.</system:String>
     <system:String x:Key="String_DeleteProfileMessage">The selected profile will be deleted permanently.</system:String>
-    <system:String x:Key="String_DeleteSessionMessage">The selected session will be deleted permanently.</system:String>
     <system:String x:Key="String_Backup">Backup</system:String>
     <system:String x:Key="String_MultipleInstances">Multiple instances</system:String>
     <system:String x:Key="String_ConnectTheNetworkCardToConfigureIt">Connect the network card to a network to configure it!</system:String>
@@ -267,19 +256,11 @@
     <system:String x:Key="String_AddDNSSuffixToHostname">Add DNS suffix (primary) to hostname</system:String>
     <system:String x:Key="String_UseCustomDNSSuffix">Use custom DNS suffix</system:String>
     <system:String x:Key="String_SettingsSuccessfullyImported">Settings successfully imported!</system:String>
-    <system:String x:Key="String_IPScannerProfilesReloaded">IP Scanner profiles reloaded</system:String>
-    <system:String x:Key="String_PingProfilesReloaded">Ping profiles reloaded</system:String>
-    <system:String x:Key="String_TracerouteProfilesReloaded">Traceroute profiles reloaded</system:String>
-    <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Network interface profiles reloaded</system:String>
-    <system:String x:Key="String_PortScannerProfilesReloaded">Port Scanner profiles reloaded</system:String>
-    <system:String x:Key="String_RemoteDesktopSessionsReloaded">Remote Desktop sessions reloaded</system:String>
-    <system:String x:Key="String_PuTTYSessionsReloaded">PuTTY sessions reloaded</system:String>
-    <system:String x:Key="String_WakeOnLANClientsReloaded">Wake on LAN clients reloaded</system:String>
+    <system:String x:Key="String_ProfilesReloaded">Profiles reloaded</system:String>
     <system:String x:Key="String_ComingSoon">Coming Soon!</system:String>
     <system:String x:Key="String_Override">override</system:String>
     <system:String x:Key="String_Add">add</system:String>
     <system:String x:Key="String_NoProfilesFoundCreateOne">No profiles found! Create one...</system:String>
-    <system:String x:Key="String_NoSessionsFoundCreateOne">No sessions found! Create one...</system:String>
     <system:String x:Key="String_NoClientsFoundCreateOne">No clients found! Create one...</system:String>
     <system:String x:Key="String_DNSServer">DNS Server</system:String>
     <system:String x:Key="String_Questions">Questions</system:String>
@@ -340,7 +321,7 @@
     <system:String x:Key="String_AuthenticationLevel">Authentication level</system:String>
     <system:String x:Key="String_RemainingTime">Remaining time</system:String>
     <system:String x:Key="String_UserInterfaceLocked">User interface locked!</system:String>
-    <system:String x:Key="String_CredentialNotFoundMessage">Edit the session and select a different credential or delete the existing one</system:String>
+    <system:String x:Key="String_CredentialNotFoundMessage">Edit the Profile and select a different credential or delete the existing one</system:String>
     <system:String x:Key="String_Credentials">Credentials</system:String>
     <system:String x:Key="String_Custom">Custom</system:String>
     <system:String x:Key="String_UseCredentials">Use credentials</system:String>
@@ -379,7 +360,6 @@
     <system:String x:Key="String_ErrorInResponseCheckIfYouHaveWritePermissions">Error in response! Check if you have write permissions.</system:String>
     <system:String x:Key="String_ShowScanResultForAllIPAddresses">Show scan result for all IP addresses</system:String>
     <system:String x:Key="String_ConfigureThePathToPuTTYInTheSettings">Configure the path to PuTTY in the settings...</system:String>
-    <system:String x:Key="String_PuTTYSessions">PuTTY sessions</system:String>
     <system:String x:Key="String_SSH">SSH</system:String>
     <system:String x:Key="String_Telnet">Telnet</system:String>
     <system:String x:Key="String_Rlogin">Rlogin</system:String>
@@ -396,7 +376,7 @@
     <system:String x:Key="String_AdditionalCommandLine">Additional command line</system:String>
     <system:String x:Key="String_PuTTYProcessHasEnded">PuTTY process has ended!</system:String>
     <system:String x:Key="String_EditGroup">Edit group</system:String>
-    <system:String x:Key="String_NewSessionDots">New session...</system:String>
+    <system:String x:Key="String_NewProfileDots">New Profile...</system:String>
     <system:String x:Key="String_Gitter">Gitter</system:String>
     <system:String x:Key="String_GitHub">GitHub</system:String>
     <system:String x:Key="String_OverwriteSettingsInTheDestinationFolder">Overwrite settings in the destination folder?\n\nIf you click "Move &amp; Restart", the remaining files will be copied and the application will be restarted with the new settings!</system:String>
@@ -430,14 +410,16 @@
     <system:String x:Key="String_AutomaticallyUpdateEvery">Automatically update every</system:String>
     <system:String x:Key="String_ClearFilter">Clear filter</system:String>
     <system:String x:Key="String_AddProfileDots">Add profile...</system:String>
-    <system:String x:Key="String_AddSessionDots">Add session...</system:String>
     <system:String x:Key="String_AddClientDots">Add client...</system:String>
     <system:String x:Key="String_ShowStatistics">Show statistics</system:String>
     <system:String x:Key="String_Subnet1">Subnet 1</system:String>
     <system:String x:Key="String_Subnet2">Subnet 2</system:String>
     <system:String x:Key="String_EnterSubnetsToCreateASupernet">Enter subnets to create a supernet...</system:String>
     <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Enter subnet and a new subnet mask to create subnets...</system:String>
-        
+    <system:String x:Key="String_Enable">Enable</system:String>
+    <system:String x:Key="String_SelectAtLeastOneNodeWhereTheProfileShouldAppear">Select at least one node, where the profile should appear! Click on a tab and select enable...</system:String>
+    <system:String x:Key="String_Profiles">Profiles</system:String>
+    
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">How to create a custom theme and accent?</system:String>
@@ -445,7 +427,7 @@
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Displays this dialog.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Reset all settings.</system:String>
-    <system:String x:Key="String_HelpMessage_Tags">Tags help you organize profiles/sessions by topics/projects. Multiple tags can be used with ";" be separated. Search by tags with "tag=xxx".</system:String>
+    <system:String x:Key="String_HelpMessage_Tags">Tags help you organize profiles/Profiles by topics/projects. Multiple tags can be used with ";" be separated. Search by tags with "tag=xxx".</system:String>
     <system:String x:Key="String_HelpMessage_Credentials">Decrypt and load your credentials to select them.</system:String>
     <system:String x:Key="String_HelpMessage_PasswordNotDisplayedCanBeOverwritten">The password is not displayed when editing, but can be overwritten.</system:String>
     <system:String x:Key="String_HelpMessage_RDPAuthenticationLevel">[0] If server authentication fails, connect to the computer without warning.\n[1] If server authentication fails, do not establish a connection.\n[2] If server authentication fails, show a warning and allow me to connect or refuse the connection.\n[3] No authentication requirement is specified.</system:String>
@@ -478,7 +460,7 @@
     <system:String x:Key="String_Button_AddProfile">Add profile...</system:String>
     <system:String x:Key="String_Button_NetworkConnections">Network Connections...</system:String>
     <system:String x:Key="String_Button_Connect">Connect</system:String>
-    <system:String x:Key="String_Button_AddSessions">Add session...</system:String>
+    <system:String x:Key="String_Button_AddProfiles">Add Profile...</system:String>
     <system:String x:Key="String_Button_Save">Save</system:String>
     <system:String x:Key="String_Button_Refresh">Refresh</system:String>
     <system:String x:Key="String_Button_Reconnect">Reconnect</system:String>
@@ -559,7 +541,7 @@
     <system:String x:Key="String_Watermark_ExampleTags">server; dmz</system:String>
     <system:String x:Key="String_Watermark_ExampleUsername">Admin</system:String>
     <system:String x:Key="String_Watermark_ExampleCredentialName">Windows-Testuser</system:String>
-    <system:String x:Key="String_Watermark_ExampleRemoteDesktopSessionName">Webserver</system:String>
+    <system:String x:Key="String_Watermark_ExampleRemoteDesktopProfileName">Webserver</system:String>
     <system:String x:Key="String_Watermark_ExampleSuffix">fritz.box</system:String>
     <system:String x:Key="String_Watermark_NotChanged">(not changed)</system:String>
     <system:String x:Key="String_Watermark_ExampleSNMPOID">1.3.6.1.2.1.1</system:String>
