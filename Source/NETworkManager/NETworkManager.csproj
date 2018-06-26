@@ -466,6 +466,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Localization\es-ES.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Localization\ru-RU.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -576,6 +580,7 @@
     <Resource Include="Resources\Localization\Flags\de-DE.png" />
     <Resource Include="Resources\Localization\Flags\en-US.png" />
     <Resource Include="Resources\Localization\Flags\ru-RU.png" />
+    <Resource Include="Resources\Localization\Flags\es-ES.png" />
     <Content Include="Themes\Black.Accent.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

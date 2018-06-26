@@ -107,7 +107,7 @@
     <system:String x:Key="String_Header_General">General</system:String>
     <system:String x:Key="String_Header_ResolvePTR">Resolver PTR</system:String>
 
-    <!-- Normal strings -->    
+    <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">¡Una potente herramienta para gestionar redes y solucionar problemas de red!</system:String>
     <system:String x:Key="String_Settings">Configuración</system:String>
@@ -150,7 +150,7 @@
     <system:String x:Key="String_ObtainAnIPAddressAutomatically">Obtener una dirección IP automáticamente</system:String>
     <system:String x:Key="String_UseTheFollowingIPAddress">Usar la siguiente dirección IP:</system:String>
     <system:String x:Key="String_ObtainDNSServerAddressAutomatically">Obtener la dirección del servidor DNS automáticamente</system:String>
-    <system:String x:Key="String_UseTheFollowingDNSServerAddresses">Usar las siguientes direcciones de servidor DNS:</system:String>    
+    <system:String x:Key="String_UseTheFollowingDNSServerAddresses">Usar las siguientes direcciones de servidor DNS:</system:String>
     <system:String x:Key="String_PrimaryDNSServer">Servidor DNS primario</system:String>
     <system:String x:Key="String_SecondaryDNSServer">Servidor DNS secundario</system:String>
     <system:String x:Key="String_Yes">Sí</system:String>
@@ -433,10 +433,10 @@
     <system:String x:Key="String_HelpMessage_Credentials">Desencriptar y cargar tus credenciales para seleccionarlas.</system:String>
     <system:String x:Key="String_HelpMessage_PasswordNotDisplayedCanBeOverwritten">La contraseña no se muestra durante la edición, pero se puede sobrescribir.</system:String>
     <system:String x:Key="String_HelpMessage_RDPAuthenticationLevel">[0] Si falla la autenticación del servidor, conéctese al equipo sin previo aviso.\n[1] Si la autenticación del servidor falla, no establezca una conexión.\n[2] Si la autenticación del servidor falla, muestre una advertencia y permítame conectarme o rechazar la conexión.\n[3] No se especifica ningún requisito de autenticación.</system:String>
-    
+
     <!-- Warn message -->
     <system:String x:Key="String_WarningMessage_SettingsGeneralAppearanceTransparency">Algunas tarjetas gráficas/controladores tienen problemas para maximizar la aplicación cuando la transparencia está habilitada. ¡La función debe estar deshabilitada para usar "Escritorio remoto"! Habilitar o deshabilitar esta característica requiere un reinicio de la aplicación.</system:String>
-    
+
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Cambiar</system:String>
     <system:String x:Key="String_Button_Default">Predeterminado</system:String>
@@ -494,7 +494,7 @@
     <system:String x:Key="String_ContextMenu_Cut">Cortar</system:String>
     <system:String x:Key="String_ContextMenu_Copy">Copiar</system:String>
     <system:String x:Key="String_ContextMenu_Paste">Pegar</system:String>
-    
+
     <!-- ToggleSwitch -->
     <system:String x:Key="String_ToggleSwitch_On">Encendido</system:String>
     <system:String x:Key="String_ToggleSwitch_Off">Apagado</system:String>
@@ -502,7 +502,7 @@
     <!-- RadioButton -->
     <system:String x:Key="String_RadioButton_Everything">Todo</system:String>
     <system:String x:Key="String_RadioButton_Custom">Personalizado:</system:String>
-    
+
     <!-- Watermark -->
     <system:String x:Key="String_Watermark_Search">Buscar...</system:String>
     <system:String x:Key="String_Watermark_EnterLocation">Ingresar ubicación...</system:String>
@@ -554,7 +554,7 @@
     <system:String x:Key="String_Watermark_ExampleSerialLine">COM5</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4SubnetmaskIPv6CIDR">255.255.255.0 o /64</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4IPv6Subnet2">192.168.178.134/255.255.255.0 o 2001:0db9::/64</system:String>
-    
+
     <!-- ShowProgress -->
     <system:String x:Key="String_Progress_SetStaticIPAddress">Establecer la dirección IP estática y puerta de enlace...</system:String>
     <system:String x:Key="String_Progress_SetDynamicIPAddress">Establecer dirección IP dinámica...</system:String>
@@ -562,7 +562,7 @@
     <system:String x:Key="String_Progesss_SetDynamicDNSServer">Establecer servidor DNS dinámico...</system:String>
     <system:String x:Key="String_Progress_RenewDHCPLease">Renovar el contrato DHCP...</system:String>
     <system:String x:Key="String_Progress_FixGatewayAfterDHCPEnabled">Corregir la puerta de enlace después de habilitar DHCP...</system:String>
-    
+
     <!-- Validate (User Input in GUI) -->
     <system:String x:Key="String_ValidationError_FieldEmpty">¡El campo no puede estar vacío!</system:String>
     <system:String x:Key="String_ValidationError_EnterValidMACAddress">¡Ingrese una dirección MAC válida, como 00:F1:23:AB:F2:35!</system:String>
@@ -586,7 +586,7 @@
     <system:String x:Key="String_ValidationError_KeyMustHave8CharactersOrMore">¡La clave debe tener 8 caracteres o más!</system:String>
     <system:String x:Key="String_ValidationError_EnterValidBaud">Ingrese un baud válido.</system:String>
     <system:String x:Key="String_ValidationError_SpacesAreNotAllowed">¡Los espacios no están permitidos!</system:String>
-    
+
     <!-- ApplicationView.Name -->
     <system:String x:Key="String_ApplicationName_IPScanner">Escáner de IP</system:String>
     <system:String x:Key="String_ApplicationName_NetworkInterface">Interfaz de red</system:String>
@@ -604,7 +604,7 @@
     <system:String x:Key="String_ApplicationName_Lookup">Búsqueda</system:String>
     <system:String x:Key="String_ApplicationName_Connections">Conexiones</system:String>
     <system:String x:Key="String_ApplicationName_Listeners">Listeners</system:String>
-    
+
     <!-- SettingsView.Name -->
     <system:String x:Key="String_SettingsName_General">General</system:String>
     <system:String x:Key="String_SettingsName_Window">Ventana</system:String>
@@ -625,7 +625,7 @@
     <system:String x:Key="String_AppTheme_BaseDark">Oscuro</system:String>
     <system:String x:Key="String_AppTheme_Black">Negro</system:String>
     <system:String x:Key="String_AppTheme_White">Blanco</system:String>
-    
+
     <!-- Accent.Name -->
     <system:String x:Key="String_Accent_Red">Rojo</system:String>
     <system:String x:Key="String_Accent_Green">Verde</system:String>
@@ -651,7 +651,7 @@
     <system:String x:Key="String_Accent_Taupe">Gris pardo</system:String>
     <system:String x:Key="String_Accent_Sienna">Siena</system:String>
     <system:String x:Key="String_Accent_Black">Negro</system:String>
-    
+
     <!-- IPStatus -->
     <system:String x:Key="String_IPStatus_Success">Éxito</system:String>
     <system:String x:Key="String_IPStatus_DestinationHostUnreachable">Host de destino inaccesible.</system:String>
@@ -659,7 +659,7 @@
     <system:String x:Key="String_IPStatus_DestinationPortUnreachable">Puerto de destino inaccesible.</system:String>
     <system:String x:Key="String_IPStatus_TimedOut">Tiempo de espera agotado.</system:String>
     <system:String x:Key="String_IPStatus_TtlExpired">TTL expiró en tránsito.</system:String>
-    
+
     <!-- TcpStatus -->
     <system:String x:Key="String_TcpState_Closed">Cerrado</system:String>
     <system:String x:Key="String_TcpState_CloseWait">CloseWait</system:String>
@@ -674,16 +674,16 @@
     <system:String x:Key="String_TcpState_SynSent">SynSent</system:String>
     <system:String x:Key="String_TcpState_TimeWait">TimeWait</system:String>
     <system:String x:Key="String_TcpState_Unknown">Desconocido</system:String>
-    
+
     <!-- TimeUnit -->
     <system:String x:Key="String_TimeUnit_Second">Segundo(s)</system:String>
     <system:String x:Key="String_TimeUnit_Minute">Minuto(s)</system:String>
     <system:String x:Key="String_TimeUnit_Hour">Hora(s)</system:String>
-    
+
     <!-- PortStatus -->
     <system:String x:Key="String_PortStatus_Closed">Cerrado</system:String>
     <system:String x:Key="String_PortStatus_Open">Abierto</system:String>
-    
+
     <!-- Remote desktop disconnect reason -->
     <system:String x:Key="String_RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE">Socket cerrado.</system:String>
     <system:String x:Key="String_RemoteDesktopDisconnectReason_ByServer">Desconexión remota por servidor.</system:String>
