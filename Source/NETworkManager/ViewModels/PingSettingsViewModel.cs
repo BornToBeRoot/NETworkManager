@@ -157,7 +157,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
+        
         private bool _showStatistics;
         public bool ShowStatistics
         {

@@ -25,5 +25,10 @@ namespace NETworkManager.Views
         {
             viewModel.CheckCredentialsLoaded();
         }
+
+        private void DataGridRow_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            viewModel.Edit();
+        }
     }
 }

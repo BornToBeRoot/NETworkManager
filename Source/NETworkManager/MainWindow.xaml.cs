@@ -385,11 +385,11 @@ namespace NETworkManager
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 // Fix airspace issues
-                ConfigurationManager.Current.FixAirspace = true;
+                ConfigurationManager.Current.IsDialogOpen = true;
 
                 MessageDialogResult result = await this.ShowMessageAsync(LocalizationManager.GetStringByKey("String_Header_Confirm"), LocalizationManager.GetStringByKey("String_ConfirmCloseQuesiton"), MessageDialogStyle.AffirmativeAndNegative, settings);
 
-                ConfigurationManager.Current.FixAirspace = false;
+                ConfigurationManager.Current.IsDialogOpen = false;
 
                 if (result == MessageDialogResult.Affirmative)
                 {
@@ -651,7 +651,7 @@ namespace NETworkManager
                 settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-                ConfigurationManager.Current.FixAirspace = true;
+                ConfigurationManager.Current.IsDialogOpen = true;
 
                 if (await this.ShowMessageAsync(LocalizationManager.GetStringByKey("String_RestartRequired"), LocalizationManager.GetStringByKey("String_RestartRequiredAfterSettingsChanged"), MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
                 {
@@ -659,7 +659,7 @@ namespace NETworkManager
                     return;
                 }
 
-                ConfigurationManager.Current.FixAirspace = false;
+                ConfigurationManager.Current.IsDialogOpen = false;
             }
 
             // Change the transparency

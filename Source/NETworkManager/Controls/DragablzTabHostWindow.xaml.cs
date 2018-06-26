@@ -1,6 +1,5 @@
 ﻿using Dragablz;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Settings;
 using NETworkManager.Views;
 using System.ComponentModel;
@@ -51,10 +50,16 @@ namespace NETworkManager.Controls
             InitializeComponent();
             DataContext = this;
 
+            // Transparency
+            if (SettingsManager.Current.Appearance_EnableTransparency)
+            {
+                AllowsTransparency = true;
+                Opacity = SettingsManager.Current.Appearance_Opacity;
+            }
+
             _applicationName = applicationName;
 
             InterTabClient = new DragablzInterTabClient(applicationName);
-
 
             InterTabController.Partition = applicationName.ToString();
 

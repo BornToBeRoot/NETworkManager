@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -43,6 +44,21 @@ namespace NETworkManager.Models.Network
         {
             Task.Run(() =>
             {
+                string hostname = pingOptions.Hostname;
+
+                // Try to resolve PTR
+                if (string.IsNullOrEmpty(hostname))
+                {
+                    try
+                    {
+                        Task.Run(() =>
+                        {
+                            hostname = Dns.GetHostEntryAsync(ipAddress).Result.HostName;
+                        });
+                    }
+                    catch (SocketException) { }
+                }
+
                 int pingTotal = 0;
                 int errorCount = 0;
 
@@ -67,22 +83,21 @@ namespace NETworkManager.Models.Network
                             pingReply = ping.Send(ipAddress, pingOptions.Timeout, pingOptions.Buffer, options);
 
                             // Reset the error count (if no exception was thrown)
-                            errorCount = 0;  
+                            errorCount = 0;
 
                             if (pingReply.Status == IPStatus.Success)
                             {
-                                
                                 if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
-                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, pingReply.Buffer.Count(), pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status));
+                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, hostname, pingReply.Buffer.Count(), pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status));
                                 else
-                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, pingReply.Buffer.Count(), pingReply.RoundtripTime, pingReply.Status));
+                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, hostname, pingReply.Buffer.Count(), pingReply.RoundtripTime, pingReply.Status));
                             }
                             else
                             {
                                 if (pingReply.Address == null)
-                                    OnPingReceived(new PingReceivedArgs(timestamp, ipAddress, pingReply.Status));
+                                    OnPingReceived(new PingReceivedArgs(timestamp, ipAddress, hostname, pingReply.Status));
                                 else
-                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, pingReply.Status));
+                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, hostname, pingReply.Status));
                             }
 
                         }

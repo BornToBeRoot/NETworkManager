@@ -293,7 +293,7 @@ namespace NETworkManager.ViewModels
 
             // Detect if settings have changed...
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-            
+
             _isLoading = false;
         }
 
@@ -364,12 +364,12 @@ namespace NETworkManager.ViewModels
             }
 
             // Try to parse the string into an IP-Address
-            IPAddress.TryParse(Host, out IPAddress ipAddress);
+            bool hostIsIP = IPAddress.TryParse(Host, out IPAddress ipAddress);
 
             try
             {
                 // Try to resolve the hostname
-                if (ipAddress == null)
+                if (!hostIsIP)
                 {
                     IPHostEntry ipHostEntrys = await Dns.GetHostEntryAsync(Host);
 
@@ -388,7 +388,7 @@ namespace NETworkManager.ViewModels
                     }
 
                     // Fallback --> If we could not resolve our prefered ip protocol for the hostname
-                    if (ipAddress == null)
+                    if (!hostIsIP)
                     {
                         foreach (IPAddress ip in ipHostEntrys.AddressList)
                         {
@@ -409,7 +409,7 @@ namespace NETworkManager.ViewModels
                 DisplayStatusMessage = true;
 
                 return;
-            }
+            }                                            
 
             // Add the hostname or ip address to the history
             AddHostToHistory(Host);
@@ -424,7 +424,8 @@ namespace NETworkManager.ViewModels
                 TTL = SettingsManager.Current.Ping_TTL,
                 DontFragment = SettingsManager.Current.Ping_DontFragment,
                 WaitTime = SettingsManager.Current.Ping_WaitTime,
-                ExceptionCancelCount = SettingsManager.Current.Ping_ExceptionCancelCount
+                ExceptionCancelCount = SettingsManager.Current.Ping_ExceptionCancelCount,
+                Hostname = hostIsIP ? string.Empty : Host
             };
 
             Ping ping = new Ping();

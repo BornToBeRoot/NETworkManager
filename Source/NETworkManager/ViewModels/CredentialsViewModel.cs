@@ -1,6 +1,5 @@
 ﻿using NETworkManager.Models.Settings;
 using System.Windows.Input;
-using System.Windows;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.IO;
@@ -156,7 +155,7 @@ namespace NETworkManager.ViewModels
             {
                 // If file exists, view to decrypt the file is shown
                 CredentialsFileExists = File.Exists(CredentialManager.GetCredentialsFilePath());
-            
+
                 // IF credentials are loaded, view to add/edit/remove is shown
                 CredentialsLoaded = CredentialManager.Loaded;
             }
@@ -169,7 +168,74 @@ namespace NETworkManager.ViewModels
             get { return new RelayCommand(p => SetMasterPasswordAction()); }
         }
 
-        private async void SetMasterPasswordAction()
+        private void SetMasterPasswordAction()
+        {
+            SetMasterPassword();
+        }
+
+        public ICommand DecryptAndLoadCommand
+        {
+            get { return new RelayCommand(p => DecryptAndLoadAction()); }
+        }
+
+        private void DecryptAndLoadAction()
+        {
+            DecryptAndLoad();
+        }
+
+        public ICommand ChangeMasterPasswordCommand
+        {
+            get { return new RelayCommand(p => ChangeMasterPasswordAction()); }
+        }
+
+        private void ChangeMasterPasswordAction()
+        {
+            ChangeMasterPassword();
+        }
+
+        public ICommand AddCommand
+        {
+            get { return new RelayCommand(p => AddAction()); }
+        }
+
+        private void AddAction()
+        {
+            Add();
+        }
+
+        public ICommand EditCommand
+        {
+            get { return new RelayCommand(p => EditAction()); }
+        }
+
+        private void EditAction()
+        {
+            Edit();
+        }
+
+        public ICommand DeleteCommand
+        {
+            get { return new RelayCommand(p => DeleteAction()); }
+        }
+
+        private void DeleteAction()
+        {
+            Delete();
+        }
+
+        public ICommand LockUnlockCommand
+        {
+            get { return new RelayCommand(p => LockUnlockAction()); }
+        }
+
+        private void LockUnlockAction()
+        {
+            LockUnlock();
+        }
+        #endregion
+
+        #region Methods
+        public async void SetMasterPassword()
         {
             CustomDialog customDialog = new CustomDialog()
             {
@@ -200,12 +266,7 @@ namespace NETworkManager.ViewModels
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand DecryptAndLoadCommand
-        {
-            get { return new RelayCommand(p => DecryptAndLoadAction()); }
-        }
-
-        private async void DecryptAndLoadAction()
+        public async void DecryptAndLoad()
         {
             CustomDialog customDialog = new CustomDialog()
             {
@@ -235,12 +296,7 @@ namespace NETworkManager.ViewModels
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand ChangeMasterPasswordCommand
-        {
-            get { return new RelayCommand(p => ChangeMasterPasswordAction()); }
-        }
-
-        private async void ChangeMasterPasswordAction()
+        public async void ChangeMasterPassword()
         {
             CustomDialog customDialogSetMasterPassword = new CustomDialog()
             {
@@ -266,12 +322,7 @@ namespace NETworkManager.ViewModels
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialogSetMasterPassword);
         }
 
-        public ICommand AddCommand
-        {
-            get { return new RelayCommand(p => AddAction()); }
-        }
-
-        private async void AddAction()
+        public async void Add()
         {
             CustomDialog customDialog = new CustomDialog()
             {
@@ -306,12 +357,7 @@ namespace NETworkManager.ViewModels
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand EditCommand
-        {
-            get { return new RelayCommand(p => EditAction()); }
-        }
-
-        private async void EditAction()
+        public async void Edit()
         {
             CustomDialog customDialog = new CustomDialog()
             {
@@ -348,12 +394,7 @@ namespace NETworkManager.ViewModels
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand DeleteCommand
-        {
-            get { return new RelayCommand(p => DeleteAction()); }
-        }
-
-        private async void DeleteAction()
+        public async void Delete()
         {
             CustomDialog customDialog = new CustomDialog()
             {
@@ -380,12 +421,7 @@ namespace NETworkManager.ViewModels
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand LockUnlockCommand
-        {
-            get { return new RelayCommand(p => LockUnlockAction()); }
-        }
-
-        private async void LockUnlockAction()
+        public async void LockUnlock()
         {
             if (Locked)
             {
@@ -419,9 +455,7 @@ namespace NETworkManager.ViewModels
                 TimerLockUIStop();
             }
         }
-        #endregion
 
-        #region Methods
         private void TimerLockUIStart()
         {
             Locked = false;
