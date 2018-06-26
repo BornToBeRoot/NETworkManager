@@ -105,6 +105,7 @@
     <system:String x:Key="String_Header_Supernetting">Superredes</system:String>
     <system:String x:Key="String_Header_NetworkInterface">Interfaz de red</system:String>
     <system:String x:Key="String_Header_General">General</system:String>
+    <system:String x:Key="String_Header_ResolvePTR">Resolver PTR</system:String>
 
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
