@@ -7,6 +7,7 @@
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
         xmlns:Settings="clr-namespace:NETworkManager.Models.Settings"
+        xmlns:asf="clr-namespace:AirspaceFixer;assembly=AirspaceFixer"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         Dialog:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
@@ -26,38 +27,40 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition MinWidth="40" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="350" />
             </Grid.ColumnDefinitions>
-            <dragablz:TabablzControl Grid.Column="0" Grid.Row="0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
-                <dragablz:TabablzControl.InterTabController>
-                    <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" MoveWindowWithSolitaryTabs="False" x:Name="InterTabController" />
-                </dragablz:TabablzControl.InterTabController>
-                <dragablz:TabablzControl.Resources>
-                    <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">
-                        <Setter Property="HeaderSuffixContent">
-                            <Setter.Value>
-                                <Grid HorizontalAlignment="Right" Width="40" Height="44">
-                                    <Button Style="{StaticResource CleanButton}" Command="{Binding ConnectCommand}" ToolTip="{DynamicResource String_NewTab}" Focusable="False">
-                                        <Rectangle Width="20" Height="20">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
-                                            </Rectangle.OpacityMask>
-                                            <Rectangle.Style>
-                                                <Style TargetType="{x:Type Rectangle}">
-                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Rectangle.Style>
-                                        </Rectangle>
-                                    </Button>
-                                </Grid>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </dragablz:TabablzControl.Resources>
-            </dragablz:TabablzControl>
+            <asf:AirspacePanel Grid.Column="0" Grid.Row="0" FixAirspace="{Binding Source={x:Static Settings:ConfigurationManager.Current}, Path=IsDialogOpen}">
+                <dragablz:TabablzControl ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" Visibility="{Binding Source={x:Static Settings:ConfigurationManager.Current}, Path=IsDialogOpen, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
+                    <dragablz:TabablzControl.InterTabController>
+                        <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" MoveWindowWithSolitaryTabs="False" x:Name="InterTabController" />
+                    </dragablz:TabablzControl.InterTabController>
+                    <dragablz:TabablzControl.Resources>
+                        <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">
+                            <Setter Property="HeaderSuffixContent">
+                                <Setter.Value>
+                                    <Grid HorizontalAlignment="Right" Width="40" Height="44">
+                                        <Button Style="{StaticResource CleanButton}" Command="{Binding ConnectCommand}" ToolTip="{DynamicResource String_NewTab}" Focusable="False">
+                                            <Rectangle Width="20" Height="20">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
+                                                </Rectangle.OpacityMask>
+                                                <Rectangle.Style>
+                                                    <Style TargetType="{x:Type Rectangle}">
+                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Rectangle.Style>
+                                            </Rectangle>
+                                        </Button>
+                                    </Grid>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </dragablz:TabablzControl.Resources>
+                </dragablz:TabablzControl>
+            </asf:AirspacePanel>
             <Grid Grid.Column="0" VerticalAlignment="Center">
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">

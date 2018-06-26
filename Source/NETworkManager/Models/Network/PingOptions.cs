@@ -9,6 +9,7 @@
         public int TTL { get; set; }
         public bool DontFragment { get; set; }
         public int ExceptionCancelCount { get; set; }
+        public string Hostname { get; set; }
 
         public PingOptions()
         {
@@ -24,6 +25,18 @@
             TTL = ttl;
             DontFragment = dontFragment;
             ExceptionCancelCount = exceptionCancelCount;
+        }
+
+        public PingOptions(int attempts, int waitTime, int timeout, byte[] buffer, int ttl, bool dontFragment, int exceptionCancelCount, bool resolvePTR, string hostname)
+        {
+            Attempts = attempts;
+            WaitTime = waitTime;
+            Timeout = timeout;
+            Buffer = buffer;
+            TTL = ttl;
+            DontFragment = dontFragment;
+            ExceptionCancelCount = exceptionCancelCount;
+            Hostname = hostname;
         }
     }
 }

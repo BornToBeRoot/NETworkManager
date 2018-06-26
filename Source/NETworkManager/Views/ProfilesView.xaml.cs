@@ -20,5 +20,10 @@ namespace NETworkManager.Views
             ContextMenu menu = sender as ContextMenu;
             menu.DataContext = viewModel;
         }
+
+        private void DataGridRow_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            viewModel.EditProfile();
+        }
     }
 }

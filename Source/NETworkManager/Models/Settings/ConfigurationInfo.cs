@@ -17,16 +17,16 @@ namespace NETworkManager.Models.Settings
         public string ApplicationFullName { get; set; }
         public string ApplicationName { get; set; }
 
-        private bool _fixAirspace { get; set; }
-        public bool FixAirspace
+        private bool _isDialogOpen { get; set; }
+        public bool IsDialogOpen
         {
-            get { return _fixAirspace; }
+            get { return _isDialogOpen; }
             set
             {
-                if (value == _fixAirspace)
+                if (value == _isDialogOpen)
                     return;
 
-                _fixAirspace = value;
+                _isDialogOpen = value;
                 OnPropertyChanged();
             }
         }

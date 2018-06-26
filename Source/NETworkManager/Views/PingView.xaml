@@ -127,6 +127,7 @@
             <Control:ScrollingDataGrid.Columns>
                 <DataGridTextColumn Header="Timestamp" Binding="{Binding Timestamp}" MinWidth="180" />
                 <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_Bytes}" Binding="{Binding Bytes, Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
                 <DataGridTextColumn Header="{DynamicResource String_Time}" MinWidth="100">
                     <DataGridTextColumn.Binding>

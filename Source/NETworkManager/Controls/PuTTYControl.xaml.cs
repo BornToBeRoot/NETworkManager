@@ -138,11 +138,11 @@ namespace NETworkManager.Controls
                 MetroDialogSettings settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
 
-                ConfigurationManager.Current.FixAirspace = true;
+                ConfigurationManager.Current.IsDialogOpen = true;
 
                 await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, settings);
 
-                ConfigurationManager.Current.FixAirspace = false;
+                ConfigurationManager.Current.IsDialogOpen = false;
             }
         }
 

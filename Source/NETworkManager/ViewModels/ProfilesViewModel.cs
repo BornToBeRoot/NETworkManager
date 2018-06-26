@@ -86,7 +86,54 @@ namespace NETworkManager.ViewModels
             get { return new RelayCommand(p => AddProfileAction()); }
         }
 
-        private async void AddProfileAction()
+        private void AddProfileAction()
+        {
+            AddProfile();
+        }
+
+        public ICommand EditProfileCommand
+        {
+            get { return new RelayCommand(p => EditProfileAction()); }
+        }
+
+        private void EditProfileAction()
+        {
+            EditProfile();
+        }
+
+        public ICommand CopyAsProfileCommand
+        {
+            get { return new RelayCommand(p => CopyAsProfileAction()); }
+        }
+
+        private void CopyAsProfileAction()
+        {
+            CopyAsProfile();
+        }
+
+        public ICommand DeleteProfileCommand
+        {
+            get { return new RelayCommand(p => DeleteProfileAction()); }
+        }
+
+        private void DeleteProfileAction()
+        {
+            DeleteProfile();
+        }
+
+        public ICommand EditGroupCommand
+        {
+            get { return new RelayCommand(p => EditGroupAction(p)); }
+        }
+
+        private void EditGroupAction(object group)
+        {
+            EditGroup(group);
+        }
+        #endregion
+
+        #region Methods
+        public async void AddProfile()
         {
             CustomDialog customDialog = new CustomDialog()
             {
@@ -111,44 +158,7 @@ namespace NETworkManager.ViewModels
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand EditProfileCommand
-        {
-            get { return new RelayCommand(p => EditProfileAction()); }
-        }
-
-        private async void EditProfileAction()
-        {
-            CustomDialog customDialog = new CustomDialog()
-            {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")                
-            };
-
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.RemoveProfile(SelectedProfile);
-
-                ProfileManager.AddProfile(instance);
-            }, instance =>
-            {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), SelectedProfile);
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand CopyAsProfileCommand
-        {
-            get { return new RelayCommand(p => CopyAsProfileAction()); }
-        }
-
-        private async void CopyAsProfileAction()
+        public async void CopyAsProfile()
         {
             CustomDialog customDialog = new CustomDialog()
             {
@@ -173,12 +183,34 @@ namespace NETworkManager.ViewModels
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand DeleteProfileCommand
+        public async void EditProfile()
         {
-            get { return new RelayCommand(p => DeleteProfileAction()); }
+            CustomDialog customDialog = new CustomDialog()
+            {
+                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
+            };
+
+            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                ProfileManager.RemoveProfile(SelectedProfile);
+
+                ProfileManager.AddProfile(instance);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, ProfileManager.GetGroups(), SelectedProfile);
+
+            customDialog.Content = new ProfileDialog
+            {
+                DataContext = profileViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        private async void DeleteProfileAction()
+        public async void DeleteProfile()
         {
             CustomDialog customDialog = new CustomDialog()
             {
@@ -203,12 +235,7 @@ namespace NETworkManager.ViewModels
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand EditGroupCommand
-        {
-            get { return new RelayCommand(p => EditGroupAction(p)); }
-        }
-
-        private async void EditGroupAction(object group)
+        public async void EditGroup(object group)
         {
             CustomDialog customDialog = new CustomDialog()
             {

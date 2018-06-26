@@ -105,7 +105,8 @@
     <system:String x:Key="String_Header_Supernetting">Supernetting</system:String>
     <system:String x:Key="String_Header_NetworkInterface">Network Interface</system:String>
     <system:String x:Key="String_Header_General">General</system:String>
-
+    <system:String x:Key="String_Header_ResolvePTR">Resolve PTR</system:String>
+    
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">A powerful tool for managing networks and troubleshoot network problems!</system:String>

@@ -9,6 +9,7 @@ namespace NETworkManager.Models.Network
     {
         public DateTime Timestamp { get; set; }
         public IPAddress IPAddress { get; set; }
+        public string Hostname { get; set; }
         public int Bytes { get; set; }
         public long Time { get; set; }
         public int TTL { get; set; }
@@ -56,6 +57,17 @@ namespace NETworkManager.Models.Network
             Status = status;
         }
 
+        public PingInfo(DateTime timestamp, IPAddress ipAddress, string hostname, int bytes, long time, int ttl, IPStatus status)
+        {
+            Timestamp = timestamp;
+            IPAddress = ipAddress;
+            Hostname = hostname;
+            Bytes = bytes;
+            Time = time;
+            TTL = ttl;
+            Status = status;
+        }
+
         public PingInfo(IPAddress ipAddress, int bytes, long time, int ttl, IPStatus status)
         {
             IPAddress = ipAddress;
@@ -67,7 +79,7 @@ namespace NETworkManager.Models.Network
 
         public static PingInfo Parse(PingReceivedArgs e)
         {
-            return new PingInfo(e.Timestamp, e.IPAddress, e.Bytes, e.Time, e.TTL, e.Status);
+            return new PingInfo(e.Timestamp, e.IPAddress, e.Hostname, e.Bytes, e.Time, e.TTL, e.Status);
         }
     }
 }
