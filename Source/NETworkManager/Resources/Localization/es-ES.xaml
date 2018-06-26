@@ -32,7 +32,7 @@
     <system:String x:Key="String_Header_Multithreading">Multithreading</system:String>
     <system:String x:Key="String_Header_Confirm">Confirmar</system:String>
     <system:String x:Key="String_Header_HotKeys">Atajos del teclado</system:String>
-    <system:String x:Key="String_Header_DNSLookup">DNS Lookup</system:String>
+    <system:String x:Key="String_Header_DNSLookup">Búsqueda de DNS</system:String>
     <system:String x:Key="String_Header_Route">Route</system:String>
     <system:String x:Key="String_Header_DontFragment">No fragmentar</system:String>
     <system:String x:Key="String_Header_Import">Importar</system:String>
@@ -72,7 +72,7 @@
     <system:String x:Key="String_Header_RemoteDesktop">Escritorio remoto</system:String>
     <system:String x:Key="String_Header_Disconnected">Desconectado</system:String>
     <system:String x:Key="String_Header_LocalDevicesAndResources">Dispositivos y recursos locales</system:String>
-    <system:String x:Key="String_Header_Display">Display</system:String>
+    <system:String x:Key="String_Header_Display">Visualizar</system:String>
     <system:String x:Key="String_Header_Filter">Filtrar</system:String>
     <system:String x:Key="String_Header_ARPTable">Tabla ARP</system:String>
     <system:String x:Key="String_Header_Website">Sitio web</system:String>
@@ -87,7 +87,7 @@
     <system:String x:Key="String_Header_DeleteCredential">Eliminar credencial</system:String>
     <system:String x:Key="String_Header_Authentication">Autenticación</system:String>
     <system:String x:Key="String_Header_CredentialNotFound">¡Credencial no encontrada!</system:String>
-    <system:String x:Key="String_Header_ConnectAs">Connect as</system:String>
+    <system:String x:Key="String_Header_ConnectAs">Conectar como</system:String>
     <system:String x:Key="String_Header_Query">Consulta</system:String>
     <system:String x:Key="String_Header_SNMP">SNMP</system:String>
     <system:String x:Key="String_Header_v1v2c">v1/v2c</system:String>
@@ -101,8 +101,8 @@
     <system:String x:Key="String_Header_Overwrite">¿Sobrescribir?</system:String>
     <system:String x:Key="String_Header_NewTab">Nueva pestaña</system:String>
     <system:String x:Key="String_Header_Resources">Recursos</system:String>
-    <system:String x:Key="String_Header_Subnetting">Subnetting</system:String>
-    <system:String x:Key="String_Header_Supernetting">Supernetting</system:String>
+    <system:String x:Key="String_Header_Subnetting">Subredes</system:String>
+    <system:String x:Key="String_Header_Supernetting">Superredes</system:String>
     <system:String x:Key="String_Header_NetworkInterface">Interfaz de red</system:String>
     <system:String x:Key="String_Header_General">General</system:String>
 
@@ -112,7 +112,7 @@
     <system:String x:Key="String_Settings">Configuración</system:String>
     <system:String x:Key="String_RestartRequired">Reinicio requerido</system:String>
     <system:String x:Key="String_RestartRequiredAfterSettingsChanged">¡Algunas configuraciones se aplican solo después de reiniciar la aplicación!</system:String>
-    <system:String x:Key="String_WakeUp">Wake Up</system:String>
+    <system:String x:Key="String_WakeUp">Encender</system:String>
     <system:String x:Key="String_MACAddress">Dirección MAC</system:String>
     <system:String x:Key="String_Hostname">Nombre del host</system:String>
     <system:String x:Key="String_Description">Descripción</system:String>
@@ -141,8 +141,8 @@
     <system:String x:Key="String_IPv4DefaultGateway">IPv4-Default-Gateway</system:String>
     <system:String x:Key="String_DHCPEnabled">DHCP habilitado</system:String>
     <system:String x:Key="String_DHCPServer">Servidor DHCP</system:String>
-    <system:String x:Key="String_DHCPLeaseObtained">DHCP Lease Obtained</system:String>
-    <system:String x:Key="String_DHCPLeaseExpires">DHCP Lease Expires</system:String>
+    <system:String x:Key="String_DHCPLeaseObtained">Contrato de DHCP obtenido</system:String>
+    <system:String x:Key="String_DHCPLeaseExpires">Contrato de DHCP expira</system:String>
     <system:String x:Key="String_IPv6Address">Dirección IPv6</system:String>
     <system:String x:Key="String_IPv6AddressLinkLocal">Enlace de dirección IPv6 local</system:String>
     <system:String x:Key="String_IPv6DefaultGateway">Puerta de enlace IPv6 predeterminada</system:String>
@@ -166,7 +166,7 @@
     <system:String x:Key="String_Administrator">Administrador</system:String>
     <system:String x:Key="String_NetworkAddress">Dirección de red</system:String>
     <system:String x:Key="String_DeleteClientMessage">El cliente seleccionado se eliminará de forma permanente.</system:String>
-    <system:String x:Key="String_Timeout">Timeout</system:String>
+    <system:String x:Key="String_Timeout">Tiempo finalizado</system:String>
     <system:String x:Key="String_Buffer">Buffer</system:String>
     <system:String x:Key="String_Bytes">Bytes</system:String>
     <system:String x:Key="String_TTL">TTL</system:String>
@@ -180,23 +180,23 @@
     <system:String x:Key="String_PacketLoss">Paquetes perdidos</system:String>
     <system:String x:Key="String_Minimum">Mínimo</system:String>
     <system:String x:Key="String_Maximum">Máximo</system:String>
-    <system:String x:Key="String_AverageTime">Average time</system:String>
-    <system:String x:Key="String_Threads">Threads</system:String>
-    <system:String x:Key="String_Attempts">Attempts</system:String>
+    <system:String x:Key="String_AverageTime">Tiempo promedio</system:String>
+    <system:String x:Key="String_Threads">Hilos</system:String>
+    <system:String x:Key="String_Attempts">Intentos</system:String>
     <system:String x:Key="String_ResolveHostname">Resolver el nombre de host</system:String>
     <system:String x:Key="String_ReadTheMACAddressFromTheArpCache">Leer la dirección MAC de la caché ARP</system:String>
-    <system:String x:Key="String_Time">Time</system:String>
-    <system:String x:Key="String_Time1">Time 1</system:String>
-    <system:String x:Key="String_Time2">Time 2</system:String>
-    <system:String x:Key="String_Time3">Time 3</system:String>
+    <system:String x:Key="String_Time">Hora</system:String>
+    <system:String x:Key="String_Time1">Hora 1</system:String>
+    <system:String x:Key="String_Time2">Hora 2</system:String>
+    <system:String x:Key="String_Time3">Hora 3</system:String>
     <system:String x:Key="String_PreferredProtocolWhenResolvingHostname">Protocolo preferido al resolver el nombre de host:</system:String>
-    <system:String x:Key="String_Hop">Hop</system:String>
-    <system:String x:Key="String_Hops">Hops</system:String>
-    <system:String x:Key="String_MaximumHopsRouter">Maximum hops/router</system:String>
+    <system:String x:Key="String_Hop">Salto</system:String>
+    <system:String x:Key="String_Hops">Saltos</system:String>
+    <system:String x:Key="String_MaximumHopsRouter">Máximo de saltos/router</system:String>
     <system:String x:Key="String_ConfirmClose">Confirmar cierre</system:String>
     <system:String x:Key="String_ConfirmCloseQuesiton">¿Estás seguro de que quieres cerrar la aplicación?</system:String>
     <system:String x:Key="String_UntrayBringWindowToFront">Untray / Bring window to front</system:String>
-    <system:String x:Key="String_MaximumNumberOfHopsReached">Maximum number ({0}) of hops/router reached!</system:String>
+    <system:String x:Key="String_MaximumNumberOfHopsReached">¡Número máximo ({0}) de hops/router alcanzados!</system:String>
     <system:String x:Key="String_CanceledByUser">¡La operación ha sido cancelada por el usuario!</system:String>
     <system:String x:Key="String_SelectedSettingsAreReset">La configuración seleccionada se restablecerá.</system:String>
     <system:String x:Key="String_TheSettingsLocationIsNotAffected">La ubicación de configuración no está afectada</system:String>
@@ -251,12 +251,12 @@
     <system:String x:Key="String_Backup">Respaldo</system:String>
     <system:String x:Key="String_MultipleInstances">Múltiples instancias</system:String>
     <system:String x:Key="String_ConnectTheNetworkCardToConfigureIt">¡Conecte la tarjeta de red a una red para configurarla!</system:String>
-    <system:String x:Key="String_DNSAutoconfiguration">DNS Autconfiguration</system:String>
+    <system:String x:Key="String_DNSAutoconfiguration">Configuración automática de DNS</system:String>
     <system:String x:Key="String_Back">atrás</system:String>
     <system:String x:Key="String_AddDNSSuffixToHostname">Añadir sufijo de DNS (primario) al nombre del host</system:String>
     <system:String x:Key="String_UseCustomDNSSuffix">Usar sufijo de DNS personalizado</system:String>
     <system:String x:Key="String_SettingsSuccessfullyImported">¡Configuración importada con éxito!</system:String>
-    <system:String x:Key="String_ProfilesReloaded">Profiles reloaded</system:String>
+    <system:String x:Key="String_ProfilesReloaded">Perfiles recargados</system:String>
     <system:String x:Key="String_ComingSoon">¡Próximamente!</system:String>
     <system:String x:Key="String_Override">anular</system:String>
     <system:String x:Key="String_Add">añadir</system:String>
@@ -268,7 +268,7 @@
     <system:String x:Key="String_Authorities">Autoridades</system:String>
     <system:String x:Key="String_Additionals">Adicionales</system:String>
     <system:String x:Key="String_MessageSize">Tamaño del mensaje</system:String>
-    <system:String x:Key="String_Destination">Destination</system:String>
+    <system:String x:Key="String_Destination">Destino</system:String>
     <system:String x:Key="String_EnterASubnetToCalculateIt">Ingrese una subred para calcularla...</system:String>
     <system:String x:Key="String_Subnet">Subred</system:String>
     <system:String x:Key="String_FirstUsableIPAddress">Primera dirección IP utilizable</system:String>
@@ -302,7 +302,7 @@
     <system:String x:Key="String_ForkMeOnGitHub">¡Búscame en Github!</system:String>
     <system:String x:Key="String_Documentation">Documentación</system:String>
     <system:String x:Key="String_Version">Versión</system:String>
-    <system:String x:Key="String_Headers">Headers</system:String>
+    <system:String x:Key="String_Headers">Encabezados</system:String>
     <system:String x:Key="String_ID">ID</system:String>
     <system:String x:Key="String_Repeat">Repetir</system:String>
     <system:String x:Key="String_PasswordsDoesNotMatch">¡Las contraseñas no coinciden!</system:String>
@@ -319,7 +319,7 @@
     <system:String x:Key="String_Multicast">Multicast</system:String>
     <system:String x:Key="String_CredentialSecuritySupportProvider">Habilitar proveedor de soporte de seguridad de credenciales</system:String>
     <system:String x:Key="String_AuthenticationLevel">Nivel de autenticación</system:String>
-    <system:String x:Key="String_RemainingTime">Remaining time</system:String>
+    <system:String x:Key="String_RemainingTime">Tiempo restante</system:String>
     <system:String x:Key="String_UserInterfaceLocked">¡Interfaz de usuario bloqueada!</system:String>
     <system:String x:Key="String_CredentialNotFoundMessage">Editar el perfil y seleccionar una credencial diferente o eliminar la existente</system:String>
     <system:String x:Key="String_Credentials">Credenciales</system:String>
@@ -333,21 +333,21 @@
     <system:String x:Key="String_OID">OID</system:String>
     <system:String x:Key="String_Community">Comunidad</system:String>
     <system:String x:Key="String_Data">Datos</system:String>
-    <system:String x:Key="String_WalkMode">Walk mode</system:String>
+    <system:String x:Key="String_WalkMode">Modo de prueba</system:String>
     <system:String x:Key="String_License">Licencia</system:String>
     <system:String x:Key="String_TimeoutOnSNMPQuery">Tiempo de espera en la consulta SNMP.</system:String>
     <system:String x:Key="String_Responses">Respuestas</system:String>
     <system:String x:Key="String_ErrorInResponse">¡Error en respuesta!</system:String>
     <system:String x:Key="String_Security">Seguridad</system:String>
-    <system:String x:Key="String_Auth">Auth</system:String>
-    <system:String x:Key="String_Priv">Priv</system:String>
-    <system:String x:Key="String_FixedScreenSize">Fixed screen size:</system:String>
+    <system:String x:Key="String_Auth">Aute.</system:String>
+    <system:String x:Key="String_Priv">Priv.</system:String>
+    <system:String x:Key="String_FixedScreenSize">Tamaño de pantalla fijo:</system:String>
     <system:String x:Key="String_UseCurrentViewSize">Usar el tamaño de la vista actual como tamaño de pantalla</system:String>
     <system:String x:Key="String_CustomScreenSize">Tamaño de pantalla personalizado:</system:String>
-    <system:String x:Key="String_Width">Width</system:String>
-    <system:String x:Key="String_Height">Height</system:String>
+    <system:String x:Key="String_Width">Ancho</system:String>
+    <system:String x:Key="String_Height">Alto</system:String>
     <system:String x:Key="String_VersionxxAvailable">¡Versión {0} disponible!</system:String>
-    <system:String x:Key="String_CheckForUpdatesAtStartup">Check for updates at startup</system:String>
+    <system:String x:Key="String_CheckForUpdatesAtStartup">Buscar actualizaciones al inicio</system:String>
     <system:String x:Key="String_NoUpdateAvailable">¡Actualización no disponible!</system:String>
     <system:String x:Key="String_InstallRDP8dot1Message">¡Debe instalar la versión 8.1 del protocolo de escritorio remoto (RDP) en su sistema para usar la funcionalidad de escritorio remoto!</system:String>
     <system:String x:Key="String_TheProcessCanTakeUpSomeTimeAndResources">El proceso puede tomar algo de tiempo y recursos (CPU / RAM).</system:String>
@@ -366,11 +366,11 @@
     <system:String x:Key="String_RAW">RAW</system:String>
     <system:String x:Key="String_Baud">Baud</system:String>
     <system:String x:Key="String_Serial">Serial</system:String>
-    <system:String x:Key="String_SerialLine">Serial line</system:String>
+    <system:String x:Key="String_SerialLine">Línea serial</system:String>
     <system:String x:Key="String_DefaultSSHPort">Puerto SSH predeterminado</system:String>
-    <system:String x:Key="String_DefaultTelnetPort">Default Telnet port</system:String>
-    <system:String x:Key="String_DefaultBaudRate">Default baud rate</system:String>
-    <system:String x:Key="String_DefaultRloginPort">Default Rlogin port</system:String>
+    <system:String x:Key="String_DefaultTelnetPort">Puerto Telnet predeterminado</system:String>
+    <system:String x:Key="String_DefaultBaudRate">Transmisión predeterminada</system:String>
+    <system:String x:Key="String_DefaultRloginPort">Puerto Rlogin predeterminado</system:String>
     <system:String x:Key="String_PuTTYProfile">Perfil PuTTY</system:String>
     <system:String x:Key="String_Profile">Perfil</system:String>
     <system:String x:Key="String_AdditionalCommandLine">Línea de comando adicional</system:String>
@@ -381,18 +381,18 @@
     <system:String x:Key="String_GitHub">GitHub</system:String>
     <system:String x:Key="String_OverwriteSettingsInTheDestinationFolder">¿Sobrescribir la configuración del directorio de destino?\n\n¡Si hace clic en "Mover y reiniciar", los archivos restantes se copiarán y la aplicación se reiniciará con la nueva configuración!</system:String>
     <system:String x:Key="String_Ping">Ping</system:String>
-    <system:String x:Key="String_Trace">Trace</system:String>
+    <system:String x:Key="String_Trace">Rastro</system:String>
     <system:String x:Key="String_AddATabToPerformANetworkScan">Añadir una pestaña para realizar un escaneo de red...</system:String>
     <system:String x:Key="String_AddATabToPerformAPortScan">Añadir una pestaña para realizar un escaneo de puertos...</system:String>
     <system:String x:Key="String_AddATabToPerformAPing">Añadir una pestaña para realizar un ping...</system:String>
     <system:String x:Key="String_AddATabToPerformATrace">Añadir una pestaña para realizar un seguimiento...</system:String>
-    <system:String x:Key="String_AddATabToPerformADNSLookup">Add a tab to perform a DNS lookup...</system:String>
+    <system:String x:Key="String_AddATabToPerformADNSLookup">Añadir una pestaña para realizar una búsqueda de DNS...</system:String>
     <system:String x:Key="String_AddATabToPerformAnSNMPAction">Añadir una pestaña para realizar una acción SNMP...</system:String>
     <system:String x:Key="String_AddATabToQueryTheHTTPHeaders">Añadir una pestaña para consultar los encabezados HTTP...</system:String>
     <system:String x:Key="String_AddATabToOpenANewConnection">Añadir una pestaña para abrir una nueva conexión...</system:String>
     <system:String x:Key="String_IPScanner">Escáner de IP</system:String>
     <system:String x:Key="String_PortScanner">Escáner de puertos</system:String>
-    <system:String x:Key="String_DNSLookupDots">DNS Lookup...</system:String>
+    <system:String x:Key="String_DNSLookupDots">Búsqueda de DNS...</system:String>
     <system:String x:Key="String_Traceroute">Traceroute</system:String>
     <system:String x:Key="String_RemoteDesktop">Escritorio remoto</system:String>
     <system:String x:Key="String_PuTTY">PuTTY</system:String>
@@ -426,7 +426,7 @@
     <system:String x:Key="String_DocumentationTitle_00002">¿Cómo crear un tema y un acento personalizados?</system:String>
 
     <!-- Help message -->
-    <system:String x:Key="String_HelpMessage_ParameterHelp">Muestra este cuadro de diálogo.</system:String>
+    <system:String x:Key="String_HelpMessage_ParameterHelp">Mostrar este cuadro de diálogo.</system:String>
     <system:String x:Key="String_HelpMessage_ParameterResetSettings">Restablecer todas las configuraciones.</system:String>
     <system:String x:Key="String_HelpMessage_Tags">Las etiquetas le ayudan a organizar perfiles, por temas/proyectos. Se pueden usar múltiples etiquetas con ";" separadas. Buscar por etiquetas con "tag=xxx".</system:String>
     <system:String x:Key="String_HelpMessage_Credentials">Desencriptar y cargar tus credenciales para seleccionarlas.</system:String>
@@ -439,7 +439,7 @@
     <!-- Buttons -->
     <system:String x:Key="String_Button_Change">Cambiar</system:String>
     <system:String x:Key="String_Button_Default">Predeterminado</system:String>
-    <system:String x:Key="String_Button_WakeUp">Wake up</system:String>
+    <system:String x:Key="String_Button_WakeUp">Encender</system:String>
     <system:String x:Key="String_Button_Apply">Aplicar</system:String>
     <system:String x:Key="String_Button_RestartNow">Reiniciar ahora</system:String>
     <system:String x:Key="String_Button_AddClient">Añadir cliente...</system:String>
@@ -450,7 +450,7 @@
     <system:String x:Key="String_Button_Calculate">Calcular</system:String>
     <system:String x:Key="String_Button_Ping">Ping</system:String>
     <system:String x:Key="String_Button_Scan">Escanear</system:String>
-    <system:String x:Key="String_Button_Trace">Trace</system:String>
+    <system:String x:Key="String_Button_Trace">Rastro</system:String>
     <system:String x:Key="String_Button_Close">Cerrar</system:String>
     <system:String x:Key="String_Button_Import">Importar</system:String>
     <system:String x:Key="String_Button_Export">Exportar</system:String>
@@ -499,7 +499,7 @@
     <system:String x:Key="String_ToggleSwitch_Off">Apagado</system:String>
 
     <!-- RadioButton -->
-    <system:String x:Key="String_RadioButton_Everything">Everything</system:String>
+    <system:String x:Key="String_RadioButton_Everything">Todo</system:String>
     <system:String x:Key="String_RadioButton_Custom">Personalizado:</system:String>
     
     <!-- Watermark -->
@@ -517,7 +517,7 @@
     <system:String x:Key="String_Watermark_ExamplePort3389">3389</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Address">192.168.178.55</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4Subnetmask">255.255.255.0</system:String>
-    <system:String x:Key="String_Watermark_ExampleHostnameOrIPAddress">SERVER-01 or 172.16.0.100</system:String>
+    <system:String x:Key="String_Watermark_ExampleHostnameOrIPAddress">SERVER-01 o 172.16.0.100</system:String>
     <system:String x:Key="String_Watermark_ExampleIPScanRange">192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150; server-01/24</system:String>
     <system:String x:Key="String_Watermark_LocationOfTheImport">Ubicación del archivo de importación...</system:String>
     <system:String x:Key="String_Watermark_ExampleMACAddressesOrVendor">01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5; Intel Corp; Asus</system:String>
@@ -533,16 +533,16 @@
     <system:String x:Key="String_Watermark_Filter">Filtrar...</system:String>
     <system:String x:Key="String_Watermark_ExampleWebsiteUri">http(s)://example.com/index.html</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4SubnetWithCIDR">192.168.100.0/24</system:String>
-    <system:String x:Key="String_Watermark_ExampleIPScannerProfileName">Switche (Home)</system:String>
+    <system:String x:Key="String_Watermark_ExampleIPScannerProfileName">Switche (inicial)</system:String>
     <system:String x:Key="String_Watermark_ExampleGroupSwitche">Switche</system:String>
     <system:String x:Key="String_Watermark_ExampleGroupServers">Servidores</system:String>
     <system:String x:Key="String_Watermark_ExampleNetworkInterfaceProfileName">Switche (estático)</system:String>
     <system:String x:Key="String_Watermark_ExamplePortScannerProfileName">Servidor web</system:String>
     <system:String x:Key="String_Watermark_ExampleWebserverPorts">80; 443; 8080; 8443</system:String>
-    <system:String x:Key="String_Watermark_ExampleTags">server; dmz</system:String>
+    <system:String x:Key="String_Watermark_ExampleTags">servidor; dmz</system:String>
     <system:String x:Key="String_Watermark_ExampleUsername">Admin</system:String>
-    <system:String x:Key="String_Watermark_ExampleCredentialName">Windows-Testuser</system:String>
-    <system:String x:Key="String_Watermark_ExampleRemoteDesktopProfileName">Webserver</system:String>
+    <system:String x:Key="String_Watermark_ExampleCredentialName">Usuario de prueba-Windows</system:String>
+    <system:String x:Key="String_Watermark_ExampleRemoteDesktopProfileName">Servidor web</system:String>
     <system:String x:Key="String_Watermark_ExampleSuffix">fritz.box</system:String>
     <system:String x:Key="String_Watermark_NotChanged">(sin cambios)</system:String>
     <system:String x:Key="String_Watermark_ExampleSNMPOID">1.3.6.1.2.1.1</system:String>
@@ -559,7 +559,7 @@
     <system:String x:Key="String_Progress_SetDynamicIPAddress">Establecer dirección IP dinámica...</system:String>
     <system:String x:Key="String_Progress_SetStaticDNSServer">Establecer servidor DNS estático...</system:String>
     <system:String x:Key="String_Progesss_SetDynamicDNSServer">Establecer servidor DNS dinámico...</system:String>
-    <system:String x:Key="String_Progress_RenewDHCPLease">Renew DHCP lease...</system:String>
+    <system:String x:Key="String_Progress_RenewDHCPLease">Renovar el contrato DHCP...</system:String>
     <system:String x:Key="String_Progress_FixGatewayAfterDHCPEnabled">Corregir la puerta de enlace después de habilitar DHCP...</system:String>
     
     <!-- Validate (User Input in GUI) -->
@@ -583,7 +583,7 @@
     <system:String x:Key="String_ValidationError_EnterOneOrMoreValidIPAddresses">¡Ingrese una o más direcciones IP válidas!</system:String>
     <system:String x:Key="String_ValidationError_EnterValidOID">¡Ingrese un OID válido!</system:String>
     <system:String x:Key="String_ValidationError_KeyMustHave8CharactersOrMore">¡La clave debe tener 8 caracteres o más!</system:String>
-    <system:String x:Key="String_ValidationError_EnterValidBaud">Enter a valid baud.</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidBaud">Ingrese un baud válido.</system:String>
     <system:String x:Key="String_ValidationError_SpacesAreNotAllowed">¡Los espacios no están permitidos!</system:String>
     
     <!-- ApplicationView.Name -->
@@ -594,13 +594,13 @@
     <system:String x:Key="String_ApplicationName_WakeOnLAN">Wake on LAN</system:String>
     <system:String x:Key="String_ApplicationName_Ping">Ping</system:String>
     <system:String x:Key="String_ApplicationName_Traceroute">Traceroute</system:String>
-    <system:String x:Key="String_ApplicationName_DNSLookup">DNS Lookup</system:String>
+    <system:String x:Key="String_ApplicationName_DNSLookup">Búsqueda de DNS</system:String>
     <system:String x:Key="String_ApplicationName_RemoteDesktop">Escritorio remoto</system:String>
     <system:String x:Key="String_ApplicationName_PuTTY">PuTTY</system:String>
     <system:String x:Key="String_ApplicationName_SNMP">SNMP</system:String>
     <system:String x:Key="String_ApplicationName_HTTPHeaders">Encabezados HTTP</system:String>
     <system:String x:Key="String_ApplicationName_ARPTable">Tabla ARP</system:String>
-    <system:String x:Key="String_ApplicationName_Lookup">Lookup</system:String>
+    <system:String x:Key="String_ApplicationName_Lookup">Búsqueda</system:String>
     <system:String x:Key="String_ApplicationName_Connections">Conexiones</system:String>
     <system:String x:Key="String_ApplicationName_Listeners">Listeners</system:String>
     
@@ -663,7 +663,7 @@
     <system:String x:Key="String_TcpState_Closed">Cerrado</system:String>
     <system:String x:Key="String_TcpState_CloseWait">CloseWait</system:String>
     <system:String x:Key="String_TcpState_Closing">Cerrando</system:String>
-    <system:String x:Key="String_TcpState_DeleteTcb">Eliminar Tcb</system:String>
+    <system:String x:Key="String_TcpState_DeleteTcb">DeleteTcb</system:String>
     <system:String x:Key="String_TcpState_Established">Establecido</system:String>
     <system:String x:Key="String_TcpState_FinWait1">FinWait1</system:String>
     <system:String x:Key="String_TcpState_FinWait2">FinWait2</system:String>
@@ -689,8 +689,8 @@
     <system:String x:Key="String_RemoteDesktopDisconnectReason_ClientDecompressionError">Error de descompresión.</system:String>
     <system:String x:Key="String_RemoteDesktopDisconnectReason_ConnectionTimedOut">Tiempo de conexión agotado.</system:String>
     <system:String x:Key="String_RemoteDesktopDisconnectReason_DecryptionError">Error de desencriptación.</system:String>
-    <system:String x:Key="String_RemoteDesktopDisconnectReason_DNSLookupFailed">DNS name lookup failure.</system:String>
-    <system:String x:Key="String_RemoteDesktopDisconnectReason_DNSLookupFailed2">DNS lookup failed.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_DNSLookupFailed">Error de búsqueda de nombre DNS.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_DNSLookupFailed2">Búsqueda de DNS fallida.</system:String>
     <system:String x:Key="String_RemoteDesktopDisconnectReason_EncryptionError">Error de encriptación.</system:String>
     <system:String x:Key="String_RemoteDesktopDisconnectReason_GetHostByNameFailed">Windows Sockets gethostbyname call failed.</system:String>
     <system:String x:Key="String_RemoteDesktopDisconnectReason_HostNotFound">Host no encontrado.</system:String>
@@ -703,7 +703,7 @@
     <system:String x:Key="String_RemoteDesktopDisconnectReason_InvalidSecurityData">Los datos de seguridad no son válidos.</system:String>
     <system:String x:Key="String_RemoteDesktopDisconnectReason_InvalidIPAddr">La dirección IP especificada no es válida.</system:String>
     <system:String x:Key="String_RemoteDesktopDisconnectReason_LicensingFailed">Negociación de licencia fallida.</system:String>
-    <system:String x:Key="String_RemoteDesktopDisconnectReason_LicensingTimeout">Licensing time-out.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_LicensingTimeout">Tiempo de espera de licencia.</system:String>
     <system:String x:Key="String_RemoteDesktopDisconnectReason_LocalNotError">Desconexión local.</system:String>
     <system:String x:Key="String_RemoteDesktopDisconnectReason_NoInfo">No hay información disponible.</system:String>
     <system:String x:Key="String_RemoteDesktopDisconnectReason_OutOfMemory">Sin memoria.</system:String>
@@ -713,8 +713,8 @@
     <system:String x:Key="String_RemoteDesktopDisconnectReason_ServerCertificateUnpackErr">No se ha podido desempaquetar el certificado del servidor.</system:String>
     <system:String x:Key="String_RemoteDesktopDisconnectReason_SocketConnectFailed">Conexión de Windows Sockets fallida.</system:String>
     <system:String x:Key="String_RemoteDesktopDisconnectReason_SocketRecvFailed">Llamada de recuperación de Windows Sockets fallida.</system:String>
-    <system:String x:Key="String_RemoteDesktopDisconnectReason_TimeoutOccurred">Timeout occurred.</system:String>
-    <system:String x:Key="String_RemoteDesktopDisconnectReason_TimerError">Internal timer error.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_TimeoutOccurred">Tiempo de espera ocurrido.</system:String>
+    <system:String x:Key="String_RemoteDesktopDisconnectReason_TimerError">Error interno del temporizador.</system:String>
     <system:String x:Key="String_RemoteDesktopDisconnectReason_WinsockSendFailed">Llamada de envío de Windows Sockets fallida.</system:String>
     <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrAccountDisabled">La cuenta está deshabilitada.</system:String>
     <system:String x:Key="String_RemoteDesktopDisconnectReason_SslErrAccountExpired">La cuenta ha expirado.</system:String>
