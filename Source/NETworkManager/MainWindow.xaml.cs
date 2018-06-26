@@ -278,7 +278,7 @@ namespace NETworkManager
                 AllowsTransparency = true;
                 Opacity = SettingsManager.Current.Appearance_Opacity;
             }
-
+                        
             // NotifyIcon for Autostart
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray || SettingsManager.Current.TrayIcon_AlwaysShowIcon)
                 InitNotifyIcon();
@@ -289,6 +289,9 @@ namespace NETworkManager
 
             // Set the version text
             Version = string.Format("{0} {1}", LocalizationManager.GetStringByKey("String_Version"), AssemblyManager.Current.Version);
+
+            // Load Profiles
+            ProfileManager.Load();
 
             // Load application list, filter, sort
             LoadApplicationList();

@@ -34,12 +34,12 @@ namespace NETworkManager.Views
         private void ListBoxItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
-                viewModel.ConnectSessionCommand.Execute(null);
+                viewModel.ConnectProfileCommand.Execute(null);
         }
 
         public async void AddTab(string host)
         {
-            // Wait for the interface to load, before displaying the dialog to connect a new session... 
+            // Wait for the interface to load, before displaying the dialog to connect a new Profile... 
             // MahApps will throw an exception... 
             while (!loaded)
                 await Task.Delay(100);

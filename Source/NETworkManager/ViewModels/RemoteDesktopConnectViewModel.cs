@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
-    public class RemoteDesktopSessionConnectViewModel : ViewModelBase
+    public class RemoteDesktopConnectViewModel : ViewModelBase
     {
         private readonly ICommand _connectCommand;
         public ICommand ConnectCommand
@@ -160,18 +160,18 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public RemoteDesktopSessionConnectViewModel(Action<RemoteDesktopSessionConnectViewModel> connectCommand, Action<RemoteDesktopSessionConnectViewModel> cancelHandler, bool connectAs = false)
+        public RemoteDesktopConnectViewModel(Action<RemoteDesktopConnectViewModel> connectCommand, Action<RemoteDesktopConnectViewModel> cancelHandler, bool connectAs = false)
         {
             _connectCommand = new RelayCommand(p => connectCommand(this));
             _cancelCommand = new RelayCommand(p => cancelHandler(this));
-             
+
             ConnectAs = connectAs;
 
             if (!ConnectAs)
                 _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.RemoteDesktop_HostHistory);
 
             if (CredentialManager.Loaded)
-                _credentials = CollectionViewSource.GetDefaultView(CredentialManager.CredentialInfoList);
+                _credentials = new CollectionViewSource { Source = CredentialManager.CredentialInfoList }.View;
             else
                 CredentialsLocked = true;
         }

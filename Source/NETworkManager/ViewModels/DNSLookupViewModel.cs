@@ -48,7 +48,19 @@ namespace NETworkManager.ViewModels
             get { return _hostHistoryView; }
         }
 
-        public List<QType> Types { get; set; }
+        private List<QType> _types = new List<QType>();
+        public List<QType> Types
+        {
+            get { return _types; }
+            set
+            {
+                if (value == _types)
+                    return;
+
+                _types = value;
+                OnPropertyChanged();
+            }
+        }
 
         private QType _type;
         public QType Type
@@ -238,10 +250,24 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            Types = Enum.GetValues(typeof(QType)).Cast<QType>().OrderBy(x => x.ToString()).ToList();
-            Type = Types.First(x => x == SettingsManager.Current.DNSLookup_Type);
-
+            LoadTypes();
+            
             ExpandStatistics = SettingsManager.Current.DNSLookup_ExpandStatistics;
+        }
+
+        private void LoadTypes()
+        {
+            if (SettingsManager.Current.DNSLookup_ShowMostCommonQueryTypes)
+                Types = Enum.GetValues(typeof(QType)).Cast<QType>().Where(x => (x == QType.A || x == QType.AAAA || x == QType.ANY || x == QType.CNAME || x == QType.MX || x == QType.NS || x == QType.PTR || x == QType.SOA || x == QType.LOC || x == QType.TXT)).OrderBy(x => x.ToString()).ToList();
+            else
+                Types = Enum.GetValues(typeof(QType)).Cast<QType>().OrderBy(x => x.ToString()).ToList();
+
+            Type = Types.FirstOrDefault(x => x == SettingsManager.Current.DNSLookup_Type);
+
+            // Fallback
+            if (Type == 0)
+                Type = QType.ANY;
+
         }
         #endregion
 
@@ -450,6 +476,9 @@ namespace NETworkManager.ViewModels
         {
             if (e.PropertyName == nameof(SettingsInfo.DNSLookup_ShowStatistics))
                 OnPropertyChanged(nameof(ShowStatistics));
+
+            if (e.PropertyName == nameof(SettingsInfo.DNSLookup_ShowMostCommonQueryTypes))
+                LoadTypes();
         }
         #endregion
     }

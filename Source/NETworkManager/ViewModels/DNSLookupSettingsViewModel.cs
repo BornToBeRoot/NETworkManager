@@ -184,6 +184,23 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _showMostCommonQueryTypes;
+        public bool ShowMostCommonQueryTypes
+        {
+            get { return _showMostCommonQueryTypes; }
+            set
+            {
+                if (value == _showMostCommonQueryTypes)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.DNSLookup_ShowMostCommonQueryTypes = value;
+
+                _showMostCommonQueryTypes = value;
+                OnPropertyChanged();
+            }
+        }
+
         public List<TransportType> TransportTypes { get; set; }
 
         private TransportType _transportType;
@@ -279,6 +296,7 @@ namespace NETworkManager.ViewModels
             UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache;
             Classes = Enum.GetValues(typeof(QClass)).Cast<QClass>().OrderBy(x => x.ToString()).ToList();
             Class = Classes.First(x => x == SettingsManager.Current.DNSLookup_Class);
+            ShowMostCommonQueryTypes = SettingsManager.Current.DNSLookup_ShowMostCommonQueryTypes;
             TransportTypes = Enum.GetValues(typeof(TransportType)).Cast<TransportType>().OrderBy(x => x.ToString()).ToList();
             TransportType = TransportTypes.First(x => x == SettingsManager.Current.DNSLookup_TransportType);
             Attempts = SettingsManager.Current.DNSLookup_Attempts;

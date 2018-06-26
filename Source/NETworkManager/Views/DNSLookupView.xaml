@@ -40,14 +40,13 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Host}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox x:Name="cbHost" Grid.Column="2" Grid.Row="0" Height="{Binding ElementName=cbType, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox x:Name="cbHost" Grid.Column="2" Grid.Row="0" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -56,14 +55,17 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Type}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox x:Name="cbType" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding Types}" SelectedItem="{Binding Type}" Width="200" HorizontalAlignment="Left" />
-                <Button Grid.Column="4" Grid.Row="2" Command="{Binding LookupCommand}" IsDefault="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" HorizontalAlignment="Right">
+                <TextBlock Grid.Column="4" Grid.Row="0" Text="{DynamicResource String_Type}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
+                <ComboBox x:Name="cbTypes" Grid.Column="6" Grid.Row="0" ItemsSource="{Binding Types}" SelectedItem="{Binding Type}" Width="150" HorizontalAlignment="Left" />
+                <Button Grid.Column="8" Grid.Row="0" Command="{Binding LookupCommand}" IsDefault="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" HorizontalAlignment="Right">
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=cbHost}" Value="True" >
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=cbTypes}" Value="True" >
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding IsLookupRunning}" Value="True">

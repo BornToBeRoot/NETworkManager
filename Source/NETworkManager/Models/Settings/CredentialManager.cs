@@ -14,7 +14,8 @@ namespace NETworkManager.Models.Settings
 {
     public static class CredentialManager
     {
-        public const string CredentialsFileName = "Credentials.encrypted";
+        public const string CredentialsFileName = "Credentials";
+        public const string CredentialsExtension = "xml";
 
         // Collection with ID, Name, Username, Password
         public static ObservableCollection<CredentialInfo> Credentials = new ObservableCollection<CredentialInfo>();
@@ -45,9 +46,14 @@ namespace NETworkManager.Models.Settings
             return SecureStringHelper.ConvertToString(_masterPassword).Equals(SecureStringHelper.ConvertToString(password));
         }
 
+        public static string GetCredentialsFileName()
+        {
+            return string.Format("{0}.{1}", CredentialsFileName, CredentialsExtension);
+        }
+
         public static string GetCredentialsFilePath()
         {
-            return Path.Combine(SettingsManager.GetSettingsLocation(), CredentialsFileName);
+            return Path.Combine(SettingsManager.GetSettingsLocation(), GetCredentialsFileName());
         }
 
         public static bool Load(SecureString pasword)

@@ -69,11 +69,6 @@
     <system:String x:Key="String_Header_Subnet">Subnetz</system:String>
     <system:String x:Key="String_Header_Calculator">Rechner</system:String>
     <system:String x:Key="String_Header_Connect">Verbinden</system:String>
-    <system:String x:Key="String_Header_AddSession">Sitzung hinzufügen</system:String>
-    <system:String x:Key="String_Header_EditSession">Sitzung bearbeiten</system:String>
-    <system:String x:Key="String_Header_CopySession">Sitzung kopieren</system:String>
-    <system:String x:Key="String_Header_DeleteSession">Sitzung löschen</system:String>
-    <system:String x:Key="String_Header_Sessions">Sitzungen</system:String>
     <system:String x:Key="String_Header_RemoteDesktop">Remote Desktop</system:String>
     <system:String x:Key="String_Header_Disconnected">Getrennt</system:String>
     <system:String x:Key="String_Header_LocalDevicesAndResources">Lokale Geräte und Ressourcen</system:String>
@@ -108,6 +103,8 @@
     <system:String x:Key="String_Header_Resources">Ressourcen</system:String>
     <system:String x:Key="String_Header_Subnetting">Subnetting</system:String>
     <system:String x:Key="String_Header_Supernetting">Supernetting</system:String>
+    <system:String x:Key="String_Header_NetworkInterface">Netzwerkinterface</system:String>
+    <system:String x:Key="String_Header_General">Allgemein</system:String>
 
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -201,13 +198,6 @@
     <system:String x:Key="String_UntrayBringWindowToFront">Untray / Fenster in den Vordergrund bringen</system:String>
     <system:String x:Key="String_MaximumNumberOfHopsReached">Maximale Anzahl ({0}) an Hops/Router erreicht!</system:String>
     <system:String x:Key="String_CanceledByUser">Der Vorgang wurde vom Benutzer abgebrochen!</system:String>
-    <system:String x:Key="String_ApplicationSettings">Anwendungseinstellungen</system:String>
-    <system:String x:Key="String_NetworkInterfaceProfiles">Netzwerkinterface Profile</system:String>
-    <system:String x:Key="String_PingProfiles">Ping Profile</system:String>
-    <system:String x:Key="String_TracerouteProfiles">Traceroute profiles</system:String>
-    <system:String x:Key="String_PortScannerProfiles">Port-Scanner Profile</system:String>
-    <system:String x:Key="String_WakeOnLANClients">Wake on LAN Clients</system:String>
-    <system:String x:Key="String_RemoteDesktopSessions">Remote Desktop Sitzungen</system:String>
     <system:String x:Key="String_SelectedSettingsAreReset">Die ausgewählten Einstellungen werden zurückgesetzt.</system:String>
     <system:String x:Key="String_TheSettingsLocationIsNotAffected">Der Speicherpfad ist hiervon nicht betroffen</system:String>
     <system:String x:Key="String_ApplicationIsRestartedAfterwards">Die Anwendung wird danach neu gestartet</system:String>
@@ -258,7 +248,6 @@
     <system:String x:Key="String_Open">Offen</system:String>
     <system:String x:Key="String_EnterNameForProfile">Geben Sie einen Namen ein, unter dem das Profil gespeichert werden soll.</system:String>
     <system:String x:Key="String_DeleteProfileMessage">Das ausgewählte Profil wird unwiderruflich gelöscht.</system:String>
-    <system:String x:Key="String_DeleteSessionMessage">Die ausgewählte Sitzung wird unwiderruflich gelöscht.</system:String>
     <system:String x:Key="String_Backup">Sicherung</system:String>
     <system:String x:Key="String_MultipleInstances">Mehrere Instanzen</system:String>
     <system:String x:Key="String_ConnectTheNetworkCardToConfigureIt">Verbinde die Netzwerkkarte mit einem Netzwerk, um diese zu konfigurieren!</system:String>
@@ -267,19 +256,11 @@
     <system:String x:Key="String_AddDNSSuffixToHostname">DNS-Suffix (primär) zum Hostnamen hinzufügen</system:String>
     <system:String x:Key="String_UseCustomDNSSuffix">Verwende benutzerdefinierten DNS-Suffix</system:String>
     <system:String x:Key="String_SettingsSuccessfullyImported">Einstellungen erfolgreich importiert!</system:String>
-    <system:String x:Key="String_IPScannerProfilesReloaded">IP-Scanner Profile neu geladen</system:String>
-    <system:String x:Key="String_PingProfilesReloaded">Ping Profile neu geladen</system:String>
-    <system:String x:Key="String_TracerouteProfilesReloaded">Traceroute Profile neu geladen</system:String>
-    <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Netzwerkinterface Profile neu geladen</system:String>
-    <system:String x:Key="String_PortScannerProfilesReloaded">Port-Scanner Profile neu geladen</system:String>
-    <system:String x:Key="String_RemoteDesktopSessionsReloaded">Remote Desktop Sitzungen neu geladen</system:String>
-    <system:String x:Key="String_PuTTYSessionsReloaded">PuTTY Sitzungen neu geladen</system:String>
-    <system:String x:Key="String_WakeOnLANClientsReloaded">Wake on LAN Clients neu geladen</system:String>
+    <system:String x:Key="String_ProfilesReloaded">Profile neu geladen</system:String>
     <system:String x:Key="String_ComingSoon">Kommt demnächst!</system:String>
     <system:String x:Key="String_Override">überschreiben</system:String>
     <system:String x:Key="String_Add">hinzufügen</system:String>
     <system:String x:Key="String_NoProfilesFoundCreateOne">Keine Profile gefunden! Erstelle eins...</system:String>
-    <system:String x:Key="String_NoSessionsFoundCreateOne">Keine Sitzungen gefunden! Erstelle eine...</system:String>
     <system:String x:Key="String_NoClientsFoundCreateOne">Keine Clients gefunden! Erstelle einen...</system:String>
     <system:String x:Key="String_DNSServer">DNS-Server</system:String>
     <system:String x:Key="String_Questions">Anfragen</system:String>
@@ -379,7 +360,6 @@
     <system:String x:Key="String_ErrorInResponseCheckIfYouHaveWritePermissions">Fehler in Antwort! Prüfen Sie, ob Sie Schreibrechte haben.</system:String>
     <system:String x:Key="String_ShowScanResultForAllIPAddresses">Zeige Scan-Ergebnis für alle IP-Adressen</system:String>
     <system:String x:Key="String_ConfigureThePathToPuTTYInTheSettings">Konfiguriere den Pfad zu PuTTY in den Einstellungen...</system:String>
-    <system:String x:Key="String_PuTTYSessions">PuTTY Sitzungen</system:String>
     <system:String x:Key="String_SSH">SSH</system:String>
     <system:String x:Key="String_Telnet">Telnet</system:String>
     <system:String x:Key="String_Rlogin">Rlogin</system:String>
@@ -396,7 +376,7 @@
     <system:String x:Key="String_AdditionalCommandLine">Zusätzliche Kommandozeile</system:String>
     <system:String x:Key="String_PuTTYProcessHasEnded">PuTTY-Prozess wurde beendet!</system:String>
     <system:String x:Key="String_EditGroup">Gruppe bearbeiten</system:String>
-    <system:String x:Key="String_NewSessionDots">Neue Sitzung...</system:String>
+    <system:String x:Key="String_NewProfileDots">Neue Sitzung...</system:String>
     <system:String x:Key="String_Gitter">Gitter</system:String>
     <system:String x:Key="String_GitHub">GitHub</system:String>
     <system:String x:Key="String_OverwriteSettingsInTheDestinationFolder">Einstellungen im Zielordner überschreiben?\n\nWenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Dateien kopiert und die Anwendung danach mit den neuen Einstellungen neu gestartet!</system:String>
@@ -430,14 +410,17 @@
     <system:String x:Key="String_AutomaticallyUpdateEvery">Automatisch aktualisieren alle</system:String>
     <system:String x:Key="String_AddProfileDots">Profil hinzufügen...</system:String>
     <system:String x:Key="String_ClearFilter">Filter löschen</system:String>
-    <system:String x:Key="String_AddSessionDots">Sitzung hinzufügen...</system:String>
     <system:String x:Key="String_AddClientDots">Client hinzufügen...</system:String>
     <system:String x:Key="String_ShowStatistics">Statistiken anzeigen</system:String>
     <system:String x:Key="String_Subnet1">Subnetz 1</system:String>
     <system:String x:Key="String_Subnet2">Subnetz 2</system:String>
     <system:String x:Key="String_EnterSubnetsToCreateASupernet">Geben Sie Subnetze ein, um ein Supernet zu erstellen...</system:String>
     <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Geben Sie das Subnetz und eine neue Subnetzmaske ein, um Subnetze zu erstellen...</system:String>
-
+    <system:String x:Key="String_Enable">Aktivieren</system:String>
+    <system:String x:Key="String_SelectAtLeastOneNodeWhereTheProfileShouldAppear">Select at least one node, where the profile should appear! Click on a tab and select enable...</system:String>
+    <system:String x:Key="String_Profiles">Profile</system:String>
+    <system:String x:Key="String_ShowOnlyMostCommonQueryTypes">Nur die häufigsten Abfragetypen anzeigen</system:String>
+    
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">Wie erstelle ich ein benutzerdefiniertes Thema und Akzent?</system:String>
@@ -478,7 +461,7 @@
     <system:String x:Key="String_Button_AddProfile">Profil hinzufügen...</system:String>
     <system:String x:Key="String_Button_NetworkConnections">Netzwerkverbindungen...</system:String>
     <system:String x:Key="String_Button_Connect">Verbinden</system:String>
-    <system:String x:Key="String_Button_AddSessions">Sitzung hinzufügen...</system:String>
+    <system:String x:Key="String_Button_AddProfiles">Sitzung hinzufügen...</system:String>
     <system:String x:Key="String_Button_Save">Speichern</system:String>
     <system:String x:Key="String_Button_Refresh">Aktualisieren</system:String>
     <system:String x:Key="String_Button_Reconnect">Wiederverbinden</system:String>
@@ -559,7 +542,7 @@
     <system:String x:Key="String_Watermark_ExampleTags">server; dmz</system:String>
     <system:String x:Key="String_Watermark_ExampleUsername">Admin</system:String>
     <system:String x:Key="String_Watermark_ExampleCredentialName">Windows-Testbenutzer</system:String>
-    <system:String x:Key="String_Watermark_ExampleRemoteDesktopSessionName">Webserver</system:String>
+    <system:String x:Key="String_Watermark_ExampleRemoteDesktopProfileName">Webserver</system:String>
     <system:String x:Key="String_Watermark_ExampleSuffix">fritz.box</system:String>
     <system:String x:Key="String_Watermark_NotChanged">(nicht geändert)</system:String>
     <system:String x:Key="String_Watermark_ExampleSNMPOID">1.3.6.1.2.1.1</system:String>

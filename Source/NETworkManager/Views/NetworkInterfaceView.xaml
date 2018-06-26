@@ -636,7 +636,7 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <TextBox x:Name="txtSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}"/>
-                        <ListBox Grid.Column="0" Grid.Row="2" x:Name="listBoxProfiles" ItemsSource="{Binding NetworkInterfaceProfiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
+                        <ListBox Grid.Column="0" Grid.Row="2" x:Name="listBoxProfiles" ItemsSource="{Binding Profiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                             <ListBox.Resources>
                                 <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                     <MenuItem Header="{DynamicResource String_Apply}" Command="{Binding ApplyProfileCommand}">
@@ -735,7 +735,7 @@
                                 <Style TargetType="{x:Type Grid}">
                                     <Setter Property="Visibility" Value="Collapsed" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding NetworkInterfaceProfiles.Count}" Value="0">
+                                        <DataTrigger Binding="{Binding Profiles.Count}" Value="0">
                                             <Setter Property="Visibility" Value="Visible" />
                                         </DataTrigger>
                                     </Style.Triggers>

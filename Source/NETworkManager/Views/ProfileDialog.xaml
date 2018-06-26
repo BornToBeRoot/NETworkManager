@@ -1,0 +1,971 @@
+﻿<UserControl x:Class="NETworkManager.Views.ProfileDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Network="clr-namespace:NETworkManager.Models.Network"
+             xmlns:Converter="clr-namespace:NETworkManager.Converters"
+             xmlns:Validator="clr-namespace:NETworkManager.Validators"
+             xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
+             mc:Ignorable="d" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid Margin="0,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TabControl Margin="0,0,0,20">
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource ProfileTabItem}" />
+            </TabControl.Resources>
+            <TabItem Header="{DynamicResource String_Header_General}">
+                <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="10" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="10" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="10" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="10" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="34" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Name}" />
+                            <TextBox x:Name="txtName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleRemoteDesktopProfileName}">
+                                <TextBox.Text>
+                                    <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
+                            <TextBox x:Name="txtHost" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                <TextBox.Text>
+                                    <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                            <Validator:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                            <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Credential}" />
+                            <ComboBox x:Name="cbCredential" Grid.Column="2" Grid.Row="4" SelectedValue="{Binding CredentialID}" SelectedValuePath="ID" Style="{StaticResource DefaultComboBox}" ItemsSource="{Binding Credentials}">
+                                <ComboBox.InputBindings>
+                                    <KeyBinding Command="{Binding UnselectCredentialCommand}" Key="Delete"/>
+                                </ComboBox.InputBindings>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}[{0}] {1}">
+                                                        <Binding Path="ID" />
+                                                        <Binding Path="Name" />
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_Group}" />
+                            <ComboBox x:Name="cbGroup" Grid.Column="2" Grid.Row="6" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleGroupServers}">
+                                <ComboBox.Text>
+                                    <Binding Path="Group" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </ComboBox.Text>
+                            </ComboBox>
+                            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="4" ToolTip="{DynamicResource String_HelpMessage_Credentials}" Visibility="{Binding ShowUnlockCredentialsHint, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                                <Rectangle.Resources>
+                                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                                </Rectangle.Resources>
+                            </Rectangle>
+                            <TextBlock Grid.Column="0" Grid.Row="8" Text="{DynamicResource String_Tags}" />
+                            <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding Tags, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleTags}"/>
+                            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="8" ToolTip="{DynamicResource String_HelpMessage_Tags}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                                <Rectangle.Resources>
+                                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                                </Rectangle.Resources>
+                            </Rectangle>
+                        </Grid>
+                        <TextBlock Text="{DynamicResource String_SelectAtLeastOneNodeWhereTheProfileShouldAppear}" TextWrapping="Wrap" Visibility="{Binding TabEnabled, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{DynamicResource AccentTextBlock}" Margin="0,20,0,0"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="{DynamicResource String_Header_NetworkInterface}">
+                <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,10">
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="34" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
+                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding NetworkInterface_Enabled}" />
+                        </Grid>
+                        <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
+                        <StackPanel IsEnabled="{Binding NetworkInterface_Enabled}">
+                            <RadioButton x:Name="radioButtonEnableDynamicIPAddress" GroupName="NetworkInterface_IPAddressConfig" IsChecked="{Binding NetworkInterface_EnableDynamicIPAddress}" Content="{DynamicResource String_ObtainAnIPAddressAutomatically}" Margin="0,0,0,10"/>
+                            <RadioButton x:Name="radioButtonEnableStaticIPAddress" GroupName="NetworkInterface_IPAddressConfig" IsChecked="{Binding NetworkInterface_EnableStaticIPAddress}" Content="{DynamicResource String_UseTheFollowingIPAddress}" Margin="0,0,0,10"/>
+                            <Grid IsEnabled="{Binding NetworkInterface_EnableStaticIPAddress}" Margin="0,0,0,10">
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_IPv4Address}" />
+                                <TextBox x:Name="txtNetworkInterfaceIPAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}" >
+                                    <TextBox.Text>
+                                        <Binding Path="NetworkInterface_IPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_SubnetmaskOrCIDR}" />
+                                <ComboBox x:Name="cbNetworkInterfaceSubnetmaskOrCidr" Grid.Column="2" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetmaskIPv4CIDR}" ItemsSource="{x:Static Network:Subnetmask.List}">
+                                    <ComboBox.Text>
+                                        <Binding Path="NetworkInterface_SubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <Validator:IPv4SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </ComboBox.Text>
+                                </ComboBox>
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_DefaultGateway}" />
+                                <TextBox x:Name="txtNetworkInterfaceGateway" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" >
+                                    <TextBox.Text>
+                                        <Binding Path="NetworkInterface_Gateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                            <RadioButton x:Name="radioButtonEnableDynamicDNS" GroupName="NetworkInterface_DNSServerConfig" Content="{DynamicResource String_ObtainDNSServerAddressAutomatically}" IsChecked="{Binding NetworkInterface_EnableDynamicDNS}" Margin="0,0,0,10" IsEnabled="{Binding NetworkInterface_EnableDynamicIPAddress}" />
+                            <RadioButton x:Name="radioButtonEnableStaticDNS" GroupName="NetworkInterface_DNSServerConfig" Content="{DynamicResource String_UseTheFollowingDNSServerAddresses}" IsChecked="{Binding NetworkInterface_EnableStaticDNS}" Margin="0,0,0,10"/>
+                            <Grid IsEnabled="{Binding NetworkInterface_EnableStaticDNS}">
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_PrimaryDNSServer}" />
+                                <TextBox x:Name="txtNetworkInterfacePrimaryDNSServer" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" >
+                                    <TextBox.Text>
+                                        <Binding Path="NetworkInterface_PrimaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_SecondaryDNSServer}" />
+                                <TextBox x:Name="txtNetworkInterfaceSecondaryDNSServer" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNSServer}" >
+                                    <TextBox.Text>
+                                        <Binding Path="NetworkInterface_SecondaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="{DynamicResource String_Header_IPScanner}">
+                <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,10">
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="34" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
+                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding IPScanner_Enabled}" />
+                        </Grid>
+                        <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
+                        <StackPanel IsEnabled="{Binding IPScanner_Enabled}">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Inherit Hostname" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding IPScanner_InheritHost}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_IPRange}" />
+                                <TextBox x:Name="txtIPScannerIPRange" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding IPScanner_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetWithCIDR}">
+                                    <TextBox.Text>
+                                        <Binding Path="IPScanner_IPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <Validator:IPScanRangeValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="{DynamicResource String_Header_PortScanner}">
+                <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,10">
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="34" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
+                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding PortScanner_Enabled}" />
+                        </Grid>
+                        <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
+                        <StackPanel IsEnabled="{Binding PortScanner_Enabled}">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Inherit Host" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding PortScanner_InheritHost}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
+                                <TextBox x:Name="txtPortScannerHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding PortScanner_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                    <TextBox.Text>
+                                        <Binding Path="PortScanner_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Ports}" />
+                                <TextBox x:Name="txtPortScannerPorts" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePortScanRange}">
+                                    <TextBox.Text>
+                                        <Binding Path="PortScanner_Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <Validator:PortRangeValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="{DynamicResource String_Header_Ping}">
+                <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,10">
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="34" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
+                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Ping_Enabled}" />
+                        </Grid>
+                        <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
+                        <StackPanel IsEnabled="{Binding Ping_Enabled}">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Inherit Host" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Ping_InheritHost}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
+                                <TextBox x:Name="txtPingHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Ping_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                    <TextBox.Text>
+                                        <Binding Path="Ping_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="{DynamicResource String_Header_Traceroute}">
+                <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,10">
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="34" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
+                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Traceroute_Enabled}" />
+                        </Grid>
+                        <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
+                        <StackPanel IsEnabled="{Binding Traceroute_Enabled}">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Inherit Host" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Traceroute_InheritHost}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
+                                <TextBox x:Name="txtTracerouteHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Traceroute_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                    <TextBox.Text>
+                                        <Binding Path="Traceroute_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="{DynamicResource String_Header_RemoteDesktop}">
+                <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,10">
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="34" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
+                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding RemoteDesktop_Enabled}" />
+                        </Grid>
+                        <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
+                        <StackPanel IsEnabled="{Binding RemoteDesktop_Enabled}">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Inherit Host" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding RemoteDesktop_InheritHost}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
+                                <TextBox x:Name="txtRemoteDesktopHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding RemoteDesktop_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                    <TextBox.Text>
+                                        <Binding Path="RemoteDesktop_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="{DynamicResource String_Header_PuTTY}">
+                <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,10">
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="34" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
+                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding PuTTY_Enabled}" />
+                        </Grid>
+                        <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
+                        <StackPanel IsEnabled="{Binding PuTTY_Enabled}">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Mode}" />
+                                <WrapPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal">
+                                    <WrapPanel.Resources>
+                                        <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource DefaultRadioButton}">
+                                            <Setter Property="Margin" Value="0,5,10,5" />
+                                        </Style>
+                                    </WrapPanel.Resources>
+                                    <RadioButton Content="{DynamicResource String_SSH}" IsChecked="{Binding PuTTY_UseSSH}" />
+                                    <RadioButton Content="{DynamicResource String_Telnet}" IsChecked="{Binding PuTTY_UseTelnet}" />
+                                    <RadioButton Content="{DynamicResource String_Serial}" IsChecked="{Binding PuTTY_UseSerial}" />
+                                    <RadioButton Content="{DynamicResource String_Rlogin}" IsChecked="{Binding PuTTY_UseRlogin}" />
+                                    <RadioButton Content="{DynamicResource String_RAW}" IsChecked="{Binding PuTTY_UseRAW}" />
+                                </WrapPanel>
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="Inherit Host" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityConverter}}" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OnLabel="" OffLabel="" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityConverter}}" IsChecked="{Binding PuTTY_InheritHost}" />
+                                <TextBlock Grid.Column="0" Grid.Row="4">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
+                                            <Setter Property="Text" Value="{StaticResource String_Host}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding PuTTY_UseSerial}" Value="True">
+                                                    <Setter Property="Text" Value="{StaticResource String_SerialLine}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBox x:Name="txtPuTTYHost" Grid.Column="2" Grid.Row="4" IsEnabled="{Binding PuTTY_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                    <TextBox.Text>
+                                        <Binding Path="PuTTY_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <Validator:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBox x:Name="txtPuTTYSerialLine" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSerialLine}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <TextBox.Text>
+                                        <Binding Path="PuTTY_SerialLine" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <Validator:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="6">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
+                                            <Setter Property="Text" Value="{DynamicResource String_Port}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding PuTTY_UseSerial}" Value="True">
+                                                    <Setter Property="Text" Value="{DynamicResource String_Baud}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBox x:Name="txtPuTTYPort" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort22}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
+                                    <TextBox.Text>
+                                        <Binding Path="PuTTY_Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <Validator:PortValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBox x:Name="txtPuTTYBaud" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleBaud9600}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <TextBox.Text>
+                                        <Binding Path="PuTTY_Baud" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <Validator:BaudValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="8" Text="{DynamicResource String_Username}" />
+                                <TextBox Grid.Column="2" Grid.Row="8" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleUsername}">
+                                    <TextBox.Text>
+                                        <Binding Path="PuTTY_Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="10" Text="{DynamicResource String_Profile}" />
+                                <TextBox Grid.Column="2" Grid.Row="10">
+                                    <TextBox.Text>
+                                        <Binding Path="PuTTY_Profile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="12" Text="{DynamicResource String_AdditionalCommandLine}" />
+                                <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding PuTTY_AdditionalCommandLine}" Style="{StaticResource DefaultTextBox}" />
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="{DynamicResource String_Header_WakeOnLAN}">
+                <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,10">
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="34" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
+                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding WakeOnLAN_Enabled}" />
+                        </Grid>
+                        <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
+                        <StackPanel IsEnabled="{Binding WakeOnLAN_Enabled}">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_MACAddress}" />
+                                <TextBox x:Name="txtWakeOnLANMACAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddress}">
+                                    <TextBox.Text>
+                                        <Binding Path="WakeOnLAN_MACAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <Validator:MACAddressValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Broadcast}" />
+                                <TextBox x:Name="txtWakeOnLANBroadcast" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Broadcast}">
+                                    <TextBox.Text>
+                                        <Binding Path="WakeOnLAN_Broadcast" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Port}" />
+                                <TextBox x:Name="txtWakeOnLANPort" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort7}">
+                                    <TextBox.Text>
+                                        <Binding Path="WakeOnLAN_Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <Validator:PortValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="{DynamicResource String_Button_Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
+            <Button Content="{DynamicResource String_Button_Save}" Command="{Binding SaveCommand}" IsDefault="True" Margin="10,0,0,0">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
+                        <Style.Triggers>
+                            <!-- General -->
+                            <DataTrigger Binding="{Binding ElementName=txtName,Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=txtHost,Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=cbGroup,Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <!-- No tab enabled -->
+                            <DataTrigger Binding="{Binding TabEnabled}" Value="False">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <!-- Network Interface -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding NetworkInterface_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding NetworkInterface_EnableStaticIPAddress}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=txtNetworkInterfaceIPAddress, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding NetworkInterface_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding NetworkInterface_EnableStaticIPAddress}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=cbNetworkInterfaceSubnetmaskOrCidr, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding NetworkInterface_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding NetworkInterface_EnableStaticIPAddress}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=txtNetworkInterfaceGateway, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding NetworkInterface_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding NetworkInterface_EnableStaticDNS}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=txtNetworkInterfacePrimaryDNSServer, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding NetworkInterface_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding NetworkInterface_EnableStaticDNS}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=txtNetworkInterfaceSecondaryDNSServer, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- IP Scanner -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IPScanner_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding IPScanner_InheritHost}" Value="False"/>
+                                    <Condition Binding="{Binding ElementName=txtIPScannerIPRange, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- Port Scanner -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding PortScanner_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding PortScanner_InheritHost}" Value="False"/>
+                                    <Condition Binding="{Binding ElementName=txtPortScannerHost, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding PortScanner_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding ElementName=txtPortScannerPorts, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- Ping -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Ping_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding Ping_InheritHost}" Value="False"/>
+                                    <Condition Binding="{Binding ElementName=txtPingHost, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- Traceroute -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Traceroute_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding Traceroute_InheritHost}" Value="False"/>
+                                    <Condition Binding="{Binding ElementName=txtTracerouteHost, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- Remote Desktop -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding RemoteDesktop_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding RemoteDesktop_InheritHost}" Value="False"/>
+                                    <Condition Binding="{Binding ElementName=txtRemoteDesktopHost, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- PuTTY -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding PuTTY_UseSerial}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=txtPuTTYSerialLine, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding PuTTY_UseSerial}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=txtPuTTYBaud, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding PuTTY_UseSerial}" Value="False" />
+                                    <Condition Binding="{Binding PuTTY_InheritHost}" Value="False" />
+                                    <Condition Binding="{Binding ElementName=txtPuTTYHost, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding PuTTY_UseSerial}" Value="False" />
+                                    <Condition Binding="{Binding ElementName=txtPuTTYPort, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- Wake on LAN -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding WakeOnLAN_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding ElementName=txtWakeOnLANMACAddress, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding WakeOnLAN_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding ElementName=txtWakeOnLANBroadcast, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding WakeOnLAN_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding ElementName=txtWakeOnLANPort, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

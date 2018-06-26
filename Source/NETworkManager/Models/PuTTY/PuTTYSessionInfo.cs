@@ -1,8 +1,9 @@
-﻿using static NETworkManager.Models.PuTTY.PuTTY;
+﻿using NETworkManager.Models.Settings;
+using static NETworkManager.Models.PuTTY.PuTTY;
 
 namespace NETworkManager.Models.PuTTY
 {
-    public class PuTTYSessionInfo
+    public class PuTTYProfileInfo
     {
         public string PuTTYLocation { get; set; }
         public string HostOrSerialLine { get; set; }
@@ -12,21 +13,22 @@ namespace NETworkManager.Models.PuTTY
         public string Username { get; set; }
         public string AdditionalCommandLine { get; set; }
 
-        public PuTTYSessionInfo()
+        public PuTTYProfileInfo()
         {
 
         }
 
-        public static PuTTYSessionInfo Parse(Settings.PuTTYSessionInfo sessionInfo)
+        public static PuTTYProfileInfo Parse(ProfileInfo profileInfo)
         {
-            PuTTYSessionInfo info = new PuTTYSessionInfo();
-
-            info.HostOrSerialLine = sessionInfo.HostOrSerialLine;
-            info.PortOrBaud = sessionInfo.PortOrBaud;
-            info.Mode = sessionInfo.ConnectionMode;
-            info.Username = sessionInfo.Username;
-            info.Profile = sessionInfo.Profile;
-            info.AdditionalCommandLine = sessionInfo.AdditionalCommandLine;
+            PuTTYProfileInfo info = new PuTTYProfileInfo
+            {
+                HostOrSerialLine = profileInfo.PuTTY_HostOrSerialLine,
+                PortOrBaud = profileInfo.PuTTY_PortOrBaud,
+                Mode = profileInfo.PuTTY_ConnectionMode,
+                Username = profileInfo.PuTTY_Username,
+                Profile = profileInfo.PuTTY_Profile,
+                AdditionalCommandLine = profileInfo.PuTTY_AdditionalCommandLine
+            };
 
             return info;
         }

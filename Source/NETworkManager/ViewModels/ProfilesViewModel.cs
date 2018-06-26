@@ -1,48 +1,20 @@
-﻿using System.Collections.ObjectModel;
-using NETworkManager.Controls;
-using Dragablz;
+﻿using NETworkManager.Models.Settings;
 using System.Windows.Input;
-using NETworkManager.Views;
-using NETworkManager.Utilities;
-using NETworkManager.Models.Settings;
 using System.ComponentModel;
-using System;
 using System.Windows.Data;
-using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
-using System.Windows;
+using NETworkManager.Views;
+using System;
+using NETworkManager.Utilities;
+using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
-    public class PingHostViewModel : ViewModelBase
+    public class ProfilesViewModel : ViewModelBase
     {
         #region Variables
         private IDialogCoordinator dialogCoordinator;
 
-        public IInterTabClient InterTabClient { get; private set; }
-        public ObservableCollection<DragablzTabItem> TabItems { get; private set; }
-
-        private const string tagIdentifier = "tag=";
-
-        private bool _isLoading = true;
-
-        private int _tabId = 0;
-
-        private int _selectedTabIndex;
-        public int SelectedTabIndex
-        {
-            get { return _selectedTabIndex; }
-            set
-            {
-                if (value == _selectedTabIndex)
-                    return;
-
-                _selectedTabIndex = value;
-                OnPropertyChanged();
-            }
-        }
-
-        #region Profiles
         ICollectionView _profiles;
         public ICollectionView Profiles
         {
@@ -79,65 +51,12 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private bool _canProfileWidthChange = true;
-        private double _tempProfileWidth;
-
-        private bool _expandProfileView;
-        public bool ExpandProfileView
-        {
-            get { return _expandProfileView; }
-            set
-            {
-                if (value == _expandProfileView)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Ping_ExpandProfileView = value;
-
-                _expandProfileView = value;
-
-                if (_canProfileWidthChange)
-                    ResizeProfile(dueToChangedSize: false);
-
-                OnPropertyChanged();
-            }
-        }
-
-        private GridLength _profileWidth;
-        public GridLength ProfileWidth
-        {
-            get { return _profileWidth; }
-            set
-            {
-                if (value == _profileWidth)
-                    return;
-
-                if (!_isLoading && value.Value != 40) // Do not save the size when collapsed
-                    SettingsManager.Current.Ping_ProfileWidth = value.Value;
-
-                _profileWidth = value;
-
-                if (_canProfileWidthChange)
-                    ResizeProfile(dueToChangedSize: true);
-
-                OnPropertyChanged();
-            }
-        }
-        #endregion
         #endregion
 
-        #region Constructor, load settings
-        public PingHostViewModel(IDialogCoordinator instance)
+        #region Constructor
+        public ProfilesViewModel(IDialogCoordinator instance)
         {
             dialogCoordinator = instance;
-
-            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.Ping);
-
-            TabItems = new ObservableCollection<DragablzTabItem>()
-            {
-                new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new PingView(_tabId), _tabId)
-            };
 
             _profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
             _profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
@@ -148,56 +67,20 @@ namespace NETworkManager.ViewModels
                 ProfileInfo info = o as ProfileInfo;
 
                 if (string.IsNullOrEmpty(Search))
-                    return info.Ping_Enabled;
+                    return true;
 
                 string search = Search.Trim();
 
                 // Search by: Name
-                return (info.Ping_Enabled && info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+                return (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
             // This will select the first entry as selected item...
-            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.Ping_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
-
-            LoadSettings();
-
-            _isLoading = false;
-        }
-
-        private void LoadSettings()
-        {
-            ExpandProfileView = SettingsManager.Current.Ping_ExpandProfileView;
-
-            if (ExpandProfileView)
-                ProfileWidth = new GridLength(SettingsManager.Current.Ping_ProfileWidth);
-            else
-                ProfileWidth = new GridLength(40);
-
-            _tempProfileWidth = SettingsManager.Current.Ping_ProfileWidth;
+            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
         }
         #endregion
 
-        #region ICommand & Actions
-        public ICommand AddTabCommand
-        {
-            get { return new RelayCommand(p => AddTabAction()); }
-        }
-
-        private void AddTabAction()
-        {
-            AddTab();
-        }
-
-        public ICommand PingProfileCommand
-        {
-            get { return new RelayCommand(p => PingProfileAction()); }
-        }
-
-        private void PingProfileAction()
-        {
-            AddTab(SelectedProfile.Ping_Host);
-        }
-
+        #region Commands & Actions
         public ICommand AddProfileCommand
         {
             get { return new RelayCommand(p => AddProfileAction()); }
@@ -237,7 +120,7 @@ namespace NETworkManager.ViewModels
         {
             CustomDialog customDialog = new CustomDialog()
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
+                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")                
             };
 
             ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
@@ -337,6 +220,8 @@ namespace NETworkManager.ViewModels
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
+
+                _profiles.Refresh();
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -348,67 +233,6 @@ namespace NETworkManager.ViewModels
             };
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand ClearSearchCommand
-        {
-            get { return new RelayCommand(p => ClearSearchAction()); }
-        }
-
-        private void ClearSearchAction()
-        {
-            Search = string.Empty;
-        }
-
-        public ItemActionCallback CloseItemCommand
-        {
-            get { return CloseItemAction; }
-        }
-
-        private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
-        {
-            ((args.DragablzItem.Content as DragablzTabItem).View as PingView).CloseTab();
-        }
-        #endregion
-
-        #region Methods
-        private void ResizeProfile(bool dueToChangedSize)
-        {
-            _canProfileWidthChange = false;
-
-            if (dueToChangedSize)
-            {
-                if (ProfileWidth.Value == 40)
-                    ExpandProfileView = false;
-                else
-                    ExpandProfileView = true;
-            }
-            else
-            {
-                if (ExpandProfileView)
-                {
-                    if (_tempProfileWidth == 40)
-                        ProfileWidth = new GridLength(250);
-                    else
-                        ProfileWidth = new GridLength(_tempProfileWidth);
-                }
-                else
-                {
-                    _tempProfileWidth = ProfileWidth.Value;
-                    ProfileWidth = new GridLength(40);
-                }
-            }
-
-            _canProfileWidthChange = true;
-        }
-
-        public void AddTab(string host = null)
-        {
-            _tabId++;
-
-            TabItems.Add(new DragablzTabItem(host ?? LocalizationManager.GetStringByKey("String_Header_NewTab"), new PingView(_tabId, host), _tabId));
-
-            SelectedTabIndex = TabItems.Count - 1;
         }
         #endregion
     }

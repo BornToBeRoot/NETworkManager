@@ -69,11 +69,6 @@
     <system:String x:Key="String_Header_Subnet">Подсеть</system:String>
     <system:String x:Key="String_Header_Calculator">Калькулятор</system:String>    
     <system:String x:Key="String_Header_Connect">Подключить</system:String>
-    <system:String x:Key="String_Header_AddSession">Добавить сеанс</system:String>
-    <system:String x:Key="String_Header_EditSession">Изменить сеанс</system:String>
-    <system:String x:Key="String_Header_CopySession">Копировать сеанс</system:String>
-    <system:String x:Key="String_Header_DeleteSession">Удалить сеанс</system:String>
-    <system:String x:Key="String_Header_Sessions">Сеансы</system:String>
     <system:String x:Key="String_Header_RemoteDesktop">Remote Desktop</system:String>
     <system:String x:Key="String_Header_Disconnected">Отсоединенный</system:String>
     <system:String x:Key="String_Header_LocalDevicesAndResources">Локальные устройства и ресурсы</system:String>
@@ -108,7 +103,9 @@
     <system:String x:Key="String_Header_Resources">Ресурсы</system:String>
     <system:String x:Key="String_Header_Subnetting">Разбиение на подсети</system:String>
     <system:String x:Key="String_Header_Supernetting">Супер плетение</system:String>
-
+    <system:String x:Key="String_Header_NetworkInterface">Network Interface</system:String> <!-- new / updated -->
+    <system:String x:Key="String_Header_General">General</system:String> <!-- new / updated -->
+    
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Мощный инструмент для управления сетями и устранения сетевых проблем!</system:String>
@@ -201,13 +198,6 @@
     <system:String x:Key="String_UntrayBringWindowToFront">Untray / окно в фронте</system:String>
     <system:String x:Key="String_MaximumNumberOfHopsReached">Достигнуто Максимальное число ({0}) прыжков/маршрутизатора!</system:String>
     <system:String x:Key="String_CanceledByUser">Операция отменена пользователем!</system:String>
-    <system:String x:Key="String_ApplicationSettings">Настройки программы</system:String>
-    <system:String x:Key="String_NetworkInterfaceProfiles">Профили сетевого интерфейса</system:String>
-    <system:String x:Key="String_PingProfiles">Ping Профили</system:String>
-    <system:String x:Key="String_TracerouteProfiles">Профили трассировки</system:String>
-    <system:String x:Key="String_PortScannerProfiles">Профили сканера портов</system:String>
-    <system:String x:Key="String_WakeOnLANClients">Пробуждение по клиентам локальной сети</system:String>
-    <system:String x:Key="String_RemoteDesktopSessions">Сеансы удаленного рабочего стола</system:String>
     <system:String x:Key="String_SelectedSettingsAreReset">Выбранные настройки будут сброшены.</system:String>
     <system:String x:Key="String_TheSettingsLocationIsNotAffected">На расположение параметры не влияет</system:String>
     <system:String x:Key="String_ApplicationIsRestartedAfterwards">Приложения после перезагрузки</system:String>
@@ -258,7 +248,6 @@
     <system:String x:Key="String_Open">Открыть</system:String>
     <system:String x:Key="String_EnterNameForProfile">Введите имя, под которым вы хотите сохранить профиль.</system:String>
     <system:String x:Key="String_DeleteProfileMessage">Выбранный профиль будет удален навсегда.</system:String>
-    <system:String x:Key="String_DeleteSessionMessage">Выбранный сеанс будет удален навсегда.</system:String>
     <system:String x:Key="String_Backup">Архивация</system:String>
     <system:String x:Key="String_MultipleInstances">Различные экземпляры</system:String>
     <system:String x:Key="String_ConnectTheNetworkCardToConfigureIt">Подключите сетевую карту к сети, чтобы настроить её!</system:String>
@@ -267,19 +256,11 @@
     <system:String x:Key="String_AddDNSSuffixToHostname">Добавить DNS-суффикс (основной) к имени хоста</system:String>
     <system:String x:Key="String_UseCustomDNSSuffix">Использовать пользовательский DNS-суффикс</system:String>
     <system:String x:Key="String_SettingsSuccessfullyImported">Параметры успешно импортированы!</system:String>
-    <system:String x:Key="String_IPScannerProfilesReloaded">Перезагрузка профилей сканера IP</system:String>
-    <system:String x:Key="String_PingProfilesReloaded">Ping профили перезагрузка</system:String>
-    <system:String x:Key="String_TracerouteProfilesReloaded">Профили трассировки перезагружены</system:String>
-    <system:String x:Key="String_NetworkInterfaceProfilesReloaded">Перезагрузка профилей сетевого интерфейса</system:String>
-    <system:String x:Key="String_PortScannerProfilesReloaded">Перезагрузка профилей сканера портов</system:String>
-    <system:String x:Key="String_RemoteDesktopSessionsReloaded">Перезагрузка сеансов удаленного рабочего стола</system:String>
-    <system:String x:Key="String_PuTTYSessionsReloaded">PuTTY перезагрузка сеансов</system:String>
-    <system:String x:Key="String_WakeOnLANClientsReloaded">Wake on LAN перезагрузка клиентов</system:String>
+    <system:String x:Key="String_ProfilesReloaded">Profiles reloaded</system:String> <!-- new / updated -->
     <system:String x:Key="String_ComingSoon">В ближайшее время!</system:String>
     <system:String x:Key="String_Override">перезаписать</system:String>
     <system:String x:Key="String_Add">добавить</system:String>
     <system:String x:Key="String_NoProfilesFoundCreateOne">Профили не найдены! Создать...</system:String>
-    <system:String x:Key="String_NoSessionsFoundCreateOne">Сеансы не найдены! Создать...</system:String>
     <system:String x:Key="String_NoClientsFoundCreateOne">Клиенты не найдены! Создать...</system:String>
     <system:String x:Key="String_DNSServer">DNS-сервер</system:String>
     <system:String x:Key="String_Questions">Вопросы</system:String>
@@ -379,7 +360,6 @@
     <system:String x:Key="String_ErrorInResponseCheckIfYouHaveWritePermissions">Ошибка в ответе! Проверьте, есть ли у вас разрешения на запись.</system:String>
     <system:String x:Key="String_ShowScanResultForAllIPAddresses">Показать результат сканирования, для всех IP-адресов</system:String>
     <system:String x:Key="String_ConfigureThePathToPuTTYInTheSettings">Настройте путь к PuTTY в настройках...</system:String>
-    <system:String x:Key="String_PuTTYSessions">PuTTY сессия</system:String>
     <system:String x:Key="String_SSH">SSH</system:String>
     <system:String x:Key="String_Telnet">Telnet</system:String>
     <system:String x:Key="String_Rlogin">Rlogin</system:String>
@@ -396,7 +376,7 @@
     <system:String x:Key="String_AdditionalCommandLine">Дополнительная командная строка</system:String>
     <system:String x:Key="String_PuTTYProcessHasEnded">PuTTY процесс завершился!</system:String>
     <system:String x:Key="String_EditGroup">Изменить группу</system:String>
-    <system:String x:Key="String_NewSessionDots">Новый сеанс...</system:String>
+    <system:String x:Key="String_NewProfileDots">Новый сеанс...</system:String>
     <system:String x:Key="String_Gitter">Gitter</system:String>
     <system:String x:Key="String_GitHub">GitHub</system:String>
     <system:String x:Key="String_OverwriteSettingsInTheDestinationFolder">Перезаписать настройки в папке назначения?\n\nЕсли Вы нажмете "Move &amp; Restart", остальные файлы будут скопированы и приложение будет перезапущено с новыми настройками!</system:String>
@@ -430,13 +410,16 @@
     <system:String x:Key="String_AutomaticallyUpdateEvery">Автоматически обновлять всегда</system:String>
     <system:String x:Key="String_ClearFilter">Очистить фильтр</system:String>
     <system:String x:Key="String_AddProfileDots">Добавить профиль...</system:String>
-    <system:String x:Key="String_AddSessionDots">Добавить сеанс...</system:String>
     <system:String x:Key="String_AddClientDots">Добавить клиент...</system:String>
     <system:String x:Key="String_ShowStatistics">Показать статистику</system:String>
     <system:String x:Key="String_Subnet1">Подсеть 1</system:String>
     <system:String x:Key="String_Subnet2">Подсеть 2</system:String>
     <system:String x:Key="String_EnterSubnetsToCreateASupernet">Введите подсети для создания суперсети...</system:String>
     <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Введите подсеть и новую маску подсети для создания подсетей...</system:String>
+    <system:String x:Key="String_Enable">Enable</system:String> <!-- new / updated -->
+    <system:String x:Key="String_SelectAtLeastOneNodeWhereTheProfileShouldAppear">Select at least one node, where the profile should appear! Click on a tab and select enable...</system:String> <!-- new / updated -->
+    <system:String x:Key="String_Profiles">Profiles</system:String> <!-- new / updated -->
+    <system:String x:Key="String_ShowOnlyMostCommonQueryTypes">Show only most common query types</system:String>
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Как установить RDP 8.1 на Windows 7 / Server 2008 R2</system:String>
@@ -478,7 +461,7 @@
     <system:String x:Key="String_Button_AddProfile">Добавить профиль...</system:String>
     <system:String x:Key="String_Button_NetworkConnections">Сетевое подключение...</system:String>
     <system:String x:Key="String_Button_Connect">Соединить</system:String>
-    <system:String x:Key="String_Button_AddSessions">Добавить сеанс...</system:String>
+    <system:String x:Key="String_Button_AddProfiles">Добавить сеанс...</system:String>
     <system:String x:Key="String_Button_Save">Сохранить</system:String>
     <system:String x:Key="String_Button_Refresh">Обновить</system:String>
     <system:String x:Key="String_Button_Reconnect">Восстановить соединение</system:String>
@@ -559,7 +542,7 @@
     <system:String x:Key="String_Watermark_ExampleTags">server; dmz</system:String>
     <system:String x:Key="String_Watermark_ExampleUsername">Admin</system:String>
     <system:String x:Key="String_Watermark_ExampleCredentialName">Windows-Testuser</system:String>
-    <system:String x:Key="String_Watermark_ExampleRemoteDesktopSessionName">Webserver</system:String>
+    <system:String x:Key="String_Watermark_ExampleRemoteDesktopProfileName">Webserver</system:String>
     <system:String x:Key="String_Watermark_ExampleSuffix">fritz.box</system:String>
     <system:String x:Key="String_Watermark_NotChanged">(not changed)</system:String>
     <system:String x:Key="String_Watermark_ExampleSNMPOID">1.3.6.1.2.1.1</system:String>
