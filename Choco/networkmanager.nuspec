@@ -47,15 +47,15 @@ This is a nuspec. It mostly adheres to https://docs.nuget.org/create/Nuspec-Refe
     <docsUrl>https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</docsUrl>
     <!--<mailingListUrl></mailingListUrl>-->
     <bugTrackerUrl>https://github.com/BornToBeRoot/NETworkManager/issues</bugTrackerUrl>
-    <tags>networkmanager networkinterface network ipscanner ip scan portscanner port wakeonlan wol traceroute tracert trace ping icmp dns dnslookup subnet calculator subnetting supernetting httpheader snmp walk get set v2c v1 v3 rdp remotedesktop putty ssh arp table listeners connections</tags>
-    <summary></summary>
+    <tags>networkinterface ipscanner portscanner wakeonlan traceroute ping dnslookup subnet calculator snmp remotedesktop ssh putty</tags>
+    <summary>A powerful tool for managing networks and troubleshoot network problems!</summary>
     <description>A powerful tool for managing networks and troubleshoot network problems!</description>
     <!-- <releaseNotes>__REPLACE_OR_REMOVE__MarkDown_Okay</releaseNotes> -->
     <!-- =============================== -->      
 
     <!-- Specifying dependencies and version ranges? https://docs.nuget.org/create/versioning#specifying-version-ranges-in-.nuspec-files -->
     <dependencies>
-      <dependency id="dotnet4.7.2" version="4.7.2.0" />
+      <dependency id="dotnetfx" />
     </dependencies>
     <!-- chocolatey-core.extension - https://chocolatey.org/packages/chocolatey-core.extension
          - You want to use Get-UninstallRegistryKey on less than 0.9.10 (in chocolateyUninstall.ps1)
