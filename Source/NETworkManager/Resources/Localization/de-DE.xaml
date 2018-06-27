@@ -555,14 +555,6 @@
     <system:String x:Key="String_Watermark_ExampleIPv4SubnetmaskIPv6CIDR">255.255.255.0 or /64</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4IPv6Subnet2">192.168.178.134/255.255.255.0 or 2001:0db9::/64</system:String>
 
-    <!-- ShowProgress -->
-    <system:String x:Key="String_Progress_SetStaticIPAddress">Setze statische IP-Adresse und Gateway...</system:String>
-    <system:String x:Key="String_Progress_SetDynamicIPAddress">Setze dynamische IP-Adresse...</system:String>
-    <system:String x:Key="String_Progress_SetStaticDNSServer">Setze statische DNS-Server...</system:String>
-    <system:String x:Key="String_Progesss_SetDynamicDNSServer">Setze dynamischen DNS-Server...</system:String>
-    <system:String x:Key="String_Progress_RenewDHCPLease">Erneuere DHCP Lease...</system:String>
-    <system:String x:Key="String_Progress_FixGatewayAfterDHCPEnabled">Fixe Gateway nachdem DHCP aktiviert wurde...</system:String>
-
     <!-- Validate (User Input in GUI) -->
     <system:String x:Key="String_ValidationError_FieldEmpty">Feld darf nicht leer sein!</system:String>
     <system:String x:Key="String_ValidationError_EnterValidMACAddress">Geben Sie eine gültige MAC-Addresse (z.B. 00:F1:23:AB:F2:35) ein!</system:String>

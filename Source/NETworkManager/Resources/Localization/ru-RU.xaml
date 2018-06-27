@@ -352,7 +352,7 @@
     <system:String x:Key="String_NoUpdateAvailable">Нет доступных обновлений!</system:String>
     <system:String x:Key="String_InstallRDP8dot1Message">Для использования функций удаленного рабочего стола необходимо установить протокол удаленного рабочего стола (RDP) версии 8.1 в системе!</system:String>
     <system:String x:Key="String_TheProcessCanTakeUpSomeTimeAndResources">Процесс может занять некоторое время и ресурсы (CPU / RAM).</system:String>
-    <system:String x:Key="String_ErrorCheckingApiGithubComVerifyYourNetworkConnection">Проверка ошибок "eapi.github.com', проверьте подключение к сети!</system:String>
+    <system:String x:Key="String_ErrorCheckingApiGithubComVerifyYourNetworkConnection">Проверка ошибок "api.github.com', проверьте подключение к сети!</system:String>
     <system:String x:Key="String_Mode">Режим</system:String>
     <system:String x:Key="String_OpenProject">Открыть проект</system:String>
     <system:String x:Key="String_OpenLicense">Open license</system:String>
@@ -554,14 +554,6 @@
     <system:String x:Key="String_Watermark_ExampleSerialLine">COM5</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4SubnetmaskIPv6CIDR">255.255.255.0 or /64</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4IPv6Subnet2">192.168.178.134/255.255.255.0 or 2001:0db9::/64</system:String>
-
-    <!-- ShowProgress -->
-    <system:String x:Key="String_Progress_SetStaticIPAddress">Установка статического IP-адреса и шлюза...</system:String>
-    <system:String x:Key="String_Progress_SetDynamicIPAddress">Задать динамический IP-адрес...</system:String>
-    <system:String x:Key="String_Progress_SetStaticDNSServer">Установить статический DNS-сервер...</system:String>
-    <system:String x:Key="String_Progesss_SetDynamicDNSServer">Установить динамический DNS-сервер...</system:String>
-    <system:String x:Key="String_Progress_RenewDHCPLease">Обновить аренду DHCP...</system:String>
-    <system:String x:Key="String_Progress_FixGatewayAfterDHCPEnabled">Исправить шлюз после включения DHCP...</system:String>
     
     <!-- Validate (User Input in GUI) -->
     <system:String x:Key="String_ValidationError_FieldEmpty">Поле не может быть пустым!</system:String>
