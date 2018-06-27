@@ -352,7 +352,7 @@
     <system:String x:Key="String_NoUpdateAvailable">No update available!</system:String>
     <system:String x:Key="String_InstallRDP8dot1Message">You must install the Remote Desktop Protocol (RDP) version 8.1 on your system to use the Remote Desktop functionality!</system:String>
     <system:String x:Key="String_TheProcessCanTakeUpSomeTimeAndResources">The process can take up some time and resources (CPU / RAM).</system:String>
-    <system:String x:Key="String_ErrorCheckingApiGithubComVerifyYourNetworkConnection">Error checking 'eapi.github.com', check your network connection!</system:String>
+    <system:String x:Key="String_ErrorCheckingApiGithubComVerifyYourNetworkConnection">Error checking 'api.github.com', check your network connection!</system:String>
     <system:String x:Key="String_Mode">Mode</system:String>
     <system:String x:Key="String_OpenProject">Open project</system:String>
     <system:String x:Key="String_OpenLicense">Open license</system:String>
@@ -554,14 +554,6 @@
     <system:String x:Key="String_Watermark_ExampleSerialLine">COM5</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4SubnetmaskIPv6CIDR">255.255.255.0 or /64</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4IPv6Subnet2">192.168.178.134/255.255.255.0 or 2001:0db9::/64</system:String>
-    
-    <!-- ShowProgress -->
-    <system:String x:Key="String_Progress_SetStaticIPAddress">Set static IP address and gateway...</system:String>
-    <system:String x:Key="String_Progress_SetDynamicIPAddress">Set dynamic IP address...</system:String>
-    <system:String x:Key="String_Progress_SetStaticDNSServer">Set static DNS server...</system:String>
-    <system:String x:Key="String_Progesss_SetDynamicDNSServer">Set dynamic DNS server...</system:String>
-    <system:String x:Key="String_Progress_RenewDHCPLease">Renew DHCP lease...</system:String>
-    <system:String x:Key="String_Progress_FixGatewayAfterDHCPEnabled">Fix gateway after DHCP is enabled...</system:String>
     
     <!-- Validate (User Input in GUI) -->
     <system:String x:Key="String_ValidationError_FieldEmpty">Field cannot be empty!</system:String>

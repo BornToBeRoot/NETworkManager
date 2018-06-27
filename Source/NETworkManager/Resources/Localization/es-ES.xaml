@@ -352,7 +352,7 @@
     <system:String x:Key="String_NoUpdateAvailable">¡Actualización no disponible!</system:String>
     <system:String x:Key="String_InstallRDP8dot1Message">¡Debe instalar la versión 8.1 del protocolo de escritorio remoto (RDP) en su sistema para usar la funcionalidad de escritorio remoto!</system:String>
     <system:String x:Key="String_TheProcessCanTakeUpSomeTimeAndResources">El proceso puede tomar algo de tiempo y recursos (CPU / RAM).</system:String>
-    <system:String x:Key="String_ErrorCheckingApiGithubComVerifyYourNetworkConnection">¡Error al comprobar 'eapi.github.com', compruebe su conexión de red!</system:String>
+    <system:String x:Key="String_ErrorCheckingApiGithubComVerifyYourNetworkConnection">¡Error al comprobar 'api.github.com', compruebe su conexión de red!</system:String>
     <system:String x:Key="String_Mode">Modo</system:String>
     <system:String x:Key="String_OpenProject">Abrir proyecto</system:String>
     <system:String x:Key="String_OpenLicense">Abrir licencia</system:String>
@@ -554,14 +554,6 @@
     <system:String x:Key="String_Watermark_ExampleSerialLine">COM5</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4SubnetmaskIPv6CIDR">255.255.255.0 o /64</system:String>
     <system:String x:Key="String_Watermark_ExampleIPv4IPv6Subnet2">192.168.178.134/255.255.255.0 o 2001:0db9::/64</system:String>
-
-    <!-- ShowProgress -->
-    <system:String x:Key="String_Progress_SetStaticIPAddress">Establecer la dirección IP estática y puerta de enlace...</system:String>
-    <system:String x:Key="String_Progress_SetDynamicIPAddress">Establecer dirección IP dinámica...</system:String>
-    <system:String x:Key="String_Progress_SetStaticDNSServer">Establecer servidor DNS estático...</system:String>
-    <system:String x:Key="String_Progesss_SetDynamicDNSServer">Establecer servidor DNS dinámico...</system:String>
-    <system:String x:Key="String_Progress_RenewDHCPLease">Renovar el contrato DHCP...</system:String>
-    <system:String x:Key="String_Progress_FixGatewayAfterDHCPEnabled">Corregir la puerta de enlace después de habilitar DHCP...</system:String>
 
     <!-- Validate (User Input in GUI) -->
     <system:String x:Key="String_ValidationError_FieldEmpty">¡El campo no puede estar vacío!</system:String>
