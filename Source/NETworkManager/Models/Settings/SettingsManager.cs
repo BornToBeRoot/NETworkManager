@@ -61,7 +61,7 @@ namespace NETworkManager.Models.Settings
         #region File paths
         private static string GetIsPortableFilePath()
         {
-            return Path.Combine(GetApplicationLocation(), GetSettingsFileName());
+            return Path.Combine(GetApplicationLocation(), GetIsPortableFileName());
         }
 
         public static string GetSettingsFilePath()
