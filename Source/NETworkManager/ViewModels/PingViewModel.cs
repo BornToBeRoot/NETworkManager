@@ -51,7 +51,7 @@ namespace NETworkManager.ViewModels
         {
             get { return _hostHistoryView; }
         }
-
+              
         private bool _isPingRunning;
         public bool IsPingRunning
         {
@@ -99,6 +99,19 @@ namespace NETworkManager.ViewModels
             get { return _pingResultView; }
         }
 
+        private PingInfo _selectedPingResult;
+        public PingInfo SelectedPingResult
+        {
+            get { return _selectedPingResult; }
+            set
+            {
+                if (value == _selectedPingResult)
+                    return;
+
+                _selectedPingResult = value;
+                OnPropertyChanged();
+            }
+        }
 
         private int _pingsTransmitted;
         public int PingsTransmitted
@@ -326,6 +339,76 @@ namespace NETworkManager.ViewModels
                 StopPing();
             else
                 StartPing();
+        }
+
+        public ICommand CopySelectedTimestampCommand
+        {
+            get { return new RelayCommand(p => CopySelectedTimestampAction()); }
+        }
+
+        private void CopySelectedTimestampAction()
+        {
+            Clipboard.SetText(SelectedPingResult.Timestamp.ToString());
+        }
+
+        public ICommand CopySelectedIPAddressCommand
+        {
+            get { return new RelayCommand(p => CopySelectedIPAddressAction()); }
+        }
+
+        private void CopySelectedIPAddressAction()
+        {
+            Clipboard.SetText(SelectedPingResult.IPAddress.ToString());
+        }
+
+        public ICommand CopySelectedHostnameCommand
+        {
+            get { return new RelayCommand(p => CopySelectedHostnameAction()); }
+        }
+
+        private void CopySelectedHostnameAction()
+        {
+            Clipboard.SetText(SelectedPingResult.Hostname);
+        }
+
+        public ICommand CopySelectedBytesCommand
+        {
+            get { return new RelayCommand(p => CopySelectedBytesAction()); }
+        }
+
+        private void CopySelectedBytesAction()
+        {
+            Clipboard.SetText(SelectedPingResult.Bytes.ToString());
+        }
+
+        public ICommand CopySelectedTimeCommand
+        {
+            get { return new RelayCommand(p => CopySelectedTimeAction()); }
+        }
+
+        private void CopySelectedTimeAction()
+        {
+            Clipboard.SetText(SelectedPingResult.Time.ToString());
+        }
+
+        public ICommand CopySelectedTTLCommand
+        {
+            get { return new RelayCommand(p => CopySelectedTTLAction()); }
+        }
+
+        private void CopySelectedTTLAction()
+        {
+            Clipboard.SetText(SelectedPingResult.TTL.ToString());
+        }
+
+        public ICommand CopySelectedStatusCommand
+        {
+            get { return new RelayCommand(p => CopySelectedStatusAction()); }
+        }
+
+        private void CopySelectedStatusAction()
+        {
+            Clipboard.SetText(LocalizationManager.GetStringByKey("String_IPStatus_" + SelectedPingResult.Status.ToString()));
         }
         #endregion
 

@@ -423,7 +423,8 @@
     <system:String x:Key="String_ShowOnlyMostCommonQueryTypes">Show only most common query types</system:String>
     <system:String x:Key="String_DisableTransparencyInTheSettingsToUseRemoteDesktop">Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use Remote Desktop</system:String>
     <system:String x:Key="String_DisableTransparencyInTheSettingsToUsePuTTY">Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PuTTY</system:String>
-    
+    <system:String x:Key="String_Timestamp">Timestamp</system:String>
+
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">How to create a custom theme and accent?</system:String>
