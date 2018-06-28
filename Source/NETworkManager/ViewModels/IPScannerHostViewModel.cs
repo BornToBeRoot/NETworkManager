@@ -152,8 +152,18 @@ namespace NETworkManager.ViewModels
 
                 string search = Search.Trim();
 
-                // Search by: Name
-                return (info.IPScanner_Enabled && info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+                // Search by: Tag=xxx (exact match, ignore case)
+                if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (string.IsNullOrEmpty(info.Tags))
+                        return false;
+                    else
+                        return (info.IPScanner_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase)));
+                }
+                else // Search by: Name, IPScanner_IPRange
+                {
+                    return (info.IPScanner_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || (info.IPScanner_IPRange.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1)));
+                }
             };
 
             // This will select the first entry as selected item...
@@ -217,7 +227,7 @@ namespace NETworkManager.ViewModels
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
-               
+
         public ICommand EditProfileCommand
         {
             get { return new RelayCommand(p => EditProfileAction()); }
@@ -368,7 +378,7 @@ namespace NETworkManager.ViewModels
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
             ((args.DragablzItem.Content as DragablzTabItem).View as IPScannerView).CloseTab();
-        }              
+        }
         #endregion
 
         #region Methods
