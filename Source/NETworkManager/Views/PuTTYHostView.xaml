@@ -331,7 +331,7 @@
             </Button>
         </StackPanel>
         <StackPanel VerticalAlignment="Center" Visibility="{Binding Source={x:Static Settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="10">
-            <TextBlock Text="{DynamicResource String_DisableTransparencyInTheSettingsToUseRemoteDesktop}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+            <TextBlock Text="{DynamicResource String_DisableTransparencyInTheSettingsToUsePuTTY}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
             <Button HorizontalAlignment="Center" Command="{Binding OpenSettingsCommand}" Style="{StaticResource ImageWithTextButton}">
                 <Button.Content>
                     <Grid>
