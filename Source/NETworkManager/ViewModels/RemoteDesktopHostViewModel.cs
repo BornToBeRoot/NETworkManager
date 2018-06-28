@@ -537,9 +537,9 @@ namespace NETworkManager.ViewModels
                             ConfigurationManager.Current.IsDialogOpen = false;
                         }
                     }, instance =>
-                    {
-                        ConfigurationManager.Current.IsDialogOpen = true;
-                        dialogCoordinator.HideMetroDialogAsync(this, customDialog);                       
+                    {                        
+                        dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                        ConfigurationManager.Current.IsDialogOpen = false;
                     });
 
                     customDialog.Content = new CredentialsMasterPasswordDialog
