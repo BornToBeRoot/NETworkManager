@@ -132,7 +132,7 @@ namespace NETworkManager.Models.Settings
 
                 Ping_Enabled = instance.Ping_Enabled,
                 Ping_InheritHost = instance.Ping_InheritHost,
-                Ping_Host = instance.Ping_Host,
+                Ping_Host = instance.Ping_InheritHost ? instance.Host : instance.Ping_Host,
 
                 Traceroute_Enabled = instance.Traceroute_Enabled,
                 Traceroute_InheritHost = instance.Traceroute_InheritHost,
