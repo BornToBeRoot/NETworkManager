@@ -212,7 +212,12 @@ namespace NETworkManager.ViewModels
 
         public ICommand ConnectCommand
         {
-            get { return new RelayCommand(p => ConnectAction()); }
+            get { return new RelayCommand(p => ConnectAction(), Connect_CanExecute); }
+        }
+
+        private bool Connect_CanExecute(object obj)
+        {
+            return IsPuTTYConfigured && !ConfigurationManager.Current.IsTransparencyEnabled;
         }
 
         private void ConnectAction()

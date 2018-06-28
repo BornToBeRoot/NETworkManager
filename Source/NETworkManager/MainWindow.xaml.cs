@@ -277,6 +277,8 @@ namespace NETworkManager
             {
                 AllowsTransparency = true;
                 Opacity = SettingsManager.Current.Appearance_Opacity;
+
+                ConfigurationManager.Current.IsTransparencyEnabled = true;
             }
                         
             // NotifyIcon for Autostart

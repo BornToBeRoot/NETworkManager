@@ -103,9 +103,9 @@
     <system:String x:Key="String_Header_Resources">Ресурсы</system:String>
     <system:String x:Key="String_Header_Subnetting">Разбиение на подсети</system:String>
     <system:String x:Key="String_Header_Supernetting">Супер плетение</system:String>
-    <system:String x:Key="String_Header_NetworkInterface">Network Interface</system:String> <!-- new / updated -->
-    <system:String x:Key="String_Header_General">General</system:String> <!-- new / updated -->
-    <system:String x:Key="String_Header_ResolvePTR">Resolve PTR</system:String> <!-- new / updated -->
+    <system:String x:Key="String_Header_NetworkInterface">Network Interface</system:String> <!-- new/updated, please remove comment if string is translated -->
+    <system:String x:Key="String_Header_General">General</system:String> <!-- new/updated, please remove comment if string is translated -->
+    <system:String x:Key="String_Header_ResolvePTR">Resolve PTR</system:String> <!-- new/updated, please remove comment if string is translated -->
 
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -257,7 +257,7 @@
     <system:String x:Key="String_AddDNSSuffixToHostname">Добавить DNS-суффикс (основной) к имени хоста</system:String>
     <system:String x:Key="String_UseCustomDNSSuffix">Использовать пользовательский DNS-суффикс</system:String>
     <system:String x:Key="String_SettingsSuccessfullyImported">Параметры успешно импортированы!</system:String>
-    <system:String x:Key="String_ProfilesReloaded">Profiles reloaded</system:String> <!-- new / updated -->
+    <system:String x:Key="String_ProfilesReloaded">Profiles reloaded</system:String> <!-- new/updated, please remove comment if string is translated -->
     <system:String x:Key="String_ComingSoon">В ближайшее время!</system:String>
     <system:String x:Key="String_Override">перезаписать</system:String>
     <system:String x:Key="String_Add">добавить</system:String>
@@ -417,10 +417,12 @@
     <system:String x:Key="String_Subnet2">Подсеть 2</system:String>
     <system:String x:Key="String_EnterSubnetsToCreateASupernet">Введите подсети для создания суперсети...</system:String>
     <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Введите подсеть и новую маску подсети для создания подсетей...</system:String>
-    <system:String x:Key="String_Enable">Enable</system:String> <!-- new / updated -->
-    <system:String x:Key="String_SelectAtLeastOneNodeWhereTheProfileShouldAppear">Select at least one node, where the profile should appear! Click on a tab and select enable...</system:String> <!-- new / updated -->
-    <system:String x:Key="String_Profiles">Profiles</system:String> <!-- new / updated -->
+    <system:String x:Key="String_Enable">Enable</system:String> <!-- new/updated, please remove comment if string is translated -->
+    <system:String x:Key="String_SelectAtLeastOneNodeWhereTheProfileShouldAppear">Select at least one node, where the profile should appear! Click on a tab and select enable...</system:String> <!-- new/updated, please remove comment if string is translated -->
+    <system:String x:Key="String_Profiles">Profiles</system:String> <!-- new/updated, please remove comment if string is translated -->
     <system:String x:Key="String_ShowOnlyMostCommonQueryTypes">Show only most common query types</system:String>
+    <system:String x:Key="String_DisableTransparencyInTheSettingsToUseRemoteDesktop">Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use Remote Desktop</system:String> <!-- new/updated, please remove comment if string is translated -->
+    <system:String x:Key="String_DisableTransparencyInTheSettingsToUsePuTTY">Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PuTTY</system:String> <!-- new/updated, please remove comment if string is translated -->
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Как установить RDP 8.1 на Windows 7 / Server 2008 R2</system:String>

@@ -16,6 +16,7 @@ namespace NETworkManager.Models.Settings
         public string ExecutionPath { get; set; }
         public string ApplicationFullName { get; set; }
         public string ApplicationName { get; set; }
+        public bool IsTransparencyEnabled { get; set; }
 
         private bool _isDialogOpen { get; set; }
         public bool IsDialogOpen

@@ -22,7 +22,19 @@
         <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding ConnectCommand}" />
     </UserControl.InputBindings>
     <Grid>
-        <Grid Visibility="{Binding IsRDP8dot1Available, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Grid>
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsRDP8dot1Available}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Source={x:Static Settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -297,7 +309,19 @@
                 </Grid>
             </Expander>
         </Grid>
-        <StackPanel VerticalAlignment="Center" Visibility="{Binding IsRDP8dot1Available, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Margin="10">
+        <StackPanel VerticalAlignment="Center" Margin="10">
+            <StackPanel.Style>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsRDP8dot1Available}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Source={x:Static Settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
             <TextBlock Text="{DynamicResource String_InstallRDP8dot1Message}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <StackPanel.InputBindings>
@@ -330,6 +354,25 @@
                 </Rectangle>
                 <TextBlock Text="{DynamicResource String_DocumentationTitle_00001}" VerticalAlignment="Center" FontSize="14" Margin="10,0,0,0" />
             </StackPanel>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" Visibility="{Binding Source={x:Static Settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="10">
+            <TextBlock Text="{DynamicResource String_DisableTransparencyInTheSettingsToUseRemoteDesktop}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+            <Button HorizontalAlignment="Center" Command="{Binding OpenSettingsCommand}" Style="{StaticResource ImageWithTextButton}">
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Settings}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_OpenSettings}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                    </Grid>
+                </Button.Content>
+            </Button>
         </StackPanel>
     </Grid>
 </UserControl>
