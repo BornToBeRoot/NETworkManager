@@ -296,7 +296,8 @@ namespace NETworkManager.ViewModels
 
             // Result view
             _portScanResultView = CollectionViewSource.GetDefaultView(PortScanResult);
-
+            _portScanResultView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortInfo.Host)));
+            
             LoadSettings();
 
             // Detect if settings have changed...
