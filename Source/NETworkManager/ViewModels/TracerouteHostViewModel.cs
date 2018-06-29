@@ -152,8 +152,18 @@ namespace NETworkManager.ViewModels
 
                 string search = Search.Trim();
 
-                // Search by: Name
-                return (info.Traceroute_Enabled && info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+                // Search by: Tag=xxx (exact match, ignore case)
+                if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (string.IsNullOrEmpty(info.Tags))
+                        return false;
+                    else
+                        return (info.Traceroute_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase)));
+                }
+                else // Search by: Name, Traceroute_Host
+                {
+                    return (info.Traceroute_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || (info.Traceroute_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1)));
+                }
             };
 
             // This will select the first entry as selected item...

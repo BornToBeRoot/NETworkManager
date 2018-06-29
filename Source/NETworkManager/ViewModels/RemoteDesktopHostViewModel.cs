@@ -168,8 +168,18 @@ namespace NETworkManager.ViewModels
 
                     string search = Search.Trim();
 
-                    // Search by: Name
-                    return (info.RemoteDesktop_Enabled && info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+                    // Search by: Tag=xxx (exact match, ignore case)
+                    if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (string.IsNullOrEmpty(info.Tags))
+                            return false;
+                        else
+                            return (info.RemoteDesktop_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase)));
+                    }
+                    else // Search by: Name, RemoteDesktop_Host
+                    {
+                        return (info.RemoteDesktop_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteDesktop_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1));
+                    }
                 };
 
                 // This will select the first entry as selected item...

@@ -162,7 +162,7 @@ namespace NETworkManager.ViewModels
                 }
                 else // Search by: Name, IPScanner_IPRange
                 {
-                    return (info.IPScanner_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || (info.IPScanner_IPRange.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1)));
+                    return (info.IPScanner_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.IPScanner_IPRange.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1));
                 }
             };
 

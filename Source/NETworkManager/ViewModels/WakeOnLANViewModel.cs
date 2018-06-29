@@ -19,6 +19,8 @@ namespace NETworkManager.ViewModels
         #region  Variables 
         private IDialogCoordinator dialogCoordinator;
 
+        private const string tagIdentifier = "tag=";
+
         private bool _isLoading = true;
 
         private bool _isSending;
@@ -257,8 +259,18 @@ namespace NETworkManager.ViewModels
 
                 string search = Search.Trim();
 
-                // Search by: Name
-                return (info.WakeOnLAN_Enabled && info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+                // Search by: Tag=xxx (exact match, ignore case)
+                if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (string.IsNullOrEmpty(info.Tags))
+                        return false;
+                    else
+                        return (info.WakeOnLAN_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase)));
+                }
+                else // Search by: Name, PuTTY_HostOrSerialLine
+                {
+                    return (info.WakeOnLAN_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.WakeOnLAN_MACAddress.Replace("-", "").Replace(":", "").IndexOf(search.Replace("-", "").Replace(":", ""), StringComparison.OrdinalIgnoreCase) > -1));
+                }
             };
 
             // This will select the first entry as selected item...
