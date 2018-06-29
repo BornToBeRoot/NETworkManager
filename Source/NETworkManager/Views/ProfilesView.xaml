@@ -77,9 +77,30 @@
                                     <ControlTemplate TargetType="{x:Type GroupItem}">
                                         <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}">
                                             <Expander.Header>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding Name}" Margin="0" />
-                                                </StackPanel>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{DynamicResource DefaultTextBlock}"/>
+                                                    <Button Grid.Column="1" ToolTip="{DynamicResource String_EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource CleanButton}">
+                                                        <Rectangle Width="16" Height="16">
+                                                            <Rectangle.OpacityMask>
+                                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
+                                                            </Rectangle.OpacityMask>
+                                                            <Rectangle.Style>
+                                                                <Style TargetType="{x:Type Rectangle}">
+                                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Rectangle.Style>
+                                                        </Rectangle>
+                                                    </Button>
+                                                </Grid>
                                             </Expander.Header>
                                             <ItemsPresenter />
                                         </Expander>
