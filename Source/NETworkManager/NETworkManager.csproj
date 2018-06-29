@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\SourceLink.Create.GitHub.2.8.3\build\SourceLink.Create.GitHub.props" Condition="Exists('..\packages\SourceLink.Create.GitHub.2.8.3\build\SourceLink.Create.GitHub.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -106,8 +105,8 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>obj\Debug\MSTSCLib.dll</HintPath>
     </Reference>
-    <Reference Include="Octokit, Version=0.30.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Octokit.0.30.0\lib\net45\Octokit.dll</HintPath>
+    <Reference Include="Octokit, Version=0.29.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Octokit.0.29.0\lib\net45\Octokit.dll</HintPath>
     </Reference>
     <Reference Include="SharpSnmpLib, Version=10.0.7.0, Culture=neutral, PublicKeyToken=4c00852d3788e005, processorArchitecture=MSIL">
       <HintPath>..\packages\Lextm.SharpSnmpLib.10.0.7\lib\net452\SharpSnmpLib.dll</HintPath>
@@ -1143,14 +1142,6 @@
   <PropertyGroup>
     <PreBuildEvent>PowerShell.exe -ExecutionPolicy Bypass -NoProfile -File "$(ProjectDir)..\..\Scripts\PreBuildEventCommandLine.ps1" "$(TargetDir)"</PreBuildEvent>
   </PropertyGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>Dieses Projekt verweist auf mindestens ein NuGet-Paket, das auf diesem Computer fehlt. Verwenden Sie die Wiederherstellung von NuGet-Paketen, um die fehlenden Dateien herunterzuladen. Weitere Informationen finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=322105". Die fehlende Datei ist "{0}".</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\SourceLink.Create.GitHub.2.8.3\build\SourceLink.Create.GitHub.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SourceLink.Create.GitHub.2.8.3\build\SourceLink.Create.GitHub.props'))" />
-    <Error Condition="!Exists('..\packages\SourceLink.Create.GitHub.2.8.3\build\SourceLink.Create.GitHub.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SourceLink.Create.GitHub.2.8.3\build\SourceLink.Create.GitHub.targets'))" />
-  </Target>
-  <Import Project="..\packages\SourceLink.Create.GitHub.2.8.3\build\SourceLink.Create.GitHub.targets" Condition="Exists('..\packages\SourceLink.Create.GitHub.2.8.3\build\SourceLink.Create.GitHub.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
