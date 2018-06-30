@@ -424,6 +424,7 @@
     <system:String x:Key="String_DisableTransparencyInTheSettingsToUseRemoteDesktop">Desactive la transparencia en la configuración (General/Apariencia) y reinicie la aplicación luego puede usar el Escritorio remoto</system:String>
     <system:String x:Key="String_DisableTransparencyInTheSettingsToUsePuTTY">Desactive la transparencia en la configuración (General/Apariencia) y reinicie la aplicación luego puede usar PuTTY</system:String>
     <system:String x:Key="String_Timestamp">Timestamp</system:String> <!-- new/updated, please remove comment if string is translated -->
+    <system:String x:Key="String_SearchedLanguageNotFound">Searched language not found!</system:String> <!-- new/updated, please remove comment if string is translated -->
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Cómo instalar RDP 8.1 en Windows 7/Server 2008 R2</system:String>

@@ -424,6 +424,7 @@
     <system:String x:Key="String_DisableTransparencyInTheSettingsToUseRemoteDesktop">Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use Remote Desktop</system:String> <!-- new/updated, please remove comment if string is translated -->
     <system:String x:Key="String_DisableTransparencyInTheSettingsToUsePuTTY">Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PuTTY</system:String> <!-- new/updated, please remove comment if string is translated -->
     <system:String x:Key="String_Timestamp">Timestamp</system:String> <!-- new/updated, please remove comment if string is translated -->
+    <system:String x:Key="String_SearchedLanguageNotFound">Searched language not found!</system:String> <!-- new/updated, please remove comment if string is translated -->
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Как установить RDP 8.1 на Windows 7 / Server 2008 R2</system:String>

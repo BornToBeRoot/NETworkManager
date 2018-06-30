@@ -81,7 +81,7 @@
                         </Rectangle.Style>
                     </Rectangle>
                 </Button>
-                <TextBlock Text="{DynamicResource String_NothingFound}" Style="{DynamicResource MessageTextBlock}" />
+                <TextBlock Text="{DynamicResource String_SearchedLanguageNotFound}" Style="{DynamicResource MessageTextBlock}" />
             </StackPanel>
         </Grid>
         <Grid Grid.Row="3" Visibility="{Binding RestartRequired, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,10,0,0">
