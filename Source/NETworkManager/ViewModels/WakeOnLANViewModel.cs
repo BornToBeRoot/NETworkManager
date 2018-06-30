@@ -476,7 +476,7 @@ namespace NETworkManager.ViewModels
 
                 ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
 
-                _profiles.Refresh();
+                Refresh();
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -555,6 +555,12 @@ namespace NETworkManager.ViewModels
             }
 
             _canProfileWidthChange = true;
+        }
+
+        public void Refresh()
+        {
+            // Refresh profiles
+            Profiles.Refresh();
         }
         #endregion
     }

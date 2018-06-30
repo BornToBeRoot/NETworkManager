@@ -23,7 +23,7 @@ namespace NETworkManager.ViewModels
         private IDialogCoordinator dialogCoordinator;
 
         private const string tagIdentifier = "tag=";
-        
+
         private bool _isLoading = true;
 
         public bool IsAdmin
@@ -729,7 +729,7 @@ namespace NETworkManager.ViewModels
             LoadSettings();
 
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-            
+
             _isLoading = false;
         }
 
@@ -972,6 +972,8 @@ namespace NETworkManager.ViewModels
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
+
+                Refresh();
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -1160,6 +1162,12 @@ namespace NETworkManager.ViewModels
             }
 
             _canProfileWidthChange = true;
+        }
+
+        public void Refresh()
+        {
+            // Refresh profiles
+            Profiles.Refresh();
         }
         #endregion
 

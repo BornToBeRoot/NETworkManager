@@ -41,7 +41,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
+                           
         #region Profiles
         ICollectionView _profiles;
         public ICollectionView Profiles
@@ -419,6 +419,12 @@ namespace NETworkManager.ViewModels
             TabItems.Add(new DragablzTabItem(host ?? LocalizationManager.GetStringByKey("String_Header_NewTab"), new PingView(_tabId, host), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
+        }
+
+        public void Refresh()
+        {
+            // Refresh profiles
+            Profiles.Refresh();
         }
         #endregion
     }

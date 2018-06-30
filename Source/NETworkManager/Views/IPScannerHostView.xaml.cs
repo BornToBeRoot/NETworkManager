@@ -33,5 +33,10 @@ namespace NETworkManager.Views
         {
             viewModel.AddTab(host);
         }
+
+        public void Refresh()
+        {
+            viewModel.Refresh();
+        }
     }
 }

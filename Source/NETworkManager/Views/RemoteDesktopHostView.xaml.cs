@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -46,6 +47,11 @@ namespace NETworkManager.Views
 
             if (viewModel.IsRDP8dot1Available)
                 viewModel.AddTab(host);
+        }
+
+        public void Refresh()
+        {
+            viewModel.Refresh();
         }
     }
 }

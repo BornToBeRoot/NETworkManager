@@ -62,7 +62,7 @@ namespace NETworkManager.ViewModels
         {
             get { return _profiles; }
         }
-
+                
         private ProfileInfo _selectedProfile = new ProfileInfo();
         public ProfileInfo SelectedProfile
         {
@@ -404,7 +404,7 @@ namespace NETworkManager.ViewModels
 
                 ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
 
-                _profiles.Refresh();
+                Refresh();
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -732,6 +732,12 @@ namespace NETworkManager.ViewModels
             }
 
             _canProfileWidthChange = true;
+        }
+
+        public void Refresh()
+        {
+            // Refresh profiles
+            Profiles.Refresh();
         }
         #endregion
     }

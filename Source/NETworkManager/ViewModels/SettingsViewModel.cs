@@ -38,7 +38,7 @@ namespace NETworkManager.ViewModels.Settings
                 OnPropertyChanged();
             }
         }
-
+                
         private bool _searchNothingFound;
         public bool SearchNothingFound
         {

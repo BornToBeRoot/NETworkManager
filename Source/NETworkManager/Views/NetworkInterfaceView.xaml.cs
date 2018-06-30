@@ -14,11 +14,16 @@ namespace NETworkManager.Views
             InitializeComponent();
             DataContext = viewModel;
         }
-                
+
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
             ContextMenu menu = sender as ContextMenu;
             menu.DataContext = viewModel;
+        }
+
+        public void Refresh()
+        {
+            viewModel.Refresh();
         }
     }
 }

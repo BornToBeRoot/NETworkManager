@@ -41,7 +41,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
+                
         #region Profiles
         ICollectionView _profiles;
         public ICollectionView Profiles
@@ -347,6 +347,8 @@ namespace NETworkManager.ViewModels
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
+
+                Refresh();
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -419,6 +421,12 @@ namespace NETworkManager.ViewModels
             TabItems.Add(new DragablzTabItem(host ?? LocalizationManager.GetStringByKey("String_Header_NewTab"), new TracerouteView(_tabId, host), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
+        }
+
+        public void Refresh()
+        {
+            // Refresh profiles
+            Profiles.Refresh();
         }
         #endregion
     }

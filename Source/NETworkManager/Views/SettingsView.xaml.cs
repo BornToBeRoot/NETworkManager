@@ -1,6 +1,5 @@
 ﻿using NETworkManager.ViewModels.Settings;
 using System.Windows.Controls;
-using System;
 
 namespace NETworkManager.Views
 {
@@ -30,6 +29,11 @@ namespace NETworkManager.Views
 
             // Scroll into view
             listBoxSettings.ScrollIntoView(viewModel.SelectedSettingsView);
+        }
+
+        public void Refresh()
+        {
+            ProfilesView.Refresh();
         }
     }
 }

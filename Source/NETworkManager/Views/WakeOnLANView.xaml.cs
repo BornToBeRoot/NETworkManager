@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -19,6 +20,11 @@ namespace NETworkManager.Views
         {
             ContextMenu menu = sender as ContextMenu;
             menu.DataContext = viewModel;
+        }
+
+        public void Refresh()
+        {
+            viewModel.Refresh();
         }
     }
 }

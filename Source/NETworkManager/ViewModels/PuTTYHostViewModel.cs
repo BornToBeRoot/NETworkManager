@@ -56,8 +56,8 @@ namespace NETworkManager.ViewModels
                 _selectedTabIndex = value;
                 OnPropertyChanged();
             }
-        }
-                
+        }              
+
         #region Profiles
         ICollectionView _profiles;
         public ICollectionView Profiles
@@ -78,7 +78,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         private string _search;
         public string Search
         {
@@ -184,7 +184,7 @@ namespace NETworkManager.ViewModels
 
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.PuTTY_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
-            
+
             LoadSettings();
 
             SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
@@ -234,7 +234,7 @@ namespace NETworkManager.ViewModels
         {
             Connect();
         }
-                
+
         public ICommand ConnectProfileCommand
         {
             get { return new RelayCommand(p => ConnectProfileAction()); }
@@ -243,7 +243,7 @@ namespace NETworkManager.ViewModels
         private void ConnectProfileAction()
         {
             ConnectProfile();
-        }            
+        }
 
         public ICommand ConnectProfileExternalCommand
         {
@@ -407,6 +407,8 @@ namespace NETworkManager.ViewModels
                 ConfigurationManager.Current.IsDialogOpen = false;
 
                 ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
+
+                Refresh();
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -635,6 +637,12 @@ namespace NETworkManager.ViewModels
             }
 
             _canProfileWidthChange = true;
+        }
+
+        public void Refresh()
+        {
+            // Refresh profiles
+            Profiles.Refresh();
         }
         #endregion
     }

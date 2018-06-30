@@ -292,6 +292,12 @@ namespace NETworkManager.ViewModels
 
             await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
+
+        public void Refresh()
+        {
+            // Refresh profiles
+            Profiles.Refresh();
+        }
         #endregion
     }
 }

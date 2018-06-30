@@ -40,7 +40,7 @@ namespace NETworkManager.ViewModels
                 _selectedTabIndex = value;
                 OnPropertyChanged();
             }
-        }
+        }                
 
         #region Profiles
         ICollectionView _profiles;
@@ -347,6 +347,8 @@ namespace NETworkManager.ViewModels
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
+
+                Refresh();
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -419,6 +421,12 @@ namespace NETworkManager.ViewModels
             TabItems.Add(new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new IPScannerView(_tabId, host), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
+        }
+
+        public void Refresh()
+        {
+            // Refresh profiles
+            Profiles.Refresh();
         }
         #endregion
     }
