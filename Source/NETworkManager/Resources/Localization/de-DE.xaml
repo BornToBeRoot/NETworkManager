@@ -248,7 +248,7 @@
     <system:String x:Key="String_TheFollowingParametersAreAvailable">Folgende Parameter stehen zur Verfügung:</system:String>
     <system:String x:Key="String_Open">Offen</system:String>
     <system:String x:Key="String_EnterNameForProfile">Geben Sie einen Namen ein, unter dem das Profil gespeichert werden soll.</system:String>
-    <system:String x:Key="String_DeleteProfileMessage">Das ausgewählte Profil wird unwiderruflich gelöscht.</system:String>
+    <system:String x:Key="String_DeleteProfileMessage">Ausgewählte Profile werden unwiderruflich gelöscht.</system:String>
     <system:String x:Key="String_Backup">Sicherung</system:String>
     <system:String x:Key="String_MultipleInstances">Mehrere Instanzen</system:String>
     <system:String x:Key="String_ConnectTheNetworkCardToConfigureIt">Verbinde die Netzwerkkarte mit einem Netzwerk, um diese zu konfigurieren!</system:String>

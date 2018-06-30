@@ -248,7 +248,7 @@
     <system:String x:Key="String_TheFollowingParametersAreAvailable">The following parameters are available:</system:String>
     <system:String x:Key="String_Open">Open</system:String>
     <system:String x:Key="String_EnterNameForProfile">Enter a name under which you want to save the profile.</system:String>
-    <system:String x:Key="String_DeleteProfileMessage">The selected profile will be deleted permanently.</system:String>
+    <system:String x:Key="String_DeleteProfileMessage">Selected profiles will be deleted permanently.</system:String>
     <system:String x:Key="String_Backup">Backup</system:String>
     <system:String x:Key="String_MultipleInstances">Multiple instances</system:String>
     <system:String x:Key="String_ConnectTheNetworkCardToConfigureIt">Connect the network card to a network to configure it!</system:String>

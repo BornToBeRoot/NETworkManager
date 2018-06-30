@@ -248,7 +248,7 @@
     <system:String x:Key="String_TheFollowingParametersAreAvailable">Están disponibles los siguientes parámetros:</system:String>
     <system:String x:Key="String_Open">Abrir</system:String>
     <system:String x:Key="String_EnterNameForProfile">Ingrese un nombre debajo del cual desea guardar el perfil.</system:String>
-    <system:String x:Key="String_DeleteProfileMessage">El perfil seleccionado se eliminará de forma permanente.</system:String>
+    <system:String x:Key="String_DeleteProfileMessage">Selected profiles will be deleted permanently.</system:String> <!-- new/updated, please remove comment if string is translated -->
     <system:String x:Key="String_Backup">Respaldo</system:String>
     <system:String x:Key="String_MultipleInstances">Múltiples instancias</system:String>
     <system:String x:Key="String_ConnectTheNetworkCardToConfigureIt">¡Conecte la tarjeta de red a una red para configurarla!</system:String>

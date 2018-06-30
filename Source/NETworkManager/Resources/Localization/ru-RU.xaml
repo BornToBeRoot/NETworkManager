@@ -248,7 +248,7 @@
     <system:String x:Key="String_TheFollowingParametersAreAvailable">Доступны следующие параметры:</system:String>
     <system:String x:Key="String_Open">Открыть</system:String>
     <system:String x:Key="String_EnterNameForProfile">Введите имя, под которым вы хотите сохранить профиль.</system:String>
-    <system:String x:Key="String_DeleteProfileMessage">Выбранный профиль будет удален навсегда.</system:String>
+    <system:String x:Key="String_DeleteProfileMessage">Selected profiles will be deleted permanently.</system:String> <!-- new/updated, please remove comment if string is translated -->
     <system:String x:Key="String_Backup">Архивация</system:String>
     <system:String x:Key="String_MultipleInstances">Различные экземпляры</system:String>
     <system:String x:Key="String_ConnectTheNetworkCardToConfigureIt">Подключите сетевую карту к сети, чтобы настроить её!</system:String>
