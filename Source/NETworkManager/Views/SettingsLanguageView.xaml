@@ -8,6 +8,7 @@
         mc:Ignorable="d">
     <UserControl.Resources>
         <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -25,7 +26,7 @@
             <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Language}" Margin="0,0,0,0" />
             <TextBox x:Name="txtSearch" Grid.Column="2" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
         </Grid>
-        <ListView Grid.Row="2" ItemsSource="{Binding Localizations}" SelectedItem="{Binding LocalizationSelectedItem}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
+        <ListView Grid.Row="2" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLangauge}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="5">
@@ -50,7 +51,40 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Grid Grid.Row="3" Visibility="{Binding RestartRequired, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Grid Grid.Row="2" VerticalAlignment="Center">
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Languages.Count}" Value="0">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <StackPanel>
+                <Button HorizontalAlignment="Center" Focusable="False" ToolTip="{DynamicResource String_ClearFilter}" Command="{Binding ClearSearchCommand}" Margin="0,0,0,10" Style="{StaticResource CleanButton}">
+                    <Rectangle Width="20" Height="20">
+                        <Rectangle.Resources>
+                            <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{IconPacks:Material Kind=FilterRemoveOutline}" />
+                        </Rectangle.Resources>
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
+                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </Button>
+                <TextBlock Text="{DynamicResource String_NothingFound}" Style="{DynamicResource MessageTextBlock}" />
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="3" Visibility="{Binding RestartRequired, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,10,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="5" />

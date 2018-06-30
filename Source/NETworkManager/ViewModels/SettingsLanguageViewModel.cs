@@ -4,6 +4,7 @@ using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
 using System.ComponentModel;
 using System;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
@@ -12,21 +13,21 @@ namespace NETworkManager.ViewModels
         #region Variables
         private bool _isLoading = true;
 
-        ICollectionView _localizations;
-        public ICollectionView Localizations
+        ICollectionView _languages;
+        public ICollectionView Languages
         {
-            get { return _localizations; }
+            get { return _languages; }
         }
 
         private string _cultureCode = string.Empty;
 
-        private LocalizationInfo _localizationSelectedItem;
-        public LocalizationInfo LocalizationSelectedItem
+        private LocalizationInfo _selectedLanguage;
+        public LocalizationInfo SelectedLangauge
         {
-            get { return _localizationSelectedItem; }
+            get { return _selectedLanguage; }
             set
             {
-                if (value == _localizationSelectedItem)
+                if (value == _selectedLanguage)
                     return;
 
                 if (!_isLoading && value != null) // Don't change if the value is null (can happen when a user searchs for a language....)
@@ -38,7 +39,7 @@ namespace NETworkManager.ViewModels
                     RestartRequired = (value.Code != _cultureCode);
                 }
 
-                _localizationSelectedItem = value;
+                _selectedLanguage = value;
                 OnPropertyChanged();
             }
         }
@@ -54,7 +55,7 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                Localizations.Refresh();
+                Languages.Refresh();
 
                 OnPropertyChanged();
             }
@@ -78,10 +79,10 @@ namespace NETworkManager.ViewModels
         #region Construtor, LoadSettings
         public SettingsLanguageViewModel()
         {
-            _localizations = CollectionViewSource.GetDefaultView(LocalizationManager.List);
-            _localizations.SortDescriptions.Add(new SortDescription(nameof(LocalizationInfo.Name), ListSortDirection.Ascending));
+            _languages = CollectionViewSource.GetDefaultView(LocalizationManager.List);
+            _languages.SortDescriptions.Add(new SortDescription(nameof(LocalizationInfo.Name), ListSortDirection.Ascending));
 
-            _localizations.Filter = o =>
+            _languages.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
                     return true;
@@ -94,7 +95,7 @@ namespace NETworkManager.ViewModels
                 return (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.NativeName.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
-            LocalizationSelectedItem = Localizations.Cast<LocalizationInfo>().FirstOrDefault(x => x.Code == LocalizationManager.Current.Code);
+            SelectedLangauge = Languages.Cast<LocalizationInfo>().FirstOrDefault(x => x.Code == LocalizationManager.Current.Code);
 
             LoadSettings();
 
@@ -105,7 +106,18 @@ namespace NETworkManager.ViewModels
         {
             _cultureCode = SettingsManager.Current.Localization_CultureCode;
         }
+        #endregion
 
+        #region ICommands & Actions
+        public ICommand ClearSearchCommand
+        {
+            get { return new RelayCommand(p => ClearSearchAction()); }
+        }
+
+        private void ClearSearchAction()
+        {
+            Search = string.Empty;
+        }
         #endregion
     }
 }
