@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:Converter="clr-namespace:NETworkManager.Converters"
+        xmlns:Controls="clr-namespace:NETworkManager.Controls"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         Dialog:DialogParticipation.Register="{Binding}"
@@ -30,7 +31,7 @@
             </Grid.ColumnDefinitions>
             <TextBox x:Name="txtSearch" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
         </Grid>
-        <DataGrid x:Name="dataGridProfiles" Grid.Row="2" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True">
+        <Controls:MultiSelectDataGrid x:Name="dataGridProfiles" Grid.Row="2" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" SelectedItemsList="{Binding SelectedProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
@@ -122,20 +123,18 @@
                 <DataGridCheckBoxColumn Header="{DynamicResource String_Header_PuTTY}" Binding="{Binding PuTTY_Enabled}" />
                 <DataGridCheckBoxColumn Header="{DynamicResource String_Header_WakeOnLAN}" Binding="{Binding WakeOnLAN_Enabled}" />
             </DataGrid.Columns>
-
-        </DataGrid>
+        </Controls:MultiSelectDataGrid>
         <StackPanel Grid.Row="4" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Command="{Binding DeleteProfileCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                        <Setter Property="IsEnabled" Value="False"/>
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=dataGridProfiles, Path=SelectedItems.Count}" Value="1" />
+                                    <Condition Binding="{Binding ElementName=dataGridProfiles, Path=SelectedItems.Count}" Value="0" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="True"/>
+                                    <Setter Property="IsEnabled" Value="False"/>
                                 </MultiDataTrigger.Setters>
                             </MultiDataTrigger>
                         </Style.Triggers>

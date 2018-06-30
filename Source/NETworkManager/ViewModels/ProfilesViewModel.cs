@@ -7,6 +7,8 @@ using NETworkManager.Views;
 using System;
 using NETworkManager.Utilities;
 using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace NETworkManager.ViewModels
 {
@@ -16,7 +18,7 @@ namespace NETworkManager.ViewModels
         private IDialogCoordinator dialogCoordinator;
 
         private const string tagIdentifier = "tag=";
-        
+
         ICollectionView _profiles;
         public ICollectionView Profiles
         {
@@ -33,6 +35,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _selectedProfile = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IList _selectedProfiles = new ArrayList();
+        public IList SelectedProfiles
+        {
+            get { return _selectedProfiles; }
+            set
+            {
+                if (value == _selectedProfiles)
+                    return;
+
+                _selectedProfiles = value;
                 OnPropertyChanged();
             }
         }
@@ -233,7 +249,10 @@ namespace NETworkManager.ViewModels
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                ProfileManager.RemoveProfile(SelectedProfile);
+                List<ProfileInfo> list = new List<ProfileInfo>(SelectedProfiles.Cast<ProfileInfo>());
+
+                foreach (ProfileInfo profile in list)
+                    ProfileManager.RemoveProfile(profile);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);

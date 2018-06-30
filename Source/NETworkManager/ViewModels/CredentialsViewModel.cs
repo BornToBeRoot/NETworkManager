@@ -8,6 +8,9 @@ using NETworkManager.Views;
 using System;
 using System.Windows.Threading;
 using NETworkManager.Utilities;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
@@ -91,6 +94,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _selectedCredential = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IList _selectedCredentials = new ArrayList();
+        public IList SelectedCredentials
+        {
+            get { return _selectedCredentials; }
+            set
+            {
+                if (value == _selectedCredentials)
+                    return;
+
+                _selectedCredentials = value;
                 OnPropertyChanged();
             }
         }
@@ -405,7 +422,10 @@ namespace NETworkManager.ViewModels
             {
                 dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                CredentialManager.RemoveCredential(SelectedCredential);
+                List<CredentialInfo> list = new List<CredentialInfo>(SelectedCredentials.Cast<CredentialInfo>());
+
+                foreach (CredentialInfo credential in list)
+                    CredentialManager.RemoveCredential(credential);
 
                 TimerLockUIStart(); // Reset timer
             }, instance =>
