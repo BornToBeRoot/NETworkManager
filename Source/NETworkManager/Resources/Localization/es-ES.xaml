@@ -248,7 +248,7 @@
     <system:String x:Key="String_TheFollowingParametersAreAvailable">Están disponibles los siguientes parámetros:</system:String>
     <system:String x:Key="String_Open">Abrir</system:String>
     <system:String x:Key="String_EnterNameForProfile">Ingrese un nombre debajo del cual desea guardar el perfil.</system:String>
-    <system:String x:Key="String_DeleteProfileMessage">Selected profiles will be deleted permanently.</system:String> <!-- new/updated, please remove comment if string is translated -->
+    <system:String x:Key="String_DeleteProfileMessage">Los perfiles seleccionados se eliminarán permanentemente.</system:String>
     <system:String x:Key="String_Backup">Respaldo</system:String>
     <system:String x:Key="String_MultipleInstances">Múltiples instancias</system:String>
     <system:String x:Key="String_ConnectTheNetworkCardToConfigureIt">¡Conecte la tarjeta de red a una red para configurarla!</system:String>
@@ -423,12 +423,12 @@
     <system:String x:Key="String_ShowOnlyMostCommonQueryTypes">Mostrar solo los tipos de consulta más comunes</system:String>
     <system:String x:Key="String_DisableTransparencyInTheSettingsToUseRemoteDesktop">Desactive la transparencia en la configuración (General/Apariencia) y reinicie la aplicación luego puede usar el Escritorio remoto</system:String>
     <system:String x:Key="String_DisableTransparencyInTheSettingsToUsePuTTY">Desactive la transparencia en la configuración (General/Apariencia) y reinicie la aplicación luego puede usar PuTTY</system:String>
-    <system:String x:Key="String_Timestamp">Timestamp</system:String> <!-- new/updated, please remove comment if string is translated -->
-    <system:String x:Key="String_SearchedLanguageNotFound">Searched language not found!</system:String> <!-- new/updated, please remove comment if string is translated -->
+    <system:String x:Key="String_Timestamp">Marca de tiempo</system:String>
+    <system:String x:Key="String_SearchedLanguageNotFound">¡Idioma buscado no encontrado!</system:String>
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Cómo instalar RDP 8.1 en Windows 7/Server 2008 R2</system:String>
-    <system:String x:Key="String_DocumentationTitle_00002">¿Cómo crear un tema y un acento personalizados?</system:String>
+    <system:String x:Key="String_DocumentationTitle_00002">¿Cómo crear un tema y un tono personalizados?</system:String>
 
     <!-- Help message -->
     <system:String x:Key="String_HelpMessage_ParameterHelp">Mostrar este cuadro de diálogo.</system:String>
@@ -565,8 +565,8 @@
     <system:String x:Key="String_ValidationError_EnterValidPort">¡Ingrese un puerto válido (1 - 65535)!</system:String>
     <system:String x:Key="String_ValidationError_EnterValidIPv4Address">¡Ingrese una dirección IPv4 válida!</system:String>
     <system:String x:Key="String_ValidationError_FolderDoesNotExist">¡El directorio no existe!</system:String>
-    <system:String x:Key="String_ValidationError_EnterValidSubnetmask">Ingrese una máscara de subred válida (como 255.255.255.0)!</system:String>
-    <system:String x:Key="String_ValidationError_EnterValidSubnetmaskOrCIDR">Ingrese una máscara de subred o CIDR válida (como 255.255.255.0 or 24)!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidSubnetmask">¡Ingrese una máscara de subred válida (como 255.255.255.0)!</system:String>
+    <system:String x:Key="String_ValidationError_EnterValidSubnetmaskOrCIDR">¡Ingrese una máscara de subred o CIDR válida (como 255.255.255.0 or 24)!</system:String>
     <system:String x:Key="String_ValidationError_EnterValidIPScanRange">¡Ingrese un rango ip válido!</system:String>
     <system:String x:Key="String_ValidationError_FileDoesNotExist">¡El archivo no existe!</system:String>
     <system:String x:Key="String_ValidationError_EnterValidPortOrPortRange">¡Ingrese un puerto válido y/o un rango de puertos (1 - 65535)!</system:String>
