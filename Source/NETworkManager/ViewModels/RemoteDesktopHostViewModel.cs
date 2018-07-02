@@ -567,7 +567,7 @@ namespace NETworkManager.ViewModels
                         DataContext = credentialsMasterPasswordViewModel
                     };
 
-
+                    ConfigurationManager.Current.IsDialogOpen = true;
                     await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
                 }
                 else // Connect already unlocked

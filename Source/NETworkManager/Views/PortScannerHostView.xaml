@@ -27,7 +27,28 @@
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" MoveWindowWithSolitaryTabs="False" x:Name="InterTabController" />
             </dragablz:TabablzControl.InterTabController>
-        </dragablz:TabablzControl>
+            <dragablz:TabablzControl.HeaderSuffixContent>
+                <Grid HorizontalAlignment="Right" Width="40" Height="44">
+                    <Button Style="{StaticResource CleanButton}" Command="{Binding AddTabCommand}" ToolTip="{DynamicResource String_NewTab}" Focusable="False">
+                        <Rectangle Width="20" Height="20">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
+                            </Rectangle.OpacityMask>
+                            <Rectangle.Style>
+                                <Style TargetType="{x:Type Rectangle}">
+                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                        </Rectangle>
+                    </Button>
+                </Grid>
+            </dragablz:TabablzControl.HeaderSuffixContent>
+        </dragablz:TabablzControl>        
         <Grid Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">
             <Grid.Style>
                 <Style TargetType="{x:Type Grid}">

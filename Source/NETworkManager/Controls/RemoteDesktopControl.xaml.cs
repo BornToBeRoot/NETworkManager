@@ -8,6 +8,7 @@ using System;
 using System.Windows.Threading;
 using NETworkManager.Utilities;
 using NETworkManager.Models.Settings;
+using System.Diagnostics;
 
 namespace NETworkManager.Controls
 {
@@ -27,7 +28,7 @@ namespace NETworkManager.Controls
 
         private const string RemoteDesktopDisconnectReasonIdentifier = "String_RemoteDesktopDisconnectReason_";
 
-        private Models.RemoteDesktop.RemoteDesktopSessionInfo _rdpProfileInfo;
+        private RemoteDesktopSessionInfo _rdpProfileInfo;
 
         DispatcherTimer reconnectAdjustScreenTimer = new DispatcherTimer();
 
@@ -75,6 +76,20 @@ namespace NETworkManager.Controls
             }
         }
 
+        private bool _reconnecting;
+        public bool Reconnecting
+        {
+            get { return _reconnecting; }
+            set
+            {
+                if (value == _reconnecting)
+                    return;
+
+                _reconnecting = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _disconnectReason;
         public string DisconnectReason
         {
@@ -91,7 +106,7 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Constructor, load
-        public RemoteDesktopControl(Models.RemoteDesktop.RemoteDesktopSessionInfo info)
+        public RemoteDesktopControl(RemoteDesktopSessionInfo info)
         {
             InitializeComponent();
             DataContext = this;
@@ -181,6 +196,8 @@ namespace NETworkManager.Controls
 
         private void Reconnect()
         {
+            Reconnecting = true;
+
             if (_rdpProfileInfo.AdjustScreenAutomatically)
             {
                 rdpClient.DesktopWidth = (int)rdpGrid.ActualWidth;
@@ -341,6 +358,7 @@ namespace NETworkManager.Controls
         private void RdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
         {
             Connected = false;
+            Reconnecting = false;
 
             DisconnectReason = GetDisconnectReason(e.discReason);
         }
