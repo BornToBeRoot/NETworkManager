@@ -1,5 +1,5 @@
 # Listeners
 
-![Listeners](../../_images/Listeners.de-DE.png)
+![Listeners](../../_images/Listeners.png)
 
 [zurück](../README.md)

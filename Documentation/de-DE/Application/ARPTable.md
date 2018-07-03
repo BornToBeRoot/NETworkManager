@@ -1,9 +1,9 @@
 # ARP-Tabelle
 
-![ARPTable](../../_images/ARPTable.de-DE.png)
+![ARPTable](../../_images/ARPTable.png)
 
 ## Eintrag hinzufügen
 
-![ARPTable_AddEntry](../../_images/ARPTable_AddEntry.de-DE.png)
+![ARPTable_AddEntry](../../_images/ARPTable_AddEntry.png)
 
 [zurück](../README.md)

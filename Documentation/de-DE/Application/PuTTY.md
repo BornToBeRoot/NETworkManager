@@ -1,10 +1,5 @@
 # PuTTY
 
-
-![PuTTY](../../_images/PuTTY.de-DE.png)
-
-## Sitzung
-
-![PuTTY_Session](../../_images/PuTTY_Session.de-DE.png)
+![PuTTY](../../_images/PuTTY.png)
 
 [zurück](../README.md)

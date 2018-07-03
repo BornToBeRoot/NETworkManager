@@ -1,5 +1,5 @@
 # DNS-Lookup
 
-![DNSLookup](../../_images/DNSLookup.de-DE.png)
+![DNSLookup](../../_images/DNSLookup.png)
 
 [zurück](../README.md)
