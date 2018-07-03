@@ -12,7 +12,7 @@
         mc:Ignorable="d">
     <UserControl.Resources>
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -79,8 +79,8 @@
                     </Button.Content>
                 </Button>
             </Grid>
-            <Controls:MetroProgressBar Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True" Visibility="{Binding IsLookupRunning, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,10,0,0"/>
-            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{DynamicResource String_NoPortsFoundCheckYourInput}" Visibility="{Binding NoPortsFound, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+            <Controls:MetroProgressBar Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True" Visibility="{Binding IsLookupRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,10,0,0"/>
+            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{DynamicResource String_NoPortsFoundCheckYourInput}" Visibility="{Binding NoPortsFound, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Result}" Style="{StaticResource HeaderTextBlock}" />
         <DataGrid Grid.Row="3" ItemsSource="{Binding PortLookupResultView}" SelectedItem="{Binding SelectedPortLookupResult}" CanUserSortColumns="False">

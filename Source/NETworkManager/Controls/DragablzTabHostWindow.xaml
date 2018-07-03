@@ -11,7 +11,7 @@
         Title="{DynamicResource String_ProductName}" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" TitleAlignment="Left"
         d:DataContext="{d:DesignInstance networkManagerControls:DragablzTabHostWindow}">    
     <controls:MetroWindow.Resources>
-        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </controls:MetroWindow.Resources>
     <controls:MetroWindow.WindowButtonCommands>
         <controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
@@ -21,7 +21,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border x:Name="HeaderBorder" Grid.Row="0" Visibility="{Binding ShowCurrentApplicationTitle, Converter={StaticResource BooleanToVisibilityConverter}}" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,0,1" MouseDown="HeaderBorder_MouseDown">
+        <Border x:Name="HeaderBorder" Grid.Row="0" Visibility="{Binding ShowCurrentApplicationTitle, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,0,1" MouseDown="HeaderBorder_MouseDown">
             <TextBlock VerticalAlignment="Center" Height="48" TextAlignment="Center" FontSize="22" Style="{StaticResource HeaderTextBlock}" Text="{Binding ApplicationTitle}" Foreground="{DynamicResource GrayBrush3}" Margin="0" />
         </Border>
         <dragablz:TabablzControl Focusable="False" Grid.Row="1" Name="TabsContainer" ClosingItemCallback="{Binding CloseItemCommand}">

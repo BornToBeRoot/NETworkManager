@@ -10,15 +10,15 @@
         mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:RemoteDesktopControl}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <converters:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanReverseToVisibilityHiddenConverter x:Key="BooleanReverseToVisibilityHiddenConverter" />
-        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid x:Name="RdpGrid" SizeChanged="RdpGrid_SizeChanged">
-        <WindowsFormsHost MaxWidth="{Binding RdpClientWidth, Mode=OneWay}" MaxHeight="{Binding RdpClientHeight, Mode=OneWay}" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <WindowsFormsHost MaxWidth="{Binding RdpClientWidth, Mode=OneWay}" MaxHeight="{Binding RdpClientHeight, Mode=OneWay}" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
             <mstsc:AxMsRdpClient9NotSafeForScripting x:Name="RdpClient" />
         </WindowsFormsHost>
-        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding IsConnected, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding IsConnected, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -27,7 +27,7 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{DynamicResource String_Header_Disconnected}" Style="{StaticResource HeaderTextBlock}" Visibility="{Binding IsReconnecting, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}" />
             <TextBlock Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding DisconnectReason}" Style="{DynamicResource DefaultTextBlock}" Visibility="{Binding IsReconnecting, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}" />
-            <controls:ProgressRing Grid.Row="0" Grid.RowSpan="2" Height="50" Width="50" IsActive="{Binding IsReconnecting}" Visibility="{Binding IsReconnecting, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <controls:ProgressRing Grid.Row="0" Grid.RowSpan="2" Height="50" Width="50" IsActive="{Binding IsReconnecting}" Visibility="{Binding IsReconnecting, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"/>
             <Button Grid.Row="3" Content="{DynamicResource String_Button_Reconnect}" Command="{Binding ReconnectCommand}" IsDefault="True" IsEnabled="{Binding IsReconnecting, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultButton}"/>
         </Grid>
     </Grid>

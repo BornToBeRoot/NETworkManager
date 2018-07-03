@@ -11,7 +11,7 @@
         mc:Ignorable="d">
     <UserControl.Resources>
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <ScrollViewer Style="{StaticResource DefaultScrollViewer}" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" HorizontalScrollBarVisibility="Disabled">
         <Grid>
@@ -89,7 +89,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" x:Name="btnCheckForUpdates" HorizontalAlignment="Left" Command="{Binding CheckForUpdatesCommand}" IsEnabled="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultButton}" Content="{DynamicResource String_Button_CheckForUpdaptes}" />
-                <StackPanel Grid.Column="2" Orientation="Horizontal" Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <StackPanel.InputBindings>
                         <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.NETworkManager_LatestReleaseURL}" />
                     </StackPanel.InputBindings>
@@ -120,8 +120,8 @@
                     </Rectangle>
                     <TextBlock Text="{Binding UpdateText}" VerticalAlignment="Center" FontSize="14" Margin="10,0,0,0" />
                 </StackPanel>
-                <Controls:ProgressRing Grid.Column="2" Visibility="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanToVisibilityConverter}}" Height="{Binding ElementName=btnCheckForUpdates, Path=ActualHeight}" Width="{Binding ElementName=btnCheckForUpdates, Path=ActualHeight}" HorizontalAlignment="Left" IsActive="True" />
-                <TextBlock Grid.Column="2" Text="{Binding UpdaterMessage}" Visibility="{Binding ShowUpdaterMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource CenterTextBlock}" Margin="10,0,0,0" />
+                <Controls:ProgressRing Grid.Column="2" Visibility="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Height="{Binding ElementName=btnCheckForUpdates, Path=ActualHeight}" Width="{Binding ElementName=btnCheckForUpdates, Path=ActualHeight}" HorizontalAlignment="Left" IsActive="True" />
+                <TextBlock Grid.Column="2" Text="{Binding UpdaterMessage}" Visibility="{Binding ShowUpdaterMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CenterTextBlock}" Margin="10,0,0,0" />
             </Grid>
             <TextBlock Grid.Row="5" Text="{DynamicResource String_Header_Libraries}" Style="{StaticResource HeaderTextBlock}"/>
             <DataGrid x:Name="dataGridLibaries" Grid.Row="6" ItemsSource="{Binding LibrariesView}" SelectedItem="{Binding SelectedLibraryInfo}" Margin="0,0,0,10">

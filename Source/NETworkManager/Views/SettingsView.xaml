@@ -3,9 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Views ="clr-namespace:NETworkManager.Views"
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:views ="clr-namespace:NETworkManager.Views"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
         mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+    </UserControl.Resources>
     <Grid>
         <TabControl Style="{StaticResource DefaultTabControl}">
             <TabItem Header="{DynamicResource String_Header_Settings}">
@@ -121,7 +125,7 @@
                                     <!-- /BUGFIX-->
                                 </ListBox>
                             </ScrollViewer>
-                            <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding SearchNothingFound, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding SearchNothingFound, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
@@ -129,7 +133,7 @@
                                 <Button Grid.Row="0" Command="{Binding ClearSearchCommand}" Style="{StaticResource CleanButton}" Margin="0,0,0,10">
                                     <Rectangle Width="24" Height="24">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=FilterRemoveOutline}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
                                         </Rectangle.OpacityMask>
                                         <Rectangle.Style>
                                             <Style TargetType="{x:Type Rectangle}">
@@ -153,14 +157,14 @@
                 </Grid>
             </TabItem>
             <TabItem Header="{DynamicResource String_Header_Profiles}">
-                <Views:ProfilesView x:Name="ProfilesView" Margin="10" />
+                <views:ProfilesView x:Name="ProfilesView" Margin="10" />
             </TabItem>
             <TabItem Header="{DynamicResource String_Header_Credentials}">
-                <Views:CredentialsView Margin="10" />
+                <views:CredentialsView Margin="10" />
             </TabItem>
             <!-- About -->
             <TabItem Header="{DynamicResource String_Header_About}">
-                <Views:AboutView Margin="10" />
+                <views:AboutView Margin="10" />
             </TabItem>
         </TabControl>
     </Grid>

@@ -12,11 +12,11 @@
         Loaded="UserControl_Loaded"
         mc:Ignorable="d">
     <UserControl.Resources>
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
+        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter"/>
+        <Converter:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <Converter:IntToStringConverter x:Key="IntToStringConverter" />
-        <Converter:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
+        <Converter:IpStatusToStringConverter x:Key="IPStatusToStringConverter" />
         <Converter:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
         <Converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
         <Converter:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
@@ -157,7 +157,7 @@
                     </TextBlock.Text>
                 </TextBlock>
             </StackPanel>
-            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
         <DataGrid Grid.Row="3" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding IPScanResultView}" SelectedItem="{Binding SelectedIPScanResult}">
@@ -264,7 +264,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Hostname}" Command="{Binding CopySelectedHostnameCommand}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <MenuItem Header="{DynamicResource String_Hostname}" Command="{Binding CopySelectedHostnameCommand}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -273,7 +273,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_MACAddress}" Command="{Binding CopySelectedMACAddressCommand}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <MenuItem Header="{DynamicResource String_MACAddress}" Command="{Binding CopySelectedMACAddressCommand}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -282,7 +282,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Vendor}" Command="{Binding CopySelectedVendorCommand}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <MenuItem Header="{DynamicResource String_Vendor}" Command="{Binding CopySelectedVendorCommand}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -341,9 +341,9 @@
             </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding PingInfo.IPAddress}" SortMemberPath="PingInfo.IPAddressInt32" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityConverter}}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityConverter}}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Vendor}" Binding="{Binding Vendor}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityConverter}}" MinWidth="200" />
+                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_Vendor}" Binding="{Binding Vendor}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="200" />
                 <DataGridTextColumn Header="{DynamicResource String_Bytes}" Binding="{Binding PingInfo.Bytes, Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
                 <DataGridTextColumn Header="{DynamicResource String_Time}" SortMemberPath="PingInfo.Time" MinWidth="80">
                     <DataGridTextColumn.Binding>
@@ -357,7 +357,7 @@
                 <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding PingInfo.Status, Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,20,0,0">
+        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,20,0,0">
             <Expander.Header>
                 <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>

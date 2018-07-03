@@ -13,11 +13,11 @@
         mc:Ignorable="d">
     <UserControl.Resources>
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
+        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <Converter:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <Converter:IntToStringConverter x:Key="IntToStringConverter" />
-        <Converter:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
-        <Converter:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
+        <Converter:IpAddressToStringConverter x:Key="IPAddressToStringConverter" />
+        <Converter:IpStatusToStringConverter x:Key="IPStatusToStringConverter" />
         <Converter:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
         <Converter:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
         <Converter:StringIsNotNullOrEmptyToBoolConverter x:Key="StringIsNotNullOrEmptyToBoolConverter" />
@@ -109,8 +109,8 @@
                     </Button.Content>
                 </Button>
             </Grid>
-            <Controls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding IsTraceRunning, Converter={StaticResource BooleanToVisibilityConverter}}" IsIndeterminate="True" />
-            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+            <Controls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding IsTraceRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" IsIndeterminate="True" />
+            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Route}" Style="{StaticResource HeaderTextBlock}" />
         <DataGrid Grid.Row="3" ItemsSource="{Binding TraceResultView}" SelectedItem="{Binding SelectedTraceResult}" CanUserSortColumns="False">
@@ -253,7 +253,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Hostname}" Command="{Binding CopySelectedHostnameCommand}" Visibility="{Binding ValidatesOnDataErrors.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <MenuItem Header="{DynamicResource String_Hostname}" Command="{Binding CopySelectedHostnameCommand}" Visibility="{Binding ValidatesOnDataErrors.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -301,10 +301,10 @@
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress, Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityConverter}}" MinWidth="150" Width="*" />
+                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">
+        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">
             <Expander.Header>
                 <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>

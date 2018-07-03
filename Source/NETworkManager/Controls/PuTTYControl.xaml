@@ -10,14 +10,14 @@
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance controls:PuttyControl}">
     <UserControl.Resources>
-        <converters:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
-        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid SizeChanged="PuTTYGrid_SizeChanged">
-        <WindowsFormsHost Visibility="{Binding Connected, Converter={StaticResource BooleanToVisibilityConverter}}">  
+        <WindowsFormsHost Visibility="{Binding Connected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">  
             <windowsForms:Panel x:Name="PuttyHost" />
         </WindowsFormsHost>
-        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding Connected, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding Connected, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />

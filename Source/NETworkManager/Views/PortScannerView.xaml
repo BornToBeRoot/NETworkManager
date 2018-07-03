@@ -4,21 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:Validator="clr-namespace:NETworkManager.Validators"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:WpfHelper="clr-namespace:NETworkManager.WpfHelper"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:validators="clr-namespace:NETworkManager.Validators"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:wpfHelpers="clr-namespace:NETworkManager.WpfHelper"
+        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d">
     <UserControl.Resources>
-        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
-        <Converter:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
-        <Converter:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
-        <Converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
-        <Converter:NullOrEmptyToStringConverter x:Key="NullOrEmptyToStringConverter" />
-        <Converter:PortStatusToStringConverter x:Key="PortStatusToStringConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
+        <converters:NullOrEmptyToStringConverter x:Key="NullOrEmptyToStringConverter" />
+        <converters:PortStatusToStringConverter x:Key="PortStatusToStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -53,8 +51,8 @@
                     <ComboBox.Text>
                         <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                <Validator:MultipleHostsValidator ValidatesOnTargetUpdated="True" />
+                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                <validators:MultipleHostsValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.Text>
@@ -64,8 +62,8 @@
                     <ComboBox.Text>
                         <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                <Validator:PortRangeValidator ValidatesOnTargetUpdated="True" />
+                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                <validators:PortRangeValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.Text>
@@ -95,8 +93,8 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Width="20" Height="20" Margin="10,5,0,5">
                                 <Rectangle.Resources>
-                                    <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:Material Kind=Play}"/>
-                                    <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
+                                    <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}"/>
+                                    <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                 </Rectangle.Resources>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
@@ -136,9 +134,9 @@
                         </Style.Triggers>
                     </Style>
                 </StackPanel.Style>
-                <Controls:MetroProgressBar Maximum="{Binding PortsToScan}" Foreground="{DynamicResource AccentColorBrush}" Value="{Binding PortsScanned}">
-                    <Controls:MetroProgressBar.Style>
-                        <Style TargetType="{x:Type Controls:MetroProgressBar}" >
+                <controls:MetroProgressBar Maximum="{Binding PortsToScan}" Foreground="{DynamicResource AccentColorBrush}" Value="{Binding PortsScanned}">
+                    <controls:MetroProgressBar.Style>
+                        <Style TargetType="{x:Type controls:MetroProgressBar}" >
                             <Setter Property="IsIndeterminate" Value="False" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding PreparingScan}" Value="True">
@@ -149,8 +147,8 @@
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </Controls:MetroProgressBar.Style>
-                </Controls:MetroProgressBar>
+                    </controls:MetroProgressBar.Style>
+                </controls:MetroProgressBar>
                 <TextBlock HorizontalAlignment="Center">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
@@ -173,19 +171,19 @@
                     </TextBlock.Text>
                 </TextBlock>
             </StackPanel>
-            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
         <DataGrid Grid.Row="3" ItemsSource="{Binding PortScanResultView}" SelectedItem="{Binding SelectedScanResult}">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
-                <WpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+                <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{DynamicResource String_CopyDots}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -193,7 +191,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -202,7 +200,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -211,7 +209,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -220,7 +218,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -229,7 +227,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -238,7 +236,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -247,7 +245,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -296,7 +294,7 @@
                 </GroupStyle>
             </DataGrid.GroupStyle>
         </DataGrid>
-        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,20,0,0">
+        <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,20,0,0">
             <Expander.Header>
                 <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>
@@ -344,3 +342,4 @@
         </Expander>
     </Grid>
 </UserControl>
+

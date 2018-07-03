@@ -11,7 +11,7 @@
         mc:Ignorable="d">
     <UserControl.Resources>
         <Converter:AutoRefreshTimeToStringConverter x:Key="AutoRefreshTimeToStringConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <Converter:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />        
         <Converter:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
@@ -93,7 +93,7 @@
                 <DataGridTextColumn Header="{DynamicResource String_Multicast}" Binding="{Binding IsMulticast, Converter={StaticResource BooleanToStringConverter}}" MinWidth="100" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-        <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+        <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         <Controls:MetroProgressBar Grid.Row="4" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
             <Controls:MetroProgressBar.Style>
                 <Style TargetType="{x:Type  Controls:MetroProgressBar}">

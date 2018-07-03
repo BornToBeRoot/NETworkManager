@@ -11,13 +11,13 @@
     <UserControl.Resources>
         <!-- Converter -->
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Autostart}" />
         <StackPanel>
             <Controls:ToggleSwitch Header="{DynamicResource String_StartWithWindows}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding StartWithWindows}" IsEnabled="{Binding ConfiguringAutostart, Converter={StaticResource BooleanReverseConverter}}" Margin="0,0,0,10"/>
-            <Controls:MetroProgressBar IsIndeterminate="True" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding ConfiguringAutostart, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,0,0,10"/>
+            <Controls:MetroProgressBar IsIndeterminate="True" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding ConfiguringAutostart, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,10"/>
             <Controls:ToggleSwitch Header="{DynamicResource String_StartMinimizedInTray}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding StartMinimizedInTray}" />
         </StackPanel>
     </StackPanel>

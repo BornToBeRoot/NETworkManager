@@ -13,9 +13,9 @@
     <UserControl.Resources>
         <Converter:BigIntegerToStringConverter x:Key="BigIntegerToStringConverter" />
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <Converter:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
+        <Converter:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <Converter:IpAddressToStringConverter x:Key="IPAddressToStringConverter" />
         <Converter:ValidateSubnetCalculatorSupernettingConverter x:Key="ValidateSubnetCalculatorSupernettingConverter" />
     </UserControl.Resources>
     <Grid>
@@ -116,7 +116,7 @@
                 </Button>
             </Grid>
         </Grid>
-        <StackPanel Grid.Row="2" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <StackPanel Grid.Row="2" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
             <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
             <ScrollViewer Style="{DynamicResource DefaultScrollViewer}">
                 <Grid>
@@ -161,6 +161,6 @@
                 </Grid>
             </ScrollViewer>
         </StackPanel>
-        <TextBlock Grid.Row="2" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_EnterSubnetsToCreateASupernet}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
+        <TextBlock Grid.Row="2" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_EnterSubnetsToCreateASupernet}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
     </Grid>
 </UserControl>

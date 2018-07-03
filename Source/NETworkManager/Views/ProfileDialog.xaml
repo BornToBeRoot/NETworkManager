@@ -11,8 +11,8 @@
              mc:Ignorable="d" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
+        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <Converter:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid Margin="0,20">
         <Grid.RowDefinitions>
@@ -100,7 +100,7 @@
                                     </Binding>
                                 </ComboBox.Text>
                             </ComboBox>
-                            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="4" ToolTip="{DynamicResource String_HelpMessage_Credentials}" Visibility="{Binding ShowUnlockCredentialsHint, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="4" ToolTip="{DynamicResource String_HelpMessage_Credentials}" Visibility="{Binding ShowUnlockCredentialsHint, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                                 <Rectangle.Resources>
                                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                                 </Rectangle.Resources>
@@ -113,7 +113,7 @@
                                 </Rectangle.Resources>
                             </Rectangle>
                         </Grid>
-                        <TextBlock Text="{DynamicResource String_SelectAtLeastOneNodeWhereTheProfileShouldAppear}" TextWrapping="Wrap" Visibility="{Binding TabEnabled, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{DynamicResource AccentTextBlock}" Margin="0,20,0,0"/>
+                        <TextBlock Text="{DynamicResource String_SelectAtLeastOneNodeWhereTheProfileShouldAppear}" TextWrapping="Wrap" Visibility="{Binding TabEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{DynamicResource AccentTextBlock}" Margin="0,20,0,0"/>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
@@ -585,8 +585,8 @@
                                     <RadioButton Content="{DynamicResource String_Rlogin}" IsChecked="{Binding PuTTY_UseRlogin}" />
                                     <RadioButton Content="{DynamicResource String_RAW}" IsChecked="{Binding PuTTY_UseRAW}" />
                                 </WrapPanel>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="Inherit Host" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityConverter}}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OnLabel="" OffLabel="" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityConverter}}" IsChecked="{Binding PuTTY_InheritHost}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="Inherit Host" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OnLabel="" OffLabel="" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" IsChecked="{Binding PuTTY_InheritHost}" />
                                 <TextBlock Grid.Column="0" Grid.Row="4">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
@@ -609,7 +609,7 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBox x:Name="txtPuTTYSerialLine" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSerialLine}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <TextBox x:Name="txtPuTTYSerialLine" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSerialLine}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_SerialLine" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -631,7 +631,7 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                <TextBox x:Name="txtPuTTYPort" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort22}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
+                                <TextBox x:Name="txtPuTTYPort" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort22}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -641,7 +641,7 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBox x:Name="txtPuTTYBaud" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleBaud9600}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <TextBox x:Name="txtPuTTYBaud" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleBaud9600}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_Baud" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>

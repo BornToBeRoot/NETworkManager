@@ -51,7 +51,7 @@
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
     <Controls:MetroWindow.Resources>
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <ContextMenu x:Key="ContextMenuNotifyIcon" MinWidth="200" Opened="ContextMenu_Opened" x:Shared="False">
             <MenuItem Header="{DynamicResource String_Show}" Command="{Binding ShowWindowCommand}">
                 <MenuItem.Icon>
@@ -447,7 +447,7 @@
                             <!-- /BUGFIX-->
                         </ListView>
                     </ScrollViewer>
-                    <Grid Grid.Row="1" MaxWidth="{Binding ElementName=ApplicationViewGrid, Path=MinWidth}" VerticalAlignment="Center" Visibility="{Binding SearchNothingFound, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Grid Grid.Row="1" MaxWidth="{Binding ElementName=ApplicationViewGrid, Path=MinWidth}" VerticalAlignment="Center" Visibility="{Binding SearchNothingFound, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -667,8 +667,8 @@
                 <StatusBarItem>
                     <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource GrayBrush3}" FontWeight="Bold" />
                 </StatusBarItem>
-                <Separator Background="{DynamicResource GrayBrush8}" Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="10,0" />
-                <StatusBarItem Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left">
+                <Separator Background="{DynamicResource GrayBrush8}" Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="10,0" />
+                <StatusBarItem Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" HorizontalAlignment="Left">
                     <StatusBarItem.InputBindings>
                         <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.NETworkManager_LatestReleaseURL}" />
                     </StatusBarItem.InputBindings>

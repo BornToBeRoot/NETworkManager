@@ -11,7 +11,7 @@
         <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </Controls:MetroWindow.WindowButtonCommands>
     <Controls:MetroWindow.Resources>
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </Controls:MetroWindow.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -49,7 +49,7 @@
         </Grid>
         </ScrollViewer>
         </Border>
-        <Grid Grid.Row="3" Visibility="{Binding DisplayWrongParameter, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,0,0,10">
+        <Grid Grid.Row="3" Visibility="{Binding DisplayWrongParameter, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,10">
             <Grid.Resources>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
                     <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />

@@ -14,9 +14,9 @@
     <UserControl.Resources>
         <Converter:BigIntegerToStringConverter x:Key="BigIntegerToStringConverter" />
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <Converter:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
+        <Converter:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <Converter:IpAddressToStringConverter x:Key="IPAddressToStringConverter" />
         <Converter:ValidateSubnetCalculatorSubnettingConverter x:Key="ValidateSubnetCalculatorSubnettingConverter" />
     </UserControl.Resources>
     <Grid>
@@ -128,10 +128,10 @@
                     </Style>
                 </Controls:MetroProgressBar.Style>
             </Controls:MetroProgressBar>
-            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
-        <TextBlock Grid.Row="2" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Text="{DynamicResource String_Header_Result}" Style="{StaticResource HeaderTextBlock}" />
-        <DataGrid Grid.Row="3" ItemsSource="{Binding SubnetsResultView}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityConverter}}" SelectedItem="{Binding SelectedSubnetResult}">
+        <TextBlock Grid.Row="2" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{DynamicResource String_Header_Result}" Style="{StaticResource HeaderTextBlock}" />
+        <DataGrid Grid.Row="3" ItemsSource="{Binding SubnetsResultView}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" SelectedItem="{Binding SelectedSubnetResult}">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -238,6 +238,6 @@
                 <DataGridTextColumn Header="{DynamicResource String_Hosts}" Binding="{Binding Usable, Converter={StaticResource BigIntegerToStringConverter}}" MinWidth="80" Width="Auto" />
             </DataGrid.Columns>
         </DataGrid>
-        <TextBlock Grid.Row="3" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_EnterSubnetAndANewSubnetmaskToCreateSubnets}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
+        <TextBlock Grid.Row="3" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_EnterSubnetAndANewSubnetmaskToCreateSubnets}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
     </Grid>
 </UserControl>

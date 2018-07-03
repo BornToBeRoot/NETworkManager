@@ -14,8 +14,8 @@
         Loaded="UserControl_Loaded"
         mc:Ignorable="d">
     <UserControl.Resources>
-        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Converter:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <Converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
     </UserControl.Resources>
     <UserControl.InputBindings>
@@ -189,7 +189,7 @@
                                                                     <ColumnDefinition Width="Auto" />
                                                                 </Grid.ColumnDefinitions>
                                                                 <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{DynamicResource DefaultTextBlock}"/>
-                                                                <Button Grid.Column="1" ToolTip="{DynamicResource String_EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource CleanButton}">
+                                                                <Button Grid.Column="1" ToolTip="{DynamicResource String_EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
                                                                     <Rectangle Width="16" Height="16">
                                                                         <Rectangle.OpacityMask>
                                                                             <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
@@ -349,7 +349,7 @@
                 <TextBlock Text="{DynamicResource String_DocumentationTitle_00001}" VerticalAlignment="Center" FontSize="14" Margin="10,0,0,0" />
             </StackPanel>
         </StackPanel>
-        <StackPanel VerticalAlignment="Center" Visibility="{Binding Source={x:Static Settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="10">
+        <StackPanel VerticalAlignment="Center" Visibility="{Binding Source={x:Static Settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="10">
             <TextBlock Text="{DynamicResource String_DisableTransparencyInTheSettingsToUseRemoteDesktop}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
             <Button HorizontalAlignment="Center" Command="{Binding OpenSettingsCommand}" Style="{StaticResource ImageWithTextButton}">
                 <Button.Content>

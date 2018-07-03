@@ -1,5 +1,4 @@
 ﻿using NETworkManager.Models.Settings;
-using NETworkManager.Utilities;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -11,14 +10,12 @@ namespace NETworkManager.Converters
     {        
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            TimeUnit timeUnit = (TimeUnit)value;
+            if (!(value is TimeUnit timeUnit))
+                return "No valid time unit passed!";
 
-            string timeUnitTranslated = LocalizationManager.GetStringByKey("String_TimeUnit_" + timeUnit.ToString());
+            var timeUnitTranslated = LocalizationManager.GetStringByKey("String_TimeUnit_" + timeUnit);
 
-            if (string.IsNullOrEmpty(timeUnitTranslated))
-                return timeUnit.ToString();
-
-            return timeUnitTranslated;
+            return string.IsNullOrEmpty(timeUnitTranslated) ? timeUnit.ToString() : timeUnitTranslated;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

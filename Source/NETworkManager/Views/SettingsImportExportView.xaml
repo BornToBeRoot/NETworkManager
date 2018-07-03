@@ -13,8 +13,8 @@
     <UserControl.Resources>
         <Converter:ValidateSettingsExportConverter x:Key="ValidateSettingsExportConverter" />
         <Converter:ValidateSettingsImportConverter x:Key="ValidateSettingsImportConverter" />
-        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Converter:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <StackPanel >
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Import}" />
@@ -28,7 +28,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button Content="{DynamicResource String_Button_Validate}" Command="{Binding ValidateImportSettingsCommand}" Visibility="{Binding ImportFileIsValid,Converter={StaticResource BooleanReverseToVisibilityConverter}}" HorizontalAlignment="Left" Margin="0,0,0,20" >
+        <Button Content="{DynamicResource String_Button_Validate}" Command="{Binding ValidateImportSettingsCommand}" Visibility="{Binding ImportFileIsValid,Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" HorizontalAlignment="Left" Margin="0,0,0,20" >
             <Button.Style>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
                     <Setter Property="IsEnabled" Value="False" />
@@ -40,7 +40,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <StackPanel Visibility="{Binding ImportFileIsValid, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,0,0,20">
+        <StackPanel Visibility="{Binding ImportFileIsValid, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,20">
             <TextBlock Style="{StaticResource DefaultTextBlock}" Text="{StaticResource String_SelectTheSettingsYouWantToImport}" Margin="0,0,0,10" />
             <RadioButton x:Name="radioButtonImportEverything" Content="{DynamicResource String_RadioButton_Everything}" IsChecked="{Binding ImportEverything}" Margin="0,0,0,10"/>
             <RadioButton x:Name="radioButtonImportCustom" Content="{DynamicResource String_RadioButton_Custom}" Margin="0,0,0,10"/>

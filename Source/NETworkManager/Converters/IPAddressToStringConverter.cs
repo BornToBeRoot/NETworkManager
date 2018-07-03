@@ -5,14 +5,11 @@ using System.Windows.Data;
 
 namespace NETworkManager.Converters
 {
-    public sealed class IPAddressToStringConverter : IValueConverter
+    public sealed class IpAddressToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
-                return "-/-";
-                        
-            return ((IPAddress)value).ToString();
+            return !(value is IPAddress) ? "-/-" : ((IPAddress)value).ToString();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
