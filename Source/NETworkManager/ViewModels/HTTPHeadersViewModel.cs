@@ -239,7 +239,7 @@ namespace NETworkManager.ViewModels
             {
                 foreach (TabablzControl tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
                 {
-                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.ID == _tabId).Header = WebsiteUri;
+                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = WebsiteUri;
                 }
             }
 

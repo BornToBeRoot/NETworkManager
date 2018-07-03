@@ -3,7 +3,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
 using System;
 using System.Windows.Threading;
 using System.Diagnostics;
@@ -15,7 +14,7 @@ using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Controls
 {
-    public partial class PuTTYControl : UserControl, INotifyPropertyChanged
+    public partial class PuttyControl : INotifyPropertyChanged
     {
         #region PropertyChangedEventHandler
         public event PropertyChangedEventHandler PropertyChanged;
@@ -27,20 +26,20 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Variables
-        private bool _initialized = false;
-        private IDialogCoordinator dialogCoordinator;
+        private bool _initialized;
+        private readonly IDialogCoordinator _dialogCoordinator;
 
-        private Models.PuTTY.PuTTYProfileInfo _puTTYProfileInfo;
+        private readonly PuTTYProfileInfo _puttyProfileInfo;
 
-        Process PuTTYProcess = null;
-        IntPtr AppWin;
+        Process _puttyProcess;
+        private IntPtr _appWin;
 
-        DispatcherTimer resizeTimer = new DispatcherTimer();
+        private readonly DispatcherTimer _resizeTimer = new DispatcherTimer();
 
         private bool _connected = true;
         public bool Connected
         {
-            get { return _connected; }
+            get => _connected;
             set
             {
                 if (value == _connected)
@@ -53,17 +52,17 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Constructor, load
-        public PuTTYControl(Models.PuTTY.PuTTYProfileInfo info)
+        public PuttyControl(PuTTYProfileInfo info)
         {
             InitializeComponent();
             DataContext = this;
 
-            dialogCoordinator = DialogCoordinator.Instance;
+            _dialogCoordinator = DialogCoordinator.Instance;
 
-            _puTTYProfileInfo = info;
+            _puttyProfileInfo = info;
 
-            resizeTimer.Tick += ResizeTimer_Tick;
-            resizeTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            _resizeTimer.Tick += ResizeTimer_Tick;
+            _resizeTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
@@ -71,11 +70,11 @@ namespace NETworkManager.Controls
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             // Connect after the control is drawn and only on the first init
-            if (!_initialized)
-            {
-                Connect();
-                _initialized = true;
-            }
+            if (_initialized)
+                return;
+
+            Connect();
+            _initialized = true;
         }
 
         private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
@@ -101,37 +100,43 @@ namespace NETworkManager.Controls
         {
             ProcessStartInfo info = new ProcessStartInfo
             {
-                FileName = _puTTYProfileInfo.PuTTYLocation,
-                Arguments = PuTTY.BuildCommandLine(_puTTYProfileInfo)
+                FileName = _puttyProfileInfo.PuTTYLocation,
+                Arguments = PuTTY.BuildCommandLine(_puttyProfileInfo)
             };
 
             try
             {
-                PuTTYProcess = Process.Start(info);
+                _puttyProcess = Process.Start(info);
 
-                PuTTYProcess.EnableRaisingEvents = true;
-                PuTTYProcess.Exited += PuTTYProcess_Exited;
+                if (_puttyProcess != null)
+                {
+                    _puttyProcess.EnableRaisingEvents = true;
+                    _puttyProcess.Exited += PuTTYProcess_Exited;
 
-                PuTTYProcess.WaitForInputIdle();
+                    _puttyProcess.WaitForInputIdle();
 
-                // Embed putty window into panel, remove border etc.
-                AppWin = PuTTYProcess.MainWindowHandle;
+                    // Embed putty window into panel, remove border etc.
+                    _appWin = _puttyProcess.MainWindowHandle;
 
-                NativeMethods.SetParent(AppWin, puTTYHost.Handle);
+                    NativeMethods.SetParent(_appWin, puTTYHost.Handle);
 
-                // Show window before set style and resize
-                NativeMethods.ShowWindow(AppWin, NativeMethods.WindowShowStyle.Maximize);
+                    // Show window before set style and resize
+                    NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
 
-                // Remove border etc.
-                long style = (int)NativeMethods.GetWindowLong(AppWin, NativeMethods.GWL_STYLE);
-                style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME);
-                NativeMethods.SetWindowLongPtr(AppWin, NativeMethods.GWL_STYLE, new IntPtr(style));
+                    // Remove border etc.
+                    long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
+                    style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME);
+                    NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
 
-                // Resize embedded application & refresh       
-                if (PuTTYProcess != null)
-                    ResizeEmbeddedPuTTY();
+                    // Resize embedded application & refresh       
+                    ResizeEmbeddedPutty();
 
-                Connected = true;
+                    Connected = true;
+                }
+                else
+                {
+                    throw new Exception("PuTTY process could not be started!");
+                }
             }
             catch (Exception ex)
             {
@@ -140,7 +145,7 @@ namespace NETworkManager.Controls
 
                 ConfigurationManager.Current.IsDialogOpen = true;
 
-                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, settings);
 
                 ConfigurationManager.Current.IsDialogOpen = false;
             }
@@ -152,15 +157,15 @@ namespace NETworkManager.Controls
             Connected = false;
         }
 
-        private void ResizeEmbeddedPuTTY()
+        private void ResizeEmbeddedPutty()
         {
-            NativeMethods.SetWindowPos(PuTTYProcess.MainWindowHandle, IntPtr.Zero, 0, 0, puTTYHost.ClientSize.Width, puTTYHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
+            NativeMethods.SetWindowPos(_puttyProcess.MainWindowHandle, IntPtr.Zero, 0, 0, puTTYHost.ClientSize.Width, puTTYHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
         }
 
         public void Disconnect()
         {
-            if (PuTTYProcess != null && !PuTTYProcess.HasExited)
-                PuTTYProcess.Kill();
+            if (_puttyProcess != null && !_puttyProcess.HasExited)
+                _puttyProcess.Kill();
         }
 
         public void CloseTab()
@@ -172,15 +177,15 @@ namespace NETworkManager.Controls
         #region Events
         private void PuTTYGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (PuTTYProcess != null)
-                ResizeEmbeddedPuTTY();
+            if (_puttyProcess != null)
+                ResizeEmbeddedPutty();
         }
 
         private void ResizeTimer_Tick(object sender, EventArgs e)
         {
-            resizeTimer.Stop();
+            _resizeTimer.Stop();
 
-            ResizeEmbeddedPuTTY();
+            ResizeEmbeddedPutty();
         }
         #endregion
     }

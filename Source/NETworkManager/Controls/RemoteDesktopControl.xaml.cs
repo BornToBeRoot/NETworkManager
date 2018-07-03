@@ -2,17 +2,15 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System;
 using System.Windows.Threading;
 using NETworkManager.Utilities;
 using NETworkManager.Models.Settings;
-using System.Diagnostics;
 
 namespace NETworkManager.Controls
 {
-    public partial class RemoteDesktopControl : UserControl, INotifyPropertyChanged
+    public partial class RemoteDesktopControl : INotifyPropertyChanged
     {
         #region PropertyChangedEventHandler
         public event PropertyChangedEventHandler PropertyChanged;
@@ -28,16 +26,16 @@ namespace NETworkManager.Controls
 
         private const string RemoteDesktopDisconnectReasonIdentifier = "String_RemoteDesktopDisconnectReason_";
 
-        private RemoteDesktopSessionInfo _rdpProfileInfo;
+        private readonly RemoteDesktopSessionInfo _rdpProfileInfo;
 
-        DispatcherTimer reconnectAdjustScreenTimer = new DispatcherTimer();
+        private readonly DispatcherTimer _reconnectAdjustScreenTimer = new DispatcherTimer();
 
         // Fix WindowsFormsHost width
         private double _rdpClientWidth;
-        public double RDPClientWidth
+        public double RdpClientWidth
         {
-            get { return _rdpClientWidth; }
-            set
+            get => _rdpClientWidth;
+            set 
             {
                 if (value == _rdpClientWidth)
                     return;
@@ -49,9 +47,9 @@ namespace NETworkManager.Controls
 
         // Fix WindowsFormsHost height
         private double _rdpClientHeight;
-        public double RDPClientHeight
+        public double RdpClientHeight
         {
-            get { return _rdpClientHeight; }
+            get => _rdpClientHeight;
             set
             {
                 if (value == _rdpClientHeight)
@@ -113,8 +111,8 @@ namespace NETworkManager.Controls
 
             _rdpProfileInfo = info;
 
-            reconnectAdjustScreenTimer.Tick += ReconnectAdjustScreenTimer_Tick;
-            reconnectAdjustScreenTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            _reconnectAdjustScreenTimer.Tick += ReconnectAdjustScreenTimer_Tick;
+            _reconnectAdjustScreenTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
@@ -217,8 +215,8 @@ namespace NETworkManager.Controls
 
         private void FixWindowsFormsHostSize()
         {
-            RDPClientWidth = rdpClient.DesktopWidth;
-            RDPClientHeight = rdpClient.DesktopHeight;
+            RdpClientWidth = rdpClient.DesktopWidth;
+            RdpClientHeight = rdpClient.DesktopHeight;
         }
 
         private void Disconnect()
@@ -367,13 +365,13 @@ namespace NETworkManager.Controls
         {
             // Prevent with a timer, that the function (rdpClient.Reconnect()) is executed too often
             if (Connected && _rdpProfileInfo.AdjustScreenAutomatically)
-                reconnectAdjustScreenTimer.Start();
+                _reconnectAdjustScreenTimer.Start();
         }
 
         private void ReconnectAdjustScreenTimer_Tick(object sender, EventArgs e)
         {
             // Stop timer
-            reconnectAdjustScreenTimer.Stop();
+            _reconnectAdjustScreenTimer.Stop();
 
             // Reconnect with new resulution
             ReconnectAdjustScreen();

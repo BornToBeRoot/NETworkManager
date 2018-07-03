@@ -217,7 +217,7 @@ namespace NETworkManager.ViewModels
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzTabItem).View as PuTTYControl).CloseTab();
+            ((args.DragablzItem.Content as DragablzTabItem).View as PuttyControl).CloseTab();
         }
 
         public ICommand ConnectCommand
@@ -526,7 +526,7 @@ namespace NETworkManager.ViewModels
             // Add PuTTY path here...
             ProfileInfo.PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
 
-            TabItems.Add(new DragablzTabItem(Header ?? ProfileInfo.HostOrSerialLine, new PuTTYControl(ProfileInfo)));
+            TabItems.Add(new DragablzTabItem(Header ?? ProfileInfo.HostOrSerialLine, new PuttyControl(ProfileInfo)));
 
             SelectedTabIndex = TabItems.Count - 1;
         }
