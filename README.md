@@ -86,3 +86,7 @@ You can also help developing! Fork the repository, do your changes and send me a
 <h2>License</h2>
 
 This software is published under the [GNU GENERAL PUBLIC LICENSE](https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE).
+
+---
+
+JetBrains Open Source License Request
