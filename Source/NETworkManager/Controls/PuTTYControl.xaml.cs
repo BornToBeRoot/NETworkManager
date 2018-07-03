@@ -118,7 +118,7 @@ namespace NETworkManager.Controls
                     // Embed putty window into panel, remove border etc.
                     _appWin = _puttyProcess.MainWindowHandle;
 
-                    NativeMethods.SetParent(_appWin, puTTYHost.Handle);
+                    NativeMethods.SetParent(_appWin, PuttyHost.Handle);
 
                     // Show window before set style and resize
                     NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
@@ -159,7 +159,7 @@ namespace NETworkManager.Controls
 
         private void ResizeEmbeddedPutty()
         {
-            NativeMethods.SetWindowPos(_puttyProcess.MainWindowHandle, IntPtr.Zero, 0, 0, puTTYHost.ClientSize.Width, puTTYHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
+            NativeMethods.SetWindowPos(_puttyProcess.MainWindowHandle, IntPtr.Zero, 0, 0, PuttyHost.ClientSize.Width, PuttyHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
         }
 
         public void Disconnect()

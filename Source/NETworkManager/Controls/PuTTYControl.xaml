@@ -3,18 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:WindowsForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        Dialog:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d" Loaded="UserControl_Loaded">
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:windowsForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:controls="clr-namespace:NETworkManager.Controls"
+        dialogs:DialogParticipation.Register="{Binding}"
+        mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance controls:PuttyControl}">
     <UserControl.Resources>
-        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
-    <Grid x:Name="puTTYGrid" SizeChanged="PuTTYGrid_SizeChanged">
+    <Grid SizeChanged="PuTTYGrid_SizeChanged">
         <WindowsFormsHost Visibility="{Binding Connected, Converter={StaticResource BooleanToVisibilityConverter}}">  
-            <WindowsForms:Panel x:Name="puTTYHost" />
+            <windowsForms:Panel x:Name="PuttyHost" />
         </WindowsFormsHost>
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding Connected, Converter={StaticResource BooleanReverseToVisibilityConverter}}">
             <Grid.RowDefinitions>
@@ -25,7 +26,7 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{DynamicResource String_Header_Disconnected}" Style="{StaticResource HeaderTextBlock}" />
             <TextBlock Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{DynamicResource String_PuTTYProcessHasEnded}" Style="{DynamicResource DefaultTextBlock}" />
-            <Button Grid.Row="4" Content="{DynamicResource String_Button_Reconnect}" Command="{Binding ReconnectCommand}" IsDefault="True" Style="{StaticResource DefaultButton}"/>
+            <Button Grid.Row="3" Content="{DynamicResource String_Button_Reconnect}" Command="{Binding ReconnectCommand}" IsDefault="True" Style="{StaticResource DefaultButton}"/>
         </Grid>
     </Grid>
 </UserControl>

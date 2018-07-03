@@ -22,7 +22,7 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Variables
-        private bool _initialized = false;
+        private bool _initialized;
 
         private const string RemoteDesktopDisconnectReasonIdentifier = "String_RemoteDesktopDisconnectReason_";
 
@@ -60,30 +60,30 @@ namespace NETworkManager.Controls
             }
         }
 
-        private bool _connected = true;
-        public bool Connected
+        private bool _isConnected = true;
+        public bool IsConnected
         {
-            get { return _connected; }
+            get => _isConnected;
             set
             {
-                if (value == _connected)
+                if (value == _isConnected)
                     return;
 
-                _connected = value;
+                _isConnected = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _reconnecting;
-        public bool Reconnecting
+        private bool _isReconnecting;
+        public bool IsReconnecting
         {
-            get { return _reconnecting; }
+            get => _isReconnecting;
             set
             {
-                if (value == _reconnecting)
+                if (value == _isReconnecting)
                     return;
 
-                _reconnecting = value;
+                _isReconnecting = value;
                 OnPropertyChanged();
             }
         }
@@ -91,7 +91,7 @@ namespace NETworkManager.Controls
         private string _disconnectReason;
         public string DisconnectReason
         {
-            get { return _disconnectReason; }
+            get => _disconnectReason;
             set
             {
                 if (value == _disconnectReason)
@@ -148,81 +148,81 @@ namespace NETworkManager.Controls
         #region Methods
         private void Connect()
         {
-            rdpClient.Server = _rdpProfileInfo.Hostname;
-            rdpClient.AdvancedSettings9.RDPPort = _rdpProfileInfo.Port;
+            RdpClient.Server = _rdpProfileInfo.Hostname;
+            RdpClient.AdvancedSettings9.RDPPort = _rdpProfileInfo.Port;
 
             if (_rdpProfileInfo.CustomCredentials)
             {
-                rdpClient.UserName = _rdpProfileInfo.Username;
-                rdpClient.AdvancedSettings9.ClearTextPassword = SecureStringHelper.ConvertToString(_rdpProfileInfo.Password);
+                RdpClient.UserName = _rdpProfileInfo.Username;
+                RdpClient.AdvancedSettings9.ClearTextPassword = SecureStringHelper.ConvertToString(_rdpProfileInfo.Password);
             }
 
             // AdvancedSettings
-            rdpClient.AdvancedSettings9.AuthenticationLevel = _rdpProfileInfo.AuthenticationLevel;
-            rdpClient.AdvancedSettings9.EnableCredSspSupport = _rdpProfileInfo.EnableCredSspSupport;
+            RdpClient.AdvancedSettings9.AuthenticationLevel = _rdpProfileInfo.AuthenticationLevel;
+            RdpClient.AdvancedSettings9.EnableCredSspSupport = _rdpProfileInfo.EnableCredSspSupport;
 
             // Devices and resources
-            rdpClient.AdvancedSettings9.RedirectClipboard = _rdpProfileInfo.RedirectClipboard;
-            rdpClient.AdvancedSettings9.RedirectDevices = _rdpProfileInfo.RedirectDevices;
-            rdpClient.AdvancedSettings9.RedirectDrives = _rdpProfileInfo.RedirectDrives;
-            rdpClient.AdvancedSettings9.RedirectPorts = _rdpProfileInfo.RedirectPorts;
-            rdpClient.AdvancedSettings9.RedirectSmartCards = _rdpProfileInfo.RedirectSmartCards;
-            rdpClient.AdvancedSettings9.RedirectPrinters = _rdpProfileInfo.RedirectPrinters;
+            RdpClient.AdvancedSettings9.RedirectClipboard = _rdpProfileInfo.RedirectClipboard;
+            RdpClient.AdvancedSettings9.RedirectDevices = _rdpProfileInfo.RedirectDevices;
+            RdpClient.AdvancedSettings9.RedirectDrives = _rdpProfileInfo.RedirectDrives;
+            RdpClient.AdvancedSettings9.RedirectPorts = _rdpProfileInfo.RedirectPorts;
+            RdpClient.AdvancedSettings9.RedirectSmartCards = _rdpProfileInfo.RedirectSmartCards;
+            RdpClient.AdvancedSettings9.RedirectPrinters = _rdpProfileInfo.RedirectPrinters;
 
             // Display
-            rdpClient.ColorDepth = _rdpProfileInfo.ColorDepth;      // 8, 15, 16, 24
+            RdpClient.ColorDepth = _rdpProfileInfo.ColorDepth;      // 8, 15, 16, 24
 
             if (_rdpProfileInfo.AdjustScreenAutomatically || _rdpProfileInfo.UseCurrentViewSize)
             {
-                rdpClient.DesktopWidth = (int)rdpGrid.ActualWidth;
-                rdpClient.DesktopHeight = (int)rdpGrid.ActualHeight;
+                RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
+                RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
             }
             else
             {
-                rdpClient.DesktopWidth = _rdpProfileInfo.DesktopWidth;
-                rdpClient.DesktopHeight = _rdpProfileInfo.DesktopHeight;
+                RdpClient.DesktopWidth = _rdpProfileInfo.DesktopWidth;
+                RdpClient.DesktopHeight = _rdpProfileInfo.DesktopHeight;
             }
 
             FixWindowsFormsHostSize();
 
             // Events
-            rdpClient.OnConnected += RdpClient_OnConnected;
-            rdpClient.OnDisconnected += RdpClient_OnDisconnected;
+            RdpClient.OnConnected += RdpClient_OnConnected;
+            RdpClient.OnDisconnected += RdpClient_OnDisconnected;
 
-            rdpClient.Connect();
+            RdpClient.Connect();
         }
 
         private void Reconnect()
         {
-            Reconnecting = true;
+            IsReconnecting = true;
 
             if (_rdpProfileInfo.AdjustScreenAutomatically)
             {
-                rdpClient.DesktopWidth = (int)rdpGrid.ActualWidth;
-                rdpClient.DesktopHeight = (int)rdpGrid.ActualHeight;
+                RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
+                RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
             }
 
             FixWindowsFormsHostSize();
 
-            rdpClient.Connect();
+            RdpClient.Connect();
         }
 
         private void ReconnectAdjustScreen()
         {
-            rdpClient.Reconnect((uint)rdpGrid.ActualWidth, (uint)rdpGrid.ActualHeight);
+            RdpClient.Reconnect((uint)RdpGrid.ActualWidth, (uint)RdpGrid.ActualHeight);
             FixWindowsFormsHostSize();
         }
 
         private void FixWindowsFormsHostSize()
         {
-            RdpClientWidth = rdpClient.DesktopWidth;
-            RdpClientHeight = rdpClient.DesktopHeight;
+            RdpClientWidth = RdpClient.DesktopWidth;
+            RdpClientHeight = RdpClient.DesktopHeight;
         }
 
         private void Disconnect()
         {
-            if (Connected)
-                rdpClient.Disconnect();
+            if (IsConnected)
+                RdpClient.Disconnect();
         }
 
         public void CloseTab()
@@ -231,7 +231,7 @@ namespace NETworkManager.Controls
         }
 
         // Source: https://msdn.microsoft.com/en-us/library/aa382170(v=vs.85).aspx
-        private string GetDisconnectReasonFromResource(string reason)
+        private static string GetDisconnectReasonFromResource(string reason)
         {
             try
             {
@@ -243,7 +243,7 @@ namespace NETworkManager.Controls
             }
         }
 
-        private string GetDisconnectReason(int reason)
+        private static string GetDisconnectReason(int reason)
         {
             switch (reason)
             {
@@ -350,21 +350,21 @@ namespace NETworkManager.Controls
         #region Events
         private void RdpClient_OnConnected(object sender, EventArgs e)
         {
-            Connected = true;
+            IsConnected = true;
         }
 
         private void RdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
         {
-            Connected = false;
-            Reconnecting = false;
+            IsConnected = false;
+            IsReconnecting = false;
 
             DisconnectReason = GetDisconnectReason(e.discReason);
         }
 
-        private void RDPGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void RdpGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             // Prevent with a timer, that the function (rdpClient.Reconnect()) is executed too often
-            if (Connected && _rdpProfileInfo.AdjustScreenAutomatically)
+            if (IsConnected && _rdpProfileInfo.AdjustScreenAutomatically)
                 _reconnectAdjustScreenTimer.Start();
         }
 

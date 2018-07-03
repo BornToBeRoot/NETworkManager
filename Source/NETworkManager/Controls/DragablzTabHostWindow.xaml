@@ -6,8 +6,10 @@
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
         mc:Ignorable="d"
-        Title="{DynamicResource String_ProductName}" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" TitleAlignment="Left">
+        Title="{DynamicResource String_ProductName}" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" TitleAlignment="Left"
+        d:DataContext="{d:DesignInstance networkManagerControls:DragablzTabHostWindow}">    
     <controls:MetroWindow.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </controls:MetroWindow.Resources>
@@ -33,7 +35,7 @@
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <ContentPresenter Content="{Binding View}" />
+                                <ContentPresenter Content="{Binding View}" d:DataContext="{d:DesignInstance networkManagerControls:DragablzTabItem}" />
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>

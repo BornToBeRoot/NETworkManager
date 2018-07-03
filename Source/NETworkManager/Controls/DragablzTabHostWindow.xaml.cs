@@ -1,8 +1,8 @@
-﻿using Dragablz;
+﻿using System;
+using Dragablz;
 using NETworkManager.Models.Settings;
 using NETworkManager.Views;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
@@ -66,6 +66,7 @@ namespace NETworkManager.Controls
         #endregion
 
         #region ICommand & Actions
+
         public ItemActionCallback CloseItemCommand => CloseItemAction;
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
@@ -73,33 +74,51 @@ namespace NETworkManager.Controls
             // Switch between application identifiert...
             switch (_applicationName)
             {
+                case ApplicationViewManager.Name.None:
+                    break;
                 case ApplicationViewManager.Name.IPScanner:
-                    ((IPScannerView) ((DragablzTabItem) args.DragablzItem.Content).View).CloseTab();
+                    ((IPScannerView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.PortScanner:
-                    ((PortScannerView) ((DragablzTabItem) args.DragablzItem.Content).View).CloseTab();
+                    ((PortScannerView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.Ping:
-                    ((PingView) ((DragablzTabItem) args.DragablzItem.Content).View).CloseTab();
+                    ((PingView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.Traceroute:
-                    ((TracerouteView) ((DragablzTabItem) args.DragablzItem.Content).View).CloseTab();
+                    ((TracerouteView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.DNSLookup:
-                    ((DNSLookupView) ((DragablzTabItem) args.DragablzItem.Content).View).CloseTab();
+                    ((DNSLookupView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.RemoteDesktop:
-                    ((RemoteDesktopControl) ((DragablzTabItem) args.DragablzItem.Content).View).CloseTab();
+                    ((RemoteDesktopControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.PuTTY:
-                    ((PuttyControl) ((DragablzTabItem) args.DragablzItem.Content).View).CloseTab();
+                    ((PuttyControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.SNMP:
-                    ((TracerouteView) ((DragablzTabItem) args.DragablzItem.Content).View).CloseTab();
+                    ((TracerouteView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.HTTPHeaders:
-                    ((HTTPHeadersView) ((DragablzTabItem) args.DragablzItem.Content).View).CloseTab();
+                    ((HTTPHeadersView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
+                case ApplicationViewManager.Name.NetworkInterface:
+                    break;
+                case ApplicationViewManager.Name.WakeOnLAN:
+                    break;
+                case ApplicationViewManager.Name.SubnetCalculator:
+                    break;
+                case ApplicationViewManager.Name.Lookup:
+                    break;
+                case ApplicationViewManager.Name.Connections:
+                    break;
+                case ApplicationViewManager.Name.Listeners:
+                    break;
+                case ApplicationViewManager.Name.ARPTable:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
         }
@@ -109,11 +128,7 @@ namespace NETworkManager.Controls
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(SettingsInfo.Window_ShowCurrentApplicationTitle))
-            {
                 OnPropertyChanged(nameof(ShowCurrentApplicationTitle));
-                Debug.WriteLine(e.PropertyName);
-            }
-
         }
         #endregion
 
