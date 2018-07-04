@@ -418,13 +418,14 @@
     <system:String x:Key="String_EnterSubnetsToCreateASupernet">Ingrese las subredes para crear una super-red...</system:String>
     <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Ingrese la subred y una nueva máscara de subred para crear subredes...</system:String>
     <system:String x:Key="String_Enable">Habilitar</system:String>
-    <system:String x:Key="String_SelectAtLeastOneNodeWhereTheProfileShouldAppear">¡Seleccione al menos un nodo, donde debe aparecer el perfil! Clic en una pestaña y seleccione habilitar...</system:String>
+    <system:String x:Key="String_EnableTheProfileInAtLeastOneTool">Enable the profile in at least one tool! Click on a tab and select "Enable"...</system:String> <!-- new/updated, please remove comment if string is translated -->
     <system:String x:Key="String_Profiles">Perfiles</system:String>
     <system:String x:Key="String_ShowOnlyMostCommonQueryTypes">Mostrar solo los tipos de consulta más comunes</system:String>
     <system:String x:Key="String_DisableTransparencyInTheSettingsToUseRemoteDesktop">Desactive la transparencia en la configuración (General/Apariencia) y reinicie la aplicación luego puede usar el Escritorio remoto</system:String>
     <system:String x:Key="String_DisableTransparencyInTheSettingsToUsePuTTY">Desactive la transparencia en la configuración (General/Apariencia) y reinicie la aplicación luego puede usar PuTTY</system:String>
     <system:String x:Key="String_Timestamp">Marca de tiempo</system:String>
     <system:String x:Key="String_SearchedLanguageNotFound">¡Idioma buscado no encontrado!</system:String>
+    <system:String x:Key="String_InheritHostFromDefault">Inherit host from default</system:String> <!-- new/updated, please remove comment if string is translated -->
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Cómo instalar RDP 8.1 en Windows 7/Server 2008 R2</system:String>
