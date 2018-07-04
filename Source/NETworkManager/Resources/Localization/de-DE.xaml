@@ -418,13 +418,14 @@
     <system:String x:Key="String_EnterSubnetsToCreateASupernet">Geben Sie Subnetze ein, um ein Supernet zu erstellen...</system:String>
     <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Geben Sie das Subnetz und eine neue Subnetzmaske ein, um Subnetze zu erstellen...</system:String>
     <system:String x:Key="String_Enable">Aktivieren</system:String>
-    <system:String x:Key="String_SelectAtLeastOneNodeWhereTheProfileShouldAppear">Select at least one node, where the profile should appear! Click on a tab and select enable...</system:String>
+    <system:String x:Key="String_EnableTheProfileInAtLeastOneTool">Aktivieren Sie das Profil in mindestens einem Tool! Klicken Sie auf eine Registerkarte und wählen Sie "Aktivieren"...</system:String>
     <system:String x:Key="String_Profiles">Profile</system:String>
     <system:String x:Key="String_ShowOnlyMostCommonQueryTypes">Nur die häufigsten Abfragetypen anzeigen</system:String>
     <system:String x:Key="String_DisableTransparencyInTheSettingsToUseRemoteDesktop">Deaktivieren Sie die Transparenz in den Einstellungen (Allgemein/Aussehen) und starten Sie anschließend die Anwendung neu, um Remote Desktop zu verwenden</system:String>
     <system:String x:Key="String_DisableTransparencyInTheSettingsToUsePuTTY">Deaktivieren Sie die Transparenz in den Einstellungen (Allgemein/Aussehen) und starten Sie anschließend die Anwendung neu, um PuTTY zu verwenden</system:String>
     <system:String x:Key="String_Timestamp">Timestamp</system:String>
     <system:String x:Key="String_SearchedLanguageNotFound">Gesuchte Sprache nicht gefunden</system:String>
+    <system:String x:Key="String_InheritHostFromDefault">Host von Standard übernehmen</system:String>
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>

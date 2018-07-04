@@ -7,17 +7,15 @@ using System.Windows.Data;
 namespace NETworkManager.Converters
 {
     public sealed class TcpStateToStringConverter : IValueConverter
-    {        
+    {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            TcpState tcpState = (TcpState)value;
+            if (!(value is TcpState tcpState))
+                return "-/-";
 
-            string status = LocalizationManager.GetStringByKey("String_TcpState_" + tcpState.ToString());
+            var status = LocalizationManager.GetStringByKey("String_TcpState_" + tcpState);
 
-            if (string.IsNullOrEmpty(status))
-                return tcpState.ToString();
-
-            return status;
+            return string.IsNullOrEmpty(status) ? tcpState.ToString() : status;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

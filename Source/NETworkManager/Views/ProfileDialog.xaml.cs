@@ -1,6 +1,4 @@
-﻿using NETworkManager.ViewModels;
-using System.Diagnostics;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {

@@ -418,13 +418,14 @@
     <system:String x:Key="String_EnterSubnetsToCreateASupernet">Введите подсети для создания суперсети...</system:String>
     <system:String x:Key="String_EnterSubnetAndANewSubnetmaskToCreateSubnets">Введите подсеть и новую маску подсети для создания подсетей...</system:String>
     <system:String x:Key="String_Enable">Enable</system:String> <!-- new/updated, please remove comment if string is translated -->
-    <system:String x:Key="String_SelectAtLeastOneNodeWhereTheProfileShouldAppear">Select at least one node, where the profile should appear! Click on a tab and select enable...</system:String> <!-- new/updated, please remove comment if string is translated -->
+    <system:String x:Key="String_EnableTheProfileInAtLeastOneTool">Enable the profile in at least one tool! Click on a tab and select "Enable"...</system:String> <!-- new/updated, please remove comment if string is translated -->
     <system:String x:Key="String_Profiles">Profiles</system:String> <!-- new/updated, please remove comment if string is translated -->
     <system:String x:Key="String_ShowOnlyMostCommonQueryTypes">Show only most common query types</system:String>
     <system:String x:Key="String_DisableTransparencyInTheSettingsToUseRemoteDesktop">Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use Remote Desktop</system:String> <!-- new/updated, please remove comment if string is translated -->
     <system:String x:Key="String_DisableTransparencyInTheSettingsToUsePuTTY">Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PuTTY</system:String> <!-- new/updated, please remove comment if string is translated -->
     <system:String x:Key="String_Timestamp">Timestamp</system:String> <!-- new/updated, please remove comment if string is translated -->
     <system:String x:Key="String_SearchedLanguageNotFound">Searched language not found!</system:String> <!-- new/updated, please remove comment if string is translated -->
+    <system:String x:Key="String_InheritHostFromDefault">Inherit host from default</system:String> <!-- new/updated, please remove comment if string is translated -->
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Как установить RDP 8.1 на Windows 7 / Server 2008 R2</system:String>

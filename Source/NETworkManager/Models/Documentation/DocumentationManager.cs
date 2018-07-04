@@ -9,100 +9,85 @@ namespace NETworkManager.Models.Documentation
 {
     public static class DocumentationManager
     {
-        public const string DocumentationBaseURL = @"https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/";
+        public const string DocumentationBaseUrl = @"https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/";
 
-        public static string DocumentationURL
-        {
-            get { return string.Format("{0}{1}/README.md", DocumentationBaseURL, Settings.LocalizationManager.Current.Code); }
-        }
+        public static string DocumentationUrl => $"{DocumentationBaseUrl}{Settings.LocalizationManager.Current.Code}/README.md";
 
-        public static List<DocumentationInfo> List
+        public static List<DocumentationInfo> List => new List<DocumentationInfo>
         {
-            get
-            {
-                return new List<DocumentationInfo>
-                {
-                    new DocumentationInfo(DocumentationIdentifier.Application_NetworkInterface, @"/Application/NetworkInterface.md", GetLocalizationInfoList("en-US", "de-DE")),
-                    new DocumentationInfo(DocumentationIdentifier.Application_IPScanner, @"/Application/IPScanner.md", GetLocalizationInfoList("en-US", "de-DE")),
-                    new DocumentationInfo(DocumentationIdentifier.Application_PortScanner, @"/Application/PortScanner.md", GetLocalizationInfoList("en-US", "de-DE")),
-                    new DocumentationInfo(DocumentationIdentifier.Application_Ping, @"/Application/Ping.md", GetLocalizationInfoList("en-US", "de-DE")),
-                    new DocumentationInfo(DocumentationIdentifier.Application_Traceroute, @"/Application/Traceroute.md", GetLocalizationInfoList("en-US", "de-DE")),
-                    new DocumentationInfo(DocumentationIdentifier.Application_DNSLookup, @"/Application/DNSLookup.md", GetLocalizationInfoList("en-US", "de-DE")),
-                    new DocumentationInfo(DocumentationIdentifier.Application_RemoteDesktop, @"/Application/RemoteDesktop.md", GetLocalizationInfoList("en-US", "de-DE")),
-                    new DocumentationInfo(DocumentationIdentifier.Application_PuTTY, @"/Application/PuTTY.md", GetLocalizationInfoList("en-US", "de-DE")),
-                    new DocumentationInfo(DocumentationIdentifier.Application_SNMP, @"/Application/SNMP.md", GetLocalizationInfoList("en-US", "de-DE")),
-                    new DocumentationInfo(DocumentationIdentifier.Application_WakeOnLAN, @"/Application/WakeOnLAN.md", GetLocalizationInfoList("en-US", "de-DE")),
-                    new DocumentationInfo(DocumentationIdentifier.Application_HTTPHeaders, @"/Application/HTTPHeaders.md", GetLocalizationInfoList("en-US", "de-DE")),
-                    new DocumentationInfo(DocumentationIdentifier.Application_SubnetCalculator, @"/Application/SubnetCalculator.md", GetLocalizationInfoList("en-US", "de-DE")),
-                    new DocumentationInfo(DocumentationIdentifier.Application_Lookup, @"/Application/Lookup.md", GetLocalizationInfoList("en-US", "de-DE")),
-                    new DocumentationInfo(DocumentationIdentifier.Application_Connections, @"/Application/Connections.md", GetLocalizationInfoList("en-US", "de-DE")),
-                    new DocumentationInfo(DocumentationIdentifier.Application_Listeners, @"/Application/Listeners.md", GetLocalizationInfoList("en-US", "de-DE")),
-                    new DocumentationInfo(DocumentationIdentifier.Application_ARPTable, @"/Application/ARPTable.md", GetLocalizationInfoList("en-US", "de-DE")),
-                    new DocumentationInfo(DocumentationIdentifier.HowTo_InstallRDP8dot1onWindows6dot1, @"/HowTo/Install_RDP_8dot1_on_Windows6dot1.md", GetLocalizationInfoList("en-US", "de-DE")),
-                    new DocumentationInfo(DocumentationIdentifier.HowTo_CreateCustomThemeAndAccent, @"/HowTo/Create_custom_theme_and_accent.md", GetLocalizationInfoList("en-US", "de-DE"))
-                };
-            }
-        }
+            new DocumentationInfo(DocumentationIdentifier.ApplicationNetworkInterface, @"/Application/NetworkInterface.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationIpScanner, @"/Application/IPScanner.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationPortScanner, @"/Application/PortScanner.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationPing, @"/Application/Ping.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationTraceroute, @"/Application/Traceroute.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationDnsLookup, @"/Application/DNSLookup.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationRemoteDesktop, @"/Application/RemoteDesktop.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationPutty, @"/Application/PuTTY.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationSnmp, @"/Application/SNMP.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationWakeOnLan, @"/Application/WakeOnLAN.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationHttpHeaders, @"/Application/HTTPHeaders.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationSubnetCalculator, @"/Application/SubnetCalculator.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationLookup, @"/Application/Lookup.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationConnections, @"/Application/Connections.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationListeners, @"/Application/Listeners.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationArpTable, @"/Application/ARPTable.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.HowToInstallRdp8Dot1OnWindows6Dot1, @"/HowTo/Install_RDP_8dot1_on_Windows6dot1.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.HowToCreateCustomThemeAndAccent, @"/HowTo/Create_custom_theme_and_accent.md", GetLocalizationInfoList("en-US", "de-DE"))
+        };
 
         public enum DocumentationIdentifier
         {
             Default,
-            Application_NetworkInterface,
-            Application_IPScanner,
-            Application_PortScanner,
-            Application_Ping,
-            Application_Traceroute,
-            Application_DNSLookup,
-            Application_RemoteDesktop,
-            Application_PuTTY,
-            Application_SNMP,
-            Application_WakeOnLAN,
-            Application_HTTPHeaders,
-            Application_SubnetCalculator,
-            Application_Lookup,
-            Application_Connections,
-            Application_Listeners,
-            Application_ARPTable,            
-            HowTo_InstallRDP8dot1onWindows6dot1,
-            HowTo_CreateCustomThemeAndAccent,
+            ApplicationNetworkInterface,
+            ApplicationIpScanner,
+            ApplicationPortScanner,
+            ApplicationPing,
+            ApplicationTraceroute,
+            ApplicationDnsLookup,
+            ApplicationRemoteDesktop,
+            ApplicationPutty,
+            ApplicationSnmp,
+            ApplicationWakeOnLan,
+            ApplicationHttpHeaders,
+            ApplicationSubnetCalculator,
+            ApplicationLookup,
+            ApplicationConnections,
+            ApplicationListeners,
+            ApplicationArpTable,            
+            HowToInstallRdp8Dot1OnWindows6Dot1,
+            HowToCreateCustomThemeAndAccent,
         }
 
         // Get localized documentation url (if available), else return the english webpage
-        public static string GetLocalizedURLbyID(DocumentationIdentifier documentationIdentifier)
+        public static string GetLocalizedUrlById(DocumentationIdentifier documentationIdentifier)
         {
-            DocumentationInfo info = List.FirstOrDefault(x => x.Identifier == documentationIdentifier);
+            var info = List.FirstOrDefault(x => x.Identifier == documentationIdentifier);
 
-            if (info.Localizations.FirstOrDefault(x => x.Code == Settings.LocalizationManager.Current.Code) != null)
-                return string.Format("{0}{1}{2}", DocumentationBaseURL, Settings.LocalizationManager.Current.Code, info.Path);
-            else
-                return string.Format("{0}en-US{1}", DocumentationBaseURL, info.Path);
+            // Return start page
+            if (info == null)
+                return DocumentationBaseUrl;
+
+            // Try get localized help, fallback is english
+            return info.Localizations.FirstOrDefault(x => x.Code == Settings.LocalizationManager.Current.Code) != null ? $"{DocumentationBaseUrl}{Settings.LocalizationManager.Current.Code}{info.Path}" : $"{DocumentationBaseUrl}en-US{info.Path}";
         }
 
         // Generate a list with culture codes
         private static List<Settings.LocalizationInfo> GetLocalizationInfoList(params string[] codes)
         {
-            List<Settings.LocalizationInfo> list = new List<Settings.LocalizationInfo>();
-
-            foreach (string code in codes)
-                list.Add(new Settings.LocalizationInfo(code));
-
-            return list;
+            return codes.Select(code => new Settings.LocalizationInfo(code)).ToList();
         }
 
         public static void OpenDocumentation(DocumentationIdentifier documentationIdentifier)
         {            
-            Process.Start(documentationIdentifier == DocumentationIdentifier.Default ? DocumentationURL : GetLocalizedURLbyID(documentationIdentifier));
+            Process.Start(documentationIdentifier == DocumentationIdentifier.Default ? DocumentationUrl : GetLocalizedUrlById(documentationIdentifier));
         }
 
         #region ICommands & Actions
-        public static ICommand OpenDocumentationCommand
-        {
-            get { return new RelayCommand(p => OpenDocumentationAction(p)); }
-        }
+        public static ICommand OpenDocumentationCommand => new RelayCommand(OpenDocumentationAction);
 
         private static void OpenDocumentationAction(object documentationIdentifier)
         {
-            OpenDocumentation((DocumentationIdentifier)Enum.Parse(typeof(DocumentationIdentifier), documentationIdentifier as string));
+            OpenDocumentation((DocumentationIdentifier)Enum.Parse(typeof(DocumentationIdentifier), documentationIdentifier as string ?? throw new InvalidOperationException()));
         }
         #endregion
     }

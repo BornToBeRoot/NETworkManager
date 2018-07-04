@@ -918,52 +918,52 @@ namespace NETworkManager
             switch (SelectedApplication.Name)
             {
                 case ApplicationViewManager.Name.NetworkInterface:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_NetworkInterface);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationNetworkInterface);
                     break;
                 case ApplicationViewManager.Name.IPScanner:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_IPScanner);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationIpScanner);
                     break;
                 case ApplicationViewManager.Name.PortScanner:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_PortScanner);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationPortScanner);
                     break;
                 case ApplicationViewManager.Name.Ping:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_Ping);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationPing);
                     break;
                 case ApplicationViewManager.Name.Traceroute:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_Traceroute);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationTraceroute);
                     break;
                 case ApplicationViewManager.Name.DNSLookup:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_DNSLookup);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationDnsLookup);
                     break;
                 case ApplicationViewManager.Name.RemoteDesktop:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_RemoteDesktop);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationRemoteDesktop);
                     break;
                 case ApplicationViewManager.Name.PuTTY:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_PuTTY);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationPutty);
                     break;
                 case ApplicationViewManager.Name.SNMP:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_SNMP);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationSnmp);
                     break;
                 case ApplicationViewManager.Name.WakeOnLAN:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_WakeOnLAN);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationWakeOnLan);
                     break;
                 case ApplicationViewManager.Name.HTTPHeaders:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_HTTPHeaders);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationHttpHeaders);
                     break;
                 case ApplicationViewManager.Name.SubnetCalculator:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_SubnetCalculator);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationSubnetCalculator);
                     break;
                 case ApplicationViewManager.Name.Lookup:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_Lookup);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationLookup);
                     break;
                 case ApplicationViewManager.Name.Connections:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_Connections);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationConnections);
                     break;
                 case ApplicationViewManager.Name.Listeners:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_Listeners);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationListeners);
                     break;
                 case ApplicationViewManager.Name.ARPTable:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_ARPTable);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationArpTable);
                     break;
                 default:
                     DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Default);
