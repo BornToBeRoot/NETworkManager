@@ -63,8 +63,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<OUIInfo> _ouiLookupResult = new ObservableCollection<OUIInfo>();
-        public ObservableCollection<OUIInfo> OUILookupResult
+        private ObservableCollection<OuiInfo> _ouiLookupResult = new ObservableCollection<OuiInfo>();
+        public ObservableCollection<OuiInfo> OUILookupResult
         {
             get { return _ouiLookupResult; }
             set
@@ -82,8 +82,8 @@ namespace NETworkManager.ViewModels
             get { return _ouiLookupResultView; }
         }
 
-        private OUIInfo _selectedOUILookup;
-        public OUIInfo SelectedOUILookup
+        private OuiInfo _selectedOUILookup;
+        public OuiInfo SelectedOUILookup
         {
             get { return _selectedOUILookup; }
             set
@@ -145,7 +145,7 @@ namespace NETworkManager.ViewModels
 
                 if (Regex.IsMatch(macAddressOrVendor1, RegexHelper.MACAddressRegex) || Regex.IsMatch(macAddressOrVendor1, RegexHelper.MACAddressFirst3BytesRegex))
                 {
-                    foreach (OUIInfo info in await OUILookup.LookupAsync(macAddressOrVendor1))
+                    foreach (OuiInfo info in await OuiLookup.LookupAsync(macAddressOrVendor1))
                     {
                         OUILookupResult.Add(info);
                     }
@@ -156,7 +156,7 @@ namespace NETworkManager.ViewModels
                 }
             }
 
-            foreach (OUIInfo info in await OUILookup.LookupByVendorAsync(vendors))
+            foreach (OuiInfo info in await OuiLookup.LookupByVendorAsync(vendors))
             {
                 OUILookupResult.Add(info);
             }
@@ -181,7 +181,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedMACAddressAction()
         {
-            Clipboard.SetText(SelectedOUILookup.MACAddress);
+            Clipboard.SetText(SelectedOUILookup.MacAddress);
         }
 
         public ICommand CopySelectedVendorCommand

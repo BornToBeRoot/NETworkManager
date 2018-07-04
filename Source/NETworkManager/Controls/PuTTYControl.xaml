@@ -6,9 +6,9 @@
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         xmlns:windowsForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        xmlns:controls="clr-namespace:NETworkManager.Controls"
+        xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
         dialogs:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance controls:PuttyControl}">
+        mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:PuttyControl}">
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />

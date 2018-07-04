@@ -82,18 +82,18 @@ namespace NETworkManager.Models.Network
                                     {
                                         tcpClient.EndConnect(tcpClientConnection);
 
-                                        OnPortScanned(new PortScannedArgs(host, port, PortLookup.Lookup(port).FirstOrDefault(x => x.Protocol == PortLookup.Protocol.tcp), PortInfo.PortStatus.Open));
+                                        OnPortScanned(new PortScannedArgs(host, port, PortLookup.Lookup(port).FirstOrDefault(x => x.Protocol == PortLookup.Protocol.Tcp), PortInfo.PortStatus.Open));
                                     }
                                     catch
                                     {
                                         if (portScannerOptions.ShowClosed)
-                                            OnPortScanned(new PortScannedArgs(host, port, PortLookup.Lookup(port).FirstOrDefault(x => x.Protocol == PortLookup.Protocol.tcp), PortInfo.PortStatus.Closed));
+                                            OnPortScanned(new PortScannedArgs(host, port, PortLookup.Lookup(port).FirstOrDefault(x => x.Protocol == PortLookup.Protocol.Tcp), PortInfo.PortStatus.Closed));
                                     }
                                 }
                                 else
                                 {
                                     if (portScannerOptions.ShowClosed)
-                                        OnPortScanned(new PortScannedArgs(host, port, PortLookup.Lookup(port).FirstOrDefault(x => x.Protocol == PortLookup.Protocol.tcp), PortInfo.PortStatus.Closed));
+                                        OnPortScanned(new PortScannedArgs(host, port, PortLookup.Lookup(port).FirstOrDefault(x => x.Protocol == PortLookup.Protocol.Tcp), PortInfo.PortStatus.Closed));
                                 }
                             }
 

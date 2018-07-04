@@ -149,7 +149,7 @@ namespace NETworkManager.Models.Network
                                 // Vendor lookup
                                 if (macAddress != null)
                                 {
-                                    OUIInfo info = OUILookup.Lookup(macAddress.ToString()).FirstOrDefault();
+                                    OuiInfo info = OuiLookup.Lookup(macAddress.ToString()).FirstOrDefault();
 
                                     if (info != null)
                                         vendor = info.Vendor;

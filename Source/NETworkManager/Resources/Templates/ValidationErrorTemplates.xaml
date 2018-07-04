@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Converter="clr-namespace:NETworkManager.Converters"
-                    xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
-    <Converter:BooleanOrConverter x:Key="BooleanOrConverter" />
+                    xmlns:converters="clr-namespace:NETworkManager.Converters"
+                    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
+    <converters:BooleanOrConverter x:Key="BooleanOrConverter" />
 
     <ControlTemplate x:Key="DefaultErrorTemplate">
         <StackPanel Orientation="Horizontal">
@@ -42,7 +42,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Grid.Column="0" Width="20" Height="20" Fill="{DynamicResource GrayBrush3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=InformationVariant}" />                                        
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=InformationVariant}" />                                        
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                                 <TextBlock Grid.Column="1" Text="{Binding Path=/ErrorContent}" Foreground="{DynamicResource BlackColorBrush}" FontSize="14" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,0,0,0"/>

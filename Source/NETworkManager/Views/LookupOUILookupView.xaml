@@ -127,7 +127,7 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MacAddress}" MinWidth="150" />
                 <DataGridTextColumn Header="{DynamicResource String_Vendor}" Binding="{Binding Vendor, Converter={StaticResource NullOrEmptyToStringConverter}}" MinWidth="200" Width="*" />
             </DataGrid.Columns>
         </DataGrid>

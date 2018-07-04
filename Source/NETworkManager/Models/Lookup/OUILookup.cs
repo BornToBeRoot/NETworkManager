@@ -9,64 +9,59 @@ using System.Xml;
 
 namespace NETworkManager.Models.Lookup
 {
-    public static class OUILookup
+    public static class OuiLookup
     {
         #region Variables
-        private static string OUIFilePath = Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "OUI.xml");
+        private static readonly string OuiFilePath = Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "OUI.xml");
 
-        private static List<OUIInfo> OUIList;
-        private static Lookup<string, OUIInfo> OUIs;
+        private static readonly List<OuiInfo> OuiList;
+        private static readonly Lookup<string, OuiInfo> OuiInfoLookup;
         #endregion
 
         #region Constructor
-        static OUILookup()
+        static OuiLookup()
         {
-            OUIList = new List<OUIInfo>();
+            OuiList = new List<OuiInfo>();
 
-            XmlDocument document = new XmlDocument();
-            document.Load(OUIFilePath);
+            var document = new XmlDocument();
+            document.Load(OuiFilePath);
 
-            foreach(XmlNode node in document.SelectNodes("/OUIs/OUI"))
+            // ReSharper disable once PossibleNullReferenceException
+            foreach (XmlNode node in document.SelectNodes("/OUIs/OUI"))
             {
-                OUIList.Add(new OUIInfo(node.SelectSingleNode("MACAddress").InnerText, node.SelectSingleNode("Vendor").InnerText));
+                if (node != null)
+                    OuiList.Add(new OuiInfo(node.SelectSingleNode("MACAddress")?.InnerText, node.SelectSingleNode("Vendor")?.InnerText));
             }
 
-            OUIs = (Lookup<string, OUIInfo>)OUIList.ToLookup(x => x.MACAddress);
+            OuiInfoLookup = (Lookup<string, OuiInfo>)OuiList.ToLookup(x => x.MacAddress);
         }
         #endregion
 
         #region Methods
-        public static Task<List<OUIInfo>> LookupAsync(string macAddress)
+        public static Task<List<OuiInfo>> LookupAsync(string macAddress)
         {
             return Task.Run(() => Lookup(macAddress));
         }
 
-        public static List<OUIInfo> Lookup(string macAddress)
+        public static List<OuiInfo> Lookup(string macAddress)
         {
-            List<OUIInfo> list = new List<OUIInfo>();
+            var ouiKey = Regex.Replace(macAddress, "[-|:|.]", "").Substring(0, 6).ToUpper();
 
-            string ouiKey = Regex.Replace(macAddress, "[-|:|.]", "").Substring(0, 6).ToUpper();
-
-            foreach (OUIInfo info in OUIs[ouiKey])
-            {
-                list.Add(info);
-            }
-
-            return list;
+            return OuiInfoLookup[ouiKey].ToList();
         }
 
-        public static Task<List<OUIInfo>> LookupByVendorAsync(List<string> vendors)
+        public static Task<List<OuiInfo>> LookupByVendorAsync(List<string> vendors)
         {
             return Task.Run(() => LookupByVendor(vendors));
         }
 
-        public static List<OUIInfo> LookupByVendor(List<string> vendors)
+        public static List<OuiInfo> LookupByVendor(List<string> vendors)
         {
-            List<OUIInfo> list = new List<OUIInfo>();
+            var list = new List<OuiInfo>();
 
-            foreach (OUIInfo info in OUIList)
+            foreach (var info in OuiList)
             {
-                foreach (string vendor in vendors)
+                foreach (var vendor in vendors)
                 {
                     if (info.Vendor.IndexOf(vendor, StringComparison.OrdinalIgnoreCase) > -1)
                         list.Add(info);

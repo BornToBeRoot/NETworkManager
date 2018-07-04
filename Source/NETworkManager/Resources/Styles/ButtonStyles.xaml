@@ -41,7 +41,6 @@
 
     <Style x:Key="ImageButton" TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
         <Setter Property="MinWidth" Value="35" />
-        <Setter Property="MinHeight" Value="35" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     </Style>
