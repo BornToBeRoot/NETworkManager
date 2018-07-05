@@ -293,16 +293,16 @@ namespace NETworkManager.Models.Settings
 
         #region Others
         // Application view       
-        private bool _applicationView_Expand;
-        public bool ApplicationView_Expand
+        private bool _expandApplicationView;
+        public bool ExpandApplicationView
         {
-            get { return _applicationView_Expand; }
+            get { return _expandApplicationView; }
             set
             {
-                if (value == _applicationView_Expand)
+                if (value == _expandApplicationView)
                     return;
 
-                _applicationView_Expand = value;
+                _expandApplicationView = value;
                 SettingsChanged = true;
             }
         }
