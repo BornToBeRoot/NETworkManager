@@ -667,8 +667,15 @@
                 <StatusBarItem>
                     <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource GrayBrush3}" FontWeight="Bold" />
                 </StatusBarItem>
-                <Separator Background="{DynamicResource GrayBrush8}" Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="10,0" />
-                <StatusBarItem Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" HorizontalAlignment="Left">
+                <Separator Background="{DynamicResource GrayBrush8}" Visibility="{Binding IsDebug, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="10,0,0,0" />
+                <StatusBarItem Visibility="{Binding IsDebug, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="10,0,0,0">
+                    <TextBlock Text="!! DEBUG VERSION !!" VerticalAlignment="Center" FontSize="14" />
+                </StatusBarItem>
+                <StatusBarItem Visibility="{Binding IsDebug, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="10,0,0,0" >
+                    <TextBlock Text="{Binding BuildDate}" VerticalAlignment="Center" FontSize="14" />
+                </StatusBarItem>
+                <Separator Background="{DynamicResource GrayBrush8}" Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="10,0,0,0" />                
+                <StatusBarItem Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" HorizontalAlignment="Left" Margin="10,0,0,0">
                     <StatusBarItem.InputBindings>
                         <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.NETworkManager_LatestReleaseURL}" />
                     </StatusBarItem.InputBindings>

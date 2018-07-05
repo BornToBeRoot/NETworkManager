@@ -225,6 +225,34 @@ namespace NETworkManager
             }
         }
 
+        private bool _isDebug;
+        public bool IsDebug
+        {
+            get { return _isDebug; }
+            set
+            {
+                if (value == _isDebug)
+                    return;
+
+                _isDebug = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _buildDate;
+        public string BuildDate
+        {
+            get { return _buildDate; }
+            set
+            {
+                if (value == _buildDate)
+                    return;
+
+                _buildDate = value;
+                OnPropertyChanged();
+            }
+        }
+        
         private bool _updateAvailable;
         public bool UpdateAvailable
         {
@@ -290,6 +318,11 @@ namespace NETworkManager
 
             // Set the version text
             Version = string.Format("{0} {1}", LocalizationManager.GetStringByKey("String_Version"), AssemblyManager.Current.Version);
+
+#if DEBUG
+            IsDebug = true;
+            BuildDate = AssemblyManager.Current.BuildDate.ToString();
+#endif
 
             // Load Profiles
             ProfileManager.Load();

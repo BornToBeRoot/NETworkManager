@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System;
 
 namespace NETworkManager.Models.Settings
 {
@@ -16,7 +17,8 @@ namespace NETworkManager.Models.Settings
             Current = new AssemblyInfo()
             {
                 Title = title.Title,
-                Version = name.Version
+                Version = name.Version,
+                BuildDate = new DateTime(2000, 1, 1).Add(new TimeSpan((TimeSpan.TicksPerDay * name.Version.Build) + (TimeSpan.TicksPerSecond * 2 * name.Version.Revision)))                
             };
         }
     }

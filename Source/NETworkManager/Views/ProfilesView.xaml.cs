@@ -29,18 +29,6 @@ namespace NETworkManager.Views
             viewModel.EditProfile();
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            if(_isFirstLoad)
-            {
-                _isFirstLoad = false;
-                return;
-            }
-
-            viewModel.Refresh();
-            Debug.WriteLine("rer");
-        }
-
         public void Refresh()
         {
             viewModel.Refresh();

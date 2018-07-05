@@ -36,7 +36,10 @@
                 <StackPanel Grid.Column="1" Margin="20,0,0,0">
                     <TextBlock FontSize="32" Grid.Row="0" Text="{DynamicResource String_ProductName}" Style="{StaticResource HeaderTextBlock}" />
                     <TextBlock Text="{DynamicResource String_Slogan}" Style="{DynamicResource WrapTextBlock}" Margin="0,0,0,5" />
-                    <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold" Margin="0,0,0,5" />
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                        <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold" />
+                        <TextBlock Text="{Binding BuildDate, StringFormat={}({0})}" Style="{StaticResource DefaultTextBlock}" Margin="10,0,0,0" />
+                    </StackPanel>
                     <TextBlock Text="{x:Static Resources:Resources.NETworkManager_License}" Style="{StaticResource LinkTextBlock}" Margin="0,0,0,5">
                         <TextBlock.InputBindings>
                             <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.NETworkManager_LicenseUrl}" MouseAction="LeftClick" />

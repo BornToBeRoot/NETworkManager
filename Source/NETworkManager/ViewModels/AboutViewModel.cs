@@ -27,18 +27,14 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _version;
         public string Version
         {
-            get { return _version; }
-            set
-            {
-                if (value == _version)
-                    return;
+            get { return AssemblyManager.Current.Version.ToString(); }
+        }
 
-                _version = value;
-                OnPropertyChanged();
-            }
+        public string BuildDate
+        {
+            get { return AssemblyManager.Current.BuildDate.ToString(); }
         }
 
         private bool _isUpdateCheckRunning;
@@ -156,8 +152,6 @@ namespace NETworkManager.ViewModels
         #region Constructor
         public AboutViewModel()
         {
-            Version = string.Format("{0} {1}", LocalizationManager.GetStringByKey("String_Version"), AssemblyManager.Current.Version);
-
             _librariesView = CollectionViewSource.GetDefaultView(LibraryManager.List);
             _librariesView.SortDescriptions.Add(new SortDescription(nameof(LibraryInfo.Library), ListSortDirection.Ascending));
 
