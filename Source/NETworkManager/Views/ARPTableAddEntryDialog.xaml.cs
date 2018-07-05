@@ -12,7 +12,7 @@ namespace NETworkManager.Views
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             // Need to be in loaded event, focusmanger won't work...
-            txtIPAddress.Focus();
+            TextBoxIpAddress.Focus();
         }
     }
 }

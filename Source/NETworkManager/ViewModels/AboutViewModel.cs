@@ -4,6 +4,7 @@ using System.Diagnostics;
 using NETworkManager.Models.Update;
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using NETworkManager.Models.Documentation;
 using System.Windows.Data;
 using NETworkManager.Utilities;
@@ -13,34 +14,14 @@ namespace NETworkManager.ViewModels
     public class AboutViewModel : ViewModelBase
     {
         #region Variables
-        private string _title;
-        public string Title
-        {
-            get { return _title; }
-            set
-            {
-                if (value == _title)
-                    return;
+        public string Version => AssemblyManager.Current.Version.ToString();
 
-                _title = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string Version
-        {
-            get { return AssemblyManager.Current.Version.ToString(); }
-        }
-
-        public string BuildDate
-        {
-            get { return AssemblyManager.Current.BuildDate.ToString(); }
-        }
+        public string BuildDate => AssemblyManager.Current.BuildDate.ToString(CultureInfo.CurrentCulture);
 
         private bool _isUpdateCheckRunning;
         public bool IsUpdateCheckRunning
         {
-            get { return _isUpdateCheckRunning; }
+            get => _isUpdateCheckRunning;
             set
             {
                 if (value == _isUpdateCheckRunning)
@@ -55,7 +36,7 @@ namespace NETworkManager.ViewModels
         private bool _updateAvailable;
         public bool UpdateAvailable
         {
-            get { return _updateAvailable; }
+            get => _updateAvailable;
             set
             {
                 if (value == _updateAvailable)
@@ -69,7 +50,7 @@ namespace NETworkManager.ViewModels
         private string _updateText;
         public string UpdateText
         {
-            get { return _updateText; }
+            get => _updateText;
             set
             {
                 if (value == _updateText)
@@ -83,7 +64,7 @@ namespace NETworkManager.ViewModels
         private bool _showUpdaterMessage;
         public bool ShowUpdaterMessage
         {
-            get { return _showUpdaterMessage; }
+            get => _showUpdaterMessage;
             set
             {
                 if (value == _showUpdaterMessage)
@@ -97,7 +78,7 @@ namespace NETworkManager.ViewModels
         private string _updaterMessage;
         public string UpdaterMessage
         {
-            get { return _updaterMessage; }
+            get => _updaterMessage;
             set
             {
                 if (value == _updaterMessage)
@@ -108,16 +89,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _librariesView;
-        public ICollectionView LibrariesView
-        {
-            get { return _librariesView; }
-        }
+        public ICollectionView LibrariesView { get; }
 
         private LibraryInfo _selectedLibraryInfo;
         public LibraryInfo SelectedLibraryInfo
         {
-            get { return _selectedLibraryInfo; }
+            get => _selectedLibraryInfo;
             set
             {
                 if (value == _selectedLibraryInfo)
@@ -128,16 +105,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _resourcesView;
-        public ICollectionView ResourcesView
-        {
-            get { return _resourcesView; }
-        }
+        public ICollectionView ResourcesView { get; }
 
         private ResourceInfo _selectedResourceInfo;
         public ResourceInfo SelectedResourceInfo
         {
-            get { return _selectedResourceInfo; }
+            get => _selectedResourceInfo;
             set
             {
                 if (value == _selectedResourceInfo)
@@ -152,11 +125,11 @@ namespace NETworkManager.ViewModels
         #region Constructor
         public AboutViewModel()
         {
-            _librariesView = CollectionViewSource.GetDefaultView(LibraryManager.List);
-            _librariesView.SortDescriptions.Add(new SortDescription(nameof(LibraryInfo.Library), ListSortDirection.Ascending));
+            LibrariesView = CollectionViewSource.GetDefaultView(LibraryManager.List);
+            LibrariesView.SortDescriptions.Add(new SortDescription(nameof(LibraryInfo.Library), ListSortDirection.Ascending));
 
-            _resourcesView = CollectionViewSource.GetDefaultView(ResourceManager.List);
-            _resourcesView.SortDescriptions.Add(new SortDescription(nameof(ResourceInfo.Resource), ListSortDirection.Ascending));
+            ResourcesView = CollectionViewSource.GetDefaultView(ResourceManager.List);
+            ResourcesView.SortDescriptions.Add(new SortDescription(nameof(ResourceInfo.Resource), ListSortDirection.Ascending));
         }
         #endregion
 
@@ -171,12 +144,9 @@ namespace NETworkManager.ViewModels
             CheckForUpdates();
         }
 
-        public ICommand OpenWebsiteCommand
-        {
-            get { return new RelayCommand(p => OpenWebsiteAction(p)); }
-        }
+        public ICommand OpenWebsiteCommand => new RelayCommand(OpenWebsiteAction);
 
-        private void OpenWebsiteAction(object url)
+        private static void OpenWebsiteAction(object url)
         {
             Process.Start((string)url);
         }
@@ -200,7 +170,7 @@ namespace NETworkManager.ViewModels
 
             IsUpdateCheckRunning = true;
 
-            Updater updater = new Updater();
+            var updater = new Updater();
 
             updater.UpdateAvailable += Updater_UpdateAvailable;
             updater.NoUpdateAvailable += Updater_NoUpdateAvailable;
@@ -209,7 +179,7 @@ namespace NETworkManager.ViewModels
             updater.Check();
         }
 
-        private void OpenLicenseFolder()
+        public void OpenLicenseFolder()
         {
             Process.Start(LibraryManager.GetLicenseLocation());
         }
@@ -224,7 +194,7 @@ namespace NETworkManager.ViewModels
             UpdateAvailable = true;
         }
 
-        private void Updater_NoUpdateAvailable(object sender, System.EventArgs e)
+        private void Updater_NoUpdateAvailable(object sender, EventArgs e)
         {
             UpdaterMessage = LocalizationManager.GetStringByKey("String_NoUpdateAvailable");
 
@@ -234,7 +204,7 @@ namespace NETworkManager.ViewModels
 
         private void Updater_Error(object sender, EventArgs e)
         {
-            UpdaterMessage = LocalizationManager.GetStringByKey("String_ErrorCheckingApiGithubComVerifyYourNetworkConnection"); ;
+            UpdaterMessage = LocalizationManager.GetStringByKey("String_ErrorCheckingApiGithubComVerifyYourNetworkConnection");
 
             IsUpdateCheckRunning = false;
             ShowUpdaterMessage = true;

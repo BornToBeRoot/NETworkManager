@@ -3,18 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Dialog:DialogParticipation.Register="{Binding}"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:network="clr-namespace:NETworkManager.Models.Network"
+        xmlns:utilities="clr-namespace:NETworkManager.Utilities"
+        dialogs:DialogParticipation.Register="{Binding}" d:DataContext="{d:DesignInstance viewModels:ARPTableViewModel}"
         mc:Ignorable="d">
     <UserControl.Resources>
-        <Converter:AutoRefreshTimeToStringConverter x:Key="AutoRefreshTimeToStringConverter" />
-        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <Converter:BooleanToStringConverter x:Key="BooleanToStringConverter" />
-        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />        
-        <Converter:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
+        <converters:AutoRefreshTimeToStringConverter x:Key="AutoRefreshTimeToStringConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
+        <converters:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -26,8 +28,8 @@
             <RowDefinition Height="10" />
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="txtSearch" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
-        <DataGrid x:Name="dataGridArpTable" Grid.Row="2" ItemsSource="{Binding ARPTableView}" SelectedItem="{Binding SelectedARPTableInfo}">
+        <TextBox x:Name="TextBoxSearch" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+        <DataGrid x:Name="DataGridArpTable" Grid.Row="2" ItemsSource="{Binding ARPTableView}" SelectedItem="{Binding SelectedARPTableInfo}">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
@@ -35,7 +37,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -43,7 +45,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -52,7 +54,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -61,7 +63,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -71,7 +73,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -88,23 +90,23 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress}" SortMemberPath="IPAddressInt32" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" MinWidth="200" />
-                <DataGridTextColumn Header="{DynamicResource String_Multicast}" Binding="{Binding IsMulticast, Converter={StaticResource BooleanToStringConverter}}" MinWidth="100" Width="*" />
+                <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding (network:ARPTableInfo.IPAddress)}" SortMemberPath="IPAddressInt32" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding (network:ARPTableInfo.MACAddress), Converter={StaticResource PhysicalAddressToStringConverter}}" MinWidth="200" />
+                <DataGridTextColumn Header="{DynamicResource String_Multicast}" Binding="{Binding (network:ARPTableInfo.IsMulticast), Converter={StaticResource BooleanToStringConverter}}" MinWidth="100" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
         <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
-        <Controls:MetroProgressBar Grid.Row="4" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
-            <Controls:MetroProgressBar.Style>
-                <Style TargetType="{x:Type  Controls:MetroProgressBar}">
+        <mahAppsControls:MetroProgressBar Grid.Row="4" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
+            <mahAppsControls:MetroProgressBar.Style>
+                <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsRefreshing}" Value="False">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </Controls:MetroProgressBar.Style>
-        </Controls:MetroProgressBar>
+            </mahAppsControls:MetroProgressBar.Style>
+        </mahAppsControls:MetroProgressBar>
         <Grid Grid.Row="6">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -115,7 +117,7 @@
                 <CheckBox IsChecked="{Binding AutoRefresh}" Content="{DynamicResource String_AutomaticallyUpdateEvery}" />
                 <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150" Margin="10,0,0,0">
                     <ComboBox.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
                             <TextBlock>
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0} {1}">
@@ -138,7 +140,7 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddEntry}" TextAlignment="Center" Margin="10,5" />
@@ -154,7 +156,7 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_DeleteEntry}" TextAlignment="Center" Margin="10,5" />
@@ -164,7 +166,7 @@
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="False" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=dataGridArpTable, Path=SelectedItems.Count}" Value="1" >
+                                <DataTrigger Binding="{Binding ElementName=DataGridArpTable, Path=SelectedItems.Count}" Value="1" >
                                     <Setter Property="IsEnabled" Value="True" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -180,7 +182,7 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_DeleteTable}" TextAlignment="Center" Margin="10,5" />
@@ -208,7 +210,7 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Refresh}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Refresh}" TextAlignment="Center" Margin="10,5" />
@@ -219,3 +221,4 @@
         </Grid>
     </Grid>
 </UserControl>
+

@@ -290,7 +290,7 @@ namespace NETworkManager.ViewModels
                 Title = LocalizationManager.GetStringByKey("String_Header_AddEntry")
             };
 
-            ARPTableAddEntryViewModel arpTableAddEntryViewModel = new ARPTableAddEntryViewModel(async instance =>
+            ArpTableAddEntryViewModel arpTableAddEntryViewModel = new ArpTableAddEntryViewModel(async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -300,7 +300,7 @@ namespace NETworkManager.ViewModels
 
                     arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
 
-                    await arpTable.AddEntryAsync(instance.IPAddress, MACAddressHelper.Format(instance.MACAddress, "-"));
+                    await arpTable.AddEntryAsync(instance.IpAddress, MACAddressHelper.Format(instance.MacAddress, "-"));
 
                     Refresh();
                 }
