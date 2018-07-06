@@ -1,16 +1,15 @@
 ﻿using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class DNSLookupSettingsView : UserControl
+    public partial class DNSLookupSettingsView
     {
-        DNSLookupSettingsViewModel viewModel = new DNSLookupSettingsViewModel();
+        private readonly DNSLookupSettingsViewModel _viewModel = new DNSLookupSettingsViewModel();
 
         public DNSLookupSettingsView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

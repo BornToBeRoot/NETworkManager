@@ -1,8 +1,6 @@
-﻿using System.Windows.Controls;
-
-namespace NETworkManager.Views
+﻿namespace NETworkManager.Views
 {
-    public partial class CredentialDialog : UserControl
+    public partial class CredentialDialog
     {
         public CredentialDialog()
         {

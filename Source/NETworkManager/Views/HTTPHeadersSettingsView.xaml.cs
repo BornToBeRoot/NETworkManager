@@ -1,16 +1,15 @@
 ﻿using NETworkManager.ViewModels.Settings;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class HTTPHeadersSettingsView : UserControl
+    public partial class HTTPHeadersSettingsView
     {
-        HTTPHeadersSettingsViewModel viewModel = new HTTPHeadersSettingsViewModel();
+        private readonly HTTPHeadersSettingsViewModel _viewModel = new HTTPHeadersSettingsViewModel();
 
         public HTTPHeadersSettingsView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

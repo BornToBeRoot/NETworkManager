@@ -1,30 +1,23 @@
-﻿using System.Windows.Controls;
-using NETworkManager.ViewModels;
+﻿using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
 {
-    public partial class HTTPHeadersView : UserControl
+    public partial class HTTPHeadersView
     {
-        HTTPHeadersViewModel viewModel;
+        private readonly HTTPHeadersViewModel _viewModel;
 
         public HTTPHeadersView(int tabId)
         {
             InitializeComponent();
 
-            viewModel = new HTTPHeadersViewModel(tabId);
+            _viewModel = new HTTPHeadersViewModel(tabId);
 
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
 
         public void CloseTab()
         {
-            viewModel.OnClose();
-        }
-
-        private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
-        {
-            ContextMenu menu = sender as ContextMenu;
-            menu.DataContext = viewModel;
+            _viewModel.OnClose();
         }
     }
 }

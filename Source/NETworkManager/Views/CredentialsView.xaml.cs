@@ -5,30 +5,29 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class CredentialsView : UserControl
+    public partial class CredentialsView
     {
-        private CredentialsViewModel viewModel = new CredentialsViewModel(DialogCoordinator.Instance);
+        private readonly CredentialsViewModel _viewModel = new CredentialsViewModel(DialogCoordinator.Instance);
 
         public CredentialsView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
-            ContextMenu menu = sender as ContextMenu;
-            menu.DataContext = viewModel;
+            if (sender is ContextMenu menu) menu.DataContext = _viewModel;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            viewModel.CheckCredentialsLoaded();
+            _viewModel.CheckCredentialsLoaded();
         }
 
         private void DataGridRow_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            viewModel.Edit();
+            _viewModel.Edit();
         }
     }
 }

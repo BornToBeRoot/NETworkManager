@@ -3,20 +3,19 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class ConnectionsView : UserControl
+    public partial class ConnectionsView
     {
-        ConnectionsViewModel viewModel = new ConnectionsViewModel();
+        private readonly ConnectionsViewModel _viewModel = new ConnectionsViewModel();
 
         public ConnectionsView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
 
         private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
         {
-            ContextMenu menu = sender as ContextMenu;
-            menu.DataContext = viewModel;
+            if (sender is ContextMenu menu) menu.DataContext = _viewModel;
         }
     }
 }

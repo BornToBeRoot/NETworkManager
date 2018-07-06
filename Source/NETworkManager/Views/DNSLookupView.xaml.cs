@@ -1,36 +1,34 @@
-﻿using System;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
 {
-    public partial class DNSLookupView : UserControl
+    public partial class DNSLookupView
     {
-        DNSLookupViewModel viewModel;
+        private readonly DNSLookupViewModel _viewModel;
 
         public DNSLookupView(int tabId, string host = null)
         {
             InitializeComponent();
 
-            viewModel = new DNSLookupViewModel(tabId, host);
+            _viewModel = new DNSLookupViewModel(tabId, host);
 
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
 
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            viewModel.OnLoaded();
+            _viewModel.OnLoaded();
         }
 
         public void CloseTab()
         {
-            viewModel.OnClose();
+            _viewModel.OnClose();
         }
 
         private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
         {
-            ContextMenu menu = sender as ContextMenu;
-            menu.DataContext = viewModel;
+            if (sender is ContextMenu menu) menu.DataContext = _viewModel;
         }
     }
 }
