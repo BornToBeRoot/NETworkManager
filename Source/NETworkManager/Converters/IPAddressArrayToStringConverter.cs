@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace NETworkManager.Converters
 {
-    public sealed class IpAddressArrayToStringConverter : IValueConverter
+    public sealed class IPAddressArrayToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

@@ -854,7 +854,7 @@
     <Compile Include="Controls\MultiSelectDataGrid.cs" />
     <Compile Include="Controls\ScrollingDataGrid.cs" />
     <Compile Include="Converters\PortStatusToStringConverter.cs" />
-    <Compile Include="Converters\IpAddressToStringConverter.cs" />
+    <Compile Include="Converters\IPAddressToStringConverter.cs" />
     <Compile Include="Converters\ValidateSettingsImportConverter.cs" />
     <Compile Include="Converters\ValidateSettingsResetConverter.cs" />
     <Compile Include="Converters\ValidateSettingsExportConverter.cs" />
@@ -968,7 +968,7 @@
     <Compile Include="Converters\BooleanToVisibilityCollapsedConverter.cs" />
     <Compile Include="Converters\PercentConverter.cs" />
     <Compile Include="Converters\PingTimeToStringConverter.cs" />
-    <Compile Include="Converters\IpStatusToStringConverter.cs" />
+    <Compile Include="Converters\IPStatusToStringConverter.cs" />
     <Compile Include="Converters\BooleanOrConverter.cs" />
     <Compile Include="Converters\NullOrEmptyToStringConverter.cs" />
     <Compile Include="Converters\SelectedItemsToBoolConverter.cs" />
@@ -1014,7 +1014,7 @@
     <Compile Include="Converters\NullToFalseConverter.cs" />
     <Compile Include="Converters\ValidateNetworkInterfaceConfigConverter.cs" />
     <Compile Include="Converters\PhysicalAddressToStringConverter.cs" />
-    <Compile Include="Converters\IpAddressArrayToStringConverter.cs" />
+    <Compile Include="Converters\IPAddressArrayToStringConverter.cs" />
     <Compile Include="Converters\BitsToHumanReadableSizeConverter.cs" />
     <Compile Include="Converters\IsSettingsLocationToBoolConverter.cs" />
     <Compile Include="Converters\IsDefaultLocationToBoolConverter.cs" />

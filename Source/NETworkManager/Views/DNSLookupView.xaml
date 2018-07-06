@@ -14,7 +14,7 @@
         <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <Converter:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <Converter:IpAddressToStringConverter x:Key="IPAddressToStringConverter" />
+        <Converter:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
         <Converter:IntToStringConverter x:Key="IntToStringConverter" />
         <Converter:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
         <Converter:NullOrEmptyToStringConverter x:Key="NullOrEmptyToStringConverter" />

@@ -205,48 +205,6 @@ namespace NETworkManager
             }
         }
 
-        private string _version;
-        public string Version
-        {
-            get => _version;
-            set
-            {
-                if (value == _version)
-                    return;
-
-                _version = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _isDebug;
-        public bool IsDebug
-        {
-            get => _isDebug;
-            set
-            {
-                if (value == _isDebug)
-                    return;
-
-                _isDebug = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _buildDate;
-        public string BuildDate
-        {
-            get => _buildDate;
-            set
-            {
-                if (value == _buildDate)
-                    return;
-
-                _buildDate = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _updateAvailable;
         public bool UpdateAvailable
         {
@@ -310,12 +268,8 @@ namespace NETworkManager
             if (ConfigurationManager.Current.IsAdmin)
                 Title = $"[{LocalizationManager.GetStringByKey("String_Administrator")}] {Title}";
 
-            // Set the version text
-            Version = $"{LocalizationManager.GetStringByKey("String_Version")} {AssemblyManager.Current.Version}";
-
 #if DEBUG
-            IsDebug = true;
-            BuildDate = AssemblyManager.Current.BuildDate.ToString(CultureInfo.CurrentCulture);
+            Title += $" - Debug ({AssemblyManager.Current.Version} | {AssemblyManager.Current.BuildDate.ToString(CultureInfo.CurrentCulture)})";
 #endif
 
             // Load Profiles
@@ -344,9 +298,11 @@ namespace NETworkManager
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
                 HideWindowToTray();
 
+#if (!DEBUG)
             // Chech for updates...
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
                 CheckForUpdates();
+#endif
         }
 
         private void LoadApplicationList()
@@ -404,7 +360,7 @@ namespace NETworkManager
                 if (WindowState == WindowState.Minimized)
                     BringWindowToFront();
 
-                MetroDialogSettings settings = AppearanceManager.MetroDialog;
+                var settings = AppearanceManager.MetroDialog;
 
                 settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_Close");
                 settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_Cancel");
@@ -413,15 +369,15 @@ namespace NETworkManager
                 // Fix airspace issues
                 ConfigurationManager.Current.IsDialogOpen = true;
 
-                MessageDialogResult result = await this.ShowMessageAsync(LocalizationManager.GetStringByKey("String_Header_Confirm"), LocalizationManager.GetStringByKey("String_ConfirmCloseQuesiton"), MessageDialogStyle.AffirmativeAndNegative, settings);
+                var result = await this.ShowMessageAsync(LocalizationManager.GetStringByKey("String_Header_Confirm"), LocalizationManager.GetStringByKey("String_ConfirmCloseQuesiton"), MessageDialogStyle.AffirmativeAndNegative, settings);
 
                 ConfigurationManager.Current.IsDialogOpen = false;
 
-                if (result == MessageDialogResult.Affirmative)
-                {
-                    _closeApplication = true;
-                    Close();
-                }
+                if (result != MessageDialogResult.Affirmative)
+                    return;
+
+                _closeApplication = true;
+                Close();
 
                 return;
             }
@@ -839,7 +795,7 @@ namespace NETworkManager
 
         private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
         {
-            UpdateText = string.Format(LocalizationManager.GetStringByKey("String_VersionxxAvailable"), e.Version);
+            UpdateText = string.Format(LocalizationManager.GetStringByKey("String_VersionxxIsAvailable"), e.Version);
             UpdateAvailable = true;
         }
         #endregion
@@ -1097,11 +1053,11 @@ namespace NETworkManager
                 }
             }.Start();
 
-            if (closeApplication)
-            {
-                _closeApplication = true;
-                Close();
-            }
+            if (!closeApplication)
+                return;
+
+            _closeApplication = true;
+            Close();
         }
 
         public ICommand ApplicationListMouseEnterCommand

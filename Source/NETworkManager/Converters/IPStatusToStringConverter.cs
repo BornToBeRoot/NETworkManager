@@ -6,7 +6,7 @@ using System.Windows.Data;
 
 namespace NETworkManager.Converters
 {
-    public sealed class IpStatusToStringConverter : IValueConverter
+    public sealed class IPStatusToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

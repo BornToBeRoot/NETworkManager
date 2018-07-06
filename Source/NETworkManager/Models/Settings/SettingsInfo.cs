@@ -113,7 +113,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _window_ShowCurrentApplicationTitle = true;
+        private bool _window_ShowCurrentApplicationTitle = false;
         public bool Window_ShowCurrentApplicationTitle
         {
             get { return _window_ShowCurrentApplicationTitle; }

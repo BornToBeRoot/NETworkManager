@@ -347,7 +347,7 @@
     <system:String x:Key="String_CustomScreenSize">Tamaño de pantalla personalizado:</system:String>
     <system:String x:Key="String_Width">Ancho</system:String>
     <system:String x:Key="String_Height">Alto</system:String>
-    <system:String x:Key="String_VersionxxAvailable">¡Versión {0} disponible!</system:String>
+    <system:String x:Key="String_VersionxxIsAvailable">Version {0} is available!</system:String> <!-- new/updated, please remove comment if string is translated -->
     <system:String x:Key="String_CheckForUpdatesAtStartup">Buscar actualizaciones al inicio</system:String>
     <system:String x:Key="String_NoUpdateAvailable">¡Actualización no disponible!</system:String>
     <system:String x:Key="String_InstallRDP8dot1Message">¡Debe instalar la versión 8.1 del protocolo de escritorio remoto (RDP) en su sistema para usar la funcionalidad de escritorio remoto!</system:String>

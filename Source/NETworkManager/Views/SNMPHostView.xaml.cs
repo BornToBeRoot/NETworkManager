@@ -12,7 +12,7 @@ namespace NETworkManager.Views
             InitializeComponent();
             DataContext = viewModel;
 
-            InterTabController.Partition = ApplicationViewManager.Name.SNMP.ToString();
+            InterTabController.Partition = ApplicationViewManager.Name.PuTTY.ToString();
         }
 
         public void AddTab(string host)

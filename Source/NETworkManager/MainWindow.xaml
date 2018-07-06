@@ -13,45 +13,6 @@
         mc:Ignorable="d"
         Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged"
                       d:DataContext="{d:DesignInstance neTworkManager:MainWindow}">
-    <mahAppsControls:MetroWindow.WindowButtonCommands>
-        <mahAppsControls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
-    </mahAppsControls:MetroWindow.WindowButtonCommands>
-    <mahAppsControls:MetroWindow.IconTemplate>
-        <DataTemplate>
-            <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" >
-                <Rectangle.LayoutTransform>
-                    <RotateTransform Angle="-90"/>
-                </Rectangle.LayoutTransform>
-                <Rectangle.OpacityMask>
-                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Sitemap}" />
-                </Rectangle.OpacityMask>
-            </Rectangle>
-        </DataTemplate>
-    </mahAppsControls:MetroWindow.IconTemplate>
-    <mahAppsControls:MetroWindow.RightWindowCommands>
-        <mahAppsControls:WindowCommands>
-            <Button Focusable="False" Command="{Binding OpenDocumentationCommand}" Cursor="Hand">
-                <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Octicons Kind=Repo}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                    <TextBlock Text="{DynamicResource String_Documentation}" VerticalAlignment="Center" Margin="5,0,0,0" />
-                </StackPanel>
-            </Button>
-            <Button Focusable="False" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_ProjectUrl}" Cursor="Hand">
-                <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=SocialGithubOctocat}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                    <TextBlock Text="{DynamicResource String_ForkMeOnGitHub}" VerticalAlignment="Center" Margin="5,0,0,0" />
-                </StackPanel>
-            </Button>
-        </mahAppsControls:WindowCommands>
-    </mahAppsControls:MetroWindow.RightWindowCommands>
     <mahAppsControls:MetroWindow.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <!-- ReSharper disable once Xaml.RedundantResource, because MainWindow uses FindResource("ContextMenuNotifyIcon") -->
@@ -86,13 +47,59 @@
             </MenuItem>
         </ContextMenu>
     </mahAppsControls:MetroWindow.Resources>
+    <mahAppsControls:MetroWindow.WindowButtonCommands>
+        <mahAppsControls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
+    </mahAppsControls:MetroWindow.WindowButtonCommands>
+    <mahAppsControls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" >
+                <Rectangle.LayoutTransform>
+                    <RotateTransform Angle="-90"/>
+                </Rectangle.LayoutTransform>
+                <Rectangle.OpacityMask>
+                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Sitemap}" />
+                </Rectangle.OpacityMask>
+            </Rectangle>
+        </DataTemplate>
+    </mahAppsControls:MetroWindow.IconTemplate>
+    <mahAppsControls:MetroWindow.RightWindowCommands>
+        <mahAppsControls:WindowCommands>
+            <Button Focusable="False" Command="{Binding OpenWebsiteCommand}" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" CommandParameter="{x:Static resources:Resources.NETworkManager_LatestReleaseURL}" Cursor="Hand">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Octicons Kind=DesktopDownload}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Text="{Binding UpdateText}" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Button Focusable="False" Command="{Binding OpenDocumentationCommand}" Cursor="Hand">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Octicons Kind=Repo}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Text="{DynamicResource String_Documentation}" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Button Focusable="False" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_ProjectUrl}" Cursor="Hand">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=SocialGithubOctocat}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Text="{DynamicResource String_ForkMeOnGitHub}" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+           
+        </mahAppsControls:WindowCommands>
+    </mahAppsControls:MetroWindow.RightWindowCommands>
+ 
     <Grid>
-        <!-- 1 = Content, 2 = StatusBar -->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Grid>
             <Grid.Style>
                 <Style TargetType="{x:Type Grid}">
                     <Setter Property="Visibility" Value="Visible" />
@@ -597,7 +604,7 @@
                 </ContentControl>
             </Grid>
         </Grid>
-        <Grid Grid.Row="0">
+        <Grid>
             <Grid.Style>
                 <Style TargetType="{x:Type Grid}">
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -659,50 +666,6 @@
                 </Border>
                 <ContentControl Grid.Row="1" x:Name="ContentControlSettings" />
             </Grid>
-        </Grid>
-        <Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource GrayBrush8}">
-            <StatusBar Foreground="{DynamicResource GrayBrush3}">
-                <StatusBarItem>
-                    <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource GrayBrush3}" FontWeight="Bold" />
-                </StatusBarItem>
-                <Separator Background="{DynamicResource GrayBrush8}" Visibility="{Binding IsDebug, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="10,0,0,0" />
-                <StatusBarItem Visibility="{Binding IsDebug, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="10,0,0,0">
-                    <TextBlock Text="!! DEBUG VERSION !!" VerticalAlignment="Center" FontSize="14" />
-                </StatusBarItem>
-                <StatusBarItem Visibility="{Binding IsDebug, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="10,0,0,0" >
-                    <TextBlock Text="{Binding BuildDate}" VerticalAlignment="Center" FontSize="14" />
-                </StatusBarItem>
-                <Separator Background="{DynamicResource GrayBrush8}" Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="10,0,0,0" />
-                <StatusBarItem Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" HorizontalAlignment="Left" Margin="10,0,0,0">
-                    <StatusBarItem.InputBindings>
-                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_LatestReleaseURL}" />
-                    </StatusBarItem.InputBindings>
-                    <StatusBarItem.Style>
-                        <Style TargetType="{x:Type StatusBarItem}" BasedOn="{StaticResource MetroStatusBarItem}">
-                            <Setter Property="Cursor" Value="Hand" />
-                            <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </StatusBarItem.Style>
-                    <StackPanel Orientation="Horizontal">
-                        <Rectangle Width="16" Height="20">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}"/>
-                            </Rectangle.OpacityMask>
-                            <Rectangle.Style>
-                                <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type StatusBarItem}}, Path=Foreground}" />
-                                </Style>
-                            </Rectangle.Style>
-                        </Rectangle>
-                        <TextBlock Text="{Binding UpdateText}" VerticalAlignment="Center" FontSize="14" Margin="10,0,0,0" />
-                    </StackPanel>
-                </StatusBarItem>
-            </StatusBar>
-        </Border>
+        </Grid>       
     </Grid>
 </mahAppsControls:MetroWindow>

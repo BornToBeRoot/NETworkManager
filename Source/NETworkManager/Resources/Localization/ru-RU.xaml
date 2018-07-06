@@ -347,7 +347,7 @@
     <system:String x:Key="String_CustomScreenSize">настраиваемый размер экрана:</system:String>
     <system:String x:Key="String_Width">Ширина</system:String>
     <system:String x:Key="String_Height">Высота</system:String>
-    <system:String x:Key="String_VersionxxAvailable">Версии {0} доступна!</system:String>
+    <system:String x:Key="String_VersionxxIsAvailable">Version {0} is available!</system:String> <!-- new/updated, please remove comment if string is translated -->
     <system:String x:Key="String_CheckForUpdatesAtStartup">Проверка наличия обновлений при запуске</system:String>
     <system:String x:Key="String_NoUpdateAvailable">Нет доступных обновлений!</system:String>
     <system:String x:Key="String_InstallRDP8dot1Message">Для использования функций удаленного рабочего стола необходимо установить протокол удаленного рабочего стола (RDP) версии 8.1 в системе!</system:String>

@@ -347,7 +347,7 @@
     <system:String x:Key="String_CustomScreenSize">Benutzerdefinierte Bildschirmgröße:</system:String>
     <system:String x:Key="String_Width">Breite</system:String>
     <system:String x:Key="String_Height">Höhe</system:String>
-    <system:String x:Key="String_VersionxxAvailable">Version {0} verfügbar!</system:String>
+    <system:String x:Key="String_VersionxxIsAvailable">Version {0} ist verfügbar!</system:String>
     <system:String x:Key="String_CheckForUpdatesAtStartup">Beim Start auf Updates prüfen</system:String>
     <system:String x:Key="String_NoUpdateAvailable">Kein Update verfügbar!</system:String>
     <system:String x:Key="String_InstallRDP8dot1Message">Sie müssen das Remotedesktopprotokoll (RDP) Version 8.1 auf Ihrem System installieren, um die Remotedesktopfunktionalität zu verwenden.</system:String>

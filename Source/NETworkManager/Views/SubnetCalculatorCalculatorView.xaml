@@ -12,7 +12,7 @@
         <Converter:BigIntegerToStringConverter x:Key="BigIntegerToStringConverter" />
         <Converter:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <Converter:IpAddressToStringConverter x:Key="IPAddressToStringConverter" />
+        <Converter:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
