@@ -20,18 +20,18 @@ namespace NETworkManager.ViewModels
     public class DNSLookupViewModel : ViewModelBase
     {
         #region Variables
-        private int _tabId;
+        private readonly int _tabId;
         private bool _firstLoad = true;
 
-        DispatcherTimer dispatcherTimer = new DispatcherTimer();
-        Stopwatch stopwatch = new Stopwatch();
+        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
+        private readonly Stopwatch _stopwatch = new Stopwatch();
 
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private string _host;
         public string Host
         {
-            get { return _host; }
+            get => _host;
             set
             {
                 if (value == _host)
@@ -42,16 +42,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _hostHistoryView;
-        public ICollectionView HostHistoryView
-        {
-            get { return _hostHistoryView; }
-        }
+        public ICollectionView HostHistoryView { get; }
 
         private List<QType> _types = new List<QType>();
         public List<QType> Types
         {
-            get { return _types; }
+            get => _types;
             set
             {
                 if (value == _types)
@@ -65,7 +61,7 @@ namespace NETworkManager.ViewModels
         private QType _type;
         public QType Type
         {
-            get { return _type; }
+            get => _type;
             set
             {
                 if (value == _type)
@@ -82,7 +78,7 @@ namespace NETworkManager.ViewModels
         private bool _isLookupRunning;
         public bool IsLookupRunning
         {
-            get { return _isLookupRunning; }
+            get => _isLookupRunning;
             set
             {
                 if (value == _isLookupRunning)
@@ -96,26 +92,22 @@ namespace NETworkManager.ViewModels
         private ObservableCollection<DNSLookupRecordInfo> _lookupResult = new ObservableCollection<DNSLookupRecordInfo>();
         public ObservableCollection<DNSLookupRecordInfo> LookupResult
         {
-            get { return _lookupResult; }
+            get => _lookupResult;
             set
             {
-                if (value == _lookupResult)
+                if (value != null && value == _lookupResult)
                     return;
 
                 _lookupResult = value;
             }
         }
 
-        private ICollectionView _lookupResultView;
-        public ICollectionView LookupResultView
-        {
-            get { return _lookupResultView; }
-        }
+        public ICollectionView LookupResultView { get; }
 
         private DNSLookupRecordInfo _selectedLookupResult;
         public DNSLookupRecordInfo SelectedLookupResult
         {
-            get { return _selectedLookupResult; }
+            get => _selectedLookupResult;
             set
             {
                 if (value == _selectedLookupResult)
@@ -129,7 +121,7 @@ namespace NETworkManager.ViewModels
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
         {
-            get { return _displayStatusMessage; }
+            get => _displayStatusMessage;
             set
             {
                 if (value == _displayStatusMessage)
@@ -143,7 +135,7 @@ namespace NETworkManager.ViewModels
         private string _statusMessage;
         public string StatusMessage
         {
-            get { return _statusMessage; }
+            get => _statusMessage;
             set
             {
                 if (value == _statusMessage)
@@ -157,7 +149,7 @@ namespace NETworkManager.ViewModels
         private DateTime? _startTime;
         public DateTime? StartTime
         {
-            get { return _startTime; }
+            get => _startTime;
             set
             {
                 if (value == _startTime)
@@ -171,7 +163,7 @@ namespace NETworkManager.ViewModels
         private TimeSpan _duration;
         public TimeSpan Duration
         {
-            get { return _duration; }
+            get => _duration;
             set
             {
                 if (value == _duration)
@@ -185,7 +177,7 @@ namespace NETworkManager.ViewModels
         private DateTime? _endTime;
         public DateTime? EndTime
         {
-            get { return _endTime; }
+            get => _endTime;
             set
             {
                 if (value == _endTime)
@@ -199,7 +191,7 @@ namespace NETworkManager.ViewModels
         private bool _expandStatistics;
         public bool ExpandStatistics
         {
-            get { return _expandStatistics; }
+            get => _expandStatistics;
             set
             {
                 if (value == _expandStatistics)
@@ -213,21 +205,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public bool ShowStatistics
-        {
-            get { return SettingsManager.Current.DNSLookup_ShowStatistics; }
-        }
+        public bool ShowStatistics => SettingsManager.Current.DNSLookup_ShowStatistics;
         #endregion
 
         #region Contructor, load settings
         public DNSLookupViewModel(int tabId, string host)
         {
+            _isLoading = true;
+
             _tabId = tabId;
             Host = host;
 
-            _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_HostHistory);
-            _lookupResultView = CollectionViewSource.GetDefaultView(LookupResult);
-            _lookupResultView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.DNSServer)));
+            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_HostHistory);
+            LookupResultView = CollectionViewSource.GetDefaultView(LookupResult);
+            LookupResultView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.DNSServer)));
 
             LoadSettings();
 
@@ -239,13 +230,13 @@ namespace NETworkManager.ViewModels
 
         public void OnLoaded()
         {
-            if (_firstLoad)
-            {
-                if (!string.IsNullOrEmpty(Host))
-                    StartLookup();
+            if (!_firstLoad)
+                return;
 
-                _firstLoad = false;
-            }
+            if (!string.IsNullOrEmpty(Host))
+                StartLookup();
+
+            _firstLoad = false;
         }
 
         private void LoadSettings()
@@ -257,11 +248,8 @@ namespace NETworkManager.ViewModels
 
         private void LoadTypes()
         {
-            if (SettingsManager.Current.DNSLookup_ShowMostCommonQueryTypes)
-                Types = Enum.GetValues(typeof(QType)).Cast<QType>().Where(x => (x == QType.A || x == QType.AAAA || x == QType.ANY || x == QType.CNAME || x == QType.MX || x == QType.NS || x == QType.PTR || x == QType.SOA || x == QType.LOC || x == QType.TXT)).OrderBy(x => x.ToString()).ToList();
-            else
-                Types = Enum.GetValues(typeof(QType)).Cast<QType>().OrderBy(x => x.ToString()).ToList();
-
+            // Filter by common types...
+            Types = SettingsManager.Current.DNSLookup_ShowMostCommonQueryTypes ? Enum.GetValues(typeof(QType)).Cast<QType>().Where(x => (x == QType.A || x == QType.AAAA || x == QType.ANY || x == QType.CNAME || x == QType.MX || x == QType.NS || x == QType.PTR || x == QType.SOA || x == QType.LOC || x == QType.TXT)).OrderBy(x => x.ToString()).ToList() : Enum.GetValues(typeof(QType)).Cast<QType>().OrderBy(x => x.ToString()).ToList();
             Type = Types.FirstOrDefault(x => x == SettingsManager.Current.DNSLookup_Type);
 
             // Fallback
@@ -344,21 +332,21 @@ namespace NETworkManager.ViewModels
 
             // Measure the time
             StartTime = DateTime.Now;
-            stopwatch.Start();
-            dispatcherTimer.Tick += DispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            dispatcherTimer.Start();
+            _stopwatch.Start();
+            _dispatcherTimer.Tick += DispatcherTimer_Tick;
+            _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            _dispatcherTimer.Start();
             EndTime = null;
 
             // Reset the latest results
             LookupResult.Clear();
 
             // Change the tab title (not nice, but it works)
-            Window window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
             if (window != null)
             {
-                foreach (TabablzControl tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+                foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
                 {
                     tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
                 }
@@ -392,25 +380,25 @@ namespace NETworkManager.ViewModels
             dnsLookupOptions.Timeout = SettingsManager.Current.DNSLookup_Timeout;
             dnsLookupOptions.ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME;
 
-            DNSLookup DNSLookup = new DNSLookup();
+            var dnsLookup = new DNSLookup();
 
-            DNSLookup.RecordReceived += DNSLookup_RecordReceived;
-            DNSLookup.LookupError += DNSLookup_LookupError;
-            DNSLookup.LookupComplete += DNSLookup_LookupComplete; ;
+            dnsLookup.RecordReceived += DNSLookup_RecordReceived;
+            dnsLookup.LookupError += DNSLookup_LookupError;
+            dnsLookup.LookupComplete += DNSLookup_LookupComplete;
 
-            DNSLookup.ResolveAsync(Host.Split(';').Select(x => x.Trim()).ToList(), dnsLookupOptions);
+            dnsLookup.ResolveAsync(Host.Split(';').Select(x => x.Trim()).ToList(), dnsLookupOptions);
         }
 
         private void LookupFinished()
         {
             // Stop timer and stopwatch
-            stopwatch.Stop();
-            dispatcherTimer.Stop();
+            _stopwatch.Stop();
+            _dispatcherTimer.Stop();
 
-            Duration = stopwatch.Elapsed;
+            Duration = _stopwatch.Elapsed;
             EndTime = DateTime.Now;
 
-            stopwatch.Reset();
+            _stopwatch.Reset();
 
             IsLookupRunning = false;
         }
@@ -424,7 +412,7 @@ namespace NETworkManager.ViewModels
         private void AddHostToHistory(string host)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.DNSLookup_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.DNSLookup_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.DNSLookup_HostHistory.Clear();
@@ -438,12 +426,12 @@ namespace NETworkManager.ViewModels
         #region Events
         private void DNSLookup_RecordReceived(object sender, DNSLookupRecordArgs e)
         {
-            DNSLookupRecordInfo DNSLookupRecordInfo = DNSLookupRecordInfo.Parse(e);
+            var dnsLookupRecordInfo = DNSLookupRecordInfo.Parse(e);
 
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 lock (LookupResult)
-                    LookupResult.Add(DNSLookupRecordInfo);
+                    LookupResult.Add(dnsLookupRecordInfo);
             }));
         }
 
@@ -469,16 +457,20 @@ namespace NETworkManager.ViewModels
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            Duration = stopwatch.Elapsed;
+            Duration = _stopwatch.Elapsed;
         }
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.DNSLookup_ShowStatistics))
-                OnPropertyChanged(nameof(ShowStatistics));
-
-            if (e.PropertyName == nameof(SettingsInfo.DNSLookup_ShowMostCommonQueryTypes))
-                LoadTypes();
+            switch (e.PropertyName)
+            {
+                case nameof(SettingsInfo.DNSLookup_ShowStatistics):
+                    OnPropertyChanged(nameof(ShowStatistics));
+                    break;
+                case nameof(SettingsInfo.DNSLookup_ShowMostCommonQueryTypes):
+                    LoadTypes();
+                    break;
+            }
         }
         #endregion
     }

@@ -11,7 +11,7 @@
         <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding AddTabCommand}" />
     </UserControl.InputBindings>
     <Grid>
-        <dragablz:TabablzControl ClosingItemCallback="{Binding (viewModels:DNSLookupHostViewModel.CloseItemCommand)}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
+        <dragablz:TabablzControl ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" MoveWindowWithSolitaryTabs="False" x:Name="InterTabController" />
             </dragablz:TabablzControl.InterTabController>
