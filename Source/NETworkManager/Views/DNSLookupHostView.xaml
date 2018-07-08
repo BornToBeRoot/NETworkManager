@@ -4,18 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        mc:Ignorable="d">
-    <UserControl.Resources>
-        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <Converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
-    </UserControl.Resources>
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DNSLookupHostViewModel}">
     <UserControl.InputBindings>
         <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding AddTabCommand}" />
     </UserControl.InputBindings>
     <Grid>
-        <dragablz:TabablzControl ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
+        <dragablz:TabablzControl ClosingItemCallback="{Binding (viewModels:DNSLookupHostViewModel.CloseItemCommand)}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" MoveWindowWithSolitaryTabs="False" x:Name="InterTabController" />
             </dragablz:TabablzControl.InterTabController>
@@ -24,7 +20,7 @@
                     <Button Style="{StaticResource CleanButton}" Command="{Binding AddTabCommand}" ToolTip="{DynamicResource String_NewTab}" Focusable="False">
                         <Rectangle Width="20" Height="20">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
+                                <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
                             </Rectangle.OpacityMask>
                             <Rectangle.Style>
                                 <Style TargetType="{x:Type Rectangle}">
@@ -56,7 +52,7 @@
                 <Button HorizontalAlignment="Center" Focusable="False" Command="{Binding AddTabCommand}" Style="{StaticResource CleanButton}" Margin="0,0,0,10">
                     <Rectangle Width="20" Height="20">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
+                            <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
                         </Rectangle.OpacityMask>
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}">
