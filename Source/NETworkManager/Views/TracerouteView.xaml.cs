@@ -4,40 +4,40 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
 {
-    public partial class TracerouteView : UserControl
+    public partial class TracerouteView
     {
-        TracerouteViewModel viewModel;
+        private readonly TracerouteViewModel _viewModel;
 
         public TracerouteView(int tabId, string host = null)
         {
             InitializeComponent();
 
-            viewModel = new TracerouteViewModel(tabId, host);
+            _viewModel = new TracerouteViewModel(tabId, host);
 
-            DataContext = viewModel;
+            DataContext = _viewModel;
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
 
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            viewModel.OnLoaded();
+            _viewModel.OnLoaded();
         }
 
         private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
         {
-            viewModel.OnClose();
+            _viewModel.OnClose();
         }
 
         public void CloseTab()
         {
-            viewModel.OnClose();
+            _viewModel.OnClose();
         }
 
         private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
         {
-            ContextMenu menu = sender as ContextMenu;
-            menu.DataContext = viewModel;
+            if (sender is ContextMenu menu)
+                menu.DataContext = _viewModel;
         }
     }
 }

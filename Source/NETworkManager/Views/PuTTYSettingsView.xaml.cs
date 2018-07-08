@@ -1,17 +1,16 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class PuTTYSettingsView : UserControl
+    public partial class PuTTYSettingsView
     {
-        PuTTYSettingsViewModel viewModel = new PuTTYSettingsViewModel(DialogCoordinator.Instance);
+        private readonly PuTTYSettingsViewModel _viewModel = new PuTTYSettingsViewModel(DialogCoordinator.Instance);
 
         public PuTTYSettingsView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

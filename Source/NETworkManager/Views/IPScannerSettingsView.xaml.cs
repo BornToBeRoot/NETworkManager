@@ -1,16 +1,15 @@
 ﻿using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class IPScannerSettingsView : UserControl
+    public partial class IPScannerSettingsView
     {
-        IPScannerSettingsViewModel viewModel = new IPScannerSettingsViewModel();
+        private readonly IPScannerSettingsViewModel _viewModel = new IPScannerSettingsViewModel();
 
         public IPScannerSettingsView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

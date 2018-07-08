@@ -15,7 +15,8 @@ namespace NETworkManager.Views
 
         private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (sender is ContextMenu menu) menu.DataContext = _viewModel;
+            if (sender is ContextMenu menu)
+                menu.DataContext = _viewModel;
         }
     }
 }

@@ -1,16 +1,15 @@
 ﻿using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class SettingsAppearanceView : UserControl
+    public partial class SettingsAppearanceView
     {
-        SettingsAppearanceViewModel viewModel = new SettingsAppearanceViewModel();
+        private readonly SettingsAppearanceViewModel _viewModel = new SettingsAppearanceViewModel();
 
         public SettingsAppearanceView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

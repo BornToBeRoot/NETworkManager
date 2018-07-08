@@ -1,30 +1,29 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class WakeOnLANView : UserControl
+    public partial class WakeOnLANView
     {
-        private WakeOnLANViewModel viewModel = new WakeOnLANViewModel(DialogCoordinator.Instance);
+        private readonly WakeOnLANViewModel _viewModel = new WakeOnLANViewModel(DialogCoordinator.Instance);
 
         public WakeOnLANView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
-            ContextMenu menu = sender as ContextMenu;
-            menu.DataContext = viewModel;
+            if (sender is ContextMenu menu)
+                menu.DataContext = _viewModel;
         }
 
         public void Refresh()
         {
-            viewModel.Refresh();
+            _viewModel.Refresh();
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿namespace NETworkManager.Models.Lookup
 {
-    public class OuiInfo
+    public class OUIInfo
     {
         public string MacAddress { get; set; }
         public string Vendor { get; set; }
 
-        public OuiInfo(string macAddress, string vendor)
+        public OUIInfo(string macAddress, string vendor)
         {
             MacAddress = macAddress;
             Vendor = vendor;

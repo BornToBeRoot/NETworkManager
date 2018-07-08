@@ -1,21 +1,17 @@
 ﻿using NETworkManager.ViewModels.Settings;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    /// <summary>
-    /// Interaktionslogik für Settings.xaml
-    /// </summary>
-    public partial class SettingsView : UserControl
+    public partial class SettingsView
     {
-        private SettingsViewModel viewModel;
+        private readonly SettingsViewModel _viewModel;
 
         public SettingsView(ApplicationViewManager.Name applicationName)
         {
             InitializeComponent();
-            viewModel = new SettingsViewModel(applicationName);
+            _viewModel = new SettingsViewModel(applicationName);
 
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
 
         private void ScrollViewer_ManipulationBoundaryFeedback(object sender, System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
@@ -25,10 +21,10 @@ namespace NETworkManager.Views
 
         public void ChangeSettingsView(ApplicationViewManager.Name name)
         {
-            viewModel.ChangeSettingsView(name);
+            _viewModel.ChangeSettingsView(name);
 
             // Scroll into view
-            listBoxSettings.ScrollIntoView(viewModel.SelectedSettingsView);
+            listBoxSettings.ScrollIntoView(_viewModel.SelectedSettingsView);
         }
 
         public void Refresh()

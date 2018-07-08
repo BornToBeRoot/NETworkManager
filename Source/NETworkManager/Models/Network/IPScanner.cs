@@ -1,6 +1,5 @@
 ﻿using NETworkManager.Models.Lookup;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -149,7 +148,7 @@ namespace NETworkManager.Models.Network
                                 // Vendor lookup
                                 if (macAddress != null)
                                 {
-                                    OuiInfo info = OuiLookup.Lookup(macAddress.ToString()).FirstOrDefault();
+                                    OUIInfo info = OUILookup.Lookup(macAddress.ToString()).FirstOrDefault();
 
                                     if (info != null)
                                         vendor = info.Vendor;

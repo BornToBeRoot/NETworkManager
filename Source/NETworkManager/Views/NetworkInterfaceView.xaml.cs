@@ -5,25 +5,25 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
 {
-    public partial class NetworkInterfaceView : UserControl
+    public partial class NetworkInterfaceView
     {
-        NetworkInterfaceViewModel viewModel = new NetworkInterfaceViewModel(DialogCoordinator.Instance);
+        private readonly NetworkInterfaceViewModel _viewModel = new NetworkInterfaceViewModel(DialogCoordinator.Instance);
 
         public NetworkInterfaceView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
-            ContextMenu menu = sender as ContextMenu;
-            menu.DataContext = viewModel;
+            if (sender is ContextMenu menu)
+                menu.DataContext = _viewModel;
         }
 
         public void Refresh()
         {
-            viewModel.Refresh();
+            _viewModel.Refresh();
         }
     }
 }

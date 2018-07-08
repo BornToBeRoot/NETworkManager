@@ -1,31 +1,30 @@
 ﻿using NETworkManager.ViewModels;
-using System;
 using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class SNMPView : UserControl
+    public partial class SNMPView
     {
-        SNMPViewModel viewModel;
+        private readonly SNMPViewModel _viewModel;
 
         public SNMPView(int tabId, string host = null)
         {
             InitializeComponent();
 
-            viewModel = new SNMPViewModel(tabId, host);
+            _viewModel = new SNMPViewModel(tabId, host);
 
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
 
         public void CloseTab()
         {
-            viewModel.OnClose();
+            _viewModel.OnClose();
         }
 
         private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
         {
-            ContextMenu menu = sender as ContextMenu;
-            menu.DataContext = viewModel;
+            if (sender is ContextMenu menu)
+                menu.DataContext = _viewModel;
         }
-                    }
+    }
 }
