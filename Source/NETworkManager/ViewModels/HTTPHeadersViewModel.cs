@@ -1,9 +1,7 @@
 ﻿using NETworkManager.Models.Network;
 using System;
 using System.Windows.Input;
-using System.Collections.Generic;
 using NETworkManager.Models.Settings;
-using System.Net;
 using System.Windows.Threading;
 using System.Diagnostics;
 using System.ComponentModel;
@@ -19,17 +17,17 @@ namespace NETworkManager.ViewModels
     public class HTTPHeadersViewModel : ViewModelBase
     {
         #region Variables
-        private int _tabId;
-                
-        DispatcherTimer dispatcherTimer = new DispatcherTimer();
-        Stopwatch stopwatch = new Stopwatch();
+        private readonly int _tabId;
 
-        private bool _isLoading = true;
+        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
+        private readonly Stopwatch _stopwatch = new Stopwatch();
+
+        private readonly bool _isLoading;
 
         private string _websiteUri;
         public string WebsiteUri
         {
-            get { return _websiteUri; }
+            get => _websiteUri;
             set
             {
                 if (value == _websiteUri)
@@ -40,16 +38,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _websiteUriHistoryView;
-        public ICollectionView WebsiteUriHistoryView
-        {
-            get { return _websiteUriHistoryView; }
-        }
+        public ICollectionView WebsiteUriHistoryView { get; }
 
         private bool _isCheckRunning;
         public bool IsCheckRunning
         {
-            get { return _isCheckRunning; }
+            get => _isCheckRunning;
             set
             {
                 if (value == _isCheckRunning)
@@ -63,7 +57,7 @@ namespace NETworkManager.ViewModels
         private string _headers;
         public string Headers
         {
-            get { return _headers; }
+            get => _headers;
             set
             {
                 if (value == _headers)
@@ -77,7 +71,7 @@ namespace NETworkManager.ViewModels
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
         {
-            get { return _displayStatusMessage; }
+            get => _displayStatusMessage;
             set
             {
                 if (value == _displayStatusMessage)
@@ -91,7 +85,7 @@ namespace NETworkManager.ViewModels
         private string _statusMessage;
         public string StatusMessage
         {
-            get { return _statusMessage; }
+            get => _statusMessage;
             set
             {
                 if (value == _statusMessage)
@@ -105,7 +99,7 @@ namespace NETworkManager.ViewModels
         private DateTime? _startTime;
         public DateTime? StartTime
         {
-            get { return _startTime; }
+            get => _startTime;
             set
             {
                 if (value == _startTime)
@@ -119,7 +113,7 @@ namespace NETworkManager.ViewModels
         private TimeSpan _duration;
         public TimeSpan Duration
         {
-            get { return _duration; }
+            get => _duration;
             set
             {
                 if (value == _duration)
@@ -133,7 +127,7 @@ namespace NETworkManager.ViewModels
         private DateTime? _endTime;
         public DateTime? EndTime
         {
-            get { return _endTime; }
+            get => _endTime;
             set
             {
                 if (value == _endTime)
@@ -147,7 +141,7 @@ namespace NETworkManager.ViewModels
         private int _headersCount;
         public int HeadersCount
         {
-            get { return _headersCount; }
+            get => _headersCount;
             set
             {
                 if (value == _headersCount)
@@ -161,7 +155,7 @@ namespace NETworkManager.ViewModels
         private bool _expandStatistics;
         public bool ExpandStatistics
         {
-            get { return _expandStatistics; }
+            get => _expandStatistics;
             set
             {
                 if (value == _expandStatistics)
@@ -175,19 +169,18 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public bool ShowStatistics
-        {
-            get { return SettingsManager.Current.HTTPHeaders_ShowStatistics; }
-        }
+        public bool ShowStatistics => SettingsManager.Current.HTTPHeaders_ShowStatistics;
+
         #endregion
 
         #region Contructor, load settings
         public HTTPHeadersViewModel(int tabId)
         {
+            _isLoading = true;
             _tabId = tabId;
 
             // Set collection view
-            _websiteUriHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.HTTPHeaders_WebsiteUriHistory);
+            WebsiteUriHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.HTTPHeaders_WebsiteUriHistory);
 
             LoadSettings();
 
@@ -223,21 +216,21 @@ namespace NETworkManager.ViewModels
 
             // Measure time
             StartTime = DateTime.Now;
-            stopwatch.Start();
-            dispatcherTimer.Tick += DispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            dispatcherTimer.Start();
+            _stopwatch.Start();
+            _dispatcherTimer.Tick += DispatcherTimer_Tick;
+            _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            _dispatcherTimer.Start();
             EndTime = null;
 
             Headers = null;
             HeadersCount = 0;
 
             // Change the tab title (not nice, but it works)
-            Window window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
             if (window != null)
             {
-                foreach (TabablzControl tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+                foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
                 {
                     tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = WebsiteUri;
                 }
@@ -245,12 +238,12 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                HTTPHeadersOptions options = new HTTPHeadersOptions()
+                var options = new HTTPHeadersOptions()
                 {
                     Timeout = SettingsManager.Current.HTTPHeaders_Timeout
                 };
 
-                WebHeaderCollection headers = await HTTPHeaders.GetHeadersAsync(new Uri(WebsiteUri), options);
+                var headers = await HTTPHeaders.GetHeadersAsync(new Uri(WebsiteUri), options);
 
                 Headers = headers.ToString();
                 HeadersCount = headers.Count;
@@ -264,13 +257,13 @@ namespace NETworkManager.ViewModels
             AddWebsiteUriToHistory(WebsiteUri);
 
             // Stop timer and stopwatch
-            stopwatch.Stop();
-            dispatcherTimer.Stop();
+            _stopwatch.Stop();
+            _dispatcherTimer.Stop();
 
-            Duration = stopwatch.Elapsed;
+            Duration = _stopwatch.Elapsed;
             EndTime = DateTime.Now;
 
-            stopwatch.Reset();
+            _stopwatch.Reset();
 
             IsCheckRunning = false;
         }
@@ -283,7 +276,7 @@ namespace NETworkManager.ViewModels
         private void AddWebsiteUriToHistory(string websiteUri)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.HTTPHeaders_WebsiteUriHistory.ToList(), websiteUri, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.HTTPHeaders_WebsiteUriHistory.ToList(), websiteUri, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.HTTPHeaders_WebsiteUriHistory.Clear();
@@ -297,7 +290,7 @@ namespace NETworkManager.ViewModels
         #region Events
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            Duration = stopwatch.Elapsed;
+            Duration = _stopwatch.Elapsed;
         }
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)

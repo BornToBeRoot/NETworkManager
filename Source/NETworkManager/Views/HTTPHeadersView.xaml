@@ -3,17 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:Validator="clr-namespace:NETworkManager.Validators"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:validators="clr-namespace:NETworkManager.Validators"
+        xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        mc:Ignorable="d">
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:HTTPHeadersViewModel}">
     <UserControl.Resources>
-        <Converter:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter"/>
-        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter"/>
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid Grid.Column="0" Grid.Row="0" Margin="10">
@@ -40,12 +40,12 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="{DynamicResource String_URL}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                    <ComboBox Grid.Column="2" x:Name="cbWebsiteUri" ItemsSource="{Binding WebsiteUriHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleWebsiteUri}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" IsEnabled="{Binding IsCheckRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                    <ComboBox Grid.Column="2" x:Name="ComboBoxWebsiteUri" ItemsSource="{Binding WebsiteUriHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleWebsiteUri}" IsEnabled="{Binding IsCheckRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                         <ComboBox.Text>
                             <Binding Path="WebsiteUri" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
-                                    <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                    <Validator:HttpAndHttpsUriValidator ValidatesOnTargetUpdated="True" />
+                                    <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                    <validators:HttpAndHttpsUriValidator ValidatesOnTargetUpdated="True" />
                                 </Binding.ValidationRules>
                             </Binding>
                         </ComboBox.Text>
@@ -55,7 +55,7 @@
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                                 <Setter Property="IsEnabled" Value="True" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=cbWebsiteUri}" Value="True" >
+                                    <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxWebsiteUri}" Value="True" >
                                         <Setter Property="IsEnabled" Value="False" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding IsCheckRunning}" Value="True">
@@ -72,7 +72,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Width="20" Height="20" Margin="10,5,0,5">
                                     <Rectangle.Resources>
-                                        <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:Material Kind=Play}"/>
+                                        <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}"/>
                                     </Rectangle.Resources>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -86,17 +86,17 @@
                         </Button.Content>
                     </Button>
                 </Grid>
-                <Controls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
-                    <Controls:MetroProgressBar.Style>
-                        <Style TargetType="{x:Type  Controls:MetroProgressBar}">
+                <mahAppsControls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
+                    <mahAppsControls:MetroProgressBar.Style>
+                        <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsCheckRunning}" Value="False">
                                     <Setter Property="Visibility" Value="Collapsed" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </Controls:MetroProgressBar.Style>
-                </Controls:MetroProgressBar>
+                    </mahAppsControls:MetroProgressBar.Style>
+                </mahAppsControls:MetroProgressBar>
                 <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
             </Grid>
             <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Headers}" />
@@ -122,7 +122,6 @@
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
-                                <Setter Property="VerticalAlignment" Value="Center" />
                                 <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
                                 <Setter Property="TextWrapping" Value="NoWrap" />
                             </Style>
@@ -141,3 +140,4 @@
         </Grid>
     </Grid>
 </UserControl>
+
