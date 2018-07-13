@@ -83,18 +83,8 @@ Check the [Issues](https://github.com/BornToBeRoot/NETworkManager/issues) if the
 
 Fork the repository, do your changes and send me a pull request!
 
-<h2>Thanks!</h2>
-
-Thanks to all the [contributors](https://github.com/BornToBeRoot/NETworkManager/graphs/contributors) who helped to improve the program!
-
-Also to the following companies, which support open source projects:
-
- <a href="https://www.jetbrains.com/resharper/">
-    <img alt="ReSharper-Logo" width="64" heigth="64" src="ReSharper.svg">
-  </a>
-
 <h2>License</h2>
 
-This software is published under the [GNU GENERAL PUBLIC LICENSE](https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE).
+This software is published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE).
 
-The licenses of the libraries, which are used in the program, can be found (here)[https://github.com/BornToBeRoot/NETworkManager/tree/master/Source/NETworkManager/Licenses].
+The licenses of the libraries, which are used in the program, can be found [here](https://github.com/BornToBeRoot/NETworkManager/tree/master/Source/NETworkManager/Licenses).
