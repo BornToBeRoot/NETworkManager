@@ -10,12 +10,12 @@ namespace NETworkManager.ViewModels
     public class IPScannerSettingsViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private bool _showScanResultForAllIPAddresses;
         public bool ShowScanResultForAllIPAddresses
         {
-            get { return _showScanResultForAllIPAddresses; }
+            get => _showScanResultForAllIPAddresses;
             set
             {
                 if (value == _showScanResultForAllIPAddresses)
@@ -32,7 +32,7 @@ namespace NETworkManager.ViewModels
         private int _threads;
         public int Threads
         {
-            get { return _threads; }
+            get => _threads;
             set
             {
                 if (value == _threads)
@@ -49,7 +49,7 @@ namespace NETworkManager.ViewModels
         private int _icmpTimeout;
         public int ICMPTimeout
         {
-            get { return _icmpTimeout; }
+            get => _icmpTimeout;
             set
             {
                 if (value == _icmpTimeout)
@@ -66,7 +66,7 @@ namespace NETworkManager.ViewModels
         private int _icmpBuffer;
         public int ICMPBuffer
         {
-            get { return _icmpBuffer; }
+            get => _icmpBuffer;
             set
             {
                 if (value == _icmpBuffer)
@@ -83,7 +83,7 @@ namespace NETworkManager.ViewModels
         private int _icmpAttempts;
         public int ICMPAttempts
         {
-            get { return _icmpAttempts; }
+            get => _icmpAttempts;
             set
             {
                 if (value == _icmpAttempts)
@@ -100,7 +100,7 @@ namespace NETworkManager.ViewModels
         private bool _resolveHostname;
         public bool ResolveHostname
         {
-            get { return _resolveHostname; }
+            get => _resolveHostname;
             set
             {
                 if (value == _resolveHostname)
@@ -117,7 +117,7 @@ namespace NETworkManager.ViewModels
         private bool _useCustomDNSServer;
         public bool UseCustomDNSServer
         {
-            get { return _useCustomDNSServer; }
+            get => _useCustomDNSServer;
             set
             {
                 if (value == _useCustomDNSServer)
@@ -134,7 +134,7 @@ namespace NETworkManager.ViewModels
         private string _customDNSServer;
         public string CustomDNSServer
         {
-            get { return _customDNSServer; }
+            get => _customDNSServer;
             set
             {
                 if (value == _customDNSServer)
@@ -151,7 +151,7 @@ namespace NETworkManager.ViewModels
         private int _dnsPort;
         public int DNSPort
         {
-            get { return _dnsPort; }
+            get => _dnsPort;
             set
             {
                 if (value == _dnsPort)
@@ -168,7 +168,7 @@ namespace NETworkManager.ViewModels
         private bool _dnsRecursion;
         public bool DNSRecursion
         {
-            get { return _dnsRecursion; }
+            get => _dnsRecursion;
             set
             {
                 if (value == _dnsRecursion)
@@ -185,7 +185,7 @@ namespace NETworkManager.ViewModels
         private bool _dnsUseResolverCache;
         public bool DNSUseResolverCache
         {
-            get { return _dnsUseResolverCache; }
+            get => _dnsUseResolverCache;
             set
             {
                 if (value == _dnsUseResolverCache)
@@ -204,7 +204,7 @@ namespace NETworkManager.ViewModels
         private TransportType _dnsTransportType;
         public TransportType DNSTransportType
         {
-            get { return _dnsTransportType; }
+            get => _dnsTransportType;
             set
             {
                 if (value == _dnsTransportType)
@@ -221,7 +221,7 @@ namespace NETworkManager.ViewModels
         private int _dnsAttempts;
         public int DNSAttempts
         {
-            get { return _dnsAttempts; }
+            get => _dnsAttempts;
             set
             {
                 if (value == _dnsAttempts)
@@ -238,7 +238,7 @@ namespace NETworkManager.ViewModels
         private int _dnsTimeout;
         public int DNSTimeout
         {
-            get { return _dnsTimeout; }
+            get => _dnsTimeout;
             set
             {
                 if (value == _dnsTimeout)
@@ -255,7 +255,7 @@ namespace NETworkManager.ViewModels
         private bool _resolveMACAddress;
         public bool ResolveMACAddress
         {
-            get { return _resolveMACAddress; }
+            get => _resolveMACAddress;
             set
             {
                 if (value == _resolveMACAddress)
@@ -272,7 +272,7 @@ namespace NETworkManager.ViewModels
         private bool _showStatistics;
         public bool ShowStatistics
         {
-            get { return _showStatistics; }
+            get => _showStatistics;
             set
             {
                 if (value == _showStatistics)
@@ -290,6 +290,8 @@ namespace NETworkManager.ViewModels
         #region Constructor, load settings
         public IPScannerSettingsViewModel()
         {
+            _isLoading = true;
+
             LoadSettings();
 
             _isLoading = false;
