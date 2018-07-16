@@ -181,7 +181,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedMACAddressAction()
         {
-            Clipboard.SetText(SelectedOUILookup.MacAddress);
+            Clipboard.SetText(SelectedOUILookup.MACAddress);
         }
 
         public ICommand CopySelectedVendorCommand

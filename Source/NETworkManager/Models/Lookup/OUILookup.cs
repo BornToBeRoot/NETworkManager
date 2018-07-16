@@ -33,7 +33,7 @@ namespace NETworkManager.Models.Lookup
                     OUIInfoList.Add(new OUIInfo(node.SelectSingleNode("MACAddress")?.InnerText, node.SelectSingleNode("Vendor")?.InnerText));
             }
 
-            OUIInfoLookup = (Lookup<string, OUIInfo>)OUIInfoList.ToLookup(x => x.MacAddress);
+            OUIInfoLookup = (Lookup<string, OUIInfo>)OUIInfoList.ToLookup(x => x.MACAddress);
         }
         #endregion
 
