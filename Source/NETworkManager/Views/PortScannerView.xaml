@@ -7,10 +7,11 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:validators="clr-namespace:NETworkManager.Validators"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
-        xmlns:wpfHelpers="clr-namespace:NETworkManager.WpfHelper"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:network="clr-namespace:NETworkManager.Models.Network"
         Loaded="UserControl_Loaded"
-        mc:Ignorable="d">
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
@@ -47,7 +48,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Host}" Style="{StaticResource CenterTextBlock}" />
-                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="cbHost" Height="{Binding ElementName=cbPort, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameAndOrIPAddress}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="ComboBoxHost" Height="{Binding ElementName=ComboBoxPort, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameAndOrIPAddress}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -58,7 +59,7 @@
                     </ComboBox.Text>
                 </ComboBox>
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Ports}" Style="{StaticResource CenterTextBlock}" />
-                <ComboBox Grid.Column="2" Grid.Row="2" x:Name="cbPort" ItemsSource="{Binding PortHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePortScanRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" Grid.Row="2" x:Name="ComboBoxPort" ItemsSource="{Binding PortHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePortScanRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -73,10 +74,10 @@
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=cbHost, Path=(Validation.HasError)}" Value="True">
+                                <DataTrigger Binding="{Binding ElementName=ComboBoxHost, Path=(Validation.HasError)}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=cbPort, Path=(Validation.HasError)}" Value="True" >
+                                <DataTrigger Binding="{Binding ElementName=ComboBoxPort, Path=(Validation.HasError)}" Value="True" >
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding CancelScan}" Value="True">
@@ -177,7 +178,6 @@
         <DataGrid Grid.Row="3" ItemsSource="{Binding PortScanResultView}" SelectedItem="{Binding SelectedScanResult}">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
-                <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{DynamicResource String_CopyDots}">
                         <MenuItem.Icon>
@@ -263,13 +263,13 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding Host.Item1}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Host.Item2, Converter={StaticResource NullOrEmptyToStringConverter}}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Port}" Binding="{Binding Port}" MinWidth="80" />
-                <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding Status, Converter={StaticResource PortStatusToStringConverter}}" MinWidth="100" />
-                <DataGridTextColumn Header="{DynamicResource String_Protocol}" Binding="{Binding LookupInfo.Protocol}" MinWidth="100" />
-                <DataGridTextColumn Header="{DynamicResource String_Service}" Binding="{Binding LookupInfo.Service}" MinWidth="100" />
-                <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding LookupInfo.Description}" MinWidth="200" Width="*" />
+                <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding (network:PortInfo.Host).Item1}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding (network:PortInfo.Host).Item2, Converter={StaticResource NullOrEmptyToStringConverter}}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_Port}" Binding="{Binding (network:PortInfo.Port)}" MinWidth="80" />
+                <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding (network:PortInfo.Status), Converter={StaticResource PortStatusToStringConverter}}" MinWidth="100" />
+                <DataGridTextColumn Header="{DynamicResource String_Protocol}" Binding="{Binding (network:PortInfo.LookupInfo).Protocol}" MinWidth="100" />
+                <DataGridTextColumn Header="{DynamicResource String_Service}" Binding="{Binding (network:PortInfo.LookupInfo).Service}" MinWidth="100" />
+                <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding (network:PortInfo.LookupInfo).Description}" MinWidth="200" Width="*" />
             </DataGrid.Columns>
             <DataGrid.GroupStyle>
                 <GroupStyle>
@@ -281,7 +281,7 @@
                                         <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}">
                                             <Expander.Header>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{DynamicResource DefaultTextBlock}"/>
+                                                    <TextBlock Text="{Binding Name}" Style="{DynamicResource DefaultTextBlock}"/>
                                                 </StackPanel>
                                             </Expander.Header>
                                             <ItemsPresenter />
@@ -315,7 +315,6 @@
                     <Grid.Resources>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
-                            <Setter Property="VerticalAlignment" Value="Center" />
                             <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
                             <Setter Property="TextWrapping" Value="NoWrap" />
                         </Style>

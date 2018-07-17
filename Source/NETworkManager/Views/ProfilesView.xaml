@@ -3,17 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:Controls="clr-namespace:NETworkManager.Controls"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:controls="clr-namespace:NETworkManager.Controls"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        Dialog:DialogParticipation.Register="{Binding}"
+        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d">
     <UserControl.Resources>
-        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -29,9 +27,9 @@
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="txtSearch" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+            <TextBox x:Name="TextBoxSearch" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
         </Grid>
-        <Controls:MultiSelectDataGrid x:Name="dataGridProfiles" Grid.Row="2" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" SelectedItemsList="{Binding SelectedProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True">
+        <controls:MultiSelectDataGrid x:Name="DataGridProfiles" Grid.Row="2" Style="{StaticResource MetroDataGrid}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" SelectedItemsList="{Binding SelectedProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
@@ -39,7 +37,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -48,7 +46,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -87,7 +85,7 @@
                                                     <Button Grid.Column="1" ToolTip="{DynamicResource String_EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
                                                         <Rectangle Width="16" Height="16">
                                                             <Rectangle.OpacityMask>
-                                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
+                                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
                                                             </Rectangle.OpacityMask>
                                                             <Rectangle.Style>
                                                                 <Style TargetType="{x:Type Rectangle}">
@@ -123,7 +121,7 @@
                 <DataGridCheckBoxColumn Header="{DynamicResource String_Header_PuTTY}" Binding="{Binding PuTTY_Enabled}" />
                 <DataGridCheckBoxColumn Header="{DynamicResource String_Header_WakeOnLAN}" Binding="{Binding WakeOnLAN_Enabled}" />
             </DataGrid.Columns>
-        </Controls:MultiSelectDataGrid>
+        </controls:MultiSelectDataGrid>
         <StackPanel Grid.Row="4" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Command="{Binding DeleteProfileCommand}">
                 <Button.Style>
@@ -131,7 +129,7 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=dataGridProfiles, Path=SelectedItems.Count}" Value="0" />
+                                    <Condition Binding="{Binding ElementName=DataGridProfiles, Path=SelectedItems.Count}" Value="0" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False"/>
@@ -148,7 +146,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_DeleteDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
@@ -162,7 +160,7 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=dataGridProfiles, Path=SelectedItems.Count}" Value="1" />
+                                    <Condition Binding="{Binding ElementName=DataGridProfiles, Path=SelectedItems.Count}" Value="1" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="True"/>
@@ -179,7 +177,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_EditDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
@@ -195,7 +193,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}" />
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />

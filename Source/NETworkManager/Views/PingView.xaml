@@ -3,22 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Control="clr-namespace:NETworkManager.Controls"
-        xmlns:Validator="clr-namespace:NETworkManager.Validators"
+        xmlns:controls="clr-namespace:NETworkManager.Controls"
+        xmlns:validators="clr-namespace:NETworkManager.Validators"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:network="clr-namespace:NETworkManager.Models.Network"
         Loaded="UserControl_Loaded"
-        mc:Ignorable="d">
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PingViewModel}">
     <UserControl.Resources>
-        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <Converter:IntToStringConverter x:Key="IntToStringConverter" />
-        <Converter:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
-        <Converter:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
-        <Converter:PercentConverter x:Key="PercentConverter" />
-        <Converter:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:IntToStringConverter x:Key="IntToStringConverter" />
+        <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
+        <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
+        <converters:PercentConverter x:Key="PercentConverter" />
+        <converters:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -44,11 +46,11 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{DynamicResource String_Host}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="txtHost" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsPingRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" x:Name="ComboBoxHost" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsPingRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.Text>
@@ -58,7 +60,7 @@
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=txtHost}" Value="True" >
+                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxHost}" Value="True" >
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding CancelPing}" Value="True">
@@ -75,8 +77,8 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Width="20" Height="20" Margin="10,5,0,5">
                                 <Rectangle.Resources>
-                                    <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:Material Kind=Play}" />
-                                    <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
+                                    <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}" />
+                                    <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                 </Rectangle.Resources>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
@@ -106,29 +108,29 @@
                     </Button.Content>
                 </Button>
             </Grid>
-            <Controls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
-                <Controls:MetroProgressBar.Style>
-                    <Style TargetType="{x:Type  Controls:MetroProgressBar}">
+            <mahAppsControls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
+                <mahAppsControls:MetroProgressBar.Style>
+                    <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsPingRunning}" Value="False">
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </Controls:MetroProgressBar.Style>
-            </Controls:MetroProgressBar>
+                </mahAppsControls:MetroProgressBar.Style>
+            </mahAppsControls:MetroProgressBar>
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Status}" Style="{StaticResource HeaderTextBlock}" />
-        <Control:ScrollingDataGrid Grid.Row="3" ItemsSource="{Binding PingResultView}" SelectedItem="{Binding SelectedPingResult}">
-            <Control:ScrollingDataGrid.Resources>
+        <controls:ScrollingDataGrid Grid.Row="3" ItemsSource="{Binding PingResultView}" SelectedItem="{Binding SelectedPingResult}">
+            <controls:ScrollingDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollingDataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{DynamicResource String_CopyDots}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -136,7 +138,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -145,7 +147,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -154,7 +156,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -163,7 +165,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -172,7 +174,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -181,7 +183,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -190,31 +192,31 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
                 </ContextMenu>
-            </Control:ScrollingDataGrid.Resources>
-            <Control:ScrollingDataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_Timestamp}" Binding="{Binding Timestamp}" MinWidth="180" />
-                <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding IPAddress}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding Hostname}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Bytes}" Binding="{Binding Bytes, Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
+            </controls:ScrollingDataGrid.Resources>
+            <controls:ScrollingDataGrid.Columns>
+                <DataGridTextColumn Header="{DynamicResource String_Timestamp}" Binding="{Binding (network:PingInfo.Timestamp)}" MinWidth="180" />
+                <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding (network:PingInfo.IPAddress)}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding (network:PingInfo.Hostname)}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_Bytes}" Binding="{Binding (network:PingInfo.Bytes), Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
                 <DataGridTextColumn Header="{DynamicResource String_Time}" MinWidth="100">
                     <DataGridTextColumn.Binding>
                         <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
-                            <Binding Path="Status" />
-                            <Binding Path="Time" />
+                            <Binding Path="(network:PingInfo.Status)" />
+                            <Binding Path="(network:PingInfo.Time)" />
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{DynamicResource String_TTL}" Binding="{Binding TTL, Converter={StaticResource IntToStringConverter}}" MinWidth="80"/>
-                <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding Status, Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150" Width="*" />
-            </Control:ScrollingDataGrid.Columns>
-            <Control:ScrollingDataGrid.RowStyle>
+                <DataGridTextColumn Header="{DynamicResource String_TTL}" Binding="{Binding (network:PingInfo.TTL), Converter={StaticResource IntToStringConverter}}" MinWidth="80"/>
+                <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding (network:PingInfo.Status), Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150" Width="*" />
+            </controls:ScrollingDataGrid.Columns>
+            <controls:ScrollingDataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" Value="1" >
@@ -222,8 +224,8 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </Control:ScrollingDataGrid.RowStyle>
-        </Control:ScrollingDataGrid>
+            </controls:ScrollingDataGrid.RowStyle>
+        </controls:ScrollingDataGrid>
         <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">
             <Expander.Header>
                 <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
@@ -247,7 +249,6 @@
                 <Grid.Resources>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
-                        <Setter Property="VerticalAlignment" Value="Center" />
                         <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
                         <Setter Property="TextWrapping" Value="NoWrap" />
                     </Style>

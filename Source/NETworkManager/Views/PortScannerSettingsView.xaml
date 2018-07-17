@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        mc:Ignorable="d">
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{DynamicResource String_Header_Multithreading}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock  Text="{DynamicResource String_Threads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />

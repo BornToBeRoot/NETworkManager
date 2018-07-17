@@ -10,4 +10,7 @@
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=TTY/@EntryIndexedValue">PuTTY</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/XamlNaming/Abbreviations/=DNS/@EntryIndexedValue">DNS</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/XamlNaming/Abbreviations/=IP/@EntryIndexedValue">IP</s:String>
-	<s:String x:Key="/Default/CodeStyle/Naming/XamlNaming/Abbreviations/=MAC/@EntryIndexedValue">MAC</s:String></wpf:ResourceDictionary>
+	<s:String x:Key="/Default/CodeStyle/Naming/XamlNaming/Abbreviations/=LAN/@EntryIndexedValue">LAN</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/XamlNaming/Abbreviations/=LANMAC/@EntryIndexedValue">LANMAC</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/XamlNaming/Abbreviations/=MAC/@EntryIndexedValue">MAC</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/XamlNaming/Abbreviations/=TTY/@EntryIndexedValue">TTY</s:String></wpf:ResourceDictionary>

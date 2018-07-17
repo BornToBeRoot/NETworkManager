@@ -3,15 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:Network="clr-namespace:NETworkManager.Models.Network"
-             xmlns:Converter="clr-namespace:NETworkManager.Converters"
-             xmlns:Validator="clr-namespace:NETworkManager.Validators"
-             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
-             mc:Ignorable="d" Loaded="UserControl_Loaded">
+             xmlns:network="clr-namespace:NETworkManager.Models.Network"
+             xmlns:converters="clr-namespace:NETworkManager.Converters"
+             xmlns:validators="clr-namespace:NETworkManager.Validators"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:settings="clr-namespace:NETworkManager.Models.Settings"
+             mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:ProfileViewModel}">
     <UserControl.Resources>
-        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid Margin="0,20">
         <Grid.RowDefinitions>
@@ -49,28 +51,28 @@
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Name}" />
-                            <TextBox x:Name="txtName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleRemoteDesktopProfileName}">
+                            <TextBox x:Name="TextBoxName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleRemoteDesktopProfileName}">
                                 <TextBox.Text>
                                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
-                                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>
                             <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
-                            <TextBox x:Name="txtHost" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                            <TextBox x:Name="TextBoxHost" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
                                 <TextBox.Text>
                                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
-                                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                            <Validator:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                            <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>
                             <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Credential}" />
-                            <ComboBox x:Name="cbCredential" Grid.Column="2" Grid.Row="4" SelectedValue="{Binding CredentialID}" SelectedValuePath="ID" Style="{StaticResource DefaultComboBox}" ItemsSource="{Binding Credentials}">
+                            <ComboBox x:Name="ComboBoxCredential" Grid.Column="2" Grid.Row="4" SelectedValue="{Binding CredentialID}" SelectedValuePath="ID" Style="{StaticResource DefaultComboBox}" ItemsSource="{Binding Credentials}">
                                 <ComboBox.InputBindings>
                                     <KeyBinding Command="{Binding UnselectCredentialCommand}" Key="Delete"/>
                                 </ComboBox.InputBindings>
@@ -80,8 +82,8 @@
                                             <TextBlock>
                                                 <TextBlock.Text>
                                                     <MultiBinding StringFormat="{}[{0}] {1}">
-                                                        <Binding Path="ID" />
-                                                        <Binding Path="Name" />
+                                                        <Binding Path="(settings:CredentialInfo.ID)" />
+                                                        <Binding Path="(settings:CredentialInfo.Name)" />
                                                     </MultiBinding>
                                                 </TextBlock.Text>
                                             </TextBlock>
@@ -90,11 +92,11 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                             <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_Group}" />
-                            <ComboBox x:Name="cbGroup" Grid.Column="2" Grid.Row="6" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleGroupServers}">
+                            <ComboBox x:Name="ComboBoxGroup" Grid.Column="2" Grid.Row="6" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleGroupServers}">
                                 <ComboBox.Text>
                                     <Binding Path="Group" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
-                                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </ComboBox.Text>
@@ -138,8 +140,8 @@
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
                         <StackPanel IsEnabled="{Binding NetworkInterface_Enabled}">
-                            <RadioButton x:Name="radioButtonEnableDynamicIPAddress" GroupName="NetworkInterface_IPAddressConfig" IsChecked="{Binding NetworkInterface_EnableDynamicIPAddress}" Content="{DynamicResource String_ObtainAnIPAddressAutomatically}" Margin="0,0,0,10"/>
-                            <RadioButton x:Name="radioButtonEnableStaticIPAddress" GroupName="NetworkInterface_IPAddressConfig" IsChecked="{Binding NetworkInterface_EnableStaticIPAddress}" Content="{DynamicResource String_UseTheFollowingIPAddress}" Margin="0,0,0,10"/>
+                            <RadioButton x:Name="RadioButtonEnableDynamicIPAddress" GroupName="NetworkInterface_IPAddressConfig" IsChecked="{Binding NetworkInterface_EnableDynamicIPAddress}" Content="{DynamicResource String_ObtainAnIPAddressAutomatically}" Margin="0,0,0,10"/>
+                            <RadioButton x:Name="RadioButtonEnableStaticIPAddress" GroupName="NetworkInterface_IPAddressConfig" IsChecked="{Binding NetworkInterface_EnableStaticIPAddress}" Content="{DynamicResource String_UseTheFollowingIPAddress}" Margin="0,0,0,10"/>
                             <Grid IsEnabled="{Binding NetworkInterface_EnableStaticIPAddress}" Margin="0,0,0,10">
                                 <Grid.Resources>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
@@ -159,40 +161,40 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_IPv4Address}" />
-                                <TextBox x:Name="txtNetworkInterfaceIPAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}" >
+                                <TextBox x:Name="TextBoxNetworkInterfaceIPAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}" >
                                     <TextBox.Text>
                                         <Binding Path="NetworkInterface_IPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_SubnetmaskOrCIDR}" />
-                                <ComboBox x:Name="cbNetworkInterfaceSubnetmaskOrCidr" Grid.Column="2" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetmaskIPv4CIDR}" ItemsSource="{x:Static Network:Subnetmask.List}">
+                                <ComboBox x:Name="ComboBoxNetworkInterfaceSubnetmaskOrCidr" Grid.Column="2" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetmaskIPv4CIDR}" ItemsSource="{x:Static network:Subnetmask.List}">
                                     <ComboBox.Text>
                                         <Binding Path="NetworkInterface_SubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <Validator:IPv4SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:IPv4SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </ComboBox.Text>
                                 </ComboBox>
                                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_DefaultGateway}" />
-                                <TextBox x:Name="txtNetworkInterfaceGateway" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" >
+                                <TextBox x:Name="TextBoxNetworkInterfaceGateway" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" >
                                     <TextBox.Text>
                                         <Binding Path="NetworkInterface_Gateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
                             </Grid>
-                            <RadioButton x:Name="radioButtonEnableDynamicDNS" GroupName="NetworkInterface_DNSServerConfig" Content="{DynamicResource String_ObtainDNSServerAddressAutomatically}" IsChecked="{Binding NetworkInterface_EnableDynamicDNS}" Margin="0,0,0,10" IsEnabled="{Binding NetworkInterface_EnableDynamicIPAddress}" />
-                            <RadioButton x:Name="radioButtonEnableStaticDNS" GroupName="NetworkInterface_DNSServerConfig" Content="{DynamicResource String_UseTheFollowingDNSServerAddresses}" IsChecked="{Binding NetworkInterface_EnableStaticDNS}" Margin="0,0,0,10"/>
+                            <RadioButton x:Name="RadioButtonEnableDynamicDNS" GroupName="NetworkInterface_DNSServerConfig" Content="{DynamicResource String_ObtainDNSServerAddressAutomatically}" IsChecked="{Binding NetworkInterface_EnableDynamicDNS}" Margin="0,0,0,10" IsEnabled="{Binding NetworkInterface_EnableDynamicIPAddress}" />
+                            <RadioButton x:Name="RadioButtonEnableStaticDNS" GroupName="NetworkInterface_DNSServerConfig" Content="{DynamicResource String_UseTheFollowingDNSServerAddresses}" IsChecked="{Binding NetworkInterface_EnableStaticDNS}" Margin="0,0,0,10"/>
                             <Grid IsEnabled="{Binding NetworkInterface_EnableStaticDNS}">
                                 <Grid.Resources>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
@@ -210,21 +212,21 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_PrimaryDNSServer}" />
-                                <TextBox x:Name="txtNetworkInterfacePrimaryDNSServer" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" >
+                                <TextBox x:Name="TextBoxNetworkInterfacePrimaryDNSServer" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" >
                                     <TextBox.Text>
                                         <Binding Path="NetworkInterface_PrimaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_SecondaryDNSServer}" />
-                                <TextBox x:Name="txtNetworkInterfaceSecondaryDNSServer" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNSServer}" >
+                                <TextBox x:Name="TextBoxNetworkInterfaceSecondaryDNSServer" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNSServer}" >
                                     <TextBox.Text>
                                         <Binding Path="NetworkInterface_SecondaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -275,12 +277,12 @@
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_InheritHostFromDefault}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding IPScanner_InheritHost}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_IPRange}" />
-                                <TextBox x:Name="txtIPScannerIPRange" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding IPScanner_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetWithCIDR}">
+                                <TextBox x:Name="TextBoxIPScannerIPRange" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding IPScanner_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetWithCIDR}">
                                     <TextBox.Text>
                                         <Binding Path="IPScanner_IPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <Validator:IPScanRangeValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:IPScanRangeValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -333,22 +335,22 @@
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_InheritHostFromDefault}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding PortScanner_InheritHost}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
-                                <TextBox x:Name="txtPortScannerHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding PortScanner_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                <TextBox x:Name="TextBoxPortScannerHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding PortScanner_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
                                     <TextBox.Text>
                                         <Binding Path="PortScanner_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Ports}" />
-                                <TextBox x:Name="txtPortScannerPorts" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePortScanRange}">
+                                <TextBox x:Name="TextBoxPortScannerPorts" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePortScanRange}">
                                     <TextBox.Text>
                                         <Binding Path="PortScanner_Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <Validator:PortRangeValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:PortRangeValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -399,11 +401,11 @@
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_InheritHostFromDefault}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Ping_InheritHost}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
-                                <TextBox x:Name="txtPingHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Ping_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                <TextBox x:Name="TextBoxPingHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Ping_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
                                     <TextBox.Text>
                                         <Binding Path="Ping_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -454,11 +456,11 @@
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_InheritHostFromDefault}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Traceroute_InheritHost}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
-                                <TextBox x:Name="txtTracerouteHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Traceroute_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                <TextBox x:Name="TextBoxTracerouteHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Traceroute_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
                                     <TextBox.Text>
                                         <Binding Path="Traceroute_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -509,11 +511,11 @@
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_InheritHostFromDefault}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding RemoteDesktop_InheritHost}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
-                                <TextBox x:Name="txtRemoteDesktopHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding RemoteDesktop_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                <TextBox x:Name="TextBoxRemoteDesktopHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding RemoteDesktop_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
                                     <TextBox.Text>
                                         <Binding Path="RemoteDesktop_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -598,22 +600,22 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                <TextBox x:Name="txtPuTTYHost" Grid.Column="2" Grid.Row="4" IsEnabled="{Binding PuTTY_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                <TextBox x:Name="TextBoxPuTTYHost" Grid.Column="2" Grid.Row="4" IsEnabled="{Binding PuTTY_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <Validator:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBox x:Name="txtPuTTYSerialLine" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSerialLine}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                <TextBox x:Name="TextBoxPuTTYSerialLine" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSerialLine}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_SerialLine" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <Validator:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -630,22 +632,22 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                <TextBox x:Name="txtPuTTYPort" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort22}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                                <TextBox x:Name="TextBoxPuTTYPort" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort22}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <Validator:PortValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:PortValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBox x:Name="txtPuTTYBaud" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleBaud9600}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                <TextBox x:Name="TextBoxPuTTYBaud" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleBaud9600}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_Baud" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <Validator:BaudValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:BaudValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -655,7 +657,7 @@
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -665,7 +667,7 @@
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_Profile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -718,34 +720,34 @@
                                     <ColumnDefinition Width="34" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_MACAddress}" />
-                                <TextBox x:Name="txtWakeOnLANMACAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddress}">
+                                <TextBox x:Name="TextBoxWakeOnLANMACAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddress}">
                                     <TextBox.Text>
                                         <Binding Path="WakeOnLAN_MACAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <Validator:MACAddressValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:MACAddressValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Broadcast}" />
-                                <TextBox x:Name="txtWakeOnLANBroadcast" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Broadcast}">
+                                <TextBox x:Name="TextBoxWakeOnLANBroadcast" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Broadcast}">
                                     <TextBox.Text>
                                         <Binding Path="WakeOnLAN_Broadcast" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Port}" />
-                                <TextBox x:Name="txtWakeOnLANPort" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort7}">
+                                <TextBox x:Name="TextBoxWakeOnLANPort" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort7}">
                                     <TextBox.Text>
                                         <Binding Path="WakeOnLAN_Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <Validator:PortValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:PortValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -763,13 +765,13 @@
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
                         <Style.Triggers>
                             <!-- General -->
-                            <DataTrigger Binding="{Binding ElementName=txtName,Path=(Validation.HasError)}" Value="True">
+                            <DataTrigger Binding="{Binding ElementName=TextBoxName,Path=(Validation.HasError)}" Value="True">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=txtHost,Path=(Validation.HasError)}" Value="True">
+                            <DataTrigger Binding="{Binding ElementName=TextBoxHost,Path=(Validation.HasError)}" Value="True">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=cbGroup,Path=(Validation.HasError)}" Value="True">
+                            <DataTrigger Binding="{Binding ElementName=ComboBoxGroup,Path=(Validation.HasError)}" Value="True">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
                             <!-- No tab enabled -->
@@ -781,7 +783,7 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding NetworkInterface_Enabled}" Value="True" />
                                     <Condition Binding="{Binding NetworkInterface_EnableStaticIPAddress}" Value="True" />
-                                    <Condition Binding="{Binding ElementName=txtNetworkInterfaceIPAddress, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxNetworkInterfaceIPAddress, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -791,7 +793,7 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding NetworkInterface_Enabled}" Value="True" />
                                     <Condition Binding="{Binding NetworkInterface_EnableStaticIPAddress}" Value="True" />
-                                    <Condition Binding="{Binding ElementName=cbNetworkInterfaceSubnetmaskOrCidr, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=ComboBoxNetworkInterfaceSubnetmaskOrCidr, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -801,7 +803,7 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding NetworkInterface_Enabled}" Value="True" />
                                     <Condition Binding="{Binding NetworkInterface_EnableStaticIPAddress}" Value="True" />
-                                    <Condition Binding="{Binding ElementName=txtNetworkInterfaceGateway, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxNetworkInterfaceGateway, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -811,7 +813,7 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding NetworkInterface_Enabled}" Value="True" />
                                     <Condition Binding="{Binding NetworkInterface_EnableStaticDNS}" Value="True" />
-                                    <Condition Binding="{Binding ElementName=txtNetworkInterfacePrimaryDNSServer, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxNetworkInterfacePrimaryDNSServer, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -821,7 +823,7 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding NetworkInterface_Enabled}" Value="True" />
                                     <Condition Binding="{Binding NetworkInterface_EnableStaticDNS}" Value="True" />
-                                    <Condition Binding="{Binding ElementName=txtNetworkInterfaceSecondaryDNSServer, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxNetworkInterfaceSecondaryDNSServer, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -832,7 +834,7 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding IPScanner_Enabled}" Value="True"/>
                                     <Condition Binding="{Binding IPScanner_InheritHost}" Value="False"/>
-                                    <Condition Binding="{Binding ElementName=txtIPScannerIPRange, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxIPScannerIPRange, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -843,7 +845,7 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding PortScanner_Enabled}" Value="True"/>
                                     <Condition Binding="{Binding PortScanner_InheritHost}" Value="False"/>
-                                    <Condition Binding="{Binding ElementName=txtPortScannerHost, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxPortScannerHost, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -852,7 +854,7 @@
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding PortScanner_Enabled}" Value="True"/>
-                                    <Condition Binding="{Binding ElementName=txtPortScannerPorts, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxPortScannerPorts, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -863,7 +865,7 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding Ping_Enabled}" Value="True"/>
                                     <Condition Binding="{Binding Ping_InheritHost}" Value="False"/>
-                                    <Condition Binding="{Binding ElementName=txtPingHost, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxPingHost, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -874,7 +876,7 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding Traceroute_Enabled}" Value="True"/>
                                     <Condition Binding="{Binding Traceroute_InheritHost}" Value="False"/>
-                                    <Condition Binding="{Binding ElementName=txtTracerouteHost, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxTracerouteHost, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -885,7 +887,7 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding RemoteDesktop_Enabled}" Value="True"/>
                                     <Condition Binding="{Binding RemoteDesktop_InheritHost}" Value="False"/>
-                                    <Condition Binding="{Binding ElementName=txtRemoteDesktopHost, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxRemoteDesktopHost, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -896,7 +898,7 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
                                     <Condition Binding="{Binding PuTTY_UseSerial}" Value="True" />
-                                    <Condition Binding="{Binding ElementName=txtPuTTYSerialLine, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxPuTTYSerialLine, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -906,7 +908,7 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
                                     <Condition Binding="{Binding PuTTY_UseSerial}" Value="True" />
-                                    <Condition Binding="{Binding ElementName=txtPuTTYBaud, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxPuTTYBaud, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -917,7 +919,7 @@
                                     <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
                                     <Condition Binding="{Binding PuTTY_UseSerial}" Value="False" />
                                     <Condition Binding="{Binding PuTTY_InheritHost}" Value="False" />
-                                    <Condition Binding="{Binding ElementName=txtPuTTYHost, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxPuTTYHost, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -927,7 +929,7 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
                                     <Condition Binding="{Binding PuTTY_UseSerial}" Value="False" />
-                                    <Condition Binding="{Binding ElementName=txtPuTTYPort, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxPuTTYPort, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -937,7 +939,7 @@
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding WakeOnLAN_Enabled}" Value="True"/>
-                                    <Condition Binding="{Binding ElementName=txtWakeOnLANMACAddress, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxWakeOnLANMACAddress, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -946,7 +948,7 @@
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding WakeOnLAN_Enabled}" Value="True"/>
-                                    <Condition Binding="{Binding ElementName=txtWakeOnLANBroadcast, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxWakeOnLANBroadcast, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -955,7 +957,7 @@
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding WakeOnLAN_Enabled}" Value="True"/>
-                                    <Condition Binding="{Binding ElementName=txtWakeOnLANPort, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxWakeOnLANPort, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
