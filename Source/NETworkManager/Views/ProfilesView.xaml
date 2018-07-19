@@ -8,8 +8,10 @@
         xmlns:controls="clr-namespace:NETworkManager.Controls"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:settings="clr-namespace:NETworkManager.Models.Settings"
         dialogs:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d">
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ProfilesViewModel}">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
@@ -81,8 +83,8 @@
                                                         <ColumnDefinition Width="*" />
                                                         <ColumnDefinition Width="Auto" />
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{DynamicResource DefaultTextBlock}"/>
-                                                    <Button Grid.Column="1" ToolTip="{DynamicResource String_EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
+                                                    <TextBlock Grid.Column="0" Text="{Binding (CollectionViewGroup.Name)}" Style="{DynamicResource DefaultTextBlock}"/>
+                                                    <Button Grid.Column="1" ToolTip="{DynamicResource String_EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding (CollectionViewGroup.Name)}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
                                                         <Rectangle Width="16" Height="16">
                                                             <Rectangle.OpacityMask>
                                                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
@@ -111,15 +113,15 @@
                 </GroupStyle>
             </DataGrid.GroupStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_Name}" Binding="{Binding Name}" MinWidth="200" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_NetworkInterface}" Binding="{Binding NetworkInterface_Enabled}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_IPScanner}" Binding="{Binding IPScanner_Enabled}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_PortScanner}" Binding="{Binding PortScanner_Enabled}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_Ping}" Binding="{Binding Ping_Enabled}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_Traceroute}" Binding="{Binding Traceroute_Enabled}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_RemoteDesktop}" Binding="{Binding RemoteDesktop_Enabled}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_PuTTY}" Binding="{Binding PuTTY_Enabled}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_WakeOnLAN}" Binding="{Binding WakeOnLAN_Enabled}" />
+                <DataGridTextColumn Header="{DynamicResource String_Name}" Binding="{Binding (settings:ProfileInfo.Name)}" MinWidth="200" />
+                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_NetworkInterface}" Binding="{Binding (settings:ProfileInfo.NetworkInterface_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_IPScanner}" Binding="{Binding (settings:ProfileInfo.IPScanner_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_PortScanner}" Binding="{Binding (settings:ProfileInfo.PortScanner_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_Ping}" Binding="{Binding (settings:ProfileInfo.Ping_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_Traceroute}" Binding="{Binding (settings:ProfileInfo.Traceroute_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_RemoteDesktop}" Binding="{Binding (settings:ProfileInfo.RemoteDesktop_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_PuTTY}" Binding="{Binding (settings:ProfileInfo.PuTTY_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_WakeOnLAN}" Binding="{Binding (settings:ProfileInfo.WakeOnLAN_Enabled)}" />
             </DataGrid.Columns>
         </controls:MultiSelectDataGrid>
         <StackPanel Grid.Row="4" HorizontalAlignment="Right" Orientation="Horizontal">

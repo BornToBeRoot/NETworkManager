@@ -3,16 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:Validator="clr-namespace:NETworkManager.Validators"
+             xmlns:validators="clr-namespace:NETworkManager.Validators"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:WpfHelper="clr-namespace:NETworkManager.WpfHelper"
-             xmlns:Converter="clr-namespace:NETworkManager.Converters"
-             xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             mc:Ignorable="d" Loaded="UserControl_Loaded">
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.WpfHelper"
+             xmlns:converters="clr-namespace:NETworkManager.Converters"
+             xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:settings="clr-namespace:NETworkManager.Models.Settings"
+             mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:RemoteDesktopConnectViewModel}">
     <UserControl.Resources>
-        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <Converter:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
     </UserControl.Resources>
     <Grid Margin="0,20">
         <Grid.RowDefinitions>
@@ -40,22 +42,22 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Name}" Visibility="{Binding ConnectAs, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,10" />
-            <TextBox x:Name="txtName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleRemoteDesktopProfileName}" Visibility="{Binding ConnectAs, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}" Margin="0,0,0,10">
+            <TextBox x:Name="TextBoxName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleRemoteDesktopProfileName}" Visibility="{Binding ConnectAs, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}" Margin="0,0,0,10">
                 <TextBox.Text>
                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource String_Host}" />
-            <ComboBox x:Name="cbHost" Grid.Column="2" Grid.Row="1" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="1" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <Validator:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </ComboBox.Text>
@@ -85,20 +87,20 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Username}" />
-                <TextBox x:Name="txtUsername" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleUsername}">
+                <TextBox x:Name="TextBoxUsername" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleUsername}">
                     <TextBox.Text>
                         <Binding Path="Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>
-                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Password}" />
-                <PasswordBox x:Name="passwordBoxPassword" Grid.Column="2" Grid.Row="2" Style="{StaticResource DefaultPasswordBox}" >
-                    <Interactivity:Interaction.Behaviors>
-                        <WpfHelper:PasswordBoxBindingBehavior Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </Interactivity:Interaction.Behaviors>
+                <PasswordBox x:Name="PasswordBoxPassword" Grid.Column="2" Grid.Row="2" Style="{StaticResource DefaultPasswordBox}" >
+                    <interactivity:Interaction.Behaviors>
+                        <wpfHelpers:PasswordBoxBindingBehavior Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </interactivity:Interaction.Behaviors>
                 </PasswordBox>
             </Grid>
             <Grid Visibility="{Binding CustomCredentials, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
@@ -115,12 +117,12 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Credential}" />
-                <ComboBox x:Name="cbCredentialID" Grid.Column="2" Grid.Row="0" SelectedValuePath="ID" SelectedValue="{Binding CredentialID}" Style="{StaticResource DefaultComboBox}" ItemsSource="{Binding Credentials}">
+                <ComboBox x:Name="ComboBoxCredentialID" Grid.Column="2" Grid.Row="0" SelectedValuePath="ID" SelectedValue="{Binding CredentialID}" Style="{StaticResource DefaultComboBox}" ItemsSource="{Binding Credentials}">
                     <ComboBox.InputBindings>
                         <KeyBinding Command="{Binding UnselectCredentialCommand}" Key="Delete"/>
                     </ComboBox.InputBindings>
                     <ComboBox.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate DataType="settings:CredentialInfo">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock>
                                     <TextBlock.Text>
@@ -143,7 +145,7 @@
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
                         <Setter Property="IsEnabled" Value="True" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=cbHost}" Value="True" >
+                            <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxHost}" Value="True" >
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
                             <MultiDataTrigger>

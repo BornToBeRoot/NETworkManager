@@ -4,18 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:Settings="clr-namespace:NETworkManager.Models.Settings"
-        xmlns:asf="clr-namespace:AirspaceFixer;assembly=AirspaceFixer"
-        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        Dialog:DialogParticipation.Register="{Binding}"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:settings="clr-namespace:NETworkManager.Models.Settings"
+        xmlns:airspaceFixer="clr-namespace:AirspaceFixer;assembly=AirspaceFixer"
+        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
-        mc:Ignorable="d">
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PuTTYHostViewModel}">
     <UserControl.Resources>
-        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <Converter:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        <Converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding ConnectCommand}" />
@@ -28,7 +29,7 @@
                         <DataTrigger Binding="{Binding IsPuTTYConfigured}" Value="False">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Source={x:Static Settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled}" Value="True">
+                        <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled}" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -39,8 +40,8 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition MinWidth="40" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="350" />
             </Grid.ColumnDefinitions>
-            <asf:AirspacePanel Grid.Column="0" Grid.Row="0" FixAirspace="{Binding Source={x:Static Settings:ConfigurationManager.Current}, Path=IsDialogOpen}">
-                <dragablz:TabablzControl ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" Visibility="{Binding Source={x:Static Settings:ConfigurationManager.Current}, Path=IsDialogOpen, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+            <airspaceFixer:AirspacePanel Grid.Column="0" Grid.Row="0" FixAirspace="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsDialogOpen}">
+                <dragablz:TabablzControl ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsDialogOpen, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                     <dragablz:TabablzControl.InterTabController>
                         <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" MoveWindowWithSolitaryTabs="False" x:Name="InterTabController" />
                     </dragablz:TabablzControl.InterTabController>
@@ -49,7 +50,7 @@
                             <Button Style="{StaticResource CleanButton}" Command="{Binding ConnectCommand}" ToolTip="{DynamicResource String_NewTab}" Focusable="False">
                                 <Rectangle Width="20" Height="20">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
+                                        <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -66,7 +67,7 @@
                         </Grid>
                     </dragablz:TabablzControl.HeaderSuffixContent>
                 </dragablz:TabablzControl>
-            </asf:AirspacePanel>
+            </airspaceFixer:AirspacePanel>
             <Grid Grid.Column="0" VerticalAlignment="Center">
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
@@ -82,7 +83,7 @@
                     <Button HorizontalAlignment="Center" Focusable="False" Command="{Binding ConnectCommand}" ToolTip="{DynamicResource String_NewProfileDots}" Style="{StaticResource CleanButton}" Margin="0,0,0,10">
                         <Rectangle Width="20" Height="20">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
+                                <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
                             </Rectangle.OpacityMask>
                             <Rectangle.Style>
                                 <Style TargetType="{x:Type Rectangle}">
@@ -109,7 +110,7 @@
                         <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBox x:Name="txtSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}"/>
+                    <TextBox x:Name="TextBoxSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}"/>
                     <ListBox Grid.Row="2" ItemsSource="{Binding Profiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                         <ListBox.Resources>
                             <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -117,7 +118,7 @@
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Octicons Kind=Terminal}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Octicons Kind=Terminal}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
@@ -126,7 +127,7 @@
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Octicons Kind=Terminal}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Octicons Kind=Terminal}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
@@ -135,7 +136,7 @@
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
@@ -144,7 +145,7 @@
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentDuplicate}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentDuplicate}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
@@ -153,7 +154,7 @@
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
@@ -178,11 +179,11 @@
                                                                     <ColumnDefinition Width="*" />
                                                                     <ColumnDefinition Width="Auto" />
                                                                 </Grid.ColumnDefinitions>
-                                                                <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{DynamicResource DefaultTextBlock}"/>
-                                                                <Button Grid.Column="1" ToolTip="{DynamicResource String_EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
+                                                                <TextBlock Grid.Column="0" Text="{Binding (CollectionViewGroup.Name)}" Style="{DynamicResource DefaultTextBlock}"/>
+                                                                <Button Grid.Column="1" ToolTip="{DynamicResource String_EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding (CollectionViewGroup.Name)}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
                                                                     <Rectangle Width="16" Height="16">
                                                                         <Rectangle.OpacityMask>
-                                                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
+                                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
                                                                         </Rectangle.OpacityMask>
                                                                         <Rectangle.Style>
                                                                             <Style TargetType="{x:Type Rectangle}">
@@ -241,8 +242,8 @@
                                 </Button.Style>
                                 <Rectangle Width="20" Height="20">
                                     <Rectangle.Resources>
-                                        <VisualBrush x:Key="VisualPlus" Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}"/>
-                                        <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{IconPacks:Material Kind=FilterRemoveOutline}" />
+                                        <VisualBrush x:Key="VisualPlus" Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}"/>
+                                        <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
                                     </Rectangle.Resources>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -274,7 +275,7 @@
                             </TextBlock>
                         </StackPanel>
                     </Grid>
-                    <Button x:Name="btnAddProfile" Grid.Row="4" Command="{Binding AddProfileCommand}" Style="{StaticResource ImageWithTextButton}">
+                    <Button Grid.Row="4" Command="{Binding AddProfileCommand}" Style="{StaticResource ImageWithTextButton}">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -283,10 +284,10 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddProfiles}" FontSize="14" Margin="10,5" TextAlignment="Center" Grid.ColumnSpan="2"/>
+                                <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddProfiles}" FontSize="14" Margin="10,5" TextAlignment="Center" />
                             </Grid>
                         </Button.Content>
                     </Button>
@@ -300,7 +301,7 @@
                         <DataTrigger Binding="{Binding IsPuTTYConfigured}" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Source={x:Static Settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled}" Value="True">
+                        <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled}" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -316,7 +317,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Settings}" />
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Settings}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_OpenSettings}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
@@ -324,7 +325,7 @@
                 </Button.Content>
             </Button>
         </StackPanel>
-        <StackPanel VerticalAlignment="Center" Visibility="{Binding Source={x:Static Settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="10">
+        <StackPanel VerticalAlignment="Center" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="10">
             <TextBlock Text="{DynamicResource String_DisableTransparencyInTheSettingsToUsePuTTY}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
             <Button HorizontalAlignment="Center" Command="{Binding OpenSettingsCommand}" Style="{StaticResource ImageWithTextButton}">
                 <Button.Content>
@@ -335,7 +336,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Settings}" />
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Settings}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_OpenSettings}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
@@ -345,3 +346,4 @@
         </StackPanel>
     </Grid>
 </UserControl>
+

@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:Validator="clr-namespace:NETworkManager.Validators"
-        mc:Ignorable="d">
+        xmlns:validators="clr-namespace:NETworkManager.Validators"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SNMPSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{DynamicResource String_Header_SNMP}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{DynamicResource String_WalkMode}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
@@ -17,8 +18,8 @@
             <TextBox.Text>
                 <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                        <Validator:PortValidator ValidatesOnTargetUpdated="True" />
+                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <validators:PortValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

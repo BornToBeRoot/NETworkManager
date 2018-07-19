@@ -4,18 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:Validator="clr-namespace:NETworkManager.Validators"
-        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        Dialog:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d">
+        xmlns:validators="clr-namespace:NETworkManager.Validators"
+        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        dialogs:DialogParticipation.Register="{Binding}"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PuTTYSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{DynamicResource String_Header_PuTTY}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBox x:Name="txtPuTTYLocation" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_PuTTYLocation}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" Margin="0,0,0,10">
+        <TextBox x:Name="TextBoxPuTTYLocation" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_PuTTYLocation}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="PuTTYLocation" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                        <Validator:FileExistsValidator ValidatesOnTargetUpdated="True" />
+                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <validators:FileExistsValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -28,8 +29,8 @@
             <TextBox.Text>
                 <Binding Path="SSHPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                        <Validator:PortValidator ValidatesOnTargetUpdated="True" />
+                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <validators:PortValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -39,8 +40,8 @@
             <TextBox.Text>
                 <Binding Path="TelnetPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                        <Validator:PortValidator ValidatesOnTargetUpdated="True" />
+                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <validators:PortValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -50,8 +51,8 @@
             <TextBox.Text>
                 <Binding Path="RloginPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                        <Validator:PortValidator ValidatesOnTargetUpdated="True" />
+                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <validators:PortValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -63,7 +64,7 @@
             <TextBox.Text>
                 <Binding Path="BaudRate" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />                        
+                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />                        
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

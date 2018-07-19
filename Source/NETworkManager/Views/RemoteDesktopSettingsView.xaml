@@ -4,25 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:Validator="clr-namespace:NETworkManager.Validators"
-        mc:Ignorable="d">
-    <UserControl.Resources>
-        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-    </UserControl.Resources>
+        xmlns:validators="clr-namespace:NETworkManager.Validators"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:RemoteDesktopSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{DynamicResource String_Header_Display}" Style="{StaticResource HeaderTextBlock}" />
-        <RadioButton x:Name="rbAdjustScreenAutomatically" Content="{DynamicResource String_AdjustScreenAutomatically}" IsChecked="{Binding AdjustScreenAutomatically}" Margin="0,0,0,10" />
-        <RadioButton x:Name="rbUseCurrentViewSize" Content="{DynamicResource String_UseCurrentViewSize}" IsChecked="{Binding UseCurrentViewSize}" Margin="0,0,0,10" />
-        <RadioButton x:Name="rbFixedScreenSize" Content="{DynamicResource String_FixedScreenSize}" IsChecked="{Binding UseFixedScreenSize}" Margin="0,0,0,10" />
-        <GroupBox x:Name="gbFixedScreenSize" Style="{StaticResource WithoutHeaderGroupBox}" MinWidth="270" HorizontalAlignment="Left" IsEnabled="{Binding UseFixedScreenSize}" Margin="25,0,0,10">
+        <RadioButton x:Name="RadioButtonAdjustScreenAutomatically" Content="{DynamicResource String_AdjustScreenAutomatically}" IsChecked="{Binding AdjustScreenAutomatically}" Margin="0,0,0,10" />
+        <RadioButton x:Name="RadioButtonUseCurrentViewSize" Content="{DynamicResource String_UseCurrentViewSize}" IsChecked="{Binding UseCurrentViewSize}" Margin="0,0,0,10" />
+        <RadioButton x:Name="RadioButtonFixedScreenSize" Content="{DynamicResource String_FixedScreenSize}" IsChecked="{Binding UseFixedScreenSize}" Margin="0,0,0,10" />
+        <GroupBox x:Name="GroupBoxFixedScreenSize" Style="{StaticResource WithoutHeaderGroupBox}" MinWidth="270" HorizontalAlignment="Left" IsEnabled="{Binding UseFixedScreenSize}" Margin="25,0,0,10">
             <StackPanel>
                 <TextBlock Text="{DynamicResource String_SelectAScreenResolution}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
                 <ComboBox ItemsSource="{Binding ScreenResolutions}" SelectedItem="{Binding SelectedScreenResolution}" Width="250" HorizontalAlignment="Left" />
             </StackPanel>
         </GroupBox>
-        <RadioButton x:Name="rbCustomScreenSize" Content="{DynamicResource String_CustomScreenSize}" IsChecked="{Binding UseCustomScreenSize}" Margin="0,0,0,10" />
-        <GroupBox Style="{StaticResource WithoutHeaderGroupBox}" Width="{Binding ElementName=gbFixedScreenSize, Path=ActualWidth}" HorizontalAlignment="Left" IsEnabled="{Binding UseCustomScreenSize}" Margin="25,0,0,10">
+        <RadioButton x:Name="RadioButtonCustomScreenSize" Content="{DynamicResource String_CustomScreenSize}" IsChecked="{Binding UseCustomScreenSize}" Margin="0,0,0,10" />
+        <GroupBox Style="{StaticResource WithoutHeaderGroupBox}" Width="{Binding ElementName=GroupBoxFixedScreenSize, Path=ActualWidth}" HorizontalAlignment="Left" IsEnabled="{Binding UseCustomScreenSize}" Margin="25,0,0,10">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -39,8 +36,8 @@
                     <TextBox.Text>
                         <Binding Path="CustomScreenWidth" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                <Validator:Int32Validator ValidatesOnTargetUpdated="True" />
+                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                <validators:Int32Validator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
@@ -50,8 +47,8 @@
                     <TextBox.Text>
                         <Binding Path="CustomScreenHeight" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                <Validator:Int32Validator ValidatesOnTargetUpdated="True" />
+                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                <validators:Int32Validator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
@@ -66,8 +63,8 @@
             <TextBox.Text>
                 <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                        <Validator:PortValidator ValidatesOnTargetUpdated="True" />
+                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <validators:PortValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -77,7 +74,7 @@
         <TextBlock Text="{DynamicResource String_AuthenticationLevel}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
             <mah:NumericUpDown Value="{Binding AuthenticationLevel}" Maximum="3" Minimum="0" Interval="1" />
-            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="4" ToolTip="{Binding RDPAuthenticationLevelHelpMessage}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+            <Rectangle Width="24" Height="24" ToolTip="{Binding RDPAuthenticationLevelHelpMessage}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                 </Rectangle.Resources>

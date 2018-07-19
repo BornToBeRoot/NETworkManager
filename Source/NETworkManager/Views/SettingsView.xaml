@@ -6,7 +6,9 @@
         xmlns:views ="clr-namespace:NETworkManager.Views"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
-        mc:Ignorable="d">
+        xmlns:settings="clr-namespace:NETworkManager.ViewModels.Settings"
+        xmlns:networkManager="clr-namespace:NETworkManager"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance settings:SettingsViewModel}">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
@@ -24,9 +26,9 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <TextBox x:Name="txtSearch" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+                            <TextBox x:Name="TextBoxSearch" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
                             <ScrollViewer Grid.Row="1" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" Style="{StaticResource FadeOutScrollViewer}">
-                                <ListBox x:Name="listBoxSettings" ItemsSource="{Binding SettingsViews}" SelectedItem="{Binding SelectedSettingsView}" Margin="10,0,10,10">
+                                <ListBox x:Name="ListBoxSettings" ItemsSource="{Binding SettingsViews}" SelectedItem="{Binding SelectedSettingsView}" Margin="10,0,10,10">
                                     <ListBox.GroupStyle>
                                         <GroupStyle>
                                             <GroupStyle.ContainerStyle>
@@ -34,9 +36,9 @@
                                                     <Setter Property="Template">
                                                         <Setter.Value>
                                                             <ControlTemplate>
-                                                                <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}" Padding="0">
+                                                                <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}">
                                                                     <Expander.Header>
-                                                                        <TextBlock Text="{Binding Name}" Style="{StaticResource DefaultTextBlock}" Margin="0" Foreground="{DynamicResource GrayBrush3}"/>
+                                                                        <TextBlock Text="{Binding (CollectionViewGroup.Name)}" Style="{StaticResource DefaultTextBlock}" Margin="0" Foreground="{DynamicResource GrayBrush3}"/>
                                                                     </Expander.Header>
                                                                     <ItemsPresenter />
                                                                 </Expander>
@@ -56,6 +58,7 @@
                                                 </Grid.ColumnDefinitions>
                                                 <Rectangle Grid.Column="0" Width="20" Height="20" Margin="10,0">
                                                     <Rectangle.OpacityMask>
+                                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved, can not bind to (networkManager:SettingsViewInfo.Icon) -->
                                                         <VisualBrush Stretch="Uniform" Visual="{Binding Icon}" />
                                                     </Rectangle.OpacityMask>
                                                     <Rectangle.Style>
@@ -72,7 +75,7 @@
                                                         </Style>
                                                     </Rectangle.Style>
                                                 </Rectangle>
-                                                <TextBlock Grid.Column="1" Text="{Binding TranslatedName}" >
+                                                <TextBlock Grid.Column="1" Text="{Binding (networkManager:SettingsViewInfo.TranslatedName)}" >
                                                     <TextBlock.Style>
                                                         <Style TargetType="{x:Type TextBlock}">
                                                             <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />

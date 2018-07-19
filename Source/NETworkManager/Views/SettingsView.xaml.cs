@@ -24,7 +24,7 @@ namespace NETworkManager.Views
             _viewModel.ChangeSettingsView(name);
 
             // Scroll into view
-            listBoxSettings.ScrollIntoView(_viewModel.SelectedSettingsView);
+            ListBoxSettings.ScrollIntoView(_viewModel.SelectedSettingsView);
         }
 
         public void Refresh()

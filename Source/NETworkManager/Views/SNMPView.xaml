@@ -3,18 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:Validator="clr-namespace:NETworkManager.Validators"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:validators="clr-namespace:NETworkManager.Validators"
+        xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        mc:Ignorable="d">
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:network="clr-namespace:NETworkManager.Models.Network"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SNMPViewModel}">
     <UserControl.Resources>
-        <Converter:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        <Converter:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter"/>
-        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:IntToStringConverter x:Key="IntToStringConverter" />
-        <Converter:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter"/>
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:IntToStringConverter x:Key="IntToStringConverter" />
+        <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
@@ -33,7 +34,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_SNMP}" />
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="10" />
@@ -56,11 +57,11 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Host}" Style="{StaticResource CenterTextBlock}" />
-            <ComboBox Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3" x:Name="cbHost" Height="{Binding ElementName=cbOID, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+            <ComboBox Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3" x:Name="ComboBoxHost" Height="{Binding ElementName=ComboBoxOID, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </ComboBox.Text>
@@ -70,12 +71,12 @@
             <TextBlock Grid.Column="10" Grid.Row="0" Text="{DynamicResource String_Mode}" Style="{StaticResource CenterTextBlock}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
             <ComboBox Grid.Column="12" Grid.Row="0" ItemsSource="{Binding Modes}" SelectedItem="{Binding Mode}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_OID}" Style="{StaticResource CenterTextBlock}" />
-            <ComboBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3" x:Name="cbOID" Height="{Binding ElementName=btnQuery, Path=ActualHeight}" ItemsSource="{Binding OIDHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSNMPOID}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+            <ComboBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3" x:Name="ComboBoxOID" Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" ItemsSource="{Binding OIDHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSNMPOID}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                 <ComboBox.Text>
                     <Binding Path="OID" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <Validator:OIDValidator ValidatesOnTargetUpdated="True" />
+                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <validators:OIDValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </ComboBox.Text>
@@ -92,7 +93,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <TextBox Grid.Column="8" Grid.Row="2" Grid.ColumnSpan="5" Name="txtCommunity" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSNMPCommunity}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
+            <TextBox Grid.Column="8" Grid.Row="2" Grid.ColumnSpan="5" Name="TextBoxCommunity" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSNMPCommunity}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                         <Setter Property="Visibility" Value="Visible" />
@@ -106,7 +107,7 @@
                 <TextBox.Text>
                     <Binding Path="Community" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
@@ -147,7 +148,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <TextBox Grid.Column="12" Grid.Row="2" x:Name="txtUsername" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleUsername}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
+            <TextBox Grid.Column="12" Grid.Row="2" x:Name="TextBoxUsername" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleUsername}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -161,7 +162,7 @@
                 <TextBox.Text>
                     <Binding Path="Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
@@ -193,7 +194,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ComboBox Grid.Column="2" Grid.Row="3" Height="{Binding ElementName=btnQuery, Path=ActualHeight}" ItemsSource="{Binding AuthenticationProviders}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" SelectedItem="{Binding AuthenticationProvider}" Margin="0,10,0,0">
+            <ComboBox Grid.Column="2" Grid.Row="3" Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" ItemsSource="{Binding AuthenticationProviders}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" SelectedItem="{Binding AuthenticationProvider}" Margin="0,10,0,0">
                 <ComboBox.Style>
                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource DefaultComboBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -220,7 +221,7 @@
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <TextBox Grid.Column="4" Grid.Row="3" Name="txtAuth" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Margin="0,10,0,0">
+            <TextBox Grid.Column="4" Grid.Row="3" Name="TextBoxAuth" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Margin="0,10,0,0">
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -249,7 +250,7 @@
                 <TextBox.Text>
                     <Binding Path="Auth" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
@@ -290,7 +291,7 @@
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <TextBox Grid.Column="10" Grid.ColumnSpan="3" Grid.Row="3" Name="txtPriv" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Margin="0,10,0,0">
+            <TextBox Grid.Column="10" Grid.ColumnSpan="3" Grid.Row="3" Name="TextBoxPriv" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Margin="0,10,0,0">
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -310,14 +311,14 @@
                 <TextBox.Text>
                     <Binding Path="Priv" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <Validator:PrivacyAESValidator ValidatesOnTargetUpdated="True" />
+                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <validators:PrivacyAESValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
         </Grid>
-        <Button x:Name="btnQuery" Grid.Column="2" Command="{Binding WorkCommand}" IsDefault="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsWorking}" VerticalAlignment="Bottom">
+        <Button x:Name="ButtonQuery" Grid.Row="0" Grid.Column="2" Command="{Binding WorkCommand}" IsDefault="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsWorking}" VerticalAlignment="Bottom">
             <Button.Resources>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                     <Setter Property="IsDefault" Value="False" />
@@ -331,9 +332,9 @@
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Version}" Value="v1" />
-                                <Condition Binding="{Binding ElementName=cbHost, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding ElementName=cbOID, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding ElementName=txtCommunity, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=ComboBoxHost, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=ComboBoxOID, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=TextBoxCommunity, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding IsWorking}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
@@ -343,9 +344,9 @@
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Version}" Value="v2c" />
-                                <Condition Binding="{Binding ElementName=cbHost, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding ElementName=cbOID, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding ElementName=txtCommunity, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=ComboBoxHost, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=ComboBoxOID, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=TextBoxCommunity, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding IsWorking}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
@@ -356,9 +357,9 @@
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Version}" Value="v3" />
                                 <Condition Binding="{Binding Security}" Value="noAuthNoPriv" />
-                                <Condition Binding="{Binding ElementName=cbHost, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding ElementName=cbOID, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding ElementName=txtUsername, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=ComboBoxHost, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=ComboBoxOID, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=TextBoxUsername, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding IsWorking}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
@@ -369,10 +370,10 @@
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Version}" Value="v3" />
                                 <Condition Binding="{Binding Security}" Value="AuthNoPriv" />
-                                <Condition Binding="{Binding ElementName=cbHost, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding ElementName=cbOID, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding ElementName=txtUsername, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding ElementName=txtAuth, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=ComboBoxHost, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=ComboBoxOID, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=TextBoxUsername, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=TextBoxAuth, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding IsWorking}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
@@ -383,11 +384,11 @@
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Version}" Value="v3" />
                                 <Condition Binding="{Binding Security}" Value="AuthPriv" />
-                                <Condition Binding="{Binding ElementName=cbHost, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding ElementName=cbOID, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding ElementName=txtUsername, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding ElementName=txtAuth, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding ElementName=txtPriv, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=ComboBoxHost, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=ComboBoxOID, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=TextBoxUsername, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=TextBoxAuth, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=TextBoxPriv, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding IsWorking}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
@@ -408,8 +409,7 @@
                     </Grid.ColumnDefinitions>
                     <Rectangle Width="20" Height="20" Margin="10,5,0,5">
                         <Rectangle.Resources>
-                            <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:Material Kind=Play}"/>
-                            <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
+                            <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}"/>
                         </Rectangle.Resources>
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}">
@@ -433,9 +433,9 @@
                 </Grid>
             </Button.Content>
         </Button>
-        <Controls:MetroProgressBar Grid.ColumnSpan="3" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True" Margin="0,10,0,0">
-            <Controls:MetroProgressBar.Style>
-                <Style TargetType="{x:Type Controls:MetroProgressBar}" >
+        <mahAppsControls:MetroProgressBar Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True" Margin="0,10,0,0">
+            <mahAppsControls:MetroProgressBar.Style>
+                <Style TargetType="{x:Type mahAppsControls:MetroProgressBar}" >
                     <Setter Property="Visibility" Value="Collapsed" />
                     <Setter Property="Grid.Row" Value="2" />
                     <Style.Triggers>
@@ -450,9 +450,9 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </Controls:MetroProgressBar.Style>
-        </Controls:MetroProgressBar>
-        <TextBlock Grid.ColumnSpan="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Margin="0,10,0,0" >
+            </mahAppsControls:MetroProgressBar.Style>
+        </mahAppsControls:MetroProgressBar>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Margin="0,10,0,0" >
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -471,7 +471,7 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        <TextBlock Grid.Row="4" Grid.ColumnSpan="3">
+        <TextBlock Grid.Row="4" Grid.ColumnSpan="3" Grid.Column="0">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                     <Setter Property="Text" Value="{DynamicResource String_Header_Result}" />
@@ -488,7 +488,7 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        <DataGrid Grid.Row="5" Grid.ColumnSpan="3" ItemsSource="{Binding QueryResultView}" SelectedItem="{Binding SelectedQueryResult}">
+        <DataGrid Grid.Row="5" Grid.ColumnSpan="3" Grid.Column="0" ItemsSource="{Binding QueryResultView}" SelectedItem="{Binding SelectedQueryResult}">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -496,7 +496,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -504,7 +504,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -513,7 +513,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -544,11 +544,11 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_OID}" Binding="{Binding OID}" MinWidth="200" />
-                <DataGridTextColumn Header="{DynamicResource String_Data}" Binding="{Binding Data}" MinWidth="300" Width="*" />
+                <DataGridTextColumn Header="{DynamicResource String_OID}" Binding="{Binding (network:SNMPReceivedInfo.OID)}" MinWidth="200" />
+                <DataGridTextColumn Header="{DynamicResource String_Data}" Binding="{Binding (network:SNMPReceivedInfo.Data)}" MinWidth="300" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
-        <TextBox Grid.Row="5" Text="{Binding Data}">
+        <TextBox Grid.Row="5" Grid.Column="0" Text="{Binding Data}">
             <TextBox.Style>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource ConsoleTextBox}">
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -563,7 +563,7 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <Expander Grid.Row="7" Grid.ColumnSpan="3" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">
+        <Expander Grid.Row="7" Grid.ColumnSpan="3" Grid.Column="0" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">
             <Expander.Header>
                 <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>
@@ -584,7 +584,6 @@
                     <Grid.Resources>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
-                            <Setter Property="VerticalAlignment" Value="Center" />
                             <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
                             <Setter Property="TextWrapping" Value="NoWrap" />
                         </Style>
