@@ -286,10 +286,7 @@ namespace NETworkManager.ViewModels
             Port = SettingsManager.Current.WakeOnLAN_DefaultPort;
             ExpandProfileView = SettingsManager.Current.WakeOnLAN_ExpandClientView;
 
-            if (ExpandProfileView)
-                ProfileWidth = new GridLength(SettingsManager.Current.WakeOnLAN_ClientWidth);
-            else
-                ProfileWidth = new GridLength(40);
+            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.WakeOnLAN_ClientWidth) : new GridLength(40);
 
             _tempProfileWidth = SettingsManager.Current.WakeOnLAN_ClientWidth;
         }
@@ -308,7 +305,7 @@ namespace NETworkManager.ViewModels
 
         private void WakeUpAction()
         {
-            WakeOnLANInfo info = new WakeOnLANInfo
+            var info = new WakeOnLANInfo
             {
                 MagicPacket = WakeOnLAN.CreateMagicPacket(MACAddress),
                 Broadcast = IPAddress.Parse(Broadcast),
@@ -325,7 +322,7 @@ namespace NETworkManager.ViewModels
 
         private void WakeUpProfileAction()
         {
-            WakeOnLANInfo info = new WakeOnLANInfo
+            var info = new WakeOnLANInfo
             {
                 MagicPacket = WakeOnLAN.CreateMagicPacket(SelectedProfile.WakeOnLAN_MACAddress),
                 Broadcast = IPAddress.Parse(SelectedProfile.WakeOnLAN_Broadcast),
@@ -342,12 +339,12 @@ namespace NETworkManager.ViewModels
 
         private async void AddProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
             };
 
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -372,12 +369,12 @@ namespace NETworkManager.ViewModels
 
         private async void EditProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
             };
 
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -404,12 +401,12 @@ namespace NETworkManager.ViewModels
 
         private async void CopyAsProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
             };
 
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -434,12 +431,12 @@ namespace NETworkManager.ViewModels
 
         private async void DeleteProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
             };
 
-            ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+            var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -457,14 +454,11 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand EditGroupCommand
-        {
-            get { return new RelayCommand(p => EditGroupAction(p)); }
-        }
+        public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
         private async void EditGroupAction(object group)
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
             };
@@ -532,19 +526,13 @@ namespace NETworkManager.ViewModels
 
             if (dueToChangedSize)
             {
-                if (ProfileWidth.Value == 40)
-                    ExpandProfileView = false;
-                else
-                    ExpandProfileView = true;
+                ExpandProfileView = ProfileWidth.Value != 40;
             }
             else
             {
                 if (ExpandProfileView)
                 {
-                    if (_tempProfileWidth == 40)
-                        ProfileWidth = new GridLength(250);
-                    else
-                        ProfileWidth = new GridLength(_tempProfileWidth);
+                    ProfileWidth = _tempProfileWidth == 40 ? new GridLength(250) : new GridLength(_tempProfileWidth);
                 }
                 else
                 {
