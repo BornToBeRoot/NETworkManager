@@ -33,7 +33,6 @@ namespace NETworkManager
             return LocalizationManager.GetStringByKey("String_ApplicationName_" + name);
         }
 
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
         public enum Name
         {
             None,
