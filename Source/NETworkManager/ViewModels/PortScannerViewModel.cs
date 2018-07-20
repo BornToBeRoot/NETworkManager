@@ -22,20 +22,20 @@ namespace NETworkManager.ViewModels
     public class PortScannerViewModel : ViewModelBase
     {
         #region Variables
-        CancellationTokenSource cancellationTokenSource;
+        private CancellationTokenSource _cancellationTokenSource;
 
-        private int _tabId;
+        private readonly int _tabId;
         private bool _firstLoad = true;
 
-        DispatcherTimer dispatcherTimer = new DispatcherTimer();
-        Stopwatch stopwatch = new Stopwatch();
+        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
+        private readonly Stopwatch _stopwatch = new Stopwatch();
 
-        private bool _isLoading = true;
+        private bool _isLoading;
 
         private string _host;
         public string Host
         {
-            get { return _host; }
+            get => _host;
             set
             {
                 if (value == _host)
@@ -46,16 +46,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _hostHistoryView;
-        public ICollectionView HostHistoryView
-        {
-            get { return _hostHistoryView; }
-        }
+        public ICollectionView HostHistoryView { get; }
 
         private string _port;
         public string Port
         {
-            get { return _port; }
+            get => _port;
             set
             {
                 if (value == _port)
@@ -66,16 +62,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _portHistoryView;
-        public ICollectionView PortHistoryView
-        {
-            get { return _portHistoryView; }
-        }
+        public ICollectionView PortHistoryView { get; }
 
         private bool _isScanRunning;
         public bool IsScanRunning
         {
-            get { return _isScanRunning; }
+            get => _isScanRunning;
             set
             {
                 if (value == _isScanRunning)
@@ -90,7 +82,7 @@ namespace NETworkManager.ViewModels
         private bool _cancelScan;
         public bool CancelScan
         {
-            get { return _cancelScan; }
+            get => _cancelScan;
             set
             {
                 if (value == _cancelScan)
@@ -104,26 +96,22 @@ namespace NETworkManager.ViewModels
         private ObservableCollection<PortInfo> _portScanResult = new ObservableCollection<PortInfo>();
         public ObservableCollection<PortInfo> PortScanResult
         {
-            get { return _portScanResult; }
+            get => _portScanResult;
             set
             {
-                if (value == _portScanResult)
+                if (_portScanResult != null && value == _portScanResult)
                     return;
 
                 _portScanResult = value;
             }
         }
 
-        private ICollectionView _portScanResultView;
-        public ICollectionView PortScanResultView
-        {
-            get { return _portScanResultView; }
-        }
+        public ICollectionView PortScanResultView { get; }
 
         private PortInfo _selectedScanResult;
         public PortInfo SelectedScanResult
         {
-            get { return _selectedScanResult; }
+            get => _selectedScanResult;
             set
             {
                 if (value == _selectedScanResult)
@@ -137,7 +125,7 @@ namespace NETworkManager.ViewModels
         private int _portsToScan;
         public int PortsToScan
         {
-            get { return _portsToScan; }
+            get => _portsToScan;
             set
             {
                 if (value == _portsToScan)
@@ -151,7 +139,7 @@ namespace NETworkManager.ViewModels
         private int _portsScanned;
         public int PortsScanned
         {
-            get { return _portsScanned; }
+            get => _portsScanned;
             set
             {
                 if (value == _portsScanned)
@@ -165,7 +153,7 @@ namespace NETworkManager.ViewModels
         private int _portsOpen;
         public int PortsOpen
         {
-            get { return _portsOpen; }
+            get => _portsOpen;
             set
             {
                 if (value == _portsOpen)
@@ -179,7 +167,7 @@ namespace NETworkManager.ViewModels
         private bool _preparingScan;
         public bool PreparingScan
         {
-            get { return _preparingScan; }
+            get => _preparingScan;
             set
             {
                 if (value == _preparingScan)
@@ -193,7 +181,7 @@ namespace NETworkManager.ViewModels
         private DateTime? _startTime;
         public DateTime? StartTime
         {
-            get { return _startTime; }
+            get => _startTime;
             set
             {
                 if (value == _startTime)
@@ -207,7 +195,7 @@ namespace NETworkManager.ViewModels
         private TimeSpan _duration;
         public TimeSpan Duration
         {
-            get { return _duration; }
+            get => _duration;
             set
             {
                 if (value == _duration)
@@ -221,7 +209,7 @@ namespace NETworkManager.ViewModels
         private DateTime? _endTime;
         public DateTime? EndTime
         {
-            get { return _endTime; }
+            get => _endTime;
             set
             {
                 if (value == _endTime)
@@ -235,7 +223,7 @@ namespace NETworkManager.ViewModels
         private bool _expandStatistics;
         public bool ExpandStatistics
         {
-            get { return _expandStatistics; }
+            get => _expandStatistics;
             set
             {
                 if (value == _expandStatistics)
@@ -252,7 +240,7 @@ namespace NETworkManager.ViewModels
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
         {
-            get { return _displayStatusMessage; }
+            get => _displayStatusMessage;
             set
             {
                 if (value == _displayStatusMessage)
@@ -266,7 +254,7 @@ namespace NETworkManager.ViewModels
         private string _statusMessage;
         public string StatusMessage
         {
-            get { return _statusMessage; }
+            get => _statusMessage;
             set
             {
                 if (value == _statusMessage)
@@ -277,26 +265,26 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public bool ShowStatistics
-        {
-            get { return SettingsManager.Current.PortScanner_ShowStatistics; }
-        }
+        public bool ShowStatistics => SettingsManager.Current.PortScanner_ShowStatistics;
+
         #endregion
 
         #region Constructor, load settings, shutdown
         public PortScannerViewModel(int tabId, string host, string port)
         {
+            _isLoading = true;
+
             _tabId = tabId;
             Host = host;
             Port = port;
 
             // Set collection view
-            _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_HostHistory);
-            _portHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortHistory);
+            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_HostHistory);
+            PortHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortHistory);
 
             // Result view
-            _portScanResultView = CollectionViewSource.GetDefaultView(PortScanResult);
-            _portScanResultView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortInfo.Host)));
+            PortScanResultView = CollectionViewSource.GetDefaultView(PortScanResult);
+            PortScanResultView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortInfo.Host)));
             
             LoadSettings();
 
@@ -313,13 +301,13 @@ namespace NETworkManager.ViewModels
 
         public void OnLoaded()
         {
-            if (_firstLoad)
-            {
-                if (!string.IsNullOrEmpty(Host) && !string.IsNullOrEmpty(Port))
-                    StartScan();
+            if (!_firstLoad)
+                return;
 
-                _firstLoad = false;
-            }
+            if (!string.IsNullOrEmpty(Host) && !string.IsNullOrEmpty(Port))
+                StartScan();
+
+            _firstLoad = false;
         }
 
         public void OnClose()
@@ -418,6 +406,8 @@ namespace NETworkManager.ViewModels
         #region Methods
         private async void StartScan()
         {
+            _isLoading = true;
+
             DisplayStatusMessage = false;
             StatusMessage = string.Empty;
 
@@ -426,37 +416,39 @@ namespace NETworkManager.ViewModels
 
             // Measure the time
             StartTime = DateTime.Now;
-            stopwatch.Start();
-            dispatcherTimer.Tick += DispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            dispatcherTimer.Start();
+            _stopwatch.Start();
+            _dispatcherTimer.Tick += DispatcherTimer_Tick;
+            _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            _dispatcherTimer.Start();
             EndTime = null;
 
             PortScanResult.Clear();
             PortsOpen = 0;
 
             // Change the tab title (not nice, but it works)
-            Window window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
             if (window != null)
             {
-                foreach (TabablzControl tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+                foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
                 {
                     tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
                 }
             }
 
-            cancellationTokenSource = new CancellationTokenSource();
+            _cancellationTokenSource = new CancellationTokenSource();
 
-            string[] hosts = Host.Split(';');
+            var hosts = Host.Split(';');
 
-            List<Tuple<IPAddress, string>> hostData = new List<Tuple<IPAddress, string>>();
+            var hostData = new List<Tuple<IPAddress, string>>();
 
-            for (int i = 0; i < hosts.Length; i++)
+            var hostname = string.Empty;
+
+            foreach (var host in hosts)
             {
-                string host = hosts[i].Trim();
-                string hostname = string.Empty;
-                IPAddress.TryParse(host, out IPAddress ipAddress);
+                var host1 = host.Trim();
+
+                IPAddress.TryParse(host1, out var ipAddress);
 
                 try
                 {
@@ -464,43 +456,45 @@ namespace NETworkManager.ViewModels
                     // Try to resolve the hostname
                     if (ipAddress == null)
                     {
-                        IPHostEntry ipHostEntry = await Dns.GetHostEntryAsync(host);
+                        var ipHostEntry = await Dns.GetHostEntryAsync(host1);
 
-                        foreach (IPAddress ip in ipHostEntry.AddressList)
+                        foreach (var ip in ipHostEntry.AddressList)
                         {
-                            if (ip.AddressFamily == AddressFamily.InterNetwork && SettingsManager.Current.PortScanner_ResolveHostnamePreferIPv4)
+                            switch (ip.AddressFamily)
                             {
-                                ipAddress = ip;
-                                continue;
-                            }
-                            else if (ip.AddressFamily == AddressFamily.InterNetworkV6 && !SettingsManager.Current.PortScanner_ResolveHostnamePreferIPv4)
-                            {
-                                ipAddress = ip;
-                                continue;
+                                case AddressFamily.InterNetwork when SettingsManager.Current.PortScanner_ResolveHostnamePreferIPv4:
+                                    ipAddress = ip;
+                                    break;
+                                case AddressFamily.InterNetworkV6 when !SettingsManager.Current.PortScanner_ResolveHostnamePreferIPv4:
+                                    ipAddress = ip;
+                                    break;
                             }
                         }
 
                         // Fallback --> If we could not resolve our prefered ip protocol
                         if (ipAddress == null)
                         {
-                            foreach (IPAddress ip in ipHostEntry.AddressList)
+                            foreach (var ip in ipHostEntry.AddressList)
                             {
                                 ipAddress = ip;
-                                continue;
+                                break;
                             }
                         }
 
-                        hostname = host;
+                        hostname = host1;
                     }
                     else
                     {
                         try
                         {
-                            IPHostEntry ipHostEntry = await Dns.GetHostEntryAsync(ipAddress);
+                            var ipHostEntry = await Dns.GetHostEntryAsync(ipAddress);
 
                             hostname = ipHostEntry.HostName;
                         }
-                        catch { }
+                        catch
+                        {
+                            // ignored
+                        }
                     }
                 }
                 catch (SocketException) // This will catch DNS resolve errors
@@ -508,7 +502,7 @@ namespace NETworkManager.ViewModels
                     if (!string.IsNullOrEmpty(StatusMessage))
                         StatusMessage += Environment.NewLine;
 
-                    StatusMessage += string.Format(LocalizationManager.GetStringByKey("String_CouldNotResolveHostnameFor"), host);
+                    StatusMessage += string.Format(LocalizationManager.GetStringByKey("String_CouldNotResolveHostnameFor"), host1);
                     DisplayStatusMessage = true;
 
                     continue;
@@ -527,7 +521,7 @@ namespace NETworkManager.ViewModels
                 return;
             }
 
-            int[] ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Port);
+            var ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Port);
 
             try
             {
@@ -539,7 +533,7 @@ namespace NETworkManager.ViewModels
                 AddHostToHistory(Host);
                 AddPortToHistory(Port);
 
-                PortScannerOptions portScannerOptions = new PortScannerOptions
+                var portScannerOptions = new PortScannerOptions
                 {
                     Threads = SettingsManager.Current.PortScanner_Threads,
                     ShowClosed = SettingsManager.Current.PortScanner_ShowClosed,
@@ -552,7 +546,7 @@ namespace NETworkManager.ViewModels
                 portScanner.ProgressChanged += PortScanner_ProgressChanged;
                 portScanner.UserHasCanceled += PortScanner_UserHasCanceled;
 
-                portScanner.ScanAsync(hostData, ports, portScannerOptions, cancellationTokenSource.Token);
+                portScanner.ScanAsync(hostData, ports, portScannerOptions, _cancellationTokenSource.Token);
             }
 
             catch (Exception ex) // This will catch any exception
@@ -567,19 +561,19 @@ namespace NETworkManager.ViewModels
         private void StopScan()
         {
             CancelScan = true;
-            cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Cancel();
         }
 
         private void ScanFinished()
         {
             // Stop timer and stopwatch
-            stopwatch.Stop();
-            dispatcherTimer.Stop();
+            _stopwatch.Stop();
+            _dispatcherTimer.Stop();
 
-            Duration = stopwatch.Elapsed;
+            Duration = _stopwatch.Elapsed;
             EndTime = DateTime.Now;
 
-            stopwatch.Reset();
+            _stopwatch.Reset();
 
             CancelScan = false;
             IsScanRunning = false;
@@ -588,7 +582,7 @@ namespace NETworkManager.ViewModels
         private void AddHostToHistory(string host)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.PortScanner_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.PortScanner_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PortScanner_HostHistory.Clear();
@@ -601,7 +595,7 @@ namespace NETworkManager.ViewModels
         private void AddPortToHistory(string port)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.PortScanner_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.PortScanner_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PortScanner_PortHistory.Clear();
@@ -633,7 +627,7 @@ namespace NETworkManager.ViewModels
 
         private void PortScanner_PortScanned(object sender, PortScannedArgs e)
         {
-            PortInfo portInfo = PortInfo.Parse(e);
+            var portInfo = PortInfo.Parse(e);
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
             {
@@ -647,7 +641,7 @@ namespace NETworkManager.ViewModels
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            Duration = stopwatch.Elapsed;
+            Duration = _stopwatch.Elapsed;
         }
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)

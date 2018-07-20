@@ -17,7 +17,7 @@ namespace NETworkManager.ViewModels
         private string _portOrService;
         public string PortOrService
         {
-            get { return _portOrService; }
+            get => _portOrService;
             set
             {
                 if (value == _portOrService)
@@ -31,7 +31,7 @@ namespace NETworkManager.ViewModels
         private bool _portOrServiceHasError;
         public bool PortOrServiceHasError
         {
-            get { return _portOrServiceHasError; }
+            get => _portOrServiceHasError;
             set
             {
                 if (value == _portOrServiceHasError)
@@ -41,16 +41,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _portsOrServicesHistoryView;
-        public ICollectionView PortsOrServicesHistoryView
-        {
-            get { return _portsOrServicesHistoryView; }
-        }
+        public ICollectionView PortsOrServicesHistoryView { get; }
 
         private bool _isLookupRunning;
         public bool IsLookupRunning
         {
-            get { return _isLookupRunning; }
+            get => _isLookupRunning;
             set
             {
                 if (value == _isLookupRunning)
@@ -64,26 +60,22 @@ namespace NETworkManager.ViewModels
         private ObservableCollection<PortLookupInfo> _portLookupResult = new ObservableCollection<PortLookupInfo>();
         public ObservableCollection<PortLookupInfo> PortLookupResult
         {
-            get { return _portLookupResult; }
+            get => _portLookupResult;
             set
             {
-                if (value == _portLookupResult)
+                if (value != null && value == _portLookupResult)
                     return;
 
                 _portLookupResult = value;
             }
         }
 
-        private ICollectionView _portLookupResultView;
-        public ICollectionView PortLookupResultView
-        {
-            get { return _portLookupResultView; }
-        }
+        public ICollectionView PortLookupResultView { get; }
 
         private PortLookupInfo _selectedPortLookupResult;
         public PortLookupInfo SelectedPortLookupResult
         {
-            get { return _selectedPortLookupResult; }
+            get => _selectedPortLookupResult;
             set
             {
                 if (value == _selectedPortLookupResult)
@@ -97,7 +89,7 @@ namespace NETworkManager.ViewModels
         private bool _noPortsFound;
         public bool NoPortsFound
         {
-            get { return _noPortsFound; }
+            get => _noPortsFound;
             set
             {
                 if (value == _noPortsFound)
@@ -112,8 +104,8 @@ namespace NETworkManager.ViewModels
         #region Constructor, Load settings
         public LookupPortLookupViewModel()
         {
-            _portsOrServicesHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_Port_PortsHistory);
-            _portLookupResultView = CollectionViewSource.GetDefaultView(PortLookupResult);
+            PortsOrServicesHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_Port_PortsHistory);
+            PortLookupResultView = CollectionViewSource.GetDefaultView(PortLookupResult);
         }
         #endregion
 
@@ -134,23 +126,23 @@ namespace NETworkManager.ViewModels
 
             PortLookupResult.Clear();
 
-            List<string> portsByService = new List<string>();
+            var portsByService = new List<string>();
 
-            foreach (string portOrService in PortOrService.Split(';'))
+            foreach (var portOrService in PortOrService.Split(';'))
             {
-                string portOrService1 = portOrService.Trim();
+                var portOrService1 = portOrService.Trim();
 
                 if (portOrService1.Contains("-"))
                 {
-                    string[] portRange = portOrService1.Split('-');
+                    var portRange = portOrService1.Split('-');
 
-                    if (int.TryParse(portRange[0], out int startPort) && int.TryParse(portRange[1], out int endPort))
+                    if (int.TryParse(portRange[0], out var startPort) && int.TryParse(portRange[1], out var endPort))
                     {
                         if ((startPort > 0) && (startPort < 65536) && (endPort > 0) && (endPort < 65536) && (startPort < endPort))
                         {
-                            for (int i = startPort; i < endPort + 1; i++)
+                            for (var i = startPort; i < endPort + 1; i++)
                             {
-                                foreach (PortLookupInfo info in await PortLookup.LookupAsync(i))
+                                foreach (var info in await PortLookup.LookupAsync(i))
                                 {
                                     PortLookupResult.Add(info);
                                 }
@@ -173,7 +165,7 @@ namespace NETworkManager.ViewModels
                     {
                         if (port > 0 && port < 65536)
                         {
-                            foreach (PortLookupInfo info in await PortLookup.LookupAsync(port))
+                            foreach (var info in await PortLookup.LookupAsync(port))
                             {
                                 PortLookupResult.Add(info);
                             }
@@ -190,7 +182,7 @@ namespace NETworkManager.ViewModels
                 }
             }
 
-            foreach (PortLookupInfo info in await PortLookup.LookupByServiceAsync(portsByService))
+            foreach (var info in await PortLookup.LookupByServiceAsync(portsByService))
             {
                 PortLookupResult.Add(info);
             }
@@ -243,8 +235,6 @@ namespace NETworkManager.ViewModels
             get { return new RelayCommand(p => CopySelectedDescriptionAction()); }
         }
 
-        public string PortOrService1 { get => _portOrService; set => _portOrService = value; }
-
         private void CopySelectedDescriptionAction()
         {
             Clipboard.SetText(SelectedPortLookupResult.Description);
@@ -255,7 +245,7 @@ namespace NETworkManager.ViewModels
         private void AddPortOrServiceToHistory(string portOrService)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.Lookup_Port_PortsHistory.ToList(), portOrService, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.Lookup_Port_PortsHistory.ToList(), portOrService, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.Lookup_Port_PortsHistory.Clear();

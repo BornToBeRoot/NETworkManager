@@ -157,7 +157,7 @@ namespace NETworkManager.ViewModels
                     return !string.IsNullOrEmpty(info.Tags) && info.IPScanner_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(TagIdentifier.Length, search.Length - TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
 
                 // Search by: Name, IPScanner_IPRange
-                return (info.IPScanner_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.IPScanner_IPRange.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1));
+                return info.IPScanner_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.IPScanner_IPRange.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
             // This will select the first entry as selected item...

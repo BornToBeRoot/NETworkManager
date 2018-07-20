@@ -18,7 +18,7 @@ namespace NETworkManager.ViewModels
         private string _macOrVendorAddress;
         public string MACAddressOrVendor
         {
-            get { return _macOrVendorAddress; }
+            get => _macOrVendorAddress;
             set
             {
                 if (value == _macOrVendorAddress)
@@ -32,7 +32,7 @@ namespace NETworkManager.ViewModels
         private bool _macAddressOrVendorHasError;
         public bool MACAddressOrVendorHasError
         {
-            get { return _macAddressOrVendorHasError; }
+            get => _macAddressOrVendorHasError;
             set
             {
                 if (value == _macAddressOrVendorHasError)
@@ -43,16 +43,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _macAddressOrVendorHistoryView;
-        public ICollectionView MACAddressOrVendorHistoryView
-        {
-            get { return _macAddressOrVendorHistoryView; }
-        }
+        public ICollectionView MACAddressOrVendorHistoryView { get; }
 
         private bool _isLookupRunning;
         public bool IsLookupRunning
         {
-            get { return _isLookupRunning; }
+            get => _isLookupRunning;
             set
             {
                 if (value == _isLookupRunning)
@@ -66,26 +62,22 @@ namespace NETworkManager.ViewModels
         private ObservableCollection<OUIInfo> _ouiLookupResult = new ObservableCollection<OUIInfo>();
         public ObservableCollection<OUIInfo> OUILookupResult
         {
-            get { return _ouiLookupResult; }
+            get => _ouiLookupResult;
             set
             {
-                if (value == _ouiLookupResult)
+                if (value != null && value == _ouiLookupResult)
                     return;
 
                 _ouiLookupResult = value;
             }
         }
 
-        private ICollectionView _ouiLookupResultView;
-        public ICollectionView OUILookupResultView
-        {
-            get { return _ouiLookupResultView; }
-        }
+        public ICollectionView OUILookupResultView { get; }
 
         private OUIInfo _selectedOUILookup;
         public OUIInfo SelectedOUILookup
         {
-            get { return _selectedOUILookup; }
+            get => _selectedOUILookup;
             set
             {
                 if (value == _selectedOUILookup)
@@ -99,7 +91,7 @@ namespace NETworkManager.ViewModels
         private bool _noVendorFound;
         public bool NoVendorFound
         {
-            get { return _noVendorFound; }
+            get => _noVendorFound;
             set
             {
                 if (value == _noVendorFound)
@@ -115,8 +107,8 @@ namespace NETworkManager.ViewModels
         public LookupOUILookupViewModel()
         {
             // Set collection view
-            _macAddressOrVendorHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory);
-            _ouiLookupResultView = CollectionViewSource.GetDefaultView(OUILookupResult);
+            MACAddressOrVendorHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory);
+            OUILookupResultView = CollectionViewSource.GetDefaultView(OUILookupResult);
         }
         #endregion
 
@@ -137,15 +129,15 @@ namespace NETworkManager.ViewModels
 
             OUILookupResult.Clear();
 
-            List<string> vendors = new List<string>();
+            var vendors = new List<string>();
 
-            foreach (string macAddressOrVendor in MACAddressOrVendor.Split(';'))
+            foreach (var macAddressOrVendor in MACAddressOrVendor.Split(';'))
             {
-                string macAddressOrVendor1 = macAddressOrVendor.Trim();
+                var macAddressOrVendor1 = macAddressOrVendor.Trim();
 
                 if (Regex.IsMatch(macAddressOrVendor1, RegexHelper.MACAddressRegex) || Regex.IsMatch(macAddressOrVendor1, RegexHelper.MACAddressFirst3BytesRegex))
                 {
-                    foreach (OUIInfo info in await OUILookup.LookupAsync(macAddressOrVendor1))
+                    foreach (var info in await OUILookup.LookupAsync(macAddressOrVendor1))
                     {
                         OUILookupResult.Add(info);
                     }
@@ -156,7 +148,7 @@ namespace NETworkManager.ViewModels
                 }
             }
 
-            foreach (OUIInfo info in await OUILookup.LookupByVendorAsync(vendors))
+            foreach (var info in await OUILookup.LookupByVendorAsync(vendors))
             {
                 OUILookupResult.Add(info);
             }
@@ -199,7 +191,7 @@ namespace NETworkManager.ViewModels
         private void AddMACAddressOrVendorToHistory(string macAddressOrVendor)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory.ToList(), macAddressOrVendor, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory.ToList(), macAddressOrVendor, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory.Clear();
