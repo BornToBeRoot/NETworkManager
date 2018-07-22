@@ -4,7 +4,6 @@ using NETworkManager.Utilities;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Windows;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
@@ -13,14 +12,14 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private const string ApplicationFileExtensionFilter = "Application (*.exe)|*.exe";
-        private IDialogCoordinator dialogCoordinator;
+        private readonly IDialogCoordinator _dialogCoordinator;
         
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private string _puTTYLocation;
         public string PuTTYLocation
         {
-            get { return _puTTYLocation; }
+            get => _puTTYLocation;
             set
             {
                 if (value == _puTTYLocation)
@@ -40,7 +39,7 @@ namespace NETworkManager.ViewModels
         private bool _isPuTTYConfigured;
         public bool IsPuTTYConfigured
         {
-            get { return _isPuTTYConfigured; }
+            get => _isPuTTYConfigured;
             set
             {
                 if (value == _isPuTTYConfigured)
@@ -54,7 +53,7 @@ namespace NETworkManager.ViewModels
         private string _puTTYProfile;
         public string PuTTYProfile
         {
-            get { return _puTTYProfile; }
+            get => _puTTYProfile;
             set
             {
                 if (value == _puTTYProfile)
@@ -71,7 +70,7 @@ namespace NETworkManager.ViewModels
         private string _serialLine;
         public string SerialLine
         {
-            get { return _serialLine; }
+            get => _serialLine;
             set
             {
                 if (value == _serialLine)
@@ -88,7 +87,7 @@ namespace NETworkManager.ViewModels
         private int _sshPort;
         public int SSHPort
         {
-            get { return _sshPort; }
+            get => _sshPort;
             set
             {
                 if (value == _sshPort)
@@ -105,7 +104,7 @@ namespace NETworkManager.ViewModels
         private int _telnetPort;
         public int TelnetPort
         {
-            get { return _telnetPort; }
+            get => _telnetPort;
             set
             {
                 if (value == _telnetPort)
@@ -122,7 +121,7 @@ namespace NETworkManager.ViewModels
         private int _baudRate;
         public int BaudRate
         {
-            get { return _baudRate; }
+            get => _baudRate;
             set
             {
                 if (value == _baudRate)
@@ -139,7 +138,7 @@ namespace NETworkManager.ViewModels
         private int _rloginPort;
         public int RloginPort
         {
-            get { return _rloginPort; }
+            get => _rloginPort;
             set
             {
                 if (value == _rloginPort)
@@ -157,7 +156,9 @@ namespace NETworkManager.ViewModels
         #region Contructor, load settings
         public PuTTYSettingsViewModel(IDialogCoordinator instance)
         {
-            dialogCoordinator = instance;
+            _isLoading = true;
+
+            _dialogCoordinator = instance;
 
             LoadSettings();
 
@@ -185,7 +186,7 @@ namespace NETworkManager.ViewModels
 
         private void BrowseFileAction()
         {
-            System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog()
+            var openFileDialog = new System.Windows.Forms.OpenFileDialog
             {
                 Filter = ApplicationFileExtensionFilter
             };
@@ -214,10 +215,11 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                MetroDialogSettings settings = AppearanceManager.MetroDialog;
+                var settings = AppearanceManager.MetroDialog;
+
                 settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
 
-                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, settings);
             }
         }
         #endregion

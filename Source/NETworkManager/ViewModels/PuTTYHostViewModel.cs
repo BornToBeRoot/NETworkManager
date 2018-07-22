@@ -21,19 +21,19 @@ namespace NETworkManager.ViewModels
     public class PuTTYHostViewModel : ViewModelBase
     {
         #region Variables
-        private IDialogCoordinator dialogCoordinator;
+        private readonly IDialogCoordinator _dialogCoordinator;
 
-        public IInterTabClient InterTabClient { get; private set; }
-        public ObservableCollection<DragablzTabItem> TabItems { get; private set; }
+        public IInterTabClient InterTabClient { get; }
+        public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-        private const string tagIdentifier = "tag=";
+        private const string TagIdentifier = "tag=";
 
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private bool _isPuTTYConfigured;
         public bool IsPuTTYConfigured
         {
-            get { return _isPuTTYConfigured; }
+            get => _isPuTTYConfigured;
             set
             {
                 if (value == _isPuTTYConfigured)
@@ -47,7 +47,7 @@ namespace NETworkManager.ViewModels
         private int _selectedTabIndex;
         public int SelectedTabIndex
         {
-            get { return _selectedTabIndex; }
+            get => _selectedTabIndex;
             set
             {
                 if (value == _selectedTabIndex)
@@ -59,16 +59,13 @@ namespace NETworkManager.ViewModels
         }              
 
         #region Profiles
-        ICollectionView _profiles;
-        public ICollectionView Profiles
-        {
-            get { return _profiles; }
-        }
+
+        public ICollectionView Profiles { get; }
 
         private ProfileInfo _selectedProfile = new ProfileInfo();
         public ProfileInfo SelectedProfile
         {
-            get { return _selectedProfile; }
+            get => _selectedProfile;
             set
             {
                 if (value == _selectedProfile)
@@ -82,7 +79,7 @@ namespace NETworkManager.ViewModels
         private string _search;
         public string Search
         {
-            get { return _search; }
+            get => _search;
             set
             {
                 if (value == _search)
@@ -102,7 +99,7 @@ namespace NETworkManager.ViewModels
         private bool _expandProfileView;
         public bool ExpandProfileView
         {
-            get { return _expandProfileView; }
+            get => _expandProfileView;
             set
             {
                 if (value == _expandProfileView)
@@ -114,28 +111,28 @@ namespace NETworkManager.ViewModels
                 _expandProfileView = value;
 
                 if (_canProfileWidthChange)
-                    ResizeProfile(dueToChangedSize: false);
+                    ResizeProfile(false);
 
                 OnPropertyChanged();
             }
         }
 
-        private GridLength _ProfileWidth;
+        private GridLength _profileWidth;
         public GridLength ProfileWidth
         {
-            get { return _ProfileWidth; }
+            get => _profileWidth;
             set
             {
-                if (value == _ProfileWidth)
+                if (value == _profileWidth)
                     return;
 
                 if (!_isLoading && value.Value != 40) // Do not save the size when collapsed
                     SettingsManager.Current.PuTTY_ProfileWidth = value.Value;
 
-                _ProfileWidth = value;
+                _profileWidth = value;
 
                 if (_canProfileWidthChange)
-                    ResizeProfile(dueToChangedSize: true);
+                    ResizeProfile(true);
 
                 OnPropertyChanged();
             }
@@ -146,7 +143,9 @@ namespace NETworkManager.ViewModels
         #region Constructor, load settings
         public PuTTYHostViewModel(IDialogCoordinator instance)
         {
-            dialogCoordinator = instance;
+            _isLoading = true;
+
+            _dialogCoordinator = instance;
 
             // Check if putty is available...
             CheckIfPuTTYConfigured();
@@ -155,31 +154,26 @@ namespace NETworkManager.ViewModels
 
             TabItems = new ObservableCollection<DragablzTabItem>();
 
-            _profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
-            _profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
-            _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
-            _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
-            _profiles.Filter = o =>
+            Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
+            Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
+            Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
+            Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
+            Profiles.Filter = o =>
             {
-                ProfileInfo info = o as ProfileInfo;
+                if (!(o is ProfileInfo info))
+                    return false;
 
                 if (string.IsNullOrEmpty(Search))
                     return info.PuTTY_Enabled;
 
-                string search = Search.Trim();
+                var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
-                if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (string.IsNullOrEmpty(info.Tags))
-                        return false;
-                    else
-                        return (info.PuTTY_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase)));
-                }
-                else // Search by: Name, PuTTY_HostOrSerialLine
-                {
-                    return (info.PuTTY_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PuTTY_HostOrSerialLine.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1));
-                }
+                if (search.StartsWith(TagIdentifier, StringComparison.OrdinalIgnoreCase))
+                    return !string.IsNullOrEmpty(info.Tags) && info.PuTTY_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(TagIdentifier.Length, search.Length - TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+
+                // Search by: Name, IPScanner_IPRange
+                return info.PuTTY_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PuTTY_HostOrSerialLine.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
             // This will select the first entry as selected item...
@@ -188,6 +182,8 @@ namespace NETworkManager.ViewModels
             LoadSettings();
 
             SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
+
+            _isLoading = false;
         }
 
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -200,24 +196,18 @@ namespace NETworkManager.ViewModels
         {
             ExpandProfileView = SettingsManager.Current.PuTTY_ExpandProfileView;
 
-            if (ExpandProfileView)
-                ProfileWidth = new GridLength(SettingsManager.Current.PuTTY_ProfileWidth);
-            else
-                ProfileWidth = new GridLength(40);
+            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.PuTTY_ProfileWidth) : new GridLength(40);
 
             _tempProfileWidth = SettingsManager.Current.PuTTY_ProfileWidth;
         }
         #endregion
 
         #region ICommand & Actions
-        public ItemActionCallback CloseItemCommand
-        {
-            get { return CloseItemAction; }
-        }
+        public ItemActionCallback CloseItemCommand => CloseItemAction;
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzTabItem).View as PuttyControl).CloseTab();
+            ((args.DragablzItem.Content as DragablzTabItem)?.View as PuttyControl)?.CloseTab();
         }
 
         public ICommand ConnectCommand
@@ -262,20 +252,20 @@ namespace NETworkManager.ViewModels
 
         private async void AddProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
             };
 
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
 
                 ProfileManager.AddProfile(instance);
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
             }, ProfileManager.GetGroups());
 
@@ -285,7 +275,7 @@ namespace NETworkManager.ViewModels
             };
 
             ConfigurationManager.Current.IsDialogOpen = true;
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand EditProfileCommand
@@ -295,14 +285,14 @@ namespace NETworkManager.ViewModels
 
         private async void EditProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
             };
 
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
 
                 ProfileManager.RemoveProfile(SelectedProfile);
@@ -310,7 +300,7 @@ namespace NETworkManager.ViewModels
                 ProfileManager.AddProfile(instance);
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
             }, ProfileManager.GetGroups(), SelectedProfile);
 
@@ -320,7 +310,7 @@ namespace NETworkManager.ViewModels
             };
 
             ConfigurationManager.Current.IsDialogOpen = true;
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand CopyAsProfileCommand
@@ -330,20 +320,20 @@ namespace NETworkManager.ViewModels
 
         private async void CopyAsProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
             };
 
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
 
                 ProfileManager.AddProfile(instance);
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
             }, ProfileManager.GetGroups(), SelectedProfile);
 
@@ -353,7 +343,7 @@ namespace NETworkManager.ViewModels
             };
 
             ConfigurationManager.Current.IsDialogOpen = true;
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand DeleteProfileCommand
@@ -363,20 +353,20 @@ namespace NETworkManager.ViewModels
 
         private async void DeleteProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
             };
 
-            ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+            var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
 
                 ProfileManager.RemoveProfile(SelectedProfile);
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
             }, LocalizationManager.GetStringByKey("String_DeleteProfileMessage"));
 
@@ -386,24 +376,21 @@ namespace NETworkManager.ViewModels
             };
 
             ConfigurationManager.Current.IsDialogOpen = true;
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand EditGroupCommand
-        {
-            get { return new RelayCommand(p => EditGroupAction(p)); }
-        }
+        public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
         private async void EditGroupAction(object group)
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
             };
 
-            GroupViewModel editGroupViewModel = new GroupViewModel(instance =>
+            var editGroupViewModel = new GroupViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
 
                 ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
@@ -411,7 +398,7 @@ namespace NETworkManager.ViewModels
                 Refresh();
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
             }, group.ToString());
 
@@ -421,7 +408,7 @@ namespace NETworkManager.ViewModels
             };
 
             ConfigurationManager.Current.IsDialogOpen = true;
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand ClearSearchCommand
@@ -439,7 +426,7 @@ namespace NETworkManager.ViewModels
             get { return new RelayCommand(p => OpenSettingsAction()); }
         }
 
-        private void OpenSettingsAction()
+        private static void OpenSettingsAction()
         {
             EventSystem.RedirectToSettings();
         }
@@ -448,22 +435,19 @@ namespace NETworkManager.ViewModels
         #region Methods
         private void CheckIfPuTTYConfigured()
         {
-            if (!string.IsNullOrEmpty(SettingsManager.Current.PuTTY_PuTTYLocation))
-                IsPuTTYConfigured = File.Exists(SettingsManager.Current.PuTTY_PuTTYLocation);
-            else
-                IsPuTTYConfigured = false;
+            IsPuTTYConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PuTTY_PuTTYLocation) && File.Exists(SettingsManager.Current.PuTTY_PuTTYLocation);
         }
 
         private async void Connect(string host = null)
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_Connect")
             };
 
-            PuTTYConnectViewModel puTTYConnectViewModel = new PuTTYConnectViewModel(instance =>
+            var puTTYConnectViewModel = new PuTTYConnectViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
 
                 // Add host to history
@@ -475,7 +459,7 @@ namespace NETworkManager.ViewModels
                 AddProfileToHistory(instance.Profile);
 
                 // Create Profile info
-                Models.PuTTY.PuTTYProfileInfo puTTYProfileInfo = new Models.PuTTY.PuTTYProfileInfo
+                var puTTYProfileInfo = new PuTTYProfileInfo
                 {
                     HostOrSerialLine = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
                     Mode = instance.ConnectionMode,
@@ -489,7 +473,7 @@ namespace NETworkManager.ViewModels
                 Connect(puTTYProfileInfo);
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
             })
             {
@@ -502,31 +486,31 @@ namespace NETworkManager.ViewModels
             };
 
             ConfigurationManager.Current.IsDialogOpen = true;
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         private void ConnectProfile()
         {
-            Connect(Models.PuTTY.PuTTYProfileInfo.Parse(SelectedProfile), SelectedProfile.Name);
+            Connect(PuTTYProfileInfo.Parse(SelectedProfile), SelectedProfile.Name);
         }
 
         private void ConnectProfileExternal()
         {
-            ProcessStartInfo info = new ProcessStartInfo
+            var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.PuTTY_PuTTYLocation,
-                Arguments = PuTTY.BuildCommandLine(Models.PuTTY.PuTTYProfileInfo.Parse(SelectedProfile))
+                Arguments = PuTTY.BuildCommandLine(PuTTYProfileInfo.Parse(SelectedProfile))
             };
 
             Process.Start(info);
         }
 
-        private void Connect(Models.PuTTY.PuTTYProfileInfo ProfileInfo, string Header = null)
+        private void Connect(PuTTYProfileInfo profileInfo, string header = null)
         {
             // Add PuTTY path here...
-            ProfileInfo.PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
+            profileInfo.PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
 
-            TabItems.Add(new DragablzTabItem(Header ?? ProfileInfo.HostOrSerialLine, new PuttyControl(ProfileInfo)));
+            TabItems.Add(new DragablzTabItem(header ?? profileInfo.HostOrSerialLine, new PuttyControl(profileInfo)));
 
             SelectedTabIndex = TabItems.Count - 1;
         }
@@ -537,10 +521,10 @@ namespace NETworkManager.ViewModels
         }
 
         // Modify history list
-        private void AddHostToHistory(string host)
+        private static void AddHostToHistory(string host)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PuTTY_HostHistory.Clear();
@@ -549,10 +533,10 @@ namespace NETworkManager.ViewModels
             list.ForEach(x => SettingsManager.Current.PuTTY_HostHistory.Add(x));
         }
 
-        private void AddSerialLineToHistory(string serialLine)
+        private static void AddSerialLineToHistory(string serialLine)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_SerialLineHistory.ToList(), serialLine, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_SerialLineHistory.ToList(), serialLine, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PuTTY_SerialLineHistory.Clear();
@@ -561,10 +545,10 @@ namespace NETworkManager.ViewModels
             list.ForEach(x => SettingsManager.Current.PuTTY_SerialLineHistory.Add(x));
         }
 
-        private void AddPortToHistory(string host)
+        private static void AddPortToHistory(string host)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_PortHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_PortHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PuTTY_PortHistory.Clear();
@@ -573,10 +557,10 @@ namespace NETworkManager.ViewModels
             list.ForEach(x => SettingsManager.Current.PuTTY_PortHistory.Add(x));
         }
 
-        private void AddBaudToHistory(string host)
+        private static void AddBaudToHistory(string host)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_BaudHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_BaudHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PuTTY_BaudHistory.Clear();
@@ -585,10 +569,10 @@ namespace NETworkManager.ViewModels
             list.ForEach(x => SettingsManager.Current.PuTTY_BaudHistory.Add(x));
         }
 
-        private void AddUsernameToHistory(string host)
+        private static void AddUsernameToHistory(string host)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_UsernameHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_UsernameHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PuTTY_UsernameHistory.Clear();
@@ -597,10 +581,10 @@ namespace NETworkManager.ViewModels
             list.ForEach(x => SettingsManager.Current.PuTTY_UsernameHistory.Add(x));
         }
 
-        private void AddProfileToHistory(string host)
+        private static void AddProfileToHistory(string host)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_ProfileHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_ProfileHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PuTTY_ProfileHistory.Clear();
@@ -615,19 +599,13 @@ namespace NETworkManager.ViewModels
 
             if (dueToChangedSize)
             {
-                if (ProfileWidth.Value == 40)
-                    ExpandProfileView = false;
-                else
-                    ExpandProfileView = true;
+                ExpandProfileView = ProfileWidth.Value != 40;
             }
             else
             {
                 if (ExpandProfileView)
                 {
-                    if (_tempProfileWidth == 40)
-                        ProfileWidth = new GridLength(250);
-                    else
-                        ProfileWidth = new GridLength(_tempProfileWidth);
+                    ProfileWidth = _tempProfileWidth == 40 ? new GridLength(250) : new GridLength(_tempProfileWidth);
                 }
                 else
                 {

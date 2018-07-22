@@ -609,12 +609,11 @@ namespace NETworkManager.ViewModels
         private void Ping_PingException(object sender, PingExceptionArgs e)
         {
             // Get the error code and change the message (maybe we can help the user with troubleshooting)
-            var w32Ex = e.InnerException as Win32Exception;
 
             var errorMessage = string.Empty;
 
-            if (w32Ex != null)
-            {   
+            if (e.InnerException is Win32Exception w32Ex)
+            {
                 switch (w32Ex.NativeErrorCode)
                 {
                     case 1231:
@@ -625,7 +624,7 @@ namespace NETworkManager.ViewModels
                         break;
                 }
             }
-            
+
             PingFinished();
 
             StatusMessage = errorMessage;

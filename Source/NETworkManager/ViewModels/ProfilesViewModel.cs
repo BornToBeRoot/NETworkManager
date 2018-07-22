@@ -15,20 +15,16 @@ namespace NETworkManager.ViewModels
     public class ProfilesViewModel : ViewModelBase
     {
         #region Variables
-        private IDialogCoordinator dialogCoordinator;
+        private readonly IDialogCoordinator _dialogCoordinator;
 
-        private const string tagIdentifier = "tag=";
+        private const string TagIdentifier = "tag=";
 
-        ICollectionView _profiles;
-        public ICollectionView Profiles
-        {
-            get { return _profiles; }
-        }
+        public ICollectionView Profiles { get; }
 
         private ProfileInfo _selectedProfile = new ProfileInfo();
         public ProfileInfo SelectedProfile
         {
-            get { return _selectedProfile; }
+            get => _selectedProfile;
             set
             {
                 if (value == _selectedProfile)
@@ -42,10 +38,10 @@ namespace NETworkManager.ViewModels
         private IList _selectedProfiles = new ArrayList();
         public IList SelectedProfiles
         {
-            get { return _selectedProfiles; }
+            get => _selectedProfiles;
             set
             {
-                if (value == _selectedProfiles)
+                if (Equals(value, _selectedProfiles))
                     return;
 
                 _selectedProfiles = value;
@@ -56,7 +52,7 @@ namespace NETworkManager.ViewModels
         private string _search;
         public string Search
         {
-            get { return _search; }
+            get => _search;
             set
             {
                 if (value == _search)
@@ -74,33 +70,28 @@ namespace NETworkManager.ViewModels
         #region Constructor
         public ProfilesViewModel(IDialogCoordinator instance)
         {
-            dialogCoordinator = instance;
+            _dialogCoordinator = instance;
 
-            _profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
-            _profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
-            _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
-            _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
-            _profiles.Filter = o =>
+            Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
+            Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
+            Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
+            Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
+            Profiles.Filter = o =>
             {
-                ProfileInfo info = o as ProfileInfo;
+                if (!(o is ProfileInfo info))
+                    return false;
 
                 if (string.IsNullOrEmpty(Search))
-                    return true;
+                    return info.IPScanner_Enabled;
 
-                string search = Search.Trim();
+                var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
-                if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (string.IsNullOrEmpty(info.Tags))
-                        return false;
-                    else
-                        return (info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase)));
-                }
-                else // Search by: Name
-                {
-                    return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-                }
+                if (search.StartsWith(TagIdentifier, StringComparison.OrdinalIgnoreCase))
+                    return !string.IsNullOrEmpty(info.Tags) && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(TagIdentifier.Length, search.Length - TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+
+                // Search by: Name, IPScanner_IPRange
+                return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
             // This will select the first entry as selected item...
@@ -149,10 +140,7 @@ namespace NETworkManager.ViewModels
             DeleteProfile();
         }
 
-        public ICommand EditGroupCommand
-        {
-            get { return new RelayCommand(p => EditGroupAction(p)); }
-        }
+        public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
         private void EditGroupAction(object group)
         {
@@ -163,19 +151,19 @@ namespace NETworkManager.ViewModels
         #region Methods
         public async void AddProfile()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
             };
 
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileManager.AddProfile(instance);
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             }, ProfileManager.GetGroups());
 
             customDialog.Content = new ProfileDialog
@@ -183,24 +171,24 @@ namespace NETworkManager.ViewModels
                 DataContext = profileViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public async void CopyAsProfile()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
             };
 
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileManager.AddProfile(instance);
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             }, ProfileManager.GetGroups(), SelectedProfile);
 
             customDialog.Content = new ProfileDialog
@@ -208,26 +196,26 @@ namespace NETworkManager.ViewModels
                 DataContext = profileViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public async void EditProfile()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
             };
 
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileManager.RemoveProfile(SelectedProfile);
 
                 ProfileManager.AddProfile(instance);
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             }, ProfileManager.GetGroups(), SelectedProfile);
 
             customDialog.Content = new ProfileDialog
@@ -235,27 +223,27 @@ namespace NETworkManager.ViewModels
                 DataContext = profileViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public async void DeleteProfile()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
             };
 
-            ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+            var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                List<ProfileInfo> list = new List<ProfileInfo>(SelectedProfiles.Cast<ProfileInfo>());
+                var list = new List<ProfileInfo>(SelectedProfiles.Cast<ProfileInfo>());
 
-                foreach (ProfileInfo profile in list)
+                foreach (var profile in list)
                     ProfileManager.RemoveProfile(profile);
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             }, LocalizationManager.GetStringByKey("String_DeleteProfileMessage"));
 
             customDialog.Content = new ConfirmRemoveDialog
@@ -263,26 +251,26 @@ namespace NETworkManager.ViewModels
                 DataContext = confirmRemoveViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public async void EditGroup(object group)
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
             };
 
-            GroupViewModel editGroupViewModel = new GroupViewModel(instance =>
+            var editGroupViewModel = new GroupViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
 
                 Refresh();
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             }, group.ToString());
 
             customDialog.Content = new GroupDialog
@@ -290,7 +278,7 @@ namespace NETworkManager.ViewModels
                 DataContext = editGroupViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public void Refresh()
