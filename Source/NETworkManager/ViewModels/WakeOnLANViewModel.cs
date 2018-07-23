@@ -149,8 +149,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        #region Clients
-
+        #region Profiles
         public ICollectionView Profiles { get; }
 
         private ProfileInfo _selectedProfile;
@@ -230,7 +229,7 @@ namespace NETworkManager.ViewModels
                 _profileWidth = value;
 
                 if (_canProfileWidthChange)
-                    ResizeClient(dueToChangedSize: true);
+                    ResizeClient(true);
 
                 OnPropertyChanged();
             }
@@ -251,25 +250,20 @@ namespace NETworkManager.ViewModels
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
             Profiles.Filter = o =>
             {
-                var info = o as ProfileInfo;
+                if (!(o is ProfileInfo info))
+                    return false;
 
                 if (string.IsNullOrEmpty(Search))
                     return info.WakeOnLAN_Enabled;
 
-                string search = Search.Trim();
+                var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
                 if (search.StartsWith(TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (string.IsNullOrEmpty(info.Tags))
-                        return false;
-                    else
-                        return (info.WakeOnLAN_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(TagIdentifier.Length, search.Length - TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase)));
-                }
-                else // Search by: Name, PuTTY_HostOrSerialLine
-                {
-                    return (info.WakeOnLAN_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.WakeOnLAN_MACAddress.Replace("-", "").Replace(":", "").IndexOf(search.Replace("-", "").Replace(":", ""), StringComparison.OrdinalIgnoreCase) > -1));
-                }
+                    return !string.IsNullOrEmpty(info.Tags) && info.WakeOnLAN_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(TagIdentifier.Length, search.Length - TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+
+                // Search by: Name, IPScanner_IPRange
+                return info.WakeOnLAN_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.WakeOnLAN_MACAddress.Replace("-", "").Replace(":", "").IndexOf(search.Replace("-", "").Replace(":", ""), StringComparison.OrdinalIgnoreCase) > -1);
             };
 
             // This will select the first entry as selected item...
@@ -463,7 +457,7 @@ namespace NETworkManager.ViewModels
                 Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
             };
 
-            GroupViewModel editGroupViewModel = new GroupViewModel(instance =>
+            var editGroupViewModel = new GroupViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 

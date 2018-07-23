@@ -8,14 +8,14 @@ namespace NETworkManager.ViewModels
     public class SettingsGeneralViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         public ObservableCollection<ApplicationViewInfo> ApplicationViewCollection { get; set; }
 
         private ApplicationViewInfo _defaultApplicationViewSelectedItem;
         public ApplicationViewInfo DefaultApplicationViewSelectedItem
         {
-            get { return _defaultApplicationViewSelectedItem; }
+            get => _defaultApplicationViewSelectedItem;
             set
             {
                 if (value == _defaultApplicationViewSelectedItem)
@@ -32,7 +32,7 @@ namespace NETworkManager.ViewModels
         private int _historyListEntries;
         public int HistoryListEntries
         {
-            get { return _historyListEntries; }
+            get => _historyListEntries;
             set
             {
                 if (value == _historyListEntries)
@@ -50,6 +50,8 @@ namespace NETworkManager.ViewModels
         #region Constructor, LoadSettings
         public SettingsGeneralViewModel()
         {
+            _isLoading = true;
+
             LoadSettings();
 
             _isLoading = false;

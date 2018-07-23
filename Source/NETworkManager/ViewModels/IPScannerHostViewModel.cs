@@ -43,7 +43,6 @@ namespace NETworkManager.ViewModels
         }
 
         #region Profiles
-
         public ICollectionView Profiles { get; }
 
         private ProfileInfo _selectedProfile = new ProfileInfo();

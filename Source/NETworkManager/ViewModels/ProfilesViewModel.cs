@@ -78,11 +78,11 @@ namespace NETworkManager.ViewModels
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
             Profiles.Filter = o =>
             {
+                if (string.IsNullOrEmpty(Search))
+                    return true;
+
                 if (!(o is ProfileInfo info))
                     return false;
-
-                if (string.IsNullOrEmpty(Search))
-                    return info.IPScanner_Enabled;
 
                 var search = Search.Trim();
 

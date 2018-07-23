@@ -8,12 +8,12 @@ namespace NETworkManager.ViewModels
     public class RemoteDesktopSettingsViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private bool _adjustScreenAutomatically;
         public bool AdjustScreenAutomatically
         {
-            get { return _adjustScreenAutomatically; }
+            get => _adjustScreenAutomatically;
             set
             {
                 if (value == _adjustScreenAutomatically)
@@ -30,7 +30,7 @@ namespace NETworkManager.ViewModels
         private bool _useCurrentViewSize;
         public bool UseCurrentViewSize
         {
-            get { return _useCurrentViewSize; }
+            get => _useCurrentViewSize;
             set
             {
                 if (value == _useCurrentViewSize)
@@ -47,7 +47,7 @@ namespace NETworkManager.ViewModels
         private bool _useFixedScreenSize;
         public bool UseFixedScreenSize
         {
-            get { return _useFixedScreenSize; }
+            get => _useFixedScreenSize;
             set
             {
                 if (value == _useFixedScreenSize)
@@ -61,32 +61,26 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public List<string> ScreenResolutions
+        public List<string> ScreenResolutions => new List<string>
         {
-            get
-            {
-                return new List<string>()
-                {
-                    "640x480",
-                    "800x600",
-                    "1024x768",
-                    "1280x720",
-                    "1280x768",
-                    "1280x800",
-                    "1280x1024",
-                    "1366x768",
-                    "1440x900",
-                    "1400x1050",
-                    "1680x1050",
-                    "1920x1080"
-                };
-            }
-        }
+            "640x480",
+            "800x600",
+            "1024x768",
+            "1280x720",
+            "1280x768",
+            "1280x800",
+            "1280x1024",
+            "1366x768",
+            "1440x900",
+            "1400x1050",
+            "1680x1050",
+            "1920x1080"
+        };
 
         private string _selectedScreenResolution;
         public string SelectedScreenResolution
         {
-            get { return _selectedScreenResolution; }
+            get => _selectedScreenResolution;
             set
             {
                 if (value == _selectedScreenResolution)
@@ -94,7 +88,7 @@ namespace NETworkManager.ViewModels
 
                 if (!_isLoading)
                 {
-                    string[] resolution = value.Split('x');
+                    var resolution = value.Split('x');
 
                     SettingsManager.Current.RemoteDesktop_ScreenWidth = int.Parse(resolution[0]);
                     SettingsManager.Current.RemoteDesktop_ScreenHeight = int.Parse(resolution[1]);
@@ -108,7 +102,7 @@ namespace NETworkManager.ViewModels
         private bool _useCustomScreenSize;
         public bool UseCustomScreenSize
         {
-            get { return _useCustomScreenSize; }
+            get => _useCustomScreenSize;
             set
             {
                 if (value == _useCustomScreenSize)
@@ -125,7 +119,7 @@ namespace NETworkManager.ViewModels
         private string _customScreenWidth;
         public string CustomScreenWidth
         {
-            get { return _customScreenWidth; }
+            get => _customScreenWidth;
             set
             {
                 if (value == _customScreenWidth)
@@ -142,7 +136,7 @@ namespace NETworkManager.ViewModels
         private string _customScreenHeight;
         public string CustomScreenHeight
         {
-            get { return _customScreenHeight; }
+            get => _customScreenHeight;
             set
             {
                 if (value == _customScreenHeight)
@@ -156,24 +150,18 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public List<int> ColorDepths
+        public List<int> ColorDepths => new List<int>
         {
-            get
-            {
-                return new List<int>()
-                {
-                    15,
-                    16,
-                    24,
-                    32
-                };
-            }
-        }
+            15,
+            16,
+            24,
+            32
+        };
 
         private int _selectedColorDepth;
         public int SelectedColorDepth
         {
-            get { return _selectedColorDepth; }
+            get => _selectedColorDepth;
             set
             {
                 if (value == _selectedColorDepth)
@@ -190,7 +178,7 @@ namespace NETworkManager.ViewModels
         private int _port;
         public int Port
         {
-            get { return _port; }
+            get => _port;
             set
             {
                 if (value == _port)
@@ -207,7 +195,7 @@ namespace NETworkManager.ViewModels
         private bool _enableCredSspSupport;
         public bool EnableCredSspSupport
         {
-            get { return _enableCredSspSupport; }
+            get => _enableCredSspSupport;
             set
             {
                 if (value == _enableCredSspSupport)
@@ -224,7 +212,7 @@ namespace NETworkManager.ViewModels
         private uint _authenticationLevel;
         public uint AuthenticationLevel
         {
-            get { return _authenticationLevel; }
+            get => _authenticationLevel;
             set
             {
                 if (value == _selectedColorDepth)
@@ -239,15 +227,12 @@ namespace NETworkManager.ViewModels
         }
 
         // String must be formatted ...
-        public string RDPAuthenticationLevelHelpMessage
-        {
-            get { return LocalizationManager.GetStringByKey("String_HelpMessage_RDPAuthenticationLevel"); }
-        }
+        public string RDPAuthenticationLevelHelpMessage => LocalizationManager.GetStringByKey("String_HelpMessage_RDPAuthenticationLevel");
 
         private bool _redirectClipboard;
         public bool RedirectClipboard
         {
-            get { return _redirectClipboard; }
+            get => _redirectClipboard;
             set
             {
                 if (value == _redirectClipboard)
@@ -264,7 +249,7 @@ namespace NETworkManager.ViewModels
         private bool _redirectDevices;
         public bool RedirectDevices
         {
-            get { return _redirectDevices; }
+            get => _redirectDevices;
             set
             {
                 if (value == _redirectDevices)
@@ -281,7 +266,7 @@ namespace NETworkManager.ViewModels
         private bool _redirectDrives;
         public bool RedirectDrives
         {
-            get { return _redirectDrives; }
+            get => _redirectDrives;
             set
             {
                 if (value == _redirectDrives)
@@ -298,7 +283,7 @@ namespace NETworkManager.ViewModels
         private bool _redirectPorts;
         public bool RedirectPorts
         {
-            get { return _redirectPorts; }
+            get => _redirectPorts;
             set
             {
                 if (value == _redirectPorts)
@@ -315,7 +300,7 @@ namespace NETworkManager.ViewModels
         private bool _redirectSmartCards;
         public bool RedirectSmartCards
         {
-            get { return _redirectSmartCards; }
+            get => _redirectSmartCards;
             set
             {
                 if (value == _redirectSmartCards)
@@ -332,7 +317,7 @@ namespace NETworkManager.ViewModels
         private bool _redirectPrinters;
         public bool RedirectPrinters
         {
-            get { return _redirectPrinters; }
+            get => _redirectPrinters;
             set
             {
                 if (value == _redirectPrinters)
@@ -350,6 +335,8 @@ namespace NETworkManager.ViewModels
         #region Constructor, load settings
         public RemoteDesktopSettingsViewModel()
         {
+            _isLoading = true;
+
             LoadSettings();
 
             _isLoading = false;
@@ -360,7 +347,7 @@ namespace NETworkManager.ViewModels
             AdjustScreenAutomatically = SettingsManager.Current.RemoteDesktop_AdjustScreenAutomatically;
             UseCurrentViewSize = SettingsManager.Current.RemoteDesktop_UseCurrentViewSize;
             UseFixedScreenSize = SettingsManager.Current.RemoteDesktop_UseFixedScreenSize;
-            SelectedScreenResolution = ScreenResolutions.FirstOrDefault(x => x == string.Format("{0}x{1}", SettingsManager.Current.RemoteDesktop_ScreenWidth, SettingsManager.Current.RemoteDesktop_ScreenHeight));
+            SelectedScreenResolution = ScreenResolutions.FirstOrDefault(x => x ==$"{SettingsManager.Current.RemoteDesktop_ScreenWidth}x{SettingsManager.Current.RemoteDesktop_ScreenHeight}");
             UseCustomScreenSize = SettingsManager.Current.RemoteDesktop_UseCustomScreenSize;
             CustomScreenWidth = SettingsManager.Current.RemoteDesktop_CustomScreenWidth.ToString();
             CustomScreenHeight = SettingsManager.Current.RemoteDesktop_CustomScreenHeight.ToString();

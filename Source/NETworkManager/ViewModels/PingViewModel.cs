@@ -465,6 +465,7 @@ namespace NETworkManager.ViewModels
                     foreach (var ip in ipHostEntrys.AddressList)
                     {
                         ipAddress = ip;
+                        break;
                     }
                 }
             }

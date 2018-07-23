@@ -6,12 +6,12 @@ namespace NETworkManager.ViewModels
     public class WakeOnLANSettingsViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private int _defaultPort;
         public int DefaultPort
         {
-            get { return _defaultPort; }
+            get => _defaultPort;
             set
             {
                 if (value == _defaultPort)
@@ -29,6 +29,8 @@ namespace NETworkManager.ViewModels
         #region Constructor, load settings
         public WakeOnLANSettingsViewModel()
         {
+            _isLoading = true;
+
             LoadSettings();
 
             _isLoading = false;

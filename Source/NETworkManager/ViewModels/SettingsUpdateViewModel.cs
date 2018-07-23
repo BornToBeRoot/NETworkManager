@@ -6,12 +6,12 @@ namespace NETworkManager.ViewModels
     public class SettingsUpdateViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private bool _checkForUpdatesAtStartup;
         public bool CheckForUpdatesAtStartup
         {
-            get { return _checkForUpdatesAtStartup; }
+            get => _checkForUpdatesAtStartup;
             set
             {
                 if (value == _checkForUpdatesAtStartup)
@@ -29,6 +29,8 @@ namespace NETworkManager.ViewModels
         #region Constructor, LoadSettings
         public SettingsUpdateViewModel()
         {
+            _isLoading = true;
+
             LoadSettings();
 
             _isLoading = false;

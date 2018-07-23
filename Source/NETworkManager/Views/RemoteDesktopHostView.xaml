@@ -26,7 +26,7 @@
             <Grid.Style>
                 <Style TargetType="{x:Type Grid}">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsRDP8dot1Available}" Value="False">
+                        <DataTrigger Binding="{Binding IsRDP8Dot1Available}" Value="False">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled}" Value="True">
@@ -307,7 +307,7 @@
             <StackPanel.Style>
                 <Style TargetType="{x:Type StackPanel}">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsRDP8dot1Available}" Value="True">
+                        <DataTrigger Binding="{Binding IsRDP8Dot1Available}" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled}" Value="True">

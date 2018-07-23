@@ -4,7 +4,6 @@ using Dragablz;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Settings;
-using System.Collections.Generic;
 using System.Linq;
 using NETworkManager.Views;
 using System.ComponentModel;
@@ -172,7 +171,7 @@ namespace NETworkManager.ViewModels
                 if (search.StartsWith(TagIdentifier, StringComparison.OrdinalIgnoreCase))
                     return !string.IsNullOrEmpty(info.Tags) && info.PuTTY_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(TagIdentifier.Length, search.Length - TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
 
-                // Search by: Name, IPScanner_IPRange
+                // Search by: Name, PuTTY_HostOrSerialLine
                 return info.PuTTY_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PuTTY_HostOrSerialLine.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 

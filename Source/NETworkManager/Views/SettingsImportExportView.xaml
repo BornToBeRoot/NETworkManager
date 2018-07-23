@@ -7,10 +7,11 @@
         xmlns:validators="clr-namespace:NETworkManager.Validators"        
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        xmlns:settings="clr-namespace:NETworkManager.ViewModels.Settings"
+        xmlns:settings="clr-namespace:NETworkManager.ViewModels"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
-        mc:Ignorable="d" d:DataContext="{d:DesignInstance settings:SettingsImportExportViewModel}">
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsImportExportViewModel}">
     <UserControl.Resources>
         <converters:ValidateSettingsExportConverter x:Key="ValidateSettingsExportConverter" />
         <converters:ValidateSettingsImportConverter x:Key="ValidateSettingsImportConverter" />

@@ -155,7 +155,7 @@ namespace NETworkManager.ViewModels
                 if (search.StartsWith(TagIdentifier, StringComparison.OrdinalIgnoreCase))
                     return !string.IsNullOrEmpty(info.Tags) && info.PortScanner_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(TagIdentifier.Length, search.Length - TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
 
-                // Search by: Name, IPScanner_IPRange
+                // Search by: Name, PortScanner_Host
                 return info.PortScanner_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PortScanner_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PortScanner_Ports.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 

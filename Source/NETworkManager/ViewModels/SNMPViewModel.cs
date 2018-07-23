@@ -22,17 +22,17 @@ namespace NETworkManager.ViewModels
     public class SNMPViewModel : ViewModelBase
     {
         #region Variables
-        DispatcherTimer dispatcherTimer = new DispatcherTimer();
-        Stopwatch stopwatch = new Stopwatch();
+        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
+        private readonly Stopwatch _stopwatch = new Stopwatch();
 
-        private int _tabId;
+        private readonly int _tabId;
 
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private string _host;
         public string Host
         {
-            get { return _host; }
+            get => _host;
             set
             {
                 if (value == _host)
@@ -43,18 +43,14 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _hostHistoryView;
-        public ICollectionView HostHistoryView
-        {
-            get { return _hostHistoryView; }
-        }
+        public ICollectionView HostHistoryView { get; }
 
         public List<SNMPVersion> Versions { get; set; }
 
         private SNMPVersion _version;
         public SNMPVersion Version
         {
-            get { return _version; }
+            get => _version;
             set
             {
                 if (value == _version)
@@ -73,7 +69,7 @@ namespace NETworkManager.ViewModels
         private SNMPMode _mode;
         public SNMPMode Mode
         {
-            get { return _mode; }
+            get => _mode;
             set
             {
                 if (value == _mode)
@@ -90,7 +86,7 @@ namespace NETworkManager.ViewModels
         private string _oid;
         public string OID
         {
-            get { return _oid; }
+            get => _oid;
             set
             {
                 if (value == _oid)
@@ -101,18 +97,14 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _oidHistoryView;
-        public ICollectionView OIDHistoryView
-        {
-            get { return _oidHistoryView; }
-        }
+        public ICollectionView OIDHistoryView { get; }
 
         public List<SNMPv3Security> Securitys { get; set; }
 
         private SNMPv3Security _security;
         public SNMPv3Security Security
         {
-            get { return _security; }
+            get => _security;
             set
             {
                 if (value == _security)
@@ -129,7 +121,7 @@ namespace NETworkManager.ViewModels
         private string _community;
         public string Community
         {
-            get { return _community; }
+            get => _community;
             set
             {
                 if (value == _community)
@@ -143,7 +135,7 @@ namespace NETworkManager.ViewModels
         private string _username;
         public string Username
         {
-            get { return _username; }
+            get => _username;
             set
             {
                 if (value == _username)
@@ -159,7 +151,7 @@ namespace NETworkManager.ViewModels
         private SNMPv3AuthenticationProvider _authenticationProvider;
         public SNMPv3AuthenticationProvider AuthenticationProvider
         {
-            get { return _authenticationProvider; }
+            get => _authenticationProvider;
             set
             {
                 if (value == _authenticationProvider)
@@ -176,7 +168,7 @@ namespace NETworkManager.ViewModels
         private string _auth;
         public string Auth
         {
-            get { return _auth; }
+            get => _auth;
             set
             {
                 if (value == _auth)
@@ -192,7 +184,7 @@ namespace NETworkManager.ViewModels
         private SNMPv3PrivacyProvider _privacyProvider;
         public SNMPv3PrivacyProvider PrivacyProvider
         {
-            get { return _privacyProvider; }
+            get => _privacyProvider;
             set
             {
                 if (value == _privacyProvider)
@@ -209,7 +201,7 @@ namespace NETworkManager.ViewModels
         private string _priv;
         public string Priv
         {
-            get { return _priv; }
+            get => _priv;
             set
             {
                 if (value == _priv)
@@ -223,7 +215,7 @@ namespace NETworkManager.ViewModels
         private string _data = string.Empty;
         public string Data
         {
-            get { return _data; }
+            get => _data;
             set
             {
                 if (value == _data)
@@ -237,7 +229,7 @@ namespace NETworkManager.ViewModels
         private bool _isWorking;
         public bool IsWorking
         {
-            get { return _isWorking; }
+            get => _isWorking;
             set
             {
                 if (value == _isWorking)
@@ -251,26 +243,22 @@ namespace NETworkManager.ViewModels
         private ObservableCollection<SNMPReceivedInfo> _queryResult = new ObservableCollection<SNMPReceivedInfo>();
         public ObservableCollection<SNMPReceivedInfo> QueryResult
         {
-            get { return _queryResult; }
+            get => _queryResult;
             set
             {
-                if (value == _queryResult)
+                if (Equals(value, _queryResult))
                     return;
 
                 _queryResult = value;
             }
         }
 
-        private ICollectionView _queryResultView;
-        public ICollectionView QueryResultView
-        {
-            get { return _queryResultView; }
-        }
+        public ICollectionView QueryResultView { get; }
 
         private SNMPReceivedInfo _selectedQueryResult;
         public SNMPReceivedInfo SelectedQueryResult
         {
-            get { return _selectedQueryResult; }
+            get => _selectedQueryResult;
             set
             {
                 if (value == _selectedQueryResult)
@@ -284,7 +272,7 @@ namespace NETworkManager.ViewModels
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
         {
-            get { return _displayStatusMessage; }
+            get => _displayStatusMessage;
             set
             {
                 if (value == _displayStatusMessage)
@@ -298,7 +286,7 @@ namespace NETworkManager.ViewModels
         private string _statusMessage;
         public string StatusMessage
         {
-            get { return _statusMessage; }
+            get => _statusMessage;
             set
             {
                 if (value == _statusMessage)
@@ -312,7 +300,7 @@ namespace NETworkManager.ViewModels
         private DateTime? _startTime;
         public DateTime? StartTime
         {
-            get { return _startTime; }
+            get => _startTime;
             set
             {
                 if (value == _startTime)
@@ -326,7 +314,7 @@ namespace NETworkManager.ViewModels
         private TimeSpan _duration;
         public TimeSpan Duration
         {
-            get { return _duration; }
+            get => _duration;
             set
             {
                 if (value == _duration)
@@ -340,7 +328,7 @@ namespace NETworkManager.ViewModels
         private DateTime? _endTime;
         public DateTime? EndTime
         {
-            get { return _endTime; }
+            get => _endTime;
             set
             {
                 if (value == _endTime)
@@ -354,7 +342,7 @@ namespace NETworkManager.ViewModels
         private int _responses;
         public int Responses
         {
-            get { return _responses; }
+            get => _responses;
             set
             {
                 if (value == _responses)
@@ -368,7 +356,7 @@ namespace NETworkManager.ViewModels
         private bool _expandStatistics;
         public bool ExpandStatistics
         {
-            get { return _expandStatistics; }
+            get => _expandStatistics;
             set
             {
                 if (value == _expandStatistics)
@@ -382,25 +370,25 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public bool ShowStatistics
-        {
-            get { return SettingsManager.Current.SNMP_ShowStatistics; }
-        }
+        public bool ShowStatistics => SettingsManager.Current.SNMP_ShowStatistics;
+
         #endregion
 
         #region Contructor, load settings
         public SNMPViewModel(int tabId, string host)
         {
+            _isLoading = true;
+
             _tabId = tabId;
             Host = host;
 
             // Set collection view
-            _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_HostHistory);
-            _oidHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OIDHistory);
+            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_HostHistory);
+            OIDHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OIDHistory);
 
             // Result view
-            _queryResultView = CollectionViewSource.GetDefaultView(QueryResult);
-            _queryResultView.SortDescriptions.Add(new SortDescription(nameof(SNMPReceivedInfo.OID), ListSortDirection.Ascending));
+            QueryResultView = CollectionViewSource.GetDefaultView(QueryResult);
+            QueryResultView.SortDescriptions.Add(new SortDescription(nameof(SNMPReceivedInfo.OID), ListSortDirection.Ascending));
 
             // Versions (v1, v2c, v3)
             Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
@@ -475,21 +463,21 @@ namespace NETworkManager.ViewModels
 
             // Measure time
             StartTime = DateTime.Now;
-            stopwatch.Start();
-            dispatcherTimer.Tick += DispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            dispatcherTimer.Start();
+            _stopwatch.Start();
+            _dispatcherTimer.Tick += DispatcherTimer_Tick;
+            _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            _dispatcherTimer.Start();
             EndTime = null;
 
             QueryResult.Clear();
             Responses = 0;
 
             // Change the tab title (not nice, but it works)
-            Window window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
             if (window != null)
             {
-                foreach (TabablzControl tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+                foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
                 {
                     tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
                 }
@@ -503,29 +491,28 @@ namespace NETworkManager.ViewModels
                 // Try to resolve the hostname
                 if (ipAddress == null)
                 {
-                    IPHostEntry ipHostEntrys = await Dns.GetHostEntryAsync(Host);
+                    var ipHostEntrys = await Dns.GetHostEntryAsync(Host);
 
-                    foreach (IPAddress ipAddr in ipHostEntrys.AddressList)
+                    foreach (var ipAddr in ipHostEntrys.AddressList)
                     {
-                        if (ipAddr.AddressFamily == AddressFamily.InterNetwork && SettingsManager.Current.SNMP_ResolveHostnamePreferIPv4)
+                        switch (ipAddr.AddressFamily)
                         {
-                            ipAddress = ipAddr;
-                            continue;
-                        }
-                        else if (ipAddr.AddressFamily == AddressFamily.InterNetworkV6 && !SettingsManager.Current.SNMP_ResolveHostnamePreferIPv4)
-                        {
-                            ipAddress = ipAddr;
-                            continue;
+                            case AddressFamily.InterNetwork when SettingsManager.Current.SNMP_ResolveHostnamePreferIPv4:
+                                ipAddress = ipAddr;
+                                break;
+                            case AddressFamily.InterNetworkV6 when !SettingsManager.Current.SNMP_ResolveHostnamePreferIPv4:
+                                ipAddress = ipAddr;
+                                break;
                         }
                     }
 
                     // Fallback --> If we could not resolve our prefered ip protocol for the hostname
                     if (ipAddress == null)
                     {
-                        foreach (IPAddress ipAddr in ipHostEntrys.AddressList)
+                        foreach (var ipAddr in ipHostEntrys.AddressList)
                         {
                             ipAddress = ipAddr;
-                            continue;
+                            break;
                         }
                     }
                 }
@@ -541,13 +528,13 @@ namespace NETworkManager.ViewModels
             }
 
             // SNMP...
-            SNMPOptions snmpOptions = new SNMPOptions()
+            var snmpOptions = new SNMPOptions()
             {
                 Port = SettingsManager.Current.SNMP_Port,
                 Timeout = SettingsManager.Current.SNMP_Timeout
             };
 
-            SNMP snmp = new SNMP();
+            var snmp = new SNMP();
 
             snmp.Received += Snmp_Received;
             snmp.Timeout += Snmp_Timeout;
@@ -562,14 +549,12 @@ namespace NETworkManager.ViewModels
                         snmp.Getv1v2cAsync(Version, ipAddress, Community, OID, snmpOptions);
                     else
                         snmp.Getv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, snmpOptions);
-
                     break;
                 case SNMPMode.Walk:
                     if (Version != SNMPVersion.v3)
                         snmp.Walkv1v2cAsync(Version, ipAddress, Community, OID, SettingsManager.Current.SNMP_WalkMode, snmpOptions);
                     else
                         snmp.Walkv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, SettingsManager.Current.SNMP_WalkMode, snmpOptions);
-
                     break;
                 case SNMPMode.Set:
                     if (Version != SNMPVersion.v3)
@@ -589,13 +574,13 @@ namespace NETworkManager.ViewModels
             IsWorking = false;
 
             // Stop timer and stopwatch
-            stopwatch.Stop();
-            dispatcherTimer.Stop();
+            _stopwatch.Stop();
+            _dispatcherTimer.Stop();
 
-            Duration = stopwatch.Elapsed;
+            Duration = _stopwatch.Elapsed;
             EndTime = DateTime.Now;
 
-            stopwatch.Reset();
+            _stopwatch.Reset();
         }
 
         public void OnClose()
@@ -606,7 +591,7 @@ namespace NETworkManager.ViewModels
         private void AddHostToHistory(string host)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.SNMP_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.SNMP_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.SNMP_HostHistory.Clear();
@@ -619,7 +604,7 @@ namespace NETworkManager.ViewModels
         private void AddOIDToHistory(string oid)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.SNMP_OIDHistory.ToList(), oid, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.SNMP_OIDHistory.ToList(), oid, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.SNMP_OIDHistory.Clear();
@@ -633,9 +618,9 @@ namespace NETworkManager.ViewModels
         #region Events
         private void Snmp_Received(object sender, SNMPReceivedArgs e)
         {
-            SNMPReceivedInfo snmpReceivedInfo = SNMPReceivedInfo.Parse(e);
+            var snmpReceivedInfo = SNMPReceivedInfo.Parse(e);
 
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 lock (QueryResult)
                     QueryResult.Add(snmpReceivedInfo);
@@ -654,10 +639,7 @@ namespace NETworkManager.ViewModels
 
         private void Snmp_Error(object sender, EventArgs e)
         {
-            if (Mode == SNMPMode.Set)
-                StatusMessage = LocalizationManager.GetStringByKey("String_ErrorInResponseCheckIfYouHaveWritePermissions");
-            else
-                StatusMessage = LocalizationManager.GetStringByKey("String_ErrorInResponse");
+            StatusMessage = LocalizationManager.GetStringByKey(Mode == SNMPMode.Set ? "String_ErrorInResponseCheckIfYouHaveWritePermissions" : "String_ErrorInResponse");
 
             DisplayStatusMessage = true;
 
@@ -685,7 +667,7 @@ namespace NETworkManager.ViewModels
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            Duration = stopwatch.Elapsed;
+            Duration = _stopwatch.Elapsed;
         }
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)

@@ -158,7 +158,7 @@ namespace NETworkManager.ViewModels
                 if (search.StartsWith(TagIdentifier, StringComparison.OrdinalIgnoreCase))
                     return !string.IsNullOrEmpty(info.Tags) && info.Ping_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(TagIdentifier.Length, search.Length - TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
 
-                // Search by: Name, IPScanner_IPRange
+                // Search by: Name, Ping_Host
                 return info.Ping_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Ping_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 

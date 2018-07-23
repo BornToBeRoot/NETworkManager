@@ -6,9 +6,9 @@
         xmlns:views ="clr-namespace:NETworkManager.Views"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
-        xmlns:settings="clr-namespace:NETworkManager.ViewModels.Settings"
-        xmlns:networkManager="clr-namespace:NETworkManager"
-        mc:Ignorable="d" d:DataContext="{d:DesignInstance settings:SettingsViewModel}">
+             xmlns:networkManager="clr-namespace:NETworkManager"
+             xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>

@@ -10,22 +10,14 @@ namespace NETworkManager.ViewModels
 {
     public class RemoteDesktopConnectViewModel : ViewModelBase
     {
-        private readonly ICommand _connectCommand;
-        public ICommand ConnectCommand
-        {
-            get { return _connectCommand; }
-        }
+        public ICommand ConnectCommand { get; }
 
-        private readonly ICommand _cancelCommand;
-        public ICommand CancelCommand
-        {
-            get { return _cancelCommand; }
-        }
+        public ICommand CancelCommand { get; }
 
         private bool _connectAs;
         public bool ConnectAs
         {
-            get { return _connectAs; }
+            get => _connectAs;
             set
             {
                 if (value == _connectAs)
@@ -39,7 +31,7 @@ namespace NETworkManager.ViewModels
         private string _name;
         public string Name
         {
-            get { return _name; }
+            get => _name;
             set
             {
                 if (value == _name)
@@ -53,7 +45,7 @@ namespace NETworkManager.ViewModels
         private string _host;
         public string Host
         {
-            get { return _host; }
+            get => _host;
             set
             {
                 if (value == _host)
@@ -64,16 +56,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _hostHistoryView;
-        public ICollectionView HostHistoryView
-        {
-            get { return _hostHistoryView; }
-        }
+        public ICollectionView HostHistoryView { get; }
 
         private bool _useCredentials;
         public bool UseCredentials
         {
-            get { return _useCredentials; }
+            get => _useCredentials;
             set
             {
                 if (value == _useCredentials)
@@ -87,7 +75,7 @@ namespace NETworkManager.ViewModels
         private bool _customCredentials = true;
         public bool CustomCredentials
         {
-            get { return _customCredentials; }
+            get => _customCredentials;
             set
             {
                 if (value == _customCredentials)
@@ -101,7 +89,7 @@ namespace NETworkManager.ViewModels
         private string _username;
         public string Username
         {
-            get { return _username; }
+            get => _username;
             set
             {
                 if (value == _username)
@@ -115,7 +103,7 @@ namespace NETworkManager.ViewModels
         private SecureString _password = new SecureString();
         public SecureString Password
         {
-            get { return _password; }
+            get => _password;
             set
             {
                 if (value == _password)
@@ -126,10 +114,10 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private int? _credentialID = null;
+        private int? _credentialID;
         public int? CredentialID
         {
-            get { return _credentialID; }
+            get => _credentialID;
             set
             {
                 if (value == _credentialID)
@@ -140,16 +128,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        ICollectionView _credentials;
-        public ICollectionView Credentials
-        {
-            get { return _credentials; }
-        }
+        public ICollectionView Credentials { get; }
 
         private bool _credentialsLocked;
         public bool CredentialsLocked
         {
-            get { return _credentialsLocked; }
+            get => _credentialsLocked;
             set
             {
                 if (value == _credentialsLocked)
@@ -162,16 +146,16 @@ namespace NETworkManager.ViewModels
 
         public RemoteDesktopConnectViewModel(Action<RemoteDesktopConnectViewModel> connectCommand, Action<RemoteDesktopConnectViewModel> cancelHandler, bool connectAs = false)
         {
-            _connectCommand = new RelayCommand(p => connectCommand(this));
-            _cancelCommand = new RelayCommand(p => cancelHandler(this));
+            ConnectCommand = new RelayCommand(p => connectCommand(this));
+            CancelCommand = new RelayCommand(p => cancelHandler(this));
 
             ConnectAs = connectAs;
 
             if (!ConnectAs)
-                _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.RemoteDesktop_HostHistory);
+                HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.RemoteDesktop_HostHistory);
 
             if (CredentialManager.Loaded)
-                _credentials = new CollectionViewSource { Source = CredentialManager.CredentialInfoList }.View;
+                Credentials = new CollectionViewSource { Source = CredentialManager.CredentialInfoList }.View;
             else
                 CredentialsLocked = true;
         }
