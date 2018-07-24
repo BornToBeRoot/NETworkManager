@@ -1,11 +1,13 @@
 ﻿// Source: https://github.com/jimradford/superputty/blob/master/SuperPutty/Utils/NativeMethods.cs
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace NETworkManager.Utilities
 {
-    class NativeMethods
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    internal class NativeMethods
     {
         #region Win32 Constants/Enums
         public const int GWL_STYLE = -16;
@@ -45,10 +47,7 @@ namespace NETworkManager.Utilities
         // http://msdn.microsoft.com/en-us/library/windows/desktop/ms644898%28v=vs.85%29.aspx
         public static IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
         {
-            if (IntPtr.Size == 8)
-                return SetWindowLongPtr64(hWnd, nIndex, dwNewLong);
-            else
-                return new IntPtr(SetWindowLong32(hWnd, nIndex, dwNewLong));
+            return IntPtr.Size == 8 ? SetWindowLongPtr64(hWnd, nIndex, dwNewLong) : new IntPtr(SetWindowLong32(hWnd, nIndex, dwNewLong));
         }
 
         [DllImport("user32.dll", EntryPoint = "SetWindowLong")]

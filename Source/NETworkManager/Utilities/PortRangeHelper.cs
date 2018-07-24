@@ -13,15 +13,15 @@ namespace NETworkManager.Utilities
         // Generate from a string like "9; 11-13; 15" an list with "9,11,12,13,15"
         public static int[] ConvertPortRangeToIntArray(string portRange)
         {
-            List<int> list = new List<int>();
+            var list = new List<int>();
 
-            foreach (string portOrRange in portRange.Replace(" ", "").Split(';'))
+            foreach (var portOrRange in portRange.Replace(" ", "").Split(';'))
             {
                 if (portOrRange.Contains("-"))
                 {
-                    string[] portRangeSplit = portOrRange.Split('-');
+                    var portRangeSplit = portOrRange.Split('-');
 
-                    for (int i = int.Parse(portRangeSplit[0]); i < int.Parse(portRangeSplit[1]) + 1; i++)
+                    for (var i = int.Parse(portRangeSplit[0]); i < int.Parse(portRangeSplit[1]) + 1; i++)
                     {
                         list.Add(i);
                     }

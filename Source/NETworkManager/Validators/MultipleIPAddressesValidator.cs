@@ -10,11 +10,17 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            foreach (string ipAddress in (value as string).Split(';'))
+            if (value == null)
+                return ValidationResult.ValidResult;
+
+            for (var index = 0; index < ((string)value).Split(';').Length; index++)
             {
+                var ipAddress = ((string)value).Split(';')[index];
+
                 if (!Regex.IsMatch(ipAddress.Trim(), RegexHelper.IPv4AddressRegex) && !Regex.IsMatch(ipAddress.Trim(), RegexHelper.IPv6AddressRegex))
                     return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterOneOrMoreValidIPAddresses"));
             }
+
             return ValidationResult.ValidResult;
         }
     }

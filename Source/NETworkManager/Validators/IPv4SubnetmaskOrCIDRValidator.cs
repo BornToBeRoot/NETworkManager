@@ -6,23 +6,24 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators
 {
+    // ReSharper disable once InconsistentNaming
     public class IPv4SubnetmaskOrCIDRValidator : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            string subnetmaskOrCidr = value as string;
+            var subnetmaskOrCidr = value as string;
 
-            if (Regex.IsMatch(subnetmaskOrCidr, RegexHelper.SubnetmaskRegex))
+            if (subnetmaskOrCidr != null && Regex.IsMatch(subnetmaskOrCidr, RegexHelper.SubnetmaskRegex))
                 return ValidationResult.ValidResult;
 
-            if (subnetmaskOrCidr.StartsWith("/"))
-            {
-                if (int.TryParse(subnetmaskOrCidr.TrimStart('/'), out int cidr))
-                {
-                    if (cidr >= 0 && cidr < 33)
-                        return ValidationResult.ValidResult;
-                }
-            }
+            if (subnetmaskOrCidr == null || !subnetmaskOrCidr.StartsWith("/"))
+                return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidSubnetmaskOrCIDR"));
+
+            if (!int.TryParse(subnetmaskOrCidr.TrimStart('/'), out var cidr))
+                return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidSubnetmaskOrCIDR"));
+
+            if (cidr >= 0 && cidr < 33)
+                return ValidationResult.ValidResult;
 
             return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidSubnetmaskOrCIDR"));
         }

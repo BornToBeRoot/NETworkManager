@@ -264,7 +264,8 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Hostname}" Command="{Binding CopySelectedHostnameCommand}" Visibility="{Binding (wpfHelper:BindingProxy.Data).(viewModels:IPScannerViewModel.ResolveHostname), Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                        <MenuItem Header="{DynamicResource String_Hostname}" Command="{Binding CopySelectedHostnameCommand}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -273,7 +274,8 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_MACAddress}" Command="{Binding CopySelectedMACAddressCommand}" Visibility="{Binding (wpfHelper:BindingProxy.Data).(viewModels:IPScannerViewModel.ResolveMACAddress), Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                        <MenuItem Header="{DynamicResource String_MACAddress}" Command="{Binding CopySelectedMACAddressCommand}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -282,7 +284,8 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Vendor}" Command="{Binding CopySelectedVendorCommand}" Visibility="{Binding (wpfHelper:BindingProxy.Data).(viewModels:IPScannerViewModel.ResolveMACAddress), Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                        <MenuItem Header="{DynamicResource String_Vendor}" Command="{Binding CopySelectedVendorCommand}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -341,9 +344,12 @@
             </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding (network:IPScannerHostInfo.PingInfo).IPAddress}" SortMemberPath="PingInfo.IPAddressInt32" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding (network:IPScannerHostInfo.Hostname)}" Visibility="{Binding (wpfHelper:BindingProxy.Data).(viewModels:IPScannerViewModel.ResolveHostname), Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding (network:IPScannerHostInfo.MACAddress), Converter={StaticResource PhysicalAddressToStringConverter}}" Visibility="{Binding (wpfHelper:BindingProxy.Data).(viewModels:IPScannerViewModel.ResolveMACAddress), Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Vendor}" Binding="{Binding (network:IPScannerHostInfo.Vendor)}" Visibility="{Binding (wpfHelper:BindingProxy.Data).(viewModels:IPScannerViewModel.ResolveMACAddress), Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="200" />
+                <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding (network:IPScannerHostInfo.Hostname)}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
+                <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding (network:IPScannerHostInfo.MACAddress), Converter={StaticResource PhysicalAddressToStringConverter}}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
+                <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                <DataGridTextColumn Header="{DynamicResource String_Vendor}" Binding="{Binding (network:IPScannerHostInfo.Vendor)}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="200" />
                 <DataGridTextColumn Header="{DynamicResource String_Bytes}" Binding="{Binding (network:IPScannerHostInfo.PingInfo).Bytes, Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
                 <DataGridTextColumn Header="{DynamicResource String_Time}" SortMemberPath="PingInfo.Time" MinWidth="80">
                     <DataGridTextColumn.Binding>

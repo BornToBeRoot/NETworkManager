@@ -8,10 +8,7 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (int.TryParse(value as string, out int x) && x > 0)
-                return ValidationResult.ValidResult;
-            else
-                return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidNumber"));
+            return int.TryParse(value as string, out var x) && x > 0 ? ValidationResult.ValidResult : new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidNumber"));
         }
     }
 }

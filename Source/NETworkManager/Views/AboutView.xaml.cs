@@ -22,7 +22,9 @@ namespace NETworkManager.Views
         private void ScrollViewer_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
         {
             var scv = (ScrollViewer)sender;
+
             scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
+
             e.Handled = true;
         }
     }

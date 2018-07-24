@@ -30,7 +30,7 @@ namespace NETworkManager.Views
             _viewModel.SaveAndCheckSettings();
         }
 
-        private void txtImportFilePath_Drop(object sender, DragEventArgs e)
+        private void TextBoxImportFilePath_Drop(object sender, DragEventArgs e)
         {
             if (!e.Data.GetDataPresent(DataFormats.FileDrop))
                 return;
@@ -41,7 +41,7 @@ namespace NETworkManager.Views
                 _viewModel.SetImportLocationFilePathFromDragDrop(files[0]);
         }
 
-        private void txtImportFilePath_PreviewDragOver(object sender, DragEventArgs e)
+        private void TextBoxImportFilePath_PreviewDragOver(object sender, DragEventArgs e)
         {
             e.Effects = DragDropEffects.Copy;
             e.Handled = true;

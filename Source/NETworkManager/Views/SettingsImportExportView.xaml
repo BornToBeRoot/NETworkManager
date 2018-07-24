@@ -7,7 +7,6 @@
         xmlns:validators="clr-namespace:NETworkManager.Validators"        
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        xmlns:settings="clr-namespace:NETworkManager.ViewModels"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
@@ -20,7 +19,7 @@
     </UserControl.Resources>
     <StackPanel >
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Import}" />
-        <TextBox x:Name="TextBoxImportFilePath" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_LocationOfTheImport}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" AllowDrop="True" Drop="txtImportFilePath_Drop" PreviewDragOver="txtImportFilePath_PreviewDragOver" Margin="0,0,0,10">
+        <TextBox x:Name="TextBoxImportFilePath" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_LocationOfTheImport}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" AllowDrop="True" Drop="TextBoxImportFilePath_Drop" PreviewDragOver="TextBoxImportFilePath_PreviewDragOver" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="ImportFilePath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>

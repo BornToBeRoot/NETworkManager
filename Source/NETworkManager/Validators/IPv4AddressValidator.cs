@@ -6,14 +6,12 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Validators
 {
+    // ReSharper disable once InconsistentNaming
     public class IPv4AddressValidator : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (Regex.IsMatch(value as string, RegexHelper.IPv4AddressRegex))
-                return ValidationResult.ValidResult;
-
-            return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidIPv4Address"));
+            return value != null && Regex.IsMatch((string) value, RegexHelper.IPv4AddressRegex) ? ValidationResult.ValidResult : new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidIPv4Address"));
         }
     }
 }
