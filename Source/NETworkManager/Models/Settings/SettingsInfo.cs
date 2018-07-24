@@ -1567,6 +1567,20 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private int _remoteDesktop_KeyboardHookMode = 1;
+        public int RemoteDesktop_KeyboardHookMode
+        {
+            get { return _remoteDesktop_KeyboardHookMode; }
+            set
+            {
+                if (value == _remoteDesktop_KeyboardHookMode)
+                    return;
+
+                _remoteDesktop_KeyboardHookMode = value;
+                SettingsChanged = true;
+            }
+        }
+
         private bool _remoteDesktop_RedirectClipboard = true;
         public bool RemoteDesktop_RedirectClipboard
         {
@@ -1910,7 +1924,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _snmp_Timeout = 60000;
+        private int _snmp_Timeout = 60;
         public int SNMP_Timeout
         {
             get { return _snmp_Timeout; }

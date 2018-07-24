@@ -1,5 +1,6 @@
 ﻿using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -226,6 +227,30 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        public List<Tuple<int, string>> KeyboardHookModes => new List<Tuple<int, string>>
+        {
+            Tuple.Create(0, LocalizationManager.GetStringByKey("String_OnThisComputer")),
+            Tuple.Create(1, LocalizationManager.GetStringByKey("String_OnTheRemoteComputer"))/*,
+            Tuple.Create(2, LocalizationManager.GetStringByKey("String_OnlyWhenUsingTheFullScreen")),*/
+        };
+
+        private Tuple<int, string> _keyboardHookMode;
+        public Tuple<int, string> KeyboardHookMode
+        {
+            get => _keyboardHookMode;
+            set
+            {
+                if (value == _keyboardHookMode)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_KeyboardHookMode = value.Item1;
+
+                _keyboardHookMode = value;
+                OnPropertyChanged();
+            }
+        }
+
         // String must be formatted ...
         public string RDPAuthenticationLevelHelpMessage => LocalizationManager.GetStringByKey("String_HelpMessage_RDPAuthenticationLevel");
 
@@ -347,7 +372,7 @@ namespace NETworkManager.ViewModels
             AdjustScreenAutomatically = SettingsManager.Current.RemoteDesktop_AdjustScreenAutomatically;
             UseCurrentViewSize = SettingsManager.Current.RemoteDesktop_UseCurrentViewSize;
             UseFixedScreenSize = SettingsManager.Current.RemoteDesktop_UseFixedScreenSize;
-            SelectedScreenResolution = ScreenResolutions.FirstOrDefault(x => x ==$"{SettingsManager.Current.RemoteDesktop_ScreenWidth}x{SettingsManager.Current.RemoteDesktop_ScreenHeight}");
+            SelectedScreenResolution = ScreenResolutions.FirstOrDefault(x => x == $"{SettingsManager.Current.RemoteDesktop_ScreenWidth}x{SettingsManager.Current.RemoteDesktop_ScreenHeight}");
             UseCustomScreenSize = SettingsManager.Current.RemoteDesktop_UseCustomScreenSize;
             CustomScreenWidth = SettingsManager.Current.RemoteDesktop_CustomScreenWidth.ToString();
             CustomScreenHeight = SettingsManager.Current.RemoteDesktop_CustomScreenHeight.ToString();
@@ -355,6 +380,7 @@ namespace NETworkManager.ViewModels
             Port = SettingsManager.Current.RemoteDesktop_Port;
             EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport;
             AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;
+            KeyboardHookMode = KeyboardHookModes.FirstOrDefault(x => x.Item1 == SettingsManager.Current.RemoteDesktop_KeyboardHookMode);
             RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;
             RedirectDevices = SettingsManager.Current.RemoteDesktop_RedirectDevices;
             RedirectDrives = SettingsManager.Current.RemoteDesktop_RedirectDrives;

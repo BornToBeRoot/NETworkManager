@@ -106,7 +106,8 @@
     <system:String x:Key="String_Header_NetworkInterface">Network Interface</system:String> <!-- new/updated, please remove comment if string is translated -->
     <system:String x:Key="String_Header_General">General</system:String> <!-- new/updated, please remove comment if string is translated -->
     <system:String x:Key="String_Header_ResolvePTR">Resolve PTR</system:String> <!-- new/updated, please remove comment if string is translated -->
-
+    <system:String x:Key="String_Header_Keyboard">Keyboard</system:String> <!-- new/updated, please remove comment if string is translated -->
+      
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Мощный инструмент для управления сетями и устранения сетевых проблем!</system:String>
@@ -426,6 +427,10 @@
     <system:String x:Key="String_Timestamp">Timestamp</system:String> <!-- new/updated, please remove comment if string is translated -->
     <system:String x:Key="String_SearchedLanguageNotFound">Searched language not found!</system:String> <!-- new/updated, please remove comment if string is translated -->
     <system:String x:Key="String_InheritHostFromDefault">Inherit host from default</system:String> <!-- new/updated, please remove comment if string is translated -->
+    <system:String x:Key="String_OnThisComputer">On this computer</system:String> <!-- new/updated, please remove comment if string is translated -->
+    <system:String x:Key="String_OnTheRemoteComputer">On the remote computer</system:String> <!-- new/updated, please remove comment if string is translated -->
+    <system:String x:Key="String_OnlyWhenUsingTheFullScreen">Only when using the full screen</system:String> <!-- new/updated, please remove comment if string is translated -->
+    <system:String x:Key="String_ApplyWindowsKeyCombinationsLikeAltTab">Apply Windows key combinations (e.g. ALT+TAB):</system:String> <!-- new/updated, please remove comment if string is translated -->
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Как установить RDP 8.1 на Windows 7 / Server 2008 R2</system:String>

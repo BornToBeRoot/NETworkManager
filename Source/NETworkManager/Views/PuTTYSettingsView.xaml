@@ -11,7 +11,7 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PuTTYSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{DynamicResource String_Header_PuTTY}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBox x:Name="TextBoxPuTTYLocation" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_PuTTYLocation}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" Margin="0,0,0,10">
+        <TextBox x:Name="TextBoxPuTTYLocation" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_PuTTYLocation}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" AllowDrop="True" Drop="TextBoxPuTTYLocation_Drop" PreviewDragOver="TextBoxPuTTYLocation_PreviewDragOver" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="PuTTYLocation" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>

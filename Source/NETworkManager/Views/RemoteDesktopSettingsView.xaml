@@ -80,6 +80,9 @@
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
+        <TextBlock Text="{DynamicResource String_Header_Keyboard}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{DynamicResource String_ApplyWindowsKeyCombinationsLikeAltTab}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <ComboBox ItemsSource="{Binding KeyboardHookModes}" DisplayMemberPath="Item2" SelectedItem="{Binding KeyboardHookMode}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,20" />
         <TextBlock Text="{DynamicResource String_Header_LocalDevicesAndResources}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{DynamicResource String_RedirectClipboard}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectClipboard}" Margin="0,0,0,10" />
         <mah:ToggleSwitch Header="{DynamicResource String_RedirectDevices}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectDevices}" Margin="0,0,0,10" />

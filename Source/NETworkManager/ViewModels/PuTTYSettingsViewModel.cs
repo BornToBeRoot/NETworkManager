@@ -222,6 +222,13 @@ namespace NETworkManager.ViewModels
                 await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, settings);
             }
         }
+
+        public void SetFilePathFromDragDrop(string filePath)
+        {
+            PuTTYLocation = filePath;
+
+            OnPropertyChanged(nameof(PuTTYLocation));
+        }
         #endregion
     }
 }

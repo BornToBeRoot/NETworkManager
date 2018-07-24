@@ -666,6 +666,7 @@ namespace NETworkManager.ViewModels
             profileInfo.Port = SettingsManager.Current.RemoteDesktop_Port;
             profileInfo.EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport;
             profileInfo.AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;
+            profileInfo.KeyboardHookMode = SettingsManager.Current.RemoteDesktop_KeyboardHookMode;
             profileInfo.RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;
             profileInfo.RedirectDevices = SettingsManager.Current.RemoteDesktop_RedirectDevices;
             profileInfo.RedirectDrives = SettingsManager.Current.RemoteDesktop_RedirectDrives;

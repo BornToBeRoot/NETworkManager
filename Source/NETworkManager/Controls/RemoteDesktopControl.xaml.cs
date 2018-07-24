@@ -26,7 +26,7 @@ namespace NETworkManager.Controls
 
         private const string RemoteDesktopDisconnectReasonIdentifier = "String_RemoteDesktopDisconnectReason_";
 
-        private readonly RemoteDesktopSessionInfo _rdpProfileInfo;
+        private readonly RemoteDesktopSessionInfo _rdpSessionInfo;
 
         private readonly DispatcherTimer _reconnectAdjustScreenTimer = new DispatcherTimer();
 
@@ -109,7 +109,7 @@ namespace NETworkManager.Controls
             InitializeComponent();
             DataContext = this;
 
-            _rdpProfileInfo = info;
+            _rdpSessionInfo = info;
 
             _reconnectAdjustScreenTimer.Tick += ReconnectAdjustScreenTimer_Tick;
             _reconnectAdjustScreenTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
@@ -148,39 +148,44 @@ namespace NETworkManager.Controls
         #region Methods
         private void Connect()
         {
-            RdpClient.Server = _rdpProfileInfo.Hostname;
-            RdpClient.AdvancedSettings9.RDPPort = _rdpProfileInfo.Port;
+            RdpClient.CreateControl();
 
-            if (_rdpProfileInfo.CustomCredentials)
+            RdpClient.Server = _rdpSessionInfo.Hostname;
+            RdpClient.AdvancedSettings9.RDPPort = _rdpSessionInfo.Port;
+
+            if (_rdpSessionInfo.CustomCredentials)
             {
-                RdpClient.UserName = _rdpProfileInfo.Username;
-                RdpClient.AdvancedSettings9.ClearTextPassword = SecureStringHelper.ConvertToString(_rdpProfileInfo.Password);
+                RdpClient.UserName = _rdpSessionInfo.Username;
+                RdpClient.AdvancedSettings9.ClearTextPassword = SecureStringHelper.ConvertToString(_rdpSessionInfo.Password);
             }
-
+            
             // AdvancedSettings
-            RdpClient.AdvancedSettings9.AuthenticationLevel = _rdpProfileInfo.AuthenticationLevel;
-            RdpClient.AdvancedSettings9.EnableCredSspSupport = _rdpProfileInfo.EnableCredSspSupport;
+            RdpClient.AdvancedSettings9.AuthenticationLevel = _rdpSessionInfo.AuthenticationLevel;
+            RdpClient.AdvancedSettings9.EnableCredSspSupport = _rdpSessionInfo.EnableCredSspSupport;
+
+            // Keyboard
+            RdpClient.SecuredSettings3.KeyboardHookMode = _rdpSessionInfo.KeyboardHookMode;
 
             // Devices and resources
-            RdpClient.AdvancedSettings9.RedirectClipboard = _rdpProfileInfo.RedirectClipboard;
-            RdpClient.AdvancedSettings9.RedirectDevices = _rdpProfileInfo.RedirectDevices;
-            RdpClient.AdvancedSettings9.RedirectDrives = _rdpProfileInfo.RedirectDrives;
-            RdpClient.AdvancedSettings9.RedirectPorts = _rdpProfileInfo.RedirectPorts;
-            RdpClient.AdvancedSettings9.RedirectSmartCards = _rdpProfileInfo.RedirectSmartCards;
-            RdpClient.AdvancedSettings9.RedirectPrinters = _rdpProfileInfo.RedirectPrinters;
+            RdpClient.AdvancedSettings9.RedirectClipboard = _rdpSessionInfo.RedirectClipboard;
+            RdpClient.AdvancedSettings9.RedirectDevices = _rdpSessionInfo.RedirectDevices;
+            RdpClient.AdvancedSettings9.RedirectDrives = _rdpSessionInfo.RedirectDrives;
+            RdpClient.AdvancedSettings9.RedirectPorts = _rdpSessionInfo.RedirectPorts;
+            RdpClient.AdvancedSettings9.RedirectSmartCards = _rdpSessionInfo.RedirectSmartCards;
+            RdpClient.AdvancedSettings9.RedirectPrinters = _rdpSessionInfo.RedirectPrinters;
 
             // Display
-            RdpClient.ColorDepth = _rdpProfileInfo.ColorDepth;      // 8, 15, 16, 24
+            RdpClient.ColorDepth = _rdpSessionInfo.ColorDepth;      // 8, 15, 16, 24
 
-            if (_rdpProfileInfo.AdjustScreenAutomatically || _rdpProfileInfo.UseCurrentViewSize)
+            if (_rdpSessionInfo.AdjustScreenAutomatically || _rdpSessionInfo.UseCurrentViewSize)
             {
                 RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
                 RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
             }
             else
             {
-                RdpClient.DesktopWidth = _rdpProfileInfo.DesktopWidth;
-                RdpClient.DesktopHeight = _rdpProfileInfo.DesktopHeight;
+                RdpClient.DesktopWidth = _rdpSessionInfo.DesktopWidth;
+                RdpClient.DesktopHeight = _rdpSessionInfo.DesktopHeight;
             }
 
             FixWindowsFormsHostSize();
@@ -189,14 +194,16 @@ namespace NETworkManager.Controls
             RdpClient.OnConnected += RdpClient_OnConnected;
             RdpClient.OnDisconnected += RdpClient_OnDisconnected;
 
-            RdpClient.Connect();
+            RdpClient.AdvancedSettings9.EnableWindowsKey = 1;                       
+
+            RdpClient.Connect();                        
         }
 
         private void Reconnect()
         {
             IsReconnecting = true;
 
-            if (_rdpProfileInfo.AdjustScreenAutomatically)
+            if (_rdpSessionInfo.AdjustScreenAutomatically)
             {
                 RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
                 RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
@@ -364,7 +371,7 @@ namespace NETworkManager.Controls
         private void RdpGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             // Prevent with a timer, that the function (rdpClient.Reconnect()) is executed too often
-            if (IsConnected && _rdpProfileInfo.AdjustScreenAutomatically)
+            if (IsConnected && _rdpSessionInfo.AdjustScreenAutomatically)
                 _reconnectAdjustScreenTimer.Start();
         }
 
