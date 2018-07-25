@@ -32,12 +32,12 @@ namespace NETworkManager.Models.Settings
 
         public static string GetSettingsFileName()
         {
-            return string.Format("{0}.{1}", SettingsFileName, SettingsFileExtension);
+            return $"{SettingsFileName}.{SettingsFileExtension}";
         }
 
         public static string GetIsPortableFileName()
         {
-            return string.Format("{0}.{1}", IsPortableFileName, IsPortableExtension);
+            return $"{IsPortableFileName}.{IsPortableExtension}";
         }
 
         #region Settings locations (default, custom, portable)
@@ -53,9 +53,8 @@ namespace NETworkManager.Models.Settings
 
         public static string GetPortableSettingsLocation()
         {
-            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), SettingsFolderName);
+            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new InvalidOperationException(), SettingsFolderName);
         }
-
         #endregion
 
         #region File paths
@@ -68,7 +67,6 @@ namespace NETworkManager.Models.Settings
         {
             return Path.Combine(GetSettingsLocation(), GetSettingsFileName());
         }
-
         #endregion
 
         #region IsPortable, SettingsLocation, SettingsLocationNotPortable
@@ -79,15 +77,12 @@ namespace NETworkManager.Models.Settings
 
         public static string GetSettingsLocation()
         {
-            if (GetIsPortable())
-                return GetPortableSettingsLocation();
-
-            return GetSettingsLocationNotPortable();
+            return GetIsPortable() ? GetPortableSettingsLocation() : GetSettingsLocationNotPortable();
         }
 
         public static string GetSettingsLocationNotPortable()
         {
-            string settingsLocation = GetCustomSettingsLocation();
+            var settingsLocation = GetCustomSettingsLocation();
 
             if (!string.IsNullOrEmpty(settingsLocation) && Directory.Exists(settingsLocation))
                 return settingsLocation;
@@ -100,11 +95,11 @@ namespace NETworkManager.Models.Settings
         {
             if (File.Exists(GetSettingsFilePath()) && !CommandLineManager.Current.ResetSettings)
             {
-                SettingsInfo settingsInfo = new SettingsInfo();
+                SettingsInfo settingsInfo;
 
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(SettingsInfo));
+                var xmlSerializer = new XmlSerializer(typeof(SettingsInfo));
 
-                using (FileStream fileStream = new FileStream(GetSettingsFilePath(), FileMode.Open))
+                using (var fileStream = new FileStream(GetSettingsFilePath(), FileMode.Open))
                 {
                     settingsInfo = (SettingsInfo)(xmlSerializer.Deserialize(fileStream));
                 }
@@ -125,9 +120,9 @@ namespace NETworkManager.Models.Settings
             // Create the directory if it does not exist
             Directory.CreateDirectory(GetSettingsLocation());
 
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(SettingsInfo));
+            var xmlSerializer = new XmlSerializer(typeof(SettingsInfo));
 
-            using (FileStream fileStream = new FileStream(Path.Combine(GetSettingsFilePath()), FileMode.Create))
+            using (var fileStream = new FileStream(Path.Combine(GetSettingsFilePath()), FileMode.Create))
             {
                 xmlSerializer.Serialize(fileStream, Current);
             }
@@ -143,7 +138,7 @@ namespace NETworkManager.Models.Settings
 
         private static void MoveSettings(string sourceLocation, string targedLocation, bool overwrite, string[] filesTargedLocation = null)
         {
-            string[] sourceFiles = Directory.GetFiles(sourceLocation);
+            var sourceFiles = Directory.GetFiles(sourceLocation);
 
             // Create the dircetory and copy the files to the new location
             Directory.CreateDirectory(targedLocation);
@@ -151,7 +146,7 @@ namespace NETworkManager.Models.Settings
             foreach (string file in sourceFiles)
             {
                 // Skip if file exists and user don't want to overwrite it
-                if (!overwrite && ((filesTargedLocation.Any(x => Path.GetFileName(x) == Path.GetFileName(file)))))
+                if (!overwrite && (filesTargedLocation ?? throw new ArgumentNullException(nameof(filesTargedLocation))).Any(x => Path.GetFileName(x) == Path.GetFileName(file)))
                     continue;
                 
                 File.Copy(file, Path.Combine(targedLocation, Path.GetFileName(file)), overwrite);

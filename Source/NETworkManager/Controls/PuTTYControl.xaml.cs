@@ -98,7 +98,7 @@ namespace NETworkManager.Controls
         #region Methods       
         private async void Connect()
         {
-            ProcessStartInfo info = new ProcessStartInfo
+            var info = new ProcessStartInfo
             {
                 FileName = _puttyProfileInfo.PuTTYLocation,
                 Arguments = PuTTY.BuildCommandLine(_puttyProfileInfo)
@@ -140,7 +140,7 @@ namespace NETworkManager.Controls
             }
             catch (Exception ex)
             {
-                MetroDialogSettings settings = AppearanceManager.MetroDialog;
+                var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
 
                 ConfigurationManager.Current.IsDialogOpen = true;

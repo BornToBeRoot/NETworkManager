@@ -145,7 +145,7 @@ namespace NETworkManager.ViewModels
             _dialogCoordinator = instance;
 
             // Check if RDP 8.1 is available
-            IsRDP8Dot1Available = Models.RemoteDesktop.RemoteDesktop.IsRDP8dot1Available();
+            IsRDP8Dot1Available = Models.RemoteDesktop.RemoteDesktop.IsRDP8Dot1Available;
 
             if (IsRDP8Dot1Available)
             {
@@ -506,7 +506,7 @@ namespace NETworkManager.ViewModels
 
             if (SelectedProfile.CredentialID > -1) // Credentials need to be unlocked first
             {
-                if (!CredentialManager.Loaded)
+                if (!CredentialManager.IsLoaded)
                 {
                     var customDialog = new CustomDialog()
                     {

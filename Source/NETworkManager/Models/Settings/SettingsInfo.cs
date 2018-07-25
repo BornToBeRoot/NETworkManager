@@ -1,16 +1,19 @@
-﻿using Heijden.DNS;
-using Lextm.SharpSnmpLib.Messaging;
-using NETworkManager.Utilities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
+using Heijden.DNS;
+using Lextm.SharpSnmpLib.Messaging;
+using NETworkManager.Utilities;
 using static NETworkManager.Models.Network.SNMP;
 
 namespace NETworkManager.Models.Settings
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class SettingsInfo : INotifyPropertyChanged
     {
         #region Events
@@ -23,15 +26,14 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region Variables
-        [XmlIgnore]
-        public bool SettingsChanged { get; set; }
-
+        [XmlIgnore] public bool SettingsChanged { get; set; }
         #region General 
+
         // General        
         private ApplicationViewManager.Name _general_DefaultApplicationViewName = ApplicationViewManager.Name.NetworkInterface;
         public ApplicationViewManager.Name General_DefaultApplicationViewName
         {
-            get { return _general_DefaultApplicationViewName; }
+            get => _general_DefaultApplicationViewName;
             set
             {
                 if (value == _general_DefaultApplicationViewName)
@@ -45,7 +47,7 @@ namespace NETworkManager.Models.Settings
         private int _general_HistoryListEntries = 5;
         public int General_HistoryListEntries
         {
-            get { return _general_HistoryListEntries; }
+            get => _general_HistoryListEntries;
             set
             {
                 if (value == _general_HistoryListEntries)
@@ -60,7 +62,7 @@ namespace NETworkManager.Models.Settings
         private bool _window_ConfirmClose;
         public bool Window_ConfirmClose
         {
-            get { return _window_ConfirmClose; }
+            get => _window_ConfirmClose;
             set
             {
                 if (value == _window_ConfirmClose)
@@ -74,7 +76,7 @@ namespace NETworkManager.Models.Settings
         private bool _window_MinimizeInsteadOfTerminating;
         public bool Window_MinimizeInsteadOfTerminating
         {
-            get { return _window_MinimizeInsteadOfTerminating; }
+            get => _window_MinimizeInsteadOfTerminating;
             set
             {
                 if (value == _window_MinimizeInsteadOfTerminating)
@@ -88,7 +90,7 @@ namespace NETworkManager.Models.Settings
         private bool _window_MultipleInstances;
         public bool Window_MultipleInstances
         {
-            get { return _window_MultipleInstances; }
+            get => _window_MultipleInstances;
             set
             {
                 if (value == _window_MultipleInstances)
@@ -102,7 +104,7 @@ namespace NETworkManager.Models.Settings
         private bool _window_MinimizeToTrayInsteadOfTaskbar;
         public bool Window_MinimizeToTrayInsteadOfTaskbar
         {
-            get { return _window_MinimizeToTrayInsteadOfTaskbar; }
+            get => _window_MinimizeToTrayInsteadOfTaskbar;
             set
             {
                 if (value == _window_MinimizeToTrayInsteadOfTaskbar)
@@ -113,10 +115,10 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _window_ShowCurrentApplicationTitle = false;
+        private bool _window_ShowCurrentApplicationTitle;
         public bool Window_ShowCurrentApplicationTitle
         {
-            get { return _window_ShowCurrentApplicationTitle; }
+            get => _window_ShowCurrentApplicationTitle;
             set
             {
                 if (value == _window_ShowCurrentApplicationTitle)
@@ -134,7 +136,7 @@ namespace NETworkManager.Models.Settings
         private bool _trayIcon_AlwaysShowIcon;
         public bool TrayIcon_AlwaysShowIcon
         {
-            get { return _trayIcon_AlwaysShowIcon; }
+            get => _trayIcon_AlwaysShowIcon;
             set
             {
                 if (value == _trayIcon_AlwaysShowIcon)
@@ -149,7 +151,7 @@ namespace NETworkManager.Models.Settings
         private string _appearance_AppTheme;
         public string Appearance_AppTheme
         {
-            get { return _appearance_AppTheme; }
+            get => _appearance_AppTheme;
             set
             {
                 if (value == _appearance_AppTheme)
@@ -163,7 +165,7 @@ namespace NETworkManager.Models.Settings
         private string _appearance_Accent;
         public string Appearance_Accent
         {
-            get { return _appearance_Accent; }
+            get => _appearance_Accent;
             set
             {
                 if (value == _appearance_Accent)
@@ -177,7 +179,7 @@ namespace NETworkManager.Models.Settings
         private bool _appearance_EnableTransparency;
         public bool Appearance_EnableTransparency
         {
-            get { return _appearance_EnableTransparency; }
+            get => _appearance_EnableTransparency;
             set
             {
                 if (value == _appearance_EnableTransparency)
@@ -191,7 +193,7 @@ namespace NETworkManager.Models.Settings
         private double _appearance_Opacity = 0.85;
         public double Appearance_Opacity
         {
-            get { return _appearance_Opacity; }
+            get => _appearance_Opacity;
             set
             {
                 if (value == _appearance_Opacity)
@@ -206,7 +208,7 @@ namespace NETworkManager.Models.Settings
         private string _localization_CultureCode;
         public string Localization_CultureCode
         {
-            get { return _localization_CultureCode; }
+            get => _localization_CultureCode;
             set
             {
                 if (value == _localization_CultureCode)
@@ -221,7 +223,7 @@ namespace NETworkManager.Models.Settings
         private bool _autostart_StartMinimizedInTray;
         public bool Autostart_StartMinimizedInTray
         {
-            get { return _autostart_StartMinimizedInTray; }
+            get => _autostart_StartMinimizedInTray;
             set
             {
                 if (value == _autostart_StartMinimizedInTray)
@@ -236,7 +238,7 @@ namespace NETworkManager.Models.Settings
         private bool _hotKey_ShowWindowEnabled;
         public bool HotKey_ShowWindowEnabled
         {
-            get { return _hotKey_ShowWindowEnabled; }
+            get => _hotKey_ShowWindowEnabled;
             set
             {
                 if (value == _hotKey_ShowWindowEnabled)
@@ -250,7 +252,7 @@ namespace NETworkManager.Models.Settings
         private int _hotKey_ShowWindowKey = 79;
         public int HotKey_ShowWindowKey
         {
-            get { return _hotKey_ShowWindowKey; }
+            get => _hotKey_ShowWindowKey;
             set
             {
                 if (value == _hotKey_ShowWindowKey)
@@ -264,7 +266,7 @@ namespace NETworkManager.Models.Settings
         private int _hotKey_ShowWindowModifier = 3;
         public int HotKey_ShowWindowModifier
         {
-            get { return _hotKey_ShowWindowModifier; }
+            get => _hotKey_ShowWindowModifier;
             set
             {
                 if (value == _hotKey_ShowWindowModifier)
@@ -279,7 +281,7 @@ namespace NETworkManager.Models.Settings
         private bool _update_CheckForUpdatesAtStartup = true;
         public bool Update_CheckForUpdatesAtStartup
         {
-            get { return _update_CheckForUpdatesAtStartup; }
+            get => _update_CheckForUpdatesAtStartup;
             set
             {
                 if (value == _update_CheckForUpdatesAtStartup)
@@ -296,7 +298,7 @@ namespace NETworkManager.Models.Settings
         private bool _expandApplicationView;
         public bool ExpandApplicationView
         {
-            get { return _expandApplicationView; }
+            get => _expandApplicationView;
             set
             {
                 if (value == _expandApplicationView)
@@ -306,14 +308,13 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
-
         #endregion
 
-        #region NetworkInterface        
+        #region NetworkInterface       
         private string _networkInterface_SelectedInterfaceId;
         public string NetworkInterface_SelectedInterfaceId
         {
-            get { return _networkInterface_SelectedInterfaceId; }
+            get => _networkInterface_SelectedInterfaceId;
             set
             {
                 if (value == _networkInterface_SelectedInterfaceId)
@@ -327,7 +328,7 @@ namespace NETworkManager.Models.Settings
         private bool _networkInterface_ExpandProfileView = true;
         public bool NetworkInterface_ExpandProfileView
         {
-            get { return _networkInterface_ExpandProfileView; }
+            get => _networkInterface_ExpandProfileView;
             set
             {
                 if (value == _networkInterface_ExpandProfileView)
@@ -341,7 +342,7 @@ namespace NETworkManager.Models.Settings
         private double _networkInterface_ProfileWidth = 250;
         public double NetworkInterface_ProfileWidth
         {
-            get { return _networkInterface_ProfileWidth; }
+            get => _networkInterface_ProfileWidth;
             set
             {
                 if (value == _networkInterface_ProfileWidth)
@@ -357,7 +358,7 @@ namespace NETworkManager.Models.Settings
         private bool _ipScanner_ShowScanResultForAllIPAddresses;
         public bool IPScanner_ShowScanResultForAllIPAddresses
         {
-            get { return _ipScanner_ShowScanResultForAllIPAddresses; }
+            get => _ipScanner_ShowScanResultForAllIPAddresses;
             set
             {
                 if (value == _ipScanner_ShowScanResultForAllIPAddresses)
@@ -371,7 +372,7 @@ namespace NETworkManager.Models.Settings
         private int _ipScanner_Threads = 256;
         public int IPScanner_Threads
         {
-            get { return _ipScanner_Threads; }
+            get => _ipScanner_Threads;
             set
             {
                 if (value == _ipScanner_Threads)
@@ -385,7 +386,7 @@ namespace NETworkManager.Models.Settings
         private int _ipScanner_ICMPAttempts = 2;
         public int IPScanner_ICMPAttempts
         {
-            get { return _ipScanner_ICMPAttempts; }
+            get => _ipScanner_ICMPAttempts;
             set
             {
                 if (value == _ipScanner_ICMPAttempts)
@@ -399,7 +400,7 @@ namespace NETworkManager.Models.Settings
         private int _ipScanner_ICMPBuffer = 32;
         public int IPScanner_ICMPBuffer
         {
-            get { return _ipScanner_ICMPBuffer; }
+            get => _ipScanner_ICMPBuffer;
             set
             {
                 if (value == _ipScanner_ICMPBuffer)
@@ -413,7 +414,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _ipScanner_IPRangeHistory = new ObservableCollection<string>();
         public ObservableCollection<string> IPScanner_IPRangeHistory
         {
-            get { return _ipScanner_IPRangeHistory; }
+            get => _ipScanner_IPRangeHistory;
             set
             {
                 if (value == _ipScanner_IPRangeHistory)
@@ -427,7 +428,7 @@ namespace NETworkManager.Models.Settings
         private bool _ipScanner_ResolveHostname = true;
         public bool IPScanner_ResolveHostname
         {
-            get { return _ipScanner_ResolveHostname; }
+            get => _ipScanner_ResolveHostname;
             set
             {
                 if (value == _ipScanner_ResolveHostname)
@@ -444,7 +445,7 @@ namespace NETworkManager.Models.Settings
         private bool _ipScanner_UseCustomDNSServer;
         public bool IPScanner_UseCustomDNSServer
         {
-            get { return _ipScanner_UseCustomDNSServer; }
+            get => _ipScanner_UseCustomDNSServer;
             set
             {
                 if (value == _ipScanner_UseCustomDNSServer)
@@ -458,7 +459,7 @@ namespace NETworkManager.Models.Settings
         private List<string> _ipScanner_CustomDNSServer = new List<string>();
         public List<string> IPScanner_CustomDNSServer
         {
-            get { return _ipScanner_CustomDNSServer; }
+            get => _ipScanner_CustomDNSServer;
             set
             {
                 if (value == _ipScanner_CustomDNSServer)
@@ -472,7 +473,7 @@ namespace NETworkManager.Models.Settings
         private int _ipScanner_DNSPort = 53;
         public int IPScanner_DNSPort
         {
-            get { return _ipScanner_DNSPort; }
+            get => _ipScanner_DNSPort;
             set
             {
                 if (value == _ipScanner_DNSPort)
@@ -486,7 +487,7 @@ namespace NETworkManager.Models.Settings
         private bool _ipScanner_DNSRecursion = true;
         public bool IPScanner_DNSRecursion
         {
-            get { return _ipScanner_DNSRecursion; }
+            get => _ipScanner_DNSRecursion;
             set
             {
                 if (value == _ipScanner_DNSRecursion)
@@ -497,10 +498,10 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _ipScanner_DNSUseResolverCache = false;
+        private bool _ipScanner_DNSUseResolverCache;
         public bool IPScanner_DNSUseResolverCache
         {
-            get { return _ipScanner_DNSUseResolverCache; }
+            get => _ipScanner_DNSUseResolverCache;
             set
             {
                 if (value == _ipScanner_DNSUseResolverCache)
@@ -514,7 +515,7 @@ namespace NETworkManager.Models.Settings
         private TransportType _ipScanner_DNSTransportType = TransportType.Udp;
         public TransportType IPScanner_DNSTransportType
         {
-            get { return _ipScanner_DNSTransportType; }
+            get => _ipScanner_DNSTransportType;
             set
             {
                 if (value == _ipScanner_DNSTransportType)
@@ -528,7 +529,7 @@ namespace NETworkManager.Models.Settings
         private int _ipScanner_DNSAttempts = 2;
         public int IPScanner_DNSAttempts
         {
-            get { return _ipScanner_DNSAttempts; }
+            get => _ipScanner_DNSAttempts;
             set
             {
                 if (value == _ipScanner_DNSAttempts)
@@ -542,7 +543,7 @@ namespace NETworkManager.Models.Settings
         private int _ipScanner_DNSTimeout = 2000;
         public int IPScanner_DNSTimeout
         {
-            get { return _ipScanner_DNSTimeout; }
+            get => _ipScanner_DNSTimeout;
             set
             {
                 if (value == _ipScanner_DNSTimeout)
@@ -556,7 +557,7 @@ namespace NETworkManager.Models.Settings
         private bool _ipScanner_ResolveMACAddress;
         public bool IPScanner_ResolveMACAddress
         {
-            get { return _ipScanner_ResolveMACAddress; }
+            get => _ipScanner_ResolveMACAddress;
             set
             {
                 if (value == _ipScanner_ResolveMACAddress)
@@ -573,7 +574,7 @@ namespace NETworkManager.Models.Settings
         private int _ipScanner_ICMPTimeout = 4000;
         public int IPScanner_ICMPTimeout
         {
-            get { return _ipScanner_ICMPTimeout; }
+            get => _ipScanner_ICMPTimeout;
             set
             {
                 if (value == _ipScanner_ICMPTimeout)
@@ -587,7 +588,7 @@ namespace NETworkManager.Models.Settings
         private bool _ipScanner_ExpandStatistics = true;
         public bool IPScanner_ExpandStatistics
         {
-            get { return _ipScanner_ExpandStatistics; }
+            get => _ipScanner_ExpandStatistics;
             set
             {
                 if (value == _ipScanner_ExpandStatistics)
@@ -601,7 +602,7 @@ namespace NETworkManager.Models.Settings
         private bool _ipScanner_ExpandProfileView = true;
         public bool IPScanner_ExpandProfileView
         {
-            get { return _ipScanner_ExpandProfileView; }
+            get => _ipScanner_ExpandProfileView;
             set
             {
                 if (value == _ipScanner_ExpandProfileView)
@@ -615,7 +616,7 @@ namespace NETworkManager.Models.Settings
         private double _ipScanner_ProfileWidth = 250;
         public double IPScanner_ProfileWidth
         {
-            get { return _ipScanner_ProfileWidth; }
+            get => _ipScanner_ProfileWidth;
             set
             {
                 if (value == _ipScanner_ProfileWidth)
@@ -629,7 +630,7 @@ namespace NETworkManager.Models.Settings
         private bool _ipScanner_ShowStatistics = true;
         public bool IPScanner_ShowStatistics
         {
-            get { return _ipScanner_ShowStatistics; }
+            get => _ipScanner_ShowStatistics;
             set
             {
                 if (value == _ipScanner_ShowStatistics)
@@ -648,7 +649,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _portScanner_HostHistory = new ObservableCollection<string>();
         public ObservableCollection<string> PortScanner_HostHistory
         {
-            get { return _portScanner_HostHistory; }
+            get => _portScanner_HostHistory;
             set
             {
                 if (value == _portScanner_HostHistory)
@@ -662,7 +663,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _portScanner_PortHistory = new ObservableCollection<string>();
         public ObservableCollection<string> PortScanner_PortHistory
         {
-            get { return _portScanner_PortHistory; }
+            get => _portScanner_PortHistory;
             set
             {
                 if (value == _portScanner_PortHistory)
@@ -676,7 +677,7 @@ namespace NETworkManager.Models.Settings
         private int _portScanner_Threads = 100;
         public int PortScanner_Threads
         {
-            get { return _portScanner_Threads; }
+            get => _portScanner_Threads;
             set
             {
                 if (value == _portScanner_Threads)
@@ -690,7 +691,7 @@ namespace NETworkManager.Models.Settings
         private bool _portScanner_ShowClosed;
         public bool PortScanner_ShowClosed
         {
-            get { return _portScanner_ShowClosed; }
+            get => _portScanner_ShowClosed;
             set
             {
                 if (value == _portScanner_ShowClosed)
@@ -704,7 +705,7 @@ namespace NETworkManager.Models.Settings
         private int _portScanner_Timeout = 4000;
         public int PortScanner_Timeout
         {
-            get { return _portScanner_Timeout; }
+            get => _portScanner_Timeout;
             set
             {
                 if (value == _portScanner_Timeout)
@@ -718,7 +719,7 @@ namespace NETworkManager.Models.Settings
         private bool _portScanner_ResolveHostnamePreferIPv4 = true;
         public bool PortScanner_ResolveHostnamePreferIPv4
         {
-            get { return _portScanner_ResolveHostnamePreferIPv4; }
+            get => _portScanner_ResolveHostnamePreferIPv4;
             set
             {
                 if (value == _portScanner_ResolveHostnamePreferIPv4)
@@ -732,7 +733,7 @@ namespace NETworkManager.Models.Settings
         private bool _portScanner_ExpandStatistics = true;
         public bool PortScanner_ExpandStatistics
         {
-            get { return _portScanner_ExpandStatistics; }
+            get => _portScanner_ExpandStatistics;
             set
             {
                 if (value == _portScanner_ExpandStatistics)
@@ -746,7 +747,7 @@ namespace NETworkManager.Models.Settings
         private bool _portScanner_ExpandProfileView = true;
         public bool PortScanner_ExpandProfileView
         {
-            get { return _portScanner_ExpandProfileView; }
+            get => _portScanner_ExpandProfileView;
             set
             {
                 if (value == _portScanner_ExpandProfileView)
@@ -760,7 +761,7 @@ namespace NETworkManager.Models.Settings
         private double _portScanner_ProfileWidth = 250;
         public double PortScanner_ProfileWidth
         {
-            get { return _portScanner_ProfileWidth; }
+            get => _portScanner_ProfileWidth;
             set
             {
                 if (value == _portScanner_ProfileWidth)
@@ -774,7 +775,7 @@ namespace NETworkManager.Models.Settings
         private bool _portScanner_ShowStatistics = true;
         public bool PortScanner_ShowStatistics
         {
-            get { return _portScanner_ShowStatistics; }
+            get => _portScanner_ShowStatistics;
             set
             {
                 if (value == _portScanner_ShowStatistics)
@@ -793,7 +794,7 @@ namespace NETworkManager.Models.Settings
         private int _ping_Attempts;
         public int Ping_Attempts
         {
-            get { return _ping_Attempts; }
+            get => _ping_Attempts;
             set
             {
                 if (value == _ping_Attempts)
@@ -807,7 +808,7 @@ namespace NETworkManager.Models.Settings
         private int _ping_Buffer = 32;
         public int Ping_Buffer
         {
-            get { return _ping_Buffer; }
+            get => _ping_Buffer;
             set
             {
                 if (value == _ping_Buffer)
@@ -821,7 +822,7 @@ namespace NETworkManager.Models.Settings
         private bool _ping_DontFragement = true;
         public bool Ping_DontFragment
         {
-            get { return _ping_DontFragement; }
+            get => _ping_DontFragement;
             set
             {
                 if (value = _ping_DontFragement)
@@ -835,7 +836,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _ping_HostHistory = new ObservableCollection<string>();
         public ObservableCollection<string> Ping_HostHistory
         {
-            get { return _ping_HostHistory; }
+            get => _ping_HostHistory;
             set
             {
                 if (value == _ping_HostHistory)
@@ -849,7 +850,7 @@ namespace NETworkManager.Models.Settings
         private bool _ping_ResolveHostnamePreferIPv4 = true;
         public bool Ping_ResolveHostnamePreferIPv4
         {
-            get { return _ping_ResolveHostnamePreferIPv4; }
+            get => _ping_ResolveHostnamePreferIPv4;
             set
             {
                 if (value == _ping_ResolveHostnamePreferIPv4)
@@ -863,7 +864,7 @@ namespace NETworkManager.Models.Settings
         private int _ping_Timeout = 4000;
         public int Ping_Timeout
         {
-            get { return _ping_Timeout; }
+            get => _ping_Timeout;
             set
             {
                 if (value == _ping_Timeout)
@@ -877,7 +878,7 @@ namespace NETworkManager.Models.Settings
         private int _ping_TTL = 64;
         public int Ping_TTL
         {
-            get { return _ping_TTL; }
+            get => _ping_TTL;
             set
             {
                 if (value == _ping_TTL)
@@ -891,7 +892,7 @@ namespace NETworkManager.Models.Settings
         private int _ping_WaitTime = 1000;
         public int Ping_WaitTime
         {
-            get { return _ping_WaitTime; }
+            get => _ping_WaitTime;
             set
             {
                 if (value == _ping_WaitTime)
@@ -905,7 +906,7 @@ namespace NETworkManager.Models.Settings
         private int _ping_ExceptionCancelCount = 3;
         public int Ping_ExceptionCancelCount
         {
-            get { return _ping_ExceptionCancelCount; }
+            get => _ping_ExceptionCancelCount;
             set
             {
                 if (value == _ping_ExceptionCancelCount)
@@ -919,7 +920,7 @@ namespace NETworkManager.Models.Settings
         private bool _ping_ExpandStatistics = true;
         public bool Ping_ExpandStatistics
         {
-            get { return _ping_ExpandStatistics; }
+            get => _ping_ExpandStatistics;
             set
             {
                 if (value == _ping_ExpandStatistics)
@@ -933,7 +934,7 @@ namespace NETworkManager.Models.Settings
         private bool _ping_ExpandProfileView = true;
         public bool Ping_ExpandProfileView
         {
-            get { return _ping_ExpandProfileView; }
+            get => _ping_ExpandProfileView;
             set
             {
                 if (value == _ping_ExpandProfileView)
@@ -947,7 +948,7 @@ namespace NETworkManager.Models.Settings
         private double _ping_ProfileWidth = 250;
         public double Ping_ProfileWidth
         {
-            get { return _ping_ProfileWidth; }
+            get => _ping_ProfileWidth;
             set
             {
                 if (value == _ping_ProfileWidth)
@@ -961,7 +962,7 @@ namespace NETworkManager.Models.Settings
         private bool _ping_ShowStatistics = true;
         public bool Ping_ShowStatistics
         {
-            get { return _ping_ShowStatistics; }
+            get => _ping_ShowStatistics;
             set
             {
                 if (value == _ping_ShowStatistics)
@@ -980,7 +981,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _traceroute_HostHistory = new ObservableCollection<string>();
         public ObservableCollection<string> Traceroute_HostHistory
         {
-            get { return _traceroute_HostHistory; }
+            get => _traceroute_HostHistory;
             set
             {
                 if (value == _traceroute_HostHistory)
@@ -994,7 +995,7 @@ namespace NETworkManager.Models.Settings
         private int _traceroute_MaximumHops = 30;
         public int Traceroute_MaximumHops
         {
-            get { return _traceroute_MaximumHops; }
+            get => _traceroute_MaximumHops;
             set
             {
                 if (value == _traceroute_MaximumHops)
@@ -1008,7 +1009,7 @@ namespace NETworkManager.Models.Settings
         private int _traceroute_Timeout = 4000;
         public int Traceroute_Timeout
         {
-            get { return _traceroute_Timeout; }
+            get => _traceroute_Timeout;
             set
             {
                 if (value == _traceroute_Timeout)
@@ -1022,7 +1023,7 @@ namespace NETworkManager.Models.Settings
         private int _traceroute_Buffer = 32;
         public int Traceroute_Buffer
         {
-            get { return _traceroute_Buffer; }
+            get => _traceroute_Buffer;
             set
             {
                 if (value == _traceroute_Buffer)
@@ -1036,7 +1037,7 @@ namespace NETworkManager.Models.Settings
         private bool _traceroute_ResolveHostname = true;
         public bool Traceroute_ResolveHostname
         {
-            get { return _traceroute_ResolveHostname; }
+            get => _traceroute_ResolveHostname;
             set
             {
                 if (value == _traceroute_ResolveHostname)
@@ -1053,7 +1054,7 @@ namespace NETworkManager.Models.Settings
         private bool _traceroute_ResolveHostnamePreferIPv4 = true;
         public bool Traceroute_ResolveHostnamePreferIPv4
         {
-            get { return _traceroute_ResolveHostnamePreferIPv4; }
+            get => _traceroute_ResolveHostnamePreferIPv4;
             set
             {
                 if (value == _traceroute_ResolveHostnamePreferIPv4)
@@ -1067,7 +1068,7 @@ namespace NETworkManager.Models.Settings
         private bool _traceroute_ExpandStatistics;
         public bool Traceroute_ExpandStatistics
         {
-            get { return _traceroute_ExpandStatistics; }
+            get => _traceroute_ExpandStatistics;
             set
             {
                 if (value == _traceroute_ExpandStatistics)
@@ -1081,7 +1082,7 @@ namespace NETworkManager.Models.Settings
         private bool _traceroute_ExpandProfileView = true;
         public bool Traceroute_ExpandProfileView
         {
-            get { return _traceroute_ExpandProfileView; }
+            get => _traceroute_ExpandProfileView;
             set
             {
                 if (value == _traceroute_ExpandProfileView)
@@ -1095,7 +1096,7 @@ namespace NETworkManager.Models.Settings
         private double _traceroute_ProfileWidth = 250;
         public double Traceroute_ProfileWidth
         {
-            get { return _traceroute_ProfileWidth; }
+            get => _traceroute_ProfileWidth;
             set
             {
                 if (value == _traceroute_ProfileWidth)
@@ -1109,7 +1110,7 @@ namespace NETworkManager.Models.Settings
         private bool _traceroute_ShowStatistics = true;
         public bool Traceroute_ShowStatistics
         {
-            get { return _traceroute_ShowStatistics; }
+            get => _traceroute_ShowStatistics;
             set
             {
                 if (value == _traceroute_ShowStatistics)
@@ -1128,7 +1129,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _dnsLookup_HostHistory = new ObservableCollection<string>();
         public ObservableCollection<string> DNSLookup_HostHistory
         {
-            get { return _dnsLookup_HostHistory; }
+            get => _dnsLookup_HostHistory;
             set
             {
                 if (value == _dnsLookup_HostHistory)
@@ -1142,7 +1143,7 @@ namespace NETworkManager.Models.Settings
         private bool _dnsLookup_UseCustomDNSServer;
         public bool DNSLookup_UseCustomDNSServer
         {
-            get { return _dnsLookup_UseCustomDNSServer; }
+            get => _dnsLookup_UseCustomDNSServer;
             set
             {
                 if (value == _dnsLookup_UseCustomDNSServer)
@@ -1156,7 +1157,7 @@ namespace NETworkManager.Models.Settings
         private List<string> _dnsLookup_CustomDNSServer = new List<string>();
         public List<string> DNSLookup_CustomDNSServer
         {
-            get { return _dnsLookup_CustomDNSServer; }
+            get => _dnsLookup_CustomDNSServer;
             set
             {
                 if (value == _dnsLookup_CustomDNSServer)
@@ -1170,7 +1171,7 @@ namespace NETworkManager.Models.Settings
         private int _dnsLookup_Port = 53;
         public int DNSLookup_Port
         {
-            get { return _dnsLookup_Port; }
+            get => _dnsLookup_Port;
             set
             {
                 if (value == _dnsLookup_Port)
@@ -1184,7 +1185,7 @@ namespace NETworkManager.Models.Settings
         private QClass _dnsLookup_Class = QClass.IN;
         public QClass DNSLookup_Class
         {
-            get { return _dnsLookup_Class; }
+            get => _dnsLookup_Class;
             set
             {
                 if (value == _dnsLookup_Class)
@@ -1198,7 +1199,7 @@ namespace NETworkManager.Models.Settings
         private bool _dnsLookup_ShowMostCommonQueryTypes = true;
         public bool DNSLookup_ShowMostCommonQueryTypes
         {
-            get { return _dnsLookup_ShowMostCommonQueryTypes; }
+            get => _dnsLookup_ShowMostCommonQueryTypes;
             set
             {
                 if (value == _dnsLookup_ShowMostCommonQueryTypes)
@@ -1215,7 +1216,7 @@ namespace NETworkManager.Models.Settings
         private QType _dnsLookup_Type = QType.ANY;
         public QType DNSLookup_Type
         {
-            get { return _dnsLookup_Type; }
+            get => _dnsLookup_Type;
             set
             {
                 if (value == _dnsLookup_Type)
@@ -1229,7 +1230,7 @@ namespace NETworkManager.Models.Settings
         private bool _dnsLookup_AddDNSSuffix = true;
         public bool DNSLookup_AddDNSSuffix
         {
-            get { return _dnsLookup_AddDNSSuffix; }
+            get => _dnsLookup_AddDNSSuffix;
             set
             {
                 if (value == _dnsLookup_AddDNSSuffix)
@@ -1243,7 +1244,7 @@ namespace NETworkManager.Models.Settings
         private bool _dnsLookup_UseCustomDNSSuffix;
         public bool DNSLookup_UseCustomDNSSuffix
         {
-            get { return _dnsLookup_UseCustomDNSSuffix; }
+            get => _dnsLookup_UseCustomDNSSuffix;
             set
             {
                 if (value == _dnsLookup_UseCustomDNSSuffix)
@@ -1257,7 +1258,7 @@ namespace NETworkManager.Models.Settings
         private string _dnsLookup_CustomDNSSuffix = string.Empty;
         public string DNSLookup_CustomDNSSuffix
         {
-            get { return _dnsLookup_CustomDNSSuffix; }
+            get => _dnsLookup_CustomDNSSuffix;
             set
             {
                 if (value == _dnsLookup_CustomDNSSuffix)
@@ -1271,7 +1272,7 @@ namespace NETworkManager.Models.Settings
         private bool _dnsLookup_ResolveCNAME = true;
         public bool DNSLookup_ResolveCNAME
         {
-            get { return _dnsLookup_ResolveCNAME; }
+            get => _dnsLookup_ResolveCNAME;
             set
             {
                 if (value == _dnsLookup_ResolveCNAME)
@@ -1285,7 +1286,7 @@ namespace NETworkManager.Models.Settings
         private bool _dnsLookup_Recursion = true;
         public bool DNSLookup_Recursion
         {
-            get { return _dnsLookup_Recursion; }
+            get => _dnsLookup_Recursion;
             set
             {
                 if (value == _dnsLookup_Recursion)
@@ -1296,10 +1297,10 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _dnsLookup_UseResolverCache = false;
+        private bool _dnsLookup_UseResolverCache;
         public bool DNSLookup_UseResolverCache
         {
-            get { return _dnsLookup_UseResolverCache; }
+            get => _dnsLookup_UseResolverCache;
             set
             {
                 if (value == _dnsLookup_UseResolverCache)
@@ -1313,7 +1314,7 @@ namespace NETworkManager.Models.Settings
         private TransportType _dnsLookup_TransportType = TransportType.Udp;
         public TransportType DNSLookup_TransportType
         {
-            get { return _dnsLookup_TransportType; }
+            get => _dnsLookup_TransportType;
             set
             {
                 if (value == _dnsLookup_TransportType)
@@ -1327,7 +1328,7 @@ namespace NETworkManager.Models.Settings
         private int _dnsLookup_Attempts = 3;
         public int DNSLookup_Attempts
         {
-            get { return _dnsLookup_Attempts; }
+            get => _dnsLookup_Attempts;
             set
             {
                 if (value == _dnsLookup_Attempts)
@@ -1341,7 +1342,7 @@ namespace NETworkManager.Models.Settings
         private int _dnsLookup_Timeout = 2000;
         public int DNSLookup_Timeout
         {
-            get { return _dnsLookup_Timeout; }
+            get => _dnsLookup_Timeout;
             set
             {
                 if (value == _dnsLookup_Timeout)
@@ -1352,10 +1353,10 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _dnsLookup_ExpandStatistics = false;
+        private bool _dnsLookup_ExpandStatistics;
         public bool DNSLookup_ExpandStatistics
         {
-            get { return _dnsLookup_ExpandStatistics; }
+            get => _dnsLookup_ExpandStatistics;
             set
             {
                 if (value == _dnsLookup_ExpandStatistics)
@@ -1369,7 +1370,7 @@ namespace NETworkManager.Models.Settings
         private bool _dnsLookup_ShowStatistics = true;
         public bool DNSLookup_ShowStatistics
         {
-            get { return _dnsLookup_ShowStatistics; }
+            get => _dnsLookup_ShowStatistics;
             set
             {
                 if (value == _dnsLookup_ShowStatistics)
@@ -1388,7 +1389,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _remoteDesktop_HostHistory = new ObservableCollection<string>();
         public ObservableCollection<string> RemoteDesktop_HostHistory
         {
-            get { return _remoteDesktop_HostHistory; }
+            get => _remoteDesktop_HostHistory;
             set
             {
                 if (value == _remoteDesktop_HostHistory)
@@ -1402,7 +1403,7 @@ namespace NETworkManager.Models.Settings
         private bool _remoteDesktop_AdjustScreenAutomatically;
         public bool RemoteDesktop_AdjustScreenAutomatically
         {
-            get { return _remoteDesktop_AdjustScreenAutomatically; }
+            get => _remoteDesktop_AdjustScreenAutomatically;
             set
             {
                 if (value == _remoteDesktop_AdjustScreenAutomatically)
@@ -1416,7 +1417,7 @@ namespace NETworkManager.Models.Settings
         private bool _remoteDesktop_UseCurrentViewSize;
         public bool RemoteDesktop_UseCurrentViewSize
         {
-            get { return _remoteDesktop_UseCurrentViewSize; }
+            get => _remoteDesktop_UseCurrentViewSize;
             set
             {
                 if (value == _remoteDesktop_UseCurrentViewSize)
@@ -1430,7 +1431,7 @@ namespace NETworkManager.Models.Settings
         private bool _remoteDesktop_UseFixedScreenSize = true;
         public bool RemoteDesktop_UseFixedScreenSize
         {
-            get { return _remoteDesktop_UseFixedScreenSize; }
+            get => _remoteDesktop_UseFixedScreenSize;
             set
             {
                 if (value == _remoteDesktop_UseFixedScreenSize)
@@ -1444,7 +1445,7 @@ namespace NETworkManager.Models.Settings
         private int _remoteDesktop_ScreenWidth = 1280;
         public int RemoteDesktop_ScreenWidth
         {
-            get { return _remoteDesktop_ScreenWidth; }
+            get => _remoteDesktop_ScreenWidth;
             set
             {
                 if (value == _remoteDesktop_ScreenWidth)
@@ -1458,7 +1459,7 @@ namespace NETworkManager.Models.Settings
         private int _remoteDesktop_ScreenHeight = 768;
         public int RemoteDesktop_ScreenHeight
         {
-            get { return _remoteDesktop_ScreenHeight; }
+            get => _remoteDesktop_ScreenHeight;
             set
             {
                 if (value == _remoteDesktop_ScreenHeight)
@@ -1472,7 +1473,7 @@ namespace NETworkManager.Models.Settings
         private bool _remoteDesktop_UseCustomScreenSize;
         public bool RemoteDesktop_UseCustomScreenSize
         {
-            get { return _remoteDesktop_UseCustomScreenSize; }
+            get => _remoteDesktop_UseCustomScreenSize;
             set
             {
                 if (value == _remoteDesktop_UseCustomScreenSize)
@@ -1486,7 +1487,7 @@ namespace NETworkManager.Models.Settings
         private int _remoteDesktop_CustomScreenWidth;
         public int RemoteDesktop_CustomScreenWidth
         {
-            get { return _remoteDesktop_CustomScreenWidth; }
+            get => _remoteDesktop_CustomScreenWidth;
             set
             {
                 if (value == _remoteDesktop_CustomScreenWidth)
@@ -1500,7 +1501,7 @@ namespace NETworkManager.Models.Settings
         private int _remoteDesktop_CustomScreenHeight;
         public int RemoteDesktop_CustomScreenHeight
         {
-            get { return _remoteDesktop_CustomScreenHeight; }
+            get => _remoteDesktop_CustomScreenHeight;
             set
             {
                 if (value == _remoteDesktop_CustomScreenHeight)
@@ -1514,7 +1515,7 @@ namespace NETworkManager.Models.Settings
         private int _remoteDesktop_ColorDepth = 32;
         public int RemoteDesktop_ColorDepth
         {
-            get { return _remoteDesktop_ColorDepth; }
+            get => _remoteDesktop_ColorDepth;
             set
             {
                 if (value == _remoteDesktop_ColorDepth)
@@ -1528,7 +1529,7 @@ namespace NETworkManager.Models.Settings
         private int _remoteDesktop_Port = 3389;
         public int RemoteDesktop_Port
         {
-            get { return _remoteDesktop_Port; }
+            get => _remoteDesktop_Port;
             set
             {
                 if (value == _remoteDesktop_Port)
@@ -1542,7 +1543,7 @@ namespace NETworkManager.Models.Settings
         private bool _remoteDesktop_EnableCredSspSupport = true;
         public bool RemoteDesktop_EnableCredSspSupport
         {
-            get { return _remoteDesktop_EnableCredSspSupport; }
+            get => _remoteDesktop_EnableCredSspSupport;
             set
             {
                 if (value == _remoteDesktop_EnableCredSspSupport)
@@ -1556,7 +1557,7 @@ namespace NETworkManager.Models.Settings
         private uint _remoteDesktop_AuthenticationLevel = 2;
         public uint RemoteDesktop_AuthenticationLevel
         {
-            get { return _remoteDesktop_AuthenticationLevel; }
+            get => _remoteDesktop_AuthenticationLevel;
             set
             {
                 if (value == _remoteDesktop_AuthenticationLevel)
@@ -1570,7 +1571,7 @@ namespace NETworkManager.Models.Settings
         private int _remoteDesktop_KeyboardHookMode = 1;
         public int RemoteDesktop_KeyboardHookMode
         {
-            get { return _remoteDesktop_KeyboardHookMode; }
+            get => _remoteDesktop_KeyboardHookMode;
             set
             {
                 if (value == _remoteDesktop_KeyboardHookMode)
@@ -1584,7 +1585,7 @@ namespace NETworkManager.Models.Settings
         private bool _remoteDesktop_RedirectClipboard = true;
         public bool RemoteDesktop_RedirectClipboard
         {
-            get { return _remoteDesktop_RedirectClipboard; }
+            get => _remoteDesktop_RedirectClipboard;
             set
             {
                 if (value == _remoteDesktop_RedirectClipboard)
@@ -1598,7 +1599,7 @@ namespace NETworkManager.Models.Settings
         private bool _remoteDesktop_RedirectDevices;
         public bool RemoteDesktop_RedirectDevices
         {
-            get { return _remoteDesktop_RedirectDevices; }
+            get => _remoteDesktop_RedirectDevices;
             set
             {
                 if (value == _remoteDesktop_RedirectDevices)
@@ -1612,7 +1613,7 @@ namespace NETworkManager.Models.Settings
         private bool _remoteDesktop_RedirectDrives;
         public bool RemoteDesktop_RedirectDrives
         {
-            get { return _remoteDesktop_RedirectDrives; }
+            get => _remoteDesktop_RedirectDrives;
             set
             {
                 if (value == _remoteDesktop_RedirectDrives)
@@ -1626,7 +1627,7 @@ namespace NETworkManager.Models.Settings
         private bool _remoteDesktop_RedirectPorts;
         public bool RemoteDesktop_RedirectPorts
         {
-            get { return _remoteDesktop_RedirectPorts; }
+            get => _remoteDesktop_RedirectPorts;
             set
             {
                 if (value == _remoteDesktop_RedirectPorts)
@@ -1640,7 +1641,7 @@ namespace NETworkManager.Models.Settings
         private bool _remoteDesktop_RedirectSmartCards;
         public bool RemoteDesktop_RedirectSmartCards
         {
-            get { return _remoteDesktop_RedirectSmartCards; }
+            get => _remoteDesktop_RedirectSmartCards;
             set
             {
                 if (value == _remoteDesktop_RedirectSmartCards)
@@ -1654,7 +1655,7 @@ namespace NETworkManager.Models.Settings
         private bool _remoteDesktop_RedirectPrinters;
         public bool RemoteDesktop_RedirectPrinters
         {
-            get { return _remoteDesktop_RedirectPrinters; }
+            get => _remoteDesktop_RedirectPrinters;
             set
             {
                 if (value == _remoteDesktop_RedirectPrinters)
@@ -1668,7 +1669,7 @@ namespace NETworkManager.Models.Settings
         private bool _remoteDesktop_ExpandProfileView = true;
         public bool RemoteDesktop_ExpandProfileView
         {
-            get { return _remoteDesktop_ExpandProfileView; }
+            get => _remoteDesktop_ExpandProfileView;
             set
             {
                 if (value == _remoteDesktop_ExpandProfileView)
@@ -1682,7 +1683,7 @@ namespace NETworkManager.Models.Settings
         private double _remoteDesktop_ProfileWidth = 250;
         public double RemoteDesktop_ProfileWidth
         {
-            get { return _remoteDesktop_ProfileWidth; }
+            get => _remoteDesktop_ProfileWidth;
             set
             {
                 if (value == _remoteDesktop_ProfileWidth)
@@ -1698,7 +1699,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _puTTY_HostHistory = new ObservableCollection<string>();
         public ObservableCollection<string> PuTTY_HostHistory
         {
-            get { return _puTTY_HostHistory; }
+            get => _puTTY_HostHistory;
             set
             {
                 if (value == _puTTY_HostHistory)
@@ -1712,7 +1713,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _puTTY_SerialLineHistory = new ObservableCollection<string>();
         public ObservableCollection<string> PuTTY_SerialLineHistory
         {
-            get { return _puTTY_SerialLineHistory; }
+            get => _puTTY_SerialLineHistory;
             set
             {
                 if (value == _puTTY_SerialLineHistory)
@@ -1726,7 +1727,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _puTTY_PortHistory = new ObservableCollection<string>();
         public ObservableCollection<string> PuTTY_PortHistory
         {
-            get { return _puTTY_PortHistory; }
+            get => _puTTY_PortHistory;
             set
             {
                 if (value == _puTTY_PortHistory)
@@ -1740,7 +1741,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _puTTY_BaudHistory = new ObservableCollection<string>();
         public ObservableCollection<string> PuTTY_BaudHistory
         {
-            get { return _puTTY_BaudHistory; }
+            get => _puTTY_BaudHistory;
             set
             {
                 if (value == _puTTY_BaudHistory)
@@ -1754,7 +1755,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _puTTY_UsernameHistory = new ObservableCollection<string>();
         public ObservableCollection<string> PuTTY_UsernameHistory
         {
-            get { return _puTTY_UsernameHistory; }
+            get => _puTTY_UsernameHistory;
             set
             {
                 if (value == _puTTY_UsernameHistory)
@@ -1768,7 +1769,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _puTTY_ProfileHistory = new ObservableCollection<string>();
         public ObservableCollection<string> PuTTY_ProfileHistory
         {
-            get { return _puTTY_ProfileHistory; }
+            get => _puTTY_ProfileHistory;
             set
             {
                 if (value == _puTTY_ProfileHistory)
@@ -1782,7 +1783,7 @@ namespace NETworkManager.Models.Settings
         private bool _puTTY_ExpandProfileView = true;
         public bool PuTTY_ExpandProfileView
         {
-            get { return _puTTY_ExpandProfileView; }
+            get => _puTTY_ExpandProfileView;
             set
             {
                 if (value == _puTTY_ExpandProfileView)
@@ -1796,7 +1797,7 @@ namespace NETworkManager.Models.Settings
         private double _puTTY_ProfileWidth = 250;
         public double PuTTY_ProfileWidth
         {
-            get { return _puTTY_ProfileWidth; }
+            get => _puTTY_ProfileWidth;
             set
             {
                 if (value == _puTTY_ProfileWidth)
@@ -1810,7 +1811,7 @@ namespace NETworkManager.Models.Settings
         private string _puTTY_PuTTYLocation;
         public string PuTTY_PuTTYLocation
         {
-            get { return _puTTY_PuTTYLocation; }
+            get => _puTTY_PuTTYLocation;
             set
             {
                 if (value == _puTTY_PuTTYLocation)
@@ -1827,7 +1828,7 @@ namespace NETworkManager.Models.Settings
         private string _puTTY_Profile;
         public string PuTTY_Profile
         {
-            get { return _puTTY_Profile; }
+            get => _puTTY_Profile;
             set
             {
                 if (value == _puTTY_Profile)
@@ -1841,7 +1842,7 @@ namespace NETworkManager.Models.Settings
         private string _puTTY_SerialLine = "COM1";
         public string PuTTY_SerialLine
         {
-            get { return _puTTY_SerialLine; }
+            get => _puTTY_SerialLine;
             set
             {
                 if (value == _puTTY_SerialLine)
@@ -1855,7 +1856,7 @@ namespace NETworkManager.Models.Settings
         private int _puTTY_SSHPort = 22;
         public int PuTTY_SSHPort
         {
-            get { return _puTTY_SSHPort; }
+            get => _puTTY_SSHPort;
             set
             {
                 if (value == _puTTY_SSHPort)
@@ -1869,7 +1870,7 @@ namespace NETworkManager.Models.Settings
         private int _puTTY_TelnetPort = 23;
         public int PuTTY_TelnetPort
         {
-            get { return _puTTY_TelnetPort; }
+            get => _puTTY_TelnetPort;
             set
             {
                 if (value == _puTTY_TelnetPort)
@@ -1883,7 +1884,7 @@ namespace NETworkManager.Models.Settings
         private int _puTTY_RloginPort = 513;
         public int PuTTY_RloginPort
         {
-            get { return _puTTY_RloginPort; }
+            get => _puTTY_RloginPort;
             set
             {
                 if (value == _puTTY_RloginPort)
@@ -1897,7 +1898,7 @@ namespace NETworkManager.Models.Settings
         private int _puTTY_BaudRate = 9600;
         public int PuTTY_BaudRate
         {
-            get { return _puTTY_BaudRate; }
+            get => _puTTY_BaudRate;
             set
             {
                 if (value == _puTTY_BaudRate)
@@ -1913,7 +1914,7 @@ namespace NETworkManager.Models.Settings
         private WalkMode _snmp_WalkMode = WalkMode.WithinSubtree;
         public WalkMode SNMP_WalkMode
         {
-            get { return _snmp_WalkMode; }
+            get => _snmp_WalkMode;
             set
             {
                 if (value == _snmp_WalkMode)
@@ -1927,7 +1928,7 @@ namespace NETworkManager.Models.Settings
         private int _snmp_Timeout = 60000;
         public int SNMP_Timeout
         {
-            get { return _snmp_Timeout; }
+            get => _snmp_Timeout;
             set
             {
                 if (value == _snmp_Timeout)
@@ -1941,8 +1942,7 @@ namespace NETworkManager.Models.Settings
         private int _snmp_port = 161;
         public int SNMP_Port
         {
-            get
-            { return _snmp_port; }
+            get => _snmp_port;
             set
             {
                 if (value == _snmp_port)
@@ -1956,7 +1956,7 @@ namespace NETworkManager.Models.Settings
         private bool _snmp_ResolveHostnamePreferIPv4 = true;
         public bool SNMP_ResolveHostnamePreferIPv4
         {
-            get { return _snmp_ResolveHostnamePreferIPv4; }
+            get => _snmp_ResolveHostnamePreferIPv4;
             set
             {
                 if (value == _snmp_ResolveHostnamePreferIPv4)
@@ -1970,7 +1970,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _snmp_HostHistory = new ObservableCollection<string>();
         public ObservableCollection<string> SNMP_HostHistory
         {
-            get { return _snmp_HostHistory; }
+            get => _snmp_HostHistory;
             set
             {
                 if (value == _snmp_HostHistory)
@@ -1984,7 +1984,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _snmp_OIDHistory = new ObservableCollection<string>();
         public ObservableCollection<string> SNMP_OIDHistory
         {
-            get { return _snmp_OIDHistory; }
+            get => _snmp_OIDHistory;
             set
             {
                 if (value == _snmp_OIDHistory)
@@ -1998,7 +1998,7 @@ namespace NETworkManager.Models.Settings
         private SNMPMode _snmp_Mode = SNMPMode.Walk;
         public SNMPMode SNMP_Mode
         {
-            get { return _snmp_Mode; }
+            get => _snmp_Mode;
             set
             {
                 if (value == _snmp_Mode)
@@ -2009,10 +2009,10 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private SNMPVersion _snmp_Version = SNMPVersion.v2c;
+        private SNMPVersion _snmp_Version = SNMPVersion.V2C;
         public SNMPVersion SNMP_Version
         {
-            get { return _snmp_Version; }
+            get => _snmp_Version;
             set
             {
                 if (value == _snmp_Version)
@@ -2026,7 +2026,7 @@ namespace NETworkManager.Models.Settings
         private bool _snmp_ExpandStatistics = true;
         public bool SNMP_ExpandStatistics
         {
-            get { return _snmp_ExpandStatistics; }
+            get => _snmp_ExpandStatistics;
             set
             {
                 if (value == _snmp_ExpandStatistics)
@@ -2037,10 +2037,10 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private SNMPv3Security _snmp_Security = SNMPv3Security.authPriv;
-        public SNMPv3Security SNMP_Security
+        private SNMPV3Security _snmp_Security = SNMPV3Security.AuthPriv;
+        public SNMPV3Security SNMP_Security
         {
-            get { return _snmp_Security; }
+            get => _snmp_Security;
             set
             {
                 if (value == _snmp_Security)
@@ -2051,10 +2051,10 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private SNMPv3AuthenticationProvider _snmp_AuthenticationProvider = SNMPv3AuthenticationProvider.SHA1;
-        public SNMPv3AuthenticationProvider SNMP_AuthenticationProvider
+        private SNMPV3AuthenticationProvider _snmp_AuthenticationProvider = SNMPV3AuthenticationProvider.SHA1;
+        public SNMPV3AuthenticationProvider SNMP_AuthenticationProvider
         {
-            get { return _snmp_AuthenticationProvider; }
+            get => _snmp_AuthenticationProvider;
             set
             {
                 if (value == _snmp_AuthenticationProvider)
@@ -2065,10 +2065,10 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private SNMPv3PrivacyProvider _snmp_PrivacyProvider = SNMPv3PrivacyProvider.AES;
-        public SNMPv3PrivacyProvider SNMP_PrivacyProvider
+        private SNMPV3PrivacyProvider _snmp_PrivacyProvider = SNMPV3PrivacyProvider.AES;
+        public SNMPV3PrivacyProvider SNMP_PrivacyProvider
         {
-            get { return _snmp_PrivacyProvider; }
+            get => _snmp_PrivacyProvider;
             set
             {
                 if (value == _snmp_PrivacyProvider)
@@ -2082,7 +2082,7 @@ namespace NETworkManager.Models.Settings
         private bool _snmp_ShowStatistics = true;
         public bool SNMP_ShowStatistics
         {
-            get { return _snmp_ShowStatistics; }
+            get => _snmp_ShowStatistics;
             set
             {
                 if (value == _snmp_ShowStatistics)
@@ -2101,7 +2101,7 @@ namespace NETworkManager.Models.Settings
         private int _wakeOnLAN_DefaultPort = 7;
         public int WakeOnLAN_DefaultPort
         {
-            get { return _wakeOnLAN_DefaultPort; }
+            get => _wakeOnLAN_DefaultPort;
             set
             {
                 if (value == _wakeOnLAN_DefaultPort)
@@ -2115,7 +2115,7 @@ namespace NETworkManager.Models.Settings
         private bool _wakeOnLAN_ExpandClientView = true;
         public bool WakeOnLAN_ExpandClientView
         {
-            get { return _wakeOnLAN_ExpandClientView; }
+            get => _wakeOnLAN_ExpandClientView;
             set
             {
                 if (value == _wakeOnLAN_ExpandClientView)
@@ -2126,11 +2126,10 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-
         private double _wakeOnLAN_ClientWidth = 250;
         public double WakeOnLAN_ClientWidth
         {
-            get { return _wakeOnLAN_ClientWidth; }
+            get => _wakeOnLAN_ClientWidth;
             set
             {
                 if (value == _wakeOnLAN_ClientWidth)
@@ -2146,7 +2145,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _httpHeaders_WebsiteUriHistory = new ObservableCollection<string>();
         public ObservableCollection<string> HTTPHeaders_WebsiteUriHistory
         {
-            get { return _httpHeaders_WebsiteUriHistory; }
+            get => _httpHeaders_WebsiteUriHistory;
             set
             {
                 if (value == _httpHeaders_WebsiteUriHistory)
@@ -2160,7 +2159,7 @@ namespace NETworkManager.Models.Settings
         private int _httpHeaders_Timeout = 10000;
         public int HTTPHeaders_Timeout
         {
-            get { return _httpHeaders_Timeout; }
+            get => _httpHeaders_Timeout;
             set
             {
                 if (value == _httpHeaders_Timeout)
@@ -2174,7 +2173,7 @@ namespace NETworkManager.Models.Settings
         private bool _httpHeaders_ExpandStatistics = true;
         public bool HTTPHeaders_ExpandStatistics
         {
-            get { return _httpHeaders_ExpandStatistics; }
+            get => _httpHeaders_ExpandStatistics;
             set
             {
                 if (value == _httpHeaders_ExpandStatistics)
@@ -2188,7 +2187,7 @@ namespace NETworkManager.Models.Settings
         private bool _httpHeaders_ShowStatistics = true;
         public bool HTTPHeaders_ShowStatistics
         {
-            get { return _httpHeaders_ShowStatistics; }
+            get => _httpHeaders_ShowStatistics;
             set
             {
                 if (value == _httpHeaders_ShowStatistics)
@@ -2204,11 +2203,12 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region Subnet Calculator
+
         #region Calculator
         private ObservableCollection<string> _subnetCalculator_Calculator_SubnetHistory = new ObservableCollection<string>();
         public ObservableCollection<string> SubnetCalculator_Calculator_SubnetHistory
         {
-            get { return _subnetCalculator_Calculator_SubnetHistory; }
+            get => _subnetCalculator_Calculator_SubnetHistory;
             set
             {
                 if (value == _subnetCalculator_Calculator_SubnetHistory)
@@ -2224,7 +2224,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _subnetCalculator_Subnetting_SubnetHistory = new ObservableCollection<string>();
         public ObservableCollection<string> SubnetCalculator_Subnetting_SubnetHistory
         {
-            get { return _subnetCalculator_Subnetting_SubnetHistory; }
+            get => _subnetCalculator_Subnetting_SubnetHistory;
             set
             {
                 if (value == _subnetCalculator_Subnetting_SubnetHistory)
@@ -2238,7 +2238,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _subnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory = new ObservableCollection<string>();
         public ObservableCollection<string> SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory
         {
-            get { return _subnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory; }
+            get => _subnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory;
             set
             {
                 if (value == _subnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory)
@@ -2249,10 +2249,11 @@ namespace NETworkManager.Models.Settings
             }
         }
         #endregion
+
         private ObservableCollection<string> _subnetCalculator_Supernetting_Subnet1 = new ObservableCollection<string>();
         public ObservableCollection<string> SubnetCalculator_Supernetting_Subnet1
         {
-            get { return _subnetCalculator_Supernetting_Subnet1; }
+            get => _subnetCalculator_Supernetting_Subnet1;
             set
             {
                 if (value == _subnetCalculator_Supernetting_Subnet1)
@@ -2266,7 +2267,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _subnetCalculator_Supernetting_Subnet2 = new ObservableCollection<string>();
         public ObservableCollection<string> SubnetCalculator_Supernetting_Subnet2
         {
-            get { return _subnetCalculator_Supernetting_Subnet2; }
+            get => _subnetCalculator_Supernetting_Subnet2;
             set
             {
                 if (value == _subnetCalculator_Supernetting_Subnet2)
@@ -2279,13 +2280,14 @@ namespace NETworkManager.Models.Settings
         #region Supernetting
 
         #endregion
+
         #endregion
 
         #region Lookup
         private ObservableCollection<string> _lookup_OUI_MACAddressOrVendorHistory = new ObservableCollection<string>();
         public ObservableCollection<string> Lookup_OUI_MACAddressOrVendorHistory
         {
-            get { return _lookup_OUI_MACAddressOrVendorHistory; }
+            get => _lookup_OUI_MACAddressOrVendorHistory;
             set
             {
                 if (value == _lookup_OUI_MACAddressOrVendorHistory)
@@ -2299,7 +2301,7 @@ namespace NETworkManager.Models.Settings
         private ObservableCollection<string> _lookup_Port_PortsHistory = new ObservableCollection<string>();
         public ObservableCollection<string> Lookup_Port_PortsHistory
         {
-            get { return _lookup_Port_PortsHistory; }
+            get => _lookup_Port_PortsHistory;
             set
             {
                 if (value == _lookup_Port_PortsHistory)
@@ -2315,7 +2317,7 @@ namespace NETworkManager.Models.Settings
         private bool _connections_AutoRefresh;
         public bool Connections_AutoRefresh
         {
-            get { return _connections_AutoRefresh; }
+            get => _connections_AutoRefresh;
             set
             {
                 if (value == _connections_AutoRefresh)
@@ -2326,10 +2328,10 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private AutoRefreshTimeInfo _connections_AutoRefreshTime = AutoRefreshTime.Defaults.First(x => (x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second));
+        private AutoRefreshTimeInfo _connections_AutoRefreshTime = AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second);
         public AutoRefreshTimeInfo Connections_AutoRefreshTime
         {
-            get { return _connections_AutoRefreshTime; }
+            get => _connections_AutoRefreshTime;
             set
             {
                 if (value == _connections_AutoRefreshTime)
@@ -2345,7 +2347,7 @@ namespace NETworkManager.Models.Settings
         private bool _listeners_AutoRefresh;
         public bool Listeners_AutoRefresh
         {
-            get { return _listeners_AutoRefresh; }
+            get => _listeners_AutoRefresh;
             set
             {
                 if (value == _listeners_AutoRefresh)
@@ -2356,10 +2358,10 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private AutoRefreshTimeInfo _listeners_AutoRefreshTime = AutoRefreshTime.Defaults.First(x => (x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second));
+        private AutoRefreshTimeInfo _listeners_AutoRefreshTime = AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second);
         public AutoRefreshTimeInfo Listeners_AutoRefreshTime
         {
-            get { return _listeners_AutoRefreshTime; }
+            get => _listeners_AutoRefreshTime;
             set
             {
                 if (value == _listeners_AutoRefreshTime)
@@ -2375,7 +2377,7 @@ namespace NETworkManager.Models.Settings
         private bool _arpTable_AutoRefresh;
         public bool ARPTable_AutoRefresh
         {
-            get { return _arpTable_AutoRefresh; }
+            get => _arpTable_AutoRefresh;
             set
             {
                 if (value == _arpTable_AutoRefresh)
@@ -2386,10 +2388,10 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private AutoRefreshTimeInfo _arpTable_AutoRefreshTime = AutoRefreshTime.Defaults.First(x => (x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second));
+        private AutoRefreshTimeInfo _arpTable_AutoRefreshTime = AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second);
         public AutoRefreshTimeInfo ARPTable_AutoRefreshTime
         {
-            get { return _arpTable_AutoRefreshTime; }
+            get => _arpTable_AutoRefreshTime;
             set
             {
                 if (value == _arpTable_AutoRefreshTime)
@@ -2458,7 +2460,7 @@ namespace NETworkManager.Models.Settings
             Lookup_Port_PortsHistory.CollectionChanged += CollectionChanged;
         }
 
-        private void CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             SettingsChanged = true;
         }

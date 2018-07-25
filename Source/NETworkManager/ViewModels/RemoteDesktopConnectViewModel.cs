@@ -154,7 +154,7 @@ namespace NETworkManager.ViewModels
             if (!ConnectAs)
                 HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.RemoteDesktop_HostHistory);
 
-            if (CredentialManager.Loaded)
+            if (CredentialManager.IsLoaded)
                 Credentials = new CollectionViewSource { Source = CredentialManager.CredentialInfoList }.View;
             else
                 CredentialsLocked = true;

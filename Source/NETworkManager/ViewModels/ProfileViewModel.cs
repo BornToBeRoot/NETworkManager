@@ -997,7 +997,7 @@ namespace NETworkManager.ViewModels
             Name = profileInfo2.Name;
             Host = profileInfo2.Host;
 
-            if (CredentialManager.Loaded)
+            if (CredentialManager.IsLoaded)
             {
                 Credentials = CollectionViewSource.GetDefaultView(CredentialManager.CredentialInfoList);
             }

@@ -8,7 +8,7 @@ namespace NETworkManager.Models.Network
         #region Methods
         public static void Send(WakeOnLANInfo info)
         {
-            using (UdpClient udpClient = new UdpClient())
+            using (var udpClient = new UdpClient())
             {
                 udpClient.Connect(info.Broadcast, info.Port);
 
@@ -18,14 +18,14 @@ namespace NETworkManager.Models.Network
 
         public static byte[] CreateMagicPacket(byte[] mac)
         {
-            byte[] packet = new byte[17 * 6];
+            var packet = new byte[17 * 6];
 
-            for (int i = 0; i < 6; i++)
+            for (var i = 0; i < 6; i++)
                 packet[i] = 0xFF;
 
-            for (int i = 1; i <= 16; i++)
+            for (var i = 1; i <= 16; i++)
             {
-                for (int j = 0; j < 6; j++)
+                for (var j = 0; j < 6; j++)
                     packet[i * 6 + j] = mac[j];
             }
 
@@ -34,7 +34,7 @@ namespace NETworkManager.Models.Network
 
         public static byte[] CreateMagicPacket(string mac)
         {
-            byte[] macBytes = MACAddressHelper.ConvertStringToByteArray(mac);
+            var macBytes = MACAddressHelper.ConvertStringToByteArray(mac);
 
             return CreateMagicPacket(macBytes);
         }

@@ -169,7 +169,7 @@ namespace NETworkManager.ViewModels
             CredentialsFileExists = File.Exists(CredentialManager.GetCredentialsFilePath());
 
             // IF credentials are loaded, view to add/edit/remove is shown
-            CredentialsLoaded = CredentialManager.Loaded;
+            CredentialsLoaded = CredentialManager.IsLoaded;
         }
         #endregion
 

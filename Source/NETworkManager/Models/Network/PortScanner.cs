@@ -1,7 +1,6 @@
 ﻿using NETworkManager.Models.Lookup;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -13,7 +12,7 @@ namespace NETworkManager.Models.Network
     public class PortScanner
     {
         #region Variables
-        int progressValue;
+        private int _progressValue;
         #endregion
 
         #region Events
@@ -35,7 +34,7 @@ namespace NETworkManager.Models.Network
 
         public virtual void OnProgressChanged()
         {
-            ProgressChanged?.Invoke(this, new ProgressChangedArgs(progressValue));
+            ProgressChanged?.Invoke(this, new ProgressChangedArgs(_progressValue));
         }
 
         public event EventHandler UserHasCanceled;
@@ -49,7 +48,7 @@ namespace NETworkManager.Models.Network
         #region Methods
         public void ScanAsync(List<Tuple<IPAddress, string>> hostData, int[] ports, PortScannerOptions portScannerOptions, CancellationToken cancellationToken)
         {
-            progressValue = 0;
+            _progressValue = 0;
 
             // Modify the ThreadPool for better performance
             ThreadPool.GetMinThreads(out int workerThreads, out int completionPortThreads);
@@ -60,21 +59,21 @@ namespace NETworkManager.Models.Network
 
                 try
                 {
-                    ParallelOptions parallelOptions = new ParallelOptions()
+                    var parallelOptions = new ParallelOptions()
                     {
                         CancellationToken = cancellationToken,
                         MaxDegreeOfParallelism = portScannerOptions.Threads
                     };
 
-                    foreach (Tuple<IPAddress, string> host in hostData)
+                    foreach (var host in hostData)
                     {
                         // foreach ip, Parallel.ForEach port...
                         Parallel.ForEach(ports, parallelOptions, port =>
                         {
                             // Test if port is open
-                            using (TcpClient tcpClient = host.Item1.AddressFamily == AddressFamily.InterNetworkV6 ? new TcpClient(AddressFamily.InterNetworkV6) : new TcpClient(AddressFamily.InterNetwork))
+                            using (var tcpClient = host.Item1.AddressFamily == AddressFamily.InterNetworkV6 ? new TcpClient(AddressFamily.InterNetworkV6) : new TcpClient(AddressFamily.InterNetwork))
                             {
-                                IAsyncResult tcpClientConnection = tcpClient.BeginConnect(host.Item1, port, null, null);
+                                var tcpClientConnection = tcpClient.BeginConnect(host.Item1, port, null, null);
 
                                 if (tcpClientConnection.AsyncWaitHandle.WaitOne(portScannerOptions.Timeout, false))
                                 {
@@ -98,7 +97,7 @@ namespace NETworkManager.Models.Network
                             }
 
                             // Increase the progress                        
-                            Interlocked.Increment(ref progressValue);
+                            Interlocked.Increment(ref _progressValue);
                             OnProgressChanged();
                         });
                     }
@@ -108,7 +107,7 @@ namespace NETworkManager.Models.Network
                 catch (OperationCanceledException) // If user has canceled
                 {
                     // Check if the scan is already complete...
-                    if ((ports.Length * hostData.Count) == progressValue)
+                    if ((ports.Length * hostData.Count) == _progressValue)
                         OnScanComplete();
                     else
                         OnUserHasCanceled();
@@ -119,7 +118,7 @@ namespace NETworkManager.Models.Network
                     ThreadPool.GetMinThreads(out workerThreads, out completionPortThreads);
                     ThreadPool.SetMinThreads(workerThreads - portScannerOptions.Threads, completionPortThreads - portScannerOptions.Threads);
                 }
-            });
+            }, cancellationToken);
         }
         #endregion
     }

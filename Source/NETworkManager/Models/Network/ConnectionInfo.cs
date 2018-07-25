@@ -14,15 +14,9 @@ namespace NETworkManager.Models.Network
         public int RemotePort { get; set; }
         public TcpState State { get; set; }
 
-        public int LocalIPAddressInt32
-        {
-            get { return LocalIPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(LocalIPAddress) : 0; }
-        }
+        public int LocalIPAddressInt32 => LocalIPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(LocalIPAddress) : 0;
 
-        public int RemoteIPAddressInt32
-        {
-            get { return LocalIPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(RemoteIPAddress) : 0; }
-        }
+        public int RemoteIPAddressInt32 => LocalIPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(RemoteIPAddress) : 0;
 
         public ConnectionInfo()
         {

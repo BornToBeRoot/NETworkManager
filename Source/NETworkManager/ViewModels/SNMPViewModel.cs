@@ -99,10 +99,10 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView OIDHistoryView { get; }
 
-        public List<SNMPv3Security> Securitys { get; set; }
+        public List<SNMPV3Security> Securitys { get; set; }
 
-        private SNMPv3Security _security;
-        public SNMPv3Security Security
+        private SNMPV3Security _security;
+        public SNMPV3Security Security
         {
             get => _security;
             set
@@ -146,10 +146,10 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public List<SNMPv3AuthenticationProvider> AuthenticationProviders { get; set; }
+        public List<SNMPV3AuthenticationProvider> AuthenticationProviders { get; set; }
 
-        private SNMPv3AuthenticationProvider _authenticationProvider;
-        public SNMPv3AuthenticationProvider AuthenticationProvider
+        private SNMPV3AuthenticationProvider _authenticationProvider;
+        public SNMPV3AuthenticationProvider AuthenticationProvider
         {
             get => _authenticationProvider;
             set
@@ -179,10 +179,10 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public List<SNMPv3PrivacyProvider> PrivacyProviders { get; set; }
+        public List<SNMPV3PrivacyProvider> PrivacyProviders { get; set; }
 
-        private SNMPv3PrivacyProvider _privacyProvider;
-        public SNMPv3PrivacyProvider PrivacyProvider
+        private SNMPV3PrivacyProvider _privacyProvider;
+        public SNMPV3PrivacyProvider PrivacyProvider
         {
             get => _privacyProvider;
             set
@@ -397,11 +397,11 @@ namespace NETworkManager.ViewModels
             Modes = new List<SNMPMode>() { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
 
             // Security
-            Securitys = new List<SNMPv3Security>() { SNMPv3Security.noAuthNoPriv, SNMPv3Security.authNoPriv, SNMPv3Security.authPriv };
+            Securitys = new List<SNMPV3Security>() { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
 
             // Auth / Priv
-            AuthenticationProviders = new List<SNMPv3AuthenticationProvider>() { SNMPv3AuthenticationProvider.MD5, SNMPv3AuthenticationProvider.SHA1 };
-            PrivacyProviders = new List<SNMPv3PrivacyProvider>() { SNMPv3PrivacyProvider.DES, SNMPv3PrivacyProvider.AES };
+            AuthenticationProviders = new List<SNMPV3AuthenticationProvider>() { SNMPV3AuthenticationProvider.MD5, SNMPV3AuthenticationProvider.SHA1 };
+            PrivacyProviders = new List<SNMPV3PrivacyProvider>() { SNMPV3PrivacyProvider.DES, SNMPV3PrivacyProvider.AES };
 
             LoadSettings();
 
@@ -545,22 +545,22 @@ namespace NETworkManager.ViewModels
             switch (Mode)
             {
                 case SNMPMode.Get:
-                    if (Version != SNMPVersion.v3)
-                        snmp.Getv1v2cAsync(Version, ipAddress, Community, OID, snmpOptions);
+                    if (Version != SNMPVersion.V3)
+                        snmp.GetV1V2CAsync(Version, ipAddress, Community, OID, snmpOptions);
                     else
                         snmp.Getv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, snmpOptions);
                     break;
                 case SNMPMode.Walk:
-                    if (Version != SNMPVersion.v3)
-                        snmp.Walkv1v2cAsync(Version, ipAddress, Community, OID, SettingsManager.Current.SNMP_WalkMode, snmpOptions);
+                    if (Version != SNMPVersion.V3)
+                        snmp.WalkV1V2CAsync(Version, ipAddress, Community, OID, SettingsManager.Current.SNMP_WalkMode, snmpOptions);
                     else
-                        snmp.Walkv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, SettingsManager.Current.SNMP_WalkMode, snmpOptions);
+                        snmp.WalkV3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, SettingsManager.Current.SNMP_WalkMode, snmpOptions);
                     break;
                 case SNMPMode.Set:
-                    if (Version != SNMPVersion.v3)
-                        snmp.Setv1v2cAsync(Version, ipAddress, Community, OID, Data, snmpOptions);
+                    if (Version != SNMPVersion.V3)
+                        snmp.SetV1V2CAsync(Version, ipAddress, Community, OID, Data, snmpOptions);
                     else
-                        snmp.Setv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, Data, snmpOptions);
+                        snmp.SetV3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, Data, snmpOptions);
                     break;
             }
 

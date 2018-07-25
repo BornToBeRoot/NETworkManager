@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.NetworkInformation;
 
 namespace NETworkManager.Models.Network
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class NetworkInterfaceInfo
     {
         public string Id { get; set; }
