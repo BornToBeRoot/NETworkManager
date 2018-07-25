@@ -12,7 +12,7 @@
         <mah:NumericUpDown Value="{Binding MaximumHops}" Maximum="100" Minimum="1" Interval="1" Margin="0,0,0,20" />
         <TextBlock Text="{DynamicResource String_Header_Ping}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{DynamicResource String_Timeout}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding Timeout}" Maximum="10000" Minimum="100" Interval="100" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding Timeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,10" />
         <TextBlock Text="{DynamicResource String_Buffer}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Buffer}" Minimum="1" Maximum="65535" Margin="0,0,0,20" />
         <TextBlock Text="{DynamicResource String_Header_DNS}" Style="{StaticResource HeaderTextBlock}" />

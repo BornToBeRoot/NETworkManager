@@ -1924,7 +1924,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _snmp_Timeout = 60;
+        private int _snmp_Timeout = 60000;
         public int SNMP_Timeout
         {
             get { return _snmp_Timeout; }

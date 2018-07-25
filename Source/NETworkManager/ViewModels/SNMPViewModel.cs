@@ -531,7 +531,7 @@ namespace NETworkManager.ViewModels
             var snmpOptions = new SNMPOptions()
             {
                 Port = SettingsManager.Current.SNMP_Port,
-                Timeout = SettingsManager.Current.SNMP_Timeout * 1000 // Timeout is in ms
+                Timeout = SettingsManager.Current.SNMP_Timeout
             };
 
             var snmp = new SNMP();
