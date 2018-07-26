@@ -107,7 +107,8 @@
     <system:String x:Key="String_Header_General">Allgemein</system:String>
     <system:String x:Key="String_Header_ResolvePTR">Resolve PTR</system:String>
     <system:String x:Key="String_Header_Keyboard">Tastatur</system:String>
-    
+    <system:String x:Key="String_Header_SettingsHaveBeenReset">Einstellungen wurden zurückgesetzt!</system:String>
+
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
     <system:String x:Key="String_Slogan">Ein leistungsstarkes Tool zum Verwalten von Netzwerken und zur Behebung von Netzwerkproblemen!</system:String>
@@ -431,7 +432,8 @@
     <system:String x:Key="String_OnTheRemoteComputer">Auf dem Remotecomputer anwenden</system:String>
     <system:String x:Key="String_OnlyWhenUsingTheFullScreen">Nur bei Vollbild anwenden</system:String>
     <system:String x:Key="String_ApplyWindowsKeyCombinationsLikeAltTab">Windows Tastenkombinationen anwenden (z.B. ALT+TAB):</system:String>
-    
+    <system:String x:Key="String_SettingsFileFoundWasCorruptOrNotCompatibleMessage">Die gefundene Einstellungsdatei war beschädigt oder nicht mit dieser Version kompatibel. Alle Einstellungen wurden zurückgesetzt (Profile und Anmeldeinformationen sind nicht betroffen!)</system:String> <!-- new/updated, please remove comment if string is translated -->
+
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">Wie erstelle ich ein benutzerdefiniertes Thema und Akzent?</system:String>

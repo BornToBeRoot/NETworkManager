@@ -16,7 +16,7 @@ namespace NETworkManager.Models.Settings
         private const string IsPortableExtension = "settings";
 
         public static SettingsInfo Current { get; set; }
-
+        
         public static bool ForceRestart { get; set; }
         public static bool HotKeysChanged { get; set; }
 
@@ -148,7 +148,7 @@ namespace NETworkManager.Models.Settings
                 // Skip if file exists and user don't want to overwrite it
                 if (!overwrite && (filesTargedLocation ?? throw new ArgumentNullException(nameof(filesTargedLocation))).Any(x => Path.GetFileName(x) == Path.GetFileName(file)))
                     continue;
-                
+
                 File.Copy(file, Path.Combine(targedLocation, Path.GetFileName(file)), overwrite);
             }
 
@@ -184,13 +184,18 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        public static void Reset()
+        public static void InitDefault()
         {
             // Init new Settings with default data
-            Current = new SettingsInfo()
+            Current = new SettingsInfo
             {
                 SettingsChanged = true
             };
+        }
+
+        public static void Reset()
+        {
+            InitDefault();
 
             ForceRestart = true;
         }

@@ -47,7 +47,15 @@ namespace NETworkManager
             AssemblyManager.Load();
 
             // Load application settings (profiles/Profiles/clients are loaded when needed)
-            SettingsManager.Load();
+            try
+            {
+                SettingsManager.Load();
+            }
+            catch (InvalidOperationException)
+            {
+                SettingsManager.InitDefault();
+                ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
+            }
 
             // Load localization (requires settings to be loaded first)
             LocalizationManager.Load();

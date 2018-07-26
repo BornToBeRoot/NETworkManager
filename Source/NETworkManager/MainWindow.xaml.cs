@@ -21,6 +21,7 @@ using System.Windows.Markup;
 using NETworkManager.Models.Update;
 using NETworkManager.Models.Documentation;
 using ContextMenu = System.Windows.Controls.ContextMenu;
+using MessageBox = System.Windows.MessageBox;
 
 namespace NETworkManager
 {
@@ -290,9 +291,21 @@ namespace NETworkManager
         }
 
         // Hide window after it shows up... not nice, but otherwise the hotkeys do not work
-        protected override void OnContentRendered(EventArgs e)
+        protected override async void OnContentRendered(EventArgs e)
         {
             base.OnContentRendered(e);
+
+            if (ConfigurationManager.Current.ShowSettingsResetNoteOnStartup)
+            {
+                var settings = AppearanceManager.MetroDialog;
+                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
+
+                ConfigurationManager.Current.IsDialogOpen = true;
+
+                await this.ShowMessageAsync(LocalizationManager.GetStringByKey("String_Header_SettingsHaveBeenReset"), LocalizationManager.GetStringByKey("String_SettingsFileFoundWasCorruptOrNotCompatibleMessage"), MessageDialogStyle.Affirmative, settings);
+
+                ConfigurationManager.Current.IsDialogOpen = false;
+            }
 
             // Hide to tray...
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)

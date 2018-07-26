@@ -17,6 +17,7 @@ namespace NETworkManager.Models.Settings
         public string ApplicationFullName { get; set; }
         public string ApplicationName { get; set; }
         public bool IsTransparencyEnabled { get; set; }
+        public bool ShowSettingsResetNoteOnStartup { get; set; }
 
         private bool _isDialogOpen;
         public bool IsDialogOpen
