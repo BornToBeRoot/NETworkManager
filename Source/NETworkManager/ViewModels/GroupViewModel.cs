@@ -1,5 +1,8 @@
 ﻿using NETworkManager.Utilities;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
@@ -43,6 +46,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        public ICollectionView Groups { get; }
+        
         private bool _groupHasChanged;
         public bool GroupHasChanged
         {
@@ -57,7 +62,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public GroupViewModel(Action<GroupViewModel> okCommand, Action<GroupViewModel> cancelHandler, string group)
+        public GroupViewModel(Action<GroupViewModel> okCommand, Action<GroupViewModel> cancelHandler, string group, IReadOnlyCollection<string> groups)
         {
             _isLoading = true;
 
@@ -66,6 +71,9 @@ namespace NETworkManager.ViewModels
 
             OldGroup = group;
             Group = group;
+
+            Groups = CollectionViewSource.GetDefaultView(groups);
+            Groups.SortDescriptions.Add(new SortDescription());
 
             _isLoading = false;
         }

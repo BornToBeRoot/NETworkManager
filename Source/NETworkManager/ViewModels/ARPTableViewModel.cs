@@ -285,7 +285,7 @@ namespace NETworkManager.ViewModels
         {
             DisplayStatusMessage = false;
 
-            CustomDialog customDialog = new CustomDialog()
+            CustomDialog customDialog = new CustomDialog
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_AddEntry")
             };

@@ -248,7 +248,7 @@ namespace NETworkManager.ViewModels
         #region Methods
         public async void SetMasterPassword()
         {
-            var customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_SetMasterPassword")
             };
@@ -279,7 +279,7 @@ namespace NETworkManager.ViewModels
 
         public async void DecryptAndLoad()
         {
-            CustomDialog customDialog = new CustomDialog()
+            CustomDialog customDialog = new CustomDialog
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_MasterPassword")
             };
@@ -309,7 +309,7 @@ namespace NETworkManager.ViewModels
 
         public async void ChangeMasterPassword()
         {
-            var customDialogSetMasterPassword = new CustomDialog()
+            var customDialogSetMasterPassword = new CustomDialog
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_SetMasterPassword")
             };
@@ -335,7 +335,7 @@ namespace NETworkManager.ViewModels
 
         public async void Add()
         {
-            var customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_AddCredential")
             };
@@ -370,7 +370,7 @@ namespace NETworkManager.ViewModels
 
         public async void Edit()
         {
-            CustomDialog customDialog = new CustomDialog()
+            CustomDialog customDialog = new CustomDialog
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_EditCredential")
             };
@@ -407,7 +407,7 @@ namespace NETworkManager.ViewModels
 
         public async void Delete()
         {
-            CustomDialog customDialog = new CustomDialog()
+            CustomDialog customDialog = new CustomDialog
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_DeleteCredential")
             };
@@ -439,7 +439,7 @@ namespace NETworkManager.ViewModels
         {
             if (IsLocked)
             {
-                CustomDialog customDialogMasterPassword = new CustomDialog()
+                CustomDialog customDialogMasterPassword = new CustomDialog
                 {
                     Title = LocalizationManager.GetStringByKey("String_Header_MasterPassword")
                 };

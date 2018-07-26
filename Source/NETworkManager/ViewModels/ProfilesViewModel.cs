@@ -151,7 +151,7 @@ namespace NETworkManager.ViewModels
         #region Methods
         public async void AddProfile()
         {
-            var customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
             };
@@ -176,7 +176,7 @@ namespace NETworkManager.ViewModels
 
         public async void CopyAsProfile()
         {
-            var customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
             };
@@ -201,7 +201,7 @@ namespace NETworkManager.ViewModels
 
         public async void EditProfile()
         {
-            var customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
             };
@@ -228,7 +228,7 @@ namespace NETworkManager.ViewModels
 
         public async void DeleteProfile()
         {
-            var customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
             };
@@ -271,7 +271,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, group.ToString());
+            }, group.ToString(), ProfileManager.GetGroups());
 
             customDialog.Content = new GroupDialog
             {

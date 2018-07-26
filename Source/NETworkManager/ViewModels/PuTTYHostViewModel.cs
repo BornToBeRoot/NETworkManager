@@ -251,7 +251,7 @@ namespace NETworkManager.ViewModels
 
         private async void AddProfileAction()
         {
-            var customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
             };
@@ -284,7 +284,7 @@ namespace NETworkManager.ViewModels
 
         private async void EditProfileAction()
         {
-            var customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
             };
@@ -319,7 +319,7 @@ namespace NETworkManager.ViewModels
 
         private async void CopyAsProfileAction()
         {
-            var customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
             };
@@ -352,7 +352,7 @@ namespace NETworkManager.ViewModels
 
         private async void DeleteProfileAction()
         {
-            var customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
             };
@@ -382,7 +382,7 @@ namespace NETworkManager.ViewModels
 
         private async void EditGroupAction(object group)
         {
-            var customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
             };
@@ -399,7 +399,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
-            }, group.ToString());
+            }, group.ToString(), ProfileManager.GetGroups());
 
             customDialog.Content = new GroupDialog
             {
@@ -439,7 +439,7 @@ namespace NETworkManager.ViewModels
 
         private async void Connect(string host = null)
         {
-            var customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_Connect")
             };
