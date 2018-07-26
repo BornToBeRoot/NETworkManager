@@ -3,19 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:Validator="clr-namespace:NETworkManager.Validators"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:validators="clr-namespace:NETworkManager.Validators"
         xmlns:metro="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:Documentation="clr-namespace:NETworkManager.Models.Documentation"
-        mc:Ignorable="d">
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:documentation="clr-namespace:NETworkManager.Models.Documentation"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsAppearanceViewModel}">
     <UserControl.Resources>
         <!-- Converters -->
-        <Converter:AppThemeToBrushConverter x:Key="AppThemeToBrushConverter" />
-        <Converter:AppThemeToStringConverter x:Key="AppThemeToStringConverter" />
-        <Converter:AccentToBrushConverter x:Key="AccentToBrushConverter" />
-        <Converter:AccentToStringConverter x:Key="AccentToStringConverter" />
+        <converters:AppThemeToBrushConverter x:Key="AppThemeToBrushConverter" />
+        <converters:AppThemeToStringConverter x:Key="AppThemeToStringConverter" />
+        <converters:AccentToBrushConverter x:Key="AccentToBrushConverter" />
+        <converters:AccentToStringConverter x:Key="AccentToStringConverter" />
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Theme}"  />
@@ -66,7 +67,7 @@
         </ListView>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
             <StackPanel.InputBindings>
-                <MouseBinding Gesture="LeftClick" Command="{x:Static Documentation:DocumentationManager.OpenDocumentationCommand}" CommandParameter="HowTo_CreateCustomThemeAndAccent" />
+                <MouseBinding Gesture="LeftClick" Command="{x:Static documentation:DocumentationManager.OpenDocumentationCommand}" CommandParameter="HowTo_CreateCustomThemeAndAccent" />
             </StackPanel.InputBindings>
             <StackPanel.Style>
                 <Style TargetType="{x:Type StackPanel}">
@@ -81,7 +82,7 @@
             </StackPanel.Style>
             <Rectangle Width="16" Height="20">
                 <Rectangle.OpacityMask>
-                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=OpenInNew}"/>
+                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}"/>
                 </Rectangle.OpacityMask>
                 <Rectangle.Style>
                     <Style TargetType="{x:Type Rectangle}">
@@ -120,8 +121,8 @@
                 <TextBox.Text>
                     <Binding Path="Opacity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <Validator:OpacityTextboxValidator ValidatesOnTargetUpdated="True" />
+                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <validators:OpacityTextboxValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>

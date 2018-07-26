@@ -1,17 +1,17 @@
 ﻿using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
 
-namespace NETworkManager.ViewModels.Settings
+namespace NETworkManager.ViewModels
 {
     public class HTTPHeadersSettingsViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
         
         private int _timeout;
         public int Timeout
         {
-            get { return _timeout; }
+            get => _timeout;
             set
             {
                 if (value == _timeout)
@@ -28,7 +28,7 @@ namespace NETworkManager.ViewModels.Settings
         private bool _showStatistics;
         public bool ShowStatistics
         {
-            get { return _showStatistics; }
+            get => _showStatistics;
             set
             {
                 if (value == _showStatistics)
@@ -46,6 +46,8 @@ namespace NETworkManager.ViewModels.Settings
         #region Contructor, load settings
         public HTTPHeadersSettingsViewModel()
         {
+            _isLoading = true;
+
             LoadSettings();
 
             _isLoading = false;

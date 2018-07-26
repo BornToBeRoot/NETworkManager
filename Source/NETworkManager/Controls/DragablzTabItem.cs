@@ -8,7 +8,7 @@ namespace NETworkManager.Controls
         private string _header;
         public string Header
         {
-            get { return _header; }
+            get => _header;
             set
             {
                 if (value == _header)
@@ -20,7 +20,7 @@ namespace NETworkManager.Controls
         }
 
         public UserControl View { get; set; }
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         public DragablzTabItem(string header, UserControl view)
         {
@@ -32,7 +32,7 @@ namespace NETworkManager.Controls
         {
             Header = header;
             View = view;
-            ID = id;
+            Id = id;
         }
     }
 }

@@ -16,6 +16,7 @@ namespace NETworkManager.Models.RemoteDesktop
         public int ColorDepth { get; set; }
         public bool EnableCredSspSupport { get; set; }
         public uint AuthenticationLevel { get; set; }
+        public int KeyboardHookMode { get; set; }
         public bool RedirectClipboard { get; set; }
         public bool RedirectDevices { get; set; }
         public bool RedirectDrives { get; set; }

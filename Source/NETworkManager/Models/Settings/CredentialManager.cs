@@ -33,11 +33,8 @@ namespace NETworkManager.Models.Settings
 
         public static bool CredentialsChanged { get; set; }
 
-        private static bool _loaded { get; set; }
-        public static bool Loaded
-        {
-            get { return _loaded; }
-        }
+        private static bool _loaded;
+        public static bool IsLoaded => _loaded;
 
         private static SecureString _masterPassword;
 
@@ -48,7 +45,7 @@ namespace NETworkManager.Models.Settings
 
         public static string GetCredentialsFileName()
         {
-            return string.Format("{0}.{1}", CredentialsFileName, CredentialsExtension);
+            return $"{CredentialsFileName}.{CredentialsExtension}";
         }
 
         public static string GetCredentialsFilePath()
@@ -65,7 +62,7 @@ namespace NETworkManager.Models.Settings
                 // Decrypt file
                 if (File.Exists(GetCredentialsFilePath()))
                 {
-                    byte[] cipherWithSaltAndIv = File.ReadAllBytes(GetCredentialsFilePath());
+                    var cipherWithSaltAndIv = File.ReadAllBytes(GetCredentialsFilePath());
 
                     xml = Decrypt(cipherWithSaltAndIv, SecureStringHelper.ConvertToString(pasword));
                 }
@@ -91,9 +88,9 @@ namespace NETworkManager.Models.Settings
 
         private static void DeserializeFromByteArray(byte[] xml)
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<CredentialInfoSerializable>));
+            var xmlSerializer = new XmlSerializer(typeof(List<CredentialInfoSerializable>));
 
-            using (MemoryStream memoryStream = new MemoryStream(xml))
+            using (var memoryStream = new MemoryStream(xml))
             {
                 ((List<CredentialInfoSerializable>)(xmlSerializer.Deserialize(memoryStream))).ForEach(credential => AddCredential(new CredentialInfo(credential.ID, credential.Name, credential.Username, SecureStringHelper.ConvertToSecureString(credential.Password))));
             }
@@ -116,18 +113,18 @@ namespace NETworkManager.Models.Settings
         private static byte[] SerializeToByteArray()
         {
             // Convert CredentialInfo to CredentialInfoSerializable
-            List<CredentialInfoSerializable> list = new List<CredentialInfoSerializable>();
+            var list = new List<CredentialInfoSerializable>();
 
-            foreach (CredentialInfo info in Credentials)
+            foreach (var info in Credentials)
             {
                 list.Add(new CredentialInfoSerializable(info.ID, info.Name, info.Username, SecureStringHelper.ConvertToString(info.Password)));
             }
 
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<CredentialInfoSerializable>));
+            var xmlSerializer = new XmlSerializer(typeof(List<CredentialInfoSerializable>));
 
-            using (MemoryStream memoryStream = new MemoryStream())
+            using (var memoryStream = new MemoryStream())
             {
-                using (StreamWriter streamWriter = new StreamWriter(memoryStream, Encoding.UTF8))
+                using (var streamWriter = new StreamWriter(memoryStream, Encoding.UTF8))
                 {
                     xmlSerializer.Serialize(streamWriter, list);
                     return memoryStream.ToArray();
@@ -142,7 +139,12 @@ namespace NETworkManager.Models.Settings
 
         public static int GetNextID()
         {
-            return Credentials.Count == 0 ? 0 : Credentials.OrderByDescending(x => x.ID).FirstOrDefault().ID + 1;
+            if (Credentials.Count == 0)
+                return 0;
+
+            var credential = Credentials.OrderByDescending(x => x.ID).FirstOrDefault();
+
+            return credential?.ID + 1 ?? 0;
         }
 
         public static void SetMasterPassword(SecureString masterPasword)
@@ -166,29 +168,29 @@ namespace NETworkManager.Models.Settings
 
         private static byte[] Encrypt(byte[] text, string password)
         {
-            byte[] salt = Generate256BitsOfRandomEntropy();
-            byte[] iv = Generate256BitsOfRandomEntropy();
+            var salt = Generate256BitsOfRandomEntropy();
+            var iv = Generate256BitsOfRandomEntropy();
 
-            using (Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, salt, Iterations))
+            using (var rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, salt, Iterations))
             {
-                byte[] key = rfc2898DeriveBytes.GetBytes(KeySize / 8); // 256 Bits / 8 Bits = 32 Bytes
+                var key = rfc2898DeriveBytes.GetBytes(KeySize / 8); // 256 Bits / 8 Bits = 32 Bytes
 
-                using (RijndaelManaged rijndaelManaged = new RijndaelManaged())
+                using (var rijndaelManaged = new RijndaelManaged())
                 {
                     rijndaelManaged.BlockSize = 256;
                     rijndaelManaged.Mode = CipherMode.CBC;
                     rijndaelManaged.Padding = PaddingMode.PKCS7;
 
-                    using (ICryptoTransform encryptor = rijndaelManaged.CreateEncryptor(key, iv))
+                    using (var encryptor = rijndaelManaged.CreateEncryptor(key, iv))
                     {
-                        using (MemoryStream memoryStream = new MemoryStream())
+                        using (var memoryStream = new MemoryStream())
                         {
-                            using (CryptoStream cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
+                            using (var cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
                             {
                                 cryptoStream.Write(text, 0, text.Length);
                                 cryptoStream.FlushFinalBlock();
 
-                                byte[] cipher = salt;
+                                var cipher = salt;
                                 cipher = cipher.Concat(iv).ToArray();
                                 cipher = cipher.Concat(memoryStream.ToArray()).ToArray();
 
@@ -205,28 +207,28 @@ namespace NETworkManager.Models.Settings
 
         private static byte[] Decrypt(byte[] cipherWithSaltAndIv, string password)
         {
-            byte[] salt = cipherWithSaltAndIv.Take(KeySize / 8).ToArray(); // 256 bits / 8 bits = 32 bytes
-            byte[] iv = cipherWithSaltAndIv.Skip(KeySize / 8).Take(KeySize / 8).ToArray(); // Skip 32 bytes, take 32 Bytes iv
-            byte[] cipher = cipherWithSaltAndIv.Skip((KeySize / 8) * 2).Take(cipherWithSaltAndIv.Length - ((KeySize / 8) * 2)).ToArray(); // Skip 64 bytes, take cipher bytes (length - 64)
+            var salt = cipherWithSaltAndIv.Take(KeySize / 8).ToArray(); // 256 bits / 8 bits = 32 bytes
+            var iv = cipherWithSaltAndIv.Skip(KeySize / 8).Take(KeySize / 8).ToArray(); // Skip 32 bytes, take 32 Bytes iv
+            var cipher = cipherWithSaltAndIv.Skip((KeySize / 8) * 2).Take(cipherWithSaltAndIv.Length - ((KeySize / 8) * 2)).ToArray(); // Skip 64 bytes, take cipher bytes (length - 64)
 
-            using (Rfc2898DeriveBytes rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, salt, Iterations))
+            using (var rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, salt, Iterations))
             {
-                byte[] key = rfc2898DeriveBytes.GetBytes(KeySize / 8); // 256 Bits / 8 Bits = 32 Bytes
+                var key = rfc2898DeriveBytes.GetBytes(KeySize / 8); // 256 Bits / 8 Bits = 32 Bytes
 
-                using (RijndaelManaged rijndaelManaged = new RijndaelManaged())
+                using (var rijndaelManaged = new RijndaelManaged())
                 {
                     rijndaelManaged.BlockSize = 256;
                     rijndaelManaged.Mode = CipherMode.CBC;
                     rijndaelManaged.Padding = PaddingMode.PKCS7;
 
-                    using (ICryptoTransform decryptor = rijndaelManaged.CreateDecryptor(key, iv))
+                    using (var decryptor = rijndaelManaged.CreateDecryptor(key, iv))
                     {
-                        using (MemoryStream memoryStream = new MemoryStream(cipher))
+                        using (var memoryStream = new MemoryStream(cipher))
                         {
-                            using (CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+                            using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
                             {
-                                byte[] text = new byte[cipher.Length];
-                                int count = cryptoStream.Read(text, 0, text.Length);
+                                var text = new byte[cipher.Length];
+                                cryptoStream.Read(text, 0, text.Length);
 
                                 memoryStream.Close();
                                 cryptoStream.Close();
@@ -241,9 +243,9 @@ namespace NETworkManager.Models.Settings
 
         private static byte[] Generate256BitsOfRandomEntropy()
         {
-            byte[] randomBytes = new byte[32]; // 32 * 8 = 256 Bits.
+            var randomBytes = new byte[32]; // 32 * 8 = 256 Bits.
 
-            using (RNGCryptoServiceProvider rngCryptoServiceProvider = new RNGCryptoServiceProvider())
+            using (var rngCryptoServiceProvider = new RNGCryptoServiceProvider())
             {
                 rngCryptoServiceProvider.GetBytes(randomBytes);
             }

@@ -1,16 +1,15 @@
 ﻿using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class SNMPSettingsView : UserControl
+    public partial class SNMPSettingsView
     {
-        SNMPSettingsViewModel viewModel = new SNMPSettingsViewModel();
+        private readonly SNMPSettingsViewModel _viewModel = new SNMPSettingsViewModel();
 
         public SNMPSettingsView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

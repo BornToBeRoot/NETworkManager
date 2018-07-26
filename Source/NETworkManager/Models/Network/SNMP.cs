@@ -52,13 +52,13 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Methods
-        public void Getv1v2cAsync(SNMPVersion version, IPAddress ipAddress, string community, string oid, SNMPOptions options)
+        public void GetV1V2CAsync(SNMPVersion version, IPAddress ipAddress, string community, string oid, SNMPOptions options)
         {
             Task.Run(() =>
             {
                 try
                 {
-                    foreach (Variable result in Messenger.Get(version == SNMPVersion.v1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(community), new List<Variable> { new Variable(new ObjectIdentifier(oid)) }, options.Timeout))
+                    foreach (var result in Messenger.Get(version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(community), new List<Variable> { new Variable(new ObjectIdentifier(oid)) }, options.Timeout))
                         OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
 
                     OnComplete();
@@ -74,7 +74,7 @@ namespace NETworkManager.Models.Network
             });
         }
 
-        public void Walkv1v2cAsync(SNMPVersion version, IPAddress ipAddress, string community, string oid, WalkMode walkMode, SNMPOptions options)
+        public void WalkV1V2CAsync(SNMPVersion version, IPAddress ipAddress, string community, string oid, WalkMode walkMode, SNMPOptions options)
         {
             Task.Run(() =>
             {
@@ -82,9 +82,9 @@ namespace NETworkManager.Models.Network
                 {
                     IList<Variable> results = new List<Variable>();
 
-                    Messenger.Walk(version == SNMPVersion.v1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(community), new ObjectIdentifier(oid), results, options.Timeout, walkMode);
+                    Messenger.Walk(version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(community), new ObjectIdentifier(oid), results, options.Timeout, walkMode);
 
-                    foreach (Variable result in results)
+                    foreach (var result in results)
                         OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
 
                     OnComplete();
@@ -100,13 +100,13 @@ namespace NETworkManager.Models.Network
             });
         }
 
-        public void Setv1v2cAsync(SNMPVersion version, IPAddress ipAddress, string communtiy, string oid, string data, SNMPOptions options)
+        public void SetV1V2CAsync(SNMPVersion version, IPAddress ipAddress, string communtiy, string oid, string data, SNMPOptions options)
         {
             Task.Run(() =>
             {
                 try
                 {
-                    Messenger.Set(version == SNMPVersion.v1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(communtiy), new List<Variable> { new Variable(new ObjectIdentifier(oid), new OctetString(data)) }, options.Timeout);
+                    Messenger.Set(version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(communtiy), new List<Variable> { new Variable(new ObjectIdentifier(oid), new OctetString(data)) }, options.Timeout);
 
                     OnComplete();
                 }
@@ -121,31 +121,38 @@ namespace NETworkManager.Models.Network
             });
         }
 
-        public void Getv3Async(IPAddress ipAddress, string oid, SNMPv3Security security, string username, SNMPv3AuthenticationProvider authProvider, string auth, SNMPv3PrivacyProvider privProvider, string priv, SNMPOptions options)
+        public void Getv3Async(IPAddress ipAddress, string oid, SNMPV3Security security, string username, SNMPV3AuthenticationProvider authProvider, string auth, SNMPV3PrivacyProvider privProvider, string priv, SNMPOptions options)
         {
             Task.Run(() =>
             {
                 try
                 {
-                    IPEndPoint ipEndpoint = new IPEndPoint(ipAddress, options.Port);
+                    var ipEndpoint = new IPEndPoint(ipAddress, options.Port);
 
                     // Discovery
-                    Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
-                    ReportMessage report = discovery.GetResponse(options.Timeout, ipEndpoint);
+                    var discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
+                    var report = discovery.GetResponse(options.Timeout, ipEndpoint);
 
                     IPrivacyProvider privacy;
 
-                    if (security == SNMPv3Security.authPriv)
-                        privacy = GetPrivacy(authProvider, auth, privProvider, priv);
-                    else if (security == SNMPv3Security.authNoPriv)
-                        privacy = GetPrivacy(authProvider, auth);
-                    else // noAuthNoPriv
-                        privacy = GetPrivacy();
+                    switch (security)
+                    {
+                        case SNMPV3Security.AuthPriv:
+                            privacy = GetPrivacy(authProvider, auth, privProvider, priv);
+                            break;
+                        // noAuthNoPriv
+                        case SNMPV3Security.AuthNoPriv:
+                            privacy = GetPrivacy(authProvider, auth);
+                            break;
+                        default:
+                            privacy = GetPrivacy();
+                            break;
+                    }
 
-                    GetRequestMessage request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(username), new List<Variable> { new Variable(new ObjectIdentifier(oid)) }, privacy, Messenger.MaxMessageSize, report);
-                    ISnmpMessage reply = request.GetResponse(options.Timeout, ipEndpoint);
+                    var request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(username), new List<Variable> { new Variable(new ObjectIdentifier(oid)) }, privacy, Messenger.MaxMessageSize, report);
+                    var reply = request.GetResponse(options.Timeout, ipEndpoint);
 
-                    Variable result = reply.Pdu().Variables[0];
+                    var result = reply.Pdu().Variables[0];
 
                     OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
 
@@ -162,32 +169,39 @@ namespace NETworkManager.Models.Network
             });
         }
 
-        public void Walkv3Async(IPAddress ipAddress, string oid, SNMPv3Security security, string username, SNMPv3AuthenticationProvider authProvider, string auth, SNMPv3PrivacyProvider privProvider, string priv, WalkMode walkMode, SNMPOptions options)
+        public void WalkV3Async(IPAddress ipAddress, string oid, SNMPV3Security security, string username, SNMPV3AuthenticationProvider authProvider, string auth, SNMPV3PrivacyProvider privProvider, string priv, WalkMode walkMode, SNMPOptions options)
         {
             Task.Run(() =>
             {
                 try
                 {
-                    IPEndPoint ipEndpoint = new IPEndPoint(ipAddress, options.Port);
+                    var ipEndpoint = new IPEndPoint(ipAddress, options.Port);
 
                     // Discovery
-                    Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
-                    ReportMessage report = discovery.GetResponse(options.Timeout, ipEndpoint);
+                    var discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
+                    var report = discovery.GetResponse(options.Timeout, ipEndpoint);
 
                     IPrivacyProvider privacy;
 
-                    if (security == SNMPv3Security.authPriv)
-                        privacy = GetPrivacy(authProvider, auth, privProvider, priv);
-                    else if (security == SNMPv3Security.authNoPriv)
-                        privacy = GetPrivacy(authProvider, auth);
-                    else // noAuthNoPriv
-                        privacy = GetPrivacy();
+                    switch (security)
+                    {
+                        case SNMPV3Security.AuthPriv:
+                            privacy = GetPrivacy(authProvider, auth, privProvider, priv);
+                            break;
+                        // noAuthNoPriv
+                        case SNMPV3Security.AuthNoPriv:
+                            privacy = GetPrivacy(authProvider, auth);
+                            break;
+                        default:
+                            privacy = GetPrivacy();
+                            break;
+                    }
 
-                    List<Variable> results = new List<Variable>();
+                    var results = new List<Variable>();
 
                     Messenger.BulkWalk(VersionCode.V3, ipEndpoint, new OctetString(username), OctetString.Empty, new ObjectIdentifier(oid), results, options.Timeout, 10, walkMode, privacy, report);
 
-                    foreach (Variable result in results)
+                    foreach (var result in results)
                         OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
 
                     OnComplete();
@@ -203,29 +217,36 @@ namespace NETworkManager.Models.Network
             });
         }
 
-        public void Setv3Async(IPAddress ipAddress, string oid, SNMPv3Security security, string username, SNMPv3AuthenticationProvider authProvider, string auth, SNMPv3PrivacyProvider privProvider, string priv, string data, SNMPOptions options)
+        public void SetV3Async(IPAddress ipAddress, string oid, SNMPV3Security security, string username, SNMPV3AuthenticationProvider authProvider, string auth, SNMPV3PrivacyProvider privProvider, string priv, string data, SNMPOptions options)
         {
             Task.Run(() =>
             {
                 try
                 {
-                    IPEndPoint ipEndpoint = new IPEndPoint(ipAddress, options.Port);
+                    var ipEndpoint = new IPEndPoint(ipAddress, options.Port);
 
                     // Discovery
-                    Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
-                    ReportMessage report = discovery.GetResponse(options.Timeout, ipEndpoint);
+                    var discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
+                    var report = discovery.GetResponse(options.Timeout, ipEndpoint);
 
                     IPrivacyProvider privacy;
 
-                    if (security == SNMPv3Security.authPriv)
-                        privacy = GetPrivacy(authProvider, auth, privProvider, priv);
-                    else if (security == SNMPv3Security.authNoPriv)
-                        privacy = GetPrivacy(authProvider, auth);
-                    else // noAuthNoPriv
-                        privacy = GetPrivacy();
+                    switch (security)
+                    {
+                        case SNMPV3Security.AuthPriv:
+                            privacy = GetPrivacy(authProvider, auth, privProvider, priv);
+                            break;
+                        // noAuthNoPriv
+                        case SNMPV3Security.AuthNoPriv:
+                            privacy = GetPrivacy(authProvider, auth);
+                            break;
+                        default:
+                            privacy = GetPrivacy();
+                            break;
+                    }
 
-                    SetRequestMessage request = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(username), OctetString.Empty, new List<Variable> { new Variable(new ObjectIdentifier(oid), new OctetString(data)) }, privacy, Messenger.MaxMessageSize, report);
-                    ISnmpMessage reply = request.GetResponse(options.Timeout, ipEndpoint);
+                    var request = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(username), OctetString.Empty, new List<Variable> { new Variable(new ObjectIdentifier(oid), new OctetString(data)) }, privacy, Messenger.MaxMessageSize, report);
+                    var reply = request.GetResponse(options.Timeout, ipEndpoint);
 
                     OnComplete();
                 }
@@ -247,11 +268,11 @@ namespace NETworkManager.Models.Network
         }
 
         // authNoPriv
-        private IPrivacyProvider GetPrivacy(SNMPv3AuthenticationProvider authProvider, string auth)
+        private IPrivacyProvider GetPrivacy(SNMPV3AuthenticationProvider authProvider, string auth)
         {
             IAuthenticationProvider authenticationProvider;
 
-            if (authProvider == SNMPv3AuthenticationProvider.MD5)
+            if (authProvider == SNMPV3AuthenticationProvider.MD5)
                 authenticationProvider = new MD5AuthenticationProvider(new OctetString(auth));
             else
                 authenticationProvider = new SHA1AuthenticationProvider(new OctetString(auth));
@@ -260,28 +281,28 @@ namespace NETworkManager.Models.Network
         }
 
         // authPriv
-        private IPrivacyProvider GetPrivacy(SNMPv3AuthenticationProvider authProvider, string auth, SNMPv3PrivacyProvider privProvider, string priv)
+        private IPrivacyProvider GetPrivacy(SNMPV3AuthenticationProvider authProvider, string auth, SNMPV3PrivacyProvider privProvider, string priv)
         {
             IAuthenticationProvider authenticationProvider;
 
-            if (authProvider == SNMPv3AuthenticationProvider.MD5)
+            if (authProvider == SNMPV3AuthenticationProvider.MD5)
                 authenticationProvider = new MD5AuthenticationProvider(new OctetString(auth));
             else
                 authenticationProvider = new SHA1AuthenticationProvider(new OctetString(auth));
 
-            if (privProvider == SNMPv3PrivacyProvider.DES)
+            if (privProvider == SNMPV3PrivacyProvider.DES)
                 return new DESPrivacyProvider(new OctetString(priv), authenticationProvider);
-            else
-                return new AESPrivacyProvider(new OctetString(priv), authenticationProvider);
+
+            return new AESPrivacyProvider(new OctetString(priv), authenticationProvider);
         }
         #endregion
 
         #region Enum
         public enum SNMPVersion
         {
-            v1,
-            v2c,
-            v3
+            V1,
+            V2C,
+            V3
         }
 
         // Trap and Inform not implemented
@@ -294,20 +315,20 @@ namespace NETworkManager.Models.Network
             Inform
         }
 
-        public enum SNMPv3Security
+        public enum SNMPV3Security
         {
-            noAuthNoPriv,
-            authNoPriv,
-            authPriv
+            NoAuthNoPriv,
+            AuthNoPriv,
+            AuthPriv
         }
 
-        public enum SNMPv3AuthenticationProvider
+        public enum SNMPV3AuthenticationProvider
         {
             MD5,
             SHA1
         }
 
-        public enum SNMPv3PrivacyProvider
+        public enum SNMPV3PrivacyProvider
         {
             DES,
             AES

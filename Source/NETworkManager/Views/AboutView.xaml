@@ -3,15 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Resources="clr-namespace:NETworkManager.Properties"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:Documentation="clr-namespace:NETworkManager.Models.Documentation"
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        mc:Ignorable="d">
+        xmlns:resources="clr-namespace:NETworkManager.Properties"
+        xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:documentation="clr-namespace:NETworkManager.Models.Documentation"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:AboutViewModel}">
     <UserControl.Resources>
-        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <ScrollViewer Style="{StaticResource DefaultScrollViewer}" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" HorizontalScrollBarVisibility="Disabled">
         <Grid>
@@ -34,20 +35,23 @@
                 </Grid.ColumnDefinitions>
                 <Image Grid.Column="0" Grid.Row="0" Width="128" Height="128" Source="/Resources/Images/NETworkManager.ico" VerticalAlignment="Center" />
                 <StackPanel Grid.Column="1" Margin="20,0,0,0">
-                    <TextBlock FontSize="32" Grid.Row="0" Text="{DynamicResource String_ProductName}" Style="{StaticResource HeaderTextBlock}" />
+                    <TextBlock FontSize="32" Text="{DynamicResource String_ProductName}" Style="{StaticResource HeaderTextBlock}" />
                     <TextBlock Text="{DynamicResource String_Slogan}" Style="{DynamicResource WrapTextBlock}" Margin="0,0,0,5" />
-                    <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold" Margin="0,0,0,5" />
-                    <TextBlock Text="{x:Static Resources:Resources.NETworkManager_License}" Style="{StaticResource LinkTextBlock}" Margin="0,0,0,5">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                        <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold" />
+                        <TextBlock Text="{Binding BuildDate, StringFormat={}({0})}" Style="{StaticResource DefaultTextBlock}" Margin="10,0,0,0" />
+                    </StackPanel>
+                    <TextBlock Text="{x:Static resources:Resources.NETworkManager_License}" Style="{StaticResource LinkTextBlock}" Margin="0,0,0,5">
                         <TextBlock.InputBindings>
-                            <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.NETworkManager_LicenseUrl}" MouseAction="LeftClick" />
+                            <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_LicenseUrl}" MouseAction="LeftClick" />
                         </TextBlock.InputBindings>
                     </TextBlock>
                     <TextBlock Text="Maintained by GitHub.com/BornToBeRoot" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
-                        <Button ToolTip="{DynamicResource String_GitHub}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Documentation:CommunityManager.GithubURL}" Style="{StaticResource CleanButton}">
+                        <Button ToolTip="{DynamicResource String_GitHub}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static documentation:CommunityManager.GithubUrl}" Style="{StaticResource CleanButton}">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:SimpleIcons Kind=GitHub}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:SimpleIcons Kind=GitHub}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
@@ -61,10 +65,10 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
-                        <Button ToolTip="{DynamicResource String_Gitter}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Documentation:CommunityManager.GitterURL}" Style="{StaticResource CleanButton}" Margin="10,0,0,0">
+                        <Button ToolTip="{DynamicResource String_Gitter}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static documentation:CommunityManager.GitterUrl}" Style="{StaticResource CleanButton}" Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24" >
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:SimpleIcons Kind=Gitter}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:SimpleIcons Kind=Gitter}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
@@ -88,10 +92,10 @@
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" x:Name="btnCheckForUpdates" HorizontalAlignment="Left" Command="{Binding CheckForUpdatesCommand}" IsEnabled="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultButton}" Content="{DynamicResource String_Button_CheckForUpdaptes}" />
-                <StackPanel Grid.Column="2" Orientation="Horizontal" Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Button Grid.Column="0" x:Name="ButtonCheckForUpdates" HorizontalAlignment="Left" Command="{Binding CheckForUpdatesCommand}" IsEnabled="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultButton}" Content="{DynamicResource String_Button_CheckForUpdaptes}" />
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <StackPanel.InputBindings>
-                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static Resources:Resources.NETworkManager_LatestReleaseURL}" />
+                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_LatestReleaseURL}" />
                     </StackPanel.InputBindings>
                     <StackPanel.Style>
                         <Style TargetType="{x:Type StackPanel}">
@@ -105,7 +109,7 @@
                     </StackPanel.Style>
                     <Rectangle Width="16" Height="20">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=OpenInNew}"/>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Octicons Kind=DesktopDownload}"/>
                         </Rectangle.OpacityMask>
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}">
@@ -120,11 +124,11 @@
                     </Rectangle>
                     <TextBlock Text="{Binding UpdateText}" VerticalAlignment="Center" FontSize="14" Margin="10,0,0,0" />
                 </StackPanel>
-                <Controls:ProgressRing Grid.Column="2" Visibility="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanToVisibilityConverter}}" Height="{Binding ElementName=btnCheckForUpdates, Path=ActualHeight}" Width="{Binding ElementName=btnCheckForUpdates, Path=ActualHeight}" HorizontalAlignment="Left" IsActive="True" />
-                <TextBlock Grid.Column="2" Text="{Binding UpdaterMessage}" Visibility="{Binding ShowUpdaterMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource CenterTextBlock}" Margin="10,0,0,0" />
+                <mahAppsControls:ProgressRing Grid.Column="2" Visibility="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Height="{Binding ElementName=ButtonCheckForUpdates, Path=ActualHeight}" Width="{Binding ElementName=ButtonCheckForUpdates, Path=ActualHeight}" HorizontalAlignment="Left" IsActive="True" />
+                <TextBlock Grid.Column="2" Text="{Binding UpdaterMessage}" Visibility="{Binding ShowUpdaterMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CenterTextBlock}" Margin="10,0,0,0" />
             </Grid>
             <TextBlock Grid.Row="5" Text="{DynamicResource String_Header_Libraries}" Style="{StaticResource HeaderTextBlock}"/>
-            <DataGrid x:Name="dataGridLibaries" Grid.Row="6" ItemsSource="{Binding LibrariesView}" SelectedItem="{Binding SelectedLibraryInfo}" Margin="0,0,0,10">
+            <DataGrid x:Name="DataGridLibaries" Grid.Row="6" ItemsSource="{Binding LibrariesView}" SelectedItem="{Binding SelectedLibraryInfo}" Margin="0,0,0,10">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -132,7 +136,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=OpenInNew}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -141,7 +145,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=OpenInNew}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -158,15 +162,15 @@
                     </Style>
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="{DynamicResource String_Name}" Binding="{Binding Library}" MinWidth="150" />
-                    <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding Description}" MinWidth="300" Width="*" >
+                    <DataGridTextColumn Header="{DynamicResource String_Name}" Binding="{Binding (documentation:LibraryInfo.Library)}" MinWidth="150" />
+                    <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding (documentation:LibraryInfo.Description)}" MinWidth="300" Width="*" >
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="{DynamicResource String_License}" Binding="{Binding License}" MinWidth="150" />
+                    <DataGridTextColumn Header="{DynamicResource String_License}" Binding="{Binding (documentation:LibraryInfo.License)}" MinWidth="150" />
                 </DataGrid.Columns>
             </DataGrid>
             <Button Grid.Row="7" Command="{Binding OpenLicenseFolderCommand}" HorizontalAlignment="Right" Style="{StaticResource ImageWithTextButton}" Margin="0,0,0,20">
@@ -178,7 +182,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=FolderOpen}" />
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FolderOpen}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_ShowLocalLicenses}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
@@ -186,7 +190,7 @@
                 </Button.Content>
             </Button>
             <TextBlock Grid.Row="8" Text="{DynamicResource String_Header_Resources}" Style="{StaticResource HeaderTextBlock}"/>
-            <DataGrid x:Name="dataGridResources" Grid.Row="9" ItemsSource="{Binding ResourcesView}" SelectedItem="{Binding SelectedResourceInfo}">
+            <DataGrid x:Name="DataGridResources" Grid.Row="9" ItemsSource="{Binding ResourcesView}" SelectedItem="{Binding SelectedResourceInfo}">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -194,7 +198,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=OpenInNew}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -211,8 +215,8 @@
                     </Style>
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="{DynamicResource String_Name}" Binding="{Binding Resource}" MinWidth="150" />
-                    <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding Description}" MinWidth="300" Width="*">
+                    <DataGridTextColumn Header="{DynamicResource String_Name}" Binding="{Binding (documentation:ResourceInfo.Resource)}" MinWidth="150" />
+                    <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding (documentation:ResourceInfo.Description)}" MinWidth="300" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.TextWrapping" Value="Wrap" />

@@ -3,22 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        Dialog:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d">
+        xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        dialogs:DialogParticipation.Register="{Binding}"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsAutostartViewModel}">
     <UserControl.Resources>
         <!-- Converter -->
-        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Autostart}" />
         <StackPanel>
-            <Controls:ToggleSwitch Header="{DynamicResource String_StartWithWindows}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding StartWithWindows}" IsEnabled="{Binding ConfiguringAutostart, Converter={StaticResource BooleanReverseConverter}}" Margin="0,0,0,10"/>
-            <Controls:MetroProgressBar IsIndeterminate="True" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding ConfiguringAutostart, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,0,0,10"/>
-            <Controls:ToggleSwitch Header="{DynamicResource String_StartMinimizedInTray}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding StartMinimizedInTray}" />
+            <mahAppsControls:ToggleSwitch Header="{DynamicResource String_StartWithWindows}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding StartWithWindows}" IsEnabled="{Binding ConfiguringAutostart, Converter={StaticResource BooleanReverseConverter}}" Margin="0,0,0,10"/>
+            <mahAppsControls:MetroProgressBar IsIndeterminate="True" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding ConfiguringAutostart, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,10"/>
+            <mahAppsControls:ToggleSwitch Header="{DynamicResource String_StartMinimizedInTray}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding StartMinimizedInTray}" />
         </StackPanel>
     </StackPanel>
 </UserControl>

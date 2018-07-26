@@ -3,34 +3,32 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Network="clr-namespace:NETworkManager.Models.Network"
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:Validator="clr-namespace:NETworkManager.Validators"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:network="clr-namespace:NETworkManager.Models.Network"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:validators="clr-namespace:NETworkManager.Validators"
+        xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:SettingsManager="clr-namespace:NETworkManager.Models.Settings"
-        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        Dialog:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d">
+        xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        dialog:DialogParticipation.Register="{Binding}"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:NetworkInterfaceViewModel}">
     <UserControl.InputBindings>
         <KeyBinding Key="F5" Command="{Binding ReloadNetworkInterfacesCommand}" />
     </UserControl.InputBindings>
     <UserControl.Resources>
-        <Converter:BitsToHumanReadableSizeConverter x:Key="BitsToHumanReadableSizeConverter" />
-        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <Converter:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />
-        <Converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
-        <Converter:NullToFalseConverter x:Key="NullToFalseConverter" />
-        <Converter:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
-        <Converter:ValidateNetworkInterfaceConfigConverter x:Key="ValidateNetworkInterfaceConfigConverter" />
-        <Converter:BooleanToStringConverter x:Key="BooleanToStringConverter" />
-        <Converter:SelectedItemsToBoolConverter x:Key="SelectedItemsToBoolConverter" />
+        <converters:BitsToHumanReadableSizeConverter x:Key="BitsToHumanReadableSizeConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />
+        <converters:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
+        <converters:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
+        <converters:ValidateNetworkInterfaceConfigConverter x:Key="ValidateNetworkInterfaceConfigConverter" />
+        <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <Style x:Key="ReloadAnimation" TargetType="Rectangle">
             <Setter Property="Height" Value="24" />
-            <Setter Property="Image.RenderTransform">
+            <Setter Property="RenderTransform">
                 <Setter.Value>
                     <RotateTransform CenterX="12" CenterY="12" />
                 </Setter.Value>
@@ -55,7 +53,7 @@
                     <DataTrigger Binding="{Binding ShowCurrentApplicationTitle}" Value="False">
                         <Setter Property="Margin" Value="0,-2,0,0" />
                     </DataTrigger>
-                </Style.Triggers> 
+                </Style.Triggers>
             </Style>
         </TabControl.Style>
         <TabItem Header="{DynamicResource String_Header_Information}">
@@ -85,14 +83,14 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <ComboBox Grid.Column="0" x:Name="cbNetworkInterfaceProfiles" Grid.Row="1" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
+                                <ComboBox Grid.Column="0" x:Name="ComboBoxNetworkInterfaceProfiles" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
                                                 <Rectangle Width="24" Height="24">
                                                     <Rectangle.Resources>
-                                                        <VisualBrush x:Key="VisualUp" Stretch="Uniform" Visual="{IconPacks:Modern Kind=Network}"/>
-                                                        <VisualBrush x:Key="VisualDown" Stretch="Uniform" Visual="{IconPacks:Modern Kind=NetworkDisconnect}" />
+                                                        <VisualBrush x:Key="VisualUp" Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}"/>
+                                                        <VisualBrush x:Key="VisualDown" Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkDisconnect}" />
                                                     </Rectangle.Resources>
                                                     <Rectangle.Style>
                                                         <Style TargetType="{x:Type Rectangle}">
@@ -146,10 +144,10 @@
                                         </Style>
                                     </ComboBox.ItemContainerStyle>
                                 </ComboBox>
-                                <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=cbNetworkInterfaceProfiles, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
+                                <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=ComboBoxNetworkInterfaceProfiles, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
                                     <Rectangle Width="24" Height="24">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Refresh}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
                                         </Rectangle.OpacityMask>
                                         <Rectangle.Style>
                                             <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ReloadAnimation}">
@@ -181,7 +179,6 @@
                             <Grid.Resources>
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
-                                    <Setter Property="VerticalAlignment" Value="Center" />
                                     <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
                                     <Setter Property="TextWrapping" Value="NoWrap" />
                                 </Style>
@@ -285,7 +282,7 @@
                                         </Grid.ColumnDefinitions>
                                         <Rectangle Width="20" Height="20" Margin="10,5,0,5">
                                             <Rectangle.Resources>
-                                                <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{IconPacks:Material Kind=Refresh}"/>
+                                                <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}"/>
                                             </Rectangle.Resources>
                                             <Rectangle.Style>
                                                 <Style TargetType="{x:Type Rectangle}">
@@ -344,8 +341,8 @@
                                                 <StackPanel Orientation="Horizontal">
                                                     <Rectangle Width="24" Height="24">
                                                         <Rectangle.Resources>
-                                                            <VisualBrush x:Key="VisualUp" Stretch="Uniform" Visual="{IconPacks:Modern Kind=Network}"/>
-                                                            <VisualBrush x:Key="VisualDown" Stretch="Uniform" Visual="{IconPacks:Modern Kind=NetworkDisconnect}" />
+                                                            <VisualBrush x:Key="VisualUp" Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}"/>
+                                                            <VisualBrush x:Key="VisualDown" Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkDisconnect}" />
                                                         </Rectangle.Resources>
                                                         <Rectangle.Style>
                                                             <Style TargetType="{x:Type Rectangle}">
@@ -399,10 +396,10 @@
                                             </Style>
                                         </ComboBox.ItemContainerStyle>
                                     </ComboBox>
-                                    <Button Grid.Column="1" Grid.Row="0" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=cbNetworkInterfaceProfiles, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
+                                    <Button Grid.Column="1" Grid.Row="0" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=ComboBoxNetworkInterfaceProfiles, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
                                         <Rectangle Width="24" Height="24">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Refresh}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
                                             </Rectangle.OpacityMask>
                                             <Rectangle.Style>
                                                 <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ReloadAnimation}">
@@ -416,19 +413,17 @@
                                             </Rectangle.Style>
                                         </Rectangle>
                                     </Button>
-                                    <TextBlock Grid.Column="0" Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{DynamicResource String_ConnectTheNetworkCardToConfigureIt}" Visibility="{Binding CanConfigure, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{DynamicResource String_ConnectTheNetworkCardToConfigureIt}" Visibility="{Binding CanConfigure, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
                                 </Grid>
                             </StackPanel>
                             <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Configure}" />
                             <StackPanel Grid.Row="2">
-                                <RadioButton x:Name="radioButtonConfigEnableDynamicIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding ConfigEnableDynamicIPAddress}" Content="{DynamicResource String_ObtainAnIPAddressAutomatically}" Margin="0,0,0,10"/>
-                                <RadioButton x:Name="radioButtonConfigEnableStaticIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding ConfigEnableStaticIPAddress}" Content="{DynamicResource String_UseTheFollowingIPAddress}" Margin="0,0,0,10"/>
+                                <RadioButton x:Name="RadioButtonConfigEnableDynamicIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding ConfigEnableDynamicIPAddress}" Content="{DynamicResource String_ObtainAnIPAddressAutomatically}" Margin="0,0,0,10"/>
+                                <RadioButton x:Name="RadioButtonConfigEnableStaticIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding ConfigEnableStaticIPAddress}" Content="{DynamicResource String_UseTheFollowingIPAddress}" Margin="0,0,0,10"/>
                                 <GroupBox Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigEnableStaticIPAddress}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="25,0,0,10">
                                     <Grid>
                                         <Grid.Resources>
-                                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
-                                                <Setter Property="Margin" Value="0,0,10,0" />
-                                            </Style>
+                                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                                             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding ConfigEnableStaticIPAddress}" Value="False">
@@ -449,23 +444,23 @@
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_IPv4Address}" />
-                                        <TextBox x:Name="txtConfigIPAddress" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}">
+                                        <TextBox x:Name="TextBoxConfigIPAddress" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}">
                                             <TextBox.Text>
                                                 <Binding Path="ConfigIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
-                                                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                        <Validator:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                        <validators:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                                     </Binding.ValidationRules>
                                                 </Binding>
                                             </TextBox.Text>
                                         </TextBox>
                                         <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_SubnetmaskOrCIDR}" />
-                                        <ComboBox x:Name="cbConfigSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetmaskIPv4CIDR}" ItemsSource="{x:Static Network:Subnetmask.List}">
+                                        <ComboBox x:Name="ComboBoxConfigSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetmaskIPv4CIDR}" ItemsSource="{x:Static network:Subnetmask.List}">
                                             <ComboBox.Text>
                                                 <Binding Path="ConfigSubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
-                                                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                        <Validator:IPv4SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True"/>
+                                                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                        <validators:IPv4SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True"/>
                                                     </Binding.ValidationRules>
                                                 </Binding>
                                             </ComboBox.Text>
@@ -486,25 +481,23 @@
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
                                         <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_DefaultGateway}"  />
-                                        <TextBox x:Name="txtConfigGateway" Grid.Column="1" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}">
+                                        <TextBox x:Name="TextBoxConfigGateway" Grid.Column="1" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}">
                                             <TextBox.Text>
                                                 <Binding Path="ConfigGateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
-                                                        <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                        <validators:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                                     </Binding.ValidationRules>
                                                 </Binding>
                                             </TextBox.Text>
                                         </TextBox>
                                     </Grid>
                                 </GroupBox>
-                                <RadioButton x:Name="radioButtonConfigEnableDynamicDNS" GroupName="DNSServerConfig" Content="{DynamicResource String_ObtainDNSServerAddressAutomatically}" IsChecked="{Binding ConfigEnableDynamicDNS}" FontSize="14"  Margin="0,0,0,10" IsEnabled="{Binding ConfigEnableDynamicIPAddress}" />
-                                <RadioButton x:Name="radioButtonConfigEnableStaticDNS" GroupName="DNSServerConfig" Content="{DynamicResource String_UseTheFollowingDNSServerAddresses}" IsChecked="{Binding ConfigEnableStaticDNS}" FontSize="14" Margin="0,0,0,10"/>
-                                <GroupBox Grid.Row="10" Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigEnableStaticDNS}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="25,0,0,0">
+                                <RadioButton x:Name="RadioButtonConfigEnableDynamicDNS" GroupName="DNSServerConfig" Content="{DynamicResource String_ObtainDNSServerAddressAutomatically}" IsChecked="{Binding ConfigEnableDynamicDNS}" FontSize="14"  Margin="0,0,0,10" IsEnabled="{Binding ConfigEnableDynamicIPAddress}" />
+                                <RadioButton x:Name="RadioButtonConfigEnableStaticDNS" GroupName="DNSServerConfig" Content="{DynamicResource String_UseTheFollowingDNSServerAddresses}" IsChecked="{Binding ConfigEnableStaticDNS}" FontSize="14" Margin="0,0,0,10"/>
+                                <GroupBox Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigEnableStaticDNS}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="25,0,0,0">
                                     <Grid>
                                         <Grid.Resources>
-                                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
-                                                <Setter Property="Margin" Value="0,0,10,0" />
-                                            </Style>
+                                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                                             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" >
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding ConfigEnableStaticDNS}" Value="False">
@@ -523,21 +516,21 @@
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_PrimaryDNSServer}"  />
-                                        <TextBox x:Name="txtConfigPrimaryDNSServer" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                        <TextBox x:Name="TextBoxConfigPrimaryDNSServer" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                             <TextBox.Text>
                                                 <Binding Path="ConfigPrimaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
-                                                        <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                        <validators:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                                     </Binding.ValidationRules>
                                                 </Binding>
                                             </TextBox.Text>
                                         </TextBox>
                                         <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_SecondaryDNSServer}"  />
-                                        <TextBox x:Name="txtConfigSecondaryDNSServer" Grid.Column="1" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNSServer}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                        <TextBox x:Name="TextBoxConfigSecondaryDNSServer" Grid.Column="1" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNSServer}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                             <TextBox.Text>
                                                 <Binding Path="ConfigSecondaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
-                                                        <Validator:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                        <validators:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                                     </Binding.ValidationRules>
                                                 </Binding>
                                             </TextBox.Text>
@@ -547,9 +540,9 @@
                             </StackPanel>
                         </Grid>
                     </ScrollViewer>
-                    <Controls:MetroProgressBar Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True" Margin="0,0,0,10">
-                        <Controls:MetroProgressBar.Style>
-                            <Style TargetType="{x:Type  Controls:MetroProgressBar}">
+                    <mahAppsControls:MetroProgressBar Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True" Margin="0,0,0,10">
+                        <mahAppsControls:MetroProgressBar.Style>
+                            <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
                                 <Setter Property="Visibility" Value="Collapsed" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding IsConfigurationRunning}" Value="True">
@@ -557,9 +550,9 @@
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </Controls:MetroProgressBar.Style>
-                    </Controls:MetroProgressBar>
-                    <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+                        </mahAppsControls:MetroProgressBar.Style>
+                    </mahAppsControls:MetroProgressBar>
+                    <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
                     <Grid Grid.Row="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -574,7 +567,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=ListDelete}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ListDelete}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                     <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_FlushDNSCache}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
@@ -590,7 +583,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentSave}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentSave}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                     <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Apply}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
@@ -604,13 +597,13 @@
                                                 <MultiBinding Converter="{StaticResource ValidateNetworkInterfaceConfigConverter}">
                                                     <Binding Path="ConfigEnableDynamicIPAddress" />
                                                     <Binding Path="ConfigEnableStaticIPAddress" />
-                                                    <Binding ElementName="txtConfigIPAddress" Path="(Validation.HasError)" />
-                                                    <Binding ElementName="cbConfigSubnetmaskOrCidr" Path="(Validation.HasError)" />
-                                                    <Binding ElementName="txtConfigGateway" Path="(Validation.HasError)" />
+                                                    <Binding ElementName="TextBoxConfigIPAddress" Path="(Validation.HasError)" />
+                                                    <Binding ElementName="ComboBoxConfigSubnetmaskOrCidr" Path="(Validation.HasError)" />
+                                                    <Binding ElementName="TextBoxConfigGateway" Path="(Validation.HasError)" />
                                                     <Binding Path="ConfigEnableDynamicDNS" />
                                                     <Binding Path="ConfigEnableStaticDNS" />
-                                                    <Binding ElementName="txtConfigPrimaryDNSServer" Path="(Validation.HasError)" />
-                                                    <Binding ElementName="txtConfigSecondaryDNSServer" Path="(Validation.HasError)" />
+                                                    <Binding ElementName="TextBoxConfigPrimaryDNSServer" Path="(Validation.HasError)" />
+                                                    <Binding ElementName="TextBoxConfigSecondaryDNSServer" Path="(Validation.HasError)" />
                                                     <Binding Path="CanConfigure" />
                                                 </MultiBinding>
                                             </DataTrigger.Binding>
@@ -626,7 +619,7 @@
                     </Grid>
                 </Grid>
                 <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
-                <Expander Grid.Column="2" x:Name="expanderProfiles" Header="{DynamicResource String_Header_Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
+                <Expander Grid.Column="2" x:Name="ExpanderProfiles" Header="{DynamicResource String_Header_Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -635,15 +628,15 @@
                             <RowDefinition Height="10" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <TextBox x:Name="txtSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}"/>
-                        <ListBox Grid.Column="0" Grid.Row="2" x:Name="listBoxProfiles" ItemsSource="{Binding Profiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
+                        <TextBox x:Name="TextBoxSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}"/>
+                        <ListBox Grid.Column="0" Grid.Row="2" x:Name="ListBoxProfiles" ItemsSource="{Binding Profiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                             <ListBox.Resources>
                                 <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                     <MenuItem Header="{DynamicResource String_Apply}" Command="{Binding ApplyProfileCommand}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                                 <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentSave}" />
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentSave}" />
                                                 </Rectangle.OpacityMask>
                                             </Rectangle>
                                         </MenuItem.Icon>
@@ -652,7 +645,7 @@
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                                 <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
                                                 </Rectangle.OpacityMask>
                                             </Rectangle>
                                         </MenuItem.Icon>
@@ -661,7 +654,7 @@
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                                 <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentDuplicate}" />
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentDuplicate}" />
                                                 </Rectangle.OpacityMask>
                                             </Rectangle>
                                         </MenuItem.Icon>
@@ -670,7 +663,7 @@
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                                 <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Close}" />
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                                 </Rectangle.OpacityMask>
                                             </Rectangle>
                                         </MenuItem.Icon>
@@ -696,10 +689,10 @@
                                                                         <ColumnDefinition Width="Auto" />
                                                                     </Grid.ColumnDefinitions>
                                                                     <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{DynamicResource DefaultTextBlock}"/>
-                                                                    <Button Grid.Column="1" ToolTip="{DynamicResource String_EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource CleanButton}">
+                                                                    <Button Grid.Column="1" ToolTip="{DynamicResource String_EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
                                                                         <Rectangle Width="16" Height="16">
                                                                             <Rectangle.OpacityMask>
-                                                                                <VisualBrush Stretch="Uniform" Visual="{IconPacks:Modern Kind=Edit}" />
+                                                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
                                                                             </Rectangle.OpacityMask>
                                                                             <Rectangle.Style>
                                                                                 <Style TargetType="{x:Type Rectangle}">
@@ -755,8 +748,8 @@
                                     </Button.Style>
                                     <Rectangle Width="20" Height="20">
                                         <Rectangle.Resources>
-                                            <VisualBrush x:Key="VisualPlus" Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}"/>
-                                            <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{IconPacks:Material Kind=FilterRemoveOutline}" />
+                                            <VisualBrush x:Key="VisualPlus" Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}"/>
+                                            <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
                                         </Rectangle.Resources>
                                         <Rectangle.Style>
                                             <Style TargetType="{x:Type Rectangle}">
@@ -788,7 +781,7 @@
                                 </TextBlock>
                             </StackPanel>
                         </Grid>
-                        <Button x:Name="btnAddProfile" Grid.Column="0" Grid.Row="4" Command="{Binding AddProfileCommand}" Style="{StaticResource ImageWithTextButton}">
+                        <Button x:Name="ButtonAddProfile" Grid.Column="0" Grid.Row="4" Command="{Binding AddProfileCommand}" Style="{StaticResource ImageWithTextButton}">
                             <Button.Content>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -797,7 +790,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Plus}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                     <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center"/>

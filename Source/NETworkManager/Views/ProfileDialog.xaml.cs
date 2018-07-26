@@ -1,10 +1,6 @@
-﻿using NETworkManager.ViewModels;
-using System.Diagnostics;
-using System.Windows.Controls;
-
-namespace NETworkManager.Views
+﻿namespace NETworkManager.Views
 {
-    public partial class ProfileDialog : UserControl
+    public partial class ProfileDialog
     {
         public ProfileDialog()
         {
@@ -14,7 +10,7 @@ namespace NETworkManager.Views
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             // Need to be in loaded event, focusmanger won't work...
-            txtName.Focus();            
+            TextBoxName.Focus();            
         }
     }
 }

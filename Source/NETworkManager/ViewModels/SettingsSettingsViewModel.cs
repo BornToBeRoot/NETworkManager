@@ -2,6 +2,7 @@
 using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -12,16 +13,16 @@ namespace NETworkManager.ViewModels
     public class SettingsSettingsViewModel : ViewModelBase
     {
         #region Variables
-        private IDialogCoordinator dialogCoordinator;
+        private readonly IDialogCoordinator _dialogCoordinator;
 
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         public Action CloseAction { get; set; }
 
         private string _locationSelectedPath;
         public string LocationSelectedPath
         {
-            get { return _locationSelectedPath; }
+            get => _locationSelectedPath;
             set
             {
                 if (value == _locationSelectedPath)
@@ -35,7 +36,7 @@ namespace NETworkManager.ViewModels
         private bool _movingFiles;
         public bool MovingFiles
         {
-            get { return _movingFiles; }
+            get => _movingFiles;
             set
             {
                 if (value == _movingFiles)
@@ -45,11 +46,11 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-              
+
         private bool _isPortable;
         public bool IsPortable
         {
-            get { return _isPortable; }
+            get => _isPortable;
             set
             {
                 if (value == _isPortable)
@@ -66,7 +67,7 @@ namespace NETworkManager.ViewModels
         private bool _makingPortable;
         public bool MakingPortable
         {
-            get { return _makingPortable; }
+            get => _makingPortable;
             set
             {
                 if (value == _makingPortable)
@@ -80,7 +81,7 @@ namespace NETworkManager.ViewModels
         private bool _resetEverything;
         public bool ResetEverything
         {
-            get { return _resetEverything; }
+            get => _resetEverything;
             set
             {
                 if (value == _resetEverything)
@@ -94,7 +95,7 @@ namespace NETworkManager.ViewModels
         private bool _settingsExists;
         public bool SettingsExists
         {
-            get { return _settingsExists; }
+            get => _settingsExists;
             set
             {
                 if (value == _settingsExists)
@@ -108,7 +109,7 @@ namespace NETworkManager.ViewModels
         private bool _resetSettings;
         public bool ResetSettings
         {
-            get { return _resetSettings; }
+            get => _resetSettings;
             set
             {
                 if (value == _resetSettings)
@@ -122,7 +123,7 @@ namespace NETworkManager.ViewModels
         private bool _profilesExists;
         public bool ProfilesExists
         {
-            get { return _profilesExists; }
+            get => _profilesExists;
             set
             {
                 if (value == _profilesExists)
@@ -136,7 +137,7 @@ namespace NETworkManager.ViewModels
         private bool _resetProfiles;
         public bool ResetProfiles
         {
-            get { return _resetProfiles; }
+            get => _resetProfiles;
             set
             {
                 if (value == _resetProfiles)
@@ -151,7 +152,9 @@ namespace NETworkManager.ViewModels
         #region Constructor, LoadSettings
         public SettingsSettingsViewModel(IDialogCoordinator instance)
         {
-            dialogCoordinator = instance;
+            _isLoading = true;
+
+            _dialogCoordinator = instance;
 
             LoadSettings();
 
@@ -173,12 +176,12 @@ namespace NETworkManager.ViewModels
 
         private void BrowseFolderAction()
         {
-            System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
 
             if (Directory.Exists(LocationSelectedPath))
                 dialog.SelectedPath = LocationSelectedPath;
 
-            System.Windows.Forms.DialogResult dialogResult = dialog.ShowDialog();
+            var dialogResult = dialog.ShowDialog();
 
             if (dialogResult == System.Windows.Forms.DialogResult.OK)
                 LocationSelectedPath = dialog.SelectedPath;
@@ -189,7 +192,7 @@ namespace NETworkManager.ViewModels
             get { return new RelayCommand(p => OpenLocationAction()); }
         }
 
-        private void OpenLocationAction()
+        private static void OpenLocationAction()
         {
             Process.Start("explorer.exe", SettingsManager.GetSettingsLocation());
         }
@@ -200,11 +203,11 @@ namespace NETworkManager.ViewModels
         }
 
         // Check if a file(name) is a settings file
-        private bool FilesContainsSettingsFiles(string[] files)
+        private static bool FilesContainsSettingsFiles(IEnumerable<string> files)
         {
-            foreach (string file in files)
+            foreach (var file in files)
             {
-                string fileName = Path.GetFileName(file);
+                var fileName = Path.GetFileName(file);
 
                 if (SettingsManager.GetSettingsFileName() == fileName)
                     return true;
@@ -219,35 +222,34 @@ namespace NETworkManager.ViewModels
         private async void ChangeSettingsAction()
         {
             MovingFiles = true;
-            bool overwrite = false;
-            bool forceRestart = false;
+            var overwrite = false;
+            var forceRestart = false;
 
-            string[] filesTargedLocation = Directory.GetFiles(LocationSelectedPath);
+            var filesTargedLocation = Directory.GetFiles(LocationSelectedPath);
 
             // Check if there are any settings files in the folder...
             if (FilesContainsSettingsFiles(filesTargedLocation))
             {
-                MetroDialogSettings settings = AppearanceManager.MetroDialog;
+                var settings = AppearanceManager.MetroDialog;
 
                 settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_Overwrite");
                 settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_Cancel");
                 settings.FirstAuxiliaryButtonText = LocalizationManager.GetStringByKey("String_Button_MoveAndRestart");
                 settings.DefaultButtonFocus = MessageDialogResult.FirstAuxiliary;
 
-                MessageDialogResult result = await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Overwrite"),LocalizationManager.GetStringByKey("String_OverwriteSettingsInTheDestinationFolder"), MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
+                var result = await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Overwrite"), LocalizationManager.GetStringByKey("String_OverwriteSettingsInTheDestinationFolder"), MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
 
-                if (result == MessageDialogResult.Negative)
+                switch (result)
                 {
-                    MovingFiles = false;
-                    return;
-                }
-                else if (result == MessageDialogResult.Affirmative)
-                {
-                    overwrite = true;
-                }
-                else if (result == MessageDialogResult.FirstAuxiliary)
-                {
-                    forceRestart = true;
+                    case MessageDialogResult.Negative:
+                        MovingFiles = false;
+                        return;
+                    case MessageDialogResult.Affirmative:
+                        overwrite = true;
+                        break;
+                    case MessageDialogResult.FirstAuxiliary:
+                        forceRestart = true;
+                        break;
                 }
             }
 
@@ -263,11 +265,11 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                MetroDialogSettings settings = AppearanceManager.MetroDialog;
+                var settings = AppearanceManager.MetroDialog;
 
                 settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
 
-               await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error") as string, ex.Message, MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
             LocationSelectedPath = string.Empty;
@@ -299,25 +301,25 @@ namespace NETworkManager.ViewModels
 
         public async void ResetSettingsAction()
         {
-            MetroDialogSettings settings = AppearanceManager.MetroDialog;
+            var settings = AppearanceManager.MetroDialog;
 
             settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_Continue");
             settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_Cancel");
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            string message = LocalizationManager.GetStringByKey("String_SelectedSettingsAreReset");
+            var message = LocalizationManager.GetStringByKey("String_SelectedSettingsAreReset");
 
             if (ResetEverything || ResetSettings)
             {
-                message += Environment.NewLine + Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_TheSettingsLocationIsNotAffected"));
-                message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_ApplicationIsRestartedAfterwards"));
+                message += Environment.NewLine + Environment.NewLine + $"* {LocalizationManager.GetStringByKey("String_TheSettingsLocationIsNotAffected")}";
+                message += Environment.NewLine + $"* {LocalizationManager.GetStringByKey("String_ApplicationIsRestartedAfterwards")}";
             }
 
-            if (await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_AreYouSure"), message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+            if (await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_AreYouSure"), message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 return;
 
-            bool forceRestart = false;
+            var forceRestart = false;
 
             if (SettingsExists && (ResetEverything || ResetSettings))
             {
@@ -337,7 +339,7 @@ namespace NETworkManager.ViewModels
             {
                 settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
 
-                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Success"), LocalizationManager.GetStringByKey("String_SettingsSuccessfullyReset"), MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Success"), LocalizationManager.GetStringByKey("String_SettingsSuccessfullyReset"), MessageDialogStyle.Affirmative, settings);
             }
         }
         #endregion
@@ -364,7 +366,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
 
             MakingPortable = false;

@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                    xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
+                    xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
     <Style x:Key="ExpanderDownHeader" BasedOn="{StaticResource ExpanderDownHeaderStyle}" TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
@@ -17,30 +17,30 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Grid.Column="0" x:Name="Chevron" Width="16" Height="16" Fill="{DynamicResource GrayBrush3}" VerticalAlignment="Center">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Entypo Kind=ChevronThinDown}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Entypo Kind=ChevronThinDown}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <Controls:ContentControlEx Grid.Column="1" 
+                            <mahAppsControls:ContentControlEx Grid.Column="1" 
                                                        Margin="10,0,0,0" 
                                                        HorizontalAlignment="Stretch"
                                                        Padding="{TemplateBinding Padding}" 
                                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                        Content="{TemplateBinding Content}"
-                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mahAppsControls:ControlsHelper.ContentCharacterCasing)}"
                                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
                                                        RecognizesAccessKey="True"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                            </Controls:ContentControlEx>
+                            </mahAppsControls:ContentControlEx>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Chevron" Property="OpacityMask">
                                 <Setter.Value>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Entypo Kind=ChevronThinUp}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Entypo Kind=ChevronThinUp}" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
@@ -57,9 +57,9 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource GrayBrush3}" />
-        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
-        <Setter Property="Controls:ExpanderHelper.HeaderDownStyle" Value="{DynamicResource ExpanderDownHeader}" />
+        <Setter Property="mahAppsControls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource GrayBrush3}" />
+        <Setter Property="mahAppsControls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
+        <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle" Value="{DynamicResource ExpanderDownHeader}" />
     </Style>
 
     <Style x:Key="ExpanderDownHeaderReverse" BasedOn="{StaticResource ExpanderDownHeaderStyle}" TargetType="{x:Type ToggleButton}">
@@ -75,23 +75,23 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Controls:ContentControlEx Grid.Column="0" 
+                            <mahAppsControls:ContentControlEx Grid.Column="0" 
                                                        Margin="0,0,10,0" 
                                                        HorizontalAlignment="Stretch"
                                                        Padding="{TemplateBinding Padding}" 
                                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                        Content="{TemplateBinding Content}"
-                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mahAppsControls:ControlsHelper.ContentCharacterCasing)}"
                                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
                                                        RecognizesAccessKey="True"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                            </Controls:ContentControlEx>
+                            </mahAppsControls:ContentControlEx>
                             <Rectangle Grid.Column="1" x:Name="Chevron" Width="16" Height="16" Fill="{DynamicResource GrayBrush3}" VerticalAlignment="Center">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Entypo Kind=ChevronThinDown}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Entypo Kind=ChevronThinDown}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>                           
                         </Grid>
@@ -100,7 +100,7 @@
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Chevron" Property="OpacityMask">
                                 <Setter.Value>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Entypo Kind=ChevronThinUp}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Entypo Kind=ChevronThinUp}" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
@@ -117,9 +117,9 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Margin" Value="-4" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource GrayBrush3}" />
-        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
-        <Setter Property="Controls:ExpanderHelper.HeaderDownStyle" Value="{DynamicResource ExpanderDownHeaderReverse}" />
+        <Setter Property="mahAppsControls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource GrayBrush3}" />
+        <Setter Property="mahAppsControls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
+        <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle" Value="{DynamicResource ExpanderDownHeaderReverse}" />
     </Style>
 
     <Style x:Key="RightExpanderOpen" BasedOn="{StaticResource ExpanderDownHeaderStyle}" TargetType="{x:Type ToggleButton}">
@@ -138,7 +138,7 @@
                             <TextBlock Grid.Column="0" Text="{TemplateBinding Content}" Style="{StaticResource HeaderTextBlock}" Margin="10,10,10,0" />
                             <Rectangle Grid.Column="1" x:Name="Chevron" Width="16" Height="16" Fill="{DynamicResource GrayBrush3}" Margin="0,10,10,0" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Entypo Kind=ChevronThinLeft}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Entypo Kind=ChevronThinLeft}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>                           
                         </Grid>
@@ -168,7 +168,7 @@
                             </Grid.RowDefinitions>
                             <Rectangle Grid.Row="0" x:Name="Chevron" Width="16" Height="16" Fill="{DynamicResource GrayBrush3}" Margin="10,14.5,10,10" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Entypo Kind=ChevronThinRight}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Entypo Kind=ChevronThinRight}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Row="1" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" Style="{StaticResource HeaderTextBlock}" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -193,14 +193,14 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="ExpandDirection" Value="Right" />
         <Setter Property="Padding" Value="10" />
-        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource GrayBrush3}" />
-        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="14" />
-        <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{DynamicResource RightExpanderClosed}" />
+        <Setter Property="mahAppsControls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource GrayBrush3}" />
+        <Setter Property="mahAppsControls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
+        <Setter Property="mahAppsControls:ControlsHelper.HeaderFontSize" Value="14" />
+        <Setter Property="mahAppsControls:ExpanderHelper.HeaderRightStyle" Value="{DynamicResource RightExpanderClosed}" />
         <Style.Triggers>
             <Trigger Property="IsExpanded" Value="True">
                 <Setter Property="ExpandDirection" Value="Down" />
-                <Setter Property="Controls:ExpanderHelper.HeaderDownStyle" Value="{DynamicResource RightExpanderOpen}" />
+                <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle" Value="{DynamicResource RightExpanderOpen}" />
             </Trigger>
         </Style.Triggers>
     </Style>

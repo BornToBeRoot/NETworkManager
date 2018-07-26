@@ -1,25 +1,27 @@
-﻿<Controls:MetroWindow x:Class="NETworkManager.Controls.DragablzTabHostWindow"
+﻿<mahAppsControls:MetroWindow x:Class="NETworkManager.Controls.DragablzTabHostWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
         mc:Ignorable="d"
-        Title="{DynamicResource String_ProductName}" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" TitleAlignment="Left">
-    <Controls:MetroWindow.Resources>
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    </Controls:MetroWindow.Resources>
-    <Controls:MetroWindow.WindowButtonCommands>
-        <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
-    </Controls:MetroWindow.WindowButtonCommands>
+        Title="{DynamicResource String_ProductName}" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" TitleAlignment="Left"
+        d:DataContext="{d:DesignInstance networkManagerControls:DragablzTabHostWindow}">    
+    <mahAppsControls:MetroWindow.Resources>
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+    </mahAppsControls:MetroWindow.Resources>
+    <mahAppsControls:MetroWindow.WindowButtonCommands>
+        <mahAppsControls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
+    </mahAppsControls:MetroWindow.WindowButtonCommands>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border x:Name="HeaderBorder" Grid.Row="0" Visibility="{Binding ShowCurrentApplicationTitle, Converter={StaticResource BooleanToVisibilityConverter}}" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,0,1" MouseDown="HeaderBorder_MouseDown">
+        <Border x:Name="HeaderBorder" Grid.Row="0" Visibility="{Binding ShowCurrentApplicationTitle, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,0,1" MouseDown="HeaderBorder_MouseDown">
             <TextBlock VerticalAlignment="Center" Height="48" TextAlignment="Center" FontSize="22" Style="{StaticResource HeaderTextBlock}" Text="{Binding ApplicationTitle}" Foreground="{DynamicResource GrayBrush3}" Margin="0" />
         </Border>
         <dragablz:TabablzControl Focusable="False" Grid.Row="1" Name="TabsContainer" ClosingItemCallback="{Binding CloseItemCommand}">
@@ -33,7 +35,7 @@
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <ContentPresenter Content="{Binding View}" />
+                                <ContentPresenter Content="{Binding View}" d:DataContext="{d:DesignInstance networkManagerControls:DragablzTabItem}" />
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>
@@ -41,4 +43,4 @@
             </dragablz:TabablzControl.Style>
         </dragablz:TabablzControl>
     </Grid>
-</Controls:MetroWindow>
+</mahAppsControls:MetroWindow>

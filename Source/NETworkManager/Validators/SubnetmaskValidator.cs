@@ -10,10 +10,7 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (Regex.IsMatch(value as string, RegexHelper.SubnetmaskRegex))
-                return ValidationResult.ValidResult;
-
-            return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidSubnetmask"));
+            return value != null && Regex.IsMatch((string) value, RegexHelper.SubnetmaskRegex) ? ValidationResult.ValidResult : new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidSubnetmask"));
         }
     }
 }

@@ -1,28 +1,24 @@
-﻿using System.Linq;
-using NETworkManager.Views;
-using System.Windows.Controls;
+﻿using System;
 using System.ComponentModel;
-using System.Windows.Data;
-using System;
+using System.Linq;
 using System.Text.RegularExpressions;
-using NETworkManager.Utilities;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
-namespace NETworkManager.ViewModels.Settings
+namespace NETworkManager.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
         #region Variables
-        private CollectionViewSource _settingsViewsSource;
-        public ICollectionView SettingsViews
-        {
-            get { return _settingsViewsSource.View; }
-        }
+        public ICollectionView SettingsViews { get; private set; }
 
         private string _search;
         public string Search
         {
-            get { return _search; }
+            get => _search;
             set
             {
                 if (value == _search)
@@ -33,7 +29,7 @@ namespace NETworkManager.ViewModels.Settings
                 SettingsViews.Refresh();
 
                 // Show note when there was nothing found
-                SearchNothingFound = SettingsViews.Cast<SettingsViewInfo>().Count() == 0;
+                SearchNothingFound = !SettingsViews.Cast<SettingsViewInfo>().Any();
 
                 OnPropertyChanged();
             }
@@ -42,7 +38,7 @@ namespace NETworkManager.ViewModels.Settings
         private bool _searchNothingFound;
         public bool SearchNothingFound
         {
-            get { return _searchNothingFound; }
+            get => _searchNothingFound;
             set
             {
                 if (value == _searchNothingFound)
@@ -56,10 +52,10 @@ namespace NETworkManager.ViewModels.Settings
         private UserControl _settingsContent;
         public UserControl SettingsContent
         {
-            get { return _settingsContent; }
+            get => _settingsContent;
             set
             {
-                if (value == _settingsContent)
+                if (Equals(value, _settingsContent))
                     return;
 
                 _settingsContent = value;
@@ -70,7 +66,7 @@ namespace NETworkManager.ViewModels.Settings
         private SettingsViewInfo _selectedSettingsView;
         public SettingsViewInfo SelectedSettingsView
         {
-            get { return _selectedSettingsView; }
+            get => _selectedSettingsView;
             set
             {
                 if (value == _selectedSettingsView)
@@ -84,25 +80,25 @@ namespace NETworkManager.ViewModels.Settings
             }
         }
 
-        SettingsGeneralView _settingsGerneralView;
-        SettingsWindowView _settingsWindowView;
-        SettingsAppearanceView _settingsApperanceView;
-        SettingsLanguageView _settingsLanguageView;
-        SettingsHotKeysView _settingsHotKeysView;
-        SettingsAutostartView _settingsAutostartView;
-        SettingsSettingsView _settingsSettingsView;
-        SettingsUpdateView _settingsUpdateView;
-        SettingsImportExportView _settingsImportExportView;
-        IPScannerSettingsView _ipScannerSettingsView;
-        PortScannerSettingsView _portScannerSettingsView;
-        PingSettingsView _pingSettingsViewModel;
-        TracerouteSettingsView _tracerouteSettingsView;
-        DNSLookupSettingsView _dnsLookupSettingsViewModel;
-        RemoteDesktopSettingsView _remoteDesktopSettingsView;
-        PuTTYSettingsView _puTTYSettingsView;
-        SNMPSettingsView _snmpSettingsView;
-        WakeOnLANSettingsView _wakeOnLANSettingsView;
-        HTTPHeadersSettingsView _httpHeadersSettingsView;
+        private SettingsGeneralView _settingsGerneralView;
+        private SettingsWindowView _settingsWindowView;
+        private SettingsAppearanceView _settingsApperanceView;
+        private SettingsLanguageView _settingsLanguageView;
+        private SettingsHotKeysView _settingsHotKeysView;
+        private SettingsAutostartView _settingsAutostartView;
+        private SettingsSettingsView _settingsSettingsView;
+        private SettingsUpdateView _settingsUpdateView;
+        private SettingsImportExportView _settingsImportExportView;
+        private IPScannerSettingsView _ipScannerSettingsView;
+        private PortScannerSettingsView _portScannerSettingsView;
+        private PingSettingsView _pingSettingsViewModel;
+        private TracerouteSettingsView _tracerouteSettingsView;
+        private DNSLookupSettingsView _dnsLookupSettingsViewModel;
+        private RemoteDesktopSettingsView _remoteDesktopSettingsView;
+        private PuTTYSettingsView _puTTYSettingsView;
+        private SNMPSettingsView _snmpSettingsView;
+        private WakeOnLANSettingsView _wakeOnLANSettingsView;
+        private HTTPHeadersSettingsView _httpHeadersSettingsView;
         #endregion
 
         #region Contructor, load settings
@@ -116,28 +112,23 @@ namespace NETworkManager.ViewModels.Settings
         private void LoadSettings()
         {
             // General
-            _settingsViewsSource = new CollectionViewSource()
-            {
-                Source = SettingsViewManager.List
-            };
-
+            SettingsViews =  new CollectionViewSource { Source = SettingsViewManager.List }.View;
             SettingsViews.GroupDescriptions.Add(new PropertyGroupDescription("TranslatedGroup"));
             SettingsViews.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-
             SettingsViews.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
                     return true;
 
-                // Settings view without "-" and " "
-                SettingsViewInfo info = o as SettingsViewInfo;
+                if (!(o is SettingsViewInfo info))
+                    return false;
+                
+                var regex = new Regex(@" |-");
 
-                Regex regex = new Regex(@" |-");
-
-                string search = regex.Replace(Search, "");
+                var search = regex.Replace(Search, "");
 
                 // Search by TranslatedName and Name
-                return (regex.Replace(info.TranslatedName, "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1) || (regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+                return regex.Replace(info.TranslatedName, "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || (regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
         }
         #endregion

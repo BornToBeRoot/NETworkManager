@@ -22,7 +22,7 @@ namespace NETworkManager.Models.Network
         public event EventHandler TraceComplete;
         protected virtual void OnTraceComplete()
         {
-            TraceComplete?.Invoke(this, System.EventArgs.Empty);
+            TraceComplete?.Invoke(this, EventArgs.Empty);
         }
 
         public event EventHandler<MaximumHopsReachedArgs> MaximumHopsReached;
@@ -34,7 +34,7 @@ namespace NETworkManager.Models.Network
         public event EventHandler UserHasCanceled;
         protected virtual void OnUserHasCanceled()
         {
-            UserHasCanceled?.Invoke(this, System.EventArgs.Empty);
+            UserHasCanceled?.Invoke(this, EventArgs.Empty);
         }
         #endregion
 
@@ -43,38 +43,41 @@ namespace NETworkManager.Models.Network
         {
             Task.Run(() =>
             {
-                byte[] buffer = new byte[traceOptions.Buffer];
+                var buffer = new byte[traceOptions.Buffer];
 
-                for (int i = 1; i < traceOptions.MaximumHops + 1; i++)
+                for (var i = 1; i < traceOptions.MaximumHops + 1; i++)
                 {
-                    List<Task<Tuple<PingReply, long>>> tasks = new List<Task<Tuple<PingReply, long>>>();
+                    var tasks = new List<Task<Tuple<PingReply, long>>>();
 
-                    for (int y = 0; y < 3; y++)
+                    for (var y = 0; y < 3; y++)
                     {
+                        var i1 = i;
+
                         tasks.Add(Task.Run(() =>
                         {
-                            Stopwatch stopwatch = new Stopwatch();
+                            var stopwatch = new Stopwatch();
 
                             PingReply pingReply;
 
-                            using (System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping())
+                            using (var ping = new System.Net.NetworkInformation.Ping())
                             {
                                 stopwatch.Start();
 
-                                pingReply = ping.Send(ipAddress, traceOptions.Timeout, buffer, new System.Net.NetworkInformation.PingOptions() { Ttl = i, DontFragment = traceOptions.DontFragement });
+                                pingReply = ping.Send(ipAddress, traceOptions.Timeout, buffer, new System.Net.NetworkInformation.PingOptions { Ttl = i1, DontFragment = traceOptions.DontFragement });
 
                                 stopwatch.Stop();
                             }
 
                             return Tuple.Create(pingReply, stopwatch.ElapsedMilliseconds);
-                        }));
+                        }, cancellationToken));
                     }
 
+                    // ReSharper disable once CoVariantArrayConversion, no write operation
                     Task.WaitAll(tasks.ToArray());
 
-                    IPAddress ipAddressHop = tasks.FirstOrDefault(x => x.Result.Item1 != null).Result.Item1.Address;
+                    var ipAddressHop = tasks.FirstOrDefault(x => x.Result.Item1 != null)?.Result.Item1.Address;
 
-                    string hostname = string.Empty;
+                    var hostname = string.Empty;
 
                     try
                     {

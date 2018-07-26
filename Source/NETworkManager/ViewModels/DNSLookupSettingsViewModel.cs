@@ -10,12 +10,12 @@ namespace NETworkManager.ViewModels
     public class DNSLookupSettingsViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private bool _useCustomDNSServer;
         public bool UseCustomDNSServer
         {
-            get { return _useCustomDNSServer; }
+            get => _useCustomDNSServer;
             set
             {
                 if (value == _useCustomDNSServer)
@@ -32,7 +32,7 @@ namespace NETworkManager.ViewModels
         private string _customDNSServer;
         public string CustomDNSServer
         {
-            get { return _customDNSServer; }
+            get => _customDNSServer;
             set
             {
                 if (value == _customDNSServer)
@@ -49,7 +49,7 @@ namespace NETworkManager.ViewModels
         private int _port;
         public int Port
         {
-            get { return _port;}
+            get => _port;
             set
             {
                 if (value == _port)
@@ -66,7 +66,7 @@ namespace NETworkManager.ViewModels
         private bool _addDNSSuffix;
         public bool AddDNSSuffix
         {
-            get { return _addDNSSuffix; }
+            get => _addDNSSuffix;
             set
             {
                 if (value == _addDNSSuffix)
@@ -83,7 +83,7 @@ namespace NETworkManager.ViewModels
         private bool _useCustomDNSSuffix;
         public bool UseCustomDNSSuffix
         {
-            get { return _useCustomDNSSuffix; }
+            get => _useCustomDNSSuffix;
             set
             {
                 if (value == _useCustomDNSSuffix)
@@ -100,7 +100,7 @@ namespace NETworkManager.ViewModels
         private string _customDNSSuffix;
         public string CustomDNSSuffix
         {
-            get { return _customDNSSuffix; }
+            get => _customDNSSuffix;
             set
             {
                 if (value == _customDNSSuffix)
@@ -117,7 +117,7 @@ namespace NETworkManager.ViewModels
         private bool _resolveCNAME;
         public bool ResolveCNAME
         {
-            get { return _resolveCNAME; }
+            get => _resolveCNAME;
             set
             {
                 if (value == _resolveCNAME)
@@ -134,7 +134,7 @@ namespace NETworkManager.ViewModels
         private bool _recursion;
         public bool Recursion
         {
-            get { return _recursion; }
+            get => _recursion;
             set
             {
                 if (value == _recursion)
@@ -151,7 +151,7 @@ namespace NETworkManager.ViewModels
         private bool _useResolverCache;
         public bool UseResolverCache
         {
-            get { return _useResolverCache; }
+            get => _useResolverCache;
             set
             {
                 if (value == _useResolverCache)
@@ -170,7 +170,7 @@ namespace NETworkManager.ViewModels
         private QClass _class;
         public QClass Class
         {
-            get { return _class; }
+            get => _class;
             set
             {
                 if (value == _class)
@@ -187,7 +187,7 @@ namespace NETworkManager.ViewModels
         private bool _showMostCommonQueryTypes;
         public bool ShowMostCommonQueryTypes
         {
-            get { return _showMostCommonQueryTypes; }
+            get => _showMostCommonQueryTypes;
             set
             {
                 if (value == _showMostCommonQueryTypes)
@@ -206,7 +206,7 @@ namespace NETworkManager.ViewModels
         private TransportType _transportType;
         public TransportType TransportType
         {
-            get { return _transportType; }
+            get => _transportType;
             set
             {
                 if (value == _transportType)
@@ -223,7 +223,7 @@ namespace NETworkManager.ViewModels
         private int _attempts;
         public int Attempts
         {
-            get { return _attempts; }
+            get => _attempts;
             set
             {
                 if (value == _attempts)
@@ -240,7 +240,7 @@ namespace NETworkManager.ViewModels
         private int _timeout;
         public int Timeout
         {
-            get { return _timeout; }
+            get => _timeout;
             set
             {
                 if (value == _timeout)
@@ -257,7 +257,7 @@ namespace NETworkManager.ViewModels
         private bool _showStatistics;
         public bool ShowStatistics
         {
-            get { return _showStatistics; }
+            get => _showStatistics;
             set
             {
                 if (value == _showStatistics)
@@ -275,6 +275,8 @@ namespace NETworkManager.ViewModels
         #region Constructor, load settings
         public DNSLookupSettingsViewModel()
         {
+            _isLoading = true;
+
             LoadSettings();
 
             _isLoading = false;

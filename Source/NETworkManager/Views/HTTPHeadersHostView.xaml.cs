@@ -1,16 +1,15 @@
 ﻿using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class HTTPHeadersHostView : UserControl
+    public partial class HTTPHeadersHostView 
     {
-        HTTPHeadersHostViewModel viewModel = new HTTPHeadersHostViewModel();
+        private readonly HTTPHeadersHostViewModel _viewModel = new HTTPHeadersHostViewModel();
 
         public HTTPHeadersHostView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
 
             InterTabController.Partition = ApplicationViewManager.Name.HTTPHeaders.ToString();
         }

@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
+                    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
     <ContextMenu x:Key="CutCopyPasteContextMenu" MinWidth="150">
         <MenuItem Header="{DynamicResource String_ContextMenu_Cut}" Command="Cut">
             <MenuItem.Icon>
@@ -16,7 +16,7 @@
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCut}" />
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCut}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
@@ -35,7 +35,7 @@
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
@@ -54,7 +54,7 @@
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentPaste}" />
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentPaste}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
@@ -76,7 +76,7 @@
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>

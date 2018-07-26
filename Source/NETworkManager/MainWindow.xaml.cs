@@ -4,27 +4,27 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Linq;
-using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Views;
 using NETworkManager.Models.Settings;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Collections.Generic;
+using System.Globalization;
 using NETworkManager.Utilities;
 using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using NETworkManager.Models.Update;
 using NETworkManager.Models.Documentation;
+using ContextMenu = System.Windows.Controls.ContextMenu;
 
 namespace NETworkManager
 {
-    public partial class MainWindow : MetroWindow, INotifyPropertyChanged
+    public partial class MainWindow : INotifyPropertyChanged
     {
         #region PropertyChangedEventHandler
         public event PropertyChangedEventHandler PropertyChanged;
@@ -36,9 +36,9 @@ namespace NETworkManager
         #endregion
 
         #region Variables        
-        NotifyIcon notifyIcon;
+        private NotifyIcon _notifyIcon;
 
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private bool _isInTray;
         private bool _closeApplication;
@@ -46,22 +46,22 @@ namespace NETworkManager
         // Indicates a restart message, when settings changed
         private string _cultureCode;
 
-        private bool _applicationView_Expand;
-        public bool ApplicationView_Expand
+        private bool _expandApplicationView;
+        public bool ExpandApplicationView
         {
-            get { return _applicationView_Expand; }
+            get => _expandApplicationView;
             set
             {
-                if (value == _applicationView_Expand)
+                if (value == _expandApplicationView)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.ApplicationView_Expand = value;
+                    SettingsManager.Current.ExpandApplicationView = value;
 
                 if (!value)
                     ClearSearchOnApplicationListMinimize();
 
-                _applicationView_Expand = value;
+                _expandApplicationView = value;
                 OnPropertyChanged();
             }
         }
@@ -69,7 +69,7 @@ namespace NETworkManager
         private bool _isTextBoxSearchFocused;
         public bool IsTextBoxSearchFocused
         {
-            get { return _isTextBoxSearchFocused; }
+            get => _isTextBoxSearchFocused;
             set
             {
                 if (value == _isTextBoxSearchFocused)
@@ -83,19 +83,19 @@ namespace NETworkManager
             }
         }
 
-        private bool _openApplicationList;
-        public bool OpenApplicationList
+        private bool _isApplicationListOpen;
+        public bool IsApplicationListOpen
         {
-            get { return _openApplicationList; }
+            get => _isApplicationListOpen;
             set
             {
-                if (value == _openApplicationList)
+                if (value == _isApplicationListOpen)
                     return;
 
                 if (!value)
                     ClearSearchOnApplicationListMinimize();
 
-                _openApplicationList = value;
+                _isApplicationListOpen = value;
                 OnPropertyChanged();
             }
         }
@@ -103,7 +103,7 @@ namespace NETworkManager
         private bool _isMouseOverApplicationList;
         public bool IsMouseOverApplicationList
         {
-            get { return _isMouseOverApplicationList; }
+            get => _isMouseOverApplicationList;
             set
             {
                 if (value == _isMouseOverApplicationList)
@@ -117,16 +117,12 @@ namespace NETworkManager
             }
         }
 
-        private ICollectionView _applications;
-        public ICollectionView Applications
-        {
-            get { return _applications; }
-        }
+        public ICollectionView Applications { get; private set; }
 
         private ApplicationViewInfo _selectedApplication;
         public ApplicationViewInfo SelectedApplication
         {
-            get { return _selectedApplication; }
+            get => _selectedApplication;
             set
             {
                 if (value == _selectedApplication)
@@ -140,13 +136,13 @@ namespace NETworkManager
             }
         }
 
-        ApplicationViewManager.Name filterLastViewName;
-        int? filterLastCount;
+        private ApplicationViewManager.Name _filterLastViewName;
+        private int? _filterLastCount;
 
         private string _search;
         public string Search
         {
-            get { return _search; }
+            get => _search;
             set
             {
                 if (value == _search)
@@ -155,28 +151,25 @@ namespace NETworkManager
                 _search = value;
 
                 if (SelectedApplication != null)
-                    filterLastViewName = SelectedApplication.Name;
+                    _filterLastViewName = SelectedApplication.Name;
 
                 Applications.Refresh();
 
-                IEnumerable<ApplicationViewInfo> sourceCollection = Applications.SourceCollection.Cast<ApplicationViewInfo>();
-                IEnumerable<ApplicationViewInfo> filteredCollection = Applications.Cast<ApplicationViewInfo>();
+                var sourceCollection = Applications.SourceCollection.Cast<ApplicationViewInfo>();
+                var filteredCollection = Applications.Cast<ApplicationViewInfo>();
 
-                int sourceCollectionCount = sourceCollection.Count();
-                int filteredCollectionCount = filteredCollection.Count();
+                var sourceInfos = sourceCollection as ApplicationViewInfo[] ?? sourceCollection.ToArray();
+                var filteredInfos = filteredCollection as ApplicationViewInfo[] ?? filteredCollection.ToArray();
 
-                if (filterLastCount == null)
-                    filterLastCount = sourceCollectionCount;
+                if (_filterLastCount == null)
+                    _filterLastCount = sourceInfos.Length;
 
-                if (filterLastCount > filteredCollectionCount)
-                    SelectedApplication = filteredCollection.FirstOrDefault();
-                else
-                    SelectedApplication = sourceCollection.FirstOrDefault(x => x.Name == filterLastViewName);
+                SelectedApplication = _filterLastCount > filteredInfos.Length ? filteredInfos.FirstOrDefault() : sourceInfos.FirstOrDefault(x => x.Name == _filterLastViewName);
 
-                filterLastCount = filteredCollectionCount;
+                _filterLastCount = filteredInfos.Length;
 
                 // Show note when there was nothing found
-                SearchNothingFound = filteredCollectionCount == 0;
+                SearchNothingFound = filteredInfos.Length == 0;
 
                 OnPropertyChanged();
             }
@@ -185,7 +178,7 @@ namespace NETworkManager
         private bool _searchNothingFound;
         public bool SearchNothingFound
         {
-            get { return _searchNothingFound; }
+            get => _searchNothingFound;
             set
             {
                 if (value == _searchNothingFound)
@@ -196,12 +189,12 @@ namespace NETworkManager
             }
         }
 
-        SettingsView _settingsView;
+        private SettingsView _settingsView;
 
         private bool _showSettingsView;
         public bool ShowSettingsView
         {
-            get { return _showSettingsView; }
+            get => _showSettingsView;
             set
             {
                 if (value == _showSettingsView)
@@ -212,24 +205,10 @@ namespace NETworkManager
             }
         }
 
-        private string _version;
-        public string Version
-        {
-            get { return _version; }
-            set
-            {
-                if (value == _version)
-                    return;
-
-                _version = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _updateAvailable;
         public bool UpdateAvailable
         {
-            get { return _updateAvailable; }
+            get => _updateAvailable;
             set
             {
                 if (value == _updateAvailable)
@@ -243,7 +222,7 @@ namespace NETworkManager
         private string _updateText;
         public string UpdateText
         {
-            get { return _updateText; }
+            get => _updateText;
             set
             {
                 if (value == _updateText)
@@ -254,15 +233,15 @@ namespace NETworkManager
             }
         }
 
-        public bool ShowCurrentApplicationTitle
-        {
-            get { return SettingsManager.Current.Window_ShowCurrentApplicationTitle; }
-        }
+        public bool ShowCurrentApplicationTitle => SettingsManager.Current.Window_ShowCurrentApplicationTitle;
+
         #endregion
 
         #region Constructor, window load and close events
         public MainWindow()
         {
+            _isLoading = true;
+
             InitializeComponent();
             DataContext = this;
 
@@ -287,10 +266,11 @@ namespace NETworkManager
 
             // Set windows title if admin
             if (ConfigurationManager.Current.IsAdmin)
-                Title = string.Format("[{0}] {1}", LocalizationManager.GetStringByKey("String_Administrator"), Title);
+                Title = $"[{LocalizationManager.GetStringByKey("String_Administrator")}] {Title}";
 
-            // Set the version text
-            Version = string.Format("{0} {1}", LocalizationManager.GetStringByKey("String_Version"), AssemblyManager.Current.Version);
+#if DEBUG
+            Title += $" - Debug ({AssemblyManager.Current.Version} | {AssemblyManager.Current.BuildDate.ToString(CultureInfo.CurrentCulture)})";
+#endif
 
             // Load Profiles
             ProfileManager.Load();
@@ -299,7 +279,7 @@ namespace NETworkManager
             LoadApplicationList();
 
             // Load settings
-            ApplicationView_Expand = SettingsManager.Current.ApplicationView_Expand;
+            ExpandApplicationView = SettingsManager.Current.ExpandApplicationView;
 
             // Register some events
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
@@ -318,37 +298,37 @@ namespace NETworkManager
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
                 HideWindowToTray();
 
+#if (!DEBUG)
             // Chech for updates...
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
                 CheckForUpdates();
+#endif
         }
 
         private void LoadApplicationList()
         {
-            _applications = CollectionViewSource.GetDefaultView(ApplicationViewManager.List);
+            Applications = CollectionViewSource.GetDefaultView(ApplicationViewManager.List);
 
-            _applications.SortDescriptions.Add(new SortDescription(nameof(ApplicationViewInfo.Name), ListSortDirection.Ascending)); // Always have the same order, even if it is translated...
-            _applications.Filter = o =>
+            Applications.SortDescriptions.Add(new SortDescription(nameof(ApplicationViewInfo.Name), ListSortDirection.Ascending)); // Always have the same order, even if it is translated...
+            Applications.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
                     return true;
 
-                // Search for application name and description without "-" and " "
-                ApplicationViewInfo info = o as ApplicationViewInfo;
+                var regex = new Regex(@" |-");
 
-                Regex regex = new Regex(@" |-");
-
-                string search = regex.Replace(Search, "");
+                var search = regex.Replace(Search, "");
 
                 // Search by TranslatedName and Name
-                return (regex.Replace(info.TranslatedName, "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1) || (regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
+                return o is ApplicationViewInfo info && (regex.Replace(info.TranslatedName, "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
             };
 
             // Get application from settings
             SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.General_DefaultApplicationViewName);
 
             // Scroll into view
-            listViewApplication.ScrollIntoView(SelectedApplication);
+            if (SelectedApplication != null)
+                ListViewApplication.ScrollIntoView(SelectedApplication);
         }
 
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
@@ -380,7 +360,7 @@ namespace NETworkManager
                 if (WindowState == WindowState.Minimized)
                     BringWindowToFront();
 
-                MetroDialogSettings settings = AppearanceManager.MetroDialog;
+                var settings = AppearanceManager.MetroDialog;
 
                 settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_Close");
                 settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_Cancel");
@@ -389,52 +369,51 @@ namespace NETworkManager
                 // Fix airspace issues
                 ConfigurationManager.Current.IsDialogOpen = true;
 
-                MessageDialogResult result = await this.ShowMessageAsync(LocalizationManager.GetStringByKey("String_Header_Confirm"), LocalizationManager.GetStringByKey("String_ConfirmCloseQuesiton"), MessageDialogStyle.AffirmativeAndNegative, settings);
+                var result = await this.ShowMessageAsync(LocalizationManager.GetStringByKey("String_Header_Confirm"), LocalizationManager.GetStringByKey("String_ConfirmCloseQuesiton"), MessageDialogStyle.AffirmativeAndNegative, settings);
 
                 ConfigurationManager.Current.IsDialogOpen = false;
 
-                if (result == MessageDialogResult.Affirmative)
-                {
-                    _closeApplication = true;
-                    Close();
-                }
+                if (result != MessageDialogResult.Affirmative)
+                    return;
+
+                _closeApplication = true;
+                Close();
 
                 return;
             }
 
             // Unregister HotKeys
-            if (RegisteredHotKeys.Count > 0)
+            if (_registeredHotKeys.Count > 0)
                 UnregisterHotKeys();
 
             // Dispose the notify icon to prevent errors
-            if (notifyIcon != null)
-                notifyIcon.Dispose();
+            _notifyIcon?.Dispose();
         }
         #endregion
 
         #region Application Views
-        NetworkInterfaceView _networkInterfaceView;
-        IPScannerHostView _ipScannerHostView;
-        PortScannerHostView _portScannerHostView;
-        PingHostView _pingHostView;
-        TracerouteHostView _tracerouteHostView;
-        DNSLookupHostView _dnsLookupHostView;
-        RemoteDesktopHostView _remoteDesktopHostView;
-        PuTTYHostView _puTTYHostView;
-        SNMPHostView _snmpHostView;
-        WakeOnLANView _wakeOnLANView;
-        SubnetCalculatorHostView _subnetCalculatorHostView;
-        HTTPHeadersHostView _httpHeadersHostView;
-        LookupHostView _lookupHostView;
-        ConnectionsView _connectionsView;
-        ListenersView _listenersView;
-        ARPTableView _arpTableView;
+        private NetworkInterfaceView _networkInterfaceView;
+        private IPScannerHostView _ipScannerHostView;
+        private PortScannerHostView _portScannerHostView;
+        private PingHostView _pingHostView;
+        private TracerouteHostView _tracerouteHostView;
+        private DNSLookupHostView _dnsLookupHostView;
+        private RemoteDesktopHostView _remoteDesktopHostView;
+        private PuTTYHostView _puttyHostView;
+        private SNMPHostView _snmpHostView;
+        private WakeOnLANView _wakeOnLanView;
+        private SubnetCalculatorHostView _subnetCalculatorHostView;
+        private HTTPHeadersHostView _httpHeadersHostView;
+        private LookupHostView _lookupHostView;
+        private ConnectionsView _connectionsView;
+        private ListenersView _listenersView;
+        private ARPTableView _arpTableView;
 
-        private ApplicationViewManager.Name? currentApplicationViewName = null;
+        private ApplicationViewManager.Name? _currentApplicationViewName;
 
         private void ChangeApplicationView(ApplicationViewManager.Name name)
         {
-            if (currentApplicationViewName == name)
+            if (_currentApplicationViewName == name)
                 return;
 
             switch (name)
@@ -445,102 +424,106 @@ namespace NETworkManager
                     else
                         RefreshApplicationView(name);
 
-                    contentControlApplication.Content = _networkInterfaceView;
+                    ContentControlApplication.Content = _networkInterfaceView;
                     break;
                 case ApplicationViewManager.Name.IPScanner:
                     if (_ipScannerHostView == null)
                         _ipScannerHostView = new IPScannerHostView();
 
-                    contentControlApplication.Content = _ipScannerHostView;
+                    ContentControlApplication.Content = _ipScannerHostView;
                     break;
                 case ApplicationViewManager.Name.PortScanner:
                     if (_portScannerHostView == null)
                         _portScannerHostView = new PortScannerHostView();
 
-                    contentControlApplication.Content = _portScannerHostView;
+                    ContentControlApplication.Content = _portScannerHostView;
                     break;
                 case ApplicationViewManager.Name.Ping:
                     if (_pingHostView == null)
                         _pingHostView = new PingHostView();
 
-                    contentControlApplication.Content = _pingHostView;
+                    ContentControlApplication.Content = _pingHostView;
                     break;
                 case ApplicationViewManager.Name.Traceroute:
                     if (_tracerouteHostView == null)
                         _tracerouteHostView = new TracerouteHostView();
 
-                    contentControlApplication.Content = _tracerouteHostView;
+                    ContentControlApplication.Content = _tracerouteHostView;
                     break;
                 case ApplicationViewManager.Name.DNSLookup:
                     if (_dnsLookupHostView == null)
                         _dnsLookupHostView = new DNSLookupHostView();
 
-                    contentControlApplication.Content = _dnsLookupHostView;
+                    ContentControlApplication.Content = _dnsLookupHostView;
                     break;
                 case ApplicationViewManager.Name.RemoteDesktop:
                     if (_remoteDesktopHostView == null)
                         _remoteDesktopHostView = new RemoteDesktopHostView();
 
-                    contentControlApplication.Content = _remoteDesktopHostView;
+                    ContentControlApplication.Content = _remoteDesktopHostView;
                     break;
                 case ApplicationViewManager.Name.PuTTY:
-                    if (_puTTYHostView == null)
-                        _puTTYHostView = new PuTTYHostView();
+                    if (_puttyHostView == null)
+                        _puttyHostView = new PuTTYHostView();
 
-                    contentControlApplication.Content = _puTTYHostView;
+                    ContentControlApplication.Content = _puttyHostView;
                     break;
                 case ApplicationViewManager.Name.SNMP:
                     if (_snmpHostView == null)
                         _snmpHostView = new SNMPHostView();
 
-                    contentControlApplication.Content = _snmpHostView;
+                    ContentControlApplication.Content = _snmpHostView;
                     break;
                 case ApplicationViewManager.Name.WakeOnLAN:
-                    if (_wakeOnLANView == null)
-                        _wakeOnLANView = new WakeOnLANView();
+                    if (_wakeOnLanView == null)
+                        _wakeOnLanView = new WakeOnLANView();
 
-                    contentControlApplication.Content = _wakeOnLANView;
+                    ContentControlApplication.Content = _wakeOnLanView;
                     break;
 
                 case ApplicationViewManager.Name.HTTPHeaders:
                     if (_httpHeadersHostView == null)
                         _httpHeadersHostView = new HTTPHeadersHostView();
 
-                    contentControlApplication.Content = _httpHeadersHostView;
+                    ContentControlApplication.Content = _httpHeadersHostView;
                     break;
                 case ApplicationViewManager.Name.SubnetCalculator:
                     if (_subnetCalculatorHostView == null)
                         _subnetCalculatorHostView = new SubnetCalculatorHostView();
 
-                    contentControlApplication.Content = _subnetCalculatorHostView;
+                    ContentControlApplication.Content = _subnetCalculatorHostView;
                     break;
                 case ApplicationViewManager.Name.Lookup:
                     if (_lookupHostView == null)
                         _lookupHostView = new LookupHostView();
 
-                    contentControlApplication.Content = _lookupHostView;
+                    ContentControlApplication.Content = _lookupHostView;
                     break;
                 case ApplicationViewManager.Name.Connections:
                     if (_connectionsView == null)
                         _connectionsView = new ConnectionsView();
 
-                    contentControlApplication.Content = _connectionsView;
+                    ContentControlApplication.Content = _connectionsView;
                     break;
                 case ApplicationViewManager.Name.Listeners:
                     if (_listenersView == null)
                         _listenersView = new ListenersView();
 
-                    contentControlApplication.Content = _listenersView;
+                    ContentControlApplication.Content = _listenersView;
                     break;
                 case ApplicationViewManager.Name.ARPTable:
                     if (_arpTableView == null)
                         _arpTableView = new ARPTableView();
 
-                    contentControlApplication.Content = _arpTableView;
+                    ContentControlApplication.Content = _arpTableView;
                     break;
+                case ApplicationViewManager.Name.None:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(name), name, null);
             }
 
-            currentApplicationViewName = name;
+            _currentApplicationViewName = name;
         }
 
 
@@ -567,34 +550,55 @@ namespace NETworkManager
                     _remoteDesktopHostView.Refresh();
                     break;
                 case ApplicationViewManager.Name.PuTTY:
-                    _puTTYHostView.Refresh();
+                    _puttyHostView.Refresh();
                     break;
                 case ApplicationViewManager.Name.WakeOnLAN:
-                    _wakeOnLANView.Refresh();
+                    _wakeOnLanView.Refresh();
                     break;
+                case ApplicationViewManager.Name.DNSLookup:
+                    break;
+                case ApplicationViewManager.Name.SNMP:
+                    break;
+                case ApplicationViewManager.Name.HTTPHeaders:
+                    break;
+                case ApplicationViewManager.Name.SubnetCalculator:
+                    break;
+                case ApplicationViewManager.Name.Lookup:
+                    break;
+                case ApplicationViewManager.Name.Connections:
+                    break;
+                case ApplicationViewManager.Name.Listeners:
+                    break;
+                case ApplicationViewManager.Name.ARPTable:
+                    break;
+                case ApplicationViewManager.Name.None:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(name), name, null);
             }
         }
 
         private void ClearSearchOnApplicationListMinimize()
         {
-            if (ApplicationView_Expand)
+            if (ExpandApplicationView)
                 return;
 
-            if (OpenApplicationList && IsTextBoxSearchFocused)
+            if (IsApplicationListOpen && IsTextBoxSearchFocused)
                 return;
 
-            if (OpenApplicationList && IsMouseOverApplicationList)
+            if (IsApplicationListOpen && IsMouseOverApplicationList)
                 return;
 
             Search = string.Empty;
 
             // Scroll into view
-            listViewApplication.ScrollIntoView(SelectedApplication);
+            ListViewApplication.ScrollIntoView(SelectedApplication);
         }
 
         private void EventSystem_RedirectToApplicationEvent(object sender, EventArgs e)
         {
-            EventSystemRedirectApplicationArgs args = e as EventSystemRedirectApplicationArgs;
+            if (!(e is EventSystemRedirectApplicationArgs args))
+                return;
 
             // Change view
             SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == args.Application);
@@ -621,11 +625,31 @@ namespace NETworkManager
                     _remoteDesktopHostView.AddTab(args.Data);
                     break;
                 case ApplicationViewManager.Name.PuTTY:
-                    _puTTYHostView.AddTab(args.Data);
+                    _puttyHostView.AddTab(args.Data);
                     break;
                 case ApplicationViewManager.Name.SNMP:
                     _snmpHostView.AddTab(args.Data);
                     break;
+                case ApplicationViewManager.Name.NetworkInterface:
+                    break;
+                case ApplicationViewManager.Name.WakeOnLAN:
+                    break;
+                case ApplicationViewManager.Name.HTTPHeaders:
+                    break;
+                case ApplicationViewManager.Name.SubnetCalculator:
+                    break;
+                case ApplicationViewManager.Name.Lookup:
+                    break;
+                case ApplicationViewManager.Name.Connections:
+                    break;
+                case ApplicationViewManager.Name.Listeners:
+                    break;
+                case ApplicationViewManager.Name.ARPTable:
+                    break;
+                case ApplicationViewManager.Name.None:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
         #endregion
@@ -641,7 +665,7 @@ namespace NETworkManager
             if (_settingsView == null)
             {
                 _settingsView = new SettingsView(SelectedApplication.Name);
-                contentControlSettings.Content = _settingsView;
+                ContentControlSettings.Content = _settingsView;
             }
             else // Change view
             {
@@ -668,11 +692,11 @@ namespace NETworkManager
             // Enable/disable tray icon
             if (!_isInTray)
             {
-                if (SettingsManager.Current.TrayIcon_AlwaysShowIcon && notifyIcon == null)
+                if (SettingsManager.Current.TrayIcon_AlwaysShowIcon && _notifyIcon == null)
                     InitNotifyIcon();
 
-                if (notifyIcon != null)
-                    notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
+                if (_notifyIcon != null)
+                    _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
 
                 MetroWindowMain.HideOverlay();
             }
@@ -682,7 +706,7 @@ namespace NETworkManager
             {
                 ShowWindowAction();
 
-                MetroDialogSettings settings = AppearanceManager.MetroDialog;
+                var settings = AppearanceManager.MetroDialog;
 
                 settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_RestartNow");
                 settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
@@ -700,7 +724,7 @@ namespace NETworkManager
             }
 
             // Change the transparency
-            if ((AllowsTransparency != SettingsManager.Current.Appearance_EnableTransparency) || (Opacity != SettingsManager.Current.Appearance_Opacity))
+            if (AllowsTransparency != SettingsManager.Current.Appearance_EnableTransparency || (Opacity != SettingsManager.Current.Appearance_Opacity))
             {
                 if (!AllowsTransparency || !SettingsManager.Current.Appearance_EnableTransparency)
                     Opacity = 1;
@@ -727,38 +751,27 @@ namespace NETworkManager
         #endregion
 
         #region Handle WndProc messages (Single instance, handle HotKeys)
-        private HwndSource hwndSoure;
+        private HwndSource _hwndSoure;
 
         // This is called after MainWindow() and before OnContentRendered() --> to register hotkeys...
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
 
-            hwndSoure = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
-            hwndSoure.AddHook(HwndHook);
+            _hwndSoure = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
+
+            _hwndSoure?.AddHook(HwndHook);
 
             RegisterHotKeys();
         }
 
         private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            // Single instance
-            if (msg == SingleInstance.WM_SHOWME)
+            // Single instance or Hotkey --> Show window
+            if (msg == SingleInstance.WM_SHOWME || msg == WmHotkey && wParam.ToInt32() == 1)
             {
                 ShowWindowAction();
                 handled = true;
-            }
-
-            // Handle hotkeys
-            if (msg == WM_HOTKEY)
-            {
-                switch (wParam.ToInt32())
-                {
-                    case 1:
-                        ShowWindowAction();
-                        handled = true;
-                        break;
-                }
             }
 
             return IntPtr.Zero;
@@ -768,21 +781,21 @@ namespace NETworkManager
         #region Update check
         private void CheckForUpdates()
         {
-            Updater updater = new Updater();
+            var updater = new Updater();
 
             updater.UpdateAvailable += Updater_UpdateAvailable;
             updater.Error += Updater_Error;
             updater.Check();
         }
 
-        private void Updater_Error(object sender, EventArgs e)
+        private static void Updater_Error(object sender, EventArgs e)
         {
             //  Log
         }
 
         private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
         {
-            UpdateText = string.Format(LocalizationManager.GetStringByKey("String_VersionxxAvailable"), e.Version);
+            UpdateText = string.Format(LocalizationManager.GetStringByKey("String_VersionxxIsAvailable"), e.Version);
             UpdateAvailable = true;
         }
         #endregion
@@ -793,59 +806,61 @@ namespace NETworkManager
         [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
-        const int WM_HOTKEY = 0x0312;
+        // WM_HOTKEY
+        private const int WmHotkey = 0x0312;
 
         /* ID | Command
         *  ---|-------------------
         *  1  | ShowWindowAction()
         */
 
-        List<int> RegisteredHotKeys = new List<int>();
+        private readonly List<int> _registeredHotKeys = new List<int>();
 
         private void RegisterHotKeys()
         {
-            if (SettingsManager.Current.HotKey_ShowWindowEnabled)
-            {
-                RegisterHotKey(new WindowInteropHelper(this).Handle, 1, SettingsManager.Current.HotKey_ShowWindowModifier, SettingsManager.Current.HotKey_ShowWindowKey);
-                RegisteredHotKeys.Add(1);
-            }
+            if (!SettingsManager.Current.HotKey_ShowWindowEnabled)
+                return;
+
+            RegisterHotKey(new WindowInteropHelper(this).Handle, 1, SettingsManager.Current.HotKey_ShowWindowModifier, SettingsManager.Current.HotKey_ShowWindowKey);
+            _registeredHotKeys.Add(1);
         }
 
         private void UnregisterHotKeys()
         {
             // Unregister all registred keys
-            foreach (int i in RegisteredHotKeys)
+            foreach (var i in _registeredHotKeys)
                 UnregisterHotKey(new WindowInteropHelper(this).Handle, i);
 
             // Clear list
-            RegisteredHotKeys.Clear();
+            _registeredHotKeys.Clear();
         }
         #endregion
 
         #region NotifyIcon
         private void InitNotifyIcon()
         {
-            notifyIcon = new NotifyIcon();
+            _notifyIcon = new NotifyIcon();
 
             // Get the application icon for the tray
-            using (Stream iconStream = System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/Resources/Images/NETworkManager.ico")).Stream)
+            using (var iconStream = System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/Resources/Images/NETworkManager.ico"))?.Stream)
             {
-                notifyIcon.Icon = new Icon(iconStream);
+                if (iconStream != null)
+                    _notifyIcon.Icon = new Icon(iconStream);
             }
 
-            notifyIcon.Text = Title;
-            notifyIcon.DoubleClick += new EventHandler(NotifyIcon_DoubleClick);
-            notifyIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(NotifyIcon_MouseDown);
-            notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
+            _notifyIcon.Text = Title;
+            _notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
+            _notifyIcon.MouseDown += NotifyIcon_MouseDown;
+            _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
         }
 
         private void NotifyIcon_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
-            {
-                System.Windows.Controls.ContextMenu trayMenu = (System.Windows.Controls.ContextMenu)FindResource("ContextMenuNotifyIcon");
-                trayMenu.IsOpen = true;
-            }
+            if (e.Button != MouseButtons.Right)
+                return;
+
+            var trayMenu = (ContextMenu)FindResource("ContextMenuNotifyIcon");
+            trayMenu.IsOpen = true;
         }
 
         private void NotifyIcon_DoubleClick(object sender, EventArgs e)
@@ -855,27 +870,27 @@ namespace NETworkManager
 
         private void MetroWindowMain_StateChanged(object sender, EventArgs e)
         {
-            if (WindowState == WindowState.Minimized)
-            {
-                if (SettingsManager.Current.Window_MinimizeToTrayInsteadOfTaskbar)
-                    HideWindowToTray();
-            }
+            if (WindowState != WindowState.Minimized)
+                return;
+
+            if (SettingsManager.Current.Window_MinimizeToTrayInsteadOfTaskbar)
+                HideWindowToTray();
         }
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
-            System.Windows.Controls.ContextMenu menu = sender as System.Windows.Controls.ContextMenu;
-            menu.DataContext = this;
+            if (sender is ContextMenu menu)
+                menu.DataContext = this;
         }
 
         private void HideWindowToTray()
         {
-            if (notifyIcon == null)
+            if (_notifyIcon == null)
                 InitNotifyIcon();
 
             _isInTray = true;
 
-            notifyIcon.Visible = true;
+            _notifyIcon.Visible = true;
 
             Hide();
         }
@@ -886,7 +901,7 @@ namespace NETworkManager
 
             Show();
 
-            notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
+            _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
         }
 
         private void BringWindowToFront()
@@ -899,12 +914,9 @@ namespace NETworkManager
         #endregion
 
         #region ICommands & Actions
-        public ICommand OpenWebsiteCommand
-        {
-            get { return new RelayCommand(p => OpenWebsiteAction(p)); }
-        }
+        public ICommand OpenWebsiteCommand => new RelayCommand(OpenWebsiteAction);
 
-        private void OpenWebsiteAction(object url)
+        private static void OpenWebsiteAction(object url)
         {
             Process.Start((string)url);
         }
@@ -919,52 +931,55 @@ namespace NETworkManager
             switch (SelectedApplication.Name)
             {
                 case ApplicationViewManager.Name.NetworkInterface:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_NetworkInterface);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationNetworkInterface);
                     break;
                 case ApplicationViewManager.Name.IPScanner:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_IPScanner);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationIpScanner);
                     break;
                 case ApplicationViewManager.Name.PortScanner:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_PortScanner);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationPortScanner);
                     break;
                 case ApplicationViewManager.Name.Ping:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_Ping);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationPing);
                     break;
                 case ApplicationViewManager.Name.Traceroute:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_Traceroute);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationTraceroute);
                     break;
                 case ApplicationViewManager.Name.DNSLookup:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_DNSLookup);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationDnsLookup);
                     break;
                 case ApplicationViewManager.Name.RemoteDesktop:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_RemoteDesktop);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationRemoteDesktop);
                     break;
                 case ApplicationViewManager.Name.PuTTY:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_PuTTY);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationPutty);
                     break;
                 case ApplicationViewManager.Name.SNMP:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_SNMP);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationSnmp);
                     break;
                 case ApplicationViewManager.Name.WakeOnLAN:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_WakeOnLAN);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationWakeOnLan);
                     break;
                 case ApplicationViewManager.Name.HTTPHeaders:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_HTTPHeaders);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationHttpHeaders);
                     break;
                 case ApplicationViewManager.Name.SubnetCalculator:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_SubnetCalculator);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationSubnetCalculator);
                     break;
                 case ApplicationViewManager.Name.Lookup:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_Lookup);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationLookup);
                     break;
                 case ApplicationViewManager.Name.Connections:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_Connections);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationConnections);
                     break;
                 case ApplicationViewManager.Name.Listeners:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_Listeners);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationListeners);
                     break;
                 case ApplicationViewManager.Name.ARPTable:
-                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Application_ARPTable);
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.ApplicationArpTable);
+                    break;
+                case ApplicationViewManager.Name.None:
+                    DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Default);
                     break;
                 default:
                     DocumentationManager.OpenDocumentation(DocumentationManager.DocumentationIdentifier.Default);
@@ -979,7 +994,7 @@ namespace NETworkManager
 
         private void OpenApplicationListAction()
         {
-            OpenApplicationList = true;
+            IsApplicationListOpen = true;
         }
 
         public ICommand OpenSettingsCommand
@@ -1034,15 +1049,15 @@ namespace NETworkManager
                 StartInfo =
                 {
                     FileName = ConfigurationManager.Current.ApplicationFullName,
-                    Arguments = string.Format("--restart-pid:{0}", Process.GetCurrentProcess().Id)
+                    Arguments = $"--restart-pid:{Process.GetCurrentProcess().Id}"
                 }
             }.Start();
 
-            if (closeApplication)
-            {
-                _closeApplication = true;
-                Close();
-            }
+            if (!closeApplication)
+                return;
+
+            _closeApplication = true;
+            Close();
         }
 
         public ICommand ApplicationListMouseEnterCommand
@@ -1064,7 +1079,7 @@ namespace NETworkManager
         {
             // Don't minmize the list, if the user has accidently mouved the mouse while searching
             if (!IsTextBoxSearchFocused)
-                OpenApplicationList = false;
+                IsApplicationListOpen = false;
 
             IsMouseOverApplicationList = false;
         }
@@ -1087,7 +1102,7 @@ namespace NETworkManager
         private void TextBoxSearchLostKeyboardFocusAction()
         {
             if (!IsMouseOverApplicationList)
-                OpenApplicationList = false;
+                IsApplicationListOpen = false;
 
             IsTextBoxSearchFocused = false;
         }
@@ -1096,9 +1111,6 @@ namespace NETworkManager
         {
             get { return new RelayCommand(p => ClearSearchAction()); }
         }
-
-        public IPScannerHostView IpScannerHostView { get => _ipScannerHostView; set => _ipScannerHostView = value; }
-        public PuTTYHostView PuTTYHostView { get => _puTTYHostView; set => _puTTYHostView = value; }
 
         private void ClearSearchAction()
         {

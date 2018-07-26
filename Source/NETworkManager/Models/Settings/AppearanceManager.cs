@@ -8,7 +8,7 @@ namespace NETworkManager.Models.Settings
 {
     public static class AppearanceManager
     {
-        private static string ThemesFilePath = Path.Combine(ConfigurationManager.Current.ExecutionPath, "Themes");
+        private static readonly string ThemesFilePath = Path.Combine(ConfigurationManager.Current.ExecutionPath, "Themes");
 
         private const string CostomThemeFileExtension = @".Theme.xaml";
         private const string CostomAccentFileExtension = @".Accent.xaml";
@@ -21,9 +21,9 @@ namespace NETworkManager.Models.Settings
         public static void Load()
         {
             // Add custom themes
-            foreach (string file in Directory.GetFiles(ThemesFilePath))
+            foreach (var file in Directory.GetFiles(ThemesFilePath))
             {
-                string fileName = Path.GetFileName(file);
+                var fileName = Path.GetFileName(file);
 
                 // Theme
                 if (fileName.EndsWith(CostomThemeFileExtension))
@@ -35,13 +35,13 @@ namespace NETworkManager.Models.Settings
             }
 
             // Change the AppTheme if it is not empty and different from the currently loaded
-            string appThemeName = SettingsManager.Current.Appearance_AppTheme;
+            var appThemeName = SettingsManager.Current.Appearance_AppTheme;
 
             if (!string.IsNullOrEmpty(appThemeName) && appThemeName != ThemeManager.DetectAppStyle().Item1.Name)
                 ChangeAppTheme(appThemeName);
 
             // Change the Accent if it is not empty and different from the currently loaded
-            string accentName = SettingsManager.Current.Appearance_Accent;
+            var accentName = SettingsManager.Current.Appearance_Accent;
 
             if (!string.IsNullOrEmpty(accentName) && accentName != ThemeManager.DetectAppStyle().Item2.Name)
                 ChangeAccent(accentName);
@@ -58,7 +58,7 @@ namespace NETworkManager.Models.Settings
         /// <param name="name">Name of the AppTheme</param>
         public static void ChangeAppTheme(string name)
         {
-            AppTheme theme = ThemeManager.GetAppTheme(name);
+            var theme = ThemeManager.GetAppTheme(name);
 
             // If user has renamed / removed a custom theme --> fallback default
             if (theme != null)
@@ -71,8 +71,8 @@ namespace NETworkManager.Models.Settings
         /// <param name="name">Name of the Accent</param>
         public static void ChangeAccent(string name)
         {
-            Tuple<AppTheme, Accent> appStyle = ThemeManager.DetectAppStyle(Application.Current);
-            Accent accent = ThemeManager.GetAccent(name);
+            var appStyle = ThemeManager.DetectAppStyle(Application.Current);
+            var accent = ThemeManager.GetAccent(name);
 
             // If user has renamed / removed a custom theme --> fallback default
             if (accent != null)

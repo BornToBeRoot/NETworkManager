@@ -1,15 +1,14 @@
-﻿using Dragablz;
-using MahApps.Metro.Controls;
+﻿using System;
+using Dragablz;
 using NETworkManager.Models.Settings;
 using NETworkManager.Views;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace NETworkManager.Controls
 {
-    public partial class DragablzTabHostWindow : MetroWindow, INotifyPropertyChanged
+    public partial class DragablzTabHostWindow : INotifyPropertyChanged
     {
         #region PropertyChangedEventHandler
         public event PropertyChangedEventHandler PropertyChanged;
@@ -21,13 +20,13 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Variables
-        public IInterTabClient InterTabClient { get; private set; }
-        private ApplicationViewManager.Name _applicationName;
+        public IInterTabClient InterTabClient { get; }
+        private readonly ApplicationViewManager.Name _applicationName;
 
         private string _applicationTitle;
         public string ApplicationTitle
         {
-            get { return _applicationTitle; }
+            get => _applicationTitle;
             set
             {
                 if (value == _applicationTitle)
@@ -38,10 +37,7 @@ namespace NETworkManager.Controls
             }
         }
 
-        public bool ShowCurrentApplicationTitle
-        {
-            get { return SettingsManager.Current.Window_ShowCurrentApplicationTitle; }
-        }
+        public bool ShowCurrentApplicationTitle => SettingsManager.Current.Window_ShowCurrentApplicationTitle;
         #endregion
 
         #region Constructor
@@ -70,43 +66,59 @@ namespace NETworkManager.Controls
         #endregion
 
         #region ICommand & Actions
-        public ItemActionCallback CloseItemCommand
-        {
-            get { return CloseItemAction; }
-        }
+
+        public ItemActionCallback CloseItemCommand => CloseItemAction;
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
             // Switch between application identifiert...
             switch (_applicationName)
             {
+                case ApplicationViewManager.Name.None:
+                    break;
                 case ApplicationViewManager.Name.IPScanner:
-                    ((args.DragablzItem.Content as DragablzTabItem).View as IPScannerView).CloseTab();
+                    ((IPScannerView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.PortScanner:
-                    ((args.DragablzItem.Content as DragablzTabItem).View as PortScannerView).CloseTab();
+                    ((PortScannerView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.Ping:
-                    ((args.DragablzItem.Content as DragablzTabItem).View as PingView).CloseTab();
+                    ((PingView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.Traceroute:
-                    ((args.DragablzItem.Content as DragablzTabItem).View as TracerouteView).CloseTab();
+                    ((TracerouteView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.DNSLookup:
-                    ((args.DragablzItem.Content as DragablzTabItem).View as DNSLookupView).CloseTab();
+                    ((DNSLookupView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.RemoteDesktop:
-                    ((args.DragablzItem.Content as DragablzTabItem).View as RemoteDesktopControl).CloseTab();
+                    ((RemoteDesktopControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.PuTTY:
-                    ((args.DragablzItem.Content as DragablzTabItem).View as PuTTYControl).CloseTab();
+                    ((PuttyControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.SNMP:
-                    ((args.DragablzItem.Content as DragablzTabItem).View as TracerouteView).CloseTab();
+                    ((TracerouteView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.HTTPHeaders:
-                    ((args.DragablzItem.Content as DragablzTabItem).View as HTTPHeadersView).CloseTab();
+                    ((HTTPHeadersView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
+                case ApplicationViewManager.Name.NetworkInterface:
+                    break;
+                case ApplicationViewManager.Name.WakeOnLAN:
+                    break;
+                case ApplicationViewManager.Name.SubnetCalculator:
+                    break;
+                case ApplicationViewManager.Name.Lookup:
+                    break;
+                case ApplicationViewManager.Name.Connections:
+                    break;
+                case ApplicationViewManager.Name.Listeners:
+                    break;
+                case ApplicationViewManager.Name.ARPTable:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
         }
@@ -116,11 +128,7 @@ namespace NETworkManager.Controls
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(SettingsInfo.Window_ShowCurrentApplicationTitle))
-            {
                 OnPropertyChanged(nameof(ShowCurrentApplicationTitle));
-                Debug.WriteLine(e.PropertyName);
-            }
-
         }
         #endregion
 

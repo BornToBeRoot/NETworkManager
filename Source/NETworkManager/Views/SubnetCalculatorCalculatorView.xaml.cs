@@ -1,16 +1,15 @@
 ﻿using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class SubnetCalculatorCalculatorView : UserControl
+    public partial class SubnetCalculatorCalculatorView
     {
-        private SubnetCalculatorCalculatorViewModel viewModel = new SubnetCalculatorCalculatorViewModel();
+        private readonly SubnetCalculatorCalculatorViewModel _viewModel = new SubnetCalculatorCalculatorViewModel();
 
         public SubnetCalculatorCalculatorView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

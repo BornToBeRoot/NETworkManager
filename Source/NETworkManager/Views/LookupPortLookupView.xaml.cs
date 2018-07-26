@@ -3,20 +3,20 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class LookupPortLookupView : UserControl
+    public partial class LookupPortLookupView
     {
-        LookupPortLookupViewModel viewModel = new LookupPortLookupViewModel();
+        private readonly LookupPortLookupViewModel _viewModel = new LookupPortLookupViewModel();
 
         public LookupPortLookupView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
 
         private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
         {
-            ContextMenu menu = sender as ContextMenu;
-            menu.DataContext = viewModel;
+            if (sender is ContextMenu menu)
+                menu.DataContext = _viewModel;
         }
     }
 }

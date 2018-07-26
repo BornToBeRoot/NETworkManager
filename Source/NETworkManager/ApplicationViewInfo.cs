@@ -25,7 +25,7 @@ namespace NETworkManager
         {
             Name = name;
             TranslatedName = ApplicationViewManager.GetTranslatedNameByName(name);
-            Canvas canvas = new Canvas();
+            var canvas = new Canvas();
             canvas.Children.Add(packIconModern);
             Icon = canvas;
         }
@@ -34,7 +34,7 @@ namespace NETworkManager
         {
             Name = name;
             TranslatedName = ApplicationViewManager.GetTranslatedNameByName(name);
-            Canvas canvas = new Canvas();
+            var canvas = new Canvas();
             canvas.Children.Add(packIconMaterial);
             Icon = canvas;
         }
@@ -43,7 +43,7 @@ namespace NETworkManager
         {
             Name = name;
             TranslatedName = ApplicationViewManager.GetTranslatedNameByName(name);
-            Canvas canvas = new Canvas();
+            var canvas = new Canvas();
             canvas.Children.Add(packIconMaterialLight);
             Icon = canvas;
         }
@@ -52,7 +52,7 @@ namespace NETworkManager
         {
             Name = name;
             TranslatedName = ApplicationViewManager.GetTranslatedNameByName(name);
-            Canvas canvas = new Canvas();
+            var canvas = new Canvas();
             canvas.Children.Add(packIconFontAwesome);
             Icon = canvas;
         }
@@ -61,7 +61,7 @@ namespace NETworkManager
         {
             Name = name;
             TranslatedName = ApplicationViewManager.GetTranslatedNameByName(name);
-            Canvas canvas = new Canvas();
+            var canvas = new Canvas();
             canvas.Children.Add(packIconOcticons);
             Icon = canvas;
         }

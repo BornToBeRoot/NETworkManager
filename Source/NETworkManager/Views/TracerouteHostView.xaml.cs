@@ -5,38 +5,38 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class TracerouteHostView : UserControl
+    public partial class TracerouteHostView
     {
-        TracerouteHostViewModel viewModel = new TracerouteHostViewModel(DialogCoordinator.Instance);
+        private readonly TracerouteHostViewModel _viewModel = new TracerouteHostViewModel(DialogCoordinator.Instance);
 
         public TracerouteHostView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
 
             InterTabController.Partition = ApplicationViewManager.Name.Traceroute.ToString();
         }
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
-            ContextMenu menu = sender as ContextMenu;
-            menu.DataContext = viewModel;
+            if (sender is ContextMenu menu)
+                menu.DataContext = _viewModel;
         }
 
         private void ListBoxItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
-                viewModel.TraceProfileCommand.Execute(null);
+                _viewModel.TraceProfileCommand.Execute(null);
         }
 
         public void AddTab(string host)
         {
-            viewModel.AddTab(host);
+            _viewModel.AddTab(host);
         }
 
         public void Refresh()
         {
-            viewModel.Refresh();
+            _viewModel.Refresh();
         }
     }
 }

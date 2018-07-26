@@ -1,16 +1,15 @@
 ﻿using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class PingSettingsView : UserControl
+    public partial class PingSettingsView
     {
-        PingSettingsViewModel viewModel = new PingSettingsViewModel();
+        private readonly PingSettingsViewModel _viewModel = new PingSettingsViewModel();
 
         public PingSettingsView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

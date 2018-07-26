@@ -1,23 +1,22 @@
 ﻿using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class SubnetCalculatorSupernettingView : UserControl
+    public partial class SubnetCalculatorSupernettingView
     {
-        private SubnetCalculatorSupernettingViewModel viewModel = new SubnetCalculatorSupernettingViewModel();
+        private readonly SubnetCalculatorSupernettingViewModel _viewModel = new SubnetCalculatorSupernettingViewModel();
 
         public SubnetCalculatorSupernettingView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
 
         private void Dispatcher_ShutdownStarted(object sender, System.EventArgs e)
         {
-            viewModel.OnShutdown();
+            _viewModel.OnShutdown();
         }
     }
 }

@@ -7,22 +7,14 @@ namespace NETworkManager.ViewModels
 {
     public class CredentialsMasterPasswordViewModel : ViewModelBase
     {
-        private readonly ICommand _okCommand;
-        public ICommand OKCommand
-        {
-            get { return _okCommand; }
-        }
+        public ICommand OkCommand { get; }
 
-        private readonly ICommand _cancelCommand;
-        public ICommand CancelCommand
-        {
-            get { return _cancelCommand; }
-        }
+        public ICommand CancelCommand { get; }
 
         private SecureString _password = new SecureString();
         public SecureString Password
         {
-            get { return _password; }
+            get => _password;
             set
             {
                 if (value == _password)
@@ -36,29 +28,29 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _passwordIsEmpty;
-        public bool PasswordIsEmpty
+        private bool _isPasswordEmpty;
+        public bool IsPasswordEmpty
         {
-            get { return _passwordIsEmpty; }
+            get => _isPasswordEmpty;
             set
             {
-                if (value == _passwordIsEmpty)
+                if (value == _isPasswordEmpty)
                     return;
 
-                _passwordIsEmpty = value;
+                _isPasswordEmpty = value;
                 OnPropertyChanged();
             }
         }
 
         public CredentialsMasterPasswordViewModel(Action<CredentialsMasterPasswordViewModel> okCommand, Action<CredentialsMasterPasswordViewModel> cancelHandler)
         {
-            _okCommand = new RelayCommand(p => okCommand(this));
-            _cancelCommand = new RelayCommand(p => cancelHandler(this));
+            OkCommand = new RelayCommand(p => okCommand(this));
+            CancelCommand = new RelayCommand(p => cancelHandler(this));
         }
 
         private void ValidatePassword()
         {
-            PasswordIsEmpty = (Password == null || Password.Length == 0);
+            IsPasswordEmpty = (Password == null || Password.Length == 0);
         }
     }
 }

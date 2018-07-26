@@ -1,16 +1,15 @@
 ﻿using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class PortScannerSettingsView : UserControl
+    public partial class PortScannerSettingsView
     {
-        PortScannerSettingsViewModel viewModel = new PortScannerSettingsViewModel();
+        private readonly PortScannerSettingsViewModel _viewModel = new PortScannerSettingsViewModel();
 
         public PortScannerSettingsView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

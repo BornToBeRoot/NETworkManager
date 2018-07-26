@@ -6,21 +6,21 @@ namespace NETworkManager.Converters
 {
     public sealed class BitsToHumanReadableSizeConverter : IValueConverter
     {
-        string[] sizes = { "Bit/s", "KBit/s", "MBit/s", "GBit/s", "Tbit/s" };
+        private readonly string[] _sizes = { "Bit/s", "KBit/s", "MBit/s", "GBit/s", "Tbit/s" };
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double bits = 0;
-            double.TryParse(value.ToString(), out bits);
+            if (value == null)
+                return "-/-";
 
-            int sizeCount = 0;
+            double.TryParse(value.ToString(), out var bits);
 
-            while (bits >= 1000 && ++sizeCount < sizes.Length)
-            {
+            var sizeCount = 0;
+
+            while (bits >= 1000 && ++sizeCount < _sizes.Length)
                 bits /= 1000;
-            }
 
-            return string.Format("{0} {1}", bits, sizes[sizeCount]);
+            return $"{bits} {_sizes[sizeCount]}";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

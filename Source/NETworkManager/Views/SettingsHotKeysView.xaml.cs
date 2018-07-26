@@ -1,16 +1,15 @@
 ﻿using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class SettingsHotKeysView : UserControl
+    public partial class SettingsHotKeysView
     {
-        SettingsHotKeysViewModel viewModel = new SettingsHotKeysViewModel();
+        private readonly SettingsHotKeysViewModel _viewModel = new SettingsHotKeysViewModel();
 
         public SettingsHotKeysView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

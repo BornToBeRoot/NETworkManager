@@ -1,19 +1,16 @@
-﻿using MahApps.Metro.Controls;
-using NETworkManager.ViewModels;
+﻿using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
-{
-    /// <summary>
-    /// Interaktionslogik für Settings.xaml
-    /// </summary>
-    public partial class HelpCommandLineWindow : MetroWindow
-    {        
-        CommandLineHelpViewModel viewModel = new CommandLineHelpViewModel();
+{ 
+    // ReSharper disable once UnusedMember.Global, called from App.xaml.cs
+    public partial class CommandLineHelpWindow
+    {
+        private readonly CommandLineHelpViewModel _viewModel = new CommandLineHelpViewModel();
 
-        public HelpCommandLineWindow()
+        public CommandLineHelpWindow()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)

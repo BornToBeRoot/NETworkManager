@@ -15,16 +15,16 @@ namespace NETworkManager.Models.Settings
         #region Methods 
         public static List<ImportExportOptions> ValidateImportFile(string filePath)
         {
-            if (!Path.GetExtension(filePath).Equals(ImportExportFileExtension))
+            if (filePath != null && !Path.GetExtension(filePath).Equals(ImportExportFileExtension))
                 throw new ImportFileNotValidException();
 
-            List<ImportExportOptions> importOptions = new List<ImportExportOptions>();
+            var importOptions = new List<ImportExportOptions>();
 
-            using (ZipArchive zipArchive = ZipFile.OpenRead(filePath))
+            using (var zipArchive = ZipFile.OpenRead(filePath))
             {
-                foreach (ZipArchiveEntry zipArchiveEntry in zipArchive.Entries)
+                foreach (var zipArchiveEntry in zipArchive.Entries)
                 {
-                    ImportExportOptions importOption = GetImportExportOption(zipArchiveEntry.Name);
+                    var importOption = GetImportExportOption(zipArchiveEntry.Name);
 
                     if (importOption != ImportExportOptions.None)
                         importOptions.Add(importOption);
@@ -33,17 +33,17 @@ namespace NETworkManager.Models.Settings
 
             if (importOptions.Count == 0)
                 throw new ImportFileNotValidException();
-            else
-                return importOptions;
+
+            return importOptions;
         }
 
         public static void Import(string filePath, List<ImportExportOptions> importOptions)
         {
-            using (ZipArchive zipArchive = ZipFile.OpenRead(filePath))
+            using (var zipArchive = ZipFile.OpenRead(filePath))
             {
-                foreach (ImportExportOptions importOption in importOptions)
+                foreach (var importOption in importOptions)
                 {
-                    string fileName = GetImportExportOptionFileName(importOption);
+                    var fileName = GetImportExportOptionFileName(importOption);
 
                     zipArchive.GetEntry(fileName).ExtractToFile(Path.Combine(SettingsManager.GetSettingsLocation(), fileName), true);
                 }
@@ -56,9 +56,9 @@ namespace NETworkManager.Models.Settings
 
         public static void Export(List<ImportExportOptions> exportOptions, string filePath)
         {
-            List<string> filesToExport = new List<string>();
+            var filesToExport = new List<string>();
 
-            foreach (ImportExportOptions exportOption in exportOptions)
+            foreach (var exportOption in exportOptions)
             {
                 filesToExport.Add(GetImportExportOptionFilePath(exportOption));
             }
@@ -67,7 +67,7 @@ namespace NETworkManager.Models.Settings
             File.Delete(filePath);
 
             // Create the archiv
-            using (ZipArchive zipArchive = ZipFile.Open(filePath, ZipArchiveMode.Create))
+            using (var zipArchive = ZipFile.Open(filePath, ZipArchiveMode.Create))
             {
                 // Add the files
                 foreach (string file in filesToExport)

@@ -3,17 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Validator="clr-namespace:NETworkManager.Validators"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:WpfHelper="clr-namespace:NETworkManager.WpfHelper"
+        xmlns:validators="clr-namespace:NETworkManager.Validators"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:wpfHelper="clr-namespace:NETworkManager.WpfHelper"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        mc:Ignorable="d">
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             
+        xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:lookup="clr-namespace:NETworkManager.Models.Lookup"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:LookupOUILookupViewModel}">
     <UserControl.Resources>
-        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <Converter:NullOrEmptyToStringConverter x:Key="NullOrEmptyToStringConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:NullOrEmptyToStringConverter x:Key="NullOrEmptyToStringConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -38,14 +40,14 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{DynamicResource String_MACAddressOrVendor}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="txtMACAddressOrVendor" ItemsSource="{Binding MACAddressOrVendorHistoryView}" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressOrVendorHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddressesOrVendor}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" x:Name="TextBoxMACAddressOrVendor" ItemsSource="{Binding MACAddressOrVendorHistoryView}" wpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressOrVendorHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddressesOrVendor}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.InputBindings>
                         <KeyBinding Command="{Binding OUILookupCommand}" Key="Return" />
                     </ComboBox.InputBindings>
                     <ComboBox.Text>
                         <Binding Path="MACAddressOrVendor" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.Text>
@@ -55,7 +57,7 @@
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=txtMACAddressOrVendor}" Value="True" >
+                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxMACAddressOrVendor}" Value="True" >
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding IsLookupRunning}" Value="True">
@@ -72,7 +74,7 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Magnify}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Magnify}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center" Text="{DynamicResource String_Button_Lookup}" />
@@ -80,8 +82,8 @@
                     </Button.Content>
                 </Button>
             </Grid>
-            <Controls:MetroProgressBar Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True" Visibility="{Binding IsLookupRunning, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,10,0,0" />
-            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{DynamicResource String_NoVendorFoundCheckYourInput}" Visibility="{Binding NoVendorFound, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+            <mahAppsControls:MetroProgressBar Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True" Visibility="{Binding IsLookupRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,10,0,0" />
+            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{DynamicResource String_NoVendorFoundCheckYourInput}" Visibility="{Binding NoVendorFound, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Result}" Style="{StaticResource HeaderTextBlock}" />
         <DataGrid Grid.Row="3" ItemsSource="{Binding OUILookupResultView}" SelectedItem="{Binding SelectedOUILookup}" CanUserSortColumns="False">
@@ -92,7 +94,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -100,7 +102,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -109,7 +111,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -127,8 +129,8 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding MACAddress}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Vendor}" Binding="{Binding Vendor, Converter={StaticResource NullOrEmptyToStringConverter}}" MinWidth="200" Width="*" />
+                <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding (lookup:OUIInfo.MACAddress)}" MinWidth="150" />
+                <DataGridTextColumn Header="{DynamicResource String_Vendor}" Binding="{Binding (lookup:OUIInfo.Vendor), Converter={StaticResource NullOrEmptyToStringConverter}}" MinWidth="200" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

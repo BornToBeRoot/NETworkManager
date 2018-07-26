@@ -20,9 +20,9 @@ namespace NETworkManager.Models.Settings
 
         public static List<string> GetGroups()
         {
-            List<string> list = new List<string>();
+            var list = new List<string>();
 
-            foreach (ProfileInfo profile in Profiles)
+            foreach (var profile in Profiles)
             {
                 if (!list.Contains(profile.Group))
                     list.Add(profile.Group);
@@ -51,14 +51,14 @@ namespace NETworkManager.Models.Settings
 
         private static void DeserializeFromFile()
         {
-            if (File.Exists(GetProfilesFilePath()))
-            {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<ProfileInfo>));
+            if (!File.Exists(GetProfilesFilePath()))
+                return;
 
-                using (FileStream fileStream = new FileStream(GetProfilesFilePath(), FileMode.Open))
-                {
-                    ((List<ProfileInfo>)(xmlSerializer.Deserialize(fileStream))).ForEach(profile => AddProfile(profile));
-                }
+            var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfo>));
+
+            using (var fileStream = new FileStream(GetProfilesFilePath(), FileMode.Open))
+            {
+                ((List<ProfileInfo>)(xmlSerializer.Deserialize(fileStream))).ForEach(AddProfile);
             }
         }
 
@@ -76,9 +76,9 @@ namespace NETworkManager.Models.Settings
 
         private static void SerializeToFile()
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<ProfileInfo>));
+            var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfo>));
 
-            using (FileStream fileStream = new FileStream(GetProfilesFilePath(), FileMode.Create))
+            using (var fileStream = new FileStream(GetProfilesFilePath(), FileMode.Create))
             {
                 xmlSerializer.Serialize(fileStream, new List<ProfileInfo>(Profiles));
             }
@@ -166,16 +166,16 @@ namespace NETworkManager.Models.Settings
         public static void RenameGroup(string oldGroup, string group)
         {
             // Go through all groups
-            for (int i = 0; i < Profiles.Count; i++)
+            foreach (var profile in Profiles)
             {
                 // Find specific group
-                if (Profiles[i].Group == oldGroup)
-                {
-                    // Rename the group
-                    Profiles[i].Group = group;
+                if (profile.Group != oldGroup)
+                    continue;
 
-                    ProfilesChanged = true;
-                }
+                // Rename the group
+                profile.Group = @group;
+
+                ProfilesChanged = true;
             }
         }
     }

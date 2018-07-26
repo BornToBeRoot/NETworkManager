@@ -8,14 +8,14 @@ namespace NETworkManager.ViewModels
     public class CommandLineHelpViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         public ObservableCollection<LocalizationInfo> LanguageCollection { get; set; }
 
         private LocalizationInfo _localizationSelectedItem;
         public LocalizationInfo LocalizationSelectedItem
         {
-            get { return _localizationSelectedItem; }
+            get => _localizationSelectedItem;
             set
             {
                 if (value == _localizationSelectedItem)
@@ -36,7 +36,7 @@ namespace NETworkManager.ViewModels
         private bool _displayWrongParameter;
         public bool DisplayWrongParameter
         {
-            get { return _displayWrongParameter; }
+            get => _displayWrongParameter;
             set
             {
                 if (value == _displayWrongParameter)
@@ -50,7 +50,7 @@ namespace NETworkManager.ViewModels
         private string _wrongParameter;
         public string WrongParameter
         {
-            get { return _wrongParameter; }
+            get => _wrongParameter;
             set
             {
                 if (value == _wrongParameter)
@@ -64,7 +64,7 @@ namespace NETworkManager.ViewModels
         private string _parameterHelp;
         public string ParameterHelp
         {
-            get { return _parameterHelp; }
+            get => _parameterHelp;
             set
             {
                 if (value == _parameterHelp)
@@ -78,7 +78,7 @@ namespace NETworkManager.ViewModels
         private string _parameterResetSettings;
         public string ParameterResetSettings
         {
-            get { return _parameterResetSettings; }
+            get => _parameterResetSettings;
             set
             {
                 if (value == _parameterResetSettings)
@@ -94,6 +94,8 @@ namespace NETworkManager.ViewModels
         #region Constructor, load settings
         public CommandLineHelpViewModel()
         {
+            _isLoading = true;
+
             LoadSettings();
 
             if (!string.IsNullOrEmpty(CommandLineManager.Current.WrongParameter))

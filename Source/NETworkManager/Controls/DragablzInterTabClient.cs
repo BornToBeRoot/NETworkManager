@@ -5,7 +5,7 @@ namespace NETworkManager.Controls
 {
     public class DragablzInterTabClient : IInterTabClient
     {
-        ApplicationViewManager.Name _applicationName;
+        private readonly ApplicationViewManager.Name _applicationName;
 
         public DragablzInterTabClient(ApplicationViewManager.Name applicationName)
         {
@@ -14,7 +14,7 @@ namespace NETworkManager.Controls
 
         public INewTabHost<Window> GetNewHost(IInterTabClient interTabClient, object partition, TabablzControl source)
         {
-            DragablzTabHostWindow dragablzTabHostWindow = new DragablzTabHostWindow(_applicationName);
+            var dragablzTabHostWindow = new DragablzTabHostWindow(_applicationName);
             return new NewTabHost<DragablzTabHostWindow>(dragablzTabHostWindow, dragablzTabHostWindow.TabsContainer);
         }
 

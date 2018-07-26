@@ -20,21 +20,16 @@ namespace NETworkManager.ViewModels
     public class NetworkInterfaceViewModel : ViewModelBase
     {
         #region Variables
-        private IDialogCoordinator dialogCoordinator;
+        private readonly IDialogCoordinator _dialogCoordinator;
 
-        private const string tagIdentifier = "tag=";
+        private const string TagIdentifier = "tag=";
 
-        private bool _isLoading = true;
-
-        public bool IsAdmin
-        {
-            get { return ConfigurationManager.Current.IsAdmin; }
-        }
+        private readonly bool _isLoading;
 
         private bool _isNetworkInteraceLoading;
         public bool IsNetworkInterfaceLoading
         {
-            get { return _isNetworkInteraceLoading; }
+            get => _isNetworkInteraceLoading;
             set
             {
                 if (value == _isNetworkInteraceLoading)
@@ -48,7 +43,7 @@ namespace NETworkManager.ViewModels
         private bool _canConfigure;
         public bool CanConfigure
         {
-            get { return _canConfigure; }
+            get => _canConfigure;
             set
             {
                 if (value == _canConfigure)
@@ -62,7 +57,7 @@ namespace NETworkManager.ViewModels
         private bool _isConfigurationRunning;
         public bool IsConfigurationRunning
         {
-            get { return _isConfigurationRunning; }
+            get => _isConfigurationRunning;
             set
             {
                 if (value == _isConfigurationRunning)
@@ -76,7 +71,7 @@ namespace NETworkManager.ViewModels
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
         {
-            get { return _displayStatusMessage; }
+            get => _displayStatusMessage;
             set
             {
                 if (value == _displayStatusMessage)
@@ -90,7 +85,7 @@ namespace NETworkManager.ViewModels
         private string _statusMessage;
         public string StatusMessage
         {
-            get { return _statusMessage; }
+            get => _statusMessage;
             set
             {
                 if (value == _statusMessage)
@@ -101,16 +96,13 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public bool ShowCurrentApplicationTitle
-        {
-            get { return SettingsManager.Current.Window_ShowCurrentApplicationTitle; }
-        }
+        public bool ShowCurrentApplicationTitle => SettingsManager.Current.Window_ShowCurrentApplicationTitle;
 
         #region NetworkInterfaces, SelectedNetworkInterface
         private List<NetworkInterfaceInfo> _networkInterfaces;
         public List<NetworkInterfaceInfo> NetworkInterfaces
         {
-            get { return _networkInterfaces; }
+            get => _networkInterfaces;
             set
             {
                 if (value == _networkInterfaces)
@@ -124,7 +116,7 @@ namespace NETworkManager.ViewModels
         private NetworkInterfaceInfo _selectedNetworkInterface;
         public NetworkInterfaceInfo SelectedNetworkInterface
         {
-            get { return _selectedNetworkInterface; }
+            get => _selectedNetworkInterface;
             set
             {
                 if (value == _selectedNetworkInterface)
@@ -164,9 +156,9 @@ namespace NETworkManager.ViewModels
                     else
                     {
                         ConfigEnableStaticIPAddress = true;
-                        ConfigIPAddress = (value != null) ? value.IPv4Address.FirstOrDefault().ToString() : string.Empty;
-                        ConfigSubnetmaskOrCidr = (value.Subnetmask != null) ? value.Subnetmask.FirstOrDefault().ToString() : string.Empty;
-                        ConfigGateway = (value.IPv4Gateway?.Any() == true) ? value.IPv4Gateway.FirstOrDefault().ToString() : string.Empty;
+                        ConfigIPAddress = value.IPv4Address.FirstOrDefault()?.ToString();
+                        ConfigSubnetmaskOrCidr = (value.Subnetmask != null) ? value.Subnetmask.FirstOrDefault()?.ToString() : string.Empty;
+                        ConfigGateway = (value.IPv4Gateway?.Any() == true) ? value.IPv4Gateway.FirstOrDefault()?.ToString() : string.Empty;
                     }
 
                     if (value.DNSAutoconfigurationEnabled)
@@ -177,9 +169,9 @@ namespace NETworkManager.ViewModels
                     {
                         ConfigEnableStaticDNS = true;
 
-                        List<IPAddress> DNSServers = value.DNSServer.Where(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToList();
-                        ConfigPrimaryDNSServer = DNSServers.Count > 0 ? DNSServers[0].ToString() : string.Empty;
-                        ConfigSecondaryDNSServer = DNSServers.Count > 1 ? DNSServers[1].ToString() : string.Empty;
+                        var dnsServers = value.DNSServer.Where(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToList();
+                        ConfigPrimaryDNSServer = dnsServers.Count > 0 ? dnsServers[0].ToString() : string.Empty;
+                        ConfigSecondaryDNSServer = dnsServers.Count > 1 ? dnsServers[1].ToString() : string.Empty;
                     }
 
                     CanConfigure = value.IsOperational;
@@ -195,7 +187,7 @@ namespace NETworkManager.ViewModels
         private string _detailsName;
         public string DetailsName
         {
-            get { return _detailsName; }
+            get => _detailsName;
             set
             {
                 if (value == _detailsName)
@@ -209,7 +201,7 @@ namespace NETworkManager.ViewModels
         private string _detailsDescription;
         public string DetailsDescription
         {
-            get { return _detailsDescription; }
+            get => _detailsDescription;
             set
             {
                 if (value == _detailsDescription)
@@ -223,7 +215,7 @@ namespace NETworkManager.ViewModels
         private string _detailsType;
         public string DetailsType
         {
-            get { return _detailsType; }
+            get => _detailsType;
             set
             {
                 if (value == _detailsType)
@@ -237,10 +229,10 @@ namespace NETworkManager.ViewModels
         private PhysicalAddress _detailsPhysicalAddress;
         public PhysicalAddress DetailsPhysicalAddress
         {
-            get { return _detailsPhysicalAddress; }
+            get => _detailsPhysicalAddress;
             set
             {
-                if (value == _detailsPhysicalAddress)
+                if (value != null && Equals(value, _detailsPhysicalAddress))
                     return;
 
                 _detailsPhysicalAddress = value;
@@ -251,7 +243,7 @@ namespace NETworkManager.ViewModels
         private OperationalStatus _detailsStatus;
         public OperationalStatus DetailsStatus
         {
-            get { return _detailsStatus; }
+            get => _detailsStatus;
             set
             {
                 if (value == _detailsStatus)
@@ -262,16 +254,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private long detailsSpeed;
+        private long _detailsSpeed;
         public long DetailsSpeed
         {
-            get { return detailsSpeed; }
+            get => _detailsSpeed;
             set
             {
-                if (value == detailsSpeed)
+                if (value == _detailsSpeed)
                     return;
 
-                detailsSpeed = value;
+                _detailsSpeed = value;
                 OnPropertyChanged();
             }
         }
@@ -279,7 +271,7 @@ namespace NETworkManager.ViewModels
         private IPAddress[] _detailsIPv4Address;
         public IPAddress[] DetailsIPv4Address
         {
-            get { return _detailsIPv4Address; }
+            get => _detailsIPv4Address;
             set
             {
                 if (value == _detailsIPv4Address)
@@ -293,7 +285,7 @@ namespace NETworkManager.ViewModels
         private IPAddress[] _detailsSubnetmask;
         public IPAddress[] DetailsSubnetmask
         {
-            get { return _detailsSubnetmask; }
+            get => _detailsSubnetmask;
             set
             {
                 if (value == _detailsSubnetmask)
@@ -307,7 +299,7 @@ namespace NETworkManager.ViewModels
         private IPAddress[] _detailsGateway;
         public IPAddress[] DetailsIPv4Gateway
         {
-            get { return _detailsGateway; }
+            get => _detailsGateway;
             set
             {
                 if (value == _detailsGateway)
@@ -321,7 +313,7 @@ namespace NETworkManager.ViewModels
         private bool _detailsIPv4DhcpEnabled;
         public bool DetailsIPv4DhcpEnabled
         {
-            get { return _detailsIPv4DhcpEnabled; }
+            get => _detailsIPv4DhcpEnabled;
             set
             {
                 if (value == _detailsIPv4DhcpEnabled)
@@ -335,7 +327,7 @@ namespace NETworkManager.ViewModels
         private IPAddress[] _detailsIPv4DhcpServer;
         public IPAddress[] DetailsIPv4DhcpServer
         {
-            get { return _detailsIPv4DhcpServer; }
+            get => _detailsIPv4DhcpServer;
             set
             {
                 if (value == _detailsIPv4DhcpServer)
@@ -349,7 +341,7 @@ namespace NETworkManager.ViewModels
         private DateTime _detailsDhcpLeaseExpires;
         public DateTime DetailsDhcpLeaseExpires
         {
-            get { return _detailsDhcpLeaseExpires; }
+            get => _detailsDhcpLeaseExpires;
             set
             {
                 if (value == _detailsDhcpLeaseExpires)
@@ -363,7 +355,7 @@ namespace NETworkManager.ViewModels
         private DateTime _detailsDhcpLeaseObtained;
         public DateTime DetailsDhcpLeaseObtained
         {
-            get { return _detailsDhcpLeaseObtained; }
+            get => _detailsDhcpLeaseObtained;
             set
             {
                 if (value == _detailsDhcpLeaseObtained)
@@ -377,7 +369,7 @@ namespace NETworkManager.ViewModels
         private IPAddress[] _detailsIPv6AddressLinkLocal;
         public IPAddress[] DetailsIPv6AddressLinkLocal
         {
-            get { return _detailsIPv6AddressLinkLocal; }
+            get => _detailsIPv6AddressLinkLocal;
             set
             {
                 if (value == _detailsIPv6AddressLinkLocal)
@@ -392,7 +384,7 @@ namespace NETworkManager.ViewModels
         private IPAddress[] _detailsIPv6Address;
         public IPAddress[] DetailsIPv6Address
         {
-            get { return _detailsIPv6Address; }
+            get => _detailsIPv6Address;
             set
             {
                 if (value == _detailsIPv6Address)
@@ -406,7 +398,7 @@ namespace NETworkManager.ViewModels
         private IPAddress[] _detailsIPv6Gateway;
         public IPAddress[] DetailsIPv6Gateway
         {
-            get { return _detailsIPv6Gateway; }
+            get => _detailsIPv6Gateway;
             set
             {
                 if (value == _detailsIPv6Gateway)
@@ -420,7 +412,7 @@ namespace NETworkManager.ViewModels
         private bool _detailsDNSAutoconfigurationEnabled;
         public bool DetailsDNSAutoconfigurationEnabled
         {
-            get { return _detailsDNSAutoconfigurationEnabled; }
+            get => _detailsDNSAutoconfigurationEnabled;
             set
             {
                 if (value == _detailsDNSAutoconfigurationEnabled)
@@ -434,7 +426,7 @@ namespace NETworkManager.ViewModels
         private string _detailsDNSSuffix;
         public string DetailsDNSSuffix
         {
-            get { return _detailsDNSSuffix; }
+            get => _detailsDNSSuffix;
             set
             {
                 if (value == _detailsDNSSuffix)
@@ -448,7 +440,7 @@ namespace NETworkManager.ViewModels
         private IPAddress[] _detailsDNSServer;
         public IPAddress[] DetailsDNSServer
         {
-            get { return _detailsDNSServer; }
+            get => _detailsDNSServer;
             set
             {
                 if (value == _detailsDNSServer)
@@ -464,7 +456,7 @@ namespace NETworkManager.ViewModels
         private bool _configEnableDynamicIPAddress = true;
         public bool ConfigEnableDynamicIPAddress
         {
-            get { return _configEnableDynamicIPAddress; }
+            get => _configEnableDynamicIPAddress;
             set
             {
                 if (value == _configEnableDynamicIPAddress)
@@ -478,7 +470,7 @@ namespace NETworkManager.ViewModels
         private bool _configEnableStaticIPAddress;
         public bool ConfigEnableStaticIPAddress
         {
-            get { return _configEnableStaticIPAddress; }
+            get => _configEnableStaticIPAddress;
             set
             {
                 if (value == _configEnableStaticIPAddress)
@@ -494,7 +486,7 @@ namespace NETworkManager.ViewModels
         private string _configIPAddress;
         public string ConfigIPAddress
         {
-            get { return _configIPAddress; }
+            get => _configIPAddress;
             set
             {
                 if (value == _configIPAddress)
@@ -508,7 +500,7 @@ namespace NETworkManager.ViewModels
         private string _configSubnetmaskOrCidr;
         public string ConfigSubnetmaskOrCidr
         {
-            get { return _configSubnetmaskOrCidr; }
+            get => _configSubnetmaskOrCidr;
             set
             {
                 if (value == _configSubnetmaskOrCidr)
@@ -522,7 +514,7 @@ namespace NETworkManager.ViewModels
         private string _configGateway;
         public string ConfigGateway
         {
-            get { return _configGateway; }
+            get => _configGateway;
             set
             {
                 if (value == _configGateway)
@@ -536,7 +528,7 @@ namespace NETworkManager.ViewModels
         private bool _configEnableDynamicDNS = true;
         public bool ConfigEnableDynamicDNS
         {
-            get { return _configEnableDynamicDNS; }
+            get => _configEnableDynamicDNS;
             set
             {
                 if (value == _configEnableDynamicDNS)
@@ -550,7 +542,7 @@ namespace NETworkManager.ViewModels
         private bool _configEnableStaticDNS;
         public bool ConfigEnableStaticDNS
         {
-            get { return _configEnableStaticDNS; }
+            get => _configEnableStaticDNS;
             set
             {
                 if (value == _configEnableStaticDNS)
@@ -564,7 +556,7 @@ namespace NETworkManager.ViewModels
         private string _configPrimaryDNSServer;
         public string ConfigPrimaryDNSServer
         {
-            get { return _configPrimaryDNSServer; }
+            get => _configPrimaryDNSServer;
             set
             {
                 if (value == _configPrimaryDNSServer)
@@ -578,7 +570,7 @@ namespace NETworkManager.ViewModels
         private string _configSecondaryDNSServer;
         public string ConfigSecondaryDNSServer
         {
-            get { return _configSecondaryDNSServer; }
+            get => _configSecondaryDNSServer;
             set
             {
                 if (value == _configSecondaryDNSServer)
@@ -591,16 +583,13 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Profiles
-        ICollectionView _profiles;
-        public ICollectionView Profiles
-        {
-            get { return _profiles; }
-        }
+
+        public ICollectionView Profiles { get; }
 
         private ProfileInfo _selectedProfile = new ProfileInfo();
         public ProfileInfo SelectedProfile
         {
-            get { return _selectedProfile; }
+            get => _selectedProfile;
             set
             {
                 if (value == _selectedProfile)
@@ -627,7 +616,7 @@ namespace NETworkManager.ViewModels
         private string _search;
         public string Search
         {
-            get { return _search; }
+            get => _search;
             set
             {
                 if (value == _search)
@@ -647,7 +636,7 @@ namespace NETworkManager.ViewModels
         private bool _expandProfileView;
         public bool ExpandProfileView
         {
-            get { return _expandProfileView; }
+            get => _expandProfileView;
             set
             {
                 if (value == _expandProfileView)
@@ -659,7 +648,7 @@ namespace NETworkManager.ViewModels
                 _expandProfileView = value;
 
                 if (_canProfileWidthChange)
-                    ResizeProfile(dueToChangedSize: false);
+                    ResizeProfile(false);
 
                 OnPropertyChanged();
             }
@@ -668,7 +657,7 @@ namespace NETworkManager.ViewModels
         private GridLength _profileWidth;
         public GridLength ProfileWidth
         {
-            get { return _profileWidth; }
+            get => _profileWidth;
             set
             {
                 if (value == _profileWidth)
@@ -691,36 +680,33 @@ namespace NETworkManager.ViewModels
         #region Constructor, LoadSettings, OnShutdown
         public NetworkInterfaceViewModel(IDialogCoordinator instance)
         {
-            dialogCoordinator = instance;
+            _isLoading = true;
+
+            _dialogCoordinator = instance;
 
             // Load network interfaces
             LoadNetworkInterfaces();
 
-            _profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
-            _profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
-            _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
-            _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
-            _profiles.Filter = o =>
+            Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
+            Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
+            Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
+            Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
+            Profiles.Filter = o =>
             {
-                ProfileInfo info = o as ProfileInfo;
+                if (!(o is ProfileInfo info))
+                    return false;
 
                 if (string.IsNullOrEmpty(Search))
                     return info.NetworkInterface_Enabled;
 
-                string search = Search.Trim();
+                var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
-                if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (string.IsNullOrEmpty(info.Tags))
-                        return false;
-                    else
-                        return (info.NetworkInterface_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase)));
-                }
-                else // Search by: Name
-                {
-                    return (info.NetworkInterface_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.IPScanner_IPRange.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1));
-                }
+                if (search.StartsWith(TagIdentifier, StringComparison.OrdinalIgnoreCase))
+                    return !string.IsNullOrEmpty(info.Tags) && info.NetworkInterface_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(TagIdentifier.Length, search.Length - TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+
+                // Search by: Name, IPScanner_IPRange
+                return info.NetworkInterface_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
             // This will select the first entry as selected item...
@@ -742,12 +728,9 @@ namespace NETworkManager.ViewModels
             // Get the last selected interface, if it is still available on this machine...
             if (NetworkInterfaces.Count > 0)
             {
-                NetworkInterfaceInfo info = NetworkInterfaces.Where(s => s.Id == SettingsManager.Current.NetworkInterface_SelectedInterfaceId).FirstOrDefault();
+                var info = NetworkInterfaces.FirstOrDefault(s => s.Id == SettingsManager.Current.NetworkInterface_SelectedInterfaceId);
 
-                if (info != null)
-                    SelectedNetworkInterface = info;
-                else
-                    SelectedNetworkInterface = NetworkInterfaces[0];
+                SelectedNetworkInterface = info ?? NetworkInterfaces[0];
             }
 
             IsNetworkInterfaceLoading = false;
@@ -757,10 +740,7 @@ namespace NETworkManager.ViewModels
         {
             ExpandProfileView = SettingsManager.Current.NetworkInterface_ExpandProfileView;
 
-            if (ExpandProfileView)
-                ProfileWidth = new GridLength(SettingsManager.Current.NetworkInterface_ProfileWidth);
-            else
-                ProfileWidth = new GridLength(40);
+            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.NetworkInterface_ProfileWidth) : new GridLength(40);
 
             _tempProfileWidth = SettingsManager.Current.NetworkInterface_ProfileWidth;
         }
@@ -791,7 +771,7 @@ namespace NETworkManager.ViewModels
             NetworkInterfaces = await Models.Network.NetworkInterface.GetNetworkInterfacesAsync();
 
             // Change interface...
-            SelectedNetworkInterface = string.IsNullOrEmpty(id) ? NetworkInterfaces.FirstOrDefault() : NetworkInterfaces.Where(x => x.Id == id).FirstOrDefault();
+            SelectedNetworkInterface = string.IsNullOrEmpty(id) ? NetworkInterfaces.FirstOrDefault() : NetworkInterfaces.FirstOrDefault(x => x.Id == id);
 
             IsNetworkInterfaceLoading = false;
         }
@@ -809,7 +789,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
         }
 
@@ -840,19 +820,19 @@ namespace NETworkManager.ViewModels
 
         private async void AddProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
             };
 
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileManager.AddProfile(instance);
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             }, ProfileManager.GetGroups());
 
             customDialog.Content = new ProfileDialog
@@ -860,7 +840,7 @@ namespace NETworkManager.ViewModels
                 DataContext = profileViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand EditProfileCommand
@@ -870,21 +850,21 @@ namespace NETworkManager.ViewModels
 
         private async void EditProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
             };
 
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileManager.RemoveProfile(SelectedProfile);
 
                 ProfileManager.AddProfile(instance);
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             }, ProfileManager.GetGroups(), SelectedProfile);
 
             customDialog.Content = new ProfileDialog
@@ -892,7 +872,7 @@ namespace NETworkManager.ViewModels
                 DataContext = profileViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand CopyAsProfileCommand
@@ -902,19 +882,19 @@ namespace NETworkManager.ViewModels
 
         private async void CopyAsProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
             };
 
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileManager.AddProfile(instance);
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             }, ProfileManager.GetGroups(), SelectedProfile);
 
             customDialog.Content = new ProfileDialog
@@ -922,7 +902,7 @@ namespace NETworkManager.ViewModels
                 DataContext = profileViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand DeleteProfileCommand
@@ -932,19 +912,19 @@ namespace NETworkManager.ViewModels
 
         private async void DeleteProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
             };
 
-            ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+            var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileManager.RemoveProfile(SelectedProfile);
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             }, LocalizationManager.GetStringByKey("String_DeleteProfileMessage"));
 
             customDialog.Content = new ConfirmRemoveDialog
@@ -952,7 +932,7 @@ namespace NETworkManager.ViewModels
                 DataContext = confirmRemoveViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand EditGroupCommand
@@ -962,21 +942,21 @@ namespace NETworkManager.ViewModels
 
         private async void EditGroupAction(object group)
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog()
             {
                 Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
             };
 
-            GroupViewModel editGroupViewModel = new GroupViewModel(instance =>
+            var editGroupViewModel = new GroupViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
 
                 Refresh();
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             }, group.ToString());
 
             customDialog.Content = new GroupDialog
@@ -984,7 +964,7 @@ namespace NETworkManager.ViewModels
                 DataContext = editGroupViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand FlushDNSCacheCommand
@@ -1014,7 +994,7 @@ namespace NETworkManager.ViewModels
             IsConfigurationRunning = true;
             DisplayStatusMessage = false;
 
-            string subnetmask = ConfigSubnetmaskOrCidr;
+            var subnetmask = ConfigSubnetmaskOrCidr;
 
             // CIDR to subnetmask
             if (ConfigEnableStaticIPAddress && subnetmask.StartsWith("/"))
@@ -1045,7 +1025,7 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                Models.Network.NetworkInterface networkInterface = new Models.Network.NetworkInterface();
+                var networkInterface = new Models.Network.NetworkInterface();
 
                 networkInterface.UserHasCanceled += NetworkInterface_UserHasCanceled;
 
@@ -1069,16 +1049,16 @@ namespace NETworkManager.ViewModels
             IsConfigurationRunning = true;
             DisplayStatusMessage = false;
 
-            string subnetmask = SelectedProfile.NetworkInterface_SubnetmaskOrCidr;
+            var subnetmask = SelectedProfile.NetworkInterface_SubnetmaskOrCidr;
 
             // CIDR to subnetmask
             if (SelectedProfile.NetworkInterface_EnableStaticIPAddress && subnetmask.StartsWith("/"))
                 subnetmask = Subnetmask.GetFromCidr(int.Parse(subnetmask.TrimStart('/'))).Subnetmask;
 
-            bool enableStaticDNS = SelectedProfile.NetworkInterface_EnableStaticDNS;
+            var enableStaticDNS = SelectedProfile.NetworkInterface_EnableStaticDNS;
 
-            string primaryDNSServer = SelectedProfile.NetworkInterface_PrimaryDNSServer;
-            string secondaryDNSServer = SelectedProfile.NetworkInterface_SecondaryDNSServer;
+            var primaryDNSServer = SelectedProfile.NetworkInterface_PrimaryDNSServer;
+            var secondaryDNSServer = SelectedProfile.NetworkInterface_SecondaryDNSServer;
 
             // If primary and secondary DNS are empty --> autoconfiguration
             if (enableStaticDNS && string.IsNullOrEmpty(primaryDNSServer) && string.IsNullOrEmpty(secondaryDNSServer))
@@ -1091,7 +1071,7 @@ namespace NETworkManager.ViewModels
                 secondaryDNSServer = string.Empty;
             }
 
-            NetworkInterfaceConfig config = new NetworkInterfaceConfig
+            var config = new NetworkInterfaceConfig
             {
                 Name = SelectedNetworkInterface.Name,
                 EnableStaticIPAddress = SelectedProfile.NetworkInterface_EnableStaticIPAddress,
@@ -1105,7 +1085,7 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                Models.Network.NetworkInterface networkInterface = new Models.Network.NetworkInterface();
+                var networkInterface = new Models.Network.NetworkInterface();
 
                 networkInterface.UserHasCanceled += NetworkInterface_UserHasCanceled;
 
@@ -1140,19 +1120,13 @@ namespace NETworkManager.ViewModels
 
             if (dueToChangedSize)
             {
-                if (ProfileWidth.Value == 40)
-                    ExpandProfileView = false;
-                else
-                    ExpandProfileView = true;
+                ExpandProfileView = ProfileWidth.Value != 40;
             }
             else
             {
                 if (ExpandProfileView)
                 {
-                    if (_tempProfileWidth == 40)
-                        ProfileWidth = new GridLength(250);
-                    else
-                        ProfileWidth = new GridLength(_tempProfileWidth);
+                    ProfileWidth = _tempProfileWidth == 40 ? new GridLength(250) : new GridLength(_tempProfileWidth);
                 }
                 else
                 {

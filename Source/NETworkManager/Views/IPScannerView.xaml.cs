@@ -4,40 +4,40 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
 {
-    public partial class IPScannerView : UserControl
+    public partial class IPScannerView
     {
-        IPScannerViewModel viewModel;
+        private readonly IPScannerViewModel _viewModel;
 
         public IPScannerView(int tabId, string ipRange = null)
         {
             InitializeComponent();
 
-            viewModel = new IPScannerViewModel(tabId, ipRange);
+            _viewModel = new IPScannerViewModel(tabId, ipRange);
 
-            DataContext = viewModel;
+            DataContext = _viewModel;
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
 
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            viewModel.OnLoaded();
+            _viewModel.OnLoaded();
         }
 
         private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
         {
-            viewModel.OnClose();
+            _viewModel.OnClose();
         }
 
         public void CloseTab()
         {
-            viewModel.OnClose();
+            _viewModel.OnClose();
         }
 
         private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
         {
-            ContextMenu menu = sender as ContextMenu;
-            menu.DataContext = viewModel;
+            if (sender is ContextMenu menu)
+                menu.DataContext = _viewModel;
         }                
     }
 }

@@ -1,6 +1,5 @@
 ﻿using NETworkManager.Models.Lookup;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -11,7 +10,7 @@ namespace NETworkManager.Models.Network
     public class IPScanner
     {
         #region Variables
-        int progressValue;
+        private int _progressValue;
         #endregion
 
         #region Events
@@ -33,7 +32,7 @@ namespace NETworkManager.Models.Network
 
         protected virtual void OnProgressChanged()
         {
-            ProgressChanged?.Invoke(this, new ProgressChangedArgs(progressValue));
+            ProgressChanged?.Invoke(this, new ProgressChangedArgs(_progressValue));
         }
 
         public event EventHandler UserHasCanceled;
@@ -50,7 +49,7 @@ namespace NETworkManager.Models.Network
             // Start the scan in a separat task
             Task.Run(() =>
             {
-                progressValue = 0;
+                _progressValue = 0;
 
                 // Modify the ThreadPool for better performance
                 ThreadPool.GetMinThreads(out int workerThreads, out int completionPortThreads);
@@ -58,39 +57,36 @@ namespace NETworkManager.Models.Network
 
                 try
                 {
-                    ParallelOptions parallelOptions = new ParallelOptions()
+                    var parallelOptions = new ParallelOptions
                     {
                         CancellationToken = cancellationToken,
                         MaxDegreeOfParallelism = ipScannerOptions.Threads
                     };
 
-                    string localHostname = ipScannerOptions.ResolveHostname ? Dns.GetHostName() : string.Empty;
-
                     Parallel.ForEach(ipAddresses, parallelOptions, ipAddress =>
                     {
-                        PingInfo pingInfo = new PingInfo();
-                        bool pingable = false;
+                        var pingInfo = new PingInfo();
+                        var pingable = false;
 
                         // PING
-                        using (System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping())
+                        using (var ping = new System.Net.NetworkInformation.Ping())
                         {
                             for (int i = 0; i < ipScannerOptions.ICMPAttempts; i++)
                             {
                                 try
                                 {
-                                    PingReply pingReply = ping.Send(ipAddress, ipScannerOptions.ICMPTimeout, ipScannerOptions.ICMPBuffer);
+                                    var pingReply = ping.Send(ipAddress, ipScannerOptions.ICMPTimeout, ipScannerOptions.ICMPBuffer);
 
-                                    if (IPStatus.Success == pingReply.Status)
+                                    if (pingReply != null && IPStatus.Success == pingReply.Status)
                                     {
                                         pingInfo = new PingInfo(pingReply.Address, pingReply.Buffer.Count(), pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status);
 
                                         pingable = true;
                                         break; // Continue with the next checks...
                                     }
-                                    else
-                                    {
+
+                                    if (pingReply != null)
                                         pingInfo = new PingInfo(ipAddress, pingReply.Status);
-                                    }
                                 }
                                 catch (PingException)
                                 {
@@ -106,11 +102,11 @@ namespace NETworkManager.Models.Network
                         if (pingable || ipScannerOptions.ShowScanResultForAllIPAddresses)
                         {
                             // DNS
-                            string hostname = string.Empty;
+                            var hostname = string.Empty;
 
                             if (ipScannerOptions.ResolveHostname)
                             {
-                                DNSLookupOptions options = new DNSLookupOptions()
+                                var options = new DNSLookupOptions()
                                 {
                                     UseCustomDNSServer = ipScannerOptions.UseCustomDNSServer,
                                     CustomDNSServers = ipScannerOptions.CustomDNSServer,
@@ -127,12 +123,12 @@ namespace NETworkManager.Models.Network
 
                             // ARP
                             PhysicalAddress macAddress = null;
-                            string vendor = string.Empty;
+                            var vendor = string.Empty;
 
                             if (ipScannerOptions.ResolveMACAddress)
                             {
                                 // Get info from arp table
-                                ARPTableInfo arpTableInfo = ARPTable.GetTable().Where(p => p.IPAddress.ToString() == ipAddress.ToString()).FirstOrDefault();
+                                var arpTableInfo = ARPTable.GetTable().FirstOrDefault(p => p.IPAddress.ToString() == ipAddress.ToString());
 
                                 if (arpTableInfo != null)
                                     macAddress = arpTableInfo.MACAddress;
@@ -140,7 +136,7 @@ namespace NETworkManager.Models.Network
                                 // Check if it is the local mac
                                 if (macAddress == null)
                                 {
-                                    NetworkInterfaceInfo networkInferfaceInfo = NetworkInterface.GetNetworkInterfaces().Where(p => p.IPv4Address.Contains(ipAddress)).FirstOrDefault();
+                                    var networkInferfaceInfo = NetworkInterface.GetNetworkInterfaces().FirstOrDefault(p => p.IPv4Address.Contains(ipAddress));
 
                                     if (networkInferfaceInfo != null)
                                         macAddress = networkInferfaceInfo.PhysicalAddress;
@@ -149,7 +145,7 @@ namespace NETworkManager.Models.Network
                                 // Vendor lookup
                                 if (macAddress != null)
                                 {
-                                    OUIInfo info = OUILookup.Lookup(macAddress.ToString()).FirstOrDefault();
+                                    var info = OUILookup.Lookup(macAddress.ToString()).FirstOrDefault();
 
                                     if (info != null)
                                         vendor = info.Vendor;
@@ -167,7 +163,7 @@ namespace NETworkManager.Models.Network
                 catch (OperationCanceledException)  // If user has canceled
                 {
                     // Check if the scan is already complete...
-                    if (ipAddresses.Length == progressValue)
+                    if (ipAddresses.Length == _progressValue)
                         OnScanComplete();
                     else
                         OnUserHasCanceled();
@@ -178,13 +174,13 @@ namespace NETworkManager.Models.Network
                     ThreadPool.GetMinThreads(out workerThreads, out completionPortThreads);
                     ThreadPool.SetMinThreads(workerThreads - ipScannerOptions.Threads, completionPortThreads - ipScannerOptions.Threads);
                 }
-            });
+            }, cancellationToken);
         }
 
         private void IncreaseProcess()
         {
             // Increase the progress                        
-            Interlocked.Increment(ref progressValue);
+            Interlocked.Increment(ref _progressValue);
             OnProgressChanged();
         }
         #endregion

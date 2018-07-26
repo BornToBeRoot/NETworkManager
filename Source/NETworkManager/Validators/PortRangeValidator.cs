@@ -8,15 +8,18 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            bool isValid = true;
+            var isValid = true;
 
-            foreach (string portOrRange in (value as string).Replace(" ", "").Split(';'))
+            if (value == null)
+                return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidPortOrPortRange"));
+
+            foreach (var portOrRange in ((string)value).Replace(" ", "").Split(';'))
             {
                 if (portOrRange.Contains("-"))
                 {
-                    string[] portRange = portOrRange.Split('-');
+                    var portRange = portOrRange.Split('-');
 
-                    if (int.TryParse(portRange[0], out int startPort) && int.TryParse(portRange[1], out int endPort))
+                    if (int.TryParse(portRange[0], out var startPort) && int.TryParse(portRange[1], out var endPort))
                     {
                         if (!((startPort > 0) && (startPort < 65536) && (endPort > 0) && (endPort < 65536) && (startPort < endPort)))
                             isValid = false;
@@ -28,7 +31,7 @@ namespace NETworkManager.Validators
                 }
                 else
                 {
-                    if (int.TryParse(portOrRange, out int portNumber))
+                    if (int.TryParse(portOrRange, out var portNumber))
                     {
                         if (!((portNumber > 0) && (portNumber < 65536)))
                             isValid = false;
@@ -40,10 +43,7 @@ namespace NETworkManager.Validators
                 }
             }
 
-            if (isValid)
-                return ValidationResult.ValidResult;
-            else
-                return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidPortOrPortRange"));
+            return isValid ? ValidationResult.ValidResult : new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidPortOrPortRange"));
         }
     }
 }

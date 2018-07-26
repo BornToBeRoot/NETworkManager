@@ -8,12 +8,12 @@ namespace NETworkManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            long.TryParse(value.ToString(), out long intValue);
+            if (value == null)
+                return "-/-";
 
-            if (intValue == 0)
-                return string.Format("-/-");
+            long.TryParse(value.ToString(), out var intValue);
 
-            return value.ToString();
+            return intValue == 0 ? "-/-" : intValue.ToString();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

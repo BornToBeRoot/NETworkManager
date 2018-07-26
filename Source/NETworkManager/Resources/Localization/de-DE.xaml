@@ -106,6 +106,7 @@
     <system:String x:Key="String_Header_NetworkInterface">Netzwerkinterface</system:String>
     <system:String x:Key="String_Header_General">Allgemein</system:String>
     <system:String x:Key="String_Header_ResolvePTR">Resolve PTR</system:String>
+    <system:String x:Key="String_Header_Keyboard">Tastatur</system:String>
     
     <!-- Normal strings -->
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -347,7 +348,7 @@
     <system:String x:Key="String_CustomScreenSize">Benutzerdefinierte Bildschirmgröße:</system:String>
     <system:String x:Key="String_Width">Breite</system:String>
     <system:String x:Key="String_Height">Höhe</system:String>
-    <system:String x:Key="String_VersionxxAvailable">Version {0} verfügbar!</system:String>
+    <system:String x:Key="String_VersionxxIsAvailable">Version {0} ist verfügbar!</system:String>
     <system:String x:Key="String_CheckForUpdatesAtStartup">Beim Start auf Updates prüfen</system:String>
     <system:String x:Key="String_NoUpdateAvailable">Kein Update verfügbar!</system:String>
     <system:String x:Key="String_InstallRDP8dot1Message">Sie müssen das Remotedesktopprotokoll (RDP) Version 8.1 auf Ihrem System installieren, um die Remotedesktopfunktionalität zu verwenden.</system:String>
@@ -426,7 +427,11 @@
     <system:String x:Key="String_Timestamp">Timestamp</system:String>
     <system:String x:Key="String_SearchedLanguageNotFound">Gesuchte Sprache nicht gefunden</system:String>
     <system:String x:Key="String_InheritHostFromDefault">Host von Standard übernehmen</system:String>
-
+    <system:String x:Key="String_OnThisComputer">Auf diesem Computer</system:String>
+    <system:String x:Key="String_OnTheRemoteComputer">Auf dem Remotecomputer anwenden</system:String>
+    <system:String x:Key="String_OnlyWhenUsingTheFullScreen">Nur bei Vollbild anwenden</system:String>
+    <system:String x:Key="String_ApplyWindowsKeyCombinationsLikeAltTab">Windows Tastenkombinationen anwenden (z.B. ALT+TAB):</system:String>
+    
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">Wie installiere ich RDP 8.1 unter Windows 7 / Server 2008 R2?</system:String>
     <system:String x:Key="String_DocumentationTitle_00002">Wie erstelle ich ein benutzerdefiniertes Thema und Akzent?</system:String>

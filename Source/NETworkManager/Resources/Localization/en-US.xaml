@@ -106,6 +106,7 @@
     <system:String x:Key="String_Header_NetworkInterface">Network Interface</system:String>
     <system:String x:Key="String_Header_General">General</system:String>
     <system:String x:Key="String_Header_ResolvePTR">Resolve PTR</system:String>
+    <system:String x:Key="String_Header_Keyboard">Keyboard</system:String>
     
     <!-- Normal strings -->    
     <system:String x:Key="String_ProductName">NETworkManager</system:String>
@@ -347,7 +348,7 @@
     <system:String x:Key="String_CustomScreenSize">Custom screen size:</system:String>
     <system:String x:Key="String_Width">Width</system:String>
     <system:String x:Key="String_Height">Height</system:String>
-    <system:String x:Key="String_VersionxxAvailable">Version {0} available!</system:String>
+    <system:String x:Key="String_VersionxxIsAvailable">Version {0} is available!</system:String>
     <system:String x:Key="String_CheckForUpdatesAtStartup">Check for updates at startup</system:String>
     <system:String x:Key="String_NoUpdateAvailable">No update available!</system:String>
     <system:String x:Key="String_InstallRDP8dot1Message">You must install the Remote Desktop Protocol (RDP) version 8.1 on your system to use the Remote Desktop functionality!</system:String>
@@ -426,6 +427,10 @@
     <system:String x:Key="String_Timestamp">Timestamp</system:String>
     <system:String x:Key="String_SearchedLanguageNotFound">Searched language not found!</system:String>
     <system:String x:Key="String_InheritHostFromDefault">Inherit host from default</system:String>
+    <system:String x:Key="String_OnThisComputer">On this computer</system:String>
+    <system:String x:Key="String_OnTheRemoteComputer">On the remote computer</system:String>
+    <system:String x:Key="String_OnlyWhenUsingTheFullScreen">Only when using the full screen</system:String>
+    <system:String x:Key="String_ApplyWindowsKeyCombinationsLikeAltTab">Apply Windows key combinations (e.g. ALT+TAB):</system:String>
 
     <!-- Documentation title -->
     <system:String x:Key="String_DocumentationTitle_00001">How to install RDP 8.1 on Windows 7/Server 2008 R2</system:String>

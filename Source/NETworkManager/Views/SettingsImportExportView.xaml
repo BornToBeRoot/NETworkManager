@@ -3,53 +3,54 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:Validator="clr-namespace:NETworkManager.Validators"        
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:validators="clr-namespace:NETworkManager.Validators"        
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        Dialog:DialogParticipation.Register="{Binding}"
+        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
-        mc:Ignorable="d">
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsImportExportViewModel}">
     <UserControl.Resources>
-        <Converter:ValidateSettingsExportConverter x:Key="ValidateSettingsExportConverter" />
-        <Converter:ValidateSettingsImportConverter x:Key="ValidateSettingsImportConverter" />
-        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:ValidateSettingsExportConverter x:Key="ValidateSettingsExportConverter" />
+        <converters:ValidateSettingsImportConverter x:Key="ValidateSettingsImportConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <StackPanel >
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Import}" />
-        <TextBox x:Name="txtImportFilePath" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_LocationOfTheImport}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" AllowDrop="True" Drop="txtImportFilePath_Drop" PreviewDragOver="txtImportFilePath_PreviewDragOver" Margin="0,0,0,10">
+        <TextBox x:Name="TextBoxImportFilePath" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_LocationOfTheImport}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" AllowDrop="True" Drop="TextBoxImportFilePath_Drop" PreviewDragOver="TextBoxImportFilePath_PreviewDragOver" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="ImportFilePath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                        <Validator:FileExistsValidator ValidatesOnTargetUpdated="True" />
+                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <validators:FileExistsValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button Content="{DynamicResource String_Button_Validate}" Command="{Binding ValidateImportSettingsCommand}" Visibility="{Binding ImportFileIsValid,Converter={StaticResource BooleanReverseToVisibilityConverter}}" HorizontalAlignment="Left" Margin="0,0,0,20" >
+        <Button Content="{DynamicResource String_Button_Validate}" Command="{Binding ValidateImportSettingsCommand}" Visibility="{Binding ImportFileIsValid,Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" HorizontalAlignment="Left" Margin="0,0,0,20" >
             <Button.Style>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
                     <Setter Property="IsEnabled" Value="False" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=txtImportFilePath, Path=(Validation.HasError)}" Value="False">
+                        <DataTrigger Binding="{Binding ElementName=TextBoxImportFilePath, Path=(Validation.HasError)}" Value="False">
                             <Setter Property="IsEnabled" Value="True" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Button.Style>
         </Button>
-        <StackPanel Visibility="{Binding ImportFileIsValid, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,0,0,20">
+        <StackPanel Visibility="{Binding ImportFileIsValid, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,20">
             <TextBlock Style="{StaticResource DefaultTextBlock}" Text="{StaticResource String_SelectTheSettingsYouWantToImport}" Margin="0,0,0,10" />
-            <RadioButton x:Name="radioButtonImportEverything" Content="{DynamicResource String_RadioButton_Everything}" IsChecked="{Binding ImportEverything}" Margin="0,0,0,10"/>
-            <RadioButton x:Name="radioButtonImportCustom" Content="{DynamicResource String_RadioButton_Custom}" Margin="0,0,0,10"/>
+            <RadioButton x:Name="RadioButtonImportEverything" Content="{DynamicResource String_RadioButton_Everything}" IsChecked="{Binding ImportEverything}" Margin="0,0,0,10"/>
+            <RadioButton x:Name="RadioButtonImportCustom" Content="{DynamicResource String_RadioButton_Custom}" Margin="0,0,0,10"/>
             <GroupBox HorizontalAlignment="Left" Margin="20,0,0,10">
                 <GroupBox.Style>
                     <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource WithoutHeaderGroupBox}">
                         <Setter Property="IsEnabled" Value="False" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=radioButtonImportCustom, Path=IsChecked}" Value="True">
+                            <DataTrigger Binding="{Binding ElementName=RadioButtonImportCustom, Path=IsChecked}" Value="True">
                                 <Setter Property="IsEnabled" Value="True" />
                             </DataTrigger>
                         </Style.Triggers>
@@ -68,7 +69,7 @@
                     </Grid.RowDefinitions>
                     <CheckBox Grid.Column="0" Grid.Row="0" Content="{DynamicResource String_Settings}" IsEnabled="{Binding ImportSettingsExists}" IsChecked="{Binding ImportSettings}" />
                     <CheckBox Grid.Column="0" Grid.Row="2" Content="{DynamicResource String_Profiles}" IsEnabled="{Binding ImportProfilesExists}" IsChecked="{Binding ImportProfiles}" />
-                    <Grid Grid.Column="2" Grid.Row="2" IsEnabled="{Binding ImportNetworkInterfaceProfilesExists}">
+                    <Grid Grid.Column="2" Grid.Row="2" IsEnabled="{Binding ImportProfilesExists}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition MinWidth="100" />
                             <ColumnDefinition Width="10" />
@@ -104,14 +105,14 @@
         </StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Export}" />
         <TextBlock Style="{StaticResource DefaultTextBlock}" Text="{StaticResource String_SelectTheSettingsYouWantToExport}" Margin="0,0,0,10" />
-        <RadioButton x:Name="radioButtonExportEverything" Content="{DynamicResource String_RadioButton_Everything}" IsChecked="{Binding ExportEverything}" Margin="0,0,0,10"/>
-        <RadioButton x:Name="radioButtonExportCustom" Content="{DynamicResource String_RadioButton_Custom}" Margin="0,0,0,10"/>
+        <RadioButton x:Name="RadioButtonExportEverything" Content="{DynamicResource String_RadioButton_Everything}" IsChecked="{Binding ExportEverything}" Margin="0,0,0,10"/>
+        <RadioButton x:Name="RadioButtonExportCustom" Content="{DynamicResource String_RadioButton_Custom}" Margin="0,0,0,10"/>
         <GroupBox Margin="20,0,0,10" MinWidth="250" HorizontalAlignment="Left">
             <GroupBox.Style>
                 <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource WithoutHeaderGroupBox}">
                     <Setter Property="IsEnabled" Value="False" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=radioButtonExportCustom, Path=IsChecked}" Value="True">
+                        <DataTrigger Binding="{Binding ElementName=RadioButtonExportCustom, Path=IsChecked}" Value="True">
                             <Setter Property="IsEnabled" Value="True" />
                         </DataTrigger>
                     </Style.Triggers>

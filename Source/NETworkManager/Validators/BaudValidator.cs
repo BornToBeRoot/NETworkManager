@@ -7,17 +7,14 @@ namespace NETworkManager.Validators
 {
     public class BaudValidator : ValidationRule
     {
-        private int[] Bauds = new int[] { 75, 300, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200 };
+        private readonly int[] _bauds = { 75, 300, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200 };
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (int.TryParse(value as string, out int baud))
-            {
-                if (Bauds.Contains(baud))
-                    return ValidationResult.ValidResult;
-            }
+            if (!int.TryParse(value as string, out var baud))
+                return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidBaud"));
 
-            return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidBaud"));
+            return _bauds.Contains(baud) ? ValidationResult.ValidResult : new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidBaud"));
         }
     }
 }

@@ -1,18 +1,18 @@
-﻿<Controls:MetroWindow x:Name="MetroWindowHelpCommandLine" x:Class="NETworkManager.Views.HelpCommandLineWindow"
+﻿<mahAppsControls:MetroWindow x:Class="NETworkManager.Views.CommandLineHelpWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
+        xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
         mc:Ignorable="d"
         Title="{DynamicResource String_ProductName}" Topmost="True" Style="{DynamicResource DefaultWindow}" MinHeight="500" Height="500" MinWidth="500" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" IsMinButtonEnabled="False" IsMaxRestoreButtonEnabled="False" ShowInTaskbar="False">
-    <Controls:MetroWindow.WindowButtonCommands>
-        <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
-    </Controls:MetroWindow.WindowButtonCommands>
-    <Controls:MetroWindow.Resources>
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    </Controls:MetroWindow.Resources>
+    <mahAppsControls:MetroWindow.WindowButtonCommands>
+        <mahAppsControls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
+    </mahAppsControls:MetroWindow.WindowButtonCommands>
+    <mahAppsControls:MetroWindow.Resources>
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+    </mahAppsControls:MetroWindow.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -49,7 +49,7 @@
         </Grid>
         </ScrollViewer>
         </Border>
-        <Grid Grid.Row="3" Visibility="{Binding DisplayWrongParameter, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,0,0,10">
+        <Grid Grid.Row="3" Visibility="{Binding DisplayWrongParameter, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,10">
             <Grid.Resources>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
                     <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
@@ -74,4 +74,4 @@
             <Button Grid.Column="1" Content="{DynamicResource String_Button_OK}" Click="Button_Click" HorizontalAlignment="Right" Style="{StaticResource DefaultButton}" />
         </Grid>
     </Grid>
-</Controls:MetroWindow>
+</mahAppsControls:MetroWindow>

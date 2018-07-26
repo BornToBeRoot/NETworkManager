@@ -8,11 +8,11 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (int.TryParse(value as string, out int portNumber))
-            {
-                if ((portNumber > 0) && (portNumber < 65536))
-                    return ValidationResult.ValidResult;
-            }
+            if (!int.TryParse(value as string, out var portNumber))
+                return new ValidationResult(false,LocalizationManager.GetStringByKey("String_ValidationError_EnterValidPort"));
+
+            if (portNumber > 0 && (portNumber < 65536))
+                return ValidationResult.ValidResult;
 
             return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidPort"));
         }

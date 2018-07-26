@@ -7,10 +7,7 @@ namespace NETworkManager.ViewModels
     public class LookupHostViewModel : ViewModelBase
     {
         #region Variables
-        public bool ShowCurrentApplicationTitle
-        {
-            get { return SettingsManager.Current.Window_ShowCurrentApplicationTitle; }
-        }
+        public bool ShowCurrentApplicationTitle => SettingsManager.Current.Window_ShowCurrentApplicationTitle;
         #endregion
 
         #region Constructor

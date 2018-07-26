@@ -6,17 +6,17 @@ namespace NETworkManager.Utilities
     {
         public static void RunPSCommand(string command, bool asAdmin = false, ProcessWindowStyle windowStyle = ProcessWindowStyle.Hidden)
         {
-            ProcessStartInfo info = new ProcessStartInfo()
+            var info = new ProcessStartInfo()
             {
                 FileName = "powershell.exe",
-                Arguments = string.Format("-NoProfile -NoLogo -Command {0}", command),
+                Arguments = $"-NoProfile -NoLogo -Command {command}",
                 WindowStyle = windowStyle
             };
 
             if (asAdmin)
                 info.Verb = "runas";
 
-            using (Process process = new Process())
+            using (var process = new Process())
             {
                 process.StartInfo = info;
 

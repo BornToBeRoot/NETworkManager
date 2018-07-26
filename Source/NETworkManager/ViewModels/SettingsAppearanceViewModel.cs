@@ -7,12 +7,12 @@ namespace NETworkManager.ViewModels
     public class SettingsAppearanceViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private AppTheme _appThemeSelectedItem;
         public AppTheme AppThemeSelectedItem
         {
-            get { return _appThemeSelectedItem; }
+            get => _appThemeSelectedItem;
             set
             {
                 if (value == _appThemeSelectedItem)
@@ -32,7 +32,7 @@ namespace NETworkManager.ViewModels
         private Accent _accentSelectedItem;
         public Accent AccentSelectedItem
         {
-            get { return _accentSelectedItem; }
+            get => _accentSelectedItem;
             set
             {
                 if (value == _accentSelectedItem)
@@ -52,7 +52,7 @@ namespace NETworkManager.ViewModels
         private bool _enableTransparency;
         public bool EnableTransparency
         {
-            get { return _enableTransparency; }
+            get => _enableTransparency;
             set
             {
                 if (value == _enableTransparency)
@@ -69,7 +69,7 @@ namespace NETworkManager.ViewModels
         private int _opacity;
         public int Opacity
         {
-            get { return _opacity; }
+            get => _opacity;
             set
             {
                 if (value == _opacity)
@@ -87,6 +87,8 @@ namespace NETworkManager.ViewModels
         #region Constructor, LoadSettings
         public SettingsAppearanceViewModel()
         {
+            _isLoading = true;
+
             LoadSettings();
 
             _isLoading = false;

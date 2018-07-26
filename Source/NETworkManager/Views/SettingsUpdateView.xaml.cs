@@ -1,16 +1,15 @@
 ﻿using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class SettingsUpdateView : UserControl
+    public partial class SettingsUpdateView
     {
-        SettingsUpdateViewModel viewModel = new SettingsUpdateViewModel();
+        private readonly SettingsUpdateViewModel _viewModel = new SettingsUpdateViewModel();
 
         public SettingsUpdateView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

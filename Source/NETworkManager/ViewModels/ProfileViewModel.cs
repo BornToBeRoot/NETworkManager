@@ -7,21 +7,20 @@ using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
 using static NETworkManager.Models.PuTTY.PuTTY;
+// ReSharper disable InconsistentNaming
 
 namespace NETworkManager.ViewModels
 {
     public class ProfileViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
-
-        private ProfileInfo _profileInfo;
+        private readonly bool _isLoading;
 
         #region General
         private string _name;
         public string Name
         {
-            get { return _name; }
+            get => _name;
             set
             {
                 if (value == _name)
@@ -39,7 +38,7 @@ namespace NETworkManager.ViewModels
         private string _host;
         public string Host
         {
-            get { return _host; }
+            get => _host;
             set
             {
                 if (value == _host)
@@ -57,7 +56,7 @@ namespace NETworkManager.ViewModels
         private int _credentialID;
         public int CredentialID
         {
-            get { return _credentialID; }
+            get => _credentialID;
             set
             {
                 if (value == _credentialID)
@@ -72,16 +71,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        ICollectionView _credentials;
-        public ICollectionView Credentials
-        {
-            get { return _credentials; }
-        }
+        public ICollectionView Credentials { get; }
 
         private string _group;
         public string Group
         {
-            get { return _group; }
+            get => _group;
             set
             {
                 if (value == _group)
@@ -96,16 +91,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        ICollectionView _groups;
-        public ICollectionView Groups
-        {
-            get { return _groups; }
-        }
+        public ICollectionView Groups { get; }
 
         private string _tags;
         public string Tags
         {
-            get { return _tags; }
+            get => _tags;
             set
             {
                 if (value == _tags)
@@ -123,7 +114,7 @@ namespace NETworkManager.ViewModels
         private bool _tabEnabled;
         public bool TabEnabled
         {
-            get { return _tabEnabled; }
+            get => _tabEnabled;
             set
             {
                 if (value == _tabEnabled)
@@ -137,7 +128,7 @@ namespace NETworkManager.ViewModels
         private bool _showUnlockCredentialsHint;
         public bool ShowUnlockCredentialsHint
         {
-            get { return _showUnlockCredentialsHint; }
+            get => _showUnlockCredentialsHint;
             set
             {
                 if (value == _showUnlockCredentialsHint)
@@ -147,15 +138,13 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        public bool CredentialIsNullOnLoad;
         #endregion
 
         #region Network Interface
         private bool _networkInterface_Enabled;
         public bool NetworkInterface_Enabled
         {
-            get { return _networkInterface_Enabled; }
+            get => _networkInterface_Enabled;
             set
             {
                 if (value == _networkInterface_Enabled)
@@ -173,7 +162,7 @@ namespace NETworkManager.ViewModels
         private bool _networkInterface_EnableDynamicIPAddress = true;
         public bool NetworkInterface_EnableDynamicIPAddress
         {
-            get { return _networkInterface_EnableDynamicIPAddress; }
+            get => _networkInterface_EnableDynamicIPAddress;
             set
             {
                 if (value == _networkInterface_EnableDynamicIPAddress)
@@ -191,15 +180,13 @@ namespace NETworkManager.ViewModels
         private bool _networkInterface_EnableStaticIPAddress;
         public bool NetworkInterface_EnableStaticIPAddress
         {
-            get { return _networkInterface_EnableStaticIPAddress; }
+            get => _networkInterface_EnableStaticIPAddress;
             set
             {
                 if (value == _networkInterface_EnableStaticIPAddress)
                     return;
 
                 if (value)
-                    NetworkInterface_EnableStaticDNS = true;
-                else
                     NetworkInterface_EnableStaticDNS = true;
 
                 _networkInterface_EnableStaticIPAddress = value;
@@ -214,7 +201,7 @@ namespace NETworkManager.ViewModels
         private string _networkInterface_IPAddress;
         public string NetworkInterface_IPAddress
         {
-            get { return _networkInterface_IPAddress; }
+            get => _networkInterface_IPAddress;
             set
             {
                 if (value == _networkInterface_IPAddress)
@@ -232,7 +219,7 @@ namespace NETworkManager.ViewModels
         private string _networkInterface_SubnetmaskOrCidr;
         public string NetworkInterface_SubnetmaskOrCidr
         {
-            get { return _networkInterface_SubnetmaskOrCidr; }
+            get => _networkInterface_SubnetmaskOrCidr;
             set
             {
                 if (value == _networkInterface_SubnetmaskOrCidr)
@@ -250,7 +237,7 @@ namespace NETworkManager.ViewModels
         private string _networkInterface_Gateway;
         public string NetworkInterface_Gateway
         {
-            get { return _networkInterface_Gateway; }
+            get => _networkInterface_Gateway;
             set
             {
                 if (value == _networkInterface_Gateway)
@@ -268,7 +255,7 @@ namespace NETworkManager.ViewModels
         private bool _networkInterface_EnableDynamicDNS = true;
         public bool NetworkInterface_EnableDynamicDNS
         {
-            get { return _networkInterface_EnableDynamicDNS; }
+            get => _networkInterface_EnableDynamicDNS;
             set
             {
                 if (value == _networkInterface_EnableDynamicDNS)
@@ -286,7 +273,7 @@ namespace NETworkManager.ViewModels
         private bool _networkInterface_EnableStaticDNS;
         public bool NetworkInterface_EnableStaticDNS
         {
-            get { return _networkInterface_EnableStaticDNS; }
+            get => _networkInterface_EnableStaticDNS;
             set
             {
                 if (value == _networkInterface_EnableStaticDNS)
@@ -304,7 +291,7 @@ namespace NETworkManager.ViewModels
         private string _networkInterface_PrimaryDNSServer;
         public string NetworkInterface_PrimaryDNSServer
         {
-            get { return _networkInterface_PrimaryDNSServer; }
+            get => _networkInterface_PrimaryDNSServer;
             set
             {
                 if (value == _networkInterface_PrimaryDNSServer)
@@ -322,7 +309,7 @@ namespace NETworkManager.ViewModels
         private string _networkInterface_SecondaryDNSServer;
         public string NetworkInterface_SecondaryDNSServer
         {
-            get { return _networkInterface_SecondaryDNSServer; }
+            get => _networkInterface_SecondaryDNSServer;
             set
             {
                 if (value == _networkInterface_SecondaryDNSServer)
@@ -339,10 +326,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region IP Scanner
+
         private bool _ipScanner_Enabled;
         public bool IPScanner_Enabled
         {
-            get { return _ipScanner_Enabled; }
+            get => _ipScanner_Enabled;
             set
             {
                 if (value == _ipScanner_Enabled)
@@ -360,7 +348,7 @@ namespace NETworkManager.ViewModels
         private bool _ipScanner_InheritHost;
         public bool IPScanner_InheritHost
         {
-            get { return _ipScanner_InheritHost; }
+            get => _ipScanner_InheritHost;
             set
             {
                 if (value == _ipScanner_InheritHost)
@@ -378,7 +366,7 @@ namespace NETworkManager.ViewModels
         private string _ipScanner_IPRange;
         public string IPScanner_IPRange
         {
-            get { return _ipScanner_IPRange; }
+            get => _ipScanner_IPRange;
             set
             {
                 if (value == _ipScanner_IPRange)
@@ -392,13 +380,15 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
         #endregion
 
         #region Port Scanner
+
         private bool _portScanner_Enabled;
         public bool PortScanner_Enabled
         {
-            get { return _portScanner_Enabled; }
+            get => _portScanner_Enabled;
             set
             {
                 if (value == _portScanner_Enabled)
@@ -416,7 +406,7 @@ namespace NETworkManager.ViewModels
         private bool _portScanner_InheritHost;
         public bool PortScanner_InheritHost
         {
-            get { return _portScanner_InheritHost; }
+            get => _portScanner_InheritHost;
             set
             {
                 if (value == _portScanner_InheritHost)
@@ -434,7 +424,7 @@ namespace NETworkManager.ViewModels
         private string _portScanner_Host;
         public string PortScanner_Host
         {
-            get { return _portScanner_Host; }
+            get => _portScanner_Host;
             set
             {
                 if (value == _portScanner_Host)
@@ -452,7 +442,7 @@ namespace NETworkManager.ViewModels
         private string _portScanner_Ports;
         public string PortScanner_Ports
         {
-            get { return _portScanner_Ports; }
+            get => _portScanner_Ports;
             set
             {
                 if (value == _portScanner_Ports)
@@ -466,13 +456,14 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
         #endregion
 
         #region Ping
         private bool _ping_Enabled;
         public bool Ping_Enabled
         {
-            get { return _ping_Enabled; }
+            get => _ping_Enabled;
             set
             {
                 if (value == _ping_Enabled)
@@ -490,7 +481,7 @@ namespace NETworkManager.ViewModels
         private bool _ping_InheritHost;
         public bool Ping_InheritHost
         {
-            get { return _ping_InheritHost; }
+            get => _ping_InheritHost;
             set
             {
                 if (value == _ping_InheritHost)
@@ -508,7 +499,7 @@ namespace NETworkManager.ViewModels
         private string _ping_Host;
         public string Ping_Host
         {
-            get { return _ping_Host; }
+            get => _ping_Host;
             set
             {
                 if (value == _ping_Host)
@@ -522,13 +513,14 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
         #endregion
 
         #region Traceroute
         private bool _traceroute_Enabled;
         public bool Traceroute_Enabled
         {
-            get { return _traceroute_Enabled; }
+            get => _traceroute_Enabled;
             set
             {
                 if (value == _traceroute_Enabled)
@@ -546,7 +538,7 @@ namespace NETworkManager.ViewModels
         private bool _traceroute_InheritHost;
         public bool Traceroute_InheritHost
         {
-            get { return _traceroute_InheritHost; }
+            get => _traceroute_InheritHost;
             set
             {
                 if (value == _traceroute_InheritHost)
@@ -564,7 +556,7 @@ namespace NETworkManager.ViewModels
         private string _traceroute_Host;
         public string Traceroute_Host
         {
-            get { return _traceroute_Host; }
+            get => _traceroute_Host;
             set
             {
                 if (value == _traceroute_Host)
@@ -578,13 +570,14 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
         #endregion
 
         #region RemoteDesktop
         private bool _remoteDesktop_Enabled;
         public bool RemoteDesktop_Enabled
         {
-            get { return _remoteDesktop_Enabled; }
+            get => _remoteDesktop_Enabled;
             set
             {
                 if (value == _remoteDesktop_Enabled)
@@ -602,7 +595,7 @@ namespace NETworkManager.ViewModels
         private bool _remoteDesktop_InheritHost;
         public bool RemoteDesktop_InheritHost
         {
-            get { return _remoteDesktop_InheritHost; }
+            get => _remoteDesktop_InheritHost;
             set
             {
                 if (value == _remoteDesktop_InheritHost)
@@ -620,7 +613,7 @@ namespace NETworkManager.ViewModels
         private string _remoteDesktop_Host;
         public string RemoteDesktop_Host
         {
-            get { return _remoteDesktop_Host; }
+            get => _remoteDesktop_Host;
             set
             {
                 if (value == _remoteDesktop_Host)
@@ -634,13 +627,14 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
         #endregion
 
         #region PuTTY 
         private bool _puTTY_Enabled;
         public bool PuTTY_Enabled
         {
-            get { return _puTTY_Enabled; }
+            get => _puTTY_Enabled;
             set
             {
                 if (value == _puTTY_Enabled)
@@ -658,7 +652,7 @@ namespace NETworkManager.ViewModels
         private bool _puTTY_InheritHost;
         public bool PuTTY_InheritHost
         {
-            get { return _puTTY_InheritHost; }
+            get => _puTTY_InheritHost;
             set
             {
                 if (value == _puTTY_InheritHost)
@@ -676,7 +670,7 @@ namespace NETworkManager.ViewModels
         private bool _puTTY_UseSSH; // Default is SSH
         public bool PuTTY_UseSSH
         {
-            get { return _puTTY_UseSSH; }
+            get => _puTTY_UseSSH;
             set
             {
                 if (value == _puTTY_UseSSH)
@@ -696,7 +690,7 @@ namespace NETworkManager.ViewModels
         private bool _puTTY_UseTelnet;
         public bool PuTTY_UseTelnet
         {
-            get { return _puTTY_UseTelnet; }
+            get => _puTTY_UseTelnet;
             set
             {
                 if (value == _puTTY_UseTelnet)
@@ -716,7 +710,7 @@ namespace NETworkManager.ViewModels
         private bool _puTTY_UseSerial;
         public bool PuTTY_UseSerial
         {
-            get { return _puTTY_UseSerial; }
+            get => _puTTY_UseSerial;
             set
             {
                 if (value == _puTTY_UseSerial)
@@ -736,7 +730,7 @@ namespace NETworkManager.ViewModels
         private bool _puTTY_UseRlogin;
         public bool PuTTY_UseRlogin
         {
-            get { return _puTTY_UseRlogin; }
+            get => _puTTY_UseRlogin;
             set
             {
                 if (value == _puTTY_UseRlogin)
@@ -756,7 +750,7 @@ namespace NETworkManager.ViewModels
         private bool _puTTY_UseRAW;
         public bool PuTTY_UseRAW
         {
-            get { return _puTTY_UseRAW; }
+            get => _puTTY_UseRAW;
             set
             {
                 if (value == _puTTY_UseRAW)
@@ -776,7 +770,7 @@ namespace NETworkManager.ViewModels
         private string _puTTY_Host;
         public string PuTTY_Host
         {
-            get { return _puTTY_Host; }
+            get => _puTTY_Host;
             set
             {
                 if (value == _puTTY_Host)
@@ -794,7 +788,7 @@ namespace NETworkManager.ViewModels
         private string _puTTY_SerialLine;
         public string PuTTY_SerialLine
         {
-            get { return _puTTY_SerialLine; }
+            get => _puTTY_SerialLine;
             set
             {
                 if (value == _puTTY_SerialLine)
@@ -812,7 +806,7 @@ namespace NETworkManager.ViewModels
         private int _puTTY_Port;
         public int PuTTY_Port
         {
-            get { return _puTTY_Port; }
+            get => _puTTY_Port;
             set
             {
                 if (value == _puTTY_Port)
@@ -830,7 +824,7 @@ namespace NETworkManager.ViewModels
         private int _puTTY_Baud;
         public int PuTTY_Baud
         {
-            get { return _puTTY_Baud; }
+            get => _puTTY_Baud;
             set
             {
                 if (value == _puTTY_Baud)
@@ -848,7 +842,7 @@ namespace NETworkManager.ViewModels
         private string _puTTY__Username;
         public string PuTTY_Username
         {
-            get { return _puTTY__Username; }
+            get => _puTTY__Username;
             set
             {
                 if (value == _puTTY__Username)
@@ -866,7 +860,7 @@ namespace NETworkManager.ViewModels
         private string _puTTY_Profile;
         public string PuTTY_Profile
         {
-            get { return _puTTY_Profile; }
+            get => _puTTY_Profile;
             set
             {
                 if (value == _puTTY_Profile)
@@ -884,7 +878,7 @@ namespace NETworkManager.ViewModels
         private string _puTTY_AdditionalCommandLine;
         public string PuTTY_AdditionalCommandLine
         {
-            get { return _puTTY_AdditionalCommandLine; }
+            get => _puTTY_AdditionalCommandLine;
             set
             {
                 if (value == _puTTY_AdditionalCommandLine)
@@ -902,7 +896,7 @@ namespace NETworkManager.ViewModels
         private ConnectionMode _puTTY_ConnectionMode;
         public ConnectionMode PuTTY_ConnectionMode
         {
-            get { return _puTTY_ConnectionMode; }
+            get => _puTTY_ConnectionMode;
             set
             {
                 if (value == _puTTY_ConnectionMode)
@@ -920,7 +914,7 @@ namespace NETworkManager.ViewModels
         private bool _wakeOnLAN_Enabled;
         public bool WakeOnLAN_Enabled
         {
-            get { return _wakeOnLAN_Enabled; }
+            get => _wakeOnLAN_Enabled;
             set
             {
                 if (value == _wakeOnLAN_Enabled)
@@ -938,7 +932,7 @@ namespace NETworkManager.ViewModels
         private string _wakeOnLAN_MACAddress;
         public string WakeOnLAN_MACAddress
         {
-            get { return _wakeOnLAN_MACAddress; }
+            get => _wakeOnLAN_MACAddress;
             set
             {
                 if (value == _wakeOnLAN_MACAddress)
@@ -956,7 +950,7 @@ namespace NETworkManager.ViewModels
         private string _wakeOnLAN_Broadcast;
         public string WakeOnLAN_Broadcast
         {
-            get { return _wakeOnLAN_Broadcast; }
+            get => _wakeOnLAN_Broadcast;
             set
             {
                 if (value == _wakeOnLAN_Broadcast)
@@ -974,7 +968,7 @@ namespace NETworkManager.ViewModels
         private int _wakeOnLAN_Port;
         public int WakeOnLAN_Port
         {
-            get { return _wakeOnLAN_Port; }
+            get => _wakeOnLAN_Port;
             set
             {
                 if (value == _wakeOnLAN_Port)
@@ -993,78 +987,77 @@ namespace NETworkManager.ViewModels
 
         public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, List<string> groups, ProfileInfo profileInfo = null)
         {
-            _saveCommand = new RelayCommand(p => saveCommand(this));
-            _cancelCommand = new RelayCommand(p => cancelHandler(this));
+            _isLoading = true;
 
-            _profileInfo = profileInfo ?? new ProfileInfo();
+            SaveCommand = new RelayCommand(p => saveCommand(this));
+            CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            Name = _profileInfo.Name;
-            Host = _profileInfo.Host;
+            var profileInfo2 = profileInfo ?? new ProfileInfo();
 
-            if (CredentialManager.Loaded)
+            Name = profileInfo2.Name;
+            Host = profileInfo2.Host;
+
+            if (CredentialManager.IsLoaded)
             {
-                _credentials = CollectionViewSource.GetDefaultView(CredentialManager.CredentialInfoList);
+                Credentials = CollectionViewSource.GetDefaultView(CredentialManager.CredentialInfoList);
             }
             else
             {
                 ShowUnlockCredentialsHint = true;
 
-                if (_profileInfo.CredentialID == -1)
-                    _credentials = new CollectionViewSource { Source = new List<CredentialInfo>() }.View;
-                else
-                    _credentials = new CollectionViewSource { Source = new List<CredentialInfo>() { new CredentialInfo(_profileInfo.CredentialID) } }.View;
+                Credentials = profileInfo2.CredentialID == -1 ? new CollectionViewSource { Source = new List<CredentialInfo>() }.View : new CollectionViewSource { Source = new List<CredentialInfo>() { new CredentialInfo(profileInfo2.CredentialID) } }.View;
             }
 
-            CredentialID = _profileInfo.CredentialID;
+            CredentialID = profileInfo2.CredentialID;
 
-            Group = string.IsNullOrEmpty(_profileInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : LocalizationManager.GetStringByKey("String_Default")) : _profileInfo.Group;
-            Tags = _profileInfo.Tags;
+            Group = string.IsNullOrEmpty(profileInfo2.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : LocalizationManager.GetStringByKey("String_Default")) : profileInfo2.Group;
+            Tags = profileInfo2.Tags;
 
-            _groups = CollectionViewSource.GetDefaultView(groups);
-            _groups.SortDescriptions.Add(new SortDescription());
+            Groups = CollectionViewSource.GetDefaultView(groups);
+            Groups.SortDescriptions.Add(new SortDescription());
 
             // Network Interface
-            NetworkInterface_Enabled = _profileInfo.NetworkInterface_Enabled;
-            NetworkInterface_EnableDynamicIPAddress = !_profileInfo.NetworkInterface_EnableStaticIPAddress;
-            NetworkInterface_EnableStaticIPAddress = _profileInfo.NetworkInterface_EnableStaticIPAddress;
-            NetworkInterface_IPAddress = _profileInfo.NetworkInterface_IPAddress;
-            NetworkInterface_Gateway = _profileInfo.NetworkInterface_Gateway;
-            NetworkInterface_SubnetmaskOrCidr = _profileInfo.NetworkInterface_SubnetmaskOrCidr;
-            NetworkInterface_EnableDynamicDNS = !_profileInfo.NetworkInterface_EnableStaticDNS;
-            NetworkInterface_EnableStaticDNS = _profileInfo.NetworkInterface_EnableStaticDNS;
-            NetworkInterface_PrimaryDNSServer = _profileInfo.NetworkInterface_PrimaryDNSServer;
-            NetworkInterface_SecondaryDNSServer = _profileInfo.NetworkInterface_SecondaryDNSServer;
+            NetworkInterface_Enabled = profileInfo2.NetworkInterface_Enabled;
+            NetworkInterface_EnableDynamicIPAddress = !profileInfo2.NetworkInterface_EnableStaticIPAddress;
+            NetworkInterface_EnableStaticIPAddress = profileInfo2.NetworkInterface_EnableStaticIPAddress;
+            NetworkInterface_IPAddress = profileInfo2.NetworkInterface_IPAddress;
+            NetworkInterface_Gateway = profileInfo2.NetworkInterface_Gateway;
+            NetworkInterface_SubnetmaskOrCidr = profileInfo2.NetworkInterface_SubnetmaskOrCidr;
+            NetworkInterface_EnableDynamicDNS = !profileInfo2.NetworkInterface_EnableStaticDNS;
+            NetworkInterface_EnableStaticDNS = profileInfo2.NetworkInterface_EnableStaticDNS;
+            NetworkInterface_PrimaryDNSServer = profileInfo2.NetworkInterface_PrimaryDNSServer;
+            NetworkInterface_SecondaryDNSServer = profileInfo2.NetworkInterface_SecondaryDNSServer;
 
             // IP Scanner
-            IPScanner_Enabled = _profileInfo.IPScanner_Enabled;
-            IPScanner_InheritHost = _profileInfo.IPScanner_InheritHost;
-            IPScanner_IPRange = _profileInfo.IPScanner_IPRange;
+            IPScanner_Enabled = profileInfo2.IPScanner_Enabled;
+            IPScanner_InheritHost = profileInfo2.IPScanner_InheritHost;
+            IPScanner_IPRange = profileInfo2.IPScanner_IPRange;
 
             // Port Scanner
-            PortScanner_Enabled = _profileInfo.PortScanner_Enabled;
-            PortScanner_InheritHost = _profileInfo.PortScanner_InheritHost;
-            PortScanner_Host = _profileInfo.PortScanner_Host;
-            PortScanner_Ports = _profileInfo.PortScanner_Ports;
+            PortScanner_Enabled = profileInfo2.PortScanner_Enabled;
+            PortScanner_InheritHost = profileInfo2.PortScanner_InheritHost;
+            PortScanner_Host = profileInfo2.PortScanner_Host;
+            PortScanner_Ports = profileInfo2.PortScanner_Ports;
 
             // Ping
-            Ping_Enabled = _profileInfo.Ping_Enabled;
-            Ping_InheritHost = _profileInfo.Ping_InheritHost;
-            Ping_Host = _profileInfo.Ping_Host;
+            Ping_Enabled = profileInfo2.Ping_Enabled;
+            Ping_InheritHost = profileInfo2.Ping_InheritHost;
+            Ping_Host = profileInfo2.Ping_Host;
 
             // Traceroute
-            Traceroute_Enabled = _profileInfo.Traceroute_Enabled;
-            Traceroute_InheritHost = _profileInfo.Traceroute_InheritHost;
-            Traceroute_Host = _profileInfo.Traceroute_Host;
+            Traceroute_Enabled = profileInfo2.Traceroute_Enabled;
+            Traceroute_InheritHost = profileInfo2.Traceroute_InheritHost;
+            Traceroute_Host = profileInfo2.Traceroute_Host;
 
             // Remote Desktop
-            RemoteDesktop_Enabled = _profileInfo.RemoteDesktop_Enabled;
-            RemoteDesktop_InheritHost = _profileInfo.RemoteDesktop_InheritHost;
-            RemoteDesktop_Host = _profileInfo.RemoteDesktop_Host;
+            RemoteDesktop_Enabled = profileInfo2.RemoteDesktop_Enabled;
+            RemoteDesktop_InheritHost = profileInfo2.RemoteDesktop_InheritHost;
+            RemoteDesktop_Host = profileInfo2.RemoteDesktop_Host;
 
             // PuTTY
-            PuTTY_Enabled = _profileInfo.PuTTY_Enabled;
+            PuTTY_Enabled = profileInfo2.PuTTY_Enabled;
 
-            switch (_profileInfo.PuTTY_ConnectionMode)
+            switch (profileInfo2.PuTTY_ConnectionMode)
             {
                 // SSH is default
                 case ConnectionMode.SSH:
@@ -1084,27 +1077,27 @@ namespace NETworkManager.ViewModels
                     break;
             }
 
-            PuTTY_InheritHost = _profileInfo.PuTTY_InheritHost;
+            PuTTY_InheritHost = profileInfo2.PuTTY_InheritHost;
 
-            if (_profileInfo.PuTTY_ConnectionMode == ConnectionMode.Serial)
+            if (profileInfo2.PuTTY_ConnectionMode == ConnectionMode.Serial)
             {
-                PuTTY_SerialLine = _profileInfo.PuTTY_HostOrSerialLine;
-                PuTTY_Baud = _profileInfo.PuTTY_PortOrBaud;
+                PuTTY_SerialLine = profileInfo2.PuTTY_HostOrSerialLine;
+                PuTTY_Baud = profileInfo2.PuTTY_PortOrBaud;
             }
             else
             {
-                PuTTY_Host = _profileInfo.PuTTY_HostOrSerialLine;
-                PuTTY_Port = _profileInfo.PuTTY_PortOrBaud == 0 ? SettingsManager.Current.PuTTY_SSHPort : _profileInfo.PuTTY_PortOrBaud; // Default SSH port
+                PuTTY_Host = profileInfo2.PuTTY_HostOrSerialLine;
+                PuTTY_Port = profileInfo2.PuTTY_PortOrBaud == 0 ? SettingsManager.Current.PuTTY_SSHPort : profileInfo2.PuTTY_PortOrBaud; // Default SSH port
             }
 
-            PuTTY_Username = _profileInfo.PuTTY_Username;
-            PuTTY_Profile = _profileInfo.PuTTY_Profile;
-            PuTTY_AdditionalCommandLine = _profileInfo.PuTTY_AdditionalCommandLine;
+            PuTTY_Username = profileInfo2.PuTTY_Username;
+            PuTTY_Profile = profileInfo2.PuTTY_Profile;
+            PuTTY_AdditionalCommandLine = profileInfo2.PuTTY_AdditionalCommandLine;
 
-            WakeOnLAN_Enabled = _profileInfo.WakeOnLAN_Enabled;
-            WakeOnLAN_MACAddress = _profileInfo.WakeOnLAN_MACAddress;
-            WakeOnLAN_Broadcast = _profileInfo.WakeOnLAN_Broadcast;
-            WakeOnLAN_Port = _profileInfo.WakeOnLAN_Port == 0 ? SettingsManager.Current.WakeOnLAN_DefaultPort : _profileInfo.WakeOnLAN_Port;
+            WakeOnLAN_Enabled = profileInfo2.WakeOnLAN_Enabled;
+            WakeOnLAN_MACAddress = profileInfo2.WakeOnLAN_MACAddress;
+            WakeOnLAN_Broadcast = profileInfo2.WakeOnLAN_Broadcast;
+            WakeOnLAN_Port = profileInfo2.WakeOnLAN_Port == 0 ? SettingsManager.Current.WakeOnLAN_DefaultPort : profileInfo2.WakeOnLAN_Port;
 
             Validate();
 
@@ -1118,17 +1111,9 @@ namespace NETworkManager.ViewModels
         }
 
         #region ICommands & Actions
-        private readonly ICommand _saveCommand;
-        public ICommand SaveCommand
-        {
-            get { return _saveCommand; }
-        }
+        public ICommand SaveCommand { get; }
 
-        private readonly ICommand _cancelCommand;
-        public ICommand CancelCommand
-        {
-            get { return _cancelCommand; }
-        }
+        public ICommand CancelCommand { get; }
 
         public ICommand UnselectCredentialCommand
         {

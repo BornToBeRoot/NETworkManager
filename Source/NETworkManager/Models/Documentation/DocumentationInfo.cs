@@ -10,11 +10,6 @@ namespace NETworkManager.Models.Documentation
         public string Path { get; set; }
         public List<LocalizationInfo> Localizations { get; set; }
 
-        public DocumentationInfo()
-        {
-
-        }
-
         public DocumentationInfo(DocumentationIdentifier identifier, string path, List<LocalizationInfo> localizations)
         {
             Identifier = identifier;
