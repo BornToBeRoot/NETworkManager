@@ -318,6 +318,7 @@
                 </TextBox.Text>
             </TextBox>
         </Grid>
+        <!-- ReSharper disable once Xaml.MissingGridIndex, in Resources -->
         <Button x:Name="ButtonQuery" Grid.Column="2" Command="{Binding WorkCommand}" IsDefault="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsWorking}" VerticalAlignment="Bottom">
             <Button.Resources>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
