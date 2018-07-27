@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Octokit;
 using NETworkManager.Models.Settings;
-using NETworkManager.Properties;
 
 namespace NETworkManager.Models.Update
 {
@@ -38,9 +37,9 @@ namespace NETworkManager.Models.Update
             {
                 try
                 {
-                    var client = new GitHubClient(new ProductHeaderValue(Resources.NETworkManager_ProjectName));
+                    var client = new GitHubClient(new ProductHeaderValue(Properties.Resources.NETworkManager_ProjectName));
 
-                    var latestRelease = client.Repository.Release.GetLatest(Resources.NETworkManager_GitHub_User, Resources.NETworkManager_GitHub_Repo);
+                    var latestRelease = client.Repository.Release.GetLatest(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo);
 
                     var latestVersion = new Version(latestRelease.Result.TagName.TrimStart('v'));
 
