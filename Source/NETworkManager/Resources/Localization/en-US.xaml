@@ -6,8 +6,6 @@
     <system:String x:Key="String_Header_Destination">Destination</system:String>
     <system:String x:Key="String_Header_Settings">Settings</system:String>
     <system:String x:Key="String_Header_Status">Status</system:String>
-    <system:String x:Key="String_Header_Clients">Clients</system:String>
-    <system:String x:Key="String_Header_Client">Client</system:String>
     <system:String x:Key="String_Header_MACAddress">MAC-Address</system:String>
     <system:String x:Key="String_Header_Details">Details</system:String>
     <system:String x:Key="String_Header_Interface">Interface</system:String>

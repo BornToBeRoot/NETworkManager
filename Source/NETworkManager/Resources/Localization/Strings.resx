@@ -411,7 +411,7 @@
   <data name="Window" xml:space="preserve">
     <value>Window</value>
   </data>
-  <data name="WrongCredentials" xml:space="preserve">
-    <value>Wrong credentials</value>
+  <data name="WrongPassword" xml:space="preserve">
+    <value>Wrong password</value>
   </data>
 </root>
