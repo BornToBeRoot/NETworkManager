@@ -123,17 +123,68 @@
   <data name="Accent" xml:space="preserve">
     <value>Accent</value>
   </data>
+  <data name="AddCredentials" xml:space="preserve">
+    <value>Add credentials</value>
+  </data>
+  <data name="AddEntry" xml:space="preserve">
+    <value>Add entry</value>
+  </data>
+  <data name="AddProfile" xml:space="preserve">
+    <value>Add profile</value>
+  </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Are you sure?</value>
+  </data>
   <data name="ARP" xml:space="preserve">
     <value>ARP</value>
+  </data>
+  <data name="ARPTable" xml:space="preserve">
+    <value>ARP Table</value>
+  </data>
+  <data name="Authentication" xml:space="preserve">
+    <value>Authentication</value>
   </data>
   <data name="Autostart" xml:space="preserve">
     <value>Autostart</value>
   </data>
+  <data name="Calculator" xml:space="preserve">
+    <value>Calculator</value>
+  </data>
+  <data name="CommandLineArguments" xml:space="preserve">
+    <value>Command Line Arguments</value>
+  </data>
   <data name="Configure" xml:space="preserve">
     <value>Configure</value>
   </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>Connect</value>
+  </data>
+  <data name="ConnectAs" xml:space="preserve">
+    <value>Connect as</value>
+  </data>
+  <data name="CopyProfile" xml:space="preserve">
+    <value>Copy profile</value>
+  </data>
+  <data name="CredentialNotFound" xml:space="preserve">
+    <value>Credential not found!</value>
+  </data>
+  <data name="Credentials" xml:space="preserve">
+    <value>Credentials</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
   <data name="DefaultApplication" xml:space="preserve">
     <value>Default application</value>
+  </data>
+  <data name="DeleteCredentials" xml:space="preserve">
+    <value>Delete credentials</value>
+  </data>
+  <data name="DeleteProfile" xml:space="preserve">
+    <value>Delete profile</value>
   </data>
   <data name="Destination" xml:space="preserve">
     <value>Destination</value>
@@ -141,8 +192,56 @@
   <data name="Details" xml:space="preserve">
     <value>Details</value>
   </data>
+  <data name="Disconnected" xml:space="preserve">
+    <value>Disconnected</value>
+  </data>
+  <data name="Display" xml:space="preserve">
+    <value>Display</value>
+  </data>
   <data name="DNS" xml:space="preserve">
     <value>DNS</value>
+  </data>
+  <data name="DNSLookup" xml:space="preserve">
+    <value>DNS Lookup</value>
+  </data>
+  <data name="DontFragment" xml:space="preserve">
+    <value>Don't fragment</value>
+  </data>
+  <data name="EditCredentials" xml:space="preserve">
+    <value>Edit credentials</value>
+  </data>
+  <data name="EditGroup" xml:space="preserve">
+    <value>Edit group</value>
+  </data>
+  <data name="EditProfile" xml:space="preserve">
+    <value>Edit profile</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Headers" xml:space="preserve">
+    <value>Headers</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="HotKeys" xml:space="preserve">
+    <value>HotKeys</value>
+  </data>
+  <data name="HTTPHeaders" xml:space="preserve">
+    <value>HTTP Headers</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Import</value>
   </data>
   <data name="Information" xml:space="preserve">
     <value>Information</value>
@@ -150,26 +249,116 @@
   <data name="Interface" xml:space="preserve">
     <value>Interface</value>
   </data>
+  <data name="IPScanner" xml:space="preserve">
+    <value>IP Scanner</value>
+  </data>
+  <data name="Keyboard" xml:space="preserve">
+    <value>Keyboard</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
+  </data>
+  <data name="Libraries" xml:space="preserve">
+    <value>Libraries</value>
+  </data>
+  <data name="License" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="LocalDevicesAndResources" xml:space="preserve">
+    <value>Local devices and resources</value>
   </data>
   <data name="Location" xml:space="preserve">
     <value>Location</value>
   </data>
+  <data name="Lookup" xml:space="preserve">
+    <value>Lookup</value>
+  </data>
   <data name="MACAddress" xml:space="preserve">
-    <value>MAC-Address</value>
+    <value>MAC Address</value>
+  </data>
+  <data name="MasterPassword" xml:space="preserve">
+    <value>Master Password</value>
+  </data>
+  <data name="Multithreading" xml:space="preserve">
+    <value>Multithreading</value>
+  </data>
+  <data name="Network" xml:space="preserve">
+    <value>Network</value>
+  </data>
+  <data name="NetworkInterface" xml:space="preserve">
+    <value>Network Interface</value>
+  </data>
+  <data name="NewTab" xml:space="preserve">
+    <value>New tab</value>
+  </data>
+  <data name="OUI" xml:space="preserve">
+    <value>OUI</value>
+  </data>
+  <data name="Overwrite" xml:space="preserve">
+    <value>Overwrite?</value>
   </data>
   <data name="Ping" xml:space="preserve">
     <value>Ping</value>
   </data>
+  <data name="Port" xml:space="preserve">
+    <value>Port</value>
+  </data>
   <data name="Portable" xml:space="preserve">
     <value>Portable</value>
+  </data>
+  <data name="PortScanner" xml:space="preserve">
+    <value>Port Scanner</value>
+  </data>
+  <data name="Profiles" xml:space="preserve">
+    <value>Profiles</value>
+  </data>
+  <data name="PuTTY" xml:space="preserve">
+    <value>PuTTY</value>
+  </data>
+  <data name="Query" xml:space="preserve">
+    <value>Query</value>
+  </data>
+  <data name="RemoteDesktop" xml:space="preserve">
+    <value>Remote Desktop</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="ResolvePTR" xml:space="preserve">
+    <value>Resolve PTR</value>
+  </data>
+  <data name="Resources" xml:space="preserve">
+    <value>Resources</value>
   </data>
   <data name="Result" xml:space="preserve">
     <value>Result</value>
   </data>
+  <data name="Route" xml:space="preserve">
+    <value>Route</value>
+  </data>
+  <data name="Scan" xml:space="preserve">
+    <value>Scan</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SelectAProfileDots" xml:space="preserve">
+    <value>Select a profile...</value>
+  </data>
+  <data name="SetMasterPassword" xml:space="preserve">
+    <value>Set Master Password</value>
+  </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="SettingsHaveBeenReset" xml:space="preserve">
+    <value>Settings have been reset!</value>
+  </data>
+  <data name="SNMP" xml:space="preserve">
+    <value>SNMP</value>
+  </data>
+  <data name="Socket" xml:space="preserve">
+    <value>Socket</value>
   </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statistics</value>
@@ -177,13 +366,52 @@
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="Subnet" xml:space="preserve">
+    <value>Subnet</value>
+  </data>
+  <data name="Subnetting" xml:space="preserve">
+    <value>Subnetting</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success!</value>
+  </data>
+  <data name="Supernetting" xml:space="preserve">
+    <value>Supernetting</value>
+  </data>
   <data name="Theme" xml:space="preserve">
     <value>Theme</value>
+  </data>
+  <data name="Traceroute" xml:space="preserve">
+    <value>Traceroute</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>Transparency</value>
   </data>
   <data name="Tray" xml:space="preserve">
     <value>Tray</value>
   </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="v1v2c" xml:space="preserve">
+    <value>v1/v2c</value>
+  </data>
+  <data name="v3" xml:space="preserve">
+    <value>v3</value>
+  </data>
+  <data name="ValidationFailed" xml:space="preserve">
+    <value>Validation failed!</value>
+  </data>
+  <data name="WakeOnLAN" xml:space="preserve">
+    <value>Wake on LAN</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>Website</value>
+  </data>
   <data name="Window" xml:space="preserve">
     <value>Window</value>
+  </data>
+  <data name="WrongCredentials" xml:space="preserve">
+    <value>Wrong credentials</value>
   </data>
 </root>

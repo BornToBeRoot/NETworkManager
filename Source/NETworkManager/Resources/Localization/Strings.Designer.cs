@@ -79,11 +79,65 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add credentials.
+        /// </summary>
+        public static string AddCredentials {
+            get {
+                return ResourceManager.GetString("AddCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add entry.
+        /// </summary>
+        public static string AddEntry {
+            get {
+                return ResourceManager.GetString("AddEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add profile.
+        /// </summary>
+        public static string AddProfile {
+            get {
+                return ResourceManager.GetString("AddProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure?.
+        /// </summary>
+        public static string AreYouSure {
+            get {
+                return ResourceManager.GetString("AreYouSure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ARP.
         /// </summary>
         public static string ARP {
             get {
                 return ResourceManager.GetString("ARP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ARP Table.
+        /// </summary>
+        public static string ARPTable {
+            get {
+                return ResourceManager.GetString("ARPTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authentication.
+        /// </summary>
+        public static string Authentication {
+            get {
+                return ResourceManager.GetString("Authentication", resourceCulture);
             }
         }
         
@@ -97,6 +151,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Calculator.
+        /// </summary>
+        public static string Calculator {
+            get {
+                return ResourceManager.GetString("Calculator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command Line Arguments.
+        /// </summary>
+        public static string CommandLineArguments {
+            get {
+                return ResourceManager.GetString("CommandLineArguments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configure.
         /// </summary>
         public static string Configure {
@@ -106,11 +178,92 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect.
+        /// </summary>
+        public static string Connect {
+            get {
+                return ResourceManager.GetString("Connect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect as.
+        /// </summary>
+        public static string ConnectAs {
+            get {
+                return ResourceManager.GetString("ConnectAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy profile.
+        /// </summary>
+        public static string CopyProfile {
+            get {
+                return ResourceManager.GetString("CopyProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credential not found!.
+        /// </summary>
+        public static string CredentialNotFound {
+            get {
+                return ResourceManager.GetString("CredentialNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credentials.
+        /// </summary>
+        public static string Credentials {
+            get {
+                return ResourceManager.GetString("Credentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data.
+        /// </summary>
+        public static string Data {
+            get {
+                return ResourceManager.GetString("Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default application.
         /// </summary>
         public static string DefaultApplication {
             get {
                 return ResourceManager.GetString("DefaultApplication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete credentials.
+        /// </summary>
+        public static string DeleteCredentials {
+            get {
+                return ResourceManager.GetString("DeleteCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete profile.
+        /// </summary>
+        public static string DeleteProfile {
+            get {
+                return ResourceManager.GetString("DeleteProfile", resourceCulture);
             }
         }
         
@@ -133,11 +286,155 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disconnected.
+        /// </summary>
+        public static string Disconnected {
+            get {
+                return ResourceManager.GetString("Disconnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display.
+        /// </summary>
+        public static string Display {
+            get {
+                return ResourceManager.GetString("Display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DNS.
         /// </summary>
         public static string DNS {
             get {
                 return ResourceManager.GetString("DNS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DNS Lookup.
+        /// </summary>
+        public static string DNSLookup {
+            get {
+                return ResourceManager.GetString("DNSLookup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t fragment.
+        /// </summary>
+        public static string DontFragment {
+            get {
+                return ResourceManager.GetString("DontFragment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit credentials.
+        /// </summary>
+        public static string EditCredentials {
+            get {
+                return ResourceManager.GetString("EditCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit group.
+        /// </summary>
+        public static string EditGroup {
+            get {
+                return ResourceManager.GetString("EditGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit profile.
+        /// </summary>
+        public static string EditProfile {
+            get {
+                return ResourceManager.GetString("EditProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        public static string Export {
+            get {
+                return ResourceManager.GetString("Export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string Filter {
+            get {
+                return ResourceManager.GetString("Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string General {
+            get {
+                return ResourceManager.GetString("General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Headers.
+        /// </summary>
+        public static string Headers {
+            get {
+                return ResourceManager.GetString("Headers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to History.
+        /// </summary>
+        public static string History {
+            get {
+                return ResourceManager.GetString("History", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HotKeys.
+        /// </summary>
+        public static string HotKeys {
+            get {
+                return ResourceManager.GetString("HotKeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HTTP Headers.
+        /// </summary>
+        public static string HTTPHeaders {
+            get {
+                return ResourceManager.GetString("HTTPHeaders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        public static string Import {
+            get {
+                return ResourceManager.GetString("Import", resourceCulture);
             }
         }
         
@@ -160,11 +457,56 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IP Scanner.
+        /// </summary>
+        public static string IPScanner {
+            get {
+                return ResourceManager.GetString("IPScanner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keyboard.
+        /// </summary>
+        public static string Keyboard {
+            get {
+                return ResourceManager.GetString("Keyboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string Language {
             get {
                 return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Libraries.
+        /// </summary>
+        public static string Libraries {
+            get {
+                return ResourceManager.GetString("Libraries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License.
+        /// </summary>
+        public static string License {
+            get {
+                return ResourceManager.GetString("License", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local devices and resources.
+        /// </summary>
+        public static string LocalDevicesAndResources {
+            get {
+                return ResourceManager.GetString("LocalDevicesAndResources", resourceCulture);
             }
         }
         
@@ -178,11 +520,83 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MAC-Address.
+        ///   Looks up a localized string similar to Lookup.
+        /// </summary>
+        public static string Lookup {
+            get {
+                return ResourceManager.GetString("Lookup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAC Address.
         /// </summary>
         public static string MACAddress {
             get {
                 return ResourceManager.GetString("MACAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Password.
+        /// </summary>
+        public static string MasterPassword {
+            get {
+                return ResourceManager.GetString("MasterPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multithreading.
+        /// </summary>
+        public static string Multithreading {
+            get {
+                return ResourceManager.GetString("Multithreading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Network.
+        /// </summary>
+        public static string Network {
+            get {
+                return ResourceManager.GetString("Network", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Network Interface.
+        /// </summary>
+        public static string NetworkInterface {
+            get {
+                return ResourceManager.GetString("NetworkInterface", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New tab.
+        /// </summary>
+        public static string NewTab {
+            get {
+                return ResourceManager.GetString("NewTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OUI.
+        /// </summary>
+        public static string OUI {
+            get {
+                return ResourceManager.GetString("OUI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overwrite?.
+        /// </summary>
+        public static string Overwrite {
+            get {
+                return ResourceManager.GetString("Overwrite", resourceCulture);
             }
         }
         
@@ -196,11 +610,92 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Port.
+        /// </summary>
+        public static string Port {
+            get {
+                return ResourceManager.GetString("Port", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Portable.
         /// </summary>
         public static string Portable {
             get {
                 return ResourceManager.GetString("Portable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port Scanner.
+        /// </summary>
+        public static string PortScanner {
+            get {
+                return ResourceManager.GetString("PortScanner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profiles.
+        /// </summary>
+        public static string Profiles {
+            get {
+                return ResourceManager.GetString("Profiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PuTTY.
+        /// </summary>
+        public static string PuTTY {
+            get {
+                return ResourceManager.GetString("PuTTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Query.
+        /// </summary>
+        public static string Query {
+            get {
+                return ResourceManager.GetString("Query", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote Desktop.
+        /// </summary>
+        public static string RemoteDesktop {
+            get {
+                return ResourceManager.GetString("RemoteDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string Reset {
+            get {
+                return ResourceManager.GetString("Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resolve PTR.
+        /// </summary>
+        public static string ResolvePTR {
+            get {
+                return ResourceManager.GetString("ResolvePTR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resources.
+        /// </summary>
+        public static string Resources {
+            get {
+                return ResourceManager.GetString("Resources", resourceCulture);
             }
         }
         
@@ -214,11 +709,83 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Route.
+        /// </summary>
+        public static string Route {
+            get {
+                return ResourceManager.GetString("Route", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan.
+        /// </summary>
+        public static string Scan {
+            get {
+                return ResourceManager.GetString("Scan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a profile....
+        /// </summary>
+        public static string SelectAProfileDots {
+            get {
+                return ResourceManager.GetString("SelectAProfileDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Master Password.
+        /// </summary>
+        public static string SetMasterPassword {
+            get {
+                return ResourceManager.GetString("SetMasterPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings have been reset!.
+        /// </summary>
+        public static string SettingsHaveBeenReset {
+            get {
+                return ResourceManager.GetString("SettingsHaveBeenReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SNMP.
+        /// </summary>
+        public static string SNMP {
+            get {
+                return ResourceManager.GetString("SNMP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Socket.
+        /// </summary>
+        public static string Socket {
+            get {
+                return ResourceManager.GetString("Socket", resourceCulture);
             }
         }
         
@@ -241,11 +808,65 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Subnet.
+        /// </summary>
+        public static string Subnet {
+            get {
+                return ResourceManager.GetString("Subnet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subnetting.
+        /// </summary>
+        public static string Subnetting {
+            get {
+                return ResourceManager.GetString("Subnetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success!.
+        /// </summary>
+        public static string Success {
+            get {
+                return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supernetting.
+        /// </summary>
+        public static string Supernetting {
+            get {
+                return ResourceManager.GetString("Supernetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Theme.
         /// </summary>
         public static string Theme {
             get {
                 return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Traceroute.
+        /// </summary>
+        public static string Traceroute {
+            get {
+                return ResourceManager.GetString("Traceroute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transparency.
+        /// </summary>
+        public static string Transparency {
+            get {
+                return ResourceManager.GetString("Transparency", resourceCulture);
             }
         }
         
@@ -259,11 +880,74 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to v1/v2c.
+        /// </summary>
+        public static string v1v2c {
+            get {
+                return ResourceManager.GetString("v1v2c", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to v3.
+        /// </summary>
+        public static string v3 {
+            get {
+                return ResourceManager.GetString("v3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validation failed!.
+        /// </summary>
+        public static string ValidationFailed {
+            get {
+                return ResourceManager.GetString("ValidationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wake on LAN.
+        /// </summary>
+        public static string WakeOnLAN {
+            get {
+                return ResourceManager.GetString("WakeOnLAN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Website.
+        /// </summary>
+        public static string Website {
+            get {
+                return ResourceManager.GetString("Website", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Window.
         /// </summary>
         public static string Window {
             get {
                 return ResourceManager.GetString("Window", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wrong credentials.
+        /// </summary>
+        public static string WrongCredentials {
+            get {
+                return ResourceManager.GetString("WrongCredentials", resourceCulture);
             }
         }
     }
