@@ -8,6 +8,7 @@
              xmlns:validators="clr-namespace:NETworkManager.Validators"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
              xmlns:settings="clr-namespace:NETworkManager.Models.Settings"
              mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:ProfileViewModel}">
     <UserControl.Resources>
@@ -25,7 +26,7 @@
             <TabControl.Resources>
                 <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource ProfileTabItem}" />
             </TabControl.Resources>
-            <TabItem Header="{DynamicResource String_Header_General}">
+            <TabItem Header="{x:Static localization:Strings.General}">
                 <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0" HorizontalScrollBarVisibility="Disabled">
                     <StackPanel>
                         <Grid>
@@ -118,7 +119,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="{DynamicResource String_Header_NetworkInterface}">
+            <TabItem Header="{x:Static localization:Strings.NetworkInterface}">
                 <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
                     <StackPanel>
                         <Grid Margin="0,0,0,10">
@@ -236,7 +237,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="{DynamicResource String_Header_IPScanner}">
+            <TabItem Header="{x:Static localization:Strings.IPScanner}">
                 <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
                     <StackPanel>
                         <Grid Margin="0,0,0,10">
@@ -292,7 +293,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="{DynamicResource String_Header_PortScanner}">
+            <TabItem Header="{x:Static localization:Strings.PortScanner}">
                 <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
                     <StackPanel>
                         <Grid Margin="0,0,0,10">
@@ -360,7 +361,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="{DynamicResource String_Header_Ping}">
+            <TabItem Header="{x:Static localization:Strings.Ping}">
                 <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
                     <StackPanel>
                         <Grid Margin="0,0,0,10">
@@ -415,7 +416,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="{DynamicResource String_Header_Traceroute}">
+            <TabItem Header="{x:Static localization:Strings.Traceroute}">
                 <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
                     <StackPanel>
                         <Grid Margin="0,0,0,10">
@@ -470,7 +471,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="{DynamicResource String_Header_RemoteDesktop}">
+            <TabItem Header="{x:Static localization:Strings.RemoteDesktop}">
                 <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
                     <StackPanel>
                         <Grid Margin="0,0,0,10">
@@ -525,7 +526,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="{DynamicResource String_Header_PuTTY}">
+            <TabItem Header="{x:Static localization:Strings.PuTTY}">
                 <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0" HorizontalScrollBarVisibility="Disabled">
                     <StackPanel>
                         <Grid Margin="0,0,0,10">
@@ -679,7 +680,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="{DynamicResource String_Header_WakeOnLAN}">
+            <TabItem Header="{x:Static localization:Strings.WakeOnLAN}">
                 <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
                     <StackPanel>
                         <Grid Margin="0,0,0,10">

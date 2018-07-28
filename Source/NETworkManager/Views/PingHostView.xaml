@@ -8,6 +8,7 @@
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PingHostViewModel}">
     <UserControl.Resources>
@@ -82,7 +83,7 @@
             </StackPanel>
         </Grid>
         <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
-        <Expander Grid.Column="2" Header="{DynamicResource String_Header_Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
+        <Expander Grid.Column="2" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />

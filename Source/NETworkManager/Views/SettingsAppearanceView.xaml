@@ -10,6 +10,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:documentation="clr-namespace:NETworkManager.Models.Documentation"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsAppearanceViewModel}">
     <UserControl.Resources>
         <!-- Converters -->
@@ -19,7 +20,7 @@
         <converters:AccentToStringConverter x:Key="AccentToStringConverter" />
     </UserControl.Resources>
     <StackPanel>
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Theme}"  />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Theme}"  />
         <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{x:Static metro:ThemeManager.AppThemes}" VerticalAlignment="Top" BorderThickness="0" Margin="0,0,0,20" SelectionMode="Single" >
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -42,7 +43,7 @@
                 <Binding Path="AppThemeSelectedItem" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
             </ListView.SelectedItem>
         </ListView>
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Accent}" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Accent}" />
         <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{x:Static metro:ThemeManager.Accents}" BorderThickness="0" SelectionMode="Single" Margin="0,0,0,10">
             <ListView.ItemTemplate>
                 <DataTemplate >
@@ -103,7 +104,7 @@
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Transparency}" />
+            <TextBlock Grid.Column="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Transparency}" />
             <Rectangle Grid.Column="2" Width="24" Height="24" ToolTip="{DynamicResource String_WarningMessage_SettingsGeneralAppearanceTransparency}" Style="{StaticResource WarnImageRectangle}" Margin="0,0,0,10">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource WarnToolTip}" />

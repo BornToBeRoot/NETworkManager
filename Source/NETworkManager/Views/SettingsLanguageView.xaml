@@ -7,6 +7,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:settings="clr-namespace:NETworkManager.Models.Settings"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsLanguageViewModel}">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
@@ -24,7 +25,7 @@
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Language}" Margin="0,0,0,0" />
+            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Language}" Margin="0,0,0,0" />
             <TextBox x:Name="TextBoxSearch" Grid.Column="2" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
         </Grid>
         <ListView Grid.Row="2" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLangauge}" Background="Transparent" BorderThickness="0" SelectionMode="Single">

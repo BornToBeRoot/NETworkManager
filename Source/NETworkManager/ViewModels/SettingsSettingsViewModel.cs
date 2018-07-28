@@ -237,7 +237,7 @@ namespace NETworkManager.ViewModels
                 settings.FirstAuxiliaryButtonText = LocalizationManager.GetStringByKey("String_Button_MoveAndRestart");
                 settings.DefaultButtonFocus = MessageDialogResult.FirstAuxiliary;
 
-                var result = await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Overwrite"), LocalizationManager.GetStringByKey("String_OverwriteSettingsInTheDestinationFolder"), MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
+                var result = await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Overwrite, LocalizationManager.GetStringByKey("String_OverwriteSettingsInTheDestinationFolder"), MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
 
                 switch (result)
                 {
@@ -269,7 +269,7 @@ namespace NETworkManager.ViewModels
 
                 settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
 
-                await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
             LocationSelectedPath = string.Empty;
@@ -316,7 +316,7 @@ namespace NETworkManager.ViewModels
                 message += Environment.NewLine + $"* {LocalizationManager.GetStringByKey("String_ApplicationIsRestartedAfterwards")}";
             }
 
-            if (await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_AreYouSure"), message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+            if (await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.AreYouSure, message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 return;
 
             var forceRestart = false;
@@ -339,7 +339,7 @@ namespace NETworkManager.ViewModels
             {
                 settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
 
-                await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Success"), LocalizationManager.GetStringByKey("String_SettingsSuccessfullyReset"), MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Success, LocalizationManager.GetStringByKey("String_SettingsSuccessfullyReset"), MessageDialogStyle.Affirmative, settings);
             }
         }
         #endregion
@@ -366,7 +366,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
 
             MakingPortable = false;

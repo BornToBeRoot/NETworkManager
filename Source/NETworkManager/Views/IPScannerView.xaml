@@ -11,6 +11,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:network="clr-namespace:NETworkManager.Models.Network"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:IPScannerViewModel}">
     <UserControl.Resources>
@@ -31,7 +32,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Scan}" />
+        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Scan}" />
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -159,7 +160,7 @@
             </StackPanel>
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
-        <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
+        <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" />
         <DataGrid Grid.Row="3" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding IPScanResultView}" SelectedItem="{Binding SelectedIPScanResult}">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
@@ -365,7 +366,7 @@
         </DataGrid>
         <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,20,0,0">
             <Expander.Header>
-                <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
+                <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>
             <StackPanel>
                 <Grid Margin="0,10,0,0">

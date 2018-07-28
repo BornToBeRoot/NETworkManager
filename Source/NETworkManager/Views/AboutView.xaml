@@ -9,6 +9,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:AboutViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
@@ -85,7 +86,7 @@
                     </StackPanel>
                 </StackPanel>
             </Grid>
-            <TextBlock Grid.Row="3" Text="{DynamicResource String_Header_Update}" Style="{StaticResource HeaderTextBlock}"/>
+            <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.Update}" Style="{StaticResource HeaderTextBlock}"/>
             <Grid Grid.Row="4" Margin="0,0,0,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -127,7 +128,7 @@
                 <mahAppsControls:ProgressRing Grid.Column="2" Visibility="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Height="{Binding ElementName=ButtonCheckForUpdates, Path=ActualHeight}" Width="{Binding ElementName=ButtonCheckForUpdates, Path=ActualHeight}" HorizontalAlignment="Left" IsActive="True" />
                 <TextBlock Grid.Column="2" Text="{Binding UpdaterMessage}" Visibility="{Binding ShowUpdaterMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CenterTextBlock}" Margin="10,0,0,0" />
             </Grid>
-            <TextBlock Grid.Row="5" Text="{DynamicResource String_Header_Libraries}" Style="{StaticResource HeaderTextBlock}"/>
+            <TextBlock Grid.Row="5" Text="{x:Static localization:Strings.Libraries}" Style="{StaticResource HeaderTextBlock}"/>
             <DataGrid x:Name="DataGridLibaries" Grid.Row="6" ItemsSource="{Binding LibrariesView}" SelectedItem="{Binding SelectedLibraryInfo}" Margin="0,0,0,10">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
@@ -189,7 +190,7 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <TextBlock Grid.Row="8" Text="{DynamicResource String_Header_Resources}" Style="{StaticResource HeaderTextBlock}"/>
+            <TextBlock Grid.Row="8" Text="{x:Static localization:Strings.Resources}" Style="{StaticResource HeaderTextBlock}"/>
             <DataGrid x:Name="DataGridResources" Grid.Row="9" ItemsSource="{Binding ResourcesView}" SelectedItem="{Binding SelectedResourceInfo}">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />

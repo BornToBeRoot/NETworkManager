@@ -250,7 +250,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
+                Title = Resources.Localization.Strings.AddProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
@@ -283,7 +283,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
+                Title = Resources.Localization.Strings.EditProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
@@ -318,7 +318,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
+                Title = Resources.Localization.Strings.CopyProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
@@ -351,7 +351,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
+                Title = Resources.Localization.Strings.DeleteProfile
             };
 
             var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
@@ -381,7 +381,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
+                Title = Resources.Localization.Strings.EditGroup
             };
 
             var editGroupViewModel = new GroupViewModel(instance =>
@@ -440,7 +440,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_Connect")
+                Title = Resources.Localization.Strings.Connect
             };
 
             var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(instance =>
@@ -510,7 +510,7 @@ namespace NETworkManager.ViewModels
                 {
                     var customDialog = new CustomDialog
                     {
-                        Title = LocalizationManager.GetStringByKey("String_Header_MasterPassword")
+                        Title = Resources.Localization.Strings.MasterPassword
                     };
 
                     var credentialsMasterPasswordViewModel = new CredentialsMasterPasswordViewModel(async instance =>
@@ -525,7 +525,7 @@ namespace NETworkManager.ViewModels
                             if (credentialInfo == null)
                             {
                                 ConfigurationManager.Current.IsDialogOpen = true;
-                                await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_CredentialNotFound"), LocalizationManager.GetStringByKey("String_CredentialNotFoundMessage"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.CredentialNotFound, LocalizationManager.GetStringByKey("String_CredentialNotFoundMessage"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
                                 ConfigurationManager.Current.IsDialogOpen = false;
 
                                 return;
@@ -540,7 +540,7 @@ namespace NETworkManager.ViewModels
                         else
                         {
                             ConfigurationManager.Current.IsDialogOpen = true;
-                            await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_WrongPassword"), LocalizationManager.GetStringByKey("String_WrongPasswordDecryptionFailed"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                            await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.WrongPassword, LocalizationManager.GetStringByKey("String_WrongPasswordDecryptionFailed"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
                             ConfigurationManager.Current.IsDialogOpen = false;
                         }
                     }, instance =>
@@ -564,7 +564,7 @@ namespace NETworkManager.ViewModels
                     if (credentialInfo == null)
                     {
                         ConfigurationManager.Current.IsDialogOpen = true;
-                        await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_CredentialNotFound"), LocalizationManager.GetStringByKey("String_CredentialNotFoundMessage"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                        await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.CredentialNotFound, LocalizationManager.GetStringByKey("String_CredentialNotFoundMessage"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
                         ConfigurationManager.Current.IsDialogOpen = false;
 
                         return;
@@ -587,7 +587,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_ConnectAs")
+                Title = Resources.Localization.Strings.ConnectAs
             };
 
             var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(instance =>

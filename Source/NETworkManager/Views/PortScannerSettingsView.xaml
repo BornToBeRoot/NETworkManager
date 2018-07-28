@@ -5,21 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerSettingsViewModel}">
     <StackPanel>
-        <TextBlock Text="{DynamicResource String_Header_Multithreading}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.Multithreading}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock  Text="{DynamicResource String_Threads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Threads}" Maximum="15000" Minimum="1" Interval="1" Margin="0,0,0,20" />
-        <TextBlock Text="{DynamicResource String_Header_PortScanner}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.PortScanner}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{DynamicResource String_ShowClosedPorts}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ShowClosed}" Margin="0,0,0,20"/>
-        <TextBlock Text="{DynamicResource String_Header_Socket}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.Socket}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock  Text="{DynamicResource String_Timeout}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown  Value="{Binding Timeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,20" />
-        <TextBlock Text="{DynamicResource String_Header_DNS}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.DNS}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_PreferredProtocolWhenResolvingHostname}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,0,10" />
         <RadioButton Content="{DynamicResource String_IPv4}" IsChecked="{Binding ResolveHostnamePreferIPv4}" Margin="0,0,0,10" />
         <RadioButton Content="{DynamicResource String_IPv6}" IsChecked="{Binding ResolveHostnamePreferIPv6}" Margin="0,0,0,20" />
-        <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{DynamicResource String_ShowStatistics}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ShowStatistics}" />
     </StackPanel>
 </UserControl>

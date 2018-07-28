@@ -247,7 +247,7 @@ namespace NETworkManager.ViewModels
             }
             catch (ImportFileNotValidException)
             {
-                await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_ValidationFailed"), LocalizationManager.GetStringByKey("String_NoValidFileFoundToImport"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.ValidationFailed, LocalizationManager.GetStringByKey("String_NoValidFileFoundToImport"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
         }
 
@@ -270,7 +270,7 @@ namespace NETworkManager.ViewModels
             if (ImportSettingsExists && (ImportEverything || ImportSettings))
                 message += Environment.NewLine + Environment.NewLine + $"* {LocalizationManager.GetStringByKey("String_ApplicationIsRestartedAfterwards")}";
 
-            if (await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_AreYouSure"), message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+            if (await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.AreYouSure, message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 return;
 
             var importOptions = new List<ImportExportManager.ImportExportOptions>();
@@ -304,7 +304,7 @@ namespace NETworkManager.ViewModels
                 if (importOptions.Contains(ImportExportManager.ImportExportOptions.Profiles))
                     message += Environment.NewLine + $"* {LocalizationManager.GetStringByKey("String_ProfilesReloaded")}";
 
-                await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Success"), message, MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Success, message, MessageDialogStyle.Affirmative, settings);
 
                 return;
             }
@@ -343,7 +343,7 @@ namespace NETworkManager.ViewModels
 
             settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
 
-            await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Success"), $"{LocalizationManager.GetStringByKey("String_SettingsSuccessfullyExported")}\n\n{LocalizationManager.GetStringByKey("String_Path")}: {saveFileDialog.FileName}", MessageDialogStyle.Affirmative, settings);
+            await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Success, $"{LocalizationManager.GetStringByKey("String_SettingsSuccessfullyExported")}\n\n{LocalizationManager.GetStringByKey("String_Path")}: {saveFileDialog.FileName}", MessageDialogStyle.Affirmative, settings);
         }
         #endregion
 

@@ -9,6 +9,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:resources="clr-namespace:NETworkManager.Properties"
         xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         xmlns:neTworkManager="clr-namespace:NETworkManager"
         mc:Ignorable="d"
         Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged"
@@ -661,7 +662,7 @@
                                 </TextBlock>
                             </Grid>
                         </Button>
-                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Height="48" TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Settings}" FontSize="22" Foreground="{DynamicResource GrayBrush3}" Margin="10,0" />
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Height="48" TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Settings}" FontSize="22" Foreground="{DynamicResource GrayBrush3}" Margin="10,0" />
                     </Grid>
                 </Border>
                 <ContentControl Grid.Row="1" x:Name="ContentControlSettings" />

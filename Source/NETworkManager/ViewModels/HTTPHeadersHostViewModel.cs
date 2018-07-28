@@ -38,7 +38,7 @@ namespace NETworkManager.ViewModels
 
             TabItems = new ObservableCollection<DragablzTabItem>
             {
-                new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new HTTPHeadersView (_tabId), _tabId)
+                new DragablzTabItem(Resources.Localization.Strings.NewTab, new HTTPHeadersView (_tabId), _tabId)
             };
         }
         #endregion
@@ -67,7 +67,7 @@ namespace NETworkManager.ViewModels
         {
             _tabId++;
 
-            TabItems.Add(new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new HTTPHeadersView(_tabId), _tabId));
+            TabItems.Add(new DragablzTabItem(Resources.Localization.Strings.NewTab, new HTTPHeadersView(_tabId), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

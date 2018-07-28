@@ -10,6 +10,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:SettingsSettingsViewModel}">
     <UserControl.Resources>
@@ -21,7 +22,7 @@
         <converters:ValidateSettingsResetConverter x:Key="ValidateSettingsResetConverter" />
     </UserControl.Resources>
     <StackPanel >
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Location}" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Location}" />
         <TextBox x:Name="TextBoxLocation" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_EnterLocation}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFolderCommand}" AllowDrop="True" Drop="TextBoxLocation_Drop" PreviewDragOver="TextBoxLocation_PreviewDragOver" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="LocationSelectedPath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -108,7 +109,7 @@
             </Grid>
             <mahAppsControls:MetroProgressBar IsIndeterminate="True" Foreground="{DynamicResource AccentColorBrush}"  Visibility="{Binding MovingFiles, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,10,0,0"/>
         </StackPanel>
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Portable}" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Portable}" />
         <StackPanel Margin="0,0,0,20">
             <mahAppsControls:ToggleSwitch x:Name="ToggleSwitchIsPortable" Header="{DynamicResource String_SaveSettingsInApplicationFolder}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding IsPortable}" IsEnabled="{Binding MakingPortable, Converter={StaticResource BooleanReverseConverter}}">
                 <mahAppsControls:ToggleSwitch.Style>
@@ -128,7 +129,7 @@
             </mahAppsControls:ToggleSwitch>
             <mahAppsControls:MetroProgressBar IsIndeterminate="True" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding MakingPortable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,10,0,0"/>
         </StackPanel>
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Reset}" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Reset}" />
         <TextBlock Style="{StaticResource DefaultTextBlock}" Text="{StaticResource String_SelectTheSettingsYouWantToReset}" Margin="0,0,0,10" />
         <RadioButton x:Name="RadioButtonResetEverything" Content="{DynamicResource String_RadioButton_Everything}" IsChecked="{Binding ResetEverything}" Margin="0,0,0,10"/>
         <RadioButton x:Name="RadioButtonResetCustom" Content="{DynamicResource String_RadioButton_Custom}" Margin="0,0,0,10"/>

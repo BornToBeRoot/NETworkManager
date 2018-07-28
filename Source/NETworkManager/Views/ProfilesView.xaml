@@ -10,6 +10,7 @@
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:settings="clr-namespace:NETworkManager.Models.Settings"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ProfilesViewModel}">
     <UserControl.Resources>
@@ -114,14 +115,14 @@
             </DataGrid.GroupStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{DynamicResource String_Name}" Binding="{Binding (settings:ProfileInfo.Name)}" MinWidth="200" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_NetworkInterface}" Binding="{Binding (settings:ProfileInfo.NetworkInterface_Enabled)}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_IPScanner}" Binding="{Binding (settings:ProfileInfo.IPScanner_Enabled)}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_PortScanner}" Binding="{Binding (settings:ProfileInfo.PortScanner_Enabled)}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_Ping}" Binding="{Binding (settings:ProfileInfo.Ping_Enabled)}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_Traceroute}" Binding="{Binding (settings:ProfileInfo.Traceroute_Enabled)}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_RemoteDesktop}" Binding="{Binding (settings:ProfileInfo.RemoteDesktop_Enabled)}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_PuTTY}" Binding="{Binding (settings:ProfileInfo.PuTTY_Enabled)}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_WakeOnLAN}" Binding="{Binding (settings:ProfileInfo.WakeOnLAN_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{x:Static localization:Strings.NetworkInterface}" Binding="{Binding (settings:ProfileInfo.NetworkInterface_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{x:Static localization:Strings.IPScanner}" Binding="{Binding (settings:ProfileInfo.IPScanner_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{x:Static localization:Strings.PortScanner}" Binding="{Binding (settings:ProfileInfo.PortScanner_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{x:Static localization:Strings.Ping}" Binding="{Binding (settings:ProfileInfo.Ping_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{x:Static localization:Strings.Traceroute}" Binding="{Binding (settings:ProfileInfo.Traceroute_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{x:Static localization:Strings.RemoteDesktop}" Binding="{Binding (settings:ProfileInfo.RemoteDesktop_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{x:Static localization:Strings.PuTTY}" Binding="{Binding (settings:ProfileInfo.PuTTY_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{x:Static localization:Strings.WakeOnLAN}" Binding="{Binding (settings:ProfileInfo.WakeOnLAN_Enabled)}" />
             </DataGrid.Columns>
         </controls:MultiSelectDataGrid>
         <StackPanel Grid.Row="4" HorizontalAlignment="Right" Orientation="Horizontal">

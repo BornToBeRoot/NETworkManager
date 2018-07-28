@@ -9,6 +9,7 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:HTTPHeadersViewModel}">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter"/>
@@ -24,7 +25,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Website}" />
+            <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Website}" />
             <Grid Grid.Row="1" Margin="0,0,0,20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -99,11 +100,11 @@
                 </mahAppsControls:MetroProgressBar>
                 <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
             </Grid>
-            <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Headers}" />
+            <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Headers}" />
             <TextBox Grid.Row="3" Text="{Binding Headers}" Style="{StaticResource ConsoleTextBox}" IsReadOnly="True" ContextMenu="{StaticResource CopyContextMenu}"/>
             <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">
                 <Expander.Header>
-                    <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
+                    <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
                 </Expander.Header>
                 <StackPanel>
                     <Grid Margin="0,10,0,0">

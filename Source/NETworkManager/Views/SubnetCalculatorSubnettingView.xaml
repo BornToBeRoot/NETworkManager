@@ -11,6 +11,7 @@
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:net="clr-namespace:System.Net;assembly=System.Net.IPNetwork"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SubnetCalculatorSubnettingViewModel}">
     <UserControl.Resources>
@@ -28,7 +29,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Subnet}" />
+        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Subnet}" />
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -132,7 +133,7 @@
             </mahAppsControls:MetroProgressBar>
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
-        <TextBlock Grid.Row="2" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{DynamicResource String_Header_Result}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Grid.Row="2" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{x:Static localization:Strings.Result}" Style="{StaticResource HeaderTextBlock}" />
         <DataGrid Grid.Row="3" ItemsSource="{Binding SubnetsResultView}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" SelectedItem="{Binding SelectedSubnetResult}">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />

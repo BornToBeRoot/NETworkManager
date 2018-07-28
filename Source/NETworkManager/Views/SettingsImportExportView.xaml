@@ -8,6 +8,7 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsImportExportViewModel}">
@@ -18,7 +19,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <StackPanel >
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Import}" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Import}" />
         <TextBox x:Name="TextBoxImportFilePath" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_LocationOfTheImport}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" AllowDrop="True" Drop="TextBoxImportFilePath_Drop" PreviewDragOver="TextBoxImportFilePath_PreviewDragOver" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="ImportFilePath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -103,7 +104,7 @@
                 </Button.Style>
             </Button>
         </StackPanel>
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Export}" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Export}" />
         <TextBlock Style="{StaticResource DefaultTextBlock}" Text="{StaticResource String_SelectTheSettingsYouWantToExport}" Margin="0,0,0,10" />
         <RadioButton x:Name="RadioButtonExportEverything" Content="{DynamicResource String_RadioButton_Everything}" IsChecked="{Binding ExportEverything}" Margin="0,0,0,10"/>
         <RadioButton x:Name="RadioButtonExportCustom" Content="{DynamicResource String_RadioButton_Custom}" Margin="0,0,0,10"/>

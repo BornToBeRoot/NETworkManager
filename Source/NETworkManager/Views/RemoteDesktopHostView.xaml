@@ -11,6 +11,7 @@
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:asf="clr-namespace:AirspaceFixer;assembly=AirspaceFixer"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:RemoteDesktopHostViewModel}">
@@ -101,7 +102,7 @@
                 </StackPanel>
             </Grid>
             <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
-            <Expander Grid.Column="2" Header="{DynamicResource String_Header_Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
+            <Expander Grid.Column="2" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />

@@ -11,6 +11,7 @@
              xmlns:wpfHelpers="clr-namespace:NETworkManager.WpfHelper"
              xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
              dialogs:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WakeOnLANViewModel}">
     <UserControl.Resources>
@@ -31,7 +32,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Client}" />
+            <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Client}" />
             <Grid Grid.Row="1" Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -138,7 +139,7 @@
             <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
-        <Expander Grid.Column="2" x:Name="ExpanderProfiles" Header="{DynamicResource String_Header_Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
+        <Expander Grid.Column="2" x:Name="ExpanderProfiles" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />

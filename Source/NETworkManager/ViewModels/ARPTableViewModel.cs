@@ -17,15 +17,15 @@ namespace NETworkManager.ViewModels
     public class ARPTableViewModel : ViewModelBase
     {
         #region Variables
-        private IDialogCoordinator dialogCoordinator;
+        private readonly IDialogCoordinator _dialogCoordinator;
 
-        private bool _isLoading = true;
-        private DispatcherTimer _autoRefreshTimer = new DispatcherTimer();
+        private readonly bool _isLoading;
+        private readonly DispatcherTimer _autoRefreshTimer = new DispatcherTimer();
 
         private string _search;
         public string Search
         {
-            get { return _search; }
+            get => _search;
             set
             {
                 if (value == _search)
@@ -42,7 +42,7 @@ namespace NETworkManager.ViewModels
         private ObservableCollection<ARPTableInfo> _arpTable = new ObservableCollection<ARPTableInfo>();
         public ObservableCollection<ARPTableInfo> ARPTable
         {
-            get { return _arpTable; }
+            get => _arpTable;
             set
             {
                 if (value == _arpTable)
@@ -53,16 +53,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _arpTableView;
-        public ICollectionView ARPTableView
-        {
-            get { return _arpTableView; }
-        }
+        public ICollectionView ARPTableView { get; }
 
         private ARPTableInfo _selectedARPTableInfo;
         public ARPTableInfo SelectedARPTableInfo
         {
-            get { return _selectedARPTableInfo; }
+            get => _selectedARPTableInfo;
             set
             {
                 if (value == _selectedARPTableInfo)
@@ -76,7 +72,7 @@ namespace NETworkManager.ViewModels
         private bool _autoRefresh;
         public bool AutoRefresh
         {
-            get { return _autoRefresh; }
+            get => _autoRefresh;
             set
             {
                 if (value == _autoRefresh)
@@ -100,16 +96,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _autoRefreshTimes;
-        public ICollectionView AutoRefreshTimes
-        {
-            get { return _autoRefreshTimes; }
-        }
+        public ICollectionView AutoRefreshTimes { get; }
 
         private AutoRefreshTimeInfo _selectedAutoRefreshTime;
         public AutoRefreshTimeInfo SelectedAutoRefreshTime
         {
-            get { return _selectedAutoRefreshTime; }
+            get => _selectedAutoRefreshTime;
             set
             {
                 if (value == _selectedAutoRefreshTime)
@@ -130,7 +122,7 @@ namespace NETworkManager.ViewModels
         private bool _isRefreshing;
         public bool IsRefreshing
         {
-            get { return _isRefreshing; }
+            get => _isRefreshing;
             set
             {
                 if (value == _isRefreshing)
@@ -144,7 +136,7 @@ namespace NETworkManager.ViewModels
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
         {
-            get { return _displayStatusMessage; }
+            get => _displayStatusMessage;
             set
             {
                 if (value == _displayStatusMessage)
@@ -158,7 +150,7 @@ namespace NETworkManager.ViewModels
         private string _statusMessage;
         public string StatusMessage
         {
-            get { return _statusMessage; }
+            get => _statusMessage;
             set
             {
                 if (value == _statusMessage)
@@ -173,24 +165,26 @@ namespace NETworkManager.ViewModels
         #region Contructor, load settings
         public ARPTableViewModel(IDialogCoordinator instance)
         {
-            dialogCoordinator = instance;
+            _isLoading = true;
+            _dialogCoordinator = instance;
 
-            _arpTableView = CollectionViewSource.GetDefaultView(ARPTable);
-            _arpTableView.SortDescriptions.Add(new SortDescription(nameof(ARPTableInfo.IPAddressInt32), ListSortDirection.Ascending));
-            _arpTableView.Filter = o =>
+            ARPTableView = CollectionViewSource.GetDefaultView(ARPTable);
+            ARPTableView.SortDescriptions.Add(new SortDescription(nameof(ARPTableInfo.IPAddressInt32), ListSortDirection.Ascending));
+            ARPTableView.Filter = o =>
             {
+                if (!(o is ARPTableInfo info))
+                    return false;
+
                 if (string.IsNullOrEmpty(Search))
                     return true;
 
-                ARPTableInfo info = o as ARPTableInfo;
-
-                string filter = Search.Replace(" ", "").Replace("-", "").Replace(":", "");
+                var filter = Search.Replace(" ", "").Replace("-", "").Replace(":", "");
 
                 // Search by IPAddress and MACAddress
                 return info.IPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || (info.IsMulticast ? LocalizationManager.GetStringByKey("String_Yes") : LocalizationManager.GetStringByKey("String_No")).IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
-            _autoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);
+            AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);
             SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.ARPTable_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.ARPTable_AutoRefreshTime.TimeUnit));
 
             _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -235,7 +229,7 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                ARPTable arpTable = new ARPTable();
+                var arpTable = new ARPTable();
 
                 arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
 
@@ -285,18 +279,18 @@ namespace NETworkManager.ViewModels
         {
             DisplayStatusMessage = false;
 
-            CustomDialog customDialog = new CustomDialog
+            var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_AddEntry")
+                Title = Resources.Localization.Strings.AddEntry
             };
 
-            ArpTableAddEntryViewModel arpTableAddEntryViewModel = new ArpTableAddEntryViewModel(async instance =>
+            var arpTableAddEntryViewModel = new ArpTableAddEntryViewModel(async instance =>
             {
-                await dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 try
                 {
-                    ARPTable arpTable = new ARPTable();
+                    var arpTable = new ARPTable();
 
                     arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
 
@@ -311,7 +305,7 @@ namespace NETworkManager.ViewModels
                 }
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             });
 
             customDialog.Content = new ARPTableAddEntryDialog
@@ -319,7 +313,7 @@ namespace NETworkManager.ViewModels
                 DataContext = arpTableAddEntryViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand CopySelectedIPAddressCommand

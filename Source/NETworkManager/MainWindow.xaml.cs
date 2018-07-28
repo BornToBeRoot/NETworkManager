@@ -21,7 +21,6 @@ using System.Windows.Markup;
 using NETworkManager.Models.Update;
 using NETworkManager.Models.Documentation;
 using ContextMenu = System.Windows.Controls.ContextMenu;
-using MessageBox = System.Windows.MessageBox;
 
 namespace NETworkManager
 {
@@ -302,7 +301,7 @@ namespace NETworkManager
 
                 ConfigurationManager.Current.IsDialogOpen = true;
 
-                await this.ShowMessageAsync(LocalizationManager.GetStringByKey("String_Header_SettingsHaveBeenReset"), LocalizationManager.GetStringByKey("String_SettingsFileFoundWasCorruptOrNotCompatibleMessage"), MessageDialogStyle.Affirmative, settings);
+                await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.SettingsHaveBeenReset, LocalizationManager.GetStringByKey("String_SettingsFileFoundWasCorruptOrNotCompatibleMessage"), MessageDialogStyle.Affirmative, settings);
 
                 ConfigurationManager.Current.IsDialogOpen = false;
             }
@@ -382,7 +381,7 @@ namespace NETworkManager
                 // Fix airspace issues
                 ConfigurationManager.Current.IsDialogOpen = true;
 
-                var result = await this.ShowMessageAsync(LocalizationManager.GetStringByKey("String_Header_Confirm"), LocalizationManager.GetStringByKey("String_ConfirmCloseQuesiton"), MessageDialogStyle.AffirmativeAndNegative, settings);
+                var result = await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.Confirm, LocalizationManager.GetStringByKey("String_ConfirmCloseQuesiton"), MessageDialogStyle.AffirmativeAndNegative, settings);
 
                 ConfigurationManager.Current.IsDialogOpen = false;
 

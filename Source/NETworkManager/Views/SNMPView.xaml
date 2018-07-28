@@ -10,6 +10,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:network="clr-namespace:NETworkManager.Models.Network"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SNMPViewModel}">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter"/>
@@ -33,7 +34,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_SNMP}" />
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.SNMP}" />
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -475,14 +476,14 @@
         <TextBlock Grid.Row="4" Grid.ColumnSpan="3" Grid.Column="0">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
-                    <Setter Property="Text" Value="{DynamicResource String_Header_Result}" />
+                    <Setter Property="Text" Value="{x:Static localization:Strings.Result}" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Mode}" Value="Set">
-                            <Setter Property="Text" Value="{DynamicResource String_Header_Data}" />
+                            <Setter Property="Text" Value="{ x:Static localization:Strings.Data}" />
                             <Setter Property="Grid.ColumnSpan" Value="1"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Mode}" Value="Trap">
-                            <Setter Property="Text" Value="{DynamicResource String_Header_Data}" />
+                            <Setter Property="Text" Value="{x:Static localization:Strings.Data}" />
                             <Setter Property="Grid.ColumnSpan" Value="1"/>
                         </DataTrigger>
                     </Style.Triggers>
@@ -566,7 +567,7 @@
         </TextBox>
         <Expander Grid.Row="7" Grid.ColumnSpan="3" Grid.Column="0" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">
             <Expander.Header>
-                <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
+                <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>
             <StackPanel>
                 <Grid Margin="0,10,0,0">

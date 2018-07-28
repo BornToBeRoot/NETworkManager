@@ -8,6 +8,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SubnetCalculatorCalculatorViewModel}">
     <UserControl.Resources>
         <converters:BigIntegerToStringConverter x:Key="BigIntegerToStringConverter" />
@@ -21,7 +22,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Subnet}" />
+        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Subnet}" />
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -72,7 +73,7 @@
             </Button>
         </Grid>
         <StackPanel Grid.Row="2">
-            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
             <ScrollViewer Style="{DynamicResource DefaultScrollViewer}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                 <Grid>
                     <Grid.Resources>

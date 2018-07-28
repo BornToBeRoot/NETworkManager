@@ -6,6 +6,7 @@
         xmlns:mstsc ="clr-namespace:AxMSTSCLib;assembly=AxMSTSCLib"
         xmlns:converters="clr-namespace:NETworkManager.Converters"        
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:localization ="clr-namespace:NETworkManager.Resources.Localization"
         xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
         mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:RemoteDesktopControl}">
     <UserControl.Resources>
@@ -25,7 +26,7 @@
                 <RowDefinition Height="20" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="{DynamicResource String_Header_Disconnected}" Style="{StaticResource HeaderTextBlock}" Visibility="{Binding IsReconnecting, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}" />
+            <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.Disconnected}" Style="{StaticResource HeaderTextBlock}" Visibility="{Binding IsReconnecting, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}" />
             <TextBlock Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding DisconnectReason}" Style="{DynamicResource DefaultTextBlock}" Visibility="{Binding IsReconnecting, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}" />
             <controls:ProgressRing Grid.Row="0" Grid.RowSpan="2" Height="50" Width="50" IsActive="{Binding IsReconnecting}" Visibility="{Binding IsReconnecting, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"/>
             <Button Grid.Row="3" Content="{DynamicResource String_Button_Reconnect}" Command="{Binding ReconnectCommand}" IsDefault="True" IsEnabled="{Binding IsReconnecting, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultButton}"/>

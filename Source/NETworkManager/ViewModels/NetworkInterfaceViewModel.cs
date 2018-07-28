@@ -789,7 +789,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
         }
 
@@ -822,7 +822,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
+                Title = Resources.Localization.Strings.AddProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
@@ -852,7 +852,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
+                Title = Resources.Localization.Strings.EditProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
@@ -884,7 +884,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
+                Title = Resources.Localization.Strings.CopyProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
@@ -914,7 +914,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
+                Title = Resources.Localization.Strings.DeleteProfile
             };
 
             var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
@@ -941,7 +941,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
+                Title = Resources.Localization.Strings.EditGroup
             };
 
             var editGroupViewModel = new GroupViewModel(instance =>

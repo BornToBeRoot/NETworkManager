@@ -145,7 +145,7 @@ namespace NETworkManager.Controls
 
                 ConfigurationManager.Current.IsDialogOpen = true;
 
-                await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, NETworkManager.Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
 
                 ConfigurationManager.Current.IsDialogOpen = false;
             }

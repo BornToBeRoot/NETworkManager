@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         mc:Ignorable="d"
         Title="{DynamicResource String_ProductName}" Topmost="True" Style="{DynamicResource DefaultWindow}" MinHeight="500" Height="500" MinWidth="500" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" IsMinButtonEnabled="False" IsMaxRestoreButtonEnabled="False" ShowInTaskbar="False">
     <mahAppsControls:MetroWindow.WindowButtonCommands>
@@ -22,7 +23,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="{DynamicResource String_Header_CommandLineArguments}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.CommandLineArguments}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Grid.Row="1" Text="{DynamicResource String_TheFollowingParametersAreAvailable}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <Border Grid.Row="2" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" Margin="0,0,0,10" Padding="5">
         <ScrollViewer Style="{StaticResource DefaultScrollViewer}" >

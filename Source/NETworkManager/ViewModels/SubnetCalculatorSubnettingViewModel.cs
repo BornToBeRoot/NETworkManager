@@ -269,7 +269,7 @@ namespace NETworkManager.ViewModels
 
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-                if (await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_AreYouSure"), LocalizationManager.GetStringByKey("String_TheProcessCanTakeUpSomeTimeAndResources"), MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+                if (await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.AreYouSure, LocalizationManager.GetStringByKey("String_TheProcessCanTakeUpSomeTimeAndResources"), MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 {
                     IsCalculationRunning = false;
 

@@ -41,7 +41,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-                
+
         #region Profiles
         public ICollectionView Profiles { get; }
 
@@ -134,7 +134,7 @@ namespace NETworkManager.ViewModels
 
             TabItems = new ObservableCollection<DragablzTabItem>()
             {
-                new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new PortScannerView(_tabId), _tabId)
+                new DragablzTabItem(Resources.Localization.Strings.NewTab, new PortScannerView(_tabId), _tabId)
             };
 
             Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
@@ -207,7 +207,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
+                Title = Resources.Localization.Strings.AddProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
@@ -237,7 +237,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
+                Title = Resources.Localization.Strings.EditProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
@@ -269,7 +269,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
+                Title = Resources.Localization.Strings.CopyProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
@@ -299,7 +299,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
+                Title = Resources.Localization.Strings.DeleteProfile
             };
 
             var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
@@ -326,7 +326,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
+                Title = Resources.Localization.Strings.EditGroup
             };
 
             var editGroupViewModel = new GroupViewModel(instance =>
@@ -396,7 +396,7 @@ namespace NETworkManager.ViewModels
         {
             _tabId++;
 
-            TabItems.Add(new DragablzTabItem(string.IsNullOrEmpty(host) ? LocalizationManager.GetStringByKey("String_Header_NewTab") : host, new PortScannerView(_tabId, host, ports), _tabId));
+            TabItems.Add(new DragablzTabItem(string.IsNullOrEmpty(host) ? Resources.Localization.Strings.NewTab : host, new PortScannerView(_tabId, host, ports), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }
