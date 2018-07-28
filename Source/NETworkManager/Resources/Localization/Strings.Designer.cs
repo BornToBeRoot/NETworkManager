@@ -943,7 +943,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wrong password.
+        ///   Looks up a localized string similar to Wrong password!.
         /// </summary>
         public static string WrongPassword {
             get {

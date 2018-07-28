@@ -249,8 +249,6 @@ namespace NETworkManager
             // Language Meta
             LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
 
-            Debug.WriteLine(NETworkManager.Resources.Localization.Strings.Application);
-
             // Load appearance
             AppearanceManager.Load();
 

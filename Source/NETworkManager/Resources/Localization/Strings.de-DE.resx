@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -117,7 +117,301 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Application" xml:space="preserve">
-    <value>Anwendung</value>
+  <data name="About" xml:space="preserve">
+    <value>Über</value>
+  </data>
+  <data name="Accent" xml:space="preserve">
+    <value>Akzent</value>
+  </data>
+  <data name="AddCredentials" xml:space="preserve">
+    <value>Anmeldeinformationen hinzufügen</value>
+  </data>
+  <data name="AddEntry" xml:space="preserve">
+    <value>Eintrag hinzufügen</value>
+  </data>
+  <data name="AddProfile" xml:space="preserve">
+    <value>Profil hinzufügen</value>
+  </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Sind Sie sicher?</value>
+  </data>
+  <data name="ARP" xml:space="preserve">
+    <value>ARP</value>
+  </data>
+  <data name="ARPTable" xml:space="preserve">
+    <value>ARP-Tabelle</value>
+  </data>
+  <data name="Authentication" xml:space="preserve">
+    <value>Authentifizierung</value>
+  </data>
+  <data name="Autostart" xml:space="preserve">
+    <value>Autostart</value>
+  </data>
+  <data name="Calculator" xml:space="preserve">
+    <value>Rechner</value>
+  </data>
+  <data name="CommandLineArguments" xml:space="preserve">
+    <value>Befehlszeilenargumente</value>
+  </data>
+  <data name="Configure" xml:space="preserve">
+    <value>Konfigurieren</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Bestätigen</value>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>Verbinden</value>
+  </data>
+  <data name="ConnectAs" xml:space="preserve">
+    <value>Verbinden als</value>
+  </data>
+  <data name="CopyProfile" xml:space="preserve">
+    <value>Profil kopieren</value>
+  </data>
+  <data name="CredentialNotFound" xml:space="preserve">
+    <value>Anmeldeinformation nicht gefunden!</value>
+  </data>
+  <data name="Credentials" xml:space="preserve">
+    <value>Anmeldeinformationen</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Daten</value>
+  </data>
+  <data name="DefaultApplication" xml:space="preserve">
+    <value>Standardanwendung</value>
+  </data>
+  <data name="DeleteCredentials" xml:space="preserve">
+    <value>Anmeldeinformation löschen</value>
+  </data>
+  <data name="DeleteProfile" xml:space="preserve">
+    <value>Profil löschen</value>
+  </data>
+  <data name="Destination" xml:space="preserve">
+    <value>Ziel</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Disconnected" xml:space="preserve">
+    <value>Getrennt</value>
+  </data>
+  <data name="Display" xml:space="preserve">
+    <value>Anzeige</value>
+  </data>
+  <data name="DNS" xml:space="preserve">
+    <value>DNS</value>
+  </data>
+  <data name="DNSLookup" xml:space="preserve">
+    <value>DNS-Lookup</value>
+  </data>
+  <data name="DontFragment" xml:space="preserve">
+    <value>Nicht fragmentieren</value>
+  </data>
+  <data name="EditCredentials" xml:space="preserve">
+    <value>Anmeldeinformation bearbeiten</value>
+  </data>
+  <data name="EditGroup" xml:space="preserve">
+    <value>Gruppe bearbeiten</value>
+  </data>
+  <data name="EditProfile" xml:space="preserve">
+    <value>Profil bearbeiten</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Exportieren</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
+  <data name="Headers" xml:space="preserve">
+    <value>Headers</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="HotKeys" xml:space="preserve">
+    <value>HotKeys</value>
+  </data>
+  <data name="HTTPHeaders" xml:space="preserve">
+    <value>HTTP-Headers</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Importieren</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Informationen</value>
+  </data>
+  <data name="Interface" xml:space="preserve">
+    <value>Interface</value>
+  </data>
+  <data name="IPScanner" xml:space="preserve">
+    <value>IP-Scanner</value>
+  </data>
+  <data name="Keyboard" xml:space="preserve">
+    <value>Tastatur</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="Libraries" xml:space="preserve">
+    <value>Bibliotheken</value>
+  </data>
+  <data name="License" xml:space="preserve">
+    <value>Lizenz</value>
+  </data>
+  <data name="LocalDevicesAndResources" xml:space="preserve">
+    <value>Lokale Geräte und Ressourcen</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Speicherort</value>
+  </data>
+  <data name="Lookup" xml:space="preserve">
+    <value>Lookup</value>
+  </data>
+  <data name="MACAddress" xml:space="preserve">
+    <value>MAC-Adresse</value>
+  </data>
+  <data name="MasterPassword" xml:space="preserve">
+    <value>Masterpasswort</value>
+  </data>
+  <data name="Multithreading" xml:space="preserve">
+    <value>Multithreading</value>
+  </data>
+  <data name="Network" xml:space="preserve">
+    <value>Netzwerk</value>
+  </data>
+  <data name="NetworkInterface" xml:space="preserve">
+    <value>Netzwerkinterface</value>
+  </data>
+  <data name="NewTab" xml:space="preserve">
+    <value>Neuer Tab</value>
+  </data>
+  <data name="OUI" xml:space="preserve">
+    <value>OUI</value>
+  </data>
+  <data name="Overwrite" xml:space="preserve">
+    <value>Überschreiben?</value>
+  </data>
+  <data name="Ping" xml:space="preserve">
+    <value>Ping</value>
+  </data>
+  <data name="Port" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="Portable" xml:space="preserve">
+    <value>Portable</value>
+  </data>
+  <data name="PortScanner" xml:space="preserve">
+    <value>Port-Scanner</value>
+  </data>
+  <data name="Profiles" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="PuTTY" xml:space="preserve">
+    <value>PuTTY</value>
+  </data>
+  <data name="Query" xml:space="preserve">
+    <value>Abfrage</value>
+  </data>
+  <data name="RemoteDesktop" xml:space="preserve">
+    <value>Remote Desktop</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Zurücksetzen</value>
+  </data>
+  <data name="ResolvePTR" xml:space="preserve">
+    <value>Resolve PTR</value>
+  </data>
+  <data name="Resources" xml:space="preserve">
+    <value>Ressourcen</value>
+  </data>
+  <data name="Result" xml:space="preserve">
+    <value>Ergebnis</value>
+  </data>
+  <data name="Route" xml:space="preserve">
+    <value>Route</value>
+  </data>
+  <data name="Scan" xml:space="preserve">
+    <value>Scannen</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Suche</value>
+  </data>
+  <data name="SelectAProfileDots" xml:space="preserve">
+    <value>Profil auswählen...</value>
+  </data>
+  <data name="SetMasterPassword" xml:space="preserve">
+    <value>Masterpasswort setzen</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="SettingsHaveBeenReset" xml:space="preserve">
+    <value>Einstellungen wurden zurückgesetzt!</value>
+  </data>
+  <data name="SNMP" xml:space="preserve">
+    <value>SNMP</value>
+  </data>
+  <data name="Socket" xml:space="preserve">
+    <value>Socket</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Statistik</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Subnet" xml:space="preserve">
+    <value>Subnetz</value>
+  </data>
+  <data name="Subnetting" xml:space="preserve">
+    <value>Subnetting</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Erfolgreich!</value>
+  </data>
+  <data name="Supernetting" xml:space="preserve">
+    <value>Supernetting</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Thema</value>
+  </data>
+  <data name="Traceroute" xml:space="preserve">
+    <value>Traceroute</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>Transparenz</value>
+  </data>
+  <data name="Tray" xml:space="preserve">
+    <value>Tray</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="v1v2c" xml:space="preserve">
+    <value>v1/v2c</value>
+  </data>
+  <data name="v3" xml:space="preserve">
+    <value>v3</value>
+  </data>
+  <data name="ValidationFailed" xml:space="preserve">
+    <value>Validierung fehlgeschlagen!</value>
+  </data>
+  <data name="WakeOnLAN" xml:space="preserve">
+    <value>Wake on LAN</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>Webseite</value>
+  </data>
+  <data name="Window" xml:space="preserve">
+    <value>Fenster</value>
+  </data>
+  <data name="WrongPassword" xml:space="preserve">
+    <value>Falsches Passwort!</value>
   </data>
 </root>
