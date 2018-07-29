@@ -718,6 +718,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connections.
+        /// </summary>
+        public static string Connections {
+            get {
+                return ResourceManager.GetString("Connections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connect the network card to a network to configure it!.
         /// </summary>
         public static string ConnectTheNetworkCardToConfigureIt {
@@ -1393,6 +1402,60 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter a valid ip range!.
+        /// </summary>
+        public static string EnterValidIPScanRange {
+            get {
+                return ResourceManager.GetString("EnterValidIPScanRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid IPv4 address!.
+        /// </summary>
+        public static string EnterValidIPv4Address {
+            get {
+                return ResourceManager.GetString("EnterValidIPv4Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid MAC address like 00:F1:23:AB:F2:35!.
+        /// </summary>
+        public static string EnterValidMACAddress {
+            get {
+                return ResourceManager.GetString("EnterValidMACAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid port (1 - 65535)!.
+        /// </summary>
+        public static string EnterValidPort {
+            get {
+                return ResourceManager.GetString("EnterValidPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid subnetmask (like 255.255.255.0)!.
+        /// </summary>
+        public static string EnterValidSubnetmask {
+            get {
+                return ResourceManager.GetString("EnterValidSubnetmask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid subnetmask or CIDR (like 255.255.255.0 or 24)!.
+        /// </summary>
+        public static string EnterValidSubnetmaskOrCIDR {
+            get {
+                return ResourceManager.GetString("EnterValidSubnetmaskOrCIDR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {
@@ -1852,6 +1915,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Field cannot be empty!.
+        /// </summary>
+        public static string FieldCannotBeEmpty {
+            get {
+                return ResourceManager.GetString("FieldCannotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File does not exists!.
+        /// </summary>
+        public static string FileDoesNotExist {
+            get {
+                return ResourceManager.GetString("FileDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter.
         /// </summary>
         public static string Filter {
@@ -1893,6 +1974,15 @@ namespace NETworkManager.Resources.Localization {
         public static string FlushDNSCache {
             get {
                 return ResourceManager.GetString("FlushDNSCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Folder does not exists!.
+        /// </summary>
+        public static string FolderDoesNotExist {
+            get {
+                return ResourceManager.GetString("FolderDoesNotExist", resourceCulture);
             }
         }
         
@@ -2316,6 +2406,15 @@ namespace NETworkManager.Resources.Localization {
         public static string License {
             get {
                 return ResourceManager.GetString("License", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Listeners.
+        /// </summary>
+        public static string Listeners {
+            get {
+                return ResourceManager.GetString("Listeners", resourceCulture);
             }
         }
         

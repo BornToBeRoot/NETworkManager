@@ -1593,4 +1593,37 @@
   <data name="WarningMessage_SettingsGeneralAppearanceTransparency" xml:space="preserve">
     <value>Some graphics cards / drivers have problems maximizing the application when transparency is enabled. The function must be disabled for using "Remote Desktop"! Enabling or disabling this feature requires a restart of the application.</value>
   </data>
+  <data name="Connections" xml:space="preserve">
+    <value>Connections</value>
+  </data>
+  <data name="EnterValidIPScanRange" xml:space="preserve">
+    <value>Enter a valid ip range!</value>
+  </data>
+  <data name="EnterValidIPv4Address" xml:space="preserve">
+    <value>Enter a valid IPv4 address!</value>
+  </data>
+  <data name="EnterValidMACAddress" xml:space="preserve">
+    <value>Enter a valid MAC address like 00:F1:23:AB:F2:35!</value>
+  </data>
+  <data name="EnterValidPort" xml:space="preserve">
+    <value>Enter a valid port (1 - 65535)!</value>
+  </data>
+  <data name="EnterValidSubnetmask" xml:space="preserve">
+    <value>Enter a valid subnetmask (like 255.255.255.0)!</value>
+  </data>
+  <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
+    <value>Enter a valid subnetmask or CIDR (like 255.255.255.0 or 24)!</value>
+  </data>
+  <data name="FieldCannotBeEmpty" xml:space="preserve">
+    <value>Field cannot be empty!</value>
+  </data>
+  <data name="FileDoesNotExist" xml:space="preserve">
+    <value>File does not exists!</value>
+  </data>
+  <data name="FolderDoesNotExist" xml:space="preserve">
+    <value>Folder does not exists!</value>
+  </data>
+  <data name="Listeners" xml:space="preserve">
+    <value>Listeners</value>
+  </data>
 </root>
