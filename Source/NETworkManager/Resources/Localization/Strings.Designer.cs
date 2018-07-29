@@ -268,6 +268,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amber.
+        /// </summary>
+        public static string Amber {
+            get {
+                return ResourceManager.GetString("Amber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Answers.
         /// </summary>
         public static string Answers {
@@ -277,11 +286,29 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Appearance.
+        /// </summary>
+        public static string Appearance {
+            get {
+                return ResourceManager.GetString("Appearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application is restarted afterwards.
         /// </summary>
         public static string ApplicationIsRestartedAfterwards {
             get {
                 return ResourceManager.GetString("ApplicationIsRestartedAfterwards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Applications.
+        /// </summary>
+        public static string Applications {
+            get {
+                return ResourceManager.GetString("Applications", resourceCulture);
             }
         }
         
@@ -421,6 +448,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dark.
+        /// </summary>
+        public static string BaseDark {
+            get {
+                return ResourceManager.GetString("BaseDark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light.
+        /// </summary>
+        public static string BaseLight {
+            get {
+                return ResourceManager.GetString("BaseLight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Baud.
         /// </summary>
         public static string Baud {
@@ -430,11 +475,38 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Black.
+        /// </summary>
+        public static string Black {
+            get {
+                return ResourceManager.GetString("Black", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blue.
+        /// </summary>
+        public static string Blue {
+            get {
+                return ResourceManager.GetString("Blue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Broadcast.
         /// </summary>
         public static string Broadcast {
             get {
                 return ResourceManager.GetString("Broadcast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Brown.
+        /// </summary>
+        public static string Brown {
+            get {
+                return ResourceManager.GetString("Brown", resourceCulture);
             }
         }
         
@@ -597,6 +669,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Closed {
             get {
                 return ResourceManager.GetString("Closed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cobalt.
+        /// </summary>
+        public static string Cobalt {
+            get {
+                return ResourceManager.GetString("Cobalt", resourceCulture);
             }
         }
         
@@ -835,6 +916,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Crimson.
+        /// </summary>
+        public static string Crimson {
+            get {
+                return ResourceManager.GetString("Crimson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Custom.
         /// </summary>
         public static string Custom {
@@ -867,6 +957,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Cut {
             get {
                 return ResourceManager.GetString("Cut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cyan.
+        /// </summary>
+        public static string Cyan {
+            get {
+                return ResourceManager.GetString("Cyan", resourceCulture);
             }
         }
         
@@ -1321,6 +1420,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Emerald.
+        /// </summary>
+        public static string Emerald {
+            get {
+                return ResourceManager.GetString("Emerald", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable.
         /// </summary>
         public static string Enable {
@@ -1384,6 +1492,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter one or more valid IP addresses!.
+        /// </summary>
+        public static string EnterOneOrMoreValidIPAddresses {
+            get {
+                return ResourceManager.GetString("EnterOneOrMoreValidIPAddresses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter subnet and a new subnet mask to create subnets....
         /// </summary>
         public static string EnterSubnetAndANewSubnetmaskToCreateSubnets {
@@ -1398,6 +1515,33 @@ namespace NETworkManager.Resources.Localization {
         public static string EnterSubnetsToCreateASupernet {
             get {
                 return ResourceManager.GetString("EnterSubnetsToCreateASupernet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid baud!.
+        /// </summary>
+        public static string EnterValidBaud {
+            get {
+                return ResourceManager.GetString("EnterValidBaud", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter valid hosts (multiple hosts can not end with &quot;;&quot;)!.
+        /// </summary>
+        public static string EnterValidHosts {
+            get {
+                return ResourceManager.GetString("EnterValidHosts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid IP address!.
+        /// </summary>
+        public static string EnterValidIPAddress {
+            get {
+                return ResourceManager.GetString("EnterValidIPAddress", resourceCulture);
             }
         }
         
@@ -1429,11 +1573,47 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter a valid number!.
+        /// </summary>
+        public static string EnterValidNumber {
+            get {
+                return ResourceManager.GetString("EnterValidNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid OID!.
+        /// </summary>
+        public static string EnterValidOID {
+            get {
+                return ResourceManager.GetString("EnterValidOID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter a valid port (1 - 65535)!.
         /// </summary>
         public static string EnterValidPort {
             get {
                 return ResourceManager.GetString("EnterValidPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid port and/or port range (1 - 65535)!.
+        /// </summary>
+        public static string EnterValidPortOrPortRange {
+            get {
+                return ResourceManager.GetString("EnterValidPortOrPortRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid subnet (like 192.168.178.133/26).
+        /// </summary>
+        public static string EnterValidSubnet {
+            get {
+                return ResourceManager.GetString("EnterValidSubnet", resourceCulture);
             }
         }
         
@@ -1452,6 +1632,15 @@ namespace NETworkManager.Resources.Localization {
         public static string EnterValidSubnetmaskOrCIDR {
             get {
                 return ResourceManager.GetString("EnterValidSubnetmaskOrCIDR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid website (like https://example.com/index.html).
+        /// </summary>
+        public static string EnterValidWebsiteUri {
+            get {
+                return ResourceManager.GetString("EnterValidWebsiteUri", resourceCulture);
             }
         }
         
@@ -2032,6 +2221,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Green.
+        /// </summary>
+        public static string Green {
+            get {
+                return ResourceManager.GetString("Green", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Group.
         /// </summary>
         public static string Group {
@@ -2230,6 +2428,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import / Export.
+        /// </summary>
+        public static string ImportExport {
+            get {
+                return ResourceManager.GetString("ImportExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Indigo.
+        /// </summary>
+        public static string Indigo {
+            get {
+                return ResourceManager.GetString("Indigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Information.
         /// </summary>
         public static string Information {
@@ -2298,6 +2514,60 @@ namespace NETworkManager.Resources.Localization {
         public static string IPScanner {
             get {
                 return ResourceManager.GetString("IPScanner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Destination host unreachable..
+        /// </summary>
+        public static string IPStatus_DestinationHostUnreachable {
+            get {
+                return ResourceManager.GetString("IPStatus_DestinationHostUnreachable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Destination network unreachable..
+        /// </summary>
+        public static string IPStatus_DestinationNetworkUnreachable {
+            get {
+                return ResourceManager.GetString("IPStatus_DestinationNetworkUnreachable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Destination port unreachable..
+        /// </summary>
+        public static string IPStatus_DestinationPortUnreachable {
+            get {
+                return ResourceManager.GetString("IPStatus_DestinationPortUnreachable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success.
+        /// </summary>
+        public static string IPStatus_Success {
+            get {
+                return ResourceManager.GetString("IPStatus_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request timed out..
+        /// </summary>
+        public static string IPStatus_TimedOut {
+            get {
+                return ResourceManager.GetString("IPStatus_TimedOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TTL expired in transit..
+        /// </summary>
+        public static string IPStatus_TtlExpired {
+            get {
+                return ResourceManager.GetString("IPStatus_TtlExpired", resourceCulture);
             }
         }
         
@@ -2374,6 +2644,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Key must have 8 characters or more!.
+        /// </summary>
+        public static string KeyMustHave8CharactersOrMore {
+            get {
+                return ResourceManager.GetString("KeyMustHave8CharactersOrMore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string Language {
@@ -2406,6 +2685,15 @@ namespace NETworkManager.Resources.Localization {
         public static string License {
             get {
                 return ResourceManager.GetString("License", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lime.
+        /// </summary>
+        public static string Lime {
+            get {
+                return ResourceManager.GetString("Lime", resourceCulture);
             }
         }
         
@@ -2491,6 +2779,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Magenta.
+        /// </summary>
+        public static string Magenta {
+            get {
+                return ResourceManager.GetString("Magenta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Magic packet successful sended!.
         /// </summary>
         public static string MagicPacketSuccessfulSended {
@@ -2505,6 +2802,15 @@ namespace NETworkManager.Resources.Localization {
         public static string MasterPassword {
             get {
                 return ResourceManager.GetString("MasterPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mauve.
+        /// </summary>
+        public static string Mauve {
+            get {
+                return ResourceManager.GetString("Mauve", resourceCulture);
             }
         }
         
@@ -2878,11 +3184,29 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Olive.
+        /// </summary>
+        public static string Olive {
+            get {
+                return ResourceManager.GetString("Olive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to On.
         /// </summary>
         public static string On {
             get {
                 return ResourceManager.GetString("On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only numbers can be entered!.
+        /// </summary>
+        public static string OnlyNumbersCanBeEntered {
+            get {
+                return ResourceManager.GetString("OnlyNumbersCanBeEntered", resourceCulture);
             }
         }
         
@@ -2964,6 +3288,15 @@ namespace NETworkManager.Resources.Localization {
         public static string OpenWebsite {
             get {
                 return ResourceManager.GetString("OpenWebsite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Orange.
+        /// </summary>
+        public static string Orange {
+            get {
+                return ResourceManager.GetString("Orange", resourceCulture);
             }
         }
         
@@ -3085,6 +3418,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pink.
+        /// </summary>
+        public static string Pink {
+            get {
+                return ResourceManager.GetString("Pink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Port.
         /// </summary>
         public static string Port {
@@ -3202,6 +3544,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Purple.
+        /// </summary>
+        public static string Purple {
+            get {
+                return ResourceManager.GetString("Purple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PuTTY.
         /// </summary>
         public static string PuTTY {
@@ -3301,6 +3652,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Red.
+        /// </summary>
+        public static string Red {
+            get {
+                return ResourceManager.GetString("Red", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Redirect clipboard.
         /// </summary>
         public static string RedirectClipboard {
@@ -3378,6 +3738,429 @@ namespace NETworkManager.Resources.Localization {
         public static string RemoteDesktop {
             get {
                 return ResourceManager.GetString("RemoteDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Socket closed..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote disconnect by server..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_ByServer {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_ByServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decompression error..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_ClientDecompressionError {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_ClientDecompressionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection timed out..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_ConnectionTimedOut {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_ConnectionTimedOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decryption error..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_DecryptionError {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_DecryptionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DNS name lookup failure..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_DNSLookupFailed {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_DNSLookupFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DNS lookup failed..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_DNSLookupFailed2 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_DNSLookupFailed2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encryption error..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_EncryptionError {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_EncryptionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows Sockets gethostbyname call failed..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_GetHostByNameFailed {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_GetHostByNameFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Host not found..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_HostNotFound {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_HostNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internal error..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_InternalError {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_InternalError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internal security error..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_InternalSecurityError {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_InternalSecurityError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internal security error..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_InternalSecurityError2 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_InternalSecurityError2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The encryption method specified is not valid..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_InvalidEncryption {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_InvalidEncryption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bad IP address specified..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_InvalidIP {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_InvalidIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The IP address specified is not valid..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_InvalidIPAddr {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_InvalidIPAddr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Security data is not valid..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_InvalidSecurityData {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_InvalidSecurityData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server security data is not valid..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_InvalidServerSecurityInfo {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_InvalidServerSecurityInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License negotiation failed..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_LicensingFailed {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_LicensingFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Licensing time-out..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_LicensingTimeout {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_LicensingTimeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local disconnection..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_LocalNotError {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_LocalNotError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No information is available..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_NoInfo {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_NoInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Out of memory..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_OutOfMemory {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_OutOfMemory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Out of memory..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_OutOfMemory2 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_OutOfMemory2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Out of memory..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_OutOfMemory3 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_OutOfMemory3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote disconnect by user..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_RemoteByUser {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_RemoteByUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to unpack server certificate..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_ServerCertificateUnpackErr {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_ServerCertificateUnpackErr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows Sockets connect failed..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_SocketConnectFailed {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_SocketConnectFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows Sockets recv call failed..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_SocketRecvFailed {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_SocketRecvFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The account is disabled..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_SslErrAccountDisabled {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_SslErrAccountDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The account is expired..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_SslErrAccountExpired {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_SslErrAccountExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The account is locked out..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_SslErrAccountLockedOut {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_SslErrAccountLockedOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The account is restricted..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_SslErrAccountRestriction {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_SslErrAccountRestriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The received certificate is expired..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_SslErrCertExpired {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_SslErrCertExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The policy does not support delegation of credentials to the target server..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_SslErrDelegationPolicy {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_SslErrDelegationPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The server authentication policy does not allow connection requests using saved credentials. The user must enter new credentials..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_SslErrFreshCredRequiredByServer {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_SslErrFreshCredRequiredByServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login failed..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_SslErrLogonFailure {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_SslErrLogonFailure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No authority could be contacted for authentication. The domain name of the authenticating party could be wrong, the domain could be unreachable, or there might have been a trust relationship failure..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_SslErrNoAuthenticatingAuthority {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_SslErrNoAuthenticatingAuthority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The specified user has no account..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_SslErrNoSuchUser {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_SslErrNoSuchUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password is expired..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_SslErrPasswordExpired {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_SslErrPasswordExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user password must be changed before logging on for the first time..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_SslErrPasswordMustChange {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_SslErrPasswordMustChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delegation of credentials to the target server is not allowed unless mutual authentication has been achieved..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_SslErrPolicyNTLMOnly {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_SslErrPolicyNTLMOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The smart card is blocked..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_SslErrSmartcardCardBlocked {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_SslErrSmartcardCardBlocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An incorrect PIN was presented to the smart card..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_SslErrSmartcardWrongPIN {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_SslErrSmartcardWrongPIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timeout occurred..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_TimeoutOccurred {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_TimeoutOccurred", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internal timer error..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_TimerError {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_TimerError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows Sockets send call failed..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_WinsockSendFailed {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_WinsockSendFailed", resourceCulture);
             }
         }
         
@@ -3877,6 +4660,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sienna.
+        /// </summary>
+        public static string Sienna {
+            get {
+                return ResourceManager.GetString("Sienna", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A powerful tool for managing networks and troubleshoot network problems!.
         /// </summary>
         public static string Slogan {
@@ -3900,6 +4692,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Socket {
             get {
                 return ResourceManager.GetString("Socket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spaces are not allowed!.
+        /// </summary>
+        public static string SpacesAreNotAllowed {
+            get {
+                return ResourceManager.GetString("SpacesAreNotAllowed", resourceCulture);
             }
         }
         
@@ -3994,6 +4795,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Steel.
+        /// </summary>
+        public static string Steel {
+            get {
+                return ResourceManager.GetString("Steel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subnet.
         /// </summary>
         public static string Subnet {
@@ -4080,6 +4890,141 @@ namespace NETworkManager.Resources.Localization {
         public static string Tags {
             get {
                 return ResourceManager.GetString("Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Taupe.
+        /// </summary>
+        public static string Taupe {
+            get {
+                return ResourceManager.GetString("Taupe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Closed.
+        /// </summary>
+        public static string TcpState_Closed {
+            get {
+                return ResourceManager.GetString("TcpState_Closed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CloseWait.
+        /// </summary>
+        public static string TcpState_CloseWait {
+            get {
+                return ResourceManager.GetString("TcpState_CloseWait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Closing.
+        /// </summary>
+        public static string TcpState_Closing {
+            get {
+                return ResourceManager.GetString("TcpState_Closing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DeleteTcb.
+        /// </summary>
+        public static string TcpState_DeleteTcb {
+            get {
+                return ResourceManager.GetString("TcpState_DeleteTcb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Established.
+        /// </summary>
+        public static string TcpState_Established {
+            get {
+                return ResourceManager.GetString("TcpState_Established", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FinWait1.
+        /// </summary>
+        public static string TcpState_FinWait1 {
+            get {
+                return ResourceManager.GetString("TcpState_FinWait1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FinWait2.
+        /// </summary>
+        public static string TcpState_FinWait2 {
+            get {
+                return ResourceManager.GetString("TcpState_FinWait2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LastAck.
+        /// </summary>
+        public static string TcpState_LastAck {
+            get {
+                return ResourceManager.GetString("TcpState_LastAck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Listen.
+        /// </summary>
+        public static string TcpState_Listen {
+            get {
+                return ResourceManager.GetString("TcpState_Listen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SynReceived.
+        /// </summary>
+        public static string TcpState_SynReceived {
+            get {
+                return ResourceManager.GetString("TcpState_SynReceived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SynSent.
+        /// </summary>
+        public static string TcpState_SynSent {
+            get {
+                return ResourceManager.GetString("TcpState_SynSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TimeWait.
+        /// </summary>
+        public static string TcpState_TimeWait {
+            get {
+                return ResourceManager.GetString("TcpState_TimeWait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unkown.
+        /// </summary>
+        public static string TcpState_Unknown {
+            get {
+                return ResourceManager.GetString("TcpState_Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teal.
+        /// </summary>
+        public static string Teal {
+            get {
+                return ResourceManager.GetString("Teal", resourceCulture);
             }
         }
         
@@ -4489,6 +5434,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Violet.
+        /// </summary>
+        public static string Violet {
+            get {
+                return ResourceManager.GetString("Violet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wake on LAN.
         /// </summary>
         public static string WakeOnLAN {
@@ -4534,6 +5488,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to White.
+        /// </summary>
+        public static string White {
+            get {
+                return ResourceManager.GetString("White", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Width.
         /// </summary>
         public static string Width {
@@ -4575,6 +5538,15 @@ namespace NETworkManager.Resources.Localization {
         public static string WrongPasswordMessage {
             get {
                 return ResourceManager.GetString("WrongPasswordMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yellow.
+        /// </summary>
+        public static string Yellow {
+            get {
+                return ResourceManager.GetString("Yellow", resourceCulture);
             }
         }
         

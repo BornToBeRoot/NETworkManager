@@ -16,8 +16,6 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
                 <!-- Dragablz -->
                 <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/MahApps.xaml" />
-                <!-- Localization -->
-                <ResourceDictionary Source="/Resources/Localization/en-US.xaml" />
                 <!-- Context menu (import berfore styles)-->
                 <ResourceDictionary Source="/Resources/ContextMenu/ContextMenu.xaml" />
                 <!-- Control templates (import before styles) -->

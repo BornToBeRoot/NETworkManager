@@ -141,7 +141,7 @@ namespace NETworkManager.Controls
             catch (Exception ex)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
+                settings.AffirmativeButtonText =  NETworkManager.Resources.Localization.Strings.OK;
 
                 ConfigurationManager.Current.IsDialogOpen = true;
 
