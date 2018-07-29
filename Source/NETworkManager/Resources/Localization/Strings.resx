@@ -417,4 +417,244 @@
   <data name="Client" xml:space="preserve">
     <value>Client</value>
   </data>
+  <data name="Administrator" xml:space="preserve">
+    <value>Administrator</value>
+  </data>
+  <data name="AlwaysShowIconInTray" xml:space="preserve">
+    <value>Always show icon in tray</value>
+  </data>
+  <data name="Attempts" xml:space="preserve">
+    <value>Attempts</value>
+  </data>
+  <data name="AverageTime" xml:space="preserve">
+    <value>Average time</value>
+  </data>
+  <data name="Broadcast" xml:space="preserve">
+    <value>Broadcast</value>
+  </data>
+  <data name="Buffer" xml:space="preserve">
+    <value>Buffer</value>
+  </data>
+  <data name="Bytes" xml:space="preserve">
+    <value>Bytes</value>
+  </data>
+  <data name="CIDR" xml:space="preserve">
+    <value>CIDR</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="DefaultGateway" xml:space="preserve">
+    <value>Default-Gateway</value>
+  </data>
+  <data name="DeleteDots" xml:space="preserve">
+    <value>Delete...</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="DHCPEnabled" xml:space="preserve">
+    <value>DHCP enabled</value>
+  </data>
+  <data name="DHCPLeaseExpires" xml:space="preserve">
+    <value>DHCP lease expires</value>
+  </data>
+  <data name="DHCPLeaseObtained" xml:space="preserve">
+    <value>DHCP lease obtained</value>
+  </data>
+  <data name="DHCPServer" xml:space="preserve">
+    <value>DHCP server</value>
+  </data>
+  <data name="DNSServers" xml:space="preserve">
+    <value>DNS server(s)</value>
+  </data>
+  <data name="DNSSuffix" xml:space="preserve">
+    <value>DNS suffix</value>
+  </data>
+  <data name="DynamicIPv4Address" xml:space="preserve">
+    <value>Dynamic IPv4 address</value>
+  </data>
+  <data name="DynamicIPv4DNSServer" xml:space="preserve">
+    <value>Dynamic IPv4 DNS server</value>
+  </data>
+  <data name="Hop" xml:space="preserve">
+    <value>Hop</value>
+  </data>
+  <data name="Hops" xml:space="preserve">
+    <value>Hops</value>
+  </data>
+  <data name="Hostname" xml:space="preserve">
+    <value>Hostname</value>
+  </data>
+  <data name="IPAddress" xml:space="preserve">
+    <value>IP address</value>
+  </data>
+  <data name="IPAddresses" xml:space="preserve">
+    <value>IP addresses</value>
+  </data>
+  <data name="IPv4" xml:space="preserve">
+    <value>IPv4</value>
+  </data>
+  <data name="IPv4Address" xml:space="preserve">
+    <value>IPv4 address</value>
+  </data>
+  <data name="IPv4DefaultGateway" xml:space="preserve">
+    <value>IPv4-Default-Gateway</value>
+  </data>
+  <data name="IPv6" xml:space="preserve">
+    <value>IPv6</value>
+  </data>
+  <data name="IPv6Address" xml:space="preserve">
+    <value>IPv6 address</value>
+  </data>
+  <data name="IPv6AddressLinkLocal" xml:space="preserve">
+    <value>Link-local IPv6 address</value>
+  </data>
+  <data name="IPv6DefaultGateway" xml:space="preserve">
+    <value>IPv6-Default-Gateway</value>
+  </data>
+  <data name="Maximum" xml:space="preserve">
+    <value>Maximum</value>
+  </data>
+  <data name="MaximumHopsRouter" xml:space="preserve">
+    <value>Maximum hops/router</value>
+  </data>
+  <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
+    <value>Minimize main window instead of terminating the application</value>
+  </data>
+  <data name="MinimizeToTrayInsteadOfTaskbar" xml:space="preserve">
+    <value>Minimize to tray instead of taskbar</value>
+  </data>
+  <data name="Minimum" xml:space="preserve">
+    <value>Minimum</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NetworkAddress" xml:space="preserve">
+    <value>Network address</value>
+  </data>
+  <data name="NewSubnetmaskOrCIDR" xml:space="preserve">
+    <value>New subnetmask or CIDR</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="ObtainAnIPAddressAutomatically" xml:space="preserve">
+    <value>Obtain an IP address automatically</value>
+  </data>
+  <data name="ObtainDNSServerAddressAutomatically" xml:space="preserve">
+    <value>Obtain DNS server address automatically</value>
+  </data>
+  <data name="PacketLoss" xml:space="preserve">
+    <value>Packet loss</value>
+  </data>
+  <data name="PacketsTransmitted" xml:space="preserve">
+    <value>Packets transmitted</value>
+  </data>
+  <data name="PhysicalAddress" xml:space="preserve">
+    <value>PhysicalAddress</value>
+  </data>
+  <data name="PreferredProtocolWhenResolvingHostname" xml:space="preserve">
+    <value>Preferred protocol when resolving hostname:</value>
+  </data>
+  <data name="PrimaryDNSServer" xml:space="preserve">
+    <value>Primary DNS server</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>NETworkManager</value>
+  </data>
+  <data name="ReadTheMACAddressFromTheArpCache" xml:space="preserve">
+    <value>Read the MAC address from the ARP cache</value>
+  </data>
+  <data name="ReceivedLost" xml:space="preserve">
+    <value>Received / Lost</value>
+  </data>
+  <data name="ResolveHostname" xml:space="preserve">
+    <value>Resolve hostname</value>
+  </data>
+  <data name="RestartRequired" xml:space="preserve">
+    <value>Restart required</value>
+  </data>
+  <data name="RestartRequiredSettingsChangedMessage" xml:space="preserve">
+    <value>Some settings are applied only after restarting the application!</value>
+  </data>
+  <data name="SaveSettingsInApplicationFolder" xml:space="preserve">
+    <value>Save settings in the application folder</value>
+  </data>
+  <data name="SecondaryDNSServer" xml:space="preserve">
+    <value>Secondary DNS server</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="ShowTheFollowingApplicationOnStartup" xml:space="preserve">
+    <value>Show the following application on startup:</value>
+  </data>
+  <data name="Slogan" xml:space="preserve">
+    <value>A powerful tool for managing networks and troubleshoot network problems!</value>
+  </data>
+  <data name="Speed" xml:space="preserve">
+    <value>Speed</value>
+  </data>
+  <data name="StartMinimizedInTray" xml:space="preserve">
+    <value>Start minimized in tray</value>
+  </data>
+  <data name="StartWithWindows" xml:space="preserve">
+    <value>Start with Windows</value>
+  </data>
+  <data name="StaticIPv4Address" xml:space="preserve">
+    <value>Static IPv4 address</value>
+  </data>
+  <data name="StaticIPv4DNSServer" xml:space="preserve">
+    <value>Static IPv4 DNS server</value>
+  </data>
+  <data name="Subnetmask" xml:space="preserve">
+    <value>Subnetmask</value>
+  </data>
+  <data name="SubnetmaskOrCIDR" xml:space="preserve">
+    <value>Subnetmask or CIDR</value>
+  </data>
+  <data name="Threads" xml:space="preserve">
+    <value>Threads</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="Time1" xml:space="preserve">
+    <value>Time 1</value>
+  </data>
+  <data name="Time2" xml:space="preserve">
+    <value>Time 2</value>
+  </data>
+  <data name="Time3" xml:space="preserve">
+    <value>Time 3</value>
+  </data>
+  <data name="Timeout" xml:space="preserve">
+    <value>Timeout</value>
+  </data>
+  <data name="TimeoutMS" xml:space="preserve">
+    <value>Timeout (ms)</value>
+  </data>
+  <data name="TimeToWaitBetweenEachPing" xml:space="preserve">
+    <value>Time to wait between each ping</value>
+  </data>
+  <data name="TTL" xml:space="preserve">
+    <value>TTL</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="UseTheFollowingDNSServerAddresses" xml:space="preserve">
+    <value>Use the following DNS server addresses:</value>
+  </data>
+  <data name="UseTheFollowingIPAddress" xml:space="preserve">
+    <value>Use the following IP address:</value>
+  </data>
+  <data name="WakeUp" xml:space="preserve">
+    <value>Wake up</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
 </root>
