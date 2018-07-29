@@ -26,7 +26,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.Disconnected}" Style="{StaticResource HeaderTextBlock}" />
-            <TextBlock Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{DynamicResource String_PuTTYProcessHasEnded}" Style="{DynamicResource DefaultTextBlock}" />
+            <TextBlock Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{x:Static localization:Strings.PuTTYProcessHasEnded}" Style="{DynamicResource DefaultTextBlock}" />
             <Button Grid.Row="3" Content="{DynamicResource String_Button_Reconnect}" Command="{Binding ReconnectCommand}" IsDefault="True" Style="{StaticResource DefaultButton}"/>
         </Grid>
     </Grid>
