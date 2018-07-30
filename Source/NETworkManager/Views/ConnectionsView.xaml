@@ -10,6 +10,7 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:network="clr-namespace:NETworkManager.Models.Network"
         xmlns:utilities="clr-namespace:NETworkManager.Utilities"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ConnectionsViewModel}">
     <UserControl.Resources>

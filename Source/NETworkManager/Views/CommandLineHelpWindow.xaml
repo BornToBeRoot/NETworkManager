@@ -7,7 +7,7 @@
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         mc:Ignorable="d"
-        Title="{DynamicResource String_ProductName}" Topmost="True" Style="{DynamicResource DefaultWindow}" MinHeight="500" Height="500" MinWidth="500" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" IsMinButtonEnabled="False" IsMaxRestoreButtonEnabled="False" ShowInTaskbar="False">
+        Title="{x:Static localization:StaticStrings.ProductName}" Topmost="True" Style="{DynamicResource DefaultWindow}" MinHeight="500" Height="500" MinWidth="500" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" IsMinButtonEnabled="False" IsMaxRestoreButtonEnabled="False" ShowInTaskbar="False">
     <mahAppsControls:MetroWindow.WindowButtonCommands>
         <mahAppsControls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </mahAppsControls:MetroWindow.WindowButtonCommands>
