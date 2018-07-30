@@ -266,7 +266,7 @@ namespace NETworkManager
 
             // Set windows title if admin
             if (ConfigurationManager.Current.IsAdmin)
-                Title = $"[{LocalizationManager.GetStringByKey("String_Administrator")}] {Title}";
+                Title = $"[{NETworkManager.Resources.Localization.Strings.Administrator}] {Title}";
 
 #if DEBUG
             Title += $" - Debug ({AssemblyManager.Current.Version} | {AssemblyManager.Current.BuildDate.ToString(CultureInfo.CurrentCulture)})";
@@ -297,11 +297,11 @@ namespace NETworkManager
             if (ConfigurationManager.Current.ShowSettingsResetNoteOnStartup)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
+                settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
 
                 ConfigurationManager.Current.IsDialogOpen = true;
 
-                await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.SettingsHaveBeenReset, LocalizationManager.GetStringByKey("String_SettingsFileFoundWasCorruptOrNotCompatibleMessage"), MessageDialogStyle.Affirmative, settings);
+                await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.SettingsHaveBeenReset, NETworkManager.Resources.Localization.Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage , MessageDialogStyle.Affirmative, settings);
 
                 ConfigurationManager.Current.IsDialogOpen = false;
             }
@@ -374,14 +374,14 @@ namespace NETworkManager
 
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_Close");
-                settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_Cancel");
+                settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.Close;
+                settings.NegativeButtonText = NETworkManager.Resources.Localization.Strings.Cancel;
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 // Fix airspace issues
                 ConfigurationManager.Current.IsDialogOpen = true;
 
-                var result = await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.Confirm, LocalizationManager.GetStringByKey("String_ConfirmCloseQuesiton"), MessageDialogStyle.AffirmativeAndNegative, settings);
+                var result = await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.Confirm, NETworkManager.Resources.Localization.Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
 
                 ConfigurationManager.Current.IsDialogOpen = false;
 
@@ -720,13 +720,13 @@ namespace NETworkManager
 
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_RestartNow");
-                settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
+                settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.RestartNow;
+                settings.NegativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 ConfigurationManager.Current.IsDialogOpen = true;
 
-                if (await this.ShowMessageAsync(LocalizationManager.GetStringByKey("String_RestartRequired"), LocalizationManager.GetStringByKey("String_RestartRequiredAfterSettingsChanged"), MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
+                if (await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.RestartRequired, NETworkManager.Resources.Localization.Strings.RestartRequiredSettingsChangedMessage, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
                 {
                     RestartApplication();
                     return;
@@ -807,7 +807,7 @@ namespace NETworkManager
 
         private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
         {
-            UpdateText = string.Format(LocalizationManager.GetStringByKey("String_VersionxxIsAvailable"), e.Version);
+            UpdateText = string.Format(NETworkManager.Resources.Localization.Strings.VersionxxIsAvailable, e.Version);
             UpdateAvailable = true;
         }
         #endregion

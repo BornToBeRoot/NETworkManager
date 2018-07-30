@@ -367,7 +367,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
-            }, LocalizationManager.GetStringByKey("String_DeleteProfileMessage"));
+            }, Resources.Localization.Strings.DeleteProfileMessage);
 
             customDialog.Content = new ConfirmRemoveDialog
             {

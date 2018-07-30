@@ -285,7 +285,7 @@ namespace NETworkManager.ViewModels
             // Result view
             PortScanResultView = CollectionViewSource.GetDefaultView(PortScanResult);
             PortScanResultView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortInfo.Host)));
-            
+
             LoadSettings();
 
             // Detect if settings have changed...
@@ -369,7 +369,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {
-            Clipboard.SetText(LocalizationManager.GetStringByKey("String_PortStatus_" + SelectedScanResult.Status.ToString()));
+            Clipboard.SetText(Resources.Localization.Strings.ResourceManager.GetString(SelectedScanResult.Status.ToString()));
         }
 
         public ICommand CopySelectedProtocolCommand
@@ -502,7 +502,7 @@ namespace NETworkManager.ViewModels
                     if (!string.IsNullOrEmpty(StatusMessage))
                         StatusMessage += Environment.NewLine;
 
-                    StatusMessage += string.Format(LocalizationManager.GetStringByKey("String_CouldNotResolveHostnameFor"), host1);
+                    StatusMessage += string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, host1);
                     DisplayStatusMessage = true;
 
                     continue;
@@ -513,7 +513,7 @@ namespace NETworkManager.ViewModels
 
             if (hostData.Count == 0)
             {
-                StatusMessage += Environment.NewLine + LocalizationManager.GetStringByKey("String_NothingToDoCheckYourInput");
+                StatusMessage += Environment.NewLine + Resources.Localization.Strings.NothingToDoCheckYourInput;
                 DisplayStatusMessage = true;
 
                 ScanFinished();
@@ -609,7 +609,7 @@ namespace NETworkManager.ViewModels
         #region Events
         private void PortScanner_UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = LocalizationManager.GetStringByKey("String_CanceledByUser");
+            StatusMessage = Resources.Localization.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
 
             ScanFinished();

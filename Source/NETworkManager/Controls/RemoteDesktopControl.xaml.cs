@@ -6,7 +6,6 @@ using System.Windows.Input;
 using System;
 using System.Windows.Threading;
 using NETworkManager.Utilities;
-using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Controls
 {
@@ -24,8 +23,6 @@ namespace NETworkManager.Controls
         #region Variables
         private bool _initialized;
 
-        private const string RemoteDesktopDisconnectReasonIdentifier = "String_RemoteDesktopDisconnectReason_";
-
         private readonly RemoteDesktopSessionInfo _rdpSessionInfo;
 
         private readonly DispatcherTimer _reconnectAdjustScreenTimer = new DispatcherTimer();
@@ -35,7 +32,7 @@ namespace NETworkManager.Controls
         public double RdpClientWidth
         {
             get => _rdpClientWidth;
-            set 
+            set
             {
                 if (value == _rdpClientWidth)
                     return;
@@ -158,7 +155,7 @@ namespace NETworkManager.Controls
                 RdpClient.UserName = _rdpSessionInfo.Username;
                 RdpClient.AdvancedSettings9.ClearTextPassword = SecureStringHelper.ConvertToString(_rdpSessionInfo.Password);
             }
-            
+
             // AdvancedSettings
             RdpClient.AdvancedSettings9.AuthenticationLevel = _rdpSessionInfo.AuthenticationLevel;
             RdpClient.AdvancedSettings9.EnableCredSspSupport = _rdpSessionInfo.EnableCredSspSupport;
@@ -194,9 +191,9 @@ namespace NETworkManager.Controls
             RdpClient.OnConnected += RdpClient_OnConnected;
             RdpClient.OnDisconnected += RdpClient_OnDisconnected;
 
-            RdpClient.AdvancedSettings9.EnableWindowsKey = 1;                       
+            RdpClient.AdvancedSettings9.EnableWindowsKey = 1;
 
-            RdpClient.Connect();                        
+            RdpClient.Connect();
         }
 
         private void Reconnect()
@@ -237,117 +234,104 @@ namespace NETworkManager.Controls
             Disconnect();
         }
 
-        // Source: https://msdn.microsoft.com/en-us/library/aa382170(v=vs.85).aspx
-        private static string GetDisconnectReasonFromResource(string reason)
-        {
-            try
-            {
-                return LocalizationManager.GetStringByKey(RemoteDesktopDisconnectReasonIdentifier + reason);
-            }
-            catch (NullReferenceException ex) // This happens when the application gets closed and the resources have already been released
-            {
-                return ex.Message; // The user should never see that message
-            }
-        }
-
         private static string GetDisconnectReason(int reason)
         {
             switch (reason)
             {
                 case 0:
-                    return GetDisconnectReasonFromResource("NoInfo");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_NoInfo;
                 case 1:
-                    return GetDisconnectReasonFromResource("LocalNotError");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_LocalNotError;
                 case 2:
-                    return GetDisconnectReasonFromResource("RemoteByUser");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_RemoteByUser;
                 case 3:
-                    return GetDisconnectReasonFromResource("ByServer");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_ByServer;
                 case 260:
-                    return GetDisconnectReasonFromResource("DNSLookupFailed");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_DNSLookupFailed;
                 case 262:
-                    return GetDisconnectReasonFromResource("OutOfMemory");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_OutOfMemory;
                 case 264:
-                    return GetDisconnectReasonFromResource("ConnectionTimedOut");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_ConnectionTimedOut;
                 case 516:
-                    return GetDisconnectReasonFromResource("SocketConnectFailed");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SocketConnectFailed;
                 case 518:
-                    return GetDisconnectReasonFromResource("OutOfMemory2");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_OutOfMemory2;
                 case 520:
-                    return GetDisconnectReasonFromResource("HostNotFound");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_HostNotFound;
                 case 772:
-                    return GetDisconnectReasonFromResource("WinsockSendFailed");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_WinsockSendFailed;
                 case 774:
-                    return GetDisconnectReasonFromResource("OutOfMemory3");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_OutOfMemory3;
                 case 776:
-                    return GetDisconnectReasonFromResource("InvalidIPAddr");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InvalidIPAddr;
                 case 1028:
-                    return GetDisconnectReasonFromResource("SocketRecvFailed");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SocketRecvFailed;
                 case 1030:
-                    return GetDisconnectReasonFromResource("InvalidSecurityData");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InvalidSecurityData;
                 case 1032:
-                    return GetDisconnectReasonFromResource("InternalError");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InternalError;
                 case 1286:
-                    return GetDisconnectReasonFromResource("InvalidEncryption");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InvalidEncryption;
                 case 1288:
-                    return GetDisconnectReasonFromResource("DNSLookupFailed2");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_DNSLookupFailed2;
                 case 1540:
-                    return GetDisconnectReasonFromResource("GetHostByNameFailed");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_GetHostByNameFailed;
                 case 1542:
-                    return GetDisconnectReasonFromResource("InvalidServerSecurityInfo");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InvalidServerSecurityInfo;
                 case 1544:
-                    return GetDisconnectReasonFromResource("TimerError");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_TimerError;
                 case 1796:
-                    return GetDisconnectReasonFromResource("TimeoutOccurred");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_TimeoutOccurred;
                 case 1798:
-                    return GetDisconnectReasonFromResource("ServerCertificateUnpackErr");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_ServerCertificateUnpackErr;
                 case 2052:
-                    return GetDisconnectReasonFromResource("InvalidIP");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InvalidIP;
                 case 2055:
-                    return GetDisconnectReasonFromResource("SslErrLogonFailure");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrLogonFailure;
                 case 2056:
-                    return GetDisconnectReasonFromResource("LicensingFailed");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_LicensingFailed;
                 case 2308:
-                    return GetDisconnectReasonFromResource("AtClientWinsockFDCLOSE");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE;
                 case 2310:
-                    return GetDisconnectReasonFromResource("InternalSecurityError");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InternalSecurityError;
                 case 2312:
-                    return GetDisconnectReasonFromResource("LicensingTimeout");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_LicensingTimeout;
                 case 2566:
-                    return GetDisconnectReasonFromResource("InternalSecurityError2");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InternalSecurityError2;
                 case 2567:
-                    return GetDisconnectReasonFromResource("SslErrNoSuchUser");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrNoSuchUser;
                 case 2822:
-                    return GetDisconnectReasonFromResource("EncryptionError");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_EncryptionError;
                 case 2823:
-                    return GetDisconnectReasonFromResource("SslErrAccountDisabled");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrAccountDisabled;
                 case 3078:
-                    return GetDisconnectReasonFromResource("DecryptionError");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_DecryptionError;
                 case 3079:
-                    return GetDisconnectReasonFromResource("SslErrAccountRestriction");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrAccountRestriction;
                 case 3080:
-                    return GetDisconnectReasonFromResource("ClientDecompressionError");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_ClientDecompressionError;
                 case 3335:
-                    return GetDisconnectReasonFromResource("SslErrAccountLockedOut");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrAccountLockedOut;
                 case 3591:
-                    return GetDisconnectReasonFromResource("SslErrAccountExpired");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrAccountExpired;
                 case 3847:
-                    return GetDisconnectReasonFromResource("SslErrPasswordExpired");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrPasswordExpired;
                 case 4615:
-                    return GetDisconnectReasonFromResource("SslErrPasswordMustChange");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrPasswordMustChange;
                 case 5639:
-                    return GetDisconnectReasonFromResource("SslErrDelegationPolicy");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrDelegationPolicy;
                 case 5895:
-                    return GetDisconnectReasonFromResource("SslErrPolicyNTLMOnly");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrPolicyNTLMOnly;
                 case 6151:
-                    return GetDisconnectReasonFromResource("SslErrNoAuthenticatingAuthority");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrNoAuthenticatingAuthority;
                 case 6919:
-                    return GetDisconnectReasonFromResource("SslErrCertExpired");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrCertExpired;
                 case 7175:
-                    return GetDisconnectReasonFromResource("SslErrSmartcardWrongPIN");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrSmartcardWrongPIN;
                 case 8455:
-                    return GetDisconnectReasonFromResource("SslErrFreshCredRequiredByServer");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrFreshCredRequiredByServer;
                 case 8711:
-                    return GetDisconnectReasonFromResource("SslErrSmartcardCardBlocked");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrSmartcardCardBlocked;
                 default:
                     return "reason not found!";
             }

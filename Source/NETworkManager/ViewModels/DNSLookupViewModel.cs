@@ -441,9 +441,9 @@ namespace NETworkManager.ViewModels
                 StatusMessage += Environment.NewLine;
 
             if (e.ErrorCode == "Timeout Error")
-                StatusMessage += string.Format(LocalizationManager.GetStringByKey("String_TimeoutWhenQueryingDNSServer"), e.DNSServer);
+                StatusMessage += string.Format(Resources.Localization.Strings.TimeoutWhenQueryingDNSServerMessage, e.DNSServer);
             else
-                StatusMessage += LocalizationManager.GetStringByKey("String_UnkownError");
+                StatusMessage += Resources.Localization.Strings.UnkownError;
 
             DisplayStatusMessage = true;
 

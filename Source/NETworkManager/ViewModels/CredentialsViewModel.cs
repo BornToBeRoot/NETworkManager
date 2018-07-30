@@ -289,7 +289,7 @@ namespace NETworkManager.ViewModels
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 if (!CredentialManager.Load(instance.Password))
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.WrongPassword, LocalizationManager.GetStringByKey("String_WrongPasswordDecryptionFailed"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.WrongPassword, Resources.Localization.Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
 
                 CheckCredentialsLoaded();
 
@@ -425,7 +425,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, LocalizationManager.GetStringByKey("String_DeleteCredentialMessage"));
+            }, Resources.Localization.Strings.DeleteCredentialMessage);
 
             customDialog.Content = new ConfirmRemoveDialog
             {
@@ -451,7 +451,7 @@ namespace NETworkManager.ViewModels
                     if (CredentialManager.VerifyMasterPasword(instance.Password))
                         TimerLockUiStart();
                     else
-                        await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.WrongPassword, LocalizationManager.GetStringByKey("String_WrongPassword"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                        await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.WrongPassword, Resources.Localization.Strings.WrongPasswordMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
                 }, instance =>
                 {
                     _dialogCoordinator.HideMetroDialogAsync(this, customDialogMasterPassword);

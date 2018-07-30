@@ -181,7 +181,7 @@ namespace NETworkManager.ViewModels
                 var filter = Search.Replace(" ", "").Replace("-", "").Replace(":", "");
 
                 // Search by IPAddress and MACAddress
-                return info.IPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || (info.IsMulticast ? LocalizationManager.GetStringByKey("String_Yes") : LocalizationManager.GetStringByKey("String_No")).IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1;
+                return info.IPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || (info.IsMulticast ? Resources.Localization.Strings.Yes : Resources.Localization.Strings.No).IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
             AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);
@@ -255,7 +255,7 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                ARPTable arpTable = new ARPTable();
+                var arpTable = new ARPTable();
 
                 arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
 
@@ -343,7 +343,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedMulticastAction()
         {
-            Clipboard.SetText(SelectedARPTableInfo.IsMulticast ? LocalizationManager.GetStringByKey("String_Yes") : LocalizationManager.GetStringByKey("String_No"));
+            Clipboard.SetText(SelectedARPTableInfo.IsMulticast ? Resources.Localization.Strings.Yes : Resources.Localization.Strings.No);
         }
         #endregion
 
@@ -380,7 +380,7 @@ namespace NETworkManager.ViewModels
         #region Events
         private void ArpTable_UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = LocalizationManager.GetStringByKey("String_CanceledByUser");
+            StatusMessage = Resources.Localization.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
         }
 

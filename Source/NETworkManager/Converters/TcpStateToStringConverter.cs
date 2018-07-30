@@ -1,5 +1,4 @@
-﻿using NETworkManager.Models.Settings;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Net.NetworkInformation;
 using System.Windows.Data;
@@ -13,7 +12,7 @@ namespace NETworkManager.Converters
             if (!(value is TcpState tcpState))
                 return "-/-";
 
-            var status = LocalizationManager.GetStringByKey("String_TcpState_" + tcpState);
+            var status = Resources.Localization.Strings.ResourceManager.GetString("String_TcpState_" + tcpState);
 
             return string.IsNullOrEmpty(status) ? tcpState.ToString() : status;
         }

@@ -264,12 +264,12 @@ namespace NETworkManager.ViewModels
             {
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_Continue");
-                settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_Cancel");
+                settings.AffirmativeButtonText = Resources.Localization.Strings.Continue;
+                settings.NegativeButtonText = Resources.Localization.Strings.Cancel;
 
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-                if (await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.AreYouSure, LocalizationManager.GetStringByKey("String_TheProcessCanTakeUpSomeTimeAndResources"), MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+                if (await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.AreYouSure, Resources.Localization.Strings.TheProcessCanTakeUpSomeTimeAndResources, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 {
                     IsCalculationRunning = false;
 

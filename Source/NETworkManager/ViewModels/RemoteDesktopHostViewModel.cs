@@ -364,7 +364,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
-            }, LocalizationManager.GetStringByKey("String_DeleteProfileMessage"));
+            }, Resources.Localization.Strings.DeleteProfileMessage);
 
             customDialog.Content = new ConfirmRemoveDialog
             {
@@ -525,7 +525,7 @@ namespace NETworkManager.ViewModels
                             if (credentialInfo == null)
                             {
                                 ConfigurationManager.Current.IsDialogOpen = true;
-                                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.CredentialNotFound, LocalizationManager.GetStringByKey("String_CredentialNotFoundMessage"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.CredentialNotFound, Resources.Localization.Strings.CredentialNotFoundMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
                                 ConfigurationManager.Current.IsDialogOpen = false;
 
                                 return;
@@ -540,11 +540,11 @@ namespace NETworkManager.ViewModels
                         else
                         {
                             ConfigurationManager.Current.IsDialogOpen = true;
-                            await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.WrongPassword, LocalizationManager.GetStringByKey("String_WrongPasswordDecryptionFailed"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                            await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.WrongPassword, Resources.Localization.Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
                             ConfigurationManager.Current.IsDialogOpen = false;
                         }
                     }, instance =>
-                    {                        
+                    {
                         _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                         ConfigurationManager.Current.IsDialogOpen = false;
                     });
@@ -564,7 +564,7 @@ namespace NETworkManager.ViewModels
                     if (credentialInfo == null)
                     {
                         ConfigurationManager.Current.IsDialogOpen = true;
-                        await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.CredentialNotFound, LocalizationManager.GetStringByKey("String_CredentialNotFoundMessage"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                        await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.CredentialNotFound, Resources.Localization.Strings.CredentialNotFoundMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
                         ConfigurationManager.Current.IsDialogOpen = false;
 
                         return;

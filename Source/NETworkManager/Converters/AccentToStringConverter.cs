@@ -1,5 +1,4 @@
 ﻿using MahApps.Metro;
-using NETworkManager.Models.Settings;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -14,7 +13,7 @@ namespace NETworkManager.Converters
             if (!(value is Accent accent))
                 return "No valid accent passed!";
 
-            var name = LocalizationManager.GetStringByKey("String_Accent_" + accent.Name);
+            var name = Resources.Localization.Strings.ResourceManager.GetString(accent.Name);
 
             if (string.IsNullOrEmpty(name))
                 name = accent.Name;

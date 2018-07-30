@@ -1636,6 +1636,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter a valid value between 25 and 100!.
+        /// </summary>
+        public static string EnterValidValueBetween25and100 {
+            get {
+                return ResourceManager.GetString("EnterValidValueBetween25and100", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter a valid website (like https://example.com/index.html).
         /// </summary>
         public static string EnterValidWebsiteUri {
@@ -2392,15 +2401,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hour(s).
-        /// </summary>
-        public static string Hours {
-            get {
-                return ResourceManager.GetString("Hours", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to HTTP Headers.
         /// </summary>
         public static string HTTPHeaders {
@@ -2874,15 +2874,6 @@ namespace NETworkManager.Resources.Localization {
         public static string Minimum {
             get {
                 return ResourceManager.GetString("Minimum", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Minute(s).
-        /// </summary>
-        public static string Minutes {
-            get {
-                return ResourceManager.GetString("Minutes", resourceCulture);
             }
         }
         
@@ -3495,15 +3486,6 @@ namespace NETworkManager.Resources.Localization {
         public static string Priv {
             get {
                 return ResourceManager.GetString("Priv", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NETworkManager.
-        /// </summary>
-        public static string ProductName {
-            get {
-                return ResourceManager.GetString("ProductName", resourceCulture);
             }
         }
         
@@ -4399,15 +4381,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Second(s).
-        /// </summary>
-        public static string Seconds {
-            get {
-                return ResourceManager.GetString("Seconds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Security.
         /// </summary>
         public static string Security {
@@ -5196,6 +5169,33 @@ namespace NETworkManager.Resources.Localization {
         public static string TimeToWaitBetweenEachPing {
             get {
                 return ResourceManager.GetString("TimeToWaitBetweenEachPing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hour(s).
+        /// </summary>
+        public static string TimeUnit_Hour {
+            get {
+                return ResourceManager.GetString("TimeUnit_Hour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minute(s).
+        /// </summary>
+        public static string TimeUnit_Minute {
+            get {
+                return ResourceManager.GetString("TimeUnit_Minute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Second(s).
+        /// </summary>
+        public static string TimeUnit_Second {
+            get {
+                return ResourceManager.GetString("TimeUnit_Second", resourceCulture);
             }
         }
         

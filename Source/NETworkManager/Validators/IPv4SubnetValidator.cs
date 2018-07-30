@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators
@@ -19,7 +18,7 @@ namespace NETworkManager.Validators
             if (subnet != null && Regex.IsMatch(subnet, RegexHelper.IPv4AddressSubnetmaskRegex))
                 return ValidationResult.ValidResult;
 
-            return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidSubnet"));
+            return new ValidationResult(false, Resources.Localization.Strings.EnterValidSubnet);
         }
     }
 }

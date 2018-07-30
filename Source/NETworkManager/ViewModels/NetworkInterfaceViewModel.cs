@@ -925,7 +925,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, LocalizationManager.GetStringByKey("String_DeleteProfileMessage"));
+            }, Resources.Localization.Strings.DeleteProfileMessage);
 
             customDialog.Content = new ConfirmRemoveDialog
             {
@@ -1145,7 +1145,7 @@ namespace NETworkManager.ViewModels
         #region Events
         private void NetworkInterface_UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = LocalizationManager.GetStringByKey("String_CanceledByUser");
+            StatusMessage = Resources.Localization.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
         }
 

@@ -467,7 +467,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {
-            Clipboard.SetText(LocalizationManager.GetStringByKey("String_IPStatus_" + SelectedIPScanResult.PingInfo.Status.ToString()));
+            Clipboard.SetText(Resources.Localization.Strings.ResourceManager.GetString("String_IPStatus_" + SelectedIPScanResult.PingInfo.Status));
         }
         #endregion
 
@@ -640,7 +640,7 @@ namespace NETworkManager.ViewModels
 
         private void IpScanner_DnsResolveFailed(AggregateException e)
         {
-            StatusMessage = $"{LocalizationManager.GetStringByKey("String_TheFollowingHostnamesCouldNotBeResolved")} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
+            StatusMessage = $"{Resources.Localization.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
             DisplayStatusMessage = true;
 
             ScanFinished();
@@ -648,7 +648,7 @@ namespace NETworkManager.ViewModels
 
         private void IpScanner_UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = LocalizationManager.GetStringByKey("String_CanceledByUser");
+            StatusMessage = Resources.Localization.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
 
             ScanFinished();

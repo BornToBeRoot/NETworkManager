@@ -561,9 +561,6 @@
   <data name="PrimaryDNSServer" xml:space="preserve">
     <value>Primary DNS server</value>
   </data>
-  <data name="ProductName" xml:space="preserve">
-    <value>NETworkManager</value>
-  </data>
   <data name="ReadTheMACAddressFromTheArpCache" xml:space="preserve">
     <value>Read the MAC address from the ARP cache</value>
   </data>
@@ -1515,13 +1512,13 @@
   <data name="HelpMessage_Tags" xml:space="preserve">
     <value>Tags help you organize profiles/Profiles by topics/projects. Multiple tags can be used with ";" be separated. Search by tags with "tag=xxx".</value>
   </data>
-  <data name="Hours" xml:space="preserve">
+  <data name="TimeUnit_Hour" xml:space="preserve">
     <value>Hour(s)</value>
   </data>
   <data name="LocationOfTheImport" xml:space="preserve">
     <value>Location of the import file...</value>
   </data>
-  <data name="Minutes" xml:space="preserve">
+  <data name="TimeUnit_Minute" xml:space="preserve">
     <value>Minute(s)</value>
   </data>
   <data name="MoveAndRestart" xml:space="preserve">
@@ -1572,7 +1569,7 @@
   <data name="SearchDots" xml:space="preserve">
     <value>Search...</value>
   </data>
-  <data name="Seconds" xml:space="preserve">
+  <data name="TimeUnit_Second" xml:space="preserve">
     <value>Second(s)</value>
   </data>
   <data name="Send" xml:space="preserve">
@@ -1949,5 +1946,8 @@
   </data>
   <data name="Yellow" xml:space="preserve">
     <value>Yellow</value>
+  </data>
+  <data name="EnterValidValueBetween25and100" xml:space="preserve">
+    <value>Enter a valid value between 25 and 100!</value>
   </data>
 </root>

@@ -1,5 +1,4 @@
-﻿using NETworkManager.Models.Settings;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
 using System.Windows.Controls;
 
@@ -12,7 +11,7 @@ namespace NETworkManager.Validators
             if (string.IsNullOrEmpty(value as string) || !((string) value).Any(char.IsWhiteSpace))
                 return ValidationResult.ValidResult;
 
-            return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_SpacesAreNotAllowed"));
+            return new ValidationResult(false, Resources.Localization.Strings.SpacesAreNotAllowed);
         }
     }
 }
