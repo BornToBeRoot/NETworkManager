@@ -655,7 +655,7 @@
     <value>Yes</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>Add</value>
+    <value>add</value>
   </data>
   <data name="AddATabToOpenANewConnection" xml:space="preserve">
     <value>Add a tab to open a new connection...</value>
@@ -964,7 +964,7 @@
     <value>The network address cannot be reached. Check if your computer is connected to the network. For information about network troubleshooting, see Windows Help.</value>
   </data>
   <data name="NewConnectionDots" xml:space="preserve">
-    <value>New connections...</value>
+    <value>New connection...</value>
   </data>
   <data name="NoDNSRecordFoundCheckYourInputAndSettings" xml:space="preserve">
     <value>No DNS record found for "{0}"! Check your input and the settings.</value>

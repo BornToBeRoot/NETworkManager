@@ -79,7 +79,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add.
+        ///   Looks up a localized string similar to add.
         /// </summary>
         public static string Add {
             get {
@@ -2950,7 +2950,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New connections....
+        ///   Looks up a localized string similar to New connection....
         /// </summary>
         public static string NewConnectionDots {
             get {
