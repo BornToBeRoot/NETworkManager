@@ -9,6 +9,6 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsUpdateViewModel}">
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Update}" />
-        <mahAppsControls:ToggleSwitch Header="{DynamicResource String_CheckForUpdatesAtStartup}" IsChecked="{Binding CheckForUpdatesAtStartup}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" Margin="0,0,0,10"/>
+        <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.CheckForUpdatesAtStartup}" IsChecked="{Binding CheckForUpdatesAtStartup}"   Margin="0,0,0,10"/>
     </StackPanel>
 </UserControl>

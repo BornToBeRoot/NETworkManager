@@ -13,7 +13,7 @@ namespace NETworkManager.Views
             DataContext = _viewModel;
         }
 
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void Click(object sender, System.Windows.RoutedEventArgs e)
         {
             Close();
         }

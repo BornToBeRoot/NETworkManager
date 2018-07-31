@@ -49,8 +49,8 @@
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_Subnet}" />
-                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="ComboBoxSubnet" Height="{Binding ElementName=ComboBoxNewSubnetmaskOrCIDR, Path=ActualHeight}" ItemsSource="{Binding SubnetHistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4IPv6Subnet}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.Subnet}" />
+                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="ComboBoxSubnet" Height="{Binding ElementName=ComboBoxNewSubnetmaskOrCIDR, Path=ActualHeight}" ItemsSource="{Binding SubnetHistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4IPv6Subnet}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Subnet" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>
@@ -60,8 +60,8 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_NewSubnetmaskOrCIDR}" />
-                <ComboBox x:Name="ComboBoxNewSubnetmaskOrCIDR" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding NewSubnetmaskOrCIDRHistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetmaskIPv6CIDR}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.NewSubnetmaskOrCIDR}" />
+                <ComboBox x:Name="ComboBoxNewSubnetmaskOrCIDR" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding NewSubnetmaskOrCIDRHistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4SubnetmaskIPv6CIDR}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="NewSubnetmaskOrCIDR" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>
@@ -112,7 +112,7 @@
                             <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Text" Value="{DynamicResource String_Button_Calculate}"/>
+                                        <Setter Property="Text" Value="{x:Static localization:Strings.Calculate}"/>
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
@@ -138,7 +138,7 @@
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{DynamicResource String_CopyDots}">
+                    <MenuItem Header="{x:Static localization:Strings.CopyDots}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -146,7 +146,7 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
-                        <MenuItem Header="{DynamicResource String_NetworkAddress}" Command="{Binding CopySelectedNetworkAddressCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.NetworkAddress}" Command="{Binding CopySelectedNetworkAddressCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -155,7 +155,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Broadcast}" Command="{Binding CopySelectedBroadcastCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Broadcast}" Command="{Binding CopySelectedBroadcastCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -164,7 +164,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_IPAddresses}" Command="{Binding CopySelectedIPAddressesCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.IPAddresses}" Command="{Binding CopySelectedIPAddressesCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -173,7 +173,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Subnetmask}" Command="{Binding CopySelectedSubnetmaskCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Subnetmask}" Command="{Binding CopySelectedSubnetmaskCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -182,7 +182,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_CIDR}" Command="{Binding CopySelectedCIDRCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.CIDR}" Command="{Binding CopySelectedCIDRCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -191,7 +191,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_FirstUsableIPAddress}" Command="{Binding CopySelectedFirstIPAddressCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.FirstUsableIPAddress}" Command="{Binding CopySelectedFirstIPAddressCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -200,7 +200,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_LastUsableIPAddress}" Command="{Binding CopySelectedLastIPAddressCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.LastUsableIPAddress}" Command="{Binding CopySelectedLastIPAddressCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -209,7 +209,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Host}" Command="{Binding CopySelectedHostCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Host}" Command="{Binding CopySelectedHostCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -231,16 +231,16 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_NetworkAddress}" Binding="{Binding (net:IPNetwork.Network), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
-                <DataGridTextColumn Header="{DynamicResource String_Broadcast}" Binding="{Binding (net:IPNetwork.Broadcast), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
-                <DataGridTextColumn Header="{DynamicResource String_IPAddresses}" Binding="{Binding (net:IPNetwork.Total), Converter={StaticResource BigIntegerToStringConverter}}" MinWidth="150"  Width="Auto" />
-                <DataGridTextColumn Header="{DynamicResource String_Subnetmask}" Binding="{Binding (net:IPNetwork.Netmask), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150"  Width="Auto" />
-                <DataGridTextColumn Header="{DynamicResource String_CIDR}" Binding="{Binding (net:IPNetwork.Cidr)}" MinWidth="80" Width="Auto" />
-                <DataGridTextColumn Header="{DynamicResource String_FirstUsableIPAddress}" Binding="{Binding (net:IPNetwork.FirstUsable), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
-                <DataGridTextColumn Header="{DynamicResource String_LastUsableIPAddress}" Binding="{Binding (net:IPNetwork.LastUsable), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
-                <DataGridTextColumn Header="{DynamicResource String_Hosts}" Binding="{Binding (net:IPNetwork.Usable), Converter={StaticResource BigIntegerToStringConverter}}" MinWidth="80" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.NetworkAddress}" Binding="{Binding (net:IPNetwork.Network), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Broadcast}" Binding="{Binding (net:IPNetwork.Broadcast), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddresses}" Binding="{Binding (net:IPNetwork.Total), Converter={StaticResource BigIntegerToStringConverter}}" MinWidth="150"  Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Subnetmask}" Binding="{Binding (net:IPNetwork.Netmask), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150"  Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.CIDR}" Binding="{Binding (net:IPNetwork.Cidr)}" MinWidth="80" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.FirstUsableIPAddress}" Binding="{Binding (net:IPNetwork.FirstUsable), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.LastUsableIPAddress}" Binding="{Binding (net:IPNetwork.LastUsable), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Hosts}" Binding="{Binding (net:IPNetwork.Usable), Converter={StaticResource BigIntegerToStringConverter}}" MinWidth="80" Width="Auto" />
             </DataGrid.Columns>
         </DataGrid>
-        <TextBlock Grid.Row="3" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_EnterSubnetAndANewSubnetmaskToCreateSubnets}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
+        <TextBlock Grid.Row="3" Foreground="{DynamicResource GrayBrush3}" Text="{x:Static localization:Strings.EnterSubnetAndANewSubnetmaskToCreateSubnets}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
     </Grid>
 </UserControl>

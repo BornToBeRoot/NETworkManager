@@ -211,43 +211,43 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <GridSplitter Grid.Column="1" Grid.RowSpan="19" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Name}" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" />
                             <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding DetailsName}" />
-                            <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource String_Description}" />
+                            <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Description}" />
                             <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding DetailsDescription}" />
-                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Type}" />
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Type}" />
                             <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding DetailsType}" />
-                            <TextBlock Grid.Column="0" Grid.Row="3" Text="{DynamicResource String_PhysicalAddress}" />
+                            <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.PhysicalAddress}" />
                             <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding DetailsPhysicalAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Status}" />
+                            <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Status}" />
                             <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding DetailsStatus}" />
-                            <TextBlock Grid.Column="0" Grid.Row="5" Text="{DynamicResource String_Speed}" />
+                            <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.Speed}" />
                             <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding DetailsSpeed, Converter={StaticResource BitsToHumanReadableSizeConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_IPv4Address}" />
+                            <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.IPv4Address}" />
                             <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding DetailsIPv4Address, Converter={StaticResource IPAddressArrayToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="7" Text="{DynamicResource String_Subnetmask}"  />
+                            <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.Subnetmask}"  />
                             <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding DetailsSubnetmask, Converter={StaticResource IPAddressArrayToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="8" Text="{DynamicResource String_IPv4DefaultGateway}" />
+                            <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.IPv4DefaultGateway}" />
                             <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding DetailsIPv4Gateway, Converter={StaticResource IPAddressArrayToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="9" Text="{DynamicResource String_DHCPEnabled}"  />
+                            <TextBlock Grid.Column="0" Grid.Row="9" Text="{x:Static localization:Strings.DHCPEnabled}"  />
                             <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding DetailsIPv4DhcpEnabled, Converter={StaticResource BooleanToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="10" Text="{DynamicResource String_DHCPServer}"  />
+                            <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.DHCPServer}"  />
                             <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding DetailsIPv4DhcpServer, Converter={StaticResource IPAddressArrayToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="11" Text="{DynamicResource String_DHCPLeaseObtained}"  />
+                            <TextBlock Grid.Column="0" Grid.Row="11" Text="{x:Static localization:Strings.DHCPLeaseObtained}"  />
                             <TextBox Grid.Column="2" Grid.Row="11" Text="{Binding DetailsDhcpLeaseObtained}" />
-                            <TextBlock Grid.Column="0" Grid.Row="12" Text="{DynamicResource String_DHCPLeaseExpires}"  />
+                            <TextBlock Grid.Column="0" Grid.Row="12" Text="{x:Static localization:Strings.DHCPLeaseExpires}"  />
                             <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding DetailsDhcpLeaseExpires}" />
-                            <TextBlock Grid.Column="0" Grid.Row="13" Text="{DynamicResource String_IPv6AddressLinkLocal}"  />
+                            <TextBlock Grid.Column="0" Grid.Row="13" Text="{x:Static localization:Strings.IPv6AddressLinkLocal}"  />
                             <TextBox Grid.Column="2" Grid.Row="13" Text="{Binding DetailsIPv6AddressLinkLocal, Converter={StaticResource IPAddressArrayToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="14" Text="{DynamicResource String_IPv6Address}" />
+                            <TextBlock Grid.Column="0" Grid.Row="14" Text="{x:Static localization:Strings.IPv6Address}" />
                             <TextBox Grid.Column="2" Grid.Row="14" Text="{Binding DetailsIPv6Address, Converter={StaticResource IPAddressArrayToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="15" Text="{DynamicResource String_IPv6DefaultGateway}" />
+                            <TextBlock Grid.Column="0" Grid.Row="15" Text="{x:Static localization:Strings.IPv6DefaultGateway}" />
                             <TextBox Grid.Column="2" Grid.Row="15" Text="{Binding DetailsIPv6Gateway , Converter={StaticResource IPAddressArrayToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="16" Text="{DynamicResource String_DNSAutoconfiguration}" />
+                            <TextBlock Grid.Column="0" Grid.Row="16" Text="{x:Static localization:Strings.DNSAutoconfiguration}" />
                             <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding DetailsDNSAutoconfigurationEnabled, Converter={StaticResource BooleanToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="17" Text="{DynamicResource String_DNSSuffix}" />
+                            <TextBlock Grid.Column="0" Grid.Row="17" Text="{x:Static localization:Strings.DNSSuffix}" />
                             <TextBox Grid.Column="2" Grid.Row="17" Text="{Binding DetailsDNSSuffix}" />
-                            <TextBlock Grid.Column="0" Grid.Row="18" Text="{DynamicResource String_DNSServers}" />
+                            <TextBlock Grid.Column="0" Grid.Row="18" Text="{x:Static localization:Strings.DNSServers}" />
                             <TextBox Grid.Column="2" Grid.Row="18" Text="{Binding DetailsDNSServer, Converter={StaticResource IPAddressArrayToStringConverter}}" />
                         </Grid>
                     </Grid>
@@ -262,7 +262,7 @@
                                 </Style.Triggers>
                             </Style>
                         </StackPanel.Style>
-                        <TextBlock Text="{DynamicResource String_NoEnabledNetworkAdaptersFound}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+                        <TextBlock Text="{x:Static localization:Strings.NoEnabledNetworkAdaptersFound}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button Command="{Binding ReloadNetworkInterfacesCommand}">
                                 <Button.Resources>
@@ -292,11 +292,11 @@
                                                 </Style>
                                             </Rectangle.Style>
                                         </Rectangle>
-                                        <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center" Text="{DynamicResource String_Button_Refresh}" />
+                                        <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center" Text="{x:Static localization:Strings.Refresh}" />
                                     </Grid>
                                 </Button.Content>
                             </Button>
-                            <Button Content="{DynamicResource String_Button_NetworkConnections}" Command="{Binding OpenNetworkConnectionsCommand}" Style="{StaticResource DefaultButton}" Margin="10,0,0,0"/>
+                            <Button Content="{x:Static localization:Strings.NetworkConnectionsDots}" Command="{Binding OpenNetworkConnectionsCommand}" Style="{StaticResource DefaultButton}" Margin="10,0,0,0"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
@@ -414,13 +414,13 @@
                                             </Rectangle.Style>
                                         </Rectangle>
                                     </Button>
-                                    <TextBlock Grid.Column="0" Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{DynamicResource String_ConnectTheNetworkCardToConfigureIt}" Visibility="{Binding CanConfigure, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{x:Static localization:Strings.ConnectTheNetworkCardToConfigureIt}" Visibility="{Binding CanConfigure, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
                                 </Grid>
                             </StackPanel>
                             <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Configure}" />
                             <StackPanel Grid.Row="2">
-                                <RadioButton x:Name="RadioButtonConfigEnableDynamicIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding ConfigEnableDynamicIPAddress}" Content="{DynamicResource String_ObtainAnIPAddressAutomatically}" Margin="0,0,0,10"/>
-                                <RadioButton x:Name="RadioButtonConfigEnableStaticIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding ConfigEnableStaticIPAddress}" Content="{DynamicResource String_UseTheFollowingIPAddress}" Margin="0,0,0,10"/>
+                                <RadioButton x:Name="RadioButtonConfigEnableDynamicIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding ConfigEnableDynamicIPAddress}" Content="{x:Static localization:Strings.ObtainAnIPAddressAutomatically}" Margin="0,0,0,10"/>
+                                <RadioButton x:Name="RadioButtonConfigEnableStaticIPAddress" GroupName="IPAddressConfig" IsChecked="{Binding ConfigEnableStaticIPAddress}" Content="{x:Static localization:Strings.UseTheFollowingIPAddress}" Margin="0,0,0,10"/>
                                 <GroupBox Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigEnableStaticIPAddress}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="25,0,0,10">
                                     <Grid>
                                         <Grid.Resources>
@@ -444,8 +444,8 @@
                                             <RowDefinition Height="10" />
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
-                                        <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_IPv4Address}" />
-                                        <TextBox x:Name="TextBoxConfigIPAddress" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}">
+                                        <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.IPv4Address}" />
+                                        <TextBox x:Name="TextBoxConfigIPAddress" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Address}">
                                             <TextBox.Text>
                                                 <Binding Path="ConfigIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
@@ -455,8 +455,8 @@
                                                 </Binding>
                                             </TextBox.Text>
                                         </TextBox>
-                                        <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_SubnetmaskOrCIDR}" />
-                                        <ComboBox x:Name="ComboBoxConfigSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetmaskIPv4CIDR}" ItemsSource="{x:Static network:Subnetmask.List}">
+                                        <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.SubnetmaskOrCIDR}" />
+                                        <ComboBox x:Name="ComboBoxConfigSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4SubnetmaskIPv4CIDR}" ItemsSource="{x:Static network:Subnetmask.List}">
                                             <ComboBox.Text>
                                                 <Binding Path="ConfigSubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
@@ -481,8 +481,8 @@
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
-                                        <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_DefaultGateway}"  />
-                                        <TextBox x:Name="TextBoxConfigGateway" Grid.Column="1" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}">
+                                        <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource CenterTextBlock}"  Text="{x:Static localization:Strings.DefaultGateway}"  />
+                                        <TextBox x:Name="TextBoxConfigGateway" Grid.Column="1" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Gateway}">
                                             <TextBox.Text>
                                                 <Binding Path="ConfigGateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
@@ -493,8 +493,8 @@
                                         </TextBox>
                                     </Grid>
                                 </GroupBox>
-                                <RadioButton x:Name="RadioButtonConfigEnableDynamicDNS" GroupName="DNSServerConfig" Content="{DynamicResource String_ObtainDNSServerAddressAutomatically}" IsChecked="{Binding ConfigEnableDynamicDNS}" FontSize="14"  Margin="0,0,0,10" IsEnabled="{Binding ConfigEnableDynamicIPAddress}" />
-                                <RadioButton x:Name="RadioButtonConfigEnableStaticDNS" GroupName="DNSServerConfig" Content="{DynamicResource String_UseTheFollowingDNSServerAddresses}" IsChecked="{Binding ConfigEnableStaticDNS}" FontSize="14" Margin="0,0,0,10"/>
+                                <RadioButton x:Name="RadioButtonConfigEnableDynamicDNS" GroupName="DNSServerConfig" Content="{x:Static localization:Strings.ObtainDNSServerAddressAutomatically}" IsChecked="{Binding ConfigEnableDynamicDNS}" FontSize="14"  Margin="0,0,0,10" IsEnabled="{Binding ConfigEnableDynamicIPAddress}" />
+                                <RadioButton x:Name="RadioButtonConfigEnableStaticDNS" GroupName="DNSServerConfig" Content="{x:Static localization:Strings.UseTheFollowingDNSServerAddresses}" IsChecked="{Binding ConfigEnableStaticDNS}" FontSize="14" Margin="0,0,0,10"/>
                                 <GroupBox Width="420" HorizontalAlignment="Left" IsEnabled="{Binding ConfigEnableStaticDNS}" Style="{DynamicResource WithoutHeaderGroupBox}" Margin="25,0,0,0">
                                     <Grid>
                                         <Grid.Resources>
@@ -516,8 +516,8 @@
                                             <RowDefinition Height="10" />
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
-                                        <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_PrimaryDNSServer}"  />
-                                        <TextBox x:Name="TextBoxConfigPrimaryDNSServer" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                        <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}"  Text="{x:Static localization:Strings.PrimaryDNSServer}"  />
+                                        <TextBox x:Name="TextBoxConfigPrimaryDNSServer" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Gateway}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                             <TextBox.Text>
                                                 <Binding Path="ConfigPrimaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
@@ -526,8 +526,8 @@
                                                 </Binding>
                                             </TextBox.Text>
                                         </TextBox>
-                                        <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}"  Text="{DynamicResource String_SecondaryDNSServer}"  />
-                                        <TextBox x:Name="TextBoxConfigSecondaryDNSServer" Grid.Column="1" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNSServer}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                        <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}"  Text="{x:Static localization:Strings.SecondaryDNSServer}"  />
+                                        <TextBox x:Name="TextBoxConfigSecondaryDNSServer" Grid.Column="1" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4DNSServer}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                             <TextBox.Text>
                                                 <Binding Path="ConfigSecondaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
@@ -571,7 +571,7 @@
                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ListDelete}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
-                                    <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_FlushDNSCache}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.FlushDNSCache}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
                                 </Grid>
                             </Button.Content>
                         </Button>
@@ -587,7 +587,7 @@
                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentSave}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
-                                    <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Apply}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Apply}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
                                 </Grid>
                             </Button.Content>
                             <Button.Style>
@@ -633,7 +633,7 @@
                         <ListBox Grid.Column="0" Grid.Row="2" x:Name="ListBoxProfiles" ItemsSource="{Binding Profiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                             <ListBox.Resources>
                                 <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                                    <MenuItem Header="{DynamicResource String_Apply}" Command="{Binding ApplyProfileCommand}">
+                                    <MenuItem Header="{x:Static localization:Strings.Apply}" Command="{Binding ApplyProfileCommand}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                                 <Rectangle.OpacityMask>
@@ -642,7 +642,7 @@
                                             </Rectangle>
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="{DynamicResource String_Edit}" Command="{Binding EditProfileCommand}">
+                                    <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditProfileCommand}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                                 <Rectangle.OpacityMask>
@@ -651,7 +651,7 @@
                                             </Rectangle>
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="{DynamicResource String_CopyAs}" Command="{Binding CopyAsProfileCommand}">
+                                    <MenuItem Header="{x:Static localization:Strings.CopyAsDots}" Command="{Binding CopyAsProfileCommand}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                                 <Rectangle.OpacityMask>
@@ -660,7 +660,7 @@
                                             </Rectangle>
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteProfileCommand}">
+                                    <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteProfileCommand}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                                 <Rectangle.OpacityMask>
@@ -690,7 +690,7 @@
                                                                         <ColumnDefinition Width="Auto" />
                                                                     </Grid.ColumnDefinitions>
                                                                     <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{DynamicResource DefaultTextBlock}"/>
-                                                                    <Button Grid.Column="1" ToolTip="{DynamicResource String_EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
+                                                                    <Button Grid.Column="1" ToolTip="{x:Static localization:Strings.EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
                                                                         <Rectangle Width="16" Height="16">
                                                                             <Rectangle.OpacityMask>
                                                                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
@@ -771,10 +771,10 @@
                                 <TextBlock>
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
-                                            <Setter Property="Text" Value="{DynamicResource String_NoProfilesFoundCreateOne}" />
+                                            <Setter Property="Text" Value="{x:Static localization:Strings.NoProfilesFoundCreateOne}" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
-                                                    <Setter Property="Text" Value="{DynamicResource String_NothingFound}" />
+                                                    <Setter Property="Text" Value="{x:Static localization:Strings.NothingFound}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -794,7 +794,7 @@
                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
-                                    <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
                                 </Grid>
                             </Button.Content>
                         </Button>

@@ -20,7 +20,7 @@
     </UserControl.Resources>
     <StackPanel >
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Import}" />
-        <TextBox x:Name="TextBoxImportFilePath" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_LocationOfTheImport}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" AllowDrop="True" Drop="TextBoxImportFilePath_Drop" PreviewDragOver="TextBoxImportFilePath_PreviewDragOver" Margin="0,0,0,10">
+        <TextBox x:Name="TextBoxImportFilePath" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.LocationOfTheImport}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" AllowDrop="True" Drop="TextBoxImportFilePath_Drop" PreviewDragOver="TextBoxImportFilePath_PreviewDragOver" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="ImportFilePath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -30,7 +30,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button Content="{DynamicResource String_Button_Validate}" Command="{Binding ValidateImportSettingsCommand}" Visibility="{Binding ImportFileIsValid,Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" HorizontalAlignment="Left" Margin="0,0,0,20" >
+        <Button Content="{x:Static localization:Strings.Validate}" Command="{Binding ValidateImportSettingsCommand}" Visibility="{Binding ImportFileIsValid,Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" HorizontalAlignment="Left" Margin="0,0,0,20" >
             <Button.Style>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
                     <Setter Property="IsEnabled" Value="False" />
@@ -43,9 +43,9 @@
             </Button.Style>
         </Button>
         <StackPanel Visibility="{Binding ImportFileIsValid, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,20">
-            <TextBlock Style="{StaticResource DefaultTextBlock}" Text="{StaticResource String_SelectTheSettingsYouWantToImport}" Margin="0,0,0,10" />
-            <RadioButton x:Name="RadioButtonImportEverything" Content="{DynamicResource String_RadioButton_Everything}" IsChecked="{Binding ImportEverything}" Margin="0,0,0,10"/>
-            <RadioButton x:Name="RadioButtonImportCustom" Content="{DynamicResource String_RadioButton_Custom}" Margin="0,0,0,10"/>
+            <TextBlock Style="{StaticResource DefaultTextBlock}" Text="{x:Static localization:Strings.SelectTheSettingsYouWantToImport}" Margin="0,0,0,10" />
+            <RadioButton x:Name="RadioButtonImportEverything" Content="{x:Static localization:Strings.Everything}" IsChecked="{Binding ImportEverything}" Margin="0,0,0,10"/>
+            <RadioButton x:Name="RadioButtonImportCustom" Content="{x:Static localization:Strings.Custom}" Margin="0,0,0,10"/>
             <GroupBox HorizontalAlignment="Left" Margin="20,0,0,10">
                 <GroupBox.Style>
                     <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource WithoutHeaderGroupBox}">
@@ -68,20 +68,20 @@
                         <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <CheckBox Grid.Column="0" Grid.Row="0" Content="{DynamicResource String_Settings}" IsEnabled="{Binding ImportSettingsExists}" IsChecked="{Binding ImportSettings}" />
-                    <CheckBox Grid.Column="0" Grid.Row="2" Content="{DynamicResource String_Profiles}" IsEnabled="{Binding ImportProfilesExists}" IsChecked="{Binding ImportProfiles}" />
+                    <CheckBox Grid.Column="0" Grid.Row="0" Content="{x:Static localization:Strings.Settings}" IsEnabled="{Binding ImportSettingsExists}" IsChecked="{Binding ImportSettings}" />
+                    <CheckBox Grid.Column="0" Grid.Row="2" Content="{x:Static localization:Strings.Profiles}" IsEnabled="{Binding ImportProfilesExists}" IsChecked="{Binding ImportProfiles}" />
                     <Grid Grid.Column="2" Grid.Row="2" IsEnabled="{Binding ImportProfilesExists}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition MinWidth="100" />
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition MinWidth="100" />
                         </Grid.ColumnDefinitions>
-                        <RadioButton Grid.Column="0" Grid.Row="0" GroupName="ImportProfiles" Content="{DynamicResource String_Override}" IsChecked="{Binding ImportOverrideProfiles}" />
-                        <RadioButton Grid.Column="2" Grid.Row="0" GroupName="ImportProfiles" Content="{DynamicResource String_Add}" />
+                        <RadioButton Grid.Column="0" Grid.Row="0" GroupName="ImportProfiles" Content="{x:Static localization:Strings.Override}" IsChecked="{Binding ImportOverrideProfiles}" />
+                        <RadioButton Grid.Column="2" Grid.Row="0" GroupName="ImportProfiles" Content="{x:Static localization:Strings.Add}" />
                     </Grid>
                 </Grid>
             </GroupBox>
-            <Button Content="{DynamicResource String_Button_Import}" Command="{Binding ImportSettingsCommand}" HorizontalAlignment="Left"  >
+            <Button Content="{x:Static localization:Strings.Import}" Command="{Binding ImportSettingsCommand}" HorizontalAlignment="Left"  >
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
                         <Setter Property="IsEnabled" Value="False" />
@@ -105,9 +105,9 @@
             </Button>
         </StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Export}" />
-        <TextBlock Style="{StaticResource DefaultTextBlock}" Text="{StaticResource String_SelectTheSettingsYouWantToExport}" Margin="0,0,0,10" />
-        <RadioButton x:Name="RadioButtonExportEverything" Content="{DynamicResource String_RadioButton_Everything}" IsChecked="{Binding ExportEverything}" Margin="0,0,0,10"/>
-        <RadioButton x:Name="RadioButtonExportCustom" Content="{DynamicResource String_RadioButton_Custom}" Margin="0,0,0,10"/>
+        <TextBlock Style="{StaticResource DefaultTextBlock}" Text="{x:Static localization:Strings.SelectTheSettingsYouWantToExport}" Margin="0,0,0,10" />
+        <RadioButton x:Name="RadioButtonExportEverything" Content="{x:Static localization:Strings.Everything}" IsChecked="{Binding ExportEverything}" Margin="0,0,0,10"/>
+        <RadioButton x:Name="RadioButtonExportCustom" Content="{x:Static localization:Strings.Custom}" Margin="0,0,0,10"/>
         <GroupBox Margin="20,0,0,10" MinWidth="250" HorizontalAlignment="Left">
             <GroupBox.Style>
                 <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource WithoutHeaderGroupBox}">
@@ -120,11 +120,11 @@
                 </Style>
             </GroupBox.Style>
             <StackPanel>
-                <CheckBox Content="{DynamicResource String_Settings}" IsEnabled="{Binding SettingsExists}" IsChecked="{Binding ExportSettings}" Margin="0,0,0,10" />
-                <CheckBox Content="{DynamicResource String_Profiles}" IsEnabled="{Binding ProfilesExists}" IsChecked="{Binding ExportProfiles}" />
+                <CheckBox Content="{x:Static localization:Strings.Settings}" IsEnabled="{Binding SettingsExists}" IsChecked="{Binding ExportSettings}" Margin="0,0,0,10" />
+                <CheckBox Content="{x:Static localization:Strings.Profiles}" IsEnabled="{Binding ProfilesExists}" IsChecked="{Binding ExportProfiles}" />
             </StackPanel>
         </GroupBox>
-        <Button Content="{DynamicResource String_Button_Export}" Command="{Binding ExportSettingsCommand}" HorizontalAlignment="Left">
+        <Button Content="{x:Static localization:Strings.Export}" Command="{Binding ExportSettingsCommand}" HorizontalAlignment="Left">
             <Button.Style>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
                     <Setter Property="IsEnabled" Value="False" />

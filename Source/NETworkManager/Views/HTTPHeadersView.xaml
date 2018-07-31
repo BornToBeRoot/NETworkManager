@@ -40,8 +40,8 @@
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="{DynamicResource String_URL}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                    <ComboBox Grid.Column="2" x:Name="ComboBoxWebsiteUri" ItemsSource="{Binding WebsiteUriHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleWebsiteUri}" IsEnabled="{Binding IsCheckRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                    <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.URL}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
+                    <ComboBox Grid.Column="2" x:Name="ComboBoxWebsiteUri" ItemsSource="{Binding WebsiteUriHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleWebsiteUri}" IsEnabled="{Binding IsCheckRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                         <ComboBox.Text>
                             <Binding Path="WebsiteUri" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
@@ -82,7 +82,7 @@
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
-                                <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center" Text="{DynamicResource String_Button_Check}" />
+                                <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center" Text="{x:Static localization:Strings.Check}" />
                             </Grid>
                         </Button.Content>
                     </Button>
@@ -127,13 +127,13 @@
                                 <Setter Property="TextWrapping" Value="NoWrap" />
                             </Style>
                         </Grid.Resources>
-                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_StartTime}" />
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.StartTime}" />
                         <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding StartTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource String_Duration}" />
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Duration}" />
                         <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Duration, StringFormat={}{0:hh}h {0:mm}m {0:ss}s {0:ff}ms}" />
-                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_EndTime}" />
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.EndTime}" />
                         <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding EndTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
-                        <TextBlock Grid.Column="3" Grid.Row="0" Text="{DynamicResource String_Headers}" />
+                        <TextBlock Grid.Column="3" Grid.Row="0" Text="{x:Static localization:Strings.Headers}" />
                         <TextBox Grid.Column="4" Grid.Row="0" Text="{Binding HeadersCount}" />
                     </Grid>
                 </StackPanel>

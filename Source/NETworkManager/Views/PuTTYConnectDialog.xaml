@@ -42,32 +42,32 @@
                 <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Mode}" />
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Mode}" />
             <WrapPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal">
                 <WrapPanel.Resources>
                     <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource DefaultRadioButton}">
                         <Setter Property="Margin" Value="0,5,10,5" />
                     </Style>
                 </WrapPanel.Resources>
-                <RadioButton Content="{DynamicResource String_SSH}" IsChecked="{Binding UseSSH}" />
-                <RadioButton Content="{DynamicResource String_Telnet}" IsChecked="{Binding UseTelnet}" />
-                <RadioButton Content="{DynamicResource String_Serial}" IsChecked="{Binding UseSerial}" />
-                <RadioButton Content="{DynamicResource String_Rlogin}" IsChecked="{Binding UseRlogin}" />
-                <RadioButton Content="{DynamicResource String_RAW}" IsChecked="{Binding UseRAW}" />
+                <RadioButton Content="{x:Static localization:Strings.SSH}" IsChecked="{Binding UseSSH}" />
+                <RadioButton Content="{x:Static localization:Strings.Telnet}" IsChecked="{Binding UseTelnet}" />
+                <RadioButton Content="{x:Static localization:Strings.Serial}" IsChecked="{Binding UseSerial}" />
+                <RadioButton Content="{x:Static localization:Strings.Rlogin}" IsChecked="{Binding UseRlogin}" />
+                <RadioButton Content="{x:Static localization:Strings.RAW}" IsChecked="{Binding UseRAW}" />
             </WrapPanel>
             <TextBlock Grid.Column="0" Grid.Row="2">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
-                        <Setter Property="Text" Value="{StaticResource String_Host}" />
+                        <Setter Property="Text" Value="{x:Static localization:Strings.Host}" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding UseSerial}" Value="True">
-                                <Setter Property="Text" Value="{StaticResource String_SerialLine}" />
+                                <Setter Property="Text" Value="{x:Static localization:Strings.SerialLine}" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -77,7 +77,7 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <ComboBox x:Name="ComboBoxSerialLine" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding SerialLineHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSerialLine}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxSerialLine" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding SerialLineHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleSerialLine}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="SerialLine" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -90,16 +90,16 @@
             <TextBlock Grid.Column="0" Grid.Row="4">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
-                        <Setter Property="Text" Value="{DynamicResource String_Port}" />
+                        <Setter Property="Text" Value="{x:Static localization:Strings.Port}" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding UseSerial}" Value="True">
-                                <Setter Property="Text" Value="{DynamicResource String_Baud}" />
+                                <Setter Property="Text" Value="{x:Static localization:Strings.Baud}" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ComboBox x:Name="ComboBoxPort" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding PortHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort22}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxPort" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding PortHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePort22}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -109,7 +109,7 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <ComboBox x:Name="ComboBoxBaud" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding BaudHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleBaud9600}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxBaud" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding BaudHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleBaud9600}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Baud" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -119,8 +119,8 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_Username}" />
-            <ComboBox x:Name="ComboBoxUsername" Grid.Column="2" Grid.Row="6" ItemsSource="{Binding UsernameHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleUsername}" Style="{StaticResource EditableComboBox}">
+            <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.Username}" />
+            <ComboBox x:Name="ComboBoxUsername" Grid.Column="2" Grid.Row="6" ItemsSource="{Binding UsernameHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleUsername}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -129,7 +129,7 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <TextBlock Grid.Column="0" Grid.Row="8" Text="{DynamicResource String_Profile}" />
+            <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.Profile}" />
             <ComboBox x:Name="ComboBoxProfile" Grid.Column="2" Grid.Row="8" ItemsSource="{Binding ProfileHistoryView}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Profile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -139,12 +139,12 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <TextBlock Grid.Column="0" Grid.Row="10" Text="{DynamicResource String_AdditionalCommandLine}" />
+            <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.AdditionalCommandLine}" />
             <TextBox x:Name="TextBoxAdditionalCommandLine" Grid.Column="2" Grid.Row="10" Text="{Binding AdditionalCommandLine}" Style="{StaticResource DefaultTextBox}" />
         </Grid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="{DynamicResource String_Button_Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
-            <Button Content="{DynamicResource String_Button_Connect}" Command="{Binding ConnectCommand}" IsDefault="True" Margin="10,0,0,0">
+            <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
+            <Button Content="{x:Static localization:Strings.Connect}" Command="{Binding ConnectCommand}" IsDefault="True" Margin="10,0,0,0">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
                         <Setter Property="IsEnabled" Value="False" />

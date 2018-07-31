@@ -10,16 +10,16 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:RemoteDesktopSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.Display}" Style="{StaticResource HeaderTextBlock}" />
-        <RadioButton x:Name="RadioButtonAdjustScreenAutomatically" Content="{DynamicResource String_AdjustScreenAutomatically}" IsChecked="{Binding AdjustScreenAutomatically}" Margin="0,0,0,10" />
-        <RadioButton x:Name="RadioButtonUseCurrentViewSize" Content="{DynamicResource String_UseCurrentViewSize}" IsChecked="{Binding UseCurrentViewSize}" Margin="0,0,0,10" />
-        <RadioButton x:Name="RadioButtonFixedScreenSize" Content="{DynamicResource String_FixedScreenSize}" IsChecked="{Binding UseFixedScreenSize}" Margin="0,0,0,10" />
+        <RadioButton x:Name="RadioButtonAdjustScreenAutomatically" Content="{x:Static localization:Strings.AdjustScreenAutomatically}" IsChecked="{Binding AdjustScreenAutomatically}" Margin="0,0,0,10" />
+        <RadioButton x:Name="RadioButtonUseCurrentViewSize" Content="{x:Static localization:Strings.UseCurrentViewSize}" IsChecked="{Binding UseCurrentViewSize}" Margin="0,0,0,10" />
+        <RadioButton x:Name="RadioButtonFixedScreenSize" Content="{x:Static localization:Strings.FixedScreenSize}" IsChecked="{Binding UseFixedScreenSize}" Margin="0,0,0,10" />
         <GroupBox x:Name="GroupBoxFixedScreenSize" Style="{StaticResource WithoutHeaderGroupBox}" MinWidth="270" HorizontalAlignment="Left" IsEnabled="{Binding UseFixedScreenSize}" Margin="25,0,0,10">
             <StackPanel>
-                <TextBlock Text="{DynamicResource String_SelectAScreenResolution}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+                <TextBlock Text="{x:Static localization:Strings.SelectAScreenResolution}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
                 <ComboBox ItemsSource="{Binding ScreenResolutions}" SelectedItem="{Binding SelectedScreenResolution}" Width="250" HorizontalAlignment="Left" />
             </StackPanel>
         </GroupBox>
-        <RadioButton x:Name="RadioButtonCustomScreenSize" Content="{DynamicResource String_CustomScreenSize}" IsChecked="{Binding UseCustomScreenSize}" Margin="0,0,0,10" />
+        <RadioButton x:Name="RadioButtonCustomScreenSize" Content="{x:Static localization:Strings.CustomScreenSize}" IsChecked="{Binding UseCustomScreenSize}" Margin="0,0,0,10" />
         <GroupBox Style="{StaticResource WithoutHeaderGroupBox}" Width="{Binding ElementName=GroupBoxFixedScreenSize, Path=ActualWidth}" HorizontalAlignment="Left" IsEnabled="{Binding UseCustomScreenSize}" Margin="25,0,0,10">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -32,7 +32,7 @@
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Width}" Style="{StaticResource CenterTextBlock}" />
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Width}" Style="{StaticResource CenterTextBlock}" />
                 <TextBox Grid.Column="2" Grid.Row="0">
                     <TextBox.Text>
                         <Binding Path="CustomScreenWidth" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -43,7 +43,7 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Height}" Style="{StaticResource CenterTextBlock}" />
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Height}" Style="{StaticResource CenterTextBlock}" />
                 <TextBox Grid.Column="2" Grid.Row="2">
                     <TextBox.Text>
                         <Binding Path="CustomScreenHeight" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -56,11 +56,11 @@
                 </TextBox>
             </Grid>
         </GroupBox>
-        <TextBlock Text="{DynamicResource String_ColorDepthBit}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.ColorDepthBit}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding ColorDepths}" SelectedItem="{Binding SelectedColorDepth}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.Network}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Text="{DynamicResource String_Port}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort3389 }" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,20">
+        <TextBlock Text="{x:Static localization:Strings.Port}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePort3389 }" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,20">
             <TextBox.Text>
                 <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -71,8 +71,8 @@
             </TextBox.Text>
         </TextBox>
         <TextBlock Text="{x:Static localization:Strings.Authentication}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{DynamicResource String_CredentialSecuritySupportProvider}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding EnableCredSspSupport}" Margin="0,0,0,10" />
-        <TextBlock Text="{DynamicResource String_AuthenticationLevel}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.EnableCredentialSecuritySupportProvider}" IsChecked="{Binding EnableCredSspSupport}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.AuthenticationLevel}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
             <mah:NumericUpDown Value="{Binding AuthenticationLevel}" Maximum="3" Minimum="0" Interval="1" />
             <Rectangle Width="24" Height="24" ToolTip="{Binding RDPAuthenticationLevelHelpMessage}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
@@ -82,14 +82,14 @@
             </Rectangle>
         </StackPanel>
         <TextBlock Text="{x:Static localization:Strings.Keyboard}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Text="{DynamicResource String_ApplyWindowsKeyCombinationsLikeAltTab}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.ApplyWindowsKeyCombinationsLikeAltTab}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding KeyboardHookModes}" DisplayMemberPath="Item2" SelectedItem="{Binding KeyboardHookMode}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.LocalDevicesAndResources}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{DynamicResource String_RedirectClipboard}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectClipboard}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{DynamicResource String_RedirectDevices}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectDevices}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{DynamicResource String_RedirectDrives}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectDrives}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{DynamicResource String_RedirectPorts}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectPorts}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{DynamicResource String_RedirectSmartcards}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectSmartCards}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{DynamicResource String_RedirectPrinters}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding RedirectPrinters}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectClipboard}"   IsChecked="{Binding RedirectClipboard}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectDevices}"   IsChecked="{Binding RedirectDevices}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectDrives}"   IsChecked="{Binding RedirectDrives}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectPorts}"   IsChecked="{Binding RedirectPorts}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectSmartcards}"   IsChecked="{Binding RedirectSmartCards}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectPrinters}"   IsChecked="{Binding RedirectPrinters}" />
     </StackPanel>
 </UserControl>

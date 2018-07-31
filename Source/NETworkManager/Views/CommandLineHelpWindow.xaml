@@ -72,7 +72,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <ComboBox FontSize="14" ItemsSource="{Binding LanguageCollection}" SelectedItem="{Binding LocalizationSelectedItem}" DisplayMemberPath="Code" Width="100" HorizontalAlignment="Left"/>
-            <Button Grid.Column="1" Content="{x:Static localization:Strings.OK}" Click="Button_Click" HorizontalAlignment="Right" Style="{StaticResource DefaultButton}" />
+            <Button Grid.Column="1" Content="{x:Static localization:Strings.OK}" Click="Click" HorizontalAlignment="Right" Style="{StaticResource DefaultButton}" />
         </Grid>
     </Grid>
 </mahAppsControls:MetroWindow>

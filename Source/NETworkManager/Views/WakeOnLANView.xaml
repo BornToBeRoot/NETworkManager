@@ -48,8 +48,8 @@
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_MACAddress}" />
-                <TextBox Grid.Column="2" Grid.Row="0" x:Name="TextBoxMACAddress" Height="{Binding ElementName=TextBoxPort, Path=ActualHeight}" wpfHelpers:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddress}">
+                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.MACAddress}" />
+                <TextBox Grid.Column="2" Grid.Row="0" x:Name="TextBoxMACAddress" Height="{Binding ElementName=TextBoxPort, Path=ActualHeight}" wpfHelpers:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressHasError}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleMACAddress}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
                     </TextBox.InputBindings>
@@ -62,8 +62,8 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Broadcast}" Style="{StaticResource CenterTextBlock}" />
-                <TextBox x:Name="TextBoxBroadcast" Grid.Column="2" Grid.Row="2" Height="{Binding ElementName=TextBoxPort, Path=ActualHeight}" wpfHelpers:ProtocolSettingsLayout.MVVMHasError="{Binding BroadcastHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Broadcast}">
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Broadcast}" Style="{StaticResource CenterTextBlock}" />
+                <TextBox x:Name="TextBoxBroadcast" Grid.Column="2" Grid.Row="2" Height="{Binding ElementName=TextBoxPort, Path=ActualHeight}" wpfHelpers:ProtocolSettingsLayout.MVVMHasError="{Binding BroadcastHasError}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Broadcast}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
                     </TextBox.InputBindings>
@@ -76,8 +76,8 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Port}" Style="{StaticResource CenterTextBlock}" />
-                <TextBox x:Name="TextBoxPort" Grid.Column="2" Grid.Row="4" wpfHelpers:ProtocolSettingsLayout.MVVMHasError="{Binding PortHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort7}" HorizontalAlignment="Left" Width="65" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Port}" Style="{StaticResource CenterTextBlock}" />
+                <TextBox x:Name="TextBoxPort" Grid.Column="2" Grid.Row="4" wpfHelpers:ProtocolSettingsLayout.MVVMHasError="{Binding PortHasError}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePort7}" HorizontalAlignment="Left" Width="65" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
                     </TextBox.InputBindings>
@@ -102,7 +102,7 @@
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Power}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_WakeUp}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.WakeUp}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
                         </Grid>
                     </Button.Content>
                     <Button.Style>
@@ -152,7 +152,7 @@
                 <ListBox Grid.Column="0" Grid.Row="2" x:Name="ListBoxProfiles" ItemsSource="{Binding Profiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                     <ListBox.Resources>
                         <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                            <MenuItem Header="{DynamicResource String_WakeUp}" Command="{Binding WakeUpProfileCommand}">
+                            <MenuItem Header="{x:Static localization:Strings.WakeUp}" Command="{Binding WakeUpProfileCommand}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>
@@ -161,7 +161,7 @@
                                     </Rectangle>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="{DynamicResource String_Edit}" Command="{Binding EditProfileCommand}">
+                            <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditProfileCommand}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>
@@ -170,7 +170,7 @@
                                     </Rectangle>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="{DynamicResource String_CopyAs}" Command="{Binding CopyAsProfileCommand}">
+                            <MenuItem Header="{x:Static localization:Strings.CopyAsDots}" Command="{Binding CopyAsProfileCommand}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>
@@ -179,7 +179,7 @@
                                     </Rectangle>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteProfileCommand}">
+                            <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteProfileCommand}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>
@@ -212,7 +212,7 @@
                                                                 <ColumnDefinition Width="Auto" />
                                                             </Grid.ColumnDefinitions>
                                                             <TextBlock Grid.Column="0" Text="{Binding (CollectionViewGroup.Name)}" Style="{DynamicResource DefaultTextBlock}"/>
-                                                            <Button Grid.Column="1" ToolTip="{DynamicResource String_EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding (CollectionViewGroup.Name)}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
+                                                            <Button Grid.Column="1" ToolTip="{x:Static localization:Strings.EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding (CollectionViewGroup.Name)}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
                                                                 <Rectangle Width="16" Height="16">
                                                                     <Rectangle.OpacityMask>
                                                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
@@ -257,11 +257,11 @@
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                     <Setter Property="Command" Value="{Binding AddProfileCommand}" />
-                                    <Setter Property="ToolTip" Value="{DynamicResource String_AddProfileDots}" />
+                                    <Setter Property="ToolTip" Value="{x:Static localization:Strings.AddProfileDots}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
                                             <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
-                                            <Setter Property="ToolTip" Value="{DynamicResource String_ClearFilter}" />
+                                            <Setter Property="ToolTip" Value="{x:Static localization:Strings.ClearFilter}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -290,10 +290,10 @@
                         <TextBlock>
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
-                                    <Setter Property="Text" Value="{DynamicResource String_NoProfilesFoundCreateOne}" />
+                                    <Setter Property="Text" Value="{x:Static localization:Strings.NoProfilesFoundCreateOne}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
-                                            <Setter Property="Text" Value="{DynamicResource String_NothingFound}" />
+                                            <Setter Property="Text" Value="{x:Static localization:Strings.NothingFound}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -313,7 +313,7 @@
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
                         </Grid>
                     </Button.Content>
                 </Button>

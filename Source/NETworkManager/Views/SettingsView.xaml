@@ -151,7 +151,7 @@
                                         </Rectangle.Style>
                                     </Rectangle>
                                 </Button>
-                                <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_SearchedSettingNotFound}" Margin="10,0" TextWrapping="Wrap" TextAlignment="Center" />
+                                <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Foreground="{DynamicResource GrayBrush3}" Text="{x:Static localization:Strings.SearchedSettingNotFound}" Margin="10,0" TextWrapping="Wrap" TextAlignment="Center" />
                             </Grid>
                         </Grid>
                     </Border>

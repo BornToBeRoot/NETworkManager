@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
     <ContextMenu x:Key="CutCopyPasteContextMenu" MinWidth="150">
-        <MenuItem Header="{DynamicResource String_ContextMenu_Cut}" Command="Cut">
+        <MenuItem Header="{x:Static localization:Strings.ContextMenu_Cut}" Command="Cut">
             <MenuItem.Icon>
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Style>
@@ -21,7 +21,7 @@
                 </Rectangle>
             </MenuItem.Icon>
         </MenuItem>
-        <MenuItem Header="{DynamicResource String_ContextMenu_Copy}" Command="Copy">
+        <MenuItem Header="{x:Static localization:Strings.ContextMenu_Copy}" Command="Copy">
             <MenuItem.Icon>
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Style>
@@ -40,7 +40,7 @@
                 </Rectangle>
             </MenuItem.Icon>
         </MenuItem>
-        <MenuItem Header="{DynamicResource String_ContextMenu_Paste}" Command="Paste">
+        <MenuItem Header="{x:Static localization:Strings.ContextMenu_Paste}" Command="Paste">
             <MenuItem.Icon>
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Style>
@@ -62,7 +62,7 @@
     </ContextMenu>
 
     <ContextMenu  x:Key="CopyContextMenu" MinWidth="150">
-        <MenuItem Header="{DynamicResource String_ContextMenu_Copy}" Command="Copy">
+        <MenuItem Header="{x:Static localization:Strings.ContextMenu_Copy}" Command="Copy">
             <MenuItem.Icon>
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Style>

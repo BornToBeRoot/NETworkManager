@@ -9,10 +9,10 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsGeneralViewModel}">
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.DefaultApplication}" />
-        <TextBlock Text="{DynamicResource String_ShowTheFollowingApplicationOnStartup}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.ShowTheFollowingApplicationOnStartup}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <ComboBox FontSize="14" ItemsSource="{Binding ApplicationViewCollection}" DisplayMemberPath="TranslatedName" SelectedItem="{Binding DefaultApplicationViewSelectedItem}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,20"/>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.History}" />
-        <TextBlock Text="{DynamicResource String_NumberOfStoredEntries}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.NumberOfStoredEntries}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding HistoryListEntries}" Maximum="50" Minimum="0" Interval="1" />
     </StackPanel>
 </UserControl>

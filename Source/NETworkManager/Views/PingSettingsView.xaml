@@ -9,24 +9,24 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PingSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.Ping}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock  Text="{DynamicResource String_Attempts}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBlock  Text="{x:Static localization:Strings.Attempts}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Attempts}" Maximum="15000" Minimum="0" Interval="1" Margin="0,0,0,10" />
-        <TextBlock Text="{DynamicResource String_Timeout}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Timeout}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Timeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,10" />
-        <TextBlock Text="{DynamicResource String_Buffer}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Buffer}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Buffer}" Minimum="1" Maximum="65535" Interval="1" Margin="0,0,0,10" />
-        <TextBlock Text="{DynamicResource String_TTL}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.TTL}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding TTL}" Minimum="1" Maximum="255" Interval="1" Margin="0,0,0,10" />
-        <mah:ToggleSwitch IsChecked="{Binding DontFragment}" Header="{x:Static localization:Strings.DontFragment}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" Margin="0,0,0,10"/>
-        <TextBlock Text="{DynamicResource String_TimeToWaitBetweenEachPing}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch IsChecked="{Binding DontFragment}" Header="{x:Static localization:Strings.DontFragment}" OnLabel="{x:Static localization:Strings.ToggleSwitch_On}" OffLabel="{x:Static localization:Strings.ToggleSwitch_Off}" Margin="0,0,0,10"/>
+        <TextBlock Text="{x:Static localization:Strings.TimeToWaitBetweenEachPing}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding WaitTime}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,20"/>
-        <TextBlock Text="{DynamicResource String_NumberOfErrorsAfterWhichIsCanceled}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.NumberOfErrorsAfterWhichIsCanceled}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding ExceptionCancelCount}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,20"/>
         <TextBlock Text="{x:Static localization:Strings.DNS}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_PreferredProtocolWhenResolvingHostname}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,0,10" />
-        <RadioButton Content="{DynamicResource String_IPv4}" IsChecked="{Binding ResolveHostnamePreferIPv4}" Margin="0,0,0,10" />
-        <RadioButton Content="{DynamicResource String_IPv6}" IsChecked="{Binding ResolveHostnamePreferIPv6}" Margin="0,0,0,20" />
+        <TextBlock Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.PreferredProtocolWhenResolvingHostname}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,0,10" />
+        <RadioButton Content="{x:Static localization:Strings.IPv4}" IsChecked="{Binding ResolveHostnamePreferIPv4}" Margin="0,0,0,10" />
+        <RadioButton Content="{x:Static localization:Strings.IPv6}" IsChecked="{Binding ResolveHostnamePreferIPv6}" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{DynamicResource String_ShowStatistics}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ShowStatistics}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowStatistics}" OnLabel="{x:Static localization:Strings.ToggleSwitch_On}" OffLabel="{x:Static localization:Strings.ToggleSwitch_Off}" IsChecked="{Binding ShowStatistics}" />
     </StackPanel>
 </UserControl>

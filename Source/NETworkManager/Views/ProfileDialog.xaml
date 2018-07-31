@@ -51,8 +51,8 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Name}" />
-                            <TextBox x:Name="TextBoxName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleRemoteDesktopProfileName}">
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" />
+                            <TextBox x:Name="TextBoxName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleRemoteDesktopProfileName}">
                                 <TextBox.Text>
                                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -61,8 +61,8 @@
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>
-                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
-                            <TextBox x:Name="TextBoxHost" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
+                            <TextBox x:Name="TextBoxHost" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}">
                                 <TextBox.Text>
                                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -72,7 +72,7 @@
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>
-                            <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Credential}" />
+                            <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Credential}" />
                             <ComboBox x:Name="ComboBoxCredential" Grid.Column="2" Grid.Row="4" SelectedValue="{Binding CredentialID}" SelectedValuePath="ID" Style="{StaticResource DefaultComboBox}" ItemsSource="{Binding Credentials}">
                                 <ComboBox.InputBindings>
                                     <KeyBinding Command="{Binding UnselectCredentialCommand}" Key="Delete"/>
@@ -92,8 +92,8 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_Group}" />
-                            <ComboBox x:Name="ComboBoxGroup" Grid.Column="2" Grid.Row="6" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleGroupServers}">
+                            <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.Group}" />
+                            <ComboBox x:Name="ComboBoxGroup" Grid.Column="2" Grid.Row="6" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleGroupServers}">
                                 <ComboBox.Text>
                                     <Binding Path="Group" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -102,20 +102,20 @@
                                     </Binding>
                                 </ComboBox.Text>
                             </ComboBox>
-                            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="4" ToolTip="{DynamicResource String_HelpMessage_Credentials}" Visibility="{Binding ShowUnlockCredentialsHint, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="4" ToolTip="{x:Static localization:Strings.HelpMessage_Credentials}" Visibility="{Binding ShowUnlockCredentialsHint, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                                 <Rectangle.Resources>
                                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                                 </Rectangle.Resources>
                             </Rectangle>
-                            <TextBlock Grid.Column="0" Grid.Row="8" Text="{DynamicResource String_Tags}" />
-                            <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding Tags, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleTags}"/>
-                            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="8" ToolTip="{DynamicResource String_HelpMessage_Tags}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                            <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.Tags}" />
+                            <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding Tags, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleTags}"/>
+                            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="8" ToolTip="{x:Static localization:Strings.HelpMessage_Tags}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                                 <Rectangle.Resources>
                                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                                 </Rectangle.Resources>
                             </Rectangle>
                         </Grid>
-                        <TextBlock Text="{DynamicResource String_EnableTheProfileInAtLeastOneTool}" TextWrapping="Wrap" Visibility="{Binding TabEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{DynamicResource AccentTextBlock}" Margin="0,20,0,0"/>
+                        <TextBlock Text="{x:Static localization:Strings.EnableTheProfileInAtLeastOneTool}" TextWrapping="Wrap" Visibility="{Binding TabEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{DynamicResource AccentTextBlock}" Margin="0,20,0,0"/>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
@@ -136,13 +136,13 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
                             <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding NetworkInterface_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
                         <StackPanel IsEnabled="{Binding NetworkInterface_Enabled}">
-                            <RadioButton x:Name="RadioButtonEnableDynamicIPAddress" GroupName="NetworkInterface_IPAddressConfig" IsChecked="{Binding NetworkInterface_EnableDynamicIPAddress}" Content="{DynamicResource String_ObtainAnIPAddressAutomatically}" Margin="0,0,0,10"/>
-                            <RadioButton x:Name="RadioButtonEnableStaticIPAddress" GroupName="NetworkInterface_IPAddressConfig" IsChecked="{Binding NetworkInterface_EnableStaticIPAddress}" Content="{DynamicResource String_UseTheFollowingIPAddress}" Margin="0,0,0,10"/>
+                            <RadioButton x:Name="RadioButtonEnableDynamicIPAddress" GroupName="NetworkInterface_IPAddressConfig" IsChecked="{Binding NetworkInterface_EnableDynamicIPAddress}" Content="{x:Static localization:Strings.ObtainAnIPAddressAutomatically}" Margin="0,0,0,10"/>
+                            <RadioButton x:Name="RadioButtonEnableStaticIPAddress" GroupName="NetworkInterface_IPAddressConfig" IsChecked="{Binding NetworkInterface_EnableStaticIPAddress}" Content="{x:Static localization:Strings.UseTheFollowingIPAddress}" Margin="0,0,0,10"/>
                             <Grid IsEnabled="{Binding NetworkInterface_EnableStaticIPAddress}" Margin="0,0,0,10">
                                 <Grid.Resources>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
@@ -161,8 +161,8 @@
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_IPv4Address}" />
-                                <TextBox x:Name="TextBoxNetworkInterfaceIPAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Address}" >
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.IPv4Address}" />
+                                <TextBox x:Name="TextBoxNetworkInterfaceIPAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Address}" >
                                     <TextBox.Text>
                                         <Binding Path="NetworkInterface_IPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -172,8 +172,8 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_SubnetmaskOrCIDR}" />
-                                <ComboBox x:Name="ComboBoxNetworkInterfaceSubnetmaskOrCidr" Grid.Column="2" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetmaskIPv4CIDR}" ItemsSource="{x:Static network:Subnetmask.List}">
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.SubnetmaskOrCIDR}" />
+                                <ComboBox x:Name="ComboBoxNetworkInterfaceSubnetmaskOrCidr" Grid.Column="2" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4SubnetmaskIPv4CIDR}" ItemsSource="{x:Static network:Subnetmask.List}">
                                     <ComboBox.Text>
                                         <Binding Path="NetworkInterface_SubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -183,8 +183,8 @@
                                         </Binding>
                                     </ComboBox.Text>
                                 </ComboBox>
-                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_DefaultGateway}" />
-                                <TextBox x:Name="TextBoxNetworkInterfaceGateway" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" >
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.DefaultGateway}" />
+                                <TextBox x:Name="TextBoxNetworkInterfaceGateway" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Gateway}" >
                                     <TextBox.Text>
                                         <Binding Path="NetworkInterface_Gateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -194,8 +194,8 @@
                                     </TextBox.Text>
                                 </TextBox>
                             </Grid>
-                            <RadioButton x:Name="RadioButtonEnableDynamicDNS" GroupName="NetworkInterface_DNSServerConfig" Content="{DynamicResource String_ObtainDNSServerAddressAutomatically}" IsChecked="{Binding NetworkInterface_EnableDynamicDNS}" Margin="0,0,0,10" IsEnabled="{Binding NetworkInterface_EnableDynamicIPAddress}" />
-                            <RadioButton x:Name="RadioButtonEnableStaticDNS" GroupName="NetworkInterface_DNSServerConfig" Content="{DynamicResource String_UseTheFollowingDNSServerAddresses}" IsChecked="{Binding NetworkInterface_EnableStaticDNS}" Margin="0,0,0,10"/>
+                            <RadioButton x:Name="RadioButtonEnableDynamicDNS" GroupName="NetworkInterface_DNSServerConfig" Content="{x:Static localization:Strings.ObtainDNSServerAddressAutomatically}" IsChecked="{Binding NetworkInterface_EnableDynamicDNS}" Margin="0,0,0,10" IsEnabled="{Binding NetworkInterface_EnableDynamicIPAddress}" />
+                            <RadioButton x:Name="RadioButtonEnableStaticDNS" GroupName="NetworkInterface_DNSServerConfig" Content="{x:Static localization:Strings.UseTheFollowingDNSServerAddresses}" IsChecked="{Binding NetworkInterface_EnableStaticDNS}" Margin="0,0,0,10"/>
                             <Grid IsEnabled="{Binding NetworkInterface_EnableStaticDNS}">
                                 <Grid.Resources>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
@@ -212,8 +212,8 @@
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_PrimaryDNSServer}" />
-                                <TextBox x:Name="TextBoxNetworkInterfacePrimaryDNSServer" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Gateway}" >
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.PrimaryDNSServer}" />
+                                <TextBox x:Name="TextBoxNetworkInterfacePrimaryDNSServer" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Gateway}" >
                                     <TextBox.Text>
                                         <Binding Path="NetworkInterface_PrimaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -222,8 +222,8 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_SecondaryDNSServer}" />
-                                <TextBox x:Name="TextBoxNetworkInterfaceSecondaryDNSServer" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNSServer}" >
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.SecondaryDNSServer}" />
+                                <TextBox x:Name="TextBoxNetworkInterfaceSecondaryDNSServer" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4DNSServer}" >
                                     <TextBox.Text>
                                         <Binding Path="NetworkInterface_SecondaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -254,7 +254,7 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
                             <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding IPScanner_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
@@ -275,10 +275,10 @@
                                     <ColumnDefinition Width="1*" />
                                     <ColumnDefinition Width="34" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_InheritHostFromDefault}" />
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding IPScanner_InheritHost}" />
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_IPRange}" />
-                                <TextBox x:Name="TextBoxIPScannerIPRange" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding IPScanner_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4SubnetWithCIDR}">
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.IPRange}" />
+                                <TextBox x:Name="TextBoxIPScannerIPRange" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding IPScanner_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4SubnetWithCIDR}">
                                     <TextBox.Text>
                                         <Binding Path="IPScanner_IPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -310,7 +310,7 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
                             <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding PortScanner_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
@@ -333,10 +333,10 @@
                                     <ColumnDefinition Width="1*" />
                                     <ColumnDefinition Width="34" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_InheritHostFromDefault}" />
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding PortScanner_InheritHost}" />
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
-                                <TextBox x:Name="TextBoxPortScannerHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding PortScanner_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
+                                <TextBox x:Name="TextBoxPortScannerHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding PortScanner_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}">
                                     <TextBox.Text>
                                         <Binding Path="PortScanner_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -345,8 +345,8 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Ports}" />
-                                <TextBox x:Name="TextBoxPortScannerPorts" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePortScanRange}">
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Ports}" />
+                                <TextBox x:Name="TextBoxPortScannerPorts" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePortScanRange}">
                                     <TextBox.Text>
                                         <Binding Path="PortScanner_Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -378,7 +378,7 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
                             <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Ping_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
@@ -399,10 +399,10 @@
                                     <ColumnDefinition Width="1*" />
                                     <ColumnDefinition Width="34" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_InheritHostFromDefault}" />
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Ping_InheritHost}" />
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
-                                <TextBox x:Name="TextBoxPingHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Ping_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
+                                <TextBox x:Name="TextBoxPingHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Ping_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}">
                                     <TextBox.Text>
                                         <Binding Path="Ping_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -433,7 +433,7 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
                             <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Traceroute_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
@@ -454,10 +454,10 @@
                                     <ColumnDefinition Width="1*" />
                                     <ColumnDefinition Width="34" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_InheritHostFromDefault}" />
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Traceroute_InheritHost}" />
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
-                                <TextBox x:Name="TextBoxTracerouteHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Traceroute_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
+                                <TextBox x:Name="TextBoxTracerouteHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Traceroute_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}">
                                     <TextBox.Text>
                                         <Binding Path="Traceroute_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -488,7 +488,7 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
                             <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding RemoteDesktop_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
@@ -509,10 +509,10 @@
                                     <ColumnDefinition Width="1*" />
                                     <ColumnDefinition Width="34" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_InheritHostFromDefault}" />
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding RemoteDesktop_InheritHost}" />
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Host}" />
-                                <TextBox x:Name="TextBoxRemoteDesktopHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding RemoteDesktop_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
+                                <TextBox x:Name="TextBoxRemoteDesktopHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding RemoteDesktop_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}">
                                     <TextBox.Text>
                                         <Binding Path="RemoteDesktop_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -543,7 +543,7 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
                             <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding PuTTY_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
@@ -574,34 +574,34 @@
                                     <ColumnDefinition Width="1*" />
                                     <ColumnDefinition Width="34" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Mode}" />
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Mode}" />
                                 <WrapPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal">
                                     <WrapPanel.Resources>
                                         <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource DefaultRadioButton}">
                                             <Setter Property="Margin" Value="0,5,10,5" />
                                         </Style>
                                     </WrapPanel.Resources>
-                                    <RadioButton Content="{DynamicResource String_SSH}" IsChecked="{Binding PuTTY_UseSSH}" />
-                                    <RadioButton Content="{DynamicResource String_Telnet}" IsChecked="{Binding PuTTY_UseTelnet}" />
-                                    <RadioButton Content="{DynamicResource String_Serial}" IsChecked="{Binding PuTTY_UseSerial}" />
-                                    <RadioButton Content="{DynamicResource String_Rlogin}" IsChecked="{Binding PuTTY_UseRlogin}" />
-                                    <RadioButton Content="{DynamicResource String_RAW}" IsChecked="{Binding PuTTY_UseRAW}" />
+                                    <RadioButton Content="{x:Static localization:Strings.SSH}" IsChecked="{Binding PuTTY_UseSSH}" />
+                                    <RadioButton Content="{x:Static localization:Strings.Telnet}" IsChecked="{Binding PuTTY_UseTelnet}" />
+                                    <RadioButton Content="{x:Static localization:Strings.Serial}" IsChecked="{Binding PuTTY_UseSerial}" />
+                                    <RadioButton Content="{x:Static localization:Strings.Rlogin}" IsChecked="{Binding PuTTY_UseRlogin}" />
+                                    <RadioButton Content="{x:Static localization:Strings.RAW}" IsChecked="{Binding PuTTY_UseRAW}" />
                                 </WrapPanel>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_InheritHostFromDefault}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.InheritHostFromDefault}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OnLabel="" OffLabel="" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" IsChecked="{Binding PuTTY_InheritHost}" />
                                 <TextBlock Grid.Column="0" Grid.Row="4">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
-                                            <Setter Property="Text" Value="{StaticResource String_Host}" />
+                                            <Setter Property="Text" Value="{x:Static localization:Strings.Host}" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding PuTTY_UseSerial}" Value="True">
-                                                    <Setter Property="Text" Value="{StaticResource String_SerialLine}" />
+                                                    <Setter Property="Text" Value="{x:Static localization:Strings.SerialLine}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                <TextBox x:Name="TextBoxPuTTYHost" Grid.Column="2" Grid.Row="4" IsEnabled="{Binding PuTTY_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostname}">
+                                <TextBox x:Name="TextBoxPuTTYHost" Grid.Column="2" Grid.Row="4" IsEnabled="{Binding PuTTY_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}">
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -611,7 +611,7 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBox x:Name="TextBoxPuTTYSerialLine" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSerialLine}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                <TextBox x:Name="TextBoxPuTTYSerialLine" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleSerialLine}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_SerialLine" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -624,16 +624,16 @@
                                 <TextBlock Grid.Column="0" Grid.Row="6">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
-                                            <Setter Property="Text" Value="{DynamicResource String_Port}" />
+                                            <Setter Property="Text" Value="{x:Static localization:Strings.Port}" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding PuTTY_UseSerial}" Value="True">
-                                                    <Setter Property="Text" Value="{DynamicResource String_Baud}" />
+                                                    <Setter Property="Text" Value="{x:Static localization:Strings.Baud}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                <TextBox x:Name="TextBoxPuTTYPort" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort22}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                                <TextBox x:Name="TextBoxPuTTYPort" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePort22}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -643,7 +643,7 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBox x:Name="TextBoxPuTTYBaud" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleBaud9600}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                <TextBox x:Name="TextBoxPuTTYBaud" Grid.Column="2" Grid.Row="6" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleBaud9600}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_Baud" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -653,8 +653,8 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="8" Text="{DynamicResource String_Username}" />
-                                <TextBox Grid.Column="2" Grid.Row="8" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleUsername}">
+                                <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.Username}" />
+                                <TextBox Grid.Column="2" Grid.Row="8" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleUsername}">
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -663,7 +663,7 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="10" Text="{DynamicResource String_Profile}" />
+                                <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.Profile}" />
                                 <TextBox Grid.Column="2" Grid.Row="10">
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_Profile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -673,7 +673,7 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="12" Text="{DynamicResource String_AdditionalCommandLine}" />
+                                <TextBlock Grid.Column="0" Grid.Row="12" Text="{x:Static localization:Strings.AdditionalCommandLine}" />
                                 <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding PuTTY_AdditionalCommandLine}" Style="{StaticResource DefaultTextBox}" />
                             </Grid>
                         </StackPanel>
@@ -697,7 +697,7 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Enable}" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
                             <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding WakeOnLAN_Enabled}" />
                         </Grid>
                         <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
@@ -720,8 +720,8 @@
                                     <ColumnDefinition Width="1*" />
                                     <ColumnDefinition Width="34" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_MACAddress}" />
-                                <TextBox x:Name="TextBoxWakeOnLANMACAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleMACAddress}">
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.MACAddress}" />
+                                <TextBox x:Name="TextBoxWakeOnLANMACAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleMACAddress}">
                                     <TextBox.Text>
                                         <Binding Path="WakeOnLAN_MACAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -731,8 +731,8 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Broadcast}" />
-                                <TextBox x:Name="TextBoxWakeOnLANBroadcast" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4Broadcast}">
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Broadcast}" />
+                                <TextBox x:Name="TextBoxWakeOnLANBroadcast" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Broadcast}">
                                     <TextBox.Text>
                                         <Binding Path="WakeOnLAN_Broadcast" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -742,8 +742,8 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_Port}" />
-                                <TextBox x:Name="TextBoxWakeOnLANPort" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort7}">
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Port}" />
+                                <TextBox x:Name="TextBoxWakeOnLANPort" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePort7}">
                                     <TextBox.Text>
                                         <Binding Path="WakeOnLAN_Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -760,8 +760,8 @@
             </TabItem>
         </TabControl>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="{DynamicResource String_Button_Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
-            <Button Content="{DynamicResource String_Button_Save}" Command="{Binding SaveCommand}" IsDefault="True" Margin="10,0,0,0">
+            <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
+            <Button Content="{x:Static localization:Strings.Save}" Command="{Binding SaveCommand}" IsDefault="True" Margin="10,0,0,0">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
                         <Style.Triggers>

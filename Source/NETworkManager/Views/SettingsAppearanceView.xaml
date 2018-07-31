@@ -96,7 +96,7 @@
                     </Style>
                 </Rectangle.Style>
             </Rectangle>
-            <TextBlock Text="{DynamicResource String_DocumentationTitle_00002}" VerticalAlignment="Center" FontSize="14" Margin="10,0,0,0" />
+            <TextBlock Text="{x:Static localization:Strings.DocumentationTitle_00002}" VerticalAlignment="Center" FontSize="14" Margin="10,0,0,0" />
         </StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -105,13 +105,13 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Transparency}" />
-            <Rectangle Grid.Column="2" Width="24" Height="24" ToolTip="{DynamicResource String_WarningMessage_SettingsGeneralAppearanceTransparency}" Style="{StaticResource WarnImageRectangle}" Margin="0,0,0,10">
+            <Rectangle Grid.Column="2" Width="24" Height="24" ToolTip="{x:Static localization:Strings.WarningMessage_SettingsGeneralAppearanceTransparency}" Style="{StaticResource WarnImageRectangle}" Margin="0,0,0,10">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource WarnToolTip}" />
                 </Rectangle.Resources>
             </Rectangle>
         </Grid>
-        <mah:ToggleSwitch Header="{DynamicResource String_EnableTransparency}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding EnableTransparency}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.EnableTransparency}"   IsChecked="{Binding EnableTransparency}" Margin="0,0,0,10"/>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
