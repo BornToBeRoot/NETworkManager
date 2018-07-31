@@ -105,7 +105,7 @@
                                     </Rectangle>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="{x:Static localization:Strings.Edit}" Command="{Binding EditProfileCommand}">
+                            <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditProfileCommand}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>
@@ -114,7 +114,7 @@
                                     </Rectangle>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="{x:Static localization:Strings.CopyAs}" Command="{Binding CopyAsProfileCommand}">
+                            <MenuItem Header="{x:Static localization:Strings.CopyAsDots}" Command="{Binding CopyAsProfileCommand}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>

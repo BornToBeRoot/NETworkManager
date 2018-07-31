@@ -1564,7 +1564,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter a valid MAC address like 00:F1:23:AB:F2:35!.
+        ///   Looks up a localized string similar to Enter a valid MAC address (like 00:F1:23:AB:F2:35)!.
         /// </summary>
         public static string EnterValidMACAddress {
             get {
@@ -2050,7 +2050,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to fritz.bxo.
+        ///   Looks up a localized string similar to fritz.box.
         /// </summary>
         public static string ExampleSuffix {
             get {

@@ -1462,7 +1462,7 @@
     <value>snmp-user</value>
   </data>
   <data name="ExampleSuffix" xml:space="preserve">
-    <value>fritz.bxo</value>
+    <value>fritz.box</value>
   </data>
   <data name="ExampleTags" xml:space="preserve">
     <value>server; dmz</value>
@@ -1588,7 +1588,7 @@
     <value>Enter a valid IPv4 address!</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>Enter a valid MAC address like 00:F1:23:AB:F2:35!</value>
+    <value>Enter a valid MAC address (like 00:F1:23:AB:F2:35)!</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
     <value>Enter a valid port (1 - 65535)!</value>
