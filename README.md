@@ -66,7 +66,7 @@
 
 <h2>System requirements</h2>
 
-- Windows 7 or later
+- Windows 7/Server 2008 R2 or later
 - .NET-Framework 4.6
 - RDP 8.1 ([How to install RDP 8.1 on Windows 7/Server 2008 R2?](Documentation/en-US/HowTo/Install_RDP_8dot1_on_Windows6dot1.md))
 
@@ -78,8 +78,8 @@ Check the [Issues](https://github.com/BornToBeRoot/NETworkManager/issues) if the
 
 - Add new features ([Issues](https://github.com/BornToBeRoot/NETworkManager/issues?q=is%3Aopen+is%3Aissue+label%3AFeature-Request), [Roadmap](https://github.com/BornToBeRoot/NETworkManager/wiki/Roadmap))
 - Fix bugs ([Issues](https://github.com/BornToBeRoot/NETworkManager/issues))
-- Improve translation / add new languages ([localization files](https://github.com/BornToBeRoot/NETworkManager/tree/master/Source/NETworkManager/Resources/Localization))
-- Improve the [documentation] (https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation)
+- Improve translation / add new languages on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager)
+- Improve the [documentation](https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation)
 
 Fork the repository, do your changes and send me a pull request!
 
