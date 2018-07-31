@@ -79,7 +79,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to add.
+        ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string Add {
             get {
@@ -1213,7 +1213,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PuTTY.
+        ///   Looks up a localized string similar to Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PuTTY..
         /// </summary>
         public static string DisableTransparencyInTheSettingsToUsePuTTY {
             get {
@@ -1222,7 +1222,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use Remote Desktop.
+        ///   Looks up a localized string similar to Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use Remote Desktop..
         /// </summary>
         public static string DisableTransparencyInTheSettingsToUseRemoteDesktop {
             get {
@@ -2149,7 +2149,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to First usable IP Address.
+        ///   Looks up a localized string similar to First usable IP address.
         /// </summary>
         public static string FirstUsableIPAddress {
             get {
@@ -2635,7 +2635,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last usable IP Address.
+        ///   Looks up a localized string similar to Last usable IP address.
         /// </summary>
         public static string LastUsableIPAddress {
             get {
@@ -2950,11 +2950,11 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New profile....
+        ///   Looks up a localized string similar to New connections....
         /// </summary>
-        public static string NewProfileDots {
+        public static string NewConnectionDots {
             get {
-                return ResourceManager.GetString("NewProfileDots", resourceCulture);
+                return ResourceManager.GetString("NewConnectionDots", resourceCulture);
             }
         }
         
@@ -2982,15 +2982,6 @@ namespace NETworkManager.Resources.Localization {
         public static string No {
             get {
                 return ResourceManager.GetString("No", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No clients found! Create one....
-        /// </summary>
-        public static string NoClientsFoundCreateOne {
-            get {
-                return ResourceManager.GetString("NoClientsFoundCreateOne", resourceCulture);
             }
         }
         
