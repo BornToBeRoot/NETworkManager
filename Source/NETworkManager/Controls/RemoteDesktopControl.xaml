@@ -29,7 +29,7 @@
             <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.Disconnected}" Style="{StaticResource HeaderTextBlock}" Visibility="{Binding IsReconnecting, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}" />
             <TextBlock Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding DisconnectReason}" Style="{DynamicResource DefaultTextBlock}" Visibility="{Binding IsReconnecting, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}" />
             <controls:ProgressRing Grid.Row="0" Grid.RowSpan="2" Height="50" Width="50" IsActive="{Binding IsReconnecting}" Visibility="{Binding IsReconnecting, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"/>
-            <Button Grid.Row="3" Content="{DynamicResource String_Button_Reconnect}" Command="{Binding ReconnectCommand}" IsDefault="True" IsEnabled="{Binding IsReconnecting, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultButton}"/>
+            <Button Grid.Row="3" Content="{x:Static localization:Strings.Reconnect}" Command="{Binding ReconnectCommand}" IsDefault="True" IsEnabled="{Binding IsReconnecting, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultButton}"/>
         </Grid>
     </Grid>
 </UserControl>

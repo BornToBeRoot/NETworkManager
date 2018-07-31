@@ -2212,24 +2212,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GitHub.
-        /// </summary>
-        public static string GitHub {
-            get {
-                return ResourceManager.GetString("GitHub", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Gitter.
-        /// </summary>
-        public static string Gitter {
-            get {
-                return ResourceManager.GetString("Gitter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Green.
         /// </summary>
         public static string Green {
@@ -2316,15 +2298,6 @@ namespace NETworkManager.Resources.Localization {
         public static string HelpMessage_Tags {
             get {
                 return ResourceManager.GetString("HelpMessage_Tags", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ••••••••••••.
-        /// </summary>
-        public static string HiddenPassword {
-            get {
-                return ResourceManager.GetString("HiddenPassword", resourceCulture);
             }
         }
         

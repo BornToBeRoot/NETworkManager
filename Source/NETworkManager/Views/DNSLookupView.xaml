@@ -45,8 +45,8 @@
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Host}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="0" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Host}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
+                <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="0" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -55,7 +55,7 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <TextBlock Grid.Column="4" Grid.Row="0" Text="{DynamicResource String_Type}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static localization:Strings.Type}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
                 <ComboBox x:Name="ComboBoxTypes" Grid.Column="6" Grid.Row="0" ItemsSource="{Binding Types}" SelectedItem="{Binding Type}" Width="150" HorizontalAlignment="Left" />
                 <Button Grid.Column="8" Grid.Row="0" Command="{Binding LookupCommand}" IsDefault="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" HorizontalAlignment="Right">
                     <Button.Resources>
@@ -91,7 +91,7 @@
                                     </Style>
                                 </Rectangle.Style>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" FontSize="14" Text="{DynamicResource String_Button_Lookup}" Margin="10,5" TextAlignment="Center" />
+                            <TextBlock Grid.Column="1" FontSize="14" Text="{x:Static localization:Strings.Lookup}" Margin="10,5" TextAlignment="Center" />
                         </Grid>
                     </Button.Content>
                 </Button>
@@ -114,7 +114,7 @@
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{DynamicResource String_CopyDots}">
+                    <MenuItem Header="{x:Static localization:Strings.CopyDots}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -122,7 +122,7 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
-                        <MenuItem Header="{DynamicResource String_Name}" Command="{Binding CopySelectedNameCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Name}" Command="{Binding CopySelectedNameCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -131,7 +131,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_TTL}" Command="{Binding CopySelectedTTLCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.TTL}" Command="{Binding CopySelectedTTLCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -140,7 +140,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Class}" Command="{Binding CopySelectedClassCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Class}" Command="{Binding CopySelectedClassCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -149,7 +149,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Type}" Command="{Binding CopySelectedTypeCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Type}" Command="{Binding CopySelectedTypeCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -158,7 +158,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Result}" Command="{Binding CopySelectedResultCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Result}" Command="{Binding CopySelectedResultCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>

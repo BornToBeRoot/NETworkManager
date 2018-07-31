@@ -903,20 +903,11 @@
   <data name="Found" xml:space="preserve">
     <value>Found</value>
   </data>
-  <data name="GitHub" xml:space="preserve">
-    <value>GitHub</value>
-  </data>
-  <data name="Gitter" xml:space="preserve">
-    <value>Gitter</value>
-  </data>
   <data name="Group" xml:space="preserve">
     <value>Group</value>
   </data>
   <data name="Height" xml:space="preserve">
     <value>Height</value>
-  </data>
-  <data name="HiddenPassword" xml:space="preserve">
-    <value>••••••••••••</value>
   </data>
   <data name="Host" xml:space="preserve">
     <value>Host</value>

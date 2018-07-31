@@ -16,8 +16,8 @@
             <TextBlock Text="{Binding Message}" Style="{StaticResource WrapTextBlock}" />
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="{DynamicResource String_Button_Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
-            <Button Content="{DynamicResource String_Button_Delete}" Command="{Binding DeleteCommand}" IsDefault="True" Style="{StaticResource HighlightedButton}" Margin="10,0,0,0" />
+            <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
+            <Button Content="{x:Static localization:Strings.Delete}" Command="{Binding DeleteCommand}" IsDefault="True" Style="{StaticResource HighlightedButton}" Margin="10,0,0,0" />
         </StackPanel>
     </Grid>
 </UserControl>

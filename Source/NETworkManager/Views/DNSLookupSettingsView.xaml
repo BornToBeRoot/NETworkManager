@@ -10,9 +10,9 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DNSLookupSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.DNSLookup}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{DynamicResource String_UseCustomDNSServer}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding UseCustomDNSServer}" Margin="0,0,0,10"/>
-        <TextBlock Text="{DynamicResource String_DNSServers}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNSServers}" Style="{StaticResource DefaultTextBox}">
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCustomDNSServer}" IsChecked="{Binding UseCustomDNSServer}" Margin="0,0,0,10"/>
+        <TextBlock Text="{x:Static localization:Strings.DNSServers}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBox Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4DNSServers}" Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>
                 <Binding Path="CustomDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -22,8 +22,8 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBlock Text="{DynamicResource String_Port}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort53}" Style="{StaticResource DefaultTextBox}">
+        <TextBlock Text="{x:Static localization:Strings.Port}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePort53}" Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>
                 <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -33,9 +33,9 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <mah:ToggleSwitch Header="{DynamicResource String_AddDNSSuffixToHostname}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding AddDNSSuffix}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="{DynamicResource String_UseCustomDNSSuffix}" IsEnabled="{Binding AddDNSSuffix}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding UseCustomDNSSuffix}" Margin="0,0,0,10"/>
-        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSuffix}" Margin="0,0,0,10">
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.AddDNSSuffixToHostname}" IsChecked="{Binding AddDNSSuffix}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCustomDNSSuffix}" IsEnabled="{Binding AddDNSSuffix}" IsChecked="{Binding UseCustomDNSSuffix}" Margin="0,0,0,10"/>
+        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleSuffix}" Margin="0,0,0,10">
             <TextBox.Resources>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                     <Setter Property="IsEnabled" Value="False" />
@@ -60,19 +60,19 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <mah:ToggleSwitch Header="{DynamicResource String_ResolveCNAME}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ResolveCNAME}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="{DynamicResource String_Recursion}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding Recursion}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="{DynamicResource String_UseResolverCache}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding UseResolverCache}" Margin="0,0,0,10"/>
-        <TextBlock Text="{DynamicResource String_Class}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveCNAMEOnANYRequests}" IsChecked="{Binding ResolveCNAME}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.Recursion}" IsChecked="{Binding Recursion}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseResolverCache}" IsChecked="{Binding UseResolverCache}" Margin="0,0,0,10"/>
+        <TextBlock Text="{x:Static localization:Strings.Class}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding Classes}" SelectedItem="{Binding Class}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{DynamicResource String_ShowOnlyMostCommonQueryTypes}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ShowMostCommonQueryTypes}" Margin="0,0,0,10"/>
-        <TextBlock Text="{DynamicResource String_Protocol}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowOnlyMostCommonQueryTypes}" IsChecked="{Binding ShowMostCommonQueryTypes}" Margin="0,0,0,10"/>
+        <TextBlock Text="{x:Static localization:Strings.Protocol}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding TransportTypes}" SelectedItem="{Binding TransportType}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
-        <TextBlock Text="{DynamicResource String_Attempts}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Attempts}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Attempts}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
-        <TextBlock Text="{DynamicResource String_Timeout}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Timeout}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Timeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{DynamicResource String_ShowStatistics}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ShowStatistics}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowStatistics}" IsChecked="{Binding ShowStatistics}" />
     </StackPanel>
 </UserControl>
