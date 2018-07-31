@@ -4687,7 +4687,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start with Windows.
+        ///   Looks up a localized string similar to Start with Windows (current user).
         /// </summary>
         public static string StartWithWindows {
             get {

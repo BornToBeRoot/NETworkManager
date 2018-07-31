@@ -15,7 +15,7 @@
         <TextBlock  Text="{x:Static localization:Strings.Threads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Threads}" Maximum="15000" Minimum="1" Interval="1" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.Ping}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock  Text="{x:Static localization:Strings.Timeout}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBlock  Text="{x:Static localization:Strings.TimeoutMS}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown  Value="{Binding ICMPTimeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.Buffer}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown  Value="{Binding ICMPBuffer}" Minimum="1" Maximum="65535" Interval="1" Margin="0,0,0,10" />
@@ -52,7 +52,7 @@
         <ComboBox ItemsSource="{Binding DNSTransportTypes}" SelectedItem="{Binding DNSTransportType}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
         <TextBlock Text="{x:Static localization:Strings.Attempts}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding DNSAttempts}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
-        <TextBlock Text="{x:Static localization:Strings.Timeout}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.TimeoutMS}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding DNSTimeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.ARP}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ReadTheMACAddressFromTheArpCache}"   IsChecked="{Binding ResolveMACAddress}" Margin="0,0,0,20" />

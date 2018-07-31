@@ -598,7 +598,7 @@
     <value>Start minimized in tray</value>
   </data>
   <data name="StartWithWindows" xml:space="preserve">
-    <value>Start with Windows</value>
+    <value>Start with Windows (current user)</value>
   </data>
   <data name="StaticIPv4Address" xml:space="preserve">
     <value>Static IPv4 address</value>
