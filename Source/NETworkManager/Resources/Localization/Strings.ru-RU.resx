@@ -1032,8 +1032,8 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
-  <data name="PasswordsDoesNotMatch" xml:space="preserve">
-    <value>Passwords does not match!</value>
+  <data name="PasswordsDoNotMatch" xml:space="preserve">
+    <value>Passwords do not match!</value>
   </data>
   <data name="Path" xml:space="preserve">
     <value>Path</value>

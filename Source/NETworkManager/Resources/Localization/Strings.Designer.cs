@@ -1762,15 +1762,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Switche (Home).
-        /// </summary>
-        public static string ExampleIPScannerProfileName {
-            get {
-                return ResourceManager.GetString("ExampleIPScannerProfileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150; server-01/24.
         /// </summary>
         public static string ExampleIPScanRange {
@@ -1906,15 +1897,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Switche (static).
-        /// </summary>
-        public static string ExampleNetworkInterfaceProfileName {
-            get {
-                return ResourceManager.GetString("ExampleNetworkInterfaceProfileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 161.
         /// </summary>
         public static string ExamplePort161 {
@@ -1983,15 +1965,6 @@ namespace NETworkManager.Resources.Localization {
         public static string ExamplePortPortRangeOrService {
             get {
                 return ResourceManager.GetString("ExamplePortPortRangeOrService", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Webserver.
-        /// </summary>
-        public static string ExamplePortScannerProfileName {
-            get {
-                return ResourceManager.GetString("ExamplePortScannerProfileName", resourceCulture);
             }
         }
         
@@ -3328,11 +3301,11 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Passwords does not match!.
+        ///   Looks up a localized string similar to Passwords do not match!.
         /// </summary>
-        public static string PasswordsDoesNotMatch {
+        public static string PasswordsDoNotMatch {
             get {
-                return ResourceManager.GetString("PasswordsDoesNotMatch", resourceCulture);
+                return ResourceManager.GetString("PasswordsDoNotMatch", resourceCulture);
             }
         }
         

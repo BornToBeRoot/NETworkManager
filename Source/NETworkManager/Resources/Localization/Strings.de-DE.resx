@@ -1032,7 +1032,7 @@
   <data name="Password" xml:space="preserve">
     <value>Passwort</value>
   </data>
-  <data name="PasswordsDoesNotMatch" xml:space="preserve">
+  <data name="PasswordsDoNotMatch" xml:space="preserve">
     <value>Passwörter stimmen nicht überein!</value>
   </data>
   <data name="Path" xml:space="preserve">

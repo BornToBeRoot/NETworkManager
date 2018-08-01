@@ -1032,8 +1032,8 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
-  <data name="PasswordsDoesNotMatch" xml:space="preserve">
-    <value>Passwords does not match!</value>
+  <data name="PasswordsDoNotMatch" xml:space="preserve">
+    <value>Passwords do not match!</value>
   </data>
   <data name="Path" xml:space="preserve">
     <value>Path</value>
@@ -1365,9 +1365,6 @@
   <data name="ExampleHostnameOrIPAddress" xml:space="preserve">
     <value>SERVER-01 or 172.16.0.100</value>
   </data>
-  <data name="ExampleIPScannerProfileName" xml:space="preserve">
-    <value>Switche (Home)</value>
-  </data>
   <data name="ExampleIPScanRange" xml:space="preserve">
     <value>192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150; server-01/24</value>
   </data>
@@ -1413,9 +1410,6 @@
   <data name="ExampleMACAddressesOrVendor" xml:space="preserve">
     <value>01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5; Intel Corp; Asus</value>
   </data>
-  <data name="ExampleNetworkInterfaceProfileName" xml:space="preserve">
-    <value>Switche (static)</value>
-  </data>
   <data name="ExamplePort161" xml:space="preserve">
     <value>161</value>
   </data>
@@ -1439,9 +1433,6 @@
   </data>
   <data name="ExamplePortPortRangeOrService" xml:space="preserve">
     <value>22; 80; https; ldaps; 777 - 999; 8080</value>
-  </data>
-  <data name="ExamplePortScannerProfileName" xml:space="preserve">
-    <value>Webserver</value>
   </data>
   <data name="ExamplePortScanRange" xml:space="preserve">
     <value>22; 80; 443; 500 - 999; 8080</value>
