@@ -1588,7 +1588,7 @@
     <value>Enter a valid subnetmask (like 255.255.255.0)!</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>Enter a valid subnetmask or CIDR (like 255.255.255.0 or 24)!</value>
+    <value>Enter a valid subnetmask or CIDR (like 255.255.255.0 or /24)!</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>Field cannot be empty!</value>
@@ -1660,7 +1660,7 @@
     <value>Enter a valid port and/or port range (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
-    <value>Enter a valid subnet (like 192.168.178.133/26)</value>
+    <value>Enter a valid subnet (like 192.168.178.133/26)!</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
     <value>Enter a valid website (like https://example.com/index.html)</value>

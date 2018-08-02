@@ -1609,7 +1609,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter a valid subnet (like 192.168.178.133/26).
+        ///   Looks up a localized string similar to Enter a valid subnet (like 192.168.178.133/26)!.
         /// </summary>
         public static string EnterValidSubnet {
             get {
@@ -1627,7 +1627,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter a valid subnetmask or CIDR (like 255.255.255.0 or 24)!.
+        ///   Looks up a localized string similar to Enter a valid subnetmask or CIDR (like 255.255.255.0 or /24)!.
         /// </summary>
         public static string EnterValidSubnetmaskOrCIDR {
             get {

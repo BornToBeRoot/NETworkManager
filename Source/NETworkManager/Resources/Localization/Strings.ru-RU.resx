@@ -226,7 +226,7 @@
     <value>Фильтр</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>General</value>
+    <value>Общие</value>
   </data>
   <data name="Headers" xml:space="preserve">
     <value>Заголовки</value>
@@ -286,7 +286,7 @@
     <value>Сеть</value>
   </data>
   <data name="NetworkInterface" xml:space="preserve">
-    <value>Network Interface</value>
+    <value>Сетевой интерфейс</value>
   </data>
   <data name="NewTab" xml:space="preserve">
     <value>Новая вкладка</value>
@@ -295,7 +295,7 @@
     <value>OUI</value>
   </data>
   <data name="OverwriteQuestion" xml:space="preserve">
-    <value>Overwrite?</value>
+    <value>Переписать?</value>
   </data>
   <data name="Ping" xml:space="preserve">
     <value>Ping</value>
@@ -412,298 +412,298 @@
     <value>Окно</value>
   </data>
   <data name="WrongPassword" xml:space="preserve">
-    <value>Wrong password!</value>
+    <value>Неверный пароль!</value>
   </data>
   <data name="Client" xml:space="preserve">
-    <value>Client</value>
+    <value>Клиент</value>
   </data>
   <data name="Administrator" xml:space="preserve">
     <value>Administrator</value>
   </data>
   <data name="AlwaysShowIconInTray" xml:space="preserve">
-    <value>Always show icon in tray</value>
+    <value>Всегда показывать значок в трее</value>
   </data>
   <data name="Attempts" xml:space="preserve">
-    <value>Attempts</value>
+    <value>Попытки</value>
   </data>
   <data name="AverageTime" xml:space="preserve">
-    <value>Average time</value>
+    <value>Среднее время</value>
   </data>
   <data name="Broadcast" xml:space="preserve">
     <value>Broadcast</value>
   </data>
   <data name="Buffer" xml:space="preserve">
-    <value>Buffer</value>
+    <value>Буфер</value>
   </data>
   <data name="Bytes" xml:space="preserve">
-    <value>Bytes</value>
+    <value>Байты</value>
   </data>
   <data name="CIDR" xml:space="preserve">
     <value>CIDR</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>Close</value>
+    <value>Закрыть</value>
   </data>
   <data name="DefaultGateway" xml:space="preserve">
-    <value>Default-Gateway</value>
+    <value>Шлюз по умолчанию</value>
   </data>
   <data name="DeleteDots" xml:space="preserve">
-    <value>Delete...</value>
+    <value>Удалить...</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Description</value>
+    <value>Описание</value>
   </data>
   <data name="DHCPEnabled" xml:space="preserve">
-    <value>DHCP enabled</value>
+    <value>DHCP включенный</value>
   </data>
   <data name="DHCPLeaseExpires" xml:space="preserve">
-    <value>DHCP lease expires</value>
+    <value>DHCP Lease истёк</value>
   </data>
   <data name="DHCPLeaseObtained" xml:space="preserve">
-    <value>DHCP lease obtained</value>
+    <value>DHCP Lease назначен</value>
   </data>
   <data name="DHCPServer" xml:space="preserve">
-    <value>DHCP server</value>
+    <value>DHCP Сервер</value>
   </data>
   <data name="DNSServers" xml:space="preserve">
-    <value>DNS server(s)</value>
+    <value>DNS-сервер(а)</value>
   </data>
   <data name="DNSSuffix" xml:space="preserve">
-    <value>DNS suffix</value>
+    <value>DNS-суффикс</value>
   </data>
   <data name="DynamicIPv4Address" xml:space="preserve">
-    <value>Dynamic IPv4 address</value>
+    <value>Динамический IPv4-Адрес</value>
   </data>
   <data name="DynamicIPv4DNSServer" xml:space="preserve">
-    <value>Dynamic IPv4 DNS server</value>
+    <value>Динамический DNS-сервер IPv4</value>
   </data>
   <data name="Hop" xml:space="preserve">
-    <value>Hop</value>
+    <value>Прыжок</value>
   </data>
   <data name="Hops" xml:space="preserve">
-    <value>Hops</value>
+    <value>Прыжки</value>
   </data>
   <data name="Hostname" xml:space="preserve">
-    <value>Hostname</value>
+    <value>Имя хоста</value>
   </data>
   <data name="IPAddress" xml:space="preserve">
-    <value>IP address</value>
+    <value>IP Адрес</value>
   </data>
   <data name="IPAddresses" xml:space="preserve">
-    <value>IP addresses</value>
+    <value>IP-адреса</value>
   </data>
   <data name="IPv4" xml:space="preserve">
     <value>IPv4</value>
   </data>
   <data name="IPv4Address" xml:space="preserve">
-    <value>IPv4 address</value>
+    <value>IPv4 Адрес</value>
   </data>
   <data name="IPv4DefaultGateway" xml:space="preserve">
-    <value>IPv4-Default-Gateway</value>
+    <value>IPv4-шлюз по умолчанию</value>
   </data>
   <data name="IPv6" xml:space="preserve">
     <value>IPv6</value>
   </data>
   <data name="IPv6Address" xml:space="preserve">
-    <value>IPv6 address</value>
+    <value>IPv6 Адрес</value>
   </data>
   <data name="IPv6AddressLinkLocal" xml:space="preserve">
-    <value>Link-local IPv6 address</value>
+    <value>Link-local IPv6 Адрес</value>
   </data>
   <data name="IPv6DefaultGateway" xml:space="preserve">
-    <value>IPv6-Default-Gateway</value>
+    <value>IPv6-Default-сетевой шлюз</value>
   </data>
   <data name="Maximum" xml:space="preserve">
-    <value>Maximum</value>
+    <value>Максимум</value>
   </data>
   <data name="MaximumHopsRouter" xml:space="preserve">
-    <value>Maximum hops/router</value>
+    <value>Макс. прыжки/маршрутизатор</value>
   </data>
   <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
-    <value>Minimize main window instead of terminating the application</value>
+    <value>Свернуть главное окно вместо завершения работы приложения</value>
   </data>
   <data name="MinimizeToTrayInsteadOfTaskbar" xml:space="preserve">
-    <value>Minimize to tray instead of taskbar</value>
+    <value>Сворачивать в трей вместо панели задач</value>
   </data>
   <data name="Minimum" xml:space="preserve">
-    <value>Minimum</value>
+    <value>Минимум</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Name</value>
+    <value>Имя</value>
   </data>
   <data name="NetworkAddress" xml:space="preserve">
-    <value>Network address</value>
+    <value>Сетевой адрес</value>
   </data>
   <data name="NewSubnetmaskOrCIDR" xml:space="preserve">
-    <value>New subnetmask or CIDR</value>
+    <value>Новая маска подсети или CIDR</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>No</value>
+    <value>Нет</value>
   </data>
   <data name="ObtainAnIPAddressAutomatically" xml:space="preserve">
-    <value>Obtain an IP address automatically</value>
+    <value>Получить IP-адрес автоматически</value>
   </data>
   <data name="ObtainDNSServerAddressAutomatically" xml:space="preserve">
-    <value>Obtain DNS server address automatically</value>
+    <value>Получить адрес DNS-сервера автоматически</value>
   </data>
   <data name="PacketLoss" xml:space="preserve">
-    <value>Packet loss</value>
+    <value>Потеря пакетов</value>
   </data>
   <data name="PacketsTransmitted" xml:space="preserve">
-    <value>Packets transmitted</value>
+    <value>Переданные пакеты</value>
   </data>
   <data name="PhysicalAddress" xml:space="preserve">
-    <value>PhysicalAddress</value>
+    <value>Физический адрес</value>
   </data>
   <data name="PreferredProtocolWhenResolvingHostname" xml:space="preserve">
-    <value>Preferred protocol when resolving hostname:</value>
+    <value>Предпочтительный протокол при разрешении имени хоста:</value>
   </data>
   <data name="PrimaryDNSServer" xml:space="preserve">
-    <value>Primary DNS server</value>
+    <value>Первичный DNS-сервер</value>
   </data>
   <data name="ReadTheMACAddressFromTheArpCache" xml:space="preserve">
-    <value>Read the MAC address from the ARP cache</value>
+    <value>Чтение MAC-адреса в кэше ARP</value>
   </data>
   <data name="ReceivedLost" xml:space="preserve">
-    <value>Received / Lost</value>
+    <value>Получено / Потеряно</value>
   </data>
   <data name="ResolveHostname" xml:space="preserve">
-    <value>Resolve hostname</value>
+    <value>Разрешить имя узла</value>
   </data>
   <data name="RestartRequired" xml:space="preserve">
-    <value>Restart required</value>
+    <value>Требуется перезапуск</value>
   </data>
   <data name="RestartRequiredSettingsChangedMessage" xml:space="preserve">
-    <value>Some settings are applied only after restarting the application!</value>
+    <value>Некоторые настройки применяются только после перезапуска приложения!</value>
   </data>
   <data name="SaveSettingsInApplicationFolder" xml:space="preserve">
-    <value>Save settings in the application folder</value>
+    <value>Сохранение настроек в папке приложения</value>
   </data>
   <data name="SecondaryDNSServer" xml:space="preserve">
-    <value>Secondary DNS server</value>
+    <value>Вторичный DNS-сервер</value>
   </data>
   <data name="Show" xml:space="preserve">
-    <value>Show</value>
+    <value>Показать</value>
   </data>
   <data name="ShowTheFollowingApplicationOnStartup" xml:space="preserve">
-    <value>Show the following application on startup:</value>
+    <value>Показать следующее приложение при запуске:</value>
   </data>
   <data name="Slogan" xml:space="preserve">
-    <value>A powerful tool for managing networks and troubleshoot network problems!</value>
+    <value>Мощный инструмент для управления сетями и устранения сетевых проблем!</value>
   </data>
   <data name="Speed" xml:space="preserve">
-    <value>Speed</value>
+    <value>Скорость</value>
   </data>
   <data name="StartMinimizedInTray" xml:space="preserve">
-    <value>Start minimized in tray</value>
+    <value>Запускаться свернутым в трей</value>
   </data>
   <data name="StartWithWindows" xml:space="preserve">
-    <value>Start with Windows (current user)</value>
+    <value>Запуск с Windows (текущий пользователь)</value>
   </data>
   <data name="StaticIPv4Address" xml:space="preserve">
-    <value>Static IPv4 address</value>
+    <value>Статический IPv4-Адрес</value>
   </data>
   <data name="StaticIPv4DNSServer" xml:space="preserve">
-    <value>Static IPv4 DNS server</value>
+    <value>Статический DNS-сервер IPv4</value>
   </data>
   <data name="Subnetmask" xml:space="preserve">
-    <value>Subnetmask</value>
+    <value>Маска подсети</value>
   </data>
   <data name="SubnetmaskOrCIDR" xml:space="preserve">
-    <value>Subnetmask or CIDR</value>
+    <value>Маска подсети или CIDR</value>
   </data>
   <data name="Threads" xml:space="preserve">
     <value>Threads</value>
   </data>
   <data name="Time" xml:space="preserve">
-    <value>Time</value>
+    <value>Время</value>
   </data>
   <data name="Time1" xml:space="preserve">
-    <value>Time 1</value>
+    <value>Время 1</value>
   </data>
   <data name="Time2" xml:space="preserve">
-    <value>Time 2</value>
+    <value>Время 2</value>
   </data>
   <data name="Time3" xml:space="preserve">
-    <value>Time 3</value>
+    <value>Время 3</value>
   </data>
   <data name="Timeout" xml:space="preserve">
-    <value>Timeout</value>
+    <value>Таймаут</value>
   </data>
   <data name="TimeoutMS" xml:space="preserve">
     <value>Timeout (ms)</value>
   </data>
   <data name="TimeToWaitBetweenEachPing" xml:space="preserve">
-    <value>Time to wait between each ping</value>
+    <value>Время ожидания между каждым ping</value>
   </data>
   <data name="TTL" xml:space="preserve">
     <value>TTL</value>
   </data>
   <data name="Type" xml:space="preserve">
-    <value>Type</value>
+    <value>Тип</value>
   </data>
   <data name="UseTheFollowingDNSServerAddresses" xml:space="preserve">
-    <value>Use the following DNS server addresses:</value>
+    <value>Использовать следующий IP-адрес:</value>
   </data>
   <data name="UseTheFollowingIPAddress" xml:space="preserve">
-    <value>Use the following IP address:</value>
+    <value>Использовать следующие адреса DNS-серверов:</value>
   </data>
   <data name="WakeUp" xml:space="preserve">
     <value>Wake up</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>Да</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>add</value>
+    <value>добавить</value>
   </data>
   <data name="AddATabToOpenANewConnection" xml:space="preserve">
-    <value>Add a tab to open a new connection...</value>
+    <value>Добавить вкладку, чтобы открыть новое соединение...</value>
   </data>
   <data name="AddATabToPerformADNSLookup" xml:space="preserve">
-    <value>Add a tab to perform a DNS lookup...</value>
+    <value>Добавить вкладки для выполнения поиска DNS...</value>
   </data>
   <data name="AddATabToPerformANetworkScan" xml:space="preserve">
-    <value>Add a tab to perform a network scan...</value>
+    <value>Добавление вкладки для выполнения сканирования сети...</value>
   </data>
   <data name="AddATabToPerformAnSNMPAction" xml:space="preserve">
-    <value>Add a tab to perform an SNMP action...</value>
+    <value>Добавить вкладку для выполнения действия SNMP...</value>
   </data>
   <data name="AddATabToPerformAPing" xml:space="preserve">
-    <value>Add a tab to perform a ping...</value>
+    <value>Добавить вкладку выполнить ping...</value>
   </data>
   <data name="AddATabToPerformAPortScan" xml:space="preserve">
-    <value>Add a tab to perform a port scan...</value>
+    <value>Добавление вкладки для выполнения сканирования портов...</value>
   </data>
   <data name="AddATabToPerformATrace" xml:space="preserve">
-    <value>Add a tab to perform a trace...</value>
+    <value>Добавить вкладку для выполнения трассировки...</value>
   </data>
   <data name="AddATabToQueryTheHTTPHeaders" xml:space="preserve">
-    <value>Add a tab to query the HTTP headers...</value>
+    <value>Добавить вкладку для запроса заголовков HTTP...</value>
   </data>
   <data name="AddDNSSuffixToHostname" xml:space="preserve">
-    <value>Add DNS suffix (primary) to hostname</value>
+    <value>Добавить DNS-суффикс (основной) к имени хоста</value>
   </data>
   <data name="AdditionalCommandLine" xml:space="preserve">
-    <value>Additional command line</value>
+    <value>Дополнительная командная строка</value>
   </data>
   <data name="Additionals" xml:space="preserve">
-    <value>Additionals</value>
+    <value>Дополнительный</value>
   </data>
   <data name="AddProfileDots" xml:space="preserve">
-    <value>Add profile...</value>
+    <value>Добавить профиль...</value>
   </data>
   <data name="AdjustScreenAutomatically" xml:space="preserve">
-    <value>Adjust screen automatically</value>
+    <value>Отрегулируйте экран автоматически</value>
   </data>
   <data name="Answers" xml:space="preserve">
-    <value>Answers</value>
+    <value>Ответы</value>
   </data>
   <data name="ApplicationIsRestartedAfterwards" xml:space="preserve">
-    <value>Application is restarted afterwards</value>
+    <value>Приложения после перезагрузки</value>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>Apply</value>
+    <value>Применить</value>
   </data>
   <data name="ApplyWindowsKeyCombinationsLikeAltTab" xml:space="preserve">
     <value>Apply Windows key combinations (e.g. ALT+TAB):</value>
@@ -712,118 +712,118 @@
     <value>Auth</value>
   </data>
   <data name="AuthenticationLevel" xml:space="preserve">
-    <value>Authentication level</value>
+    <value>Уровень проверки подлинности</value>
   </data>
   <data name="Authorities" xml:space="preserve">
-    <value>Authorities</value>
+    <value>Полномочия</value>
   </data>
   <data name="AutomaticallyUpdateEvery" xml:space="preserve">
-    <value>Automatically update every</value>
+    <value>Автоматически обновлять всегда</value>
   </data>
   <data name="Back" xml:space="preserve">
-    <value>back</value>
+    <value>Назад</value>
   </data>
   <data name="Backup" xml:space="preserve">
-    <value>Backup</value>
+    <value>Архивация</value>
   </data>
   <data name="Baud" xml:space="preserve">
     <value>Baud</value>
   </data>
   <data name="CanceledByUserMessage" xml:space="preserve">
-    <value>The operation has been canceled by the user!</value>
+    <value>Операция отменена пользователем!</value>
   </data>
   <data name="CapsLockIsEnabled" xml:space="preserve">
-    <value>Caps lock is enabled!</value>
+    <value>Caps lock включен!</value>
   </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
-    <value>Check for updates at startup</value>
+    <value>Проверка наличия обновлений при запуске</value>
   </data>
   <data name="Class" xml:space="preserve">
-    <value>Class</value>
+    <value>Класс</value>
   </data>
   <data name="ClearFilter" xml:space="preserve">
-    <value>Clear filter</value>
+    <value>Очистить фильтр</value>
   </data>
   <data name="ColorDepthBit" xml:space="preserve">
-    <value>Color depth (bit)</value>
+    <value>Глубина цвета (bit)</value>
   </data>
   <data name="Community" xml:space="preserve">
-    <value>Community</value>
+    <value>Сообщество</value>
   </data>
   <data name="ConfigureThePathToPuTTYInTheSettingsDots" xml:space="preserve">
-    <value>Configure the path to PuTTY in the settings...</value>
+    <value>Настройте путь к PuTTY в настройках...</value>
   </data>
   <data name="ConfirmClose" xml:space="preserve">
-    <value>Confirm close</value>
+    <value>Подтвердить закрытие</value>
   </data>
   <data name="ConfirmCloseMessage" xml:space="preserve">
-    <value>Are you sure you want to close the application?</value>
+    <value>Вы уверены, что хотите закрыть приложение?</value>
   </data>
   <data name="ConnectAsDots" xml:space="preserve">
-    <value>Connect as...</value>
+    <value>Подключить как...</value>
   </data>
   <data name="ConnectExternal" xml:space="preserve">
-    <value>Connect external</value>
+    <value>Подключить внешний</value>
   </data>
   <data name="ConnectTheNetworkCardToConfigureIt" xml:space="preserve">
-    <value>Connect the network card to a network to configure it!</value>
+    <value>Подключите сетевую карту к сети, чтобы настроить её!</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>Copy</value>
+    <value>Копия</value>
   </data>
   <data name="CopyAsDots" xml:space="preserve">
-    <value>Copy as...</value>
+    <value>Копировать как...</value>
   </data>
   <data name="CopyDots" xml:space="preserve">
-    <value>Copy...</value>
+    <value>Копировать...</value>
   </data>
   <data name="CouldNotResolveHostnameFor" xml:space="preserve">
-    <value>Could not resolve hostname for: "{0}"</value>
+    <value>Не удалось определить имя узла для: "{0}"</value>
   </data>
   <data name="Credential" xml:space="preserve">
-    <value>Credential</value>
+    <value>Учетные данные</value>
   </data>
   <data name="CredentialNotFoundMessage" xml:space="preserve">
-    <value>Edit the Profile and select a different credential or delete the existing one</value>
+    <value>Измените сеанс и выберите другие учетные данные или удалите существующие</value>
   </data>
   <data name="CredentialsEncryptionDisclaimer" xml:space="preserve">
-    <value>The credentials are stored encrypted with AES-256 (Rijndael) in a file. The key for the encryption results from a master password (Rfc2898DeriveBytes). The application uses a SecureString for passwords. For some functions, passwords must be converted from a SecureString to plain text, or vice versa.</value>
+    <value>Учетные данные хранятся в зашифрованном виде с AES-256 (Rijndael) в файл. Ключ для шифрования является результатом мастер-пароля (Rfc2898DeriveBytes). Приложение использует SecureString для паролей. Для некоторых функций пароли должны быть преобразованы из SecureString в обычный текст или наоборот.</value>
   </data>
   <data name="Custom" xml:space="preserve">
-    <value>Custom</value>
+    <value>Настраиваемый</value>
   </data>
   <data name="CustomScreenSize" xml:space="preserve">
-    <value>Custom screen size:</value>
+    <value>настраиваемый размер экрана:</value>
   </data>
   <data name="DataHasBeenUpdated" xml:space="preserve">
-    <value>Data has been updated!</value>
+    <value>Данные обновлены!</value>
   </data>
   <data name="DecryptAndLoadCredentialsMessage" xml:space="preserve">
-    <value>Credentials must be decrypted and loaded to manage them.</value>
+    <value>Учетные данные должны быть расшифрованы и загружены для управления ими.</value>
   </data>
   <data name="Default" xml:space="preserve">
-    <value>Default</value>
+    <value>Стандартный</value>
   </data>
   <data name="DefaultBaudRate" xml:space="preserve">
-    <value>Default baud rate</value>
+    <value>Скорость передачи данных по умолчанию</value>
   </data>
   <data name="DefaultPort" xml:space="preserve">
-    <value>Default port:</value>
+    <value>Порт по умолчанию:</value>
   </data>
   <data name="DefaultRloginPort" xml:space="preserve">
-    <value>Default Rlogin port</value>
+    <value>Порт Rlogin по умолчанию</value>
   </data>
   <data name="DefaultSSHPort" xml:space="preserve">
-    <value>Default SSH port</value>
+    <value>Порт SSH по умолчанию</value>
   </data>
   <data name="DefaultTelnetPort" xml:space="preserve">
-    <value>Default Telnet port</value>
+    <value>Порт Telnet по умолчанию</value>
   </data>
   <data name="DeleteCredentialMessage" xml:space="preserve">
-    <value>The selected credential will be deleted permanently.</value>
+    <value>Выбранные учетные данные будут удалены навсегда.</value>
   </data>
   <data name="DeleteEntry" xml:space="preserve">
-    <value>Delete entry</value>
+    <value>Удалить запись</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
     <value>Selected profiles will be deleted permanently.</value>
@@ -835,88 +835,88 @@
     <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use Remote Desktop.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
-    <value>DNS autconfiguration</value>
+    <value>Автоматическая настройка DNS</value>
   </data>
   <data name="DNSLookupDots" xml:space="preserve">
     <value>DNS Lookup...</value>
   </data>
   <data name="DNSServer" xml:space="preserve">
-    <value>DNS server</value>
+    <value>DNS-сервер</value>
   </data>
   <data name="Documentation" xml:space="preserve">
-    <value>Documentation</value>
+    <value>Документация</value>
   </data>
   <data name="Domain" xml:space="preserve">
-    <value>Domain</value>
+    <value>Домен</value>
   </data>
   <data name="Duration" xml:space="preserve">
-    <value>Duration</value>
+    <value>Продолжительность</value>
   </data>
   <data name="EditDots" xml:space="preserve">
-    <value>Edit...</value>
+    <value>Изменить...</value>
   </data>
   <data name="Enable" xml:space="preserve">
     <value>Enable</value>
   </data>
   <data name="EnableCredentialSecuritySupportProvider" xml:space="preserve">
-    <value>Enable Credential Security Support Provider</value>
+    <value>Включить поддержку Security Support Provider</value>
   </data>
   <data name="EnableTheProfileInAtLeastOneTool" xml:space="preserve">
     <value>Enable the profile in at least one tool! Click on a tab and select "Enable"...</value>
   </data>
   <data name="EnableTransparency" xml:space="preserve">
-    <value>Enable transparency</value>
+    <value>Включить прозрачность</value>
   </data>
   <data name="EndTime" xml:space="preserve">
-    <value>End time</value>
+    <value>Конечное время</value>
   </data>
   <data name="EnterASubnetToCalculateIt" xml:space="preserve">
-    <value>Enter a subnet to calculate it...</value>
+    <value>Введите подсеть для ее расчета...</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
-    <value>Enter subnet and a new subnet mask to create subnets...</value>
+    <value>Введите подсеть и новую маску подсети для создания подсетей...</value>
   </data>
   <data name="EnterSubnetsToCreateASupernet" xml:space="preserve">
-    <value>Enter subnets to create a supernet...</value>
+    <value>Введите подсети для создания суперсети...</value>
   </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
-    <value>Error checking 'api.github.com', check your network connection!</value>
+    <value>Проверка ошибок "api.github.com', проверьте подключение к сети!</value>
   </data>
   <data name="ErrorInResponse" xml:space="preserve">
-    <value>Error in response!</value>
+    <value>Ошибка в ответе!</value>
   </data>
   <data name="ErrorInResponseCheckIfYouHaveWritePermissions" xml:space="preserve">
-    <value>Error in response! Check if you have write permissions.</value>
+    <value>Ошибка в ответе! Проверьте, есть ли у вас разрешения на запись.</value>
   </data>
   <data name="Expand" xml:space="preserve">
-    <value>Expand</value>
+    <value>Расширять</value>
   </data>
   <data name="FirstUsableIPAddress" xml:space="preserve">
-    <value>First usable IP address</value>
+    <value>Первый используемый IP-адрес</value>
   </data>
   <data name="FixedScreenSize" xml:space="preserve">
-    <value>Fixed screen size:</value>
+    <value>Фиксированный размер экрана:</value>
   </data>
   <data name="ForkMeOnGitHub" xml:space="preserve">
     <value>Fork me on Github!</value>
   </data>
   <data name="Found" xml:space="preserve">
-    <value>Found</value>
+    <value>Найдено</value>
   </data>
   <data name="Group" xml:space="preserve">
-    <value>Group</value>
+    <value>Группа</value>
   </data>
   <data name="Height" xml:space="preserve">
-    <value>Height</value>
+    <value>Высота</value>
   </data>
   <data name="Host" xml:space="preserve">
-    <value>Host</value>
+    <value>Хост</value>
   </data>
   <data name="HostnameOrIPAddress" xml:space="preserve">
-    <value>Hostname or IP address</value>
+    <value>Имя хоста или IP-адрес</value>
   </data>
   <data name="Hosts" xml:space="preserve">
-    <value>Hosts</value>
+    <value>Хосты</value>
   </data>
   <data name="ID" xml:space="preserve">
     <value>ID</value>
@@ -925,79 +925,79 @@
     <value>Inherit host from default</value>
   </data>
   <data name="InstallRDP8dot1Message" xml:space="preserve">
-    <value>You must install the Remote Desktop Protocol (RDP) version 8.1 on your system to use the Remote Desktop functionality!</value>
+    <value>Для использования функций удаленного рабочего стола необходимо установить протокол удаленного рабочего стола (RDP) версии 8.1 в системе!</value>
   </data>
   <data name="IPRange" xml:space="preserve">
-    <value>IP range</value>
+    <value>IP-диапазон</value>
   </data>
   <data name="LastUsableIPAddress" xml:space="preserve">
-    <value>Last usable IP address</value>
+    <value>Последний используемый IP-адрес</value>
   </data>
   <data name="LocalIPAddress" xml:space="preserve">
-    <value>Local IP address</value>
+    <value>Локальный IP адрес</value>
   </data>
   <data name="LocalPort" xml:space="preserve">
-    <value>Local port</value>
+    <value>Локальный порт</value>
   </data>
   <data name="MACAddressOrVendor" xml:space="preserve">
-    <value>MAC address or vendor</value>
+    <value>MAC-адрес или поставщик</value>
   </data>
   <data name="MagicPacketSuccessfulSended" xml:space="preserve">
-    <value>Magic packet successful sended!</value>
+    <value>Magic пакет успешно отправлен!</value>
   </data>
   <data name="MaximumNumberOfHopsReached" xml:space="preserve">
-    <value>Maximum number ({0}) of hops/router reached!</value>
+    <value>Достигнуто Максимальное число ({0}) прыжков/маршрутизатора!</value>
   </data>
   <data name="MessageSize" xml:space="preserve">
-    <value>Message size</value>
+    <value>Размер сообщения</value>
   </data>
   <data name="Mode" xml:space="preserve">
-    <value>Mode</value>
+    <value>Режим</value>
   </data>
   <data name="Multicast" xml:space="preserve">
     <value>Multicast</value>
   </data>
   <data name="MultipleInstances" xml:space="preserve">
-    <value>Multiple instances</value>
+    <value>Различные экземпляры</value>
   </data>
   <data name="NetworkLocationCannotBeReachedMessage" xml:space="preserve">
-    <value>The network address cannot be reached. Check if your computer is connected to the network. For information about network troubleshooting, see Windows Help.</value>
+    <value>Не удается получить сетевой адрес. Проверьте, подключен ли компьютер к сети. Дополнительные сведения об устранении неполадок сети см. в справке Windows.</value>
   </data>
   <data name="NewConnectionDots" xml:space="preserve">
     <value>New connection...</value>
   </data>
   <data name="NoDNSRecordFoundCheckYourInputAndSettings" xml:space="preserve">
-    <value>No DNS record found for "{0}"! Check your input and the settings.</value>
+    <value>Запись DNS для "{0}"не найдена! Проверьте ввод и настройки.</value>
   </data>
   <data name="NoEnabledNetworkAdaptersFound" xml:space="preserve">
-    <value>No enabled network adapters found!</value>
+    <value>Сетевые адаптеры не найдены!</value>
   </data>
   <data name="NoPortsFoundCheckYourInput" xml:space="preserve">
-    <value>No ports found. Check your input!</value>
+    <value>Порты не найдены. Проверьте ввод!</value>
   </data>
   <data name="NoProfilesFoundCreateOne" xml:space="preserve">
-    <value>No profiles found! Create one...</value>
+    <value>Профили не найдены! Создать...</value>
   </data>
   <data name="NothingFound" xml:space="preserve">
-    <value>Nothing found!</value>
+    <value>Ничего не найдено!</value>
   </data>
   <data name="NothingToDoCheckYourInput" xml:space="preserve">
-    <value>Nothing to do. Check your input!</value>
+    <value>Нечего делать. Проверьте свой ввод!</value>
   </data>
   <data name="NoUpdateAvailable" xml:space="preserve">
-    <value>No update available!</value>
+    <value>Нет доступных обновлений!</value>
   </data>
   <data name="NoValidFileFoundToImport" xml:space="preserve">
-    <value>No valid file found to import.</value>
+    <value>Не найден допустимый файл для импорта.</value>
   </data>
   <data name="NoVendorFoundCheckYourInput" xml:space="preserve">
-    <value>No vendor found. Check your input!</value>
+    <value>Продавец не найден. Проверьте ввод!</value>
   </data>
   <data name="NumberOfErrorsAfterWhichIsCanceled" xml:space="preserve">
-    <value>Number of errors after which is canceled:</value>
+    <value>Количество ошибок, после которых отменяется:</value>
   </data>
   <data name="NumberOfStoredEntries" xml:space="preserve">
-    <value>Number of stored entries</value>
+    <value>Количество сохраненных записей</value>
   </data>
   <data name="OID" xml:space="preserve">
     <value>OID</value>
@@ -1012,262 +1012,262 @@
     <value>On this computer</value>
   </data>
   <data name="Open" xml:space="preserve">
-    <value>Open</value>
+    <value>Открытый</value>
   </data>
   <data name="OpenLicense" xml:space="preserve">
     <value>Open license</value>
   </data>
   <data name="OpenProject" xml:space="preserve">
-    <value>Open project</value>
+    <value>Открыть проект</value>
   </data>
   <data name="OpenWebsite" xml:space="preserve">
-    <value>Open website</value>
+    <value>Открыть сайт</value>
   </data>
   <data name="Override" xml:space="preserve">
-    <value>override</value>
+    <value>перезаписать</value>
   </data>
   <data name="OverwriteSettingsInTheDestinationFolder" xml:space="preserve">
-    <value>Overwrite settings in the destination folder?\n\nIf you click "Move &amp;amp; Restart", the remaining files will be copied and the application will be restarted with the new settings!</value>
+    <value>Перезаписать настройки в папке назначения?\n\nЕсли Вы нажмете "Move &amp;amp; Restart", остальные файлы будут скопированы и приложение будет перезапущено с новыми настройками!</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Password</value>
+    <value>Пароль</value>
   </data>
   <data name="PasswordsDoNotMatch" xml:space="preserve">
-    <value>Passwords do not match!</value>
+    <value>Пароли не совпадают!</value>
   </data>
   <data name="Path" xml:space="preserve">
-    <value>Path</value>
+    <value>Путь</value>
   </data>
   <data name="PortOrService" xml:space="preserve">
-    <value>Port or service</value>
+    <value>Порт или служба</value>
   </data>
   <data name="Ports" xml:space="preserve">
-    <value>Port(s)</value>
+    <value>Порт(ы)</value>
   </data>
   <data name="Priv" xml:space="preserve">
     <value>Priv</value>
   </data>
   <data name="Profile" xml:space="preserve">
-    <value>Profile</value>
+    <value>Профиль</value>
   </data>
   <data name="ProfilesReloaded" xml:space="preserve">
     <value>Profiles reloaded</value>
   </data>
   <data name="Protocol" xml:space="preserve">
-    <value>Protocol</value>
+    <value>Протокол</value>
   </data>
   <data name="PuTTYProcessHasEnded" xml:space="preserve">
-    <value>PuTTY process has ended!</value>
+    <value>PuTTY процесс завершился!</value>
   </data>
   <data name="PuTTYProfile" xml:space="preserve">
-    <value>PuTTY profile</value>
+    <value>PuTTY профиль</value>
   </data>
   <data name="Questions" xml:space="preserve">
-    <value>Questions</value>
+    <value>Вопросы</value>
   </data>
   <data name="RAW" xml:space="preserve">
     <value>RAW</value>
   </data>
   <data name="Recursion" xml:space="preserve">
-    <value>Recursion</value>
+    <value>Рекурсия</value>
   </data>
   <data name="RedirectClipboard" xml:space="preserve">
-    <value>Redirect clipboard</value>
+    <value>Перенаправление буфера обмена</value>
   </data>
   <data name="RedirectDevices" xml:space="preserve">
-    <value>Redirect devices</value>
+    <value>Перенаправление устройств</value>
   </data>
   <data name="RedirectDrives" xml:space="preserve">
-    <value>Redirect drives</value>
+    <value>Перенаправление дисков</value>
   </data>
   <data name="RedirectPorts" xml:space="preserve">
-    <value>Redirect ports</value>
+    <value>Порты перенаправления</value>
   </data>
   <data name="RedirectPrinters" xml:space="preserve">
-    <value>Redirect printers</value>
+    <value>Перенаправление принтеров</value>
   </data>
   <data name="RedirectSmartcards" xml:space="preserve">
-    <value>Redirect smartcards</value>
+    <value>Перенаправление смарт-карт</value>
   </data>
   <data name="RemainingTime" xml:space="preserve">
-    <value>Remaining time</value>
+    <value>Оставшееся время</value>
   </data>
   <data name="RemoteIPAddress" xml:space="preserve">
-    <value>Remote IP address</value>
+    <value>Удаленный IP адрес</value>
   </data>
   <data name="RemotePort" xml:space="preserve">
-    <value>Remote port</value>
+    <value>Удаленный порт</value>
   </data>
   <data name="Repeat" xml:space="preserve">
-    <value>Repeat</value>
+    <value>Повторять</value>
   </data>
   <data name="ResolveCNAMEOnANYRequests" xml:space="preserve">
-    <value>Resolve CNAME on ANY requests</value>
+    <value>Разрешить CNAME для любых запросов</value>
   </data>
   <data name="Responses" xml:space="preserve">
-    <value>Responses</value>
+    <value>Ответы</value>
   </data>
   <data name="RestartTheApplicationSoThatAllChangesAreApplied" xml:space="preserve">
-    <value>Restart the application so that all settings are applied!</value>
+    <value>Перезапустите приложение, чтобы все настройки были применены!</value>
   </data>
   <data name="Rlogin" xml:space="preserve">
     <value>Rlogin</value>
   </data>
   <data name="Scanned" xml:space="preserve">
-    <value>Scanned</value>
+    <value>Отсканированный</value>
   </data>
   <data name="SearchedApplicationNotFound" xml:space="preserve">
-    <value>Searched application not found!</value>
+    <value>Приложение не найдено!</value>
   </data>
   <data name="SearchedLanguageNotFound" xml:space="preserve">
     <value>Searched language not found!</value>
   </data>
   <data name="SearchedSettingNotFound" xml:space="preserve">
-    <value>Searched setting not found!</value>
+    <value>Параметр не найден!</value>
   </data>
   <data name="Security" xml:space="preserve">
-    <value>Security</value>
+    <value>Безопасность</value>
   </data>
   <data name="SelectAScreenResolution" xml:space="preserve">
-    <value>Select a screen resolution</value>
+    <value>Выберите разрешение экрана</value>
   </data>
   <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
-    <value>The selected settings are overwritten.</value>
+    <value>Выбранные настройки будут перезаписаны.</value>
   </data>
   <data name="SelectedSettingsAreReset" xml:space="preserve">
-    <value>The selected settings are reset.</value>
+    <value>Выбранные настройки будут сброшены.</value>
   </data>
   <data name="SelectTheSettingsYouWantToExport" xml:space="preserve">
-    <value>Select the settings you want to export:</value>
+    <value>Выберите параметры для экспорта:</value>
   </data>
   <data name="SelectTheSettingsYouWantToImport" xml:space="preserve">
-    <value>Select the settings you want to import:</value>
+    <value>Выберите параметры для импорта:</value>
   </data>
   <data name="SelectTheSettingsYouWantToReset" xml:space="preserve">
-    <value>Select the settings you want to reset:</value>
+    <value>Выберите параметры, которые необходимо сбросить:</value>
   </data>
   <data name="Serial" xml:space="preserve">
     <value>Serial</value>
   </data>
   <data name="SerialLine" xml:space="preserve">
-    <value>SerialLine</value>
+    <value>Serial линия</value>
   </data>
   <data name="Service" xml:space="preserve">
-    <value>Service</value>
+    <value>Служба</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
     <value>The settings file found was corrupted or is not compatible with this version. All settings have been reset (profiles and credentials are not affected!)</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
-    <value>Settings successfully exported!</value>
+    <value>Настройки успешно экспортированы!</value>
   </data>
   <data name="SettingsSuccessfullyImported" xml:space="preserve">
-    <value>Settings successfully imported!</value>
+    <value>Параметры успешно импортированы!</value>
   </data>
   <data name="SettingsSuccessfullyReset" xml:space="preserve">
-    <value>Settings successfully reset!</value>
+    <value>Настройки успешно сброшены!</value>
   </data>
   <data name="ShowClosedPorts" xml:space="preserve">
-    <value>Show closed ports</value>
+    <value>Показать закрытые порты</value>
   </data>
   <data name="ShowCurrentApplicationTitle" xml:space="preserve">
-    <value>Show current application title</value>
+    <value>Показать заголовок текущего приложения</value>
   </data>
   <data name="ShowOnlyMostCommonQueryTypes" xml:space="preserve">
     <value>Show only most common query types</value>
   </data>
   <data name="ShowScanResultForAllIPAddresses" xml:space="preserve">
-    <value>Show scan result for all IP addresses</value>
+    <value>Показать результат сканирования, для всех IP-адресов</value>
   </data>
   <data name="ShowStatistics" xml:space="preserve">
-    <value>Show statistics</value>
+    <value>Показать статистику</value>
   </data>
   <data name="SSH" xml:space="preserve">
     <value>SSH</value>
   </data>
   <data name="StartTime" xml:space="preserve">
-    <value>Start time</value>
+    <value>Время начала</value>
   </data>
   <data name="State" xml:space="preserve">
-    <value>State</value>
+    <value>Состояние</value>
   </data>
   <data name="Subnet1" xml:space="preserve">
-    <value>Subnet 1</value>
+    <value>Подсеть 1</value>
   </data>
   <data name="Subnet2" xml:space="preserve">
-    <value>Subnet 2</value>
+    <value>Подсеть 2</value>
   </data>
   <data name="Tags" xml:space="preserve">
-    <value>Tags</value>
+    <value>Метка</value>
   </data>
   <data name="Telnet" xml:space="preserve">
     <value>Telnet</value>
   </data>
   <data name="TheApplicationCanBeStartedWithoutParameters" xml:space="preserve">
-    <value>The application can be started without parameters!</value>
+    <value>Приложение может быть запущено без параметров!</value>
   </data>
   <data name="TheFollowingHostnamesCouldNotBeResolved" xml:space="preserve">
-    <value>The following hostnames could not be resolved:</value>
+    <value>Не удалось разрешить следующие имена узлов:</value>
   </data>
   <data name="TheFollowingParametersAreAvailable" xml:space="preserve">
-    <value>The following parameters are available:</value>
+    <value>Доступны следующие параметры:</value>
   </data>
-  <data name="TheFollwingParametersCanNotBeProcesses" xml:space="preserve">
-    <value>The following parameters can not be processed:</value>
+  <data name="TheFollowingParametersCanNotBeProcesses" xml:space="preserve">
+    <value>Следующие параметры не могут быть обработаны:</value>
   </data>
   <data name="TheProcessCanTakeUpSomeTimeAndResources" xml:space="preserve">
-    <value>The process can take up some time and resources (CPU / RAM).</value>
+    <value>Процесс может занять некоторое время и ресурсы (CPU / RAM).</value>
   </data>
   <data name="TheSettingsLocationIsNotAffected" xml:space="preserve">
-    <value>The settings location is not affected</value>
+    <value>На расположение параметры не влияет</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
-    <value>Timeout on SNMP query.</value>
+    <value>Время ожидания SNMP-запроса.</value>
   </data>
   <data name="TimeoutWhenQueryingDNSServerMessage" xml:space="preserve">
-    <value>Timeout when querying the DNS server with the IP address "{0}"!</value>
+    <value>Время ожидания при запросе DNS-сервера с IP-адресом " {0}"!</value>
   </data>
   <data name="Timestamp" xml:space="preserve">
     <value>Timestamp</value>
   </data>
   <data name="Trace" xml:space="preserve">
-    <value>Trace</value>
+    <value>Трассировка</value>
   </data>
   <data name="UnkownError" xml:space="preserve">
-    <value>Unkown error!</value>
+    <value>Неизвестная ошибка!</value>
   </data>
   <data name="UntrayBringWindowToFront" xml:space="preserve">
-    <value>Untray / Bring window to front</value>
+    <value>Untray / окно в фронте</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
   </data>
   <data name="UseCredentials" xml:space="preserve">
-    <value>Use credentials</value>
+    <value>Использовать учетные данные</value>
   </data>
   <data name="UseCurrentViewSize" xml:space="preserve">
-    <value>Use the current view size as the screen size</value>
+    <value>Использовать текущий размер представления в качестве размера экрана</value>
   </data>
   <data name="UseCustomDNSServer" xml:space="preserve">
-    <value>Use custom DNS server</value>
+    <value>Использовать пользовательский DNS-сервер</value>
   </data>
   <data name="UseCustomDNSSuffix" xml:space="preserve">
-    <value>Use custom DNS suffix</value>
+    <value>Использовать пользовательский DNS-суффикс</value>
   </data>
   <data name="UseResolverCache" xml:space="preserve">
-    <value>Use resolver cache</value>
+    <value>Использовать resolver cache</value>
   </data>
   <data name="UserInterfaceLocked" xml:space="preserve">
-    <value>User interface locked!</value>
+    <value>Пользовательский интерфейс заблокирован!</value>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>Username</value>
+    <value>Имя пользователя</value>
   </data>
   <data name="Vendor" xml:space="preserve">
-    <value>Vendor</value>
+    <value>Продавец</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>Version</value>
+    <value>Версия</value>
   </data>
   <data name="VersionxxIsAvailable" xml:space="preserve">
     <value>Version {0} is available!</value>
@@ -1276,73 +1276,73 @@
     <value>Walk mode</value>
   </data>
   <data name="Width" xml:space="preserve">
-    <value>Width</value>
+    <value>Ширина</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Credentials could not be decrypted with the given password.</value>
+    <value>Учетные данные не могут быть расшифрованы с заданным паролем.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
-    <value>The entered password is wrong.</value>
+    <value>Введенный пароль неверен.</value>
   </data>
   <data name="AddDots" xml:space="preserve">
-    <value>Add...</value>
+    <value>Добавить...</value>
   </data>
   <data name="AddEntryDots" xml:space="preserve">
-    <value>Add entry...</value>
+    <value>Добавить запись...</value>
   </data>
   <data name="Calculate" xml:space="preserve">
-    <value>Calculate</value>
+    <value>Рассчитать</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Отмена</value>
   </data>
   <data name="Change" xml:space="preserve">
-    <value>Change</value>
+    <value>Замена</value>
   </data>
   <data name="ChangeMasterPasswordDots" xml:space="preserve">
-    <value>Change Master Password...</value>
+    <value>Изменить Master пароль...</value>
   </data>
   <data name="Check" xml:space="preserve">
-    <value>Check</value>
+    <value>Проверить</value>
   </data>
   <data name="CheckForUpdates" xml:space="preserve">
-    <value>Check for updates</value>
+    <value>Проверить наличие обновлений</value>
   </data>
   <data name="Closed" xml:space="preserve">
-    <value>Closed</value>
+    <value>Закрытый</value>
   </data>
   <data name="ConfigurePuTTY" xml:space="preserve">
-    <value>Configure PuTTY</value>
+    <value>Настроить PuTTY</value>
   </data>
   <data name="Continue" xml:space="preserve">
-    <value>Continue</value>
+    <value>Продолжить</value>
   </data>
   <data name="CustomColon" xml:space="preserve">
-    <value>Custom:</value>
+    <value>Настраиваемый:</value>
   </data>
   <data name="Cut" xml:space="preserve">
-    <value>Cut</value>
+    <value>Вырезать</value>
   </data>
   <data name="DecryptAndLoadDots" xml:space="preserve">
-    <value>Decrypt and load...</value>
+    <value>Расшифровка и загрузка...</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Удалить</value>
   </data>
   <data name="DeleteTable" xml:space="preserve">
-    <value>Delete table</value>
+    <value>Удалить таблицу</value>
   </data>
   <data name="DocumentationTitle_00001" xml:space="preserve">
-    <value>How to install RDP 8.1 on Windows 7/Server 2008 R2</value>
+    <value>Как установить RDP 8.1 на Windows 7 / Server 2008 R2</value>
   </data>
   <data name="DocumentationTitle_00002" xml:space="preserve">
-    <value>How to create a custom theme and accent?</value>
+    <value>Как создать пользовательскую тему и оттенок?</value>
   </data>
   <data name="EnterLocationDots" xml:space="preserve">
-    <value>Enter location...</value>
+    <value>Введите местоположение...</value>
   </data>
   <data name="Everything" xml:space="preserve">
-    <value>Everything</value>
+    <value>Что угодно</value>
   </data>
   <data name="ExampleBaud9600" xml:space="preserve">
     <value>9600</value>
@@ -1351,7 +1351,7 @@
     <value>Windows-Testuser</value>
   </data>
   <data name="ExampleGroupServers" xml:space="preserve">
-    <value>Servers</value>
+    <value>Сервера</value>
   </data>
   <data name="ExampleGroupSwitche" xml:space="preserve">
     <value>Switche</value>
@@ -1364,9 +1364,6 @@
   </data>
   <data name="ExampleHostnameOrIPAddress" xml:space="preserve">
     <value>SERVER-01 or 172.16.0.100</value>
-  </data>
-  <data name="ExampleIPScannerProfileName" xml:space="preserve">
-    <value>Switche (Home)</value>
   </data>
   <data name="ExampleIPScanRange" xml:space="preserve">
     <value>192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150; server-01/24</value>
@@ -1413,9 +1410,6 @@
   <data name="ExampleMACAddressesOrVendor" xml:space="preserve">
     <value>01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5; Intel Corp; Asus</value>
   </data>
-  <data name="ExampleNetworkInterfaceProfileName" xml:space="preserve">
-    <value>Switche (static)</value>
-  </data>
   <data name="ExamplePort161" xml:space="preserve">
     <value>161</value>
   </data>
@@ -1439,9 +1433,6 @@
   </data>
   <data name="ExamplePortPortRangeOrService" xml:space="preserve">
     <value>22; 80; https; ldaps; 777 - 999; 8080</value>
-  </data>
-  <data name="ExamplePortScannerProfileName" xml:space="preserve">
-    <value>Webserver</value>
   </data>
   <data name="ExamplePortScanRange" xml:space="preserve">
     <value>22; 80; 443; 500 - 999; 8080</value>
@@ -1477,421 +1468,421 @@
     <value>http(s)://example.com/index.html</value>
   </data>
   <data name="FilterDots" xml:space="preserve">
-    <value>Filter...</value>
+    <value>Фильтр...</value>
   </data>
   <data name="FlushDNSCache" xml:space="preserve">
-    <value>Flush DNS cache</value>
+    <value>Очистить кэш DNS</value>
   </data>
   <data name="HelpMessage_Credentials" xml:space="preserve">
-    <value>Decrypt and load your credentials to select them.</value>
+    <value>Расшифруйте и загрузите свои учетные данные, чтобы выбрать их.</value>
   </data>
   <data name="HelpMessage_ParameterHelp" xml:space="preserve">
-    <value>Displays this dialog.</value>
+    <value>Отображает это диалоговое окно.</value>
   </data>
   <data name="HelpMessage_ParameterResetSettings" xml:space="preserve">
-    <value>Reset all settings.</value>
+    <value>Сбросить все настройки.</value>
   </data>
   <data name="HelpMessage_PasswordNotDisplayedCanBeOverwritten" xml:space="preserve">
-    <value>The password is not displayed when editing, but can be overwritten.</value>
+    <value>Пароль не отображается при редактировании, но может быть перезаписан.</value>
   </data>
   <data name="HelpMessage_RDPAuthenticationLevel" xml:space="preserve">
-    <value>[0] If server authentication fails, connect to the computer without warning.\n[1] If server authentication fails, do not establish a connection.\n[2] If server authentication fails, show a warning and allow me to connect or refuse the connection.\n[3] No authentication requirement is specified.</value>
+    <value>[0] При сбое проверки подлинности сервера, подключитесь к компьютеру без предупреждения.\n[1] Если проверка подлинности сервера завершается неудачно, не устанавливайте соединение.\n[2] Если аутентификация сервера не удалась, откроется предупреждение и посволит мне соединиться или отказаться.\n[3] Требование аутентификации не указано.</value>
   </data>
   <data name="HelpMessage_Tags" xml:space="preserve">
-    <value>Tags help you organize profiles/Profiles by topics/projects. Multiple tags can be used with ";" be separated. Search by tags with "tag=xxx".</value>
+    <value>Теги помогают организовать профили/сеансы по темам/проектам. Несколько тегов могут быть использованы с ";" быть разделены. Поиск по тегам с "tag=xxx".</value>
   </data>
   <data name="TimeUnit_Hour" xml:space="preserve">
-    <value>Hour(s)</value>
+    <value>Час(ы)</value>
   </data>
   <data name="LocationOfTheImport" xml:space="preserve">
-    <value>Location of the import file...</value>
+    <value>Расположение файла импорта...</value>
   </data>
   <data name="TimeUnit_Minute" xml:space="preserve">
-    <value>Minute(s)</value>
+    <value>Минута(ы)</value>
   </data>
   <data name="MoveAndRestart" xml:space="preserve">
-    <value>Move &amp; Restart</value>
+    <value>Двигать &amp; Перезапуск</value>
   </data>
   <data name="NetworkConnectionsDots" xml:space="preserve">
-    <value>Network connections....</value>
+    <value>Сетевое подключение...</value>
   </data>
   <data name="NotChanged" xml:space="preserve">
     <value>(not changed)</value>
   </data>
   <data name="Off" xml:space="preserve">
-    <value>Off</value>
+    <value>Выключен</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="On" xml:space="preserve">
-    <value>On</value>
+    <value>Включен</value>
   </data>
   <data name="OpenLocation" xml:space="preserve">
-    <value>Open location</value>
+    <value>Открыть местоположение</value>
   </data>
   <data name="OpenSettings" xml:space="preserve">
-    <value>Open settings</value>
+    <value>Открыть настройки</value>
   </data>
   <data name="Overwrite" xml:space="preserve">
-    <value>Overwrite</value>
+    <value>Перезаписать</value>
   </data>
   <data name="Paste" xml:space="preserve">
-    <value>Paste</value>
+    <value>Вставить</value>
   </data>
   <data name="PuTTYLocationDots" xml:space="preserve">
-    <value>PuTTY location...</value>
+    <value>PuTTY расположение...</value>
   </data>
   <data name="Reconnect" xml:space="preserve">
-    <value>Reconnect</value>
+    <value>Восстановить соединение</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Обновить</value>
   </data>
   <data name="RestartNow" xml:space="preserve">
-    <value>Restart now</value>
+    <value>Перезагрузить сейчас</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Сохранить</value>
   </data>
   <data name="SearchDots" xml:space="preserve">
-    <value>Search...</value>
+    <value>Поиск...</value>
   </data>
   <data name="TimeUnit_Second" xml:space="preserve">
-    <value>Second(s)</value>
+    <value>Секунда(ы)</value>
   </data>
   <data name="Send" xml:space="preserve">
-    <value>Send</value>
+    <value>Посылать</value>
   </data>
   <data name="SetMasterPasswordDots" xml:space="preserve">
-    <value>Set Master Password...</value>
+    <value>Установить Мастер-Пароль...</value>
   </data>
   <data name="ShowLocalLicenses" xml:space="preserve">
-    <value>Show local licenses</value>
+    <value>Показать локальные лицензии</value>
   </data>
   <data name="SubnetCalculator" xml:space="preserve">
-    <value>Subnet Calculator</value>
+    <value>Калькулятор подсети</value>
   </data>
   <data name="Validate" xml:space="preserve">
-    <value>Validate</value>
+    <value>Подтвердить</value>
   </data>
   <data name="WarningMessage_SettingsGeneralAppearanceTransparency" xml:space="preserve">
-    <value>Some graphics cards / drivers have problems maximizing the application when transparency is enabled. The function must be disabled for using "Remote Desktop"! Enabling or disabling this feature requires a restart of the application.</value>
+    <value>Некоторые графические карты / драйверы имеют проблемы с максимизацией приложения при включенной прозрачности. Функция должна быть отключена для использования "удаленного рабочего стола"! Включение или отключение этой функции требует перезапуска приложения.</value>
   </data>
   <data name="Connections" xml:space="preserve">
-    <value>Connections</value>
+    <value>Соединения</value>
   </data>
   <data name="EnterValidIPScanRange" xml:space="preserve">
-    <value>Enter a valid ip range!</value>
+    <value>Введите допустимый диапазон IP!</value>
   </data>
   <data name="EnterValidIPv4Address" xml:space="preserve">
-    <value>Enter a valid IPv4 address!</value>
+    <value>Введите действительный адрес IPv4!</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>Enter a valid MAC address (like 00:F1:23:AB:F2:35)!</value>
+    <value>Введите допустимый MAC-адрес (например 00:F1:23:AB:F2:35)!</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
-    <value>Enter a valid port (1 - 65535)!</value>
+    <value>Введите допустимый порт (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
-    <value>Enter a valid subnetmask (like 255.255.255.0)!</value>
+    <value>Введите допустимую маску подсети (255.255.255.0)!</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>Enter a valid subnetmask or CIDR (like 255.255.255.0 or 24)!</value>
+    <value>Введите допустимую маску подсети или CIDR (like 255.255.255.0 or /24)!</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
-    <value>Field cannot be empty!</value>
+    <value>Поле не может быть пустым!</value>
   </data>
   <data name="FileDoesNotExist" xml:space="preserve">
-    <value>File does not exists!</value>
+    <value>Файл не существует!</value>
   </data>
   <data name="FolderDoesNotExist" xml:space="preserve">
-    <value>Folder does not exists!</value>
+    <value>Папка не существует!</value>
   </data>
   <data name="Listeners" xml:space="preserve">
-    <value>Listeners</value>
+    <value>Приемники</value>
   </data>
   <data name="Amber" xml:space="preserve">
-    <value>Amber</value>
+    <value>Янтарный</value>
   </data>
   <data name="Appearance" xml:space="preserve">
-    <value>Appearance</value>
+    <value>Внешний вид</value>
   </data>
   <data name="Applications" xml:space="preserve">
-    <value>Applications</value>
+    <value>Приложения</value>
   </data>
   <data name="BaseDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>Тёмный</value>
   </data>
   <data name="BaseLight" xml:space="preserve">
-    <value>Light</value>
+    <value>Светлый</value>
   </data>
   <data name="Black" xml:space="preserve">
-    <value>Black</value>
+    <value>Чёрный</value>
   </data>
   <data name="Blue" xml:space="preserve">
-    <value>Blue</value>
+    <value>Синий</value>
   </data>
   <data name="Brown" xml:space="preserve">
-    <value>Brown</value>
+    <value>Коричневый</value>
   </data>
   <data name="Cobalt" xml:space="preserve">
-    <value>Cobalt</value>
+    <value>Кобальт</value>
   </data>
   <data name="Crimson" xml:space="preserve">
-    <value>Crimson</value>
+    <value>Малиновый</value>
   </data>
   <data name="Cyan" xml:space="preserve">
-    <value>Cyan</value>
+    <value>Голубой</value>
   </data>
   <data name="Emerald" xml:space="preserve">
-    <value>Emerald</value>
+    <value>Изумруд</value>
   </data>
   <data name="EnterOneOrMoreValidIPAddresses" xml:space="preserve">
-    <value>Enter one or more valid IP addresses!</value>
+    <value>Введите один или несколько действительных IP-адресов!</value>
   </data>
   <data name="EnterValidBaud" xml:space="preserve">
-    <value>Enter a valid baud!</value>
+    <value>Введите допустимый бод.</value>
   </data>
   <data name="EnterValidHosts" xml:space="preserve">
-    <value>Enter valid hosts (multiple hosts can not end with ";")!</value>
+    <value>Введите допустимые хосты (несколько хостов не могут заканчиваться на ";")!</value>
   </data>
   <data name="EnterValidIPAddress" xml:space="preserve">
-    <value>Enter a valid IP address!</value>
+    <value>Введите действительный IP-адрес!</value>
   </data>
   <data name="EnterValidNumber" xml:space="preserve">
-    <value>Enter a valid number!</value>
+    <value>Введите действительный номер!</value>
   </data>
   <data name="EnterValidOID" xml:space="preserve">
-    <value>Enter a valid OID!</value>
+    <value>Введите допустимое OID!</value>
   </data>
   <data name="EnterValidPortOrPortRange" xml:space="preserve">
-    <value>Enter a valid port and/or port range (1 - 65535)!</value>
+    <value>Введите допустимый порт и/или диапазон портов (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
-    <value>Enter a valid subnet (like 192.168.178.133/26)</value>
+    <value>Введите допустимую подсеть (like 192.168.178.133/26)!</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
-    <value>Enter a valid website (like https://example.com/index.html)</value>
+    <value>Введите действительный веб-сайт (like https://example.com/index.html)</value>
   </data>
   <data name="Green" xml:space="preserve">
-    <value>Green</value>
+    <value>Зеленый</value>
   </data>
   <data name="ImportExport" xml:space="preserve">
-    <value>Import / Export</value>
+    <value>импорт / экспорт</value>
   </data>
   <data name="Indigo" xml:space="preserve">
-    <value>Indigo</value>
+    <value>Индиго</value>
   </data>
   <data name="IPStatus_DestinationHostUnreachable" xml:space="preserve">
-    <value>Destination host unreachable.</value>
+    <value>Узел назначения недоступен.</value>
   </data>
   <data name="IPStatus_DestinationNetworkUnreachable" xml:space="preserve">
-    <value>Destination network unreachable.</value>
+    <value>Сеть назначения недоступна.</value>
   </data>
   <data name="IPStatus_DestinationPortUnreachable" xml:space="preserve">
-    <value>Destination port unreachable.</value>
+    <value>Порт назначения недоступен.</value>
   </data>
   <data name="IPStatus_Success" xml:space="preserve">
-    <value>Success</value>
+    <value>Успех</value>
   </data>
   <data name="IPStatus_TimedOut" xml:space="preserve">
-    <value>Request timed out.</value>
+    <value>Время ожидания запроса.</value>
   </data>
   <data name="IPStatus_TtlExpired" xml:space="preserve">
-    <value>TTL expired in transit.</value>
+    <value>TTL просроченным транзитом.</value>
   </data>
   <data name="KeyMustHave8CharactersOrMore" xml:space="preserve">
-    <value>Key must have 8 characters or more!</value>
+    <value>Ключ должен иметь 8 символов и более!</value>
   </data>
   <data name="Lime" xml:space="preserve">
-    <value>Lime</value>
+    <value>Известь</value>
   </data>
   <data name="Magenta" xml:space="preserve">
-    <value>Magenta</value>
+    <value>Пурпурный</value>
   </data>
   <data name="Mauve" xml:space="preserve">
-    <value>Mauve</value>
+    <value>Лиловый</value>
   </data>
   <data name="Olive" xml:space="preserve">
-    <value>Olive</value>
+    <value>Оливка</value>
   </data>
   <data name="OnlyNumbersCanBeEntered" xml:space="preserve">
-    <value>Only numbers can be entered!</value>
+    <value>Только номера могут быть введены!</value>
   </data>
   <data name="Orange" xml:space="preserve">
-    <value>Orange</value>
+    <value>Оранжевый</value>
   </data>
   <data name="Pink" xml:space="preserve">
-    <value>Pink</value>
+    <value>Розовый</value>
   </data>
   <data name="Purple" xml:space="preserve">
-    <value>Purple</value>
+    <value>Пурпур</value>
   </data>
   <data name="Red" xml:space="preserve">
-    <value>Red</value>
+    <value>Красный</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE" xml:space="preserve">
-    <value>Socket closed.</value>
+    <value>Socket закрыт.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ByServer" xml:space="preserve">
-    <value>Remote disconnect by server.</value>
+    <value>Удаленное отключение сервером.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ClientDecompressionError" xml:space="preserve">
-    <value>Decompression error.</value>
+    <value>Ошибка декомпрессии.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ConnectionTimedOut" xml:space="preserve">
-    <value>Connection timed out.</value>
+    <value>Истекло время ожидания соединения.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DecryptionError" xml:space="preserve">
-    <value>Decryption error.</value>
+    <value>Ошибка расшифровки.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DNSLookupFailed" xml:space="preserve">
-    <value>DNS name lookup failure.</value>
+    <value>Сбой поиска DNS-имени.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DNSLookupFailed2" xml:space="preserve">
-    <value>DNS lookup failed.</value>
+    <value>Ошибка поиска DNS.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_EncryptionError" xml:space="preserve">
-    <value>Encryption error.</value>
+    <value>Ошибка шифрования.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_GetHostByNameFailed" xml:space="preserve">
-    <value>Windows Sockets gethostbyname call failed.</value>
+    <value>Ошибка вызова Windows Sockets gethostbyname.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_HostNotFound" xml:space="preserve">
-    <value>Host not found.</value>
+    <value>Хост не найден.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InternalError" xml:space="preserve">
-    <value>Internal error.</value>
+    <value>Внутренняя ошибка.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InternalSecurityError" xml:space="preserve">
-    <value>Internal security error.</value>
+    <value>Внутренняя ошибка безопасности.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InternalSecurityError2" xml:space="preserve">
-    <value>Internal security error.</value>
+    <value>Внутренняя ошибка безопасности.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidEncryption" xml:space="preserve">
-    <value>The encryption method specified is not valid.</value>
+    <value>Указанный метод шифрования недопустим.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidIP" xml:space="preserve">
-    <value>Bad IP address specified.</value>
+    <value>Указан неверный IP-адрес.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidIPAddr" xml:space="preserve">
-    <value>The IP address specified is not valid.</value>
+    <value>Указанный IP-адрес недействителен.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidSecurityData" xml:space="preserve">
-    <value>Security data is not valid.</value>
+    <value>Данные безопасности недопустимы.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidServerSecurityInfo" xml:space="preserve">
-    <value>Server security data is not valid.</value>
+    <value>Недопустимые данные безопасности сервера.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_LicensingFailed" xml:space="preserve">
-    <value>License negotiation failed.</value>
+    <value>Не удалось согласовать лицензию.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_LicensingTimeout" xml:space="preserve">
-    <value>Licensing time-out.</value>
+    <value>Время ожидания лицензирования.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_LocalNotError" xml:space="preserve">
-    <value>Local disconnection.</value>
+    <value>Локальное отключение.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_NoInfo" xml:space="preserve">
-    <value>No information is available.</value>
+    <value>Нет информации.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_OutOfMemory" xml:space="preserve">
-    <value>Out of memory.</value>
+    <value>Нехватка памяти.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_OutOfMemory2" xml:space="preserve">
-    <value>Out of memory.</value>
+    <value>Нехватка памяти.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_OutOfMemory3" xml:space="preserve">
-    <value>Out of memory.</value>
+    <value>Нехватка памяти.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_RemoteByUser" xml:space="preserve">
-    <value>Remote disconnect by user.</value>
+    <value>Дистанционное отключение пользователя.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ServerCertificateUnpackErr" xml:space="preserve">
-    <value>Failed to unpack server certificate.</value>
+    <value>Не удалось распаковать сертификат сервера.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SocketConnectFailed" xml:space="preserve">
-    <value>Windows Sockets connect failed.</value>
+    <value>Сбой подключения Windows Sockets.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SocketRecvFailed" xml:space="preserve">
-    <value>Windows Sockets recv call failed.</value>
+    <value>Windows Sockets ошибка принятого вызова.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrAccountDisabled" xml:space="preserve">
-    <value>The account is disabled.</value>
+    <value>Учетная запись отключена.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrAccountExpired" xml:space="preserve">
-    <value>The account is expired.</value>
+    <value>Срок действия учетной записи истек.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrAccountLockedOut" xml:space="preserve">
-    <value>The account is locked out.</value>
+    <value>Учетная запись заблокирована.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrAccountRestriction" xml:space="preserve">
-    <value>The account is restricted.</value>
+    <value>Учетная запись ограничена.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrCertExpired" xml:space="preserve">
-    <value>The received certificate is expired.</value>
+    <value>Полученный сертификат истек.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrDelegationPolicy" xml:space="preserve">
-    <value>The policy does not support delegation of credentials to the target server.</value>
+    <value>Политика не поддерживает делегирование учетных данных на целевой сервер.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrFreshCredRequiredByServer" xml:space="preserve">
-    <value>The server authentication policy does not allow connection requests using saved credentials. The user must enter new credentials.</value>
+    <value>Политика проверки подлинности сервера не разрешает запросы на подключение с использованием сохраненных учетных данных. Пользователь должен ввести новые учетные данные.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrLogonFailure" xml:space="preserve">
-    <value>Login failed.</value>
+    <value>Ошибка входа.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrNoAuthenticatingAuthority" xml:space="preserve">
-    <value>No authority could be contacted for authentication. The domain name of the authenticating party could be wrong, the domain could be unreachable, or there might have been a trust relationship failure.</value>
+    <value>Не удалось связаться с полномочиями для проверки подлинности. Имя домена участника, прошедшего проверку подлинности, может быть неправильным, домен может быть недоступен или возникла ошибка доверия.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrNoSuchUser" xml:space="preserve">
-    <value>The specified user has no account.</value>
+    <value>Указанный пользователь не имеет учетной записи.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrPasswordExpired" xml:space="preserve">
-    <value>The password is expired.</value>
+    <value>Срок действия пароля истек.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrPasswordMustChange" xml:space="preserve">
-    <value>The user password must be changed before logging on for the first time.</value>
+    <value>Перед первым входом в систему необходимо изменить пароль пользователя.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrPolicyNTLMOnly" xml:space="preserve">
-    <value>Delegation of credentials to the target server is not allowed unless mutual authentication has been achieved.</value>
+    <value>Делегирование учетных данных на целевой сервер не допускается, если не достигнута взаимная проверка подлинности.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrSmartcardCardBlocked" xml:space="preserve">
-    <value>The smart card is blocked.</value>
+    <value>Смарт-карта заблокирована.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrSmartcardWrongPIN" xml:space="preserve">
-    <value>An incorrect PIN was presented to the smart card.</value>
+    <value>Неверный PIN-код от смарт-карты.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TimeoutOccurred" xml:space="preserve">
-    <value>Timeout occurred.</value>
+    <value>Пришёл Timeout.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TimerError" xml:space="preserve">
-    <value>Internal timer error.</value>
+    <value>Внутренняя ошибка таймера.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_WinsockSendFailed" xml:space="preserve">
-    <value>Windows Sockets send call failed.</value>
+    <value>Windows Sockets ошибка отправки вызова.</value>
   </data>
   <data name="Sienna" xml:space="preserve">
-    <value>Sienna</value>
+    <value>Сиена</value>
   </data>
   <data name="SpacesAreNotAllowed" xml:space="preserve">
-    <value>Spaces are not allowed!</value>
+    <value>Пробелы не допускаются!</value>
   </data>
   <data name="Steel" xml:space="preserve">
-    <value>Steel</value>
+    <value>Сталь</value>
   </data>
   <data name="Taupe" xml:space="preserve">
-    <value>Taupe</value>
+    <value>Темно-серый</value>
   </data>
   <data name="TcpState_Closed" xml:space="preserve">
-    <value>Closed</value>
+    <value>Закрытый</value>
   </data>
   <data name="TcpState_CloseWait" xml:space="preserve">
-    <value>CloseWait</value>
+    <value>Закрыть Ожидание</value>
   </data>
   <data name="TcpState_Closing" xml:space="preserve">
-    <value>Closing</value>
+    <value>Закрытие</value>
   </data>
   <data name="TcpState_DeleteTcb" xml:space="preserve">
     <value>DeleteTcb</value>
@@ -1918,24 +1909,24 @@
     <value>SynSent</value>
   </data>
   <data name="TcpState_TimeWait" xml:space="preserve">
-    <value>TimeWait</value>
+    <value>Время Ожидания</value>
   </data>
   <data name="TcpState_Unknown" xml:space="preserve">
-    <value>Unkown</value>
+    <value>Неизвестный</value>
   </data>
   <data name="Teal" xml:space="preserve">
-    <value>Teal</value>
+    <value>Чирок</value>
   </data>
   <data name="Violet" xml:space="preserve">
-    <value>Violet</value>
+    <value>Фиалка</value>
   </data>
   <data name="White" xml:space="preserve">
-    <value>White</value>
+    <value>Белый</value>
   </data>
   <data name="Yellow" xml:space="preserve">
-    <value>Yellow</value>
+    <value>Желтый</value>
   </data>
   <data name="EnterValidValueBetween25and100" xml:space="preserve">
-    <value>Enter a valid value between 25 and 100!</value>
+    <value>Введите допустимое значение от 25 до 100!</value>
   </data>
 </root>

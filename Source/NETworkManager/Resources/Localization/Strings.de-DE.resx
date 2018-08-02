@@ -1212,8 +1212,8 @@
   <data name="TheFollowingParametersAreAvailable" xml:space="preserve">
     <value>Folgende Parameter stehen zur Verfügung:</value>
   </data>
-  <data name="TheFollwingParametersCanNotBeProcesses" xml:space="preserve">
-    <value>Folgende Paramter konnten nicht verarbeitet werden:</value>
+  <data name="TheFollowingParametersCanNotBeProcesses" xml:space="preserve">
+    <value>Die folgenden Parameter können nicht verarbeitet werden:</value>
   </data>
   <data name="TheProcessCanTakeUpSomeTimeAndResources" xml:space="preserve">
     <value>Der Vorgang kann einige Zeit und Ressourcen in Anspruch nehmen (CPU / RAM).</value>
@@ -1365,9 +1365,6 @@
   <data name="ExampleHostnameOrIPAddress" xml:space="preserve">
     <value>SERVER-01 und 172.16.0.100</value>
   </data>
-  <data name="ExampleIPScannerProfileName" xml:space="preserve">
-    <value>Switche (Zuhause)</value>
-  </data>
   <data name="ExampleIPScanRange" xml:space="preserve">
     <value>192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150; server-01/24</value>
   </data>
@@ -1413,9 +1410,6 @@
   <data name="ExampleMACAddressesOrVendor" xml:space="preserve">
     <value>01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5; Intel Corp; Asus</value>
   </data>
-  <data name="ExampleNetworkInterfaceProfileName" xml:space="preserve">
-    <value>Switche (Statisch)</value>
-  </data>
   <data name="ExamplePort161" xml:space="preserve">
     <value>161</value>
   </data>
@@ -1439,9 +1433,6 @@
   </data>
   <data name="ExamplePortPortRangeOrService" xml:space="preserve">
     <value>22; 80; https; ldaps; 777 - 999; 8080</value>
-  </data>
-  <data name="ExamplePortScannerProfileName" xml:space="preserve">
-    <value>Webserver</value>
   </data>
   <data name="ExamplePortScanRange" xml:space="preserve">
     <value>22; 80; 443; 500 - 999; 8080</value>
@@ -1669,7 +1660,7 @@
     <value>Geben Sie einen gültigen Port und/oder Port-Bereich ein (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
-    <value>Geben Sie ein gültiges Subnetz ein (z.B. 192.168.178.133/26)</value>
+    <value>Geben Sie ein gültiges Subnetz ein (z.B. 192.168.178.133/26)!</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
     <value>Geben Sie eine gültige Webseite ein (z.B. https://example.com/index.html)</value>
