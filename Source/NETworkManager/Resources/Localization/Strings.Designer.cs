@@ -4977,9 +4977,9 @@ namespace NETworkManager.Resources.Localization {
         /// <summary>
         ///   Looks up a localized string similar to The following parameters can not be processed:.
         /// </summary>
-        public static string TheFollwingParametersCanNotBeProcesses {
+        public static string TheFollowingParametersCanNotBeProcesses {
             get {
-                return ResourceManager.GetString("TheFollwingParametersCanNotBeProcesses", resourceCulture);
+                return ResourceManager.GetString("TheFollowingParametersCanNotBeProcesses", resourceCulture);
             }
         }
         

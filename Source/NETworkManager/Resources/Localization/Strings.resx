@@ -1212,7 +1212,7 @@
   <data name="TheFollowingParametersAreAvailable" xml:space="preserve">
     <value>The following parameters are available:</value>
   </data>
-  <data name="TheFollwingParametersCanNotBeProcesses" xml:space="preserve">
+  <data name="TheFollowingParametersCanNotBeProcesses" xml:space="preserve">
     <value>The following parameters can not be processed:</value>
   </data>
   <data name="TheProcessCanTakeUpSomeTimeAndResources" xml:space="preserve">

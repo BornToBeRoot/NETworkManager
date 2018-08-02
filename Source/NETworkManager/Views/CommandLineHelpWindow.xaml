@@ -60,7 +60,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.TheFollwingParametersCanNotBeProcesses}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+            <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.TheFollowingParametersCanNotBeProcesses}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
             <Border Grid.Row="1" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" Padding="5">
                 <TextBox Text="{Binding WrongParameter}"/>
             </Border>
