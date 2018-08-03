@@ -9,11 +9,11 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
-        xmlns:neTworkManager="clr-namespace:NETworkManager"
+        xmlns:networkManager="clr-namespace:NETworkManager"
         xmlns:resources="clr-namespace:NETworkManager.Properties"
         mc:Ignorable="d"
         Title="{x:Static localization:StaticStrings.ProductName}" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged"
-        d:DataContext="{d:DesignInstance neTworkManager:MainWindow}">
+        d:DataContext="{d:DesignInstance networkManager:MainWindow}">
     <mahAppsControls:MetroWindow.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <!-- ReSharper disable once Xaml.RedundantResource, because MainWindow uses FindResource("ContextMenuNotifyIcon") -->
@@ -326,7 +326,7 @@
                     <ScrollViewer Grid.Row="1" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" Style="{StaticResource FadeOutScrollViewer}">
                         <ListView x:Name="ListViewApplication" ItemsSource="{Binding Applications}" SelectedItem="{Binding SelectedApplication, Mode=TwoWay}" SelectionMode="Single" BorderThickness="0">
                             <ListView.ItemTemplate>
-                                <DataTemplate DataType="neTworkManager:ApplicationViewInfo">
+                                <DataTemplate DataType="networkManager:ApplicationViewInfo">
                                     <Grid Height="48">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="48" />

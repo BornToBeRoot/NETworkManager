@@ -1,6 +1,4 @@
 ﻿using NETworkManager.Models.Settings;
-using System.Collections.ObjectModel;
-using System.Linq;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
@@ -8,31 +6,6 @@ namespace NETworkManager.ViewModels
     public class CommandLineHelpViewModel : ViewModelBase
     {
         #region Variables
-        private readonly bool _isLoading;
-
-        public ObservableCollection<LocalizationInfo> LanguageCollection { get; set; }
-
-        private LocalizationInfo _localizationSelectedItem;
-        public LocalizationInfo LocalizationSelectedItem
-        {
-            get => _localizationSelectedItem;
-            set
-            {
-                if (value == _localizationSelectedItem)
-                    return;
-
-                if (!_isLoading)
-                {
-                    LocalizationManager.Change(value);
-
-                    SettingsManager.Current.Localization_CultureCode = value.Code;
-                }
-
-                _localizationSelectedItem = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _displayWrongParameter;
         public bool DisplayWrongParameter
         {
@@ -94,10 +67,6 @@ namespace NETworkManager.ViewModels
         #region Constructor, load settings
         public CommandLineHelpViewModel()
         {
-            _isLoading = true;
-
-            LoadSettings();
-
             if (!string.IsNullOrEmpty(CommandLineManager.Current.WrongParameter))
             {
                 WrongParameter = CommandLineManager.Current.WrongParameter;
@@ -106,15 +75,7 @@ namespace NETworkManager.ViewModels
 
             ParameterHelp = CommandLineManager.ParameterHelp;
             ParameterResetSettings = CommandLineManager.ParameterResetSettings;
-
-            _isLoading = false;
         }       
-
-        private void LoadSettings()
-        {
-            LanguageCollection = new ObservableCollection<LocalizationInfo>(LocalizationManager.List);
-            LocalizationSelectedItem = LanguageCollection.FirstOrDefault(x => x.Code == LocalizationManager.Current.Code);
-        }
         #endregion
     }
 }

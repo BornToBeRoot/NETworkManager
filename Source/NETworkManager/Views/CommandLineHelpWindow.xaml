@@ -6,8 +6,10 @@
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         mc:Ignorable="d"
-        Title="{x:Static localization:StaticStrings.ProductName}" Topmost="True" Style="{DynamicResource DefaultWindow}" MinHeight="500" Height="500" MinWidth="500" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" IsMinButtonEnabled="False" IsMaxRestoreButtonEnabled="False" ShowInTaskbar="False">
+        Title="{x:Static localization:StaticStrings.ProductName}" Topmost="True" Style="{DynamicResource DefaultWindow}" MinHeight="500" Height="500" MinWidth="500" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" IsMinButtonEnabled="False" IsMaxRestoreButtonEnabled="False" ShowInTaskbar="False"
+        d:DataContext="{d:DesignInstance viewModels:CommandLineHelpViewModel}">
     <mahAppsControls:MetroWindow.WindowButtonCommands>
         <mahAppsControls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </mahAppsControls:MetroWindow.WindowButtonCommands>
@@ -66,13 +68,6 @@
             </Border>
         </Grid>
         <TextBlock Grid.Row="4" Text="{x:Static localization:Strings.TheApplicationCanBeStartedWithoutParameters}" Foreground="{DynamicResource AccentColorBrush}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
-        <Grid Grid.Row="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <ComboBox FontSize="14" ItemsSource="{Binding LanguageCollection}" SelectedItem="{Binding LocalizationSelectedItem}" DisplayMemberPath="Code" Width="100" HorizontalAlignment="Left"/>
-            <Button Grid.Column="1" Content="{x:Static localization:Strings.OK}" Click="Click" HorizontalAlignment="Right" Style="{StaticResource DefaultButton}" />
-        </Grid>
+        <Button Grid.Row="5" Content="{x:Static localization:Strings.OK}" Click="Click" HorizontalAlignment="Right" Style="{StaticResource DefaultButton}" />
     </Grid>
 </mahAppsControls:MetroWindow>
