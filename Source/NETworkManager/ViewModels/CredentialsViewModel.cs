@@ -358,7 +358,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, CredentialManager.GetNextID());
+            });
 
             customDialog.Content = new CredentialDialog
             {
@@ -395,7 +395,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, SelectedCredential.ID, SelectedCredential);
+            }, SelectedCredential);
 
             customDialog.Content = new CredentialDialog
             {

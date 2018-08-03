@@ -53,14 +53,35 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" />
                             <TextBox x:Name="TextBoxName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleRemoteDesktopProfileName}">
-                                <TextBox.Text>
-                                    <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                            <validators:IsProfileNameUnique ValidatesOnTargetUpdated="True" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsEdited}" Value="True">
+                                                <Setter Property="TextBox.Text">
+                                                    <Setter.Value>
+                                                        <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                            <Binding.ValidationRules>
+                                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                            </Binding.ValidationRules>
+                                                        </Binding>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsEdited}" Value="False">
+                                                <Setter Property="TextBox.Text">
+                                                    <Setter.Value>
+                                                        <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                            <Binding.ValidationRules>
+                                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                <validators:IsProfileNameUnique ValidatesOnTargetUpdated="True" />
+                                                            </Binding.ValidationRules>
+                                                        </Binding>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
                             </TextBox>
                             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                             <TextBox x:Name="TextBoxHost" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}">

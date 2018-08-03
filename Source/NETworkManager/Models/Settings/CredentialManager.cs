@@ -1,5 +1,6 @@
 ﻿// Contains code from: https://stackoverflow.com/questions/10168240/encrypting-decrypting-a-string-in-c-sharp 
 
+using System;
 using NETworkManager.Utilities;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,7 +27,7 @@ namespace NETworkManager.Models.Settings
             get { return Credentials.Select(x => new CredentialInfo(x.ID, x.Name)); }
         }
 
-        public static CredentialInfo GetCredentialByID(int id)
+        public static CredentialInfo GetCredentialByID(Guid id)
         {
             return Credentials.FirstOrDefault(x => x.ID == id);
         }
@@ -135,16 +136,6 @@ namespace NETworkManager.Models.Settings
         private static void Credentials_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             CredentialsChanged = true;
-        }
-
-        public static int GetNextID()
-        {
-            if (Credentials.Count == 0)
-                return 0;
-
-            var credential = Credentials.OrderByDescending(x => x.ID).FirstOrDefault();
-
-            return credential?.ID + 1 ?? 0;
         }
 
         public static void SetMasterPassword(SecureString masterPasword)

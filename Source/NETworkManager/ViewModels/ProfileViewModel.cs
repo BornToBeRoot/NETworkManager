@@ -53,8 +53,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private int _credentialID;
-        public int CredentialID
+        private Guid _credentialID;
+        public Guid CredentialID
         {
             get => _credentialID;
             set
@@ -135,6 +135,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _showUnlockCredentialsHint = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isEdited;
+        public bool IsEdited
+        {
+            get => _isEdited;
+            set
+            {
+                if(value == _isEdited)
+                    return;
+
+                _isEdited = value;
                 OnPropertyChanged();
             }
         }
@@ -992,6 +1006,8 @@ namespace NETworkManager.ViewModels
             SaveCommand = new RelayCommand(p => saveCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
+            IsEdited = profileInfo != null;
+
             var profileInfo2 = profileInfo ?? new ProfileInfo();
 
             Name = profileInfo2.Name;
@@ -1005,7 +1021,7 @@ namespace NETworkManager.ViewModels
             {
                 ShowUnlockCredentialsHint = true;
 
-                Credentials = profileInfo2.CredentialID == -1 ? new CollectionViewSource { Source = new List<CredentialInfo>() }.View : new CollectionViewSource { Source = new List<CredentialInfo>() { new CredentialInfo(profileInfo2.CredentialID) } }.View;
+                Credentials = profileInfo2.CredentialID == Guid.Empty ? new CollectionViewSource { Source = new List<CredentialInfo>() }.View : new CollectionViewSource { Source = new List<CredentialInfo>() { new CredentialInfo(profileInfo2.CredentialID) } }.View;
             }
 
             CredentialID = profileInfo2.CredentialID;
@@ -1122,7 +1138,7 @@ namespace NETworkManager.ViewModels
 
         private void UnselectCredentialAction()
         {
-            CredentialID = -1;
+            CredentialID = Guid.Empty;
         }
         #endregion
     }

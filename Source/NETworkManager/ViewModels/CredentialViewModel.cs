@@ -14,8 +14,8 @@ namespace NETworkManager.ViewModels
 
         public ICommand CancelCommand { get; }
 
-        private int _id;
-        public int Id
+        private Guid _id;
+        public Guid Id
         {
             get => _id;
             set
@@ -115,35 +115,35 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _isBeingEdited;
-        public bool IsBeingEdited
+        private bool _isEdited;
+        public bool IsEdited
         {
-            get => _isBeingEdited;
+            get => _isEdited;
             set
             {
-                if (value == _isBeingEdited)
+                if (value == _isEdited)
                     return;
 
-                _isBeingEdited = value;
+                _isEdited = value;
                 OnPropertyChanged();
             }
         }
 
-        public CredentialViewModel(Action<CredentialViewModel> saveCommand, Action<CredentialViewModel> cancelHandler, int id, CredentialInfo credentialInfo = null)
+        public CredentialViewModel(Action<CredentialViewModel> saveCommand, Action<CredentialViewModel> cancelHandler, CredentialInfo credentialInfo = null)
         {
             _isLoading = true;
 
             SaveCommand = new RelayCommand(p => saveCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
+            _isEdited = credentialInfo != null;
+
             _credentialInfo = credentialInfo ?? new CredentialInfo();
 
-            Id = id;
+            Id = _credentialInfo.ID;
             Name = _credentialInfo.Name;
             Username = _credentialInfo.Username;
             Password = _credentialInfo.Password;
-
-            _isBeingEdited = credentialInfo != null;
 
             _isLoading = false;
         }

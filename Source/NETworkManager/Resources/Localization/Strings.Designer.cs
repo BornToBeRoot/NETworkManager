@@ -916,6 +916,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Credential with this name already exists!.
+        /// </summary>
+        public static string CredentialWithThisNameAlreadyExists {
+            get {
+                return ResourceManager.GetString("CredentialWithThisNameAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Crimson.
         /// </summary>
         public static string Crimson {

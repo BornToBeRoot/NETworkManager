@@ -114,8 +114,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private int? _credentialID;
-        public int? CredentialID
+        private Guid _credentialID;
+        public Guid CredentialID
         {
             get => _credentialID;
             set
@@ -168,7 +168,7 @@ namespace NETworkManager.ViewModels
 
         private void UnselectCredentialAction()
         {
-            CredentialID = null;
+            CredentialID = Guid.Empty;
         }
         #endregion
     }

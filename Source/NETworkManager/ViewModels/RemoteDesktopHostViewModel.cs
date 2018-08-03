@@ -468,9 +468,9 @@ namespace NETworkManager.ViewModels
                     }
                     else
                     {
-                        if (instance.CredentialID != null)
+                        if (instance.CredentialID == Guid.Empty)
                         {
-                            var credentialInfo = CredentialManager.GetCredentialByID((int)instance.CredentialID);
+                            var credentialInfo = CredentialManager.GetCredentialByID(instance.CredentialID);
 
                             session.Username = credentialInfo.Username;
                             session.Password = credentialInfo.Password;
@@ -504,7 +504,7 @@ namespace NETworkManager.ViewModels
                 Hostname = SelectedProfile.RemoteDesktop_Host
             };
 
-            if (SelectedProfile.CredentialID > -1) // Credentials need to be unlocked first
+            if (SelectedProfile.CredentialID == null) // Credentials need to be unlocked first
             {
                 if (!CredentialManager.IsLoaded)
                 {
@@ -613,7 +613,7 @@ namespace NETworkManager.ViewModels
                     {
                         if (instance.CredentialID != null)
                         {
-                            var credentialInfo = CredentialManager.GetCredentialByID((int)instance.CredentialID);
+                            var credentialInfo = CredentialManager.GetCredentialByID((Guid)instance.CredentialID);
 
                             session.Username = credentialInfo.Username;
                             session.Password = credentialInfo.Password;

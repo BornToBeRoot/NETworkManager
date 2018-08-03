@@ -284,6 +284,7 @@
     <Compile Include="Models\Update\UpdateAvailableArgs.cs" />
     <Compile Include="Models\Update\Updater.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetmaskOrCIDRValidator.cs" />
+    <Compile Include="Validators\IsCredentialNameUnique.cs" />
     <Compile Include="Validators\NoSpacesValidator.cs" />
     <Compile Include="Validators\BaudValidator.cs" />
     <Compile Include="Validators\PrivacyAESValidator.cs" />
@@ -1123,6 +1124,7 @@
     <EmbeddedResource Include="Resources\Localization\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Localization\Strings.de-DE.resx" />
     <EmbeddedResource Include="Resources\Localization\Strings.ru-RU.resx" />
