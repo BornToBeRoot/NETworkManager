@@ -104,56 +104,56 @@ namespace NETworkManager.Models.Settings
 
         public static void AddProfile(ProfileViewModel instance)
         {
-            AddProfile(new ProfileInfo()
+            AddProfile(new ProfileInfo
             {
-                Name = instance.Name,
-                Host = instance.Host,
+                Name = instance.Name?.Trim(),
+                Host = instance.Host?.Trim(),
                 CredentialID = instance.CredentialID,
-                Group = instance.Group,
-                Tags = instance.Tags,
+                Group = instance.Group?.Trim(),
+                Tags = instance.Tags?.Trim(),
 
                 NetworkInterface_Enabled = instance.NetworkInterface_Enabled,
                 NetworkInterface_EnableStaticIPAddress = instance.NetworkInterface_EnableStaticIPAddress,
-                NetworkInterface_IPAddress = instance.NetworkInterface_IPAddress,
-                NetworkInterface_Gateway = instance.NetworkInterface_Gateway,
-                NetworkInterface_SubnetmaskOrCidr = instance.NetworkInterface_SubnetmaskOrCidr,
+                NetworkInterface_IPAddress = instance.NetworkInterface_IPAddress?.Trim(),
+                NetworkInterface_Gateway = instance.NetworkInterface_Gateway?.Trim(),
+                NetworkInterface_SubnetmaskOrCidr = instance.NetworkInterface_SubnetmaskOrCidr?.Trim(),
                 NetworkInterface_EnableStaticDNS = instance.NetworkInterface_EnableStaticDNS,
-                NetworkInterface_PrimaryDNSServer = instance.NetworkInterface_PrimaryDNSServer,
-                NetworkInterface_SecondaryDNSServer = instance.NetworkInterface_SecondaryDNSServer,
+                NetworkInterface_PrimaryDNSServer = instance.NetworkInterface_PrimaryDNSServer?.Trim(),
+                NetworkInterface_SecondaryDNSServer = instance.NetworkInterface_SecondaryDNSServer?.Trim(),
 
                 IPScanner_Enabled = instance.IPScanner_Enabled,
                 IPScanner_InheritHost = instance.IPScanner_InheritHost,
-                IPScanner_IPRange = instance.IPScanner_InheritHost ? instance.Host : instance.IPScanner_IPRange,
+                IPScanner_IPRange = instance.IPScanner_InheritHost ? instance.Host?.Trim() : instance.IPScanner_IPRange?.Trim(),
 
                 PortScanner_Enabled = instance.PortScanner_Enabled,
                 PortScanner_InheritHost = instance.PortScanner_InheritHost,
-                PortScanner_Host = instance.PortScanner_InheritHost ? instance.Host : instance.PortScanner_Host,
-                PortScanner_Ports = instance.PortScanner_Ports,
+                PortScanner_Host = instance.PortScanner_InheritHost ? instance.Host?.Trim() : instance.PortScanner_Host?.Trim(),
+                PortScanner_Ports = instance.PortScanner_Ports?.Trim(),
 
                 Ping_Enabled = instance.Ping_Enabled,
                 Ping_InheritHost = instance.Ping_InheritHost,
-                Ping_Host = instance.Ping_InheritHost ? instance.Host : instance.Ping_Host,
+                Ping_Host = instance.Ping_InheritHost ? instance.Host?.Trim() : instance.Ping_Host?.Trim(),
 
                 Traceroute_Enabled = instance.Traceroute_Enabled,
                 Traceroute_InheritHost = instance.Traceroute_InheritHost,
-                Traceroute_Host = instance.Traceroute_InheritHost ? instance.Host : instance.Traceroute_Host,
+                Traceroute_Host = instance.Traceroute_InheritHost ? instance.Host?.Trim() : instance.Traceroute_Host?.Trim(),
 
                 RemoteDesktop_Enabled = instance.RemoteDesktop_Enabled,
                 RemoteDesktop_InheritHost = instance.RemoteDesktop_InheritHost,
-                RemoteDesktop_Host = instance.RemoteDesktop_InheritHost ? instance.Host : instance.RemoteDesktop_Host,
+                RemoteDesktop_Host = instance.RemoteDesktop_InheritHost ? instance.Host?.Trim() : instance.RemoteDesktop_Host?.Trim(),
 
                 PuTTY_Enabled = instance.PuTTY_Enabled,
                 PuTTY_ConnectionMode = instance.PuTTY_ConnectionMode,
                 PuTTY_InheritHost = instance.PuTTY_InheritHost,
-                PuTTY_HostOrSerialLine = instance.PuTTY_ConnectionMode == PuTTY.PuTTY.ConnectionMode.Serial ? instance.PuTTY_SerialLine : (instance.PuTTY_InheritHost ? instance.Host : instance.PuTTY_Host),
+                PuTTY_HostOrSerialLine = instance.PuTTY_ConnectionMode == PuTTY.PuTTY.ConnectionMode.Serial ? instance.PuTTY_SerialLine?.Trim() : (instance.PuTTY_InheritHost ? instance.Host?.Trim() : instance.PuTTY_Host?.Trim()),
                 PuTTY_PortOrBaud = instance.PuTTY_ConnectionMode == PuTTY.PuTTY.ConnectionMode.Serial ? instance.PuTTY_Baud : instance.PuTTY_Port,
-                PuTTY_Username = instance.PuTTY_Username,
-                PuTTY_Profile = instance.PuTTY_Profile,
-                PuTTY_AdditionalCommandLine = instance.PuTTY_AdditionalCommandLine,
+                PuTTY_Username = instance.PuTTY_Username?.Trim(),
+                PuTTY_Profile = instance.PuTTY_Profile?.Trim(),
+                PuTTY_AdditionalCommandLine = instance.PuTTY_AdditionalCommandLine?.Trim(),
 
                 WakeOnLAN_Enabled = instance.WakeOnLAN_Enabled,
-                WakeOnLAN_MACAddress = instance.WakeOnLAN_MACAddress,
-                WakeOnLAN_Broadcast = instance.WakeOnLAN_Broadcast,
+                WakeOnLAN_MACAddress = instance.WakeOnLAN_MACAddress?.Trim(),
+                WakeOnLAN_Broadcast = instance.WakeOnLAN_Broadcast?.Trim(),
                 WakeOnLAN_Port = instance.WakeOnLAN_Port
             });
         }
@@ -173,7 +173,7 @@ namespace NETworkManager.Models.Settings
                     continue;
 
                 // Rename the group
-                profile.Group = @group;
+                profile.Group = @group?.Trim();
 
                 ProfilesChanged = true;
             }
