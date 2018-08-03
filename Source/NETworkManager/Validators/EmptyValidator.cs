@@ -8,7 +8,7 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            return string.IsNullOrEmpty((string)value) ? new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_FieldEmpty")) : ValidationResult.ValidResult;
+            return string.IsNullOrEmpty((string)value) ? new ValidationResult(false, Resources.Localization.Strings.FieldCannotBeEmpty) : ValidationResult.ValidResult;
         }
     }
 }

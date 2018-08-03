@@ -8,6 +8,7 @@
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerHostViewModel}">
     <UserControl.Resources>
@@ -29,7 +30,7 @@
             </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.HeaderSuffixContent>
                 <Grid HorizontalAlignment="Right" Width="40" Height="44">
-                    <Button Style="{StaticResource CleanButton}" Command="{Binding AddTabCommand}" ToolTip="{DynamicResource String_NewTab}" Focusable="False">
+                    <Button Style="{StaticResource CleanButton}" Command="{Binding AddTabCommand}" ToolTip="{x:Static localization:Strings.NewTab}" Focusable="False">
                         <Rectangle Width="20" Height="20">
                             <Rectangle.OpacityMask>
                                 <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
@@ -61,7 +62,7 @@
                 </Style>
             </Grid.Style>
             <StackPanel>
-                <Button HorizontalAlignment="Center" Focusable="False" Command="{Binding AddTabCommand}" ToolTip="{DynamicResource String_NewTab}" Style="{StaticResource CleanButton}" Margin="0,0,0,10">
+                <Button HorizontalAlignment="Center" Focusable="False" Command="{Binding AddTabCommand}" ToolTip="{x:Static localization:Strings.NewTab}" Style="{StaticResource CleanButton}" Margin="0,0,0,10">
                     <Rectangle Width="20" Height="20">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
@@ -78,11 +79,11 @@
                         </Rectangle.Style>
                     </Rectangle>
                 </Button>
-                <TextBlock Text="{DynamicResource String_AddATabToPerformAPortScan}" Style="{StaticResource MessageTextBlock}" />
+                <TextBlock Text="{x:Static localization:Strings.AddATabToPerformAPortScan}" Style="{StaticResource MessageTextBlock}" />
             </StackPanel>
         </Grid>
         <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
-        <Expander Grid.Column="2" x:Name="ExpanderProfiles" Header="{DynamicResource String_Header_Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
+        <Expander Grid.Column="2" x:Name="ExpanderProfiles" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -95,7 +96,7 @@
                 <ListBox Grid.Column="0" Grid.Row="2" x:Name="ListBoxProfiles" ItemsSource="{Binding Profiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                     <ListBox.Resources>
                         <ContextMenu x:Key="ProfileContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                            <MenuItem Header="{DynamicResource String_Scan}" Command="{Binding ScanProfileCommand}">
+                            <MenuItem Header="{x:Static localization:Strings.Scan}" Command="{Binding ScanProfileCommand}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>
@@ -104,7 +105,7 @@
                                     </Rectangle>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="{DynamicResource String_Edit}" Command="{Binding EditProfileCommand}">
+                            <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditProfileCommand}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>
@@ -113,7 +114,7 @@
                                     </Rectangle>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="{DynamicResource String_CopyAs}" Command="{Binding CopyAsProfileCommand}">
+                            <MenuItem Header="{x:Static localization:Strings.CopyAsDots}" Command="{Binding CopyAsProfileCommand}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>
@@ -122,7 +123,7 @@
                                     </Rectangle>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteProfileCommand}">
+                            <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteProfileCommand}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                         <Rectangle.OpacityMask>
@@ -152,7 +153,7 @@
                                                                 <ColumnDefinition Width="Auto" />
                                                             </Grid.ColumnDefinitions>
                                                             <TextBlock Grid.Column="0" Text="{Binding (CollectionViewGroup.Name)}" Style="{DynamicResource DefaultTextBlock}"/>
-                                                            <Button Grid.Column="1" ToolTip="{DynamicResource String_EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding (CollectionViewGroup.Name)}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
+                                                            <Button Grid.Column="1" ToolTip="{x:Static localization:Strings.EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding (CollectionViewGroup.Name)}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
                                                                 <Rectangle Width="16" Height="16">
                                                                     <Rectangle.OpacityMask>
                                                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
@@ -203,11 +204,11 @@
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                     <Setter Property="Command" Value="{Binding AddProfileCommand}" />
-                                    <Setter Property="ToolTip" Value="{DynamicResource String_AddProfileDots}" />
+                                    <Setter Property="ToolTip" Value="{x:Static localization:Strings.AddProfileDots}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
                                             <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
-                                            <Setter Property="ToolTip" Value="{DynamicResource String_ClearFilter}" />
+                                            <Setter Property="ToolTip" Value="{x:Static localization:Strings.ClearFilter}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -236,10 +237,10 @@
                         <TextBlock>
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
-                                    <Setter Property="Text" Value="{DynamicResource String_NoProfilesFoundCreateOne}" />
+                                    <Setter Property="Text" Value="{x:Static localization:Strings.NoProfilesFoundCreateOne}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
-                                            <Setter Property="Text" Value="{DynamicResource String_NothingFound}" />
+                                            <Setter Property="Text" Value="{x:Static localization:Strings.NothingFound}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -259,7 +260,7 @@
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
                         </Grid>
                     </Button.Content>
                 </Button>

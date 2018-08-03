@@ -6,11 +6,12 @@
         xmlns:validators="clr-namespace:NETworkManager.Validators"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WakeOnLANSettingsViewModel}">
     <StackPanel>
-        <TextBlock Text="{DynamicResource String_Header_WakeOnLAN}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Text="{DynamicResource String_DefaultPort}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox Width="80" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort7}">
+        <TextBlock Text="{x:Static localization:Strings.WakeOnLAN}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.DefaultPort}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBox Width="80" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePort7}">
             <TextBox.Text>
                 <Binding Path="DefaultPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>

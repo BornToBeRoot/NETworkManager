@@ -10,6 +10,7 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:network="clr-namespace:NETworkManager.Models.Network"
         xmlns:utilities="clr-namespace:NETworkManager.Utilities"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ListenersViewModel}">
     <UserControl.Resources>
@@ -31,7 +32,7 @@
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
-                    <MenuItem Header="{DynamicResource String_CopyDots}">
+                    <MenuItem Header="{x:Static localization:Strings.CopyDots}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -39,7 +40,7 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
-                        <MenuItem Header="{DynamicResource String_Protocol}" Command="{Binding CopySelectedProtocolCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Protocol}" Command="{Binding CopySelectedProtocolCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -48,7 +49,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_IPAddress}" Command="{Binding CopySelectedIPAddressCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.IPAddress}" Command="{Binding CopySelectedIPAddressCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -57,7 +58,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Port}" Command="{Binding CopySelectedPortCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Port}" Command="{Binding CopySelectedPortCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -79,9 +80,9 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_Protocol}" Binding="{Binding (network:ListenerInfo.Protocol)}" MinWidth="100" />
-                <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding (network:ListenerInfo.IPAddress)}" SortMemberPath="IPAddressInt32" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Port}" Binding="{Binding (network:ListenerInfo.Port)}" MinWidth="100" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}" Binding="{Binding (network:ListenerInfo.Protocol)}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" Binding="{Binding (network:ListenerInfo.IPAddress)}" SortMemberPath="IPAddressInt32" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Port}" Binding="{Binding (network:ListenerInfo.Port)}" MinWidth="100" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
         <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
@@ -103,7 +104,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
-                <CheckBox IsChecked="{Binding AutoRefresh}" Content="{DynamicResource String_AutomaticallyUpdateEvery}" />
+                <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" />
                 <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150" Margin="10,0,0,0">
                     <ComboBox.ItemTemplate>
                         <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
@@ -143,7 +144,7 @@
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Refresh}" TextAlignment="Center" Margin="10,5" />
+                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}" TextAlignment="Center" Margin="10,5" />
                     </Grid>
                 </Button.Content>
             </Button>

@@ -6,25 +6,26 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:validators="clr-namespace:NETworkManager.Validators"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:IPScannerSettingsViewModel}">
     <StackPanel>
-        <TextBlock Text="{DynamicResource String_Header_IPScanner}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{DynamicResource String_ShowScanResultForAllIPAddresses}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ShowScanResultForAllIPAddresses}" Margin="0,0,0,20"/>
-        <TextBlock Text="{DynamicResource String_Header_Multithreading}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock  Text="{DynamicResource String_Threads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.IPScanner}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowScanResultForAllIPAddresses}"   IsChecked="{Binding ShowScanResultForAllIPAddresses}" Margin="0,0,0,20"/>
+        <TextBlock Text="{x:Static localization:Strings.Multithreading}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock  Text="{x:Static localization:Strings.Threads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Threads}" Maximum="15000" Minimum="1" Interval="1" Margin="0,0,0,20" />
-        <TextBlock Text="{DynamicResource String_Header_Ping}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock  Text="{DynamicResource String_Timeout}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Ping}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock  Text="{x:Static localization:Strings.TimeoutMS}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown  Value="{Binding ICMPTimeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,10" />
-        <TextBlock Text="{DynamicResource String_Buffer}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Buffer}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown  Value="{Binding ICMPBuffer}" Minimum="1" Maximum="65535" Interval="1" Margin="0,0,0,10" />
-        <TextBlock  Text="{DynamicResource String_Attempts}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBlock  Text="{x:Static localization:Strings.Attempts}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding ICMPAttempts}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,20" />
-        <TextBlock Text="{DynamicResource String_Header_DNS}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{DynamicResource String_ResolveHostname}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ResolveHostname}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="{DynamicResource String_UseCustomDNSServer}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding UseCustomDNSServer}" Margin="0,0,0,10"/>
-        <TextBlock Text="{DynamicResource String_DNSServers}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4DNSServers}" Style="{StaticResource DefaultTextBox}">
+        <TextBlock Text="{x:Static localization:Strings.DNS}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveHostname}"   IsChecked="{Binding ResolveHostname}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCustomDNSServer}"   IsChecked="{Binding UseCustomDNSServer}" Margin="0,0,0,10"/>
+        <TextBlock Text="{x:Static localization:Strings.DNSServers}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBox Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4DNSServers}" Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>
                 <Binding Path="CustomDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -34,8 +35,8 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBlock Text="{DynamicResource String_Port}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort53}" Style="{StaticResource DefaultTextBox}">
+        <TextBlock Text="{x:Static localization:Strings.Port}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePort53}" Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>
                 <Binding Path="DNSPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -45,17 +46,17 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <mah:ToggleSwitch Header="{DynamicResource String_Recursion}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding DNSRecursion}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="{DynamicResource String_UseResolverCache}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding DNSUseResolverCache}" Margin="0,0,0,10"/>
-        <TextBlock Text="{DynamicResource String_Protocol}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.Recursion}"   IsChecked="{Binding DNSRecursion}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseResolverCache}"   IsChecked="{Binding DNSUseResolverCache}" Margin="0,0,0,10"/>
+        <TextBlock Text="{x:Static localization:Strings.Protocol}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding DNSTransportTypes}" SelectedItem="{Binding DNSTransportType}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
-        <TextBlock Text="{DynamicResource String_Attempts}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Attempts}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding DNSAttempts}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
-        <TextBlock Text="{DynamicResource String_Timeout}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.TimeoutMS}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding DNSTimeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,20" />
-        <TextBlock Text="{DynamicResource String_Header_ARP}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{DynamicResource String_ReadTheMACAddressFromTheArpCache}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ResolveMACAddress}" Margin="0,0,0,20" />
-        <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{DynamicResource String_ShowStatistics}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ShowStatistics}" />
+        <TextBlock Text="{x:Static localization:Strings.ARP}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ReadTheMACAddressFromTheArpCache}"   IsChecked="{Binding ResolveMACAddress}" Margin="0,0,0,20" />
+        <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowStatistics}"   IsChecked="{Binding ShowStatistics}" />
     </StackPanel>
 </UserControl>

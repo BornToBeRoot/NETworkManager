@@ -1,5 +1,4 @@
-﻿using NETworkManager.Models.Settings;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Net.NetworkInformation;
 using System.Windows.Data;
@@ -13,7 +12,7 @@ namespace NETworkManager.Converters
             if(!(value is IPStatus ipStatus))
                 return "-/-";
 
-            var status = LocalizationManager.GetStringByKey("String_IPStatus_" + ipStatus);
+            var status = Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + ipStatus);
 
             return string.IsNullOrEmpty(status) ? ipStatus.ToString() : status;
         }

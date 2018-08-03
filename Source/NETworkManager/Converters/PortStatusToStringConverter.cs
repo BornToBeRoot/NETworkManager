@@ -1,5 +1,4 @@
-﻿using NETworkManager.Models.Settings;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
 using static NETworkManager.Models.Network.PortInfo;
@@ -13,7 +12,7 @@ namespace NETworkManager.Converters
             if (!(value is PortStatus portStatus))
                 return "-/-";
 
-            var status = LocalizationManager.GetStringByKey("String_PortStatus_" + portStatus);
+            var status = Resources.Localization.Strings.ResourceManager.GetString(portStatus.ToString());
 
             return string.IsNullOrEmpty(status) ? portStatus.ToString() : status;
         }

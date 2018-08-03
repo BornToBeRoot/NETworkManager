@@ -6,15 +6,16 @@
         xmlns:views ="clr-namespace:NETworkManager.Views"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
-             xmlns:networkManager="clr-namespace:NETworkManager"
-             xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
+        xmlns:networkManager="clr-namespace:NETworkManager"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid>
         <TabControl Style="{StaticResource DefaultTabControl}">
-            <TabItem Header="{DynamicResource String_Header_Settings}">
+            <TabItem Header="{x:Static localization:Strings.Settings}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="250" />
@@ -150,7 +151,7 @@
                                         </Rectangle.Style>
                                     </Rectangle>
                                 </Button>
-                                <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_SearchedSettingNotFound}" Margin="10,0" TextWrapping="Wrap" TextAlignment="Center" />
+                                <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Foreground="{DynamicResource GrayBrush3}" Text="{x:Static localization:Strings.SearchedSettingNotFound}" Margin="10,0" TextWrapping="Wrap" TextAlignment="Center" />
                             </Grid>
                         </Grid>
                     </Border>
@@ -159,14 +160,14 @@
                     </ScrollViewer>
                 </Grid>
             </TabItem>
-            <TabItem Header="{DynamicResource String_Header_Profiles}">
+            <TabItem Header="{x:Static localization:Strings.Profiles}">
                 <views:ProfilesView x:Name="ProfilesView" Margin="10" />
             </TabItem>
-            <TabItem Header="{DynamicResource String_Header_Credentials}">
+            <TabItem Header="{x:Static localization:Strings.Credentials}">
                 <views:CredentialsView Margin="10" />
             </TabItem>
             <!-- About -->
-            <TabItem Header="{DynamicResource String_Header_About}">
+            <TabItem Header="{x:Static localization:Strings.About}">
                 <views:AboutView Margin="10" />
             </TabItem>
         </TabControl>

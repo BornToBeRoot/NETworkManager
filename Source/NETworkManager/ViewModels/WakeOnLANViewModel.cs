@@ -335,7 +335,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
+                Title = Resources.Localization.Strings.AddProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
@@ -365,7 +365,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
+                Title = Resources.Localization.Strings.EditProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
@@ -397,7 +397,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
+                Title = Resources.Localization.Strings.CopyProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
@@ -427,7 +427,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
+                Title = Resources.Localization.Strings.DeleteProfile
             };
 
             var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
@@ -438,7 +438,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, LocalizationManager.GetStringByKey("String_DeleteProfileMessage"));
+            }, Resources.Localization.Strings.DeleteProfileMessage);
 
             customDialog.Content = new ConfirmRemoveDialog
             {
@@ -454,7 +454,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
+                Title = Resources.Localization.Strings.EditGroup
             };
 
             var editGroupViewModel = new GroupViewModel(instance =>
@@ -500,7 +500,7 @@ namespace NETworkManager.ViewModels
 
                 await Task.Delay(2000); // Make the user happy, let him see a reload animation (and he cannot spam the send command)
 
-                StatusMessage = LocalizationManager.GetStringByKey("String_MagicPacketSuccessfulSended");
+                StatusMessage = Resources.Localization.Strings.MagicPacketSuccessfulSended;
                 DisplayStatusMessage = true;
             }
             catch (Exception ex)

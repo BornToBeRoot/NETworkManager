@@ -12,9 +12,9 @@ namespace NETworkManager.Validators
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             if (!int.TryParse(value as string, out var baud))
-                return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidBaud"));
+                return new ValidationResult(false, Resources.Localization.Strings.EnterValidBaud);
 
-            return _bauds.Contains(baud) ? ValidationResult.ValidResult : new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidBaud"));
+            return _bauds.Contains(baud) ? ValidationResult.ValidResult : new ValidationResult(false, Resources.Localization.Strings.EnterValidBaud);
         }
     }
 }

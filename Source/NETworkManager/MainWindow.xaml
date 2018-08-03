@@ -7,17 +7,18 @@
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:resources="clr-namespace:NETworkManager.Properties"
         xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:neTworkManager="clr-namespace:NETworkManager"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:networkManager="clr-namespace:NETworkManager"
+        xmlns:resources="clr-namespace:NETworkManager.Properties"
         mc:Ignorable="d"
-        Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged"
-        d:DataContext="{d:DesignInstance neTworkManager:MainWindow}">
+        Title="{x:Static localization:StaticStrings.ProductName}" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged"
+        d:DataContext="{d:DesignInstance networkManager:MainWindow}">
     <mahAppsControls:MetroWindow.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <!-- ReSharper disable once Xaml.RedundantResource, because MainWindow uses FindResource("ContextMenuNotifyIcon") -->
         <ContextMenu x:Key="ContextMenuNotifyIcon" MinWidth="200" Opened="ContextMenu_Opened" x:Shared="False">
-            <MenuItem Header="{DynamicResource String_Show}" Command="{Binding ShowWindowCommand}">
+            <MenuItem Header="{x:Static localization:Strings.Show}" Command="{Binding ShowWindowCommand}">
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                         <Rectangle.OpacityMask>
@@ -26,7 +27,7 @@
                     </Rectangle>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="{DynamicResource String_Settings}" Command="{Binding OpenSettingsCommand}">
+            <MenuItem Header="{x:Static localization:Strings.Settings}" Command="{Binding OpenSettingsCommand}">
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                         <Rectangle.OpacityMask>
@@ -36,7 +37,7 @@
                 </MenuItem.Icon>
             </MenuItem>
             <Separator />
-            <MenuItem Header="{DynamicResource String_Close}" Command="{Binding CloseApplicationCommand}">
+            <MenuItem Header="{x:Static localization:Strings.Close}" Command="{Binding CloseApplicationCommand}">
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource CleanWindowCloseButtonBackgroundBrush}">
                         <Rectangle.OpacityMask>
@@ -81,7 +82,7 @@
                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Octicons Kind=Repo}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
-                    <TextBlock Text="{DynamicResource String_Documentation}" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <TextBlock Text="{x:Static localization:Strings.Documentation}" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Button Focusable="False" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_ProjectUrl}" Cursor="Hand">
@@ -91,7 +92,7 @@
                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=SocialGithubOctocat}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
-                    <TextBlock Text="{DynamicResource String_ForkMeOnGitHub}" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    <TextBlock Text="{x:Static localization:Strings.ForkMeOnGitHub}" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
            
@@ -156,7 +157,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" Padding="8" Width="48" Height="48" Command="{Binding OpenApplicationListCommand}" Focusable="False" ToolTip="{DynamicResource String_Expand}">
+                            <Button Grid.Column="0" Padding="8" Width="48" Height="48" Command="{Binding OpenApplicationListCommand}" Focusable="False" ToolTip="{x:Static localization:Strings.Expand}">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                         <Style.Triggers>
@@ -200,7 +201,7 @@
                                     </Rectangle.Style>
                                 </Rectangle>
                             </Button>
-                            <TextBox x:Name="TextBoxSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_Search}" mahAppsControls:TextBoxHelper.ClearTextButton="True">
+                            <TextBox x:Name="TextBoxSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.Search}" mahAppsControls:TextBoxHelper.ClearTextButton="True">
                                 <TextBox.Style>
                                     <Style BasedOn="{StaticResource SearchTextBox}" TargetType="{x:Type TextBox}">
                                         <Setter Property="Visibility" Value="Hidden" />
@@ -325,7 +326,7 @@
                     <ScrollViewer Grid.Row="1" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" Style="{StaticResource FadeOutScrollViewer}">
                         <ListView x:Name="ListViewApplication" ItemsSource="{Binding Applications}" SelectedItem="{Binding SelectedApplication, Mode=TwoWay}" SelectionMode="Single" BorderThickness="0">
                             <ListView.ItemTemplate>
-                                <DataTemplate DataType="neTworkManager:ApplicationViewInfo">
+                                <DataTemplate DataType="networkManager:ApplicationViewInfo">
                                     <Grid Height="48">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="48" />
@@ -475,13 +476,13 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
-                        <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_SearchedApplicationNotFound}" Margin="10,0" TextWrapping="Wrap" TextAlignment="Center" />
+                        <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Foreground="{DynamicResource GrayBrush3}" Text="{x:Static localization:Strings.SearchedApplicationNotFound}" Margin="10,0" TextWrapping="Wrap" TextAlignment="Center" />
                     </Grid>
                     <Border Grid.Row="2" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,1,0,0" Background="Transparent">
                         <Button Height="48" HorizontalContentAlignment="Stretch" Command="{Binding OpenSettingsCommand}" Focusable="False">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource SettingsButton}">
-                                    <Setter Property="ToolTip" Value="{DynamicResource String_Settings}" />
+                                    <Setter Property="ToolTip" Value="{x:Static localization:Strings.Settings}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ExpandApplicationView}" Value="True">
                                             <Setter Property="ToolTip" Value="{x:Null}" />
@@ -527,7 +528,7 @@
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{DynamicResource String_Settings}" >
+                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Settings}" >
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                             <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
@@ -647,7 +648,7 @@
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{DynamicResource String_Back}" VerticalAlignment="Center" Margin="10,0,0,0">
+                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Back}" VerticalAlignment="Center" Margin="10,0,0,0">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
                                             <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
@@ -661,7 +662,7 @@
                                 </TextBlock>
                             </Grid>
                         </Button>
-                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Height="48" TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Settings}" FontSize="22" Foreground="{DynamicResource GrayBrush3}" Margin="10,0" />
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Height="48" TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Settings}" FontSize="22" Foreground="{DynamicResource GrayBrush3}" Margin="10,0" />
                     </Grid>
                 </Border>
                 <ContentControl Grid.Row="1" x:Name="ContentControlSettings" />

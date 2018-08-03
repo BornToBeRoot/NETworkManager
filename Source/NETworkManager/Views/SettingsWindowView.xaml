@@ -4,15 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         mc:Ignorable="d">
     <StackPanel>
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Window}" />
-        <controls:ToggleSwitch Header="{DynamicResource String_MinimizeInsteadOfTerminating}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding MinimizeInsteadOfTerminating}" Margin="0,0,0,10" />
-        <controls:ToggleSwitch Header="{DynamicResource String_MinimizeToTrayInsteadOfTaskbar}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding MinimizeToTrayInsteadOfTaskbar}" Margin="0,0,0,10" />
-        <controls:ToggleSwitch Header="{DynamicResource String_ConfirmClose}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ConfirmClose}" Margin="0,0,0,10"/>
-        <controls:ToggleSwitch Header="{DynamicResource String_MultipleInstances}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding MultipleInstances}" Margin="0,0,0,10"/>
-        <controls:ToggleSwitch Header="{DynamicResource String_ShowCurrentApplicationTitle}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ShowCurrentApplicationTitle}" Margin="0,0,0,20"/>
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Tray}" />
-        <controls:ToggleSwitch Header="{DynamicResource String_AlwaysShowIconInTray}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding AlwaysShowIconInTray}" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Window}" />
+        <controls:ToggleSwitch Header="{x:Static localization:Strings.MinimizeInsteadOfTerminating}"   IsChecked="{Binding MinimizeInsteadOfTerminating}" Margin="0,0,0,10" />
+        <controls:ToggleSwitch Header="{x:Static localization:Strings.MinimizeToTrayInsteadOfTaskbar}"   IsChecked="{Binding MinimizeToTrayInsteadOfTaskbar}" Margin="0,0,0,10" />
+        <controls:ToggleSwitch Header="{x:Static localization:Strings.ConfirmClose}"   IsChecked="{Binding ConfirmClose}" Margin="0,0,0,10"/>
+        <controls:ToggleSwitch Header="{x:Static localization:Strings.MultipleInstances}"   IsChecked="{Binding MultipleInstances}" Margin="0,0,0,10"/>
+        <controls:ToggleSwitch Header="{x:Static localization:Strings.ShowCurrentApplicationTitle}"   IsChecked="{Binding ShowCurrentApplicationTitle}" Margin="0,0,0,20"/>
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Tray}" />
+        <controls:ToggleSwitch Header="{x:Static localization:Strings.AlwaysShowIconInTray}"   IsChecked="{Binding AlwaysShowIconInTray}" />
     </StackPanel>
 </UserControl>

@@ -6,15 +6,16 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:validators="clr-namespace:NETworkManager.Validators"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SNMPSettingsViewModel}">
     <StackPanel>
-        <TextBlock Text="{DynamicResource String_Header_SNMP}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Text="{DynamicResource String_WalkMode}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.SNMP}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.WalkMode}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding WalkModes}" SelectedItem="{Binding WalkMode}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" />
-        <TextBlock Text="{DynamicResource String_Timeout}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Timeout}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Timeout}" Maximum="900000" Minimum="100" Interval="100" Margin="0,0,0,10" />
-        <TextBlock Text="{DynamicResource String_Port}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
-        <TextBox Width="150" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePort161}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,20">
+        <TextBlock Text="{x:Static localization:Strings.Port}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
+        <TextBox Width="150" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePort161}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,20">
             <TextBox.Text>
                 <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -24,11 +25,11 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBlock Text="{DynamicResource String_Header_DNS}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_PreferredProtocolWhenResolvingHostname}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,0,10" />
-        <RadioButton Content="{DynamicResource String_IPv4}" IsChecked="{Binding ResolveHostnamePreferIPv4}" Margin="0,0,0,10" />
-        <RadioButton Content="{DynamicResource String_IPv6}" IsChecked="{Binding ResolveHostnamePreferIPv6}" Margin="0,0,0,20" />
-        <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{DynamicResource String_ShowStatistics}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ShowStatistics}" />
+        <TextBlock Text="{x:Static localization:Strings.DNS}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.PreferredProtocolWhenResolvingHostname}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,0,10" />
+        <RadioButton Content="{x:Static localization:Strings.IPv4}" IsChecked="{Binding ResolveHostnamePreferIPv4}" Margin="0,0,0,10" />
+        <RadioButton Content="{x:Static localization:Strings.IPv6}" IsChecked="{Binding ResolveHostnamePreferIPv6}" Margin="0,0,0,20" />
+        <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowStatistics}"   IsChecked="{Binding ShowStatistics}" />
     </StackPanel>
 </UserControl>

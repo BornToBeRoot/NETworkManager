@@ -141,11 +141,11 @@ namespace NETworkManager.Controls
             catch (Exception ex)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
+                settings.AffirmativeButtonText =  NETworkManager.Resources.Localization.Strings.OK;
 
                 ConfigurationManager.Current.IsDialogOpen = true;
 
-                await _dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, NETworkManager.Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
 
                 ConfigurationManager.Current.IsDialogOpen = false;
             }

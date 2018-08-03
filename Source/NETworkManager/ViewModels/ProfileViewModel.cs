@@ -1010,7 +1010,7 @@ namespace NETworkManager.ViewModels
 
             CredentialID = profileInfo2.CredentialID;
 
-            Group = string.IsNullOrEmpty(profileInfo2.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : LocalizationManager.GetStringByKey("String_Default")) : profileInfo2.Group;
+            Group = string.IsNullOrEmpty(profileInfo2.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Resources.Localization.Strings.Default) : profileInfo2.Group;
             Tags = profileInfo2.Tags;
 
             Groups = CollectionViewSource.GetDefaultView(groups);

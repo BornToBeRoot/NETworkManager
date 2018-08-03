@@ -10,6 +10,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:network="clr-namespace:NETworkManager.Models.Network"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SNMPViewModel}">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter"/>
@@ -33,7 +34,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_SNMP}" />
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.SNMP}" />
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -56,8 +57,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Host}" Style="{StaticResource CenterTextBlock}" />
-            <ComboBox Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3" x:Name="ComboBoxHost" Height="{Binding ElementName=ComboBoxOID, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Host}" Style="{StaticResource CenterTextBlock}" />
+            <ComboBox Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3" x:Name="ComboBoxHost" Height="{Binding ElementName=ComboBoxOID, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -66,12 +67,12 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <TextBlock Grid.Column="6" Grid.Row="0" Text="{DynamicResource String_Version}" Style="{StaticResource CenterTextBlock}" />
+            <TextBlock Grid.Column="6" Grid.Row="0" Text="{x:Static localization:Strings.Version}" Style="{StaticResource CenterTextBlock}" />
             <ComboBox Grid.Column="8" Grid.Row="0" ItemsSource="{Binding Versions}" SelectedItem="{Binding Version}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
-            <TextBlock Grid.Column="10" Grid.Row="0" Text="{DynamicResource String_Mode}" Style="{StaticResource CenterTextBlock}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
+            <TextBlock Grid.Column="10" Grid.Row="0" Text="{x:Static localization:Strings.Mode}" Style="{StaticResource CenterTextBlock}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
             <ComboBox Grid.Column="12" Grid.Row="0" ItemsSource="{Binding Modes}" SelectedItem="{Binding Mode}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_OID}" Style="{StaticResource CenterTextBlock}" />
-            <ComboBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3" x:Name="ComboBoxOID" Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" ItemsSource="{Binding OIDHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSNMPOID}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.OID}" Style="{StaticResource CenterTextBlock}" />
+            <ComboBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3" x:Name="ComboBoxOID" Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" ItemsSource="{Binding OIDHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleSNMPOID}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                 <ComboBox.Text>
                     <Binding Path="OID" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -81,7 +82,7 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <TextBlock Grid.Column="6" Grid.Row="2" Text="{DynamicResource String_Community}">
+            <TextBlock Grid.Column="6" Grid.Row="2" Text="{x:Static localization:Strings.Community}">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
                         <Setter Property="Visibility" Value="Visible" />
@@ -93,7 +94,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <TextBox Grid.Column="8" Grid.Row="2" Grid.ColumnSpan="5" Name="TextBoxCommunity" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleSNMPCommunity}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
+            <TextBox Grid.Column="8" Grid.Row="2" Grid.ColumnSpan="5" Name="TextBoxCommunity" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleSNMPCommunity}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                         <Setter Property="Visibility" Value="Visible" />
@@ -112,7 +113,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Grid.Column="6" Grid.Row="2" Text="{DynamicResource String_Security}">
+            <TextBlock Grid.Column="6" Grid.Row="2" Text="{x:Static localization:Strings.Security}">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -136,7 +137,7 @@
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <TextBlock Grid.Column="10" Grid.Row="2" Text="{DynamicResource String_Username}">
+            <TextBlock Grid.Column="10" Grid.Row="2" Text="{x:Static localization:Strings.Username}">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -148,7 +149,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <TextBox Grid.Column="12" Grid.Row="2" x:Name="TextBoxUsername" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleUsername}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
+            <TextBox Grid.Column="12" Grid.Row="2" x:Name="TextBoxUsername" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleUsername}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -167,7 +168,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="3" Text="{DynamicResource String_Auth}" Margin="0,10,0,0">
+            <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Auth}" Margin="0,10,0,0">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -255,7 +256,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Grid.Column="6" Grid.Row="3" Text="{DynamicResource String_Priv}" Margin="0,10,0,0">
+            <TextBlock Grid.Column="6" Grid.Row="3" Text="{x:Static localization:Strings.Priv}" Margin="0,10,0,0">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -422,10 +423,10 @@
                     <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Text" Value="{DynamicResource String_Button_Query}"/>
+                                <Setter Property="Text" Value="{x:Static localization:Strings.Query}"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Mode}" Value="Set">
-                                        <Setter Property="Text" Value="{DynamicResource String_Button_Send}" />
+                                        <Setter Property="Text" Value="{x:Static localization:Strings.Send}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -475,14 +476,14 @@
         <TextBlock Grid.Row="4" Grid.ColumnSpan="3" Grid.Column="0">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
-                    <Setter Property="Text" Value="{DynamicResource String_Header_Result}" />
+                    <Setter Property="Text" Value="{x:Static localization:Strings.Result}" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Mode}" Value="Set">
-                            <Setter Property="Text" Value="{DynamicResource String_Header_Data}" />
+                            <Setter Property="Text" Value="{ x:Static localization:Strings.Data}" />
                             <Setter Property="Grid.ColumnSpan" Value="1"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Mode}" Value="Trap">
-                            <Setter Property="Text" Value="{DynamicResource String_Header_Data}" />
+                            <Setter Property="Text" Value="{x:Static localization:Strings.Data}" />
                             <Setter Property="Grid.ColumnSpan" Value="1"/>
                         </DataTrigger>
                     </Style.Triggers>
@@ -493,7 +494,7 @@
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{DynamicResource String_CopyDots}">
+                    <MenuItem Header="{x:Static localization:Strings.CopyDots}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -501,7 +502,7 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
-                        <MenuItem Header="{DynamicResource String_OID}" Command="{Binding CopySelectedOIDCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.OID}" Command="{Binding CopySelectedOIDCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -510,7 +511,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Data}" Command="{Binding CopySelectedDataCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Data}" Command="{Binding CopySelectedDataCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -545,8 +546,8 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_OID}" Binding="{Binding (network:SNMPReceivedInfo.OID)}" MinWidth="200" />
-                <DataGridTextColumn Header="{DynamicResource String_Data}" Binding="{Binding (network:SNMPReceivedInfo.Data)}" MinWidth="300" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.OID}" Binding="{Binding (network:SNMPReceivedInfo.OID)}" MinWidth="200" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Data}" Binding="{Binding (network:SNMPReceivedInfo.Data)}" MinWidth="300" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
         <TextBox Grid.Row="5" Grid.Column="0" Text="{Binding Data}">
@@ -566,7 +567,7 @@
         </TextBox>
         <Expander Grid.Row="7" Grid.ColumnSpan="3" Grid.Column="0" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">
             <Expander.Header>
-                <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
+                <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>
             <StackPanel>
                 <Grid Margin="0,10,0,0">
@@ -589,13 +590,13 @@
                             <Setter Property="TextWrapping" Value="NoWrap" />
                         </Style>
                     </Grid.Resources>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_StartTime}" />
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.StartTime}" />
                     <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding StartTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
-                    <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource String_Duration}" />
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Duration}" />
                     <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Duration, StringFormat={}{0:hh}h {0:mm}m {0:ss}s {0:ff}ms}" />
-                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_EndTime}" />
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.EndTime}" />
                     <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding EndTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
-                    <TextBlock Grid.Column="3" Grid.Row="0" Text="{DynamicResource String_Responses}">
+                    <TextBlock Grid.Column="3" Grid.Row="0" Text="{x:Static localization:Strings.Responses}">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
                                 <Setter Property="Visibility" Value="Visible" />

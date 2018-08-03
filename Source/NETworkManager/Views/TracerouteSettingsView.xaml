@@ -5,22 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:TracerouteSettingsViewModel}">
     <StackPanel>
-        <TextBlock Text="{DynamicResource String_Header_Traceroute}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Text="{DynamicResource String_MaximumHopsRouter}" Style="{StaticResource CenterTextBlock}"  Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Traceroute}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.MaximumHopsRouter}" Style="{StaticResource CenterTextBlock}"  Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding MaximumHops}" Maximum="100" Minimum="1" Interval="1" Margin="0,0,0,20" />
-        <TextBlock Text="{DynamicResource String_Header_Ping}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Text="{DynamicResource String_Timeout}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Ping}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.Timeout}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Timeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,10" />
-        <TextBlock Text="{DynamicResource String_Buffer}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Buffer}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Buffer}" Minimum="1" Maximum="65535" Margin="0,0,0,20" />
-        <TextBlock Text="{DynamicResource String_Header_DNS}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{DynamicResource String_ResolveHostname}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ResolveHostname}" Margin="0,0,0,10"/>
-        <TextBlock Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_PreferredProtocolWhenResolvingHostname}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,0,10" />
-        <RadioButton Content="{DynamicResource String_IPv4}" IsChecked="{Binding ResolveHostnamePreferIPv4}" Margin="0,0,0,10" />
-        <RadioButton Content="{DynamicResource String_IPv6}" IsChecked="{Binding ResolveHostnamePreferIPv6}" Margin="0,0,0,20" />
-        <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{DynamicResource String_ShowStatistics}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding ShowStatistics}" />
+        <TextBlock Text="{x:Static localization:Strings.DNS}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveHostname}"   IsChecked="{Binding ResolveHostname}" Margin="0,0,0,10"/>
+        <TextBlock Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.PreferredProtocolWhenResolvingHostname}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,0,10" />
+        <RadioButton Content="{x:Static localization:Strings.IPv4}" IsChecked="{Binding ResolveHostnamePreferIPv4}" Margin="0,0,0,10" />
+        <RadioButton Content="{x:Static localization:Strings.IPv6}" IsChecked="{Binding ResolveHostnamePreferIPv6}" Margin="0,0,0,20" />
+        <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowStatistics}"   IsChecked="{Binding ShowStatistics}" />
     </StackPanel>
 </UserControl>

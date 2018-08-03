@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views ="clr-namespace:NETworkManager.Views"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:LookupHostViewModel}">
     <TabControl>
         <TabControl.Style>
@@ -16,10 +17,10 @@
                 </Style.Triggers>
             </Style>
         </TabControl.Style>
-        <TabItem Header="{DynamicResource String_Header_OUI}">
+        <TabItem Header="{x:Static localization:Strings.OUI}">
             <views:LookupOUILookupView Margin="10" />
         </TabItem>
-        <TabItem Header="{DynamicResource String_Header_Port}">
+        <TabItem Header="{x:Static localization:Strings.Port}">
             <views:LookupPortLookupView Margin="10" />
         </TabItem>
     </TabControl>

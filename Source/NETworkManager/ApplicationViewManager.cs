@@ -1,5 +1,4 @@
 using MahApps.Metro.IconPacks;
-using NETworkManager.Models.Settings;
 using System.Collections.Generic;
 
 namespace NETworkManager
@@ -29,7 +28,43 @@ namespace NETworkManager
 
         public static string GetTranslatedNameByName(Name name)
         {
-            return LocalizationManager.GetStringByKey("String_ApplicationName_" + name);
+            switch (name)
+            {
+                case Name.NetworkInterface:
+                    return Resources.Localization.Strings.NetworkInterface;
+                case Name.IPScanner:
+                    return Resources.Localization.Strings.IPScanner;
+                case Name.PortScanner:
+                    return Resources.Localization.Strings.PortScanner;
+                case Name.Ping:
+                    return Resources.Localization.Strings.Ping;
+                case Name.Traceroute:
+                    return Resources.Localization.Strings.Traceroute;
+                case Name.DNSLookup:
+                    return Resources.Localization.Strings.DNSLookup;
+                case Name.RemoteDesktop:
+                    return Resources.Localization.Strings.RemoteDesktop;
+                case Name.PuTTY:
+                    return Resources.Localization.Strings.PuTTY;
+                case Name.SNMP:
+                    return Resources.Localization.Strings.SNMP;
+                case Name.WakeOnLAN:
+                    return Resources.Localization.Strings.WakeOnLAN;
+                case Name.HTTPHeaders:
+                    return Resources.Localization.Strings.HTTPHeaders;
+                case Name.SubnetCalculator:
+                    return Resources.Localization.Strings.SubnetCalculator;
+                case Name.Lookup:
+                    return Resources.Localization.Strings.Lookup;
+                case Name.Connections:
+                    return Resources.Localization.Strings.Connections;
+                case Name.Listeners:
+                    return Resources.Localization.Strings.Listeners;
+                case Name.ARPTable:
+                    return Resources.Localization.Strings.ARPTable;
+                default:
+                    return "";
+            }
         }
 
         public enum Name

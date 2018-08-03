@@ -11,6 +11,7 @@
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:network="clr-namespace:NETworkManager.Models.Network"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PingViewModel}">
     <UserControl.Resources>
@@ -30,7 +31,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Destination}" />
+        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Destination}" />
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -45,8 +46,8 @@
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{DynamicResource String_Host}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="ComboBoxHost" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsPingRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Host}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
+                <ComboBox Grid.Column="2" x:Name="ComboBoxHost" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsPingRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -95,10 +96,10 @@
                             <TextBlock Grid.Column="1" FontSize="14" Margin="10,5" TextAlignment="Center">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Text" Value="{DynamicResource String_Button_Ping}"/>
+                                        <Setter Property="Text" Value="{x:Static localization:Strings.Ping}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsPingRunning}" Value="True" >
-                                                <Setter Property="Text" Value="{DynamicResource String_Button_Cancel}"/>
+                                                <Setter Property="Text" Value="{x:Static localization:Strings.Cancel}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -121,12 +122,12 @@
             </mahAppsControls:MetroProgressBar>
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
-        <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Status}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Grid.Row="2" Text="{x:Static localization:Strings.Status}" Style="{StaticResource HeaderTextBlock}" />
         <controls:ScrollingDataGrid Grid.Row="3" ItemsSource="{Binding PingResultView}" SelectedItem="{Binding SelectedPingResult}">
             <controls:ScrollingDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollingDataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{DynamicResource String_CopyDots}">
+                    <MenuItem Header="{x:Static localization:Strings.CopyDots}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -134,7 +135,7 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
-                        <MenuItem Header="{DynamicResource String_Timestamp}" Command="{Binding CopySelectedTimestampCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Timestamp}" Command="{Binding CopySelectedTimestampCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -143,7 +144,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_IPAddress}" Command="{Binding CopySelectedIPAddressCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.IPAddress}" Command="{Binding CopySelectedIPAddressCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -152,7 +153,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Hostname}" Command="{Binding CopySelectedHostnameCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Hostname}" Command="{Binding CopySelectedHostnameCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -161,7 +162,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Bytes}" Command="{Binding CopySelectedBytesCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Bytes}" Command="{Binding CopySelectedBytesCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -170,7 +171,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Time}" Command="{Binding CopySelectedTimeCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Time}" Command="{Binding CopySelectedTimeCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -179,7 +180,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_TTL}" Command="{Binding CopySelectedTTLCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.TTL}" Command="{Binding CopySelectedTTLCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -188,7 +189,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Status}" Command="{Binding CopySelectedStatusCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Status}" Command="{Binding CopySelectedStatusCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -201,11 +202,11 @@
                 </ContextMenu>
             </controls:ScrollingDataGrid.Resources>
             <controls:ScrollingDataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_Timestamp}" Binding="{Binding (network:PingInfo.Timestamp)}" MinWidth="180" />
-                <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding (network:PingInfo.IPAddress)}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding (network:PingInfo.Hostname)}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Bytes}" Binding="{Binding (network:PingInfo.Bytes), Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
-                <DataGridTextColumn Header="{DynamicResource String_Time}" MinWidth="100">
+                <DataGridTextColumn Header="{x:Static localization:Strings.Timestamp}" Binding="{Binding (network:PingInfo.Timestamp)}" MinWidth="180" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" Binding="{Binding (network:PingInfo.IPAddress)}" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" Binding="{Binding (network:PingInfo.Hostname)}" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Bytes}" Binding="{Binding (network:PingInfo.Bytes), Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Time}" MinWidth="100">
                     <DataGridTextColumn.Binding>
                         <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
                             <Binding Path="(network:PingInfo.Status)" />
@@ -213,8 +214,8 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{DynamicResource String_TTL}" Binding="{Binding (network:PingInfo.TTL), Converter={StaticResource IntToStringConverter}}" MinWidth="80"/>
-                <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding (network:PingInfo.Status), Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.TTL}" Binding="{Binding (network:PingInfo.TTL), Converter={StaticResource IntToStringConverter}}" MinWidth="80"/>
+                <DataGridTextColumn Header="{x:Static localization:Strings.Status}" Binding="{Binding (network:PingInfo.Status), Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150" Width="*" />
             </controls:ScrollingDataGrid.Columns>
             <controls:ScrollingDataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
@@ -228,7 +229,7 @@
         </controls:ScrollingDataGrid>
         <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">
             <Expander.Header>
-                <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
+                <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>
             <Grid Margin="0,10,0,0">
                 <Grid.ColumnDefinitions>
@@ -253,15 +254,15 @@
                         <Setter Property="TextWrapping" Value="NoWrap" />
                     </Style>
                 </Grid.Resources>
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_StartTime}" />
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.StartTime}" />
                 <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding StartTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
-                <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource String_Duration}" />
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Duration}" />
                 <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Duration, StringFormat={}{0:hh}h {0:mm}m {0:ss}s {0:ff}ms}" />
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_EndTime}" />
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.EndTime}" />
                 <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding EndTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
-                <TextBlock Grid.Column="3" Grid.Row="0" Text="{DynamicResource String_PacketsTransmitted}" />
+                <TextBlock Grid.Column="3" Grid.Row="0" Text="{x:Static localization:Strings.PacketsTransmitted}" />
                 <TextBox Grid.Column="4" Grid.Row="0" Text="{Binding PingsTransmitted}" />
-                <TextBlock Grid.Column="3" Grid.Row="1" Text="{DynamicResource String_ReceivedLost}" />
+                <TextBlock Grid.Column="3" Grid.Row="1" Text="{x:Static localization:Strings.ReceivedLost}" />
                 <TextBox Grid.Column="4" Grid.Row="1">
                     <TextBox.Text>
                         <MultiBinding StringFormat="{}{0} / {1}">
@@ -270,7 +271,7 @@
                         </MultiBinding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBlock Grid.Column="3" Grid.Row="2" Text="{DynamicResource String_PacketLoss}" />
+                <TextBlock Grid.Column="3" Grid.Row="2" Text="{x:Static localization:Strings.PacketLoss}" />
                 <TextBox Grid.Column="4" Grid.Row="2">
                     <TextBox.Text>
                         <MultiBinding Converter="{StaticResource PercentConverter}" StringFormat="{}{0} %">
@@ -279,11 +280,11 @@
                         </MultiBinding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBlock Grid.Column="6" Grid.Row="0" Text="{DynamicResource String_AverageTime}" />
+                <TextBlock Grid.Column="6" Grid.Row="0" Text="{x:Static localization:Strings.AverageTime}" />
                 <TextBox Grid.Column="7" Grid.Row="0" Text="{Binding AverageTime, StringFormat={}{0} ms}" />
-                <TextBlock Grid.Column="6" Grid.Row="1" Text="{DynamicResource String_Minimum}" />
+                <TextBlock Grid.Column="6" Grid.Row="1" Text="{x:Static localization:Strings.Minimum}" />
                 <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding MinimumTime, StringFormat={}{0} ms}" />
-                <TextBlock Grid.Column="6" Grid.Row="2" Text="{DynamicResource String_Maximum}" />
+                <TextBlock Grid.Column="6" Grid.Row="2" Text="{x:Static localization:Strings.Maximum}" />
                 <TextBox Grid.Column="7" Grid.Row="2" Text="{Binding MaximumTime, StringFormat={}{0} ms}" />
             </Grid>
         </Expander>

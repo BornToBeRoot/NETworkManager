@@ -60,6 +60,8 @@ namespace NETworkManager
             // Load localization (requires settings to be loaded first)
             LocalizationManager.Load();
 
+            NETworkManager.Resources.Localization.Strings.Culture = LocalizationManager.Culture;
+
             if (CommandLineManager.Current.Help)
             {
                 StartupUri = new Uri("/Views/CommandLineHelpWindow.xaml", UriKind.Relative);

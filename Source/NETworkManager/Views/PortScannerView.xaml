@@ -10,6 +10,7 @@
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:network="clr-namespace:NETworkManager.Models.Network"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerViewModel}">
     <UserControl.Resources>
@@ -27,7 +28,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Scan}" />
+        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Scan}" />
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -47,8 +48,8 @@
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_Host}" Style="{StaticResource CenterTextBlock}" />
-                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="ComboBoxHost" Height="{Binding ElementName=ComboBoxPort, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleHostnameAndOrIPAddress}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Host}" Style="{StaticResource CenterTextBlock}" />
+                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="ComboBoxHost" Height="{Binding ElementName=ComboBoxPort, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostnameAndOrIPAddress}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -58,8 +59,8 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_Ports}" Style="{StaticResource CenterTextBlock}" />
-                <ComboBox Grid.Column="2" Grid.Row="2" x:Name="ComboBoxPort" ItemsSource="{Binding PortHistoryView}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePortScanRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Ports}" Style="{StaticResource CenterTextBlock}" />
+                <ComboBox Grid.Column="2" Grid.Row="2" x:Name="ComboBoxPort" ItemsSource="{Binding PortHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePortScanRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -112,10 +113,10 @@
                             <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Text" Value="{DynamicResource String_Button_Scan}"/>
+                                        <Setter Property="Text" Value="{x:Static localization:Strings.Scan}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsScanRunning}" Value="True" >
-                                                <Setter Property="Text" Value="{DynamicResource String_Button_Cancel}"/>
+                                                <Setter Property="Text" Value="{x:Static localization:Strings.Cancel}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -174,12 +175,12 @@
             </StackPanel>
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
-        <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
+        <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" />
         <DataGrid Grid.Row="3" ItemsSource="{Binding PortScanResultView}" SelectedItem="{Binding SelectedScanResult}">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{DynamicResource String_CopyDots}">
+                    <MenuItem Header="{x:Static localization:Strings.CopyDots}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -187,7 +188,7 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
-                        <MenuItem Header="{DynamicResource String_IPAddress}" Command="{Binding CopySelectedIPAddressCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.IPAddress}" Command="{Binding CopySelectedIPAddressCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -196,7 +197,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Hostname}" Command="{Binding CopySelectedHostnameCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Hostname}" Command="{Binding CopySelectedHostnameCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -205,7 +206,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Port}" Command="{Binding CopySelectedPortCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Port}" Command="{Binding CopySelectedPortCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -214,7 +215,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Status}" Command="{Binding CopySelectedStatusCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Status}" Command="{Binding CopySelectedStatusCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -223,7 +224,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Protocol}" Command="{Binding CopySelectedProtocolCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Protocol}" Command="{Binding CopySelectedProtocolCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -232,7 +233,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Service}" Command="{Binding CopySelectedServiceCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Service}" Command="{Binding CopySelectedServiceCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -241,7 +242,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Description}" Command="{Binding CopySelectedDescriptionCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Description}" Command="{Binding CopySelectedDescriptionCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -263,13 +264,13 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding (network:PortInfo.Host).Item1}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Hostname}" Binding="{Binding (network:PortInfo.Host).Item2, Converter={StaticResource NullOrEmptyToStringConverter}}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Port}" Binding="{Binding (network:PortInfo.Port)}" MinWidth="80" />
-                <DataGridTextColumn Header="{DynamicResource String_Status}" Binding="{Binding (network:PortInfo.Status), Converter={StaticResource PortStatusToStringConverter}}" MinWidth="100" />
-                <DataGridTextColumn Header="{DynamicResource String_Protocol}" Binding="{Binding (network:PortInfo.LookupInfo).Protocol}" MinWidth="100" />
-                <DataGridTextColumn Header="{DynamicResource String_Service}" Binding="{Binding (network:PortInfo.LookupInfo).Service}" MinWidth="100" />
-                <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding (network:PortInfo.LookupInfo).Description}" MinWidth="200" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" Binding="{Binding (network:PortInfo.Host).Item1}" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" Binding="{Binding (network:PortInfo.Host).Item2, Converter={StaticResource NullOrEmptyToStringConverter}}" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Port}" Binding="{Binding (network:PortInfo.Port)}" MinWidth="80" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Status}" Binding="{Binding (network:PortInfo.Status), Converter={StaticResource PortStatusToStringConverter}}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}" Binding="{Binding (network:PortInfo.LookupInfo).Protocol}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Service}" Binding="{Binding (network:PortInfo.LookupInfo).Service}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Description}" Binding="{Binding (network:PortInfo.LookupInfo).Description}" MinWidth="200" Width="*" />
             </DataGrid.Columns>
             <DataGrid.GroupStyle>
                 <GroupStyle>
@@ -296,7 +297,7 @@
         </DataGrid>
         <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,20,0,0">
             <Expander.Header>
-                <TextBlock Text="{DynamicResource String_Header_Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
+                <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
             </Expander.Header>
             <StackPanel>
                 <Grid Margin="0,10,0,0">
@@ -319,13 +320,13 @@
                             <Setter Property="TextWrapping" Value="NoWrap" />
                         </Style>
                     </Grid.Resources>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_StartTime}" />
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.StartTime}" />
                     <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding StartTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
-                    <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource String_Duration}" />
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Duration}" />
                     <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Duration, StringFormat={}{0:hh}h {0:mm}m {0:ss}s {0:ff}ms}" />
-                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_EndTime}" />
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.EndTime}" />
                     <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding EndTime, Converter={StaticResource NullableDateTimeToStringConverter}}" />
-                    <TextBlock Grid.Column="3" Grid.Row="0" Text="{DynamicResource String_Scanned}" />
+                    <TextBlock Grid.Column="3" Grid.Row="0" Text="{x:Static localization:Strings.Scanned}" />
                     <TextBox Grid.Column="4" Grid.Row="0">
                         <TextBox.Text>
                             <MultiBinding StringFormat="{}{0} / {1}">
@@ -334,7 +335,7 @@
                             </MultiBinding>
                         </TextBox.Text>
                     </TextBox>
-                    <TextBlock Grid.Column="3" Grid.Row="1" Text="{DynamicResource String_Open}" />
+                    <TextBlock Grid.Column="3" Grid.Row="1" Text="{x:Static localization:Strings.Open}" />
                     <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding PortsOpen}" />
                 </Grid>
             </StackPanel>

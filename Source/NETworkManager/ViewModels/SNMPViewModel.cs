@@ -484,7 +484,7 @@ namespace NETworkManager.ViewModels
             }
 
             // Try to parse the string into an IP-Address
-            IPAddress.TryParse(Host, out IPAddress ipAddress);
+            IPAddress.TryParse(Host, out var ipAddress);
 
             try
             {
@@ -521,7 +521,7 @@ namespace NETworkManager.ViewModels
             {
                 Finished();
 
-                StatusMessage = string.Format(LocalizationManager.GetStringByKey("String_CouldNotResolveHostnameFor"), Host);
+                StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, Host);
                 DisplayStatusMessage = true;
 
                 return;
@@ -631,7 +631,7 @@ namespace NETworkManager.ViewModels
 
         private void Snmp_Timeout(object sender, EventArgs e)
         {
-            StatusMessage = LocalizationManager.GetStringByKey("String_TimeoutOnSNMPQuery");
+            StatusMessage = Resources.Localization.Strings.TimeoutOnSNMPQuery;
             DisplayStatusMessage = true;
 
             Finished();
@@ -639,7 +639,7 @@ namespace NETworkManager.ViewModels
 
         private void Snmp_Error(object sender, EventArgs e)
         {
-            StatusMessage = LocalizationManager.GetStringByKey(Mode == SNMPMode.Set ? "String_ErrorInResponseCheckIfYouHaveWritePermissions" : "String_ErrorInResponse");
+            StatusMessage = Mode == SNMPMode.Set ? Resources.Localization.Strings.ErrorInResponseCheckIfYouHaveWritePermissions : Resources.Localization.Strings.ErrorInResponse;
 
             DisplayStatusMessage = true;
 
@@ -648,7 +648,7 @@ namespace NETworkManager.ViewModels
 
         private void Snmp_UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = LocalizationManager.GetStringByKey("String_CanceledByUser");
+            StatusMessage = Resources.Localization.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
 
             Finished();
@@ -658,7 +658,7 @@ namespace NETworkManager.ViewModels
         {
             if (Mode == SNMPMode.Set)
             {
-                StatusMessage = LocalizationManager.GetStringByKey("String_DataHasBeenUpdated");
+                StatusMessage = Resources.Localization.Strings.DataHasBeenUpdated;
                 DisplayStatusMessage = true;
             }
 

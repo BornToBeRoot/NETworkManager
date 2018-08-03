@@ -10,6 +10,7 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:network="clr-namespace:NETworkManager.Models.Network"
         xmlns:utilities="clr-namespace:NETworkManager.Utilities"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         dialogs:DialogParticipation.Register="{Binding}" d:DataContext="{d:DesignInstance viewModels:ARPTableViewModel}"
         mc:Ignorable="d">
     <UserControl.Resources>
@@ -33,7 +34,7 @@
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
-                    <MenuItem Header="{DynamicResource String_CopyDots}">
+                    <MenuItem Header="{x:Static localization:Strings.CopyDots}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -41,7 +42,7 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
-                        <MenuItem Header="{DynamicResource String_IPAddress}" Command="{Binding CopySelectedIPAddressCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.IPAddress}" Command="{Binding CopySelectedIPAddressCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -50,7 +51,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_MACAddress}" Command="{Binding CopySelectedMACAddressCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.MACAddress}" Command="{Binding CopySelectedMACAddressCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -59,7 +60,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Multicast}" Command="{Binding CopySelectedMulticastCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Multicast}" Command="{Binding CopySelectedMulticastCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -69,7 +70,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="{DynamicResource String_DeleteEntry}" Command="{Binding DeleteEntryCommand}">
+                    <MenuItem Header="{x:Static localization:Strings.DeleteEntry}" Command="{Binding DeleteEntryCommand}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -90,9 +91,9 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_IPAddress}" Binding="{Binding (network:ARPTableInfo.IPAddress)}" SortMemberPath="IPAddressInt32" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_MACAddress}" Binding="{Binding (network:ARPTableInfo.MACAddress), Converter={StaticResource PhysicalAddressToStringConverter}}" MinWidth="200" />
-                <DataGridTextColumn Header="{DynamicResource String_Multicast}" Binding="{Binding (network:ARPTableInfo.IsMulticast), Converter={StaticResource BooleanToStringConverter}}" MinWidth="100" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" Binding="{Binding (network:ARPTableInfo.IPAddress)}" SortMemberPath="IPAddressInt32" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" Binding="{Binding (network:ARPTableInfo.MACAddress), Converter={StaticResource PhysicalAddressToStringConverter}}" MinWidth="200" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Multicast}" Binding="{Binding (network:ARPTableInfo.IsMulticast), Converter={StaticResource BooleanToStringConverter}}" MinWidth="100" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
         <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
@@ -114,7 +115,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Bottom">
-                <CheckBox IsChecked="{Binding AutoRefresh}" Content="{DynamicResource String_AutomaticallyUpdateEvery}" />
+                <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" />
                 <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150" Margin="10,0,0,0">
                     <ComboBox.ItemTemplate>
                         <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
@@ -143,7 +144,7 @@
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddEntry}" TextAlignment="Center" Margin="10,5" />
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddEntry}" TextAlignment="Center" Margin="10,5" />
                         </Grid>
                     </Button.Content>
                 </Button>
@@ -159,7 +160,7 @@
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_DeleteEntry}" TextAlignment="Center" Margin="10,5" />
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.DeleteEntry}" TextAlignment="Center" Margin="10,5" />
                         </Grid>
                     </Button.Content>
                     <Button.Style>
@@ -185,7 +186,7 @@
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_DeleteTable}" TextAlignment="Center" Margin="10,5" />
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.DeleteTable}" TextAlignment="Center" Margin="10,5" />
                         </Grid>
                     </Button.Content>
                 </Button>
@@ -213,7 +214,7 @@
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_Refresh}" TextAlignment="Center" Margin="10,5" />
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}" TextAlignment="Center" Margin="10,5" />
                         </Grid>
                     </Button.Content>
                 </Button>

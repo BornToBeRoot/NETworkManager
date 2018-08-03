@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:NETworkManager.Views"
-        mc:Ignorable="d" >
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SubnetCalculatorHostViewModel}">
     <TabControl>
         <TabControl.Style>
             <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource DefaultTabControl}">
@@ -15,13 +17,13 @@
                 </Style.Triggers>
             </Style>
         </TabControl.Style>
-        <TabItem Header="{DynamicResource String_Header_Calculator}">
+        <TabItem Header="{x:Static localization:Strings.Calculator}">
             <views:SubnetCalculatorCalculatorView Margin="10" />
         </TabItem>
-        <TabItem Header="{DynamicResource String_Header_Subnetting}">
+        <TabItem Header="{x:Static localization:Strings.Subnetting}">
             <views:SubnetCalculatorSubnettingView Margin="10" />
         </TabItem>
-        <TabItem Header="{DynamicResource String_Header_Supernetting}">
+        <TabItem Header="{x:Static localization:Strings.Supernetting}">
             <views:SubnetCalculatorSupernettingView Margin="10" />
         </TabItem>
     </TabControl>

@@ -1,5 +1,4 @@
-﻿using NETworkManager.Models.Settings;
-using NETworkManager.Utilities;
+﻿using NETworkManager.Utilities;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
@@ -13,7 +12,7 @@ namespace NETworkManager.Validators
             if (value != null && (Regex.IsMatch((string)value, RegexHelper.IPv4AddressRegex) || Regex.IsMatch((string)value, RegexHelper.IPv6AddressRegex)))
                 return ValidationResult.ValidResult;
 
-            return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidIPAddress"));
+            return new ValidationResult(false, Resources.Localization.Strings.EnterValidIPAddress);
         }
     }
 }

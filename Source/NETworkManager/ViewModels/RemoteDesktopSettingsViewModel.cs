@@ -229,9 +229,9 @@ namespace NETworkManager.ViewModels
 
         public List<Tuple<int, string>> KeyboardHookModes => new List<Tuple<int, string>>
         {
-            Tuple.Create(0, LocalizationManager.GetStringByKey("String_OnThisComputer")),
-            Tuple.Create(1, LocalizationManager.GetStringByKey("String_OnTheRemoteComputer"))/*,
-            Tuple.Create(2, LocalizationManager.GetStringByKey("String_OnlyWhenUsingTheFullScreen")),*/
+            Tuple.Create(0, Resources.Localization.Strings.OnThisComputer),
+            Tuple.Create(1, Resources.Localization.Strings.OnTheRemoteComputer)/*,
+            Tuple.Create(2, Resources.Localization.Strings.OnlyWhenUsingTheFullScreen),*/
         };
 
         private Tuple<int, string> _keyboardHookMode;
@@ -252,7 +252,7 @@ namespace NETworkManager.ViewModels
         }
 
         // String must be formatted ...
-        public string RDPAuthenticationLevelHelpMessage => LocalizationManager.GetStringByKey("String_HelpMessage_RDPAuthenticationLevel");
+        public string RDPAuthenticationLevelHelpMessage => Resources.Localization.Strings.HelpMessage_RDPAuthenticationLevel;
 
         private bool _redirectClipboard;
         public bool RedirectClipboard

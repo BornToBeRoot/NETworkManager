@@ -135,7 +135,7 @@ namespace NETworkManager.ViewModels
 
             TabItems = new ObservableCollection<DragablzTabItem>
             {
-                new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new PingView(_tabId), _tabId)
+                new DragablzTabItem(Resources.Localization.Strings.NewTab, new PingView(_tabId), _tabId)
             };
 
             Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
@@ -174,10 +174,7 @@ namespace NETworkManager.ViewModels
         {
             ExpandProfileView = SettingsManager.Current.Ping_ExpandProfileView;
 
-            if (ExpandProfileView)
-                ProfileWidth = new GridLength(SettingsManager.Current.Ping_ProfileWidth);
-            else
-                ProfileWidth = new GridLength(40);
+            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.Ping_ProfileWidth) : new GridLength(40);
 
             _tempProfileWidth = SettingsManager.Current.Ping_ProfileWidth;
         }
@@ -211,12 +208,12 @@ namespace NETworkManager.ViewModels
 
         private async void AddProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog
+            var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
+                Title = Resources.Localization.Strings.AddProfile
             };
 
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -241,12 +238,12 @@ namespace NETworkManager.ViewModels
 
         private async void EditProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog
+            var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
+                Title = Resources.Localization.Strings.EditProfile
             };
 
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -273,12 +270,12 @@ namespace NETworkManager.ViewModels
 
         private async void CopyAsProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog
+            var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
+                Title = Resources.Localization.Strings.CopyProfile
             };
 
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -303,12 +300,12 @@ namespace NETworkManager.ViewModels
 
         private async void DeleteProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog
+            var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
+                Title = Resources.Localization.Strings.DeleteProfile
             };
 
-            ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+            var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -316,7 +313,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, LocalizationManager.GetStringByKey("String_DeleteProfileMessage"));
+            }, Resources.Localization.Strings.DeleteProfileMessage);
 
             customDialog.Content = new ConfirmRemoveDialog
             {
@@ -326,19 +323,16 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand EditGroupCommand
-        {
-            get { return new RelayCommand(p => EditGroupAction(p)); }
-        }
+        public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
         private async void EditGroupAction(object group)
         {
-            CustomDialog customDialog = new CustomDialog
+            var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
+                Title = Resources.Localization.Strings.EditGroup
             };
 
-            GroupViewModel editGroupViewModel = new GroupViewModel(instance =>
+            var editGroupViewModel = new GroupViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -370,7 +364,7 @@ namespace NETworkManager.ViewModels
 
         private static void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzTabItem)?.View as PingView).CloseTab();
+            ((args.DragablzItem.Content as DragablzTabItem)?.View as PingView)?.CloseTab();
         }
         #endregion
 
@@ -403,7 +397,7 @@ namespace NETworkManager.ViewModels
         {
             _tabId++;
 
-            TabItems.Add(new DragablzTabItem(host ?? LocalizationManager.GetStringByKey("String_Header_NewTab"), new PingView(_tabId, host), _tabId));
+            TabItems.Add(new DragablzTabItem(host ?? Resources.Localization.Strings.NewTab, new PingView(_tabId, host), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

@@ -3,7 +3,6 @@ using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using NETworkManager.Utilities;
 using System.Net;
-using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Validators
 {
@@ -14,7 +13,7 @@ namespace NETworkManager.Validators
             var isValid = true;
 
             if (value == null)
-                return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidIPScanRange"));
+                return new ValidationResult(false, Resources.Localization.Strings.EnterValidIPScanRange);
 
             foreach (var ipHostOrRange in ((string) value).Replace(" ", "").Split(';'))
             {
@@ -84,7 +83,7 @@ namespace NETworkManager.Validators
                 isValid = false;
             }
 
-            return isValid ? ValidationResult.ValidResult : new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidIPScanRange"));
+            return isValid ? ValidationResult.ValidResult : new ValidationResult(false, Resources.Localization.Strings.EnterValidIPScanRange);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace NETworkManager.Validators
             if (subnet != null && Regex.IsMatch(subnet, RegexHelper.IPv6AddressCidrRegex))
                 return ValidationResult.ValidResult;
 
-            return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidSubnet"));
+            return new ValidationResult(false, Resources.Localization.Strings.EnterValidSubnet);
         }
     }
 }

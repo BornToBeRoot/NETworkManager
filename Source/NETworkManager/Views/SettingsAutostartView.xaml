@@ -7,6 +7,7 @@
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsAutostartViewModel}">
     <UserControl.Resources>
@@ -15,11 +16,11 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <StackPanel>
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Autostart}" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Autostart}" />
         <StackPanel>
-            <mahAppsControls:ToggleSwitch Header="{DynamicResource String_StartWithWindows}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding StartWithWindows}" IsEnabled="{Binding ConfiguringAutostart, Converter={StaticResource BooleanReverseConverter}}" Margin="0,0,0,10"/>
+            <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.StartWithWindows}"   IsChecked="{Binding StartWithWindows}" IsEnabled="{Binding ConfiguringAutostart, Converter={StaticResource BooleanReverseConverter}}" Margin="0,0,0,10"/>
             <mahAppsControls:MetroProgressBar IsIndeterminate="True" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding ConfiguringAutostart, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,10"/>
-            <mahAppsControls:ToggleSwitch Header="{DynamicResource String_StartMinimizedInTray}" OnLabel="{DynamicResource String_ToggleSwitch_On}" OffLabel="{DynamicResource String_ToggleSwitch_Off}" IsChecked="{Binding StartMinimizedInTray}" />
+            <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.StartMinimizedInTray}"   IsChecked="{Binding StartMinimizedInTray}" />
         </StackPanel>
     </StackPanel>
 </UserControl>

@@ -10,6 +10,7 @@
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:settings="clr-namespace:NETworkManager.Models.Settings"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ProfilesViewModel}">
     <UserControl.Resources>
@@ -35,7 +36,7 @@
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
-                    <MenuItem Header="{DynamicResource String_Edit}" Command="{Binding EditProfileCommand}">
+                    <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditProfileCommand}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -44,7 +45,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{DynamicResource String_Delete}" Command="{Binding DeleteProfileCommand}">
+                    <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteProfileCommand}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -84,7 +85,7 @@
                                                         <ColumnDefinition Width="Auto" />
                                                     </Grid.ColumnDefinitions>
                                                     <TextBlock Grid.Column="0" Text="{Binding (CollectionViewGroup.Name)}" Style="{DynamicResource DefaultTextBlock}"/>
-                                                    <Button Grid.Column="1" ToolTip="{DynamicResource String_EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding (CollectionViewGroup.Name)}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
+                                                    <Button Grid.Column="1" ToolTip="{x:Static localization:Strings.EditGroup}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding (CollectionViewGroup.Name)}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
                                                         <Rectangle Width="16" Height="16">
                                                             <Rectangle.OpacityMask>
                                                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
@@ -113,15 +114,15 @@
                 </GroupStyle>
             </DataGrid.GroupStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_Name}" Binding="{Binding (settings:ProfileInfo.Name)}" MinWidth="200" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_NetworkInterface}" Binding="{Binding (settings:ProfileInfo.NetworkInterface_Enabled)}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_IPScanner}" Binding="{Binding (settings:ProfileInfo.IPScanner_Enabled)}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_PortScanner}" Binding="{Binding (settings:ProfileInfo.PortScanner_Enabled)}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_Ping}" Binding="{Binding (settings:ProfileInfo.Ping_Enabled)}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_Traceroute}" Binding="{Binding (settings:ProfileInfo.Traceroute_Enabled)}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_RemoteDesktop}" Binding="{Binding (settings:ProfileInfo.RemoteDesktop_Enabled)}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_PuTTY}" Binding="{Binding (settings:ProfileInfo.PuTTY_Enabled)}" />
-                <DataGridCheckBoxColumn Header="{DynamicResource String_Header_WakeOnLAN}" Binding="{Binding (settings:ProfileInfo.WakeOnLAN_Enabled)}" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (settings:ProfileInfo.Name)}" MinWidth="200" />
+                <DataGridCheckBoxColumn Header="{x:Static localization:Strings.NetworkInterface}" Binding="{Binding (settings:ProfileInfo.NetworkInterface_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{x:Static localization:Strings.IPScanner}" Binding="{Binding (settings:ProfileInfo.IPScanner_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{x:Static localization:Strings.PortScanner}" Binding="{Binding (settings:ProfileInfo.PortScanner_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{x:Static localization:Strings.Ping}" Binding="{Binding (settings:ProfileInfo.Ping_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{x:Static localization:Strings.Traceroute}" Binding="{Binding (settings:ProfileInfo.Traceroute_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{x:Static localization:Strings.RemoteDesktop}" Binding="{Binding (settings:ProfileInfo.RemoteDesktop_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{x:Static localization:Strings.PuTTY}" Binding="{Binding (settings:ProfileInfo.PuTTY_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{x:Static localization:Strings.WakeOnLAN}" Binding="{Binding (settings:ProfileInfo.WakeOnLAN_Enabled)}" />
             </DataGrid.Columns>
         </controls:MultiSelectDataGrid>
         <StackPanel Grid.Row="4" HorizontalAlignment="Right" Orientation="Horizontal">
@@ -151,7 +152,7 @@
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_DeleteDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.DeleteDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
                     </Grid>
                 </Button.Content>
             </Button>
@@ -182,7 +183,7 @@
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_EditDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.EditDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
                     </Grid>
                 </Button.Content>
             </Button>
@@ -198,7 +199,7 @@
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource String_Button_AddDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
                     </Grid>
                 </Button.Content>
             </Button>

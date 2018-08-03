@@ -1,5 +1,4 @@
 ﻿using Lextm.SharpSnmpLib;
-using NETworkManager.Models.Settings;
 using System.Globalization;
 using System.Windows.Controls;
 
@@ -17,7 +16,7 @@ namespace NETworkManager.Validators
             }
             catch (System.ArgumentException)
             {
-                return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidOID"));
+                return new ValidationResult(false, Resources.Localization.Strings.EnterValidOID);
             }
 
             return ValidationResult.ValidResult;
