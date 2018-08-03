@@ -3454,6 +3454,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A profile with this name already exists!.
+        /// </summary>
+        public static string ProfileWithThisNameAlreadyExists {
+            get {
+                return ResourceManager.GetString("ProfileWithThisNameAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Protocol.
         /// </summary>
         public static string Protocol {

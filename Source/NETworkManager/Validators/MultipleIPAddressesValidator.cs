@@ -1,5 +1,4 @@
-﻿using NETworkManager.Models.Settings;
-using NETworkManager.Utilities;
+﻿using NETworkManager.Utilities;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;

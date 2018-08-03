@@ -57,6 +57,7 @@
                                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                            <validators:IsProfileNameUnique ValidatesOnTargetUpdated="True" />
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>

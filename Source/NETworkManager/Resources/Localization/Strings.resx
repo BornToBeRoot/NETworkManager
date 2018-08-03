@@ -1929,4 +1929,7 @@
   <data name="EnterValidValueBetween25and100" xml:space="preserve">
     <value>Enter a valid value between 25 and 100!</value>
   </data>
+  <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
+    <value>A profile with this name already exists!</value>
+  </data>
 </root>

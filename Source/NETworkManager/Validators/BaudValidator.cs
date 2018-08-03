@@ -1,5 +1,4 @@
-﻿using NETworkManager.Models.Settings;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
 using System.Windows.Controls;
 

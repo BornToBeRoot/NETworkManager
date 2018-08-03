@@ -1,9 +1,7 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
-
 namespace NETworkManager.Validators
 {
     // ReSharper disable once InconsistentNaming

@@ -293,6 +293,7 @@
     <Compile Include="Validators\MultipleHostsValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
+    <Compile Include="Validators\IsProfileNameUnique.cs" />
     <Compile Include="ViewModels\ProfilesViewModel.cs" />
     <Compile Include="ViewModels\ListenersViewModel.cs" />
     <Compile Include="ViewModels\ConnectionsViewModel.cs" />
