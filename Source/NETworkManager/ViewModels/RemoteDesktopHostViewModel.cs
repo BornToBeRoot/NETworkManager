@@ -298,7 +298,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
-            }, ProfileManager.GetGroups(), SelectedProfile);
+            }, ProfileManager.GetGroups(), true, SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -331,7 +331,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
-            }, ProfileManager.GetGroups(), SelectedProfile);
+            }, ProfileManager.GetGroups(), false,SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -504,9 +504,10 @@ namespace NETworkManager.ViewModels
                 Hostname = SelectedProfile.RemoteDesktop_Host
             };
 
-            if (SelectedProfile.CredentialID == null) // Credentials need to be unlocked first
+            if (SelectedProfile.CredentialID != Guid.Empty) 
             {
-                if (!CredentialManager.IsLoaded)
+                // Credentials need to be unlocked first
+                if (!CredentialManager.IsLoaded) 
                 {
                     var customDialog = new CustomDialog
                     {

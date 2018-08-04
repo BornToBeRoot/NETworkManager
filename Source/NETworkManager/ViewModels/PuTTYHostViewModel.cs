@@ -301,7 +301,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
-            }, ProfileManager.GetGroups(), SelectedProfile);
+            }, ProfileManager.GetGroups(), true,SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -334,7 +334,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
-            }, ProfileManager.GetGroups(), SelectedProfile);
+            }, ProfileManager.GetGroups(), false,SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {

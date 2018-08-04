@@ -129,14 +129,14 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public CredentialViewModel(Action<CredentialViewModel> saveCommand, Action<CredentialViewModel> cancelHandler, CredentialInfo credentialInfo = null)
+        public CredentialViewModel(Action<CredentialViewModel> saveCommand, Action<CredentialViewModel> cancelHandler, bool isEdited = false, CredentialInfo credentialInfo = null)
         {
             _isLoading = true;
 
             SaveCommand = new RelayCommand(p => saveCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            _isEdited = credentialInfo != null;
+            _isEdited = isEdited;
 
             _credentialInfo = credentialInfo ?? new CredentialInfo();
 

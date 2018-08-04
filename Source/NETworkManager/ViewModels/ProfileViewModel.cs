@@ -999,14 +999,14 @@ namespace NETworkManager.ViewModels
         #endregion
         #endregion
 
-        public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, ProfileInfo profileInfo = null)
+        public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, bool isEdited = false, ProfileInfo profileInfo = null)
         {
             _isLoading = true;
 
             SaveCommand = new RelayCommand(p => saveCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            IsEdited = profileInfo != null;
+            IsEdited = isEdited;
 
             var profileInfo2 = profileInfo ?? new ProfileInfo();
 

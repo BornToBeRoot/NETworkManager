@@ -4,7 +4,6 @@ using Dragablz;
 using System.Windows.Input;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
-using NETworkManager.Models.Settings;
 
 namespace NETworkManager.ViewModels
 {
