@@ -95,24 +95,10 @@
                                 </TextBox.Text>
                             </TextBox>
                             <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Credential}" />
-                            <ComboBox x:Name="ComboBoxCredential" Grid.Column="2" Grid.Row="4" SelectedValue="{Binding CredentialID}" SelectedValuePath="ID" Style="{StaticResource DefaultComboBox}" ItemsSource="{Binding Credentials}">
+                            <ComboBox x:Name="ComboBoxCredential" Grid.Column="2" Grid.Row="4" SelectedValue="{Binding CredentialID}" DisplayMemberPath="Name" SelectedValuePath="ID" Style="{StaticResource DefaultComboBox}" ItemsSource="{Binding Credentials}">
                                 <ComboBox.InputBindings>
                                     <KeyBinding Command="{Binding UnselectCredentialCommand}" Key="Delete"/>
                                 </ComboBox.InputBindings>
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock>
-                                                <TextBlock.Text>
-                                                    <MultiBinding StringFormat="{}[{0}] {1}">
-                                                        <Binding Path="(settings:CredentialInfo.ID)" />
-                                                        <Binding Path="(settings:CredentialInfo.Name)" />
-                                                    </MultiBinding>
-                                                </TextBlock.Text>
-                                            </TextBlock>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
                             </ComboBox>
                             <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.Group}" />
                             <ComboBox x:Name="ComboBoxGroup" Grid.Column="2" Grid.Row="6" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleGroupServers}">
