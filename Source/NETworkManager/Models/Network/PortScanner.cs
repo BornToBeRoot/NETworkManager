@@ -51,7 +51,7 @@ namespace NETworkManager.Models.Network
             _progressValue = 0;
 
             // Modify the ThreadPool for better performance
-            ThreadPool.GetMinThreads(out int workerThreads, out int completionPortThreads);
+            ThreadPool.GetMinThreads(out var workerThreads, out var completionPortThreads);
             ThreadPool.SetMinThreads(workerThreads + portScannerOptions.Threads, completionPortThreads + portScannerOptions.Threads);
 
             Task.Run(() =>

@@ -1935,4 +1935,10 @@
   <data name="CredentialWithThisNameAlreadyExists" xml:space="preserve">
     <value>Credential with this name already exists!</value>
   </data>
+  <data name="PortState_Closed" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="PortState_Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
 </root>

@@ -3409,6 +3409,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Closed.
+        /// </summary>
+        public static string PortState_Closed {
+            get {
+                return ResourceManager.GetString("PortState_Closed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string PortState_Open {
+            get {
+                return ResourceManager.GetString("PortState_Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Preferred protocol when resolving hostname:.
         /// </summary>
         public static string PreferredProtocolWhenResolvingHostname {

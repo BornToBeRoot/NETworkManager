@@ -11,7 +11,6 @@ using System;
 using System.Linq;
 using System.Diagnostics;
 using NETworkManager.Utilities;
-using System.Collections.Generic;
 using System.Windows;
 
 namespace NETworkManager.ViewModels
@@ -558,7 +557,7 @@ namespace NETworkManager.ViewModels
                     ConfigurationManager.Current.IsDialogOpen = true;
                     await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
                 }
-                else // Connect already unlocked
+                else // already unlocked
                 {
                     var credentialInfo = CredentialManager.GetCredentialByID(SelectedProfile.CredentialID);
 
@@ -612,9 +611,9 @@ namespace NETworkManager.ViewModels
                     }
                     else
                     {
-                        if (instance.CredentialID != null)
+                        if (instance.CredentialID != Guid.Empty)
                         {
-                            var credentialInfo = CredentialManager.GetCredentialByID((Guid)instance.CredentialID);
+                            var credentialInfo = CredentialManager.GetCredentialByID(instance.CredentialID);
 
                             session.Username = credentialInfo.Username;
                             session.Password = credentialInfo.Password;
@@ -684,7 +683,7 @@ namespace NETworkManager.ViewModels
         }
 
         // Modify history list
-        private void AddHostToHistory(string host)
+        private static void AddHostToHistory(string host)
         {
             // Create the new list
             var list = ListHelper.Modify(SettingsManager.Current.RemoteDesktop_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
