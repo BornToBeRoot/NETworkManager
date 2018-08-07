@@ -111,16 +111,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _tabEnabled;
-        public bool TabEnabled
+        private bool _isTabEnabled;
+        public bool IsTabEnabled
         {
-            get => _tabEnabled;
+            get => _isTabEnabled;
             set
             {
-                if (value == _tabEnabled)
+                if (value == _isTabEnabled)
                     return;
 
-                _tabEnabled = value;
+                _isTabEnabled = value;
                 OnPropertyChanged();
             }
         }
@@ -1123,7 +1123,7 @@ namespace NETworkManager.ViewModels
         private void Validate()
         {
             // Note
-            TabEnabled = (NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || RemoteDesktop_Enabled || PuTTY_Enabled || WakeOnLAN_Enabled);
+            IsTabEnabled = NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || RemoteDesktop_Enabled || PuTTY_Enabled || WakeOnLAN_Enabled;
         }
 
         #region ICommands & Actions

@@ -9,7 +9,6 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
-             xmlns:settings="clr-namespace:NETworkManager.Models.Settings"
              mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:ProfileViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
@@ -52,7 +51,7 @@
                                 <ColumnDefinition Width="34" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" />
-                            <TextBox x:Name="TextBoxName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleRemoteDesktopProfileName}">
+                            <TextBox x:Name="TextBoxName" GotFocus="TextBoxName_OnGotFocus" TextChanged="TextBoxName_OnTextChanged" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleRemoteDesktopProfileName}">
                                 <TextBox.Style>
                                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                                         <Style.Triggers>
@@ -123,7 +122,7 @@
                                 </Rectangle.Resources>
                             </Rectangle>
                         </Grid>
-                        <TextBlock Text="{x:Static localization:Strings.EnableTheProfileInAtLeastOneTool}" TextWrapping="Wrap" Visibility="{Binding TabEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{DynamicResource AccentTextBlock}" Margin="0,20,0,0"/>
+                        <TextBlock Text="{x:Static localization:Strings.EnableTheProfileInAtLeastOneTool}" TextWrapping="Wrap" Visibility="{Binding IsTabEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{DynamicResource AccentTextBlock}" Margin="0,20,0,0"/>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
@@ -784,7 +783,7 @@
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
                             <!-- No tab enabled -->
-                            <DataTrigger Binding="{Binding TabEnabled}" Value="False">
+                            <DataTrigger Binding="{Binding IsTabEnabled}" Value="False">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
                             <!-- Network Interface -->
