@@ -286,14 +286,31 @@
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding IPScanner_InheritHost}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.IPRange}" />
                                 <TextBox x:Name="TextBoxIPScannerIPRange" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding IPScanner_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4SubnetWithCIDR}">
-                                    <TextBox.Text>
-                                        <Binding Path="IPScanner_IPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <validators:IPScanRangeValidator ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
+                                    <TextBox.Style>
+                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IPScanner_InheritHost}" Value="True">
+                                                    <Setter Property="TextBox.Text">
+                                                        <Setter.Value>
+                                                            <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IPScanner_InheritHost}" Value="False">
+                                                    <Setter Property="TextBox.Text">
+                                                        <Setter.Value>
+                                                            <Binding Path="IPScanner_IPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                                <Binding.ValidationRules>
+                                                                    <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                    <validators:IPScanRangeValidator ValidatesOnTargetUpdated="True" />
+                                                                </Binding.ValidationRules>
+                                                            </Binding>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
                                 </TextBox>
                             </Grid>
                         </StackPanel>
@@ -344,13 +361,30 @@
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding PortScanner_InheritHost}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                                 <TextBox x:Name="TextBoxPortScannerHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding PortScanner_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}">
-                                    <TextBox.Text>
-                                        <Binding Path="PortScanner_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
+                                    <TextBox.Style>
+                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding PortScanner_InheritHost}" Value="True">
+                                                    <Setter Property="TextBox.Text">
+                                                        <Setter.Value>
+                                                            <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding PortScanner_InheritHost}" Value="False">
+                                                    <Setter Property="TextBox.Text">
+                                                        <Setter.Value>
+                                                            <Binding Path="PortScanner_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                                <Binding.ValidationRules>
+                                                                    <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                </Binding.ValidationRules>
+                                                            </Binding>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
                                 </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Ports}" />
                                 <TextBox x:Name="TextBoxPortScannerPorts" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePortScanRange}">
@@ -410,13 +444,30 @@
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Ping_InheritHost}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                                 <TextBox x:Name="TextBoxPingHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Ping_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}">
-                                    <TextBox.Text>
-                                        <Binding Path="Ping_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
+                                    <TextBox.Style>
+                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Ping_InheritHost}" Value="True">
+                                                    <Setter Property="TextBox.Text">
+                                                        <Setter.Value>
+                                                            <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Ping_InheritHost}" Value="False">
+                                                    <Setter Property="TextBox.Text">
+                                                        <Setter.Value>
+                                                            <Binding Path="Ping_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                                <Binding.ValidationRules>
+                                                                    <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                </Binding.ValidationRules>
+                                                            </Binding>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
                                 </TextBox>
                             </Grid>
                         </StackPanel>
@@ -465,13 +516,30 @@
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Traceroute_InheritHost}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                                 <TextBox x:Name="TextBoxTracerouteHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Traceroute_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}">
-                                    <TextBox.Text>
-                                        <Binding Path="Traceroute_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
+                                    <TextBox.Style>
+                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Traceroute_InheritHost}" Value="True">
+                                                    <Setter Property="TextBox.Text">
+                                                        <Setter.Value>
+                                                            <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Traceroute_InheritHost}" Value="False">
+                                                    <Setter Property="TextBox.Text">
+                                                        <Setter.Value>
+                                                            <Binding Path="Traceroute_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                                <Binding.ValidationRules>
+                                                                    <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                </Binding.ValidationRules>
+                                                            </Binding>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
                                 </TextBox>
                             </Grid>
                         </StackPanel>
@@ -520,13 +588,30 @@
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding RemoteDesktop_InheritHost}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                                 <TextBox x:Name="TextBoxRemoteDesktopHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding RemoteDesktop_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}">
-                                    <TextBox.Text>
-                                        <Binding Path="RemoteDesktop_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
+                                    <TextBox.Style>
+                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RemoteDesktop_InheritHost}" Value="True">
+                                                    <Setter Property="TextBox.Text">
+                                                        <Setter.Value>
+                                                            <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding RemoteDesktop_InheritHost}" Value="False">
+                                                    <Setter Property="TextBox.Text">
+                                                        <Setter.Value>
+                                                            <Binding Path="RemoteDesktop_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                                <Binding.ValidationRules>
+                                                                    <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                </Binding.ValidationRules>
+                                                            </Binding>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
                                 </TextBox>
                             </Grid>
                         </StackPanel>
@@ -609,14 +694,31 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                                 <TextBox x:Name="TextBoxPuTTYHost" Grid.Column="2" Grid.Row="4" IsEnabled="{Binding PuTTY_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}">
-                                    <TextBox.Text>
-                                        <Binding Path="PuTTY_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
+                                    <TextBox.Style>
+                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding PuTTY_InheritHost}" Value="True">
+                                                    <Setter Property="TextBox.Text">
+                                                        <Setter.Value>
+                                                            <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding PuTTY_InheritHost}" Value="False">
+                                                    <Setter Property="TextBox.Text">
+                                                        <Setter.Value>
+                                                            <Binding Path="PuTTY_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                                <Binding.ValidationRules>
+                                                                    <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                    <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                                                </Binding.ValidationRules>
+                                                            </Binding>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
                                 </TextBox>
                                 <TextBox x:Name="TextBoxPuTTYSerialLine" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleSerialLine}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                     <TextBox.Text>

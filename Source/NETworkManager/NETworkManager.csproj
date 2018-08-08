@@ -233,6 +233,7 @@
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
     <Compile Include="Converters\ValidateSubnetCalculatorSupernettingConverter.cs" />
     <Compile Include="Converters\ValidateSubnetCalculatorSubnettingConverter.cs" />
+    <Compile Include="Models\Documentation\DocumentationIdentifier.cs" />
     <Compile Include="Models\Documentation\CommunityManager.cs" />
     <Compile Include="Models\Documentation\ResourceInfo.cs" />
     <Compile Include="Models\Documentation\ResourceManager.cs" />
