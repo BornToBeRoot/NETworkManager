@@ -1,5 +1,4 @@
 ﻿using NETworkManager.Utilities;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -35,29 +34,7 @@ namespace NETworkManager.Models.Documentation
             new DocumentationInfo(DocumentationIdentifier.HowToCreateCustomThemeAndAccent, @"/HowTo/Create_custom_theme_and_accent.md", GetLocalizationInfoList("en-US", "de-DE"))
         };
 
-        public enum DocumentationIdentifier
-        {
-            Default,
-            ApplicationNetworkInterface,
-            ApplicationIpScanner,
-            ApplicationPortScanner,
-            ApplicationPing,
-            ApplicationTraceroute,
-            ApplicationDnsLookup,
-            ApplicationRemoteDesktop,
-            ApplicationPutty,
-            ApplicationSnmp,
-            ApplicationWakeOnLan,
-            ApplicationHttpHeaders,
-            ApplicationSubnetCalculator,
-            ApplicationLookup,
-            ApplicationConnections,
-            ApplicationListeners,
-            ApplicationArpTable,            
-            HowToInstallRdp8Dot1OnWindows6Dot1,
-            HowToCreateCustomThemeAndAccent,
-        }
-
+       
         // Get localized documentation url (if available), else return the english webpage
         public static string GetLocalizedUrlById(DocumentationIdentifier documentationIdentifier)
         {
@@ -87,7 +64,8 @@ namespace NETworkManager.Models.Documentation
 
         private static void OpenDocumentationAction(object documentationIdentifier)
         {
-            OpenDocumentation((DocumentationIdentifier)Enum.Parse(typeof(DocumentationIdentifier), documentationIdentifier as string ?? throw new InvalidOperationException()));
+            if (documentationIdentifier != null)
+                OpenDocumentation((DocumentationIdentifier) documentationIdentifier);
         }
         #endregion
     }

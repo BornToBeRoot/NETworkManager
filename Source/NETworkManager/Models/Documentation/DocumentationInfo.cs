@@ -1,6 +1,5 @@
 ﻿using NETworkManager.Models.Settings;
 using System.Collections.Generic;
-using static NETworkManager.Models.Documentation.DocumentationManager;
 
 namespace NETworkManager.Models.Documentation
 {

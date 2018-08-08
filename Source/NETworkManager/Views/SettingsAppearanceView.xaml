@@ -68,7 +68,7 @@
         </ListView>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
             <StackPanel.InputBindings>
-                <MouseBinding Gesture="LeftClick" Command="{x:Static documentation:DocumentationManager.OpenDocumentationCommand}" CommandParameter="HowTo_CreateCustomThemeAndAccent" />
+                <MouseBinding Gesture="LeftClick" Command="{x:Static documentation:DocumentationManager.OpenDocumentationCommand}" CommandParameter="{x:Static documentation:DocumentationIdentifier.HowToCreateCustomThemeAndAccent}" />
             </StackPanel.InputBindings>
             <StackPanel.Style>
                 <Style TargetType="{x:Type StackPanel}">

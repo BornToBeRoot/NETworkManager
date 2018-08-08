@@ -320,7 +320,7 @@
             <TextBlock Text="{x:Static localization:Strings.InstallRDP8dot1Message}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <StackPanel.InputBindings>
-                    <MouseBinding Gesture="LeftClick" Command="{x:Static documentation:DocumentationManager.OpenDocumentationCommand}" CommandParameter="HowTo_InstallRDP8dot1onWindows6dot1" />
+                    <MouseBinding Gesture="LeftClick" Command="{x:Static documentation:DocumentationManager.OpenDocumentationCommand}" CommandParameter="{x:Static documentation:DocumentationIdentifier.HowToInstallRdp8Dot1OnWindows6Dot1}" />
                 </StackPanel.InputBindings>
                 <StackPanel.Style>
                     <Style TargetType="{x:Type StackPanel}">
