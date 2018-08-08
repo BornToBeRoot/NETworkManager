@@ -467,7 +467,7 @@ namespace NETworkManager.ViewModels
                     }
                     else
                     {
-                        if (instance.CredentialID == Guid.Empty)
+                        if (instance.CredentialID != Guid.Empty)
                         {
                             var credentialInfo = CredentialManager.GetCredentialByID(instance.CredentialID);
 
