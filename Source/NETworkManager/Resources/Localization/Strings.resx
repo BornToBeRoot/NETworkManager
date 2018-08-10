@@ -1933,7 +1933,7 @@
     <value>A profile with this name already exists!</value>
   </data>
   <data name="CredentialWithThisNameAlreadyExists" xml:space="preserve">
-    <value>Credential with this name already exists!</value>
+    <value>A Credential with this name already exists!</value>
   </data>
   <data name="PortState_Closed" xml:space="preserve">
     <value>Closed</value>
