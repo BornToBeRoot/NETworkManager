@@ -1,17 +1,34 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
-using System.Windows.Controls;
+using System.Windows;
 
 namespace NETworkManager.Views
 {
-    public partial class PuTTYSettingsView : UserControl
+    public partial class PuTTYSettingsView
     {
-        PuTTYSettingsViewModel viewModel = new PuTTYSettingsViewModel(DialogCoordinator.Instance);
+        private readonly PuTTYSettingsViewModel _viewModel = new PuTTYSettingsViewModel(DialogCoordinator.Instance);
 
         public PuTTYSettingsView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
+        }
+
+        private void TextBoxPuTTYLocation_Drop(object sender, System.Windows.DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop))
+                return;
+
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            if (files != null)
+                _viewModel.SetFilePathFromDragDrop(files[0]);
+        }
+
+        private void TextBoxPuTTYLocation_PreviewDragOver(object sender, System.Windows.DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.Copy;
+            e.Handled = true;
         }
     }
 }

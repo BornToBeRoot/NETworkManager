@@ -1,6 +1,4 @@
 ﻿using Microsoft.Win32;
-using System.IO;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Settings
@@ -14,12 +12,9 @@ namespace NETworkManager.Models.Settings
         {
             get
             {
-                RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(RunKeyCurrentUser);
+                var registryKey = Registry.CurrentUser.OpenSubKey(RunKeyCurrentUser);
 
-                if (registryKey.GetValue(ConfigurationManager.Current.ApplicationName) != null)
-                    return true;
-
-                return false;
+                return registryKey?.GetValue(ConfigurationManager.Current.ApplicationName) != null;
             }
         }
 
@@ -30,9 +25,12 @@ namespace NETworkManager.Models.Settings
 
         public static void Enable()
         {
-            RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(RunKeyCurrentUser, true);
+            var registryKey = Registry.CurrentUser.OpenSubKey(RunKeyCurrentUser, true);
 
-            string command = string.Format("{0} {1}", ConfigurationManager.Current.ApplicationFullName, CommandLineManager.ParameterAutostart);
+            var command = $"{ConfigurationManager.Current.ApplicationFullName} {CommandLineManager.ParameterAutostart}";
+
+            if (registryKey == null)
+                return; // LOG
 
             registryKey.SetValue(ConfigurationManager.Current.ApplicationName, command);
             registryKey.Close();
@@ -45,7 +43,10 @@ namespace NETworkManager.Models.Settings
 
         public static void Disable()
         {
-            RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(RunKeyCurrentUser, true);
+            var registryKey = Registry.CurrentUser.OpenSubKey(RunKeyCurrentUser, true);
+
+            if (registryKey == null)
+                return; // LOG
 
             registryKey.DeleteValue(ConfigurationManager.Current.ApplicationName);
             registryKey.Close();

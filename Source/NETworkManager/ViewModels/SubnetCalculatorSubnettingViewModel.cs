@@ -1,5 +1,4 @@
 ﻿using NETworkManager.Models.Settings;
-using System.Collections.Generic;
 using System.Windows.Input;
 using NETworkManager.Utilities;
 using System.Collections.ObjectModel;
@@ -18,12 +17,12 @@ namespace NETworkManager.ViewModels
     public class SubnetCalculatorSubnettingViewModel : ViewModelBase
     {
         #region Variables
-        private IDialogCoordinator dialogCoordinator;
+        private readonly IDialogCoordinator _dialogCoordinator;
 
         private string _subnet;
         public string Subnet
         {
-            get { return _subnet; }
+            get => _subnet;
             set
             {
                 if (value == _subnet)
@@ -34,16 +33,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _subnetHistoryView;
-        public ICollectionView SubnetHistoryView
-        {
-            get { return _subnetHistoryView; }
-        }
+        public ICollectionView SubnetHistoryView { get; }
 
         private string _newSubnetmaskOrCIDR;
         public string NewSubnetmaskOrCIDR
         {
-            get { return _newSubnetmaskOrCIDR; }
+            get => _newSubnetmaskOrCIDR;
             set
             {
                 if (value == _newSubnetmaskOrCIDR)
@@ -54,16 +49,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _newSubnetmaskOrCIDRHistoryView;
-        public ICollectionView NewSubnetmaskOrCIDRHistoryView
-        {
-            get { return _newSubnetmaskOrCIDRHistoryView; }
-        }
+        public ICollectionView NewSubnetmaskOrCIDRHistoryView { get; }
 
         private bool _isCalculationRunning;
         public bool IsCalculationRunning
         {
-            get { return _isCalculationRunning; }
+            get => _isCalculationRunning;
             set
             {
                 if (value == _isCalculationRunning)
@@ -77,7 +68,7 @@ namespace NETworkManager.ViewModels
         private bool _isResultVisible;
         public bool IsResultVisible
         {
-            get { return _isResultVisible; }
+            get => _isResultVisible;
             set
             {
                 if (value == _isResultVisible)
@@ -92,7 +83,7 @@ namespace NETworkManager.ViewModels
         private ObservableCollection<IPNetwork> _subnetsResult = new ObservableCollection<IPNetwork>();
         public ObservableCollection<IPNetwork> SubnetsResult
         {
-            get { return _subnetsResult; }
+            get => _subnetsResult;
             set
             {
                 if (value == _subnetsResult)
@@ -103,16 +94,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _subnetsResultView;
-        public ICollectionView SubnetsResultView
-        {
-            get { return _subnetsResultView; }
-        }
+        public ICollectionView SubnetsResultView { get; }
 
         private IPNetwork _selectedSubnetResult;
         public IPNetwork SelectedSubnetResult
         {
-            get { return _selectedSubnetResult; }
+            get => _selectedSubnetResult;
             set
             {
                 if (value == _selectedSubnetResult)
@@ -126,7 +113,7 @@ namespace NETworkManager.ViewModels
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
         {
-            get { return _displayStatusMessage; }
+            get => _displayStatusMessage;
             set
             {
                 if (value == _displayStatusMessage)
@@ -140,7 +127,7 @@ namespace NETworkManager.ViewModels
         private string _statusMessage;
         public string StatusMessage
         {
-            get { return _statusMessage; }
+            get => _statusMessage;
             set
             {
                 if (value == _statusMessage)
@@ -155,14 +142,14 @@ namespace NETworkManager.ViewModels
         #region Constructor, load settings
         public SubnetCalculatorSubnettingViewModel(IDialogCoordinator instance)
         {
-            dialogCoordinator = instance;
+            _dialogCoordinator = instance;
 
             // Set collection view
-            _subnetHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory);
-            _newSubnetmaskOrCIDRHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory);
+            SubnetHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory);
+            NewSubnetmaskOrCIDRHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory);
 
             // Result view
-            _subnetsResultView = CollectionViewSource.GetDefaultView(SubnetsResult);
+            SubnetsResultView = CollectionViewSource.GetDefaultView(SubnetsResult);
         }
         #endregion
 
@@ -266,22 +253,22 @@ namespace NETworkManager.ViewModels
 
             SubnetsResult.Clear();
 
-            IPNetwork subnet = IPNetwork.Parse(Subnet);
-            byte.TryParse(NewSubnetmaskOrCIDR.TrimStart('/'), out byte newCidr);
+            var subnet = IPNetwork.Parse(Subnet);
+            byte.TryParse(NewSubnetmaskOrCIDR.TrimStart('/'), out var newCidr);
 
             // Ask the user if there is a large calculation...
-            int baseCidr = subnet.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? 32 : 128;
+            var baseCidr = subnet.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? 32 : 128;
 
-            if (65535 < (Math.Pow(2, (baseCidr - subnet.Cidr)) / Math.Pow(2, (baseCidr - newCidr))))
+            if (65535 < (Math.Pow(2, baseCidr - subnet.Cidr) / Math.Pow(2, (baseCidr - newCidr))))
             {
-                MetroDialogSettings settings = AppearanceManager.MetroDialog;
+                var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_Continue");
-                settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_Cancel");
+                settings.AffirmativeButtonText = Resources.Localization.Strings.Continue;
+                settings.NegativeButtonText = Resources.Localization.Strings.Cancel;
 
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-                if (await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_AreYouSure"), LocalizationManager.GetStringByKey("String_TheProcessCanTakeUpSomeTimeAndResources"), MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+                if (await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.AreYouSure, Resources.Localization.Strings.TheProcessCanTakeUpSomeTimeAndResources, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 {
                     IsCalculationRunning = false;
 
@@ -292,7 +279,7 @@ namespace NETworkManager.ViewModels
             // This still slows the application / freezes the ui... there are to many updates to the ui thread...
             await Task.Run(() =>
             {
-                foreach (IPNetwork network in subnet.Subnet(newCidr))
+                foreach (var network in subnet.Subnet(newCidr))
                 {
                     Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
                     {
@@ -313,7 +300,7 @@ namespace NETworkManager.ViewModels
         private void AddSubnetToHistory(string subnet)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory.Clear();
@@ -326,7 +313,7 @@ namespace NETworkManager.ViewModels
         private void AddNewSubnetmaskOrCIDRToHistory(string newSubnetmaskOrCIDR)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory.ToList(), newSubnetmaskOrCIDR, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory.ToList(), newSubnetmaskOrCIDR, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory.Clear();

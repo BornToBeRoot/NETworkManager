@@ -1,16 +1,15 @@
 ﻿using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class TracerouteSettingsView : UserControl
+    public partial class TracerouteSettingsView
     {
-        TracerouteSettingsViewModel viewModel = new TracerouteSettingsViewModel();
+        private readonly TracerouteSettingsViewModel _viewModel = new TracerouteSettingsViewModel();
 
         public TracerouteSettingsView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

@@ -6,12 +6,12 @@ namespace NETworkManager.ViewModels
     public class TracerouteSettingsViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private int _maximumHops;
         public int MaximumHops
         {
-            get { return _maximumHops; }
+            get => _maximumHops;
             set
             {
                 if (value == _maximumHops)
@@ -28,7 +28,7 @@ namespace NETworkManager.ViewModels
         private int _timeout;
         public int Timeout
         {
-            get { return _timeout; }
+            get => _timeout;
             set
             {
                 if (value == _timeout)
@@ -45,7 +45,7 @@ namespace NETworkManager.ViewModels
         private int _buffer;
         public int Buffer
         {
-            get { return _buffer; }
+            get => _buffer;
             set
             {
                 if (value == _buffer)
@@ -62,7 +62,7 @@ namespace NETworkManager.ViewModels
         private bool _resolveHostname;
         public bool ResolveHostname
         {
-            get { return _resolveHostname; }
+            get => _resolveHostname;
             set
             {
                 if (value == _resolveHostname)
@@ -79,7 +79,7 @@ namespace NETworkManager.ViewModels
         private bool _resolveHostnamePreferIPv4;
         public bool ResolveHostnamePreferIPv4
         {
-            get { return _resolveHostnamePreferIPv4; }
+            get => _resolveHostnamePreferIPv4;
             set
             {
                 if (value == _resolveHostnamePreferIPv4)
@@ -96,7 +96,7 @@ namespace NETworkManager.ViewModels
         private bool _resolveHostnamePreferIPv6;
         public bool ResolveHostnamePreferIPv6
         {
-            get { return _resolveHostnamePreferIPv6; }
+            get => _resolveHostnamePreferIPv6;
             set
             {
                 if (value == _resolveHostnamePreferIPv6)
@@ -110,7 +110,7 @@ namespace NETworkManager.ViewModels
         private bool _showStatistics;
         public bool ShowStatistics
         {
-            get { return _showStatistics; }
+            get => _showStatistics;
             set
             {
                 if (value == _showStatistics)
@@ -128,6 +128,8 @@ namespace NETworkManager.ViewModels
         #region Constructor, load settings
         public TracerouteSettingsViewModel()
         {
+            _isLoading = true;
+
             LoadSettings();
 
             _isLoading = false;

@@ -1,6 +1,4 @@
 ﻿using NETworkManager.Models.Settings;
-using System.Collections.ObjectModel;
-using System.Linq;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
@@ -8,35 +6,10 @@ namespace NETworkManager.ViewModels
     public class CommandLineHelpViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
-
-        public ObservableCollection<LocalizationInfo> LanguageCollection { get; set; }
-
-        private LocalizationInfo _localizationSelectedItem;
-        public LocalizationInfo LocalizationSelectedItem
-        {
-            get { return _localizationSelectedItem; }
-            set
-            {
-                if (value == _localizationSelectedItem)
-                    return;
-
-                if (!_isLoading)
-                {
-                    LocalizationManager.Change(value);
-
-                    SettingsManager.Current.Localization_CultureCode = value.Code;
-                }
-
-                _localizationSelectedItem = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _displayWrongParameter;
         public bool DisplayWrongParameter
         {
-            get { return _displayWrongParameter; }
+            get => _displayWrongParameter;
             set
             {
                 if (value == _displayWrongParameter)
@@ -50,7 +23,7 @@ namespace NETworkManager.ViewModels
         private string _wrongParameter;
         public string WrongParameter
         {
-            get { return _wrongParameter; }
+            get => _wrongParameter;
             set
             {
                 if (value == _wrongParameter)
@@ -64,7 +37,7 @@ namespace NETworkManager.ViewModels
         private string _parameterHelp;
         public string ParameterHelp
         {
-            get { return _parameterHelp; }
+            get => _parameterHelp;
             set
             {
                 if (value == _parameterHelp)
@@ -78,7 +51,7 @@ namespace NETworkManager.ViewModels
         private string _parameterResetSettings;
         public string ParameterResetSettings
         {
-            get { return _parameterResetSettings; }
+            get => _parameterResetSettings;
             set
             {
                 if (value == _parameterResetSettings)
@@ -94,8 +67,6 @@ namespace NETworkManager.ViewModels
         #region Constructor, load settings
         public CommandLineHelpViewModel()
         {
-            LoadSettings();
-
             if (!string.IsNullOrEmpty(CommandLineManager.Current.WrongParameter))
             {
                 WrongParameter = CommandLineManager.Current.WrongParameter;
@@ -104,15 +75,7 @@ namespace NETworkManager.ViewModels
 
             ParameterHelp = CommandLineManager.ParameterHelp;
             ParameterResetSettings = CommandLineManager.ParameterResetSettings;
-
-            _isLoading = false;
         }       
-
-        private void LoadSettings()
-        {
-            LanguageCollection = new ObservableCollection<LocalizationInfo>(LocalizationManager.List);
-            LocalizationSelectedItem = LanguageCollection.FirstOrDefault(x => x.Code == LocalizationManager.Current.Code);
-        }
         #endregion
     }
 }

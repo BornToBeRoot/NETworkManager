@@ -1,23 +1,22 @@
 ﻿using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class DNSLookupHostView : UserControl
+    public partial class DNSLookupHostView
     {
-        DNSLookupHostViewModel viewModel = new DNSLookupHostViewModel();
+        private readonly DNSLookupHostViewModel _viewModel = new DNSLookupHostViewModel();
 
         public DNSLookupHostView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
 
             InterTabController.Partition = ApplicationViewManager.Name.DNSLookup.ToString();
         }
 
         public void AddTab(string host)
         {
-            viewModel.AddTab(host);
+            _viewModel.AddTab(host);
         }
     }
 }

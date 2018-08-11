@@ -3,12 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Views ="clr-namespace:NETworkManager.Views"
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        mc:Ignorable="d">
+        xmlns:views ="clr-namespace:NETworkManager.Views"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:networkManager="clr-namespace:NETworkManager"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+    </UserControl.Resources>
     <Grid>
         <TabControl Style="{StaticResource DefaultTabControl}">
-            <TabItem Header="{DynamicResource String_Header_Settings}">
+            <TabItem Header="{x:Static localization:Strings.Settings}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="250" />
@@ -20,9 +27,9 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <TextBox x:Name="txtSearch" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+                            <TextBox x:Name="TextBoxSearch" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
                             <ScrollViewer Grid.Row="1" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" Style="{StaticResource FadeOutScrollViewer}">
-                                <ListBox x:Name="listBoxSettings" ItemsSource="{Binding SettingsViews}" SelectedItem="{Binding SelectedSettingsView}" Margin="10,0,10,10">
+                                <ListBox x:Name="ListBoxSettings" ItemsSource="{Binding SettingsViews}" SelectedItem="{Binding SelectedSettingsView}" Margin="10,0,10,10">
                                     <ListBox.GroupStyle>
                                         <GroupStyle>
                                             <GroupStyle.ContainerStyle>
@@ -30,9 +37,9 @@
                                                     <Setter Property="Template">
                                                         <Setter.Value>
                                                             <ControlTemplate>
-                                                                <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}" Padding="0">
+                                                                <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}">
                                                                     <Expander.Header>
-                                                                        <TextBlock Text="{Binding Name}" Style="{StaticResource DefaultTextBlock}" Margin="0" Foreground="{DynamicResource GrayBrush3}"/>
+                                                                        <TextBlock Text="{Binding (CollectionViewGroup.Name)}" Style="{StaticResource DefaultTextBlock}" Margin="0" Foreground="{DynamicResource GrayBrush3}"/>
                                                                     </Expander.Header>
                                                                     <ItemsPresenter />
                                                                 </Expander>
@@ -52,6 +59,7 @@
                                                 </Grid.ColumnDefinitions>
                                                 <Rectangle Grid.Column="0" Width="20" Height="20" Margin="10,0">
                                                     <Rectangle.OpacityMask>
+                                                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved, can not bind to (networkManager:SettingsViewInfo.Icon) -->
                                                         <VisualBrush Stretch="Uniform" Visual="{Binding Icon}" />
                                                     </Rectangle.OpacityMask>
                                                     <Rectangle.Style>
@@ -68,7 +76,7 @@
                                                         </Style>
                                                     </Rectangle.Style>
                                                 </Rectangle>
-                                                <TextBlock Grid.Column="1" Text="{Binding TranslatedName}" >
+                                                <TextBlock Grid.Column="1" Text="{Binding (networkManager:SettingsViewInfo.TranslatedName)}" >
                                                     <TextBlock.Style>
                                                         <Style TargetType="{x:Type TextBlock}">
                                                             <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
@@ -121,7 +129,7 @@
                                     <!-- /BUGFIX-->
                                 </ListBox>
                             </ScrollViewer>
-                            <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding SearchNothingFound, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding SearchNothingFound, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
@@ -129,7 +137,7 @@
                                 <Button Grid.Row="0" Command="{Binding ClearSearchCommand}" Style="{StaticResource CleanButton}" Margin="0,0,0,10">
                                     <Rectangle Width="24" Height="24">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=FilterRemoveOutline}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
                                         </Rectangle.OpacityMask>
                                         <Rectangle.Style>
                                             <Style TargetType="{x:Type Rectangle}">
@@ -143,7 +151,7 @@
                                         </Rectangle.Style>
                                     </Rectangle>
                                 </Button>
-                                <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_SearchedSettingNotFound}" Margin="10,0" TextWrapping="Wrap" TextAlignment="Center" />
+                                <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Foreground="{DynamicResource GrayBrush3}" Text="{x:Static localization:Strings.SearchedSettingNotFound}" Margin="10,0" TextWrapping="Wrap" TextAlignment="Center" />
                             </Grid>
                         </Grid>
                     </Border>
@@ -152,15 +160,15 @@
                     </ScrollViewer>
                 </Grid>
             </TabItem>
-            <TabItem Header="{DynamicResource String_Header_Profiles}">
-                <Views:ProfilesView x:Name="ProfilesView" Margin="10" />
+            <TabItem Header="{x:Static localization:Strings.Profiles}">
+                <views:ProfilesView x:Name="ProfilesView" Margin="10" />
             </TabItem>
-            <TabItem Header="{DynamicResource String_Header_Credentials}">
-                <Views:CredentialsView Margin="10" />
+            <TabItem Header="{x:Static localization:Strings.Credentials}">
+                <views:CredentialsView Margin="10" />
             </TabItem>
             <!-- About -->
-            <TabItem Header="{DynamicResource String_Header_About}">
-                <Views:AboutView Margin="10" />
+            <TabItem Header="{x:Static localization:Strings.About}">
+                <views:AboutView Margin="10" />
             </TabItem>
         </TabControl>
     </Grid>

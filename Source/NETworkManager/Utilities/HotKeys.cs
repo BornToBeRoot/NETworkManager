@@ -6,7 +6,7 @@ namespace NETworkManager.Utilities
     {
         public static int GetModifierKeysSum(ModifierKeys modifierKeys)
         {
-            int sum = 0x0000;
+            var sum = 0x0000;
 
             if (modifierKeys.HasFlag(ModifierKeys.Alt))
                 sum += 0x0001;
@@ -40,7 +40,7 @@ namespace NETworkManager.Utilities
 
         public static ModifierKeys GetModifierKeysFromInt(int modifierKeys)
         {
-            ModifierKeys modKeys = ModifierKeys.None;
+            var modKeys = ModifierKeys.None;
 
             if (modifierKeys - 0x0008 >= 0)
             {

@@ -8,24 +8,16 @@ namespace NETworkManager.ViewModels
 {
     public class CredentialViewModel : ViewModelBase
     {
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
-        private readonly ICommand _saveCommand;
-        public ICommand SaveCommand
-        {
-            get { return _saveCommand; }
-        }
+        public ICommand SaveCommand { get; }
 
-        private readonly ICommand _cancelCommand;
-        public ICommand CancelCommand
-        {
-            get { return _cancelCommand; }
-        }
+        public ICommand CancelCommand { get; }
 
-        private int _id;
-        public int ID
+        private Guid _id;
+        public Guid Id
         {
-            get { return _id; }
+            get => _id;
             set
             {
                 if (_id == value)
@@ -39,7 +31,7 @@ namespace NETworkManager.ViewModels
         private string _name;
         public string Name
         {
-            get { return _name; }
+            get => _name;
             set
             {
                 if (_name == value)
@@ -57,7 +49,7 @@ namespace NETworkManager.ViewModels
         private string _username;
         public string Username
         {
-            get { return _username; }
+            get => _username;
             set
             {
                 if (_username == value)
@@ -75,7 +67,7 @@ namespace NETworkManager.ViewModels
         private SecureString _password = new SecureString();
         public SecureString Password
         {
-            get { return _password; }
+            get => _password;
             set
             {
                 if (value == _password)
@@ -93,12 +85,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private CredentialInfo _credentialInfo;
+        private readonly CredentialInfo _credentialInfo;
 
         private bool _credentialInfoChanged;
         public bool CredentialInfoChanged
         {
-            get { return _credentialInfoChanged; }
+            get => _credentialInfoChanged;
             set
             {
                 if (value == _credentialInfoChanged)
@@ -112,7 +104,7 @@ namespace NETworkManager.ViewModels
         private bool _passwordIsEmpty;
         public bool PasswordIsEmpty
         {
-            get { return _passwordIsEmpty; }
+            get => _passwordIsEmpty;
             set
             {
                 if (value == _passwordIsEmpty)
@@ -123,33 +115,35 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _isBeingEdited;
-        public bool IsBeingEdited
+        private bool _isEdited;
+        public bool IsEdited
         {
-            get { return _isBeingEdited; }
+            get => _isEdited;
             set
             {
-                if (value == _isBeingEdited)
+                if (value == _isEdited)
                     return;
 
-                _isBeingEdited = value;
+                _isEdited = value;
                 OnPropertyChanged();
             }
         }
 
-        public CredentialViewModel(Action<CredentialViewModel> saveCommand, Action<CredentialViewModel> cancelHandler, int id, CredentialInfo credentialInfo = null)
+        public CredentialViewModel(Action<CredentialViewModel> saveCommand, Action<CredentialViewModel> cancelHandler, bool isEdited = false, CredentialInfo credentialInfo = null)
         {
-            _saveCommand = new RelayCommand(p => saveCommand(this));
-            _cancelCommand = new RelayCommand(p => cancelHandler(this));
+            _isLoading = true;
+
+            SaveCommand = new RelayCommand(p => saveCommand(this));
+            CancelCommand = new RelayCommand(p => cancelHandler(this));
+
+            _isEdited = isEdited;
 
             _credentialInfo = credentialInfo ?? new CredentialInfo();
 
-            ID = id;
+            Id = _credentialInfo.ID;
             Name = _credentialInfo.Name;
             Username = _credentialInfo.Username;
             Password = _credentialInfo.Password;
-
-            _isBeingEdited = credentialInfo != null;
 
             _isLoading = false;
         }
@@ -163,6 +157,5 @@ namespace NETworkManager.ViewModels
         {
             PasswordIsEmpty = (Password == null || Password.Length == 0);
         }
-
     }
 }

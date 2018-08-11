@@ -4,27 +4,27 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class SubnetCalculatorSubnettingView : UserControl
+    public partial class SubnetCalculatorSubnettingView
     {
-        private SubnetCalculatorSubnettingViewModel viewModel = new SubnetCalculatorSubnettingViewModel(DialogCoordinator.Instance);
+        private readonly SubnetCalculatorSubnettingViewModel _viewModel = new SubnetCalculatorSubnettingViewModel(DialogCoordinator.Instance);
 
         public SubnetCalculatorSubnettingView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
 
         private void Dispatcher_ShutdownStarted(object sender, System.EventArgs e)
         {
-            viewModel.OnShutdown();
+            _viewModel.OnShutdown();
         }
 
         private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
         {
-            ContextMenu menu = sender as ContextMenu;
-            menu.DataContext = viewModel;
+            if (sender is ContextMenu menu)
+                menu.DataContext = _viewModel;
         }
     }
 }

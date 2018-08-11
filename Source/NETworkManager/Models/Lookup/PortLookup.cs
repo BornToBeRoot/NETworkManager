@@ -11,10 +11,10 @@ namespace NETworkManager.Models.Lookup
     public static class PortLookup
     {
         #region Variables
-        private static string PortsFilePath = Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "Ports.xml");
+        private static readonly string PortsFilePath = Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "Ports.xml");
 
-        private static List<PortLookupInfo> PortList;
-        private static Lookup<int, PortLookupInfo> Ports;
+        private static readonly List<PortLookupInfo> PortList;
+        private static readonly Lookup<int, PortLookupInfo> Ports;
         #endregion
 
         #region Constructor
@@ -22,15 +22,19 @@ namespace NETworkManager.Models.Lookup
         {
             PortList = new List<PortLookupInfo>();
 
-            XmlDocument document = new XmlDocument();
+            var document = new XmlDocument();
             document.Load(PortsFilePath);
 
+            // ReSharper disable once PossibleNullReferenceException
             foreach (XmlNode node in document.SelectNodes("/Ports/Port"))
             {
-                int port = int.Parse(node.SelectSingleNode("Number").InnerText);
-                Protocol protocol = (Protocol)Enum.Parse(typeof(Protocol), node.SelectSingleNode("Protocol").InnerText);
+                if (node == null)
+                    continue;
 
-                PortList.Add(new PortLookupInfo(port, protocol, node.SelectSingleNode("Name").InnerText, node.SelectSingleNode("Description").InnerText));
+                int.TryParse(node.SelectSingleNode("Number")?.InnerText, out var port);
+                Enum.TryParse<Protocol>(node.SelectSingleNode("Protocol")?.InnerText, true, out var protocol);
+
+                PortList.Add(new PortLookupInfo(port, protocol, node.SelectSingleNode("Name")?.InnerText, node.SelectSingleNode("Description")?.InnerText));
             }
 
             Ports = (Lookup<int, PortLookupInfo>)PortList.ToLookup(x => x.Number);
@@ -45,14 +49,7 @@ namespace NETworkManager.Models.Lookup
 
         public static List<PortLookupInfo> Lookup(int port)
         {
-            List<PortLookupInfo> list = new List<PortLookupInfo>();
-
-            foreach (PortLookupInfo info in Ports[port])
-            {
-                list.Add(info);
-            }
-
-            return list;
+            return Ports[port].ToList();
         }
 
         public static Task<List<PortLookupInfo>> LookupByServiceAsync(List<string> portsByService)
@@ -62,11 +59,11 @@ namespace NETworkManager.Models.Lookup
 
         public static List<PortLookupInfo> LookupByService(List<string> portsByService)
         {
-            List<PortLookupInfo> list = new List<PortLookupInfo>();
+            var list = new List<PortLookupInfo>();
 
-            foreach (PortLookupInfo info in PortList)
+            foreach (var info in PortList)
             {
-                foreach (string portByService in portsByService)
+                foreach (var portByService in portsByService)
                 {
                     if (info.Service.IndexOf(portByService, StringComparison.OrdinalIgnoreCase) > -1 || info.Description.IndexOf(portByService, StringComparison.OrdinalIgnoreCase) > -1)
                         list.Add(info);
@@ -80,10 +77,12 @@ namespace NETworkManager.Models.Lookup
 
         public enum Protocol
         {
-            tcp,
-            udp,
-            sctp,
-            dccp
+            Tcp,
+            Udp,
+            // ReSharper disable once UnusedMember.Global
+            Sctp,
+            // ReSharper disable once UnusedMember.Global
+            Dccp
         }
     }
 }

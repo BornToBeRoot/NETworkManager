@@ -10,22 +10,14 @@ namespace NETworkManager.ViewModels
 {
     public class PuTTYConnectViewModel : ViewModelBase
     {
-        private readonly ICommand _connectCommand;
-        public ICommand ConnectCommand
-        {
-            get { return _connectCommand; }
-        }
+        public ICommand ConnectCommand { get; }
 
-        private readonly ICommand _cancelCommand;
-        public ICommand CancelCommand
-        {
-            get { return _cancelCommand; }
-        }
-            
+        public ICommand CancelCommand { get; }
+
         private bool _useSSH; // Default is SSH
         public bool UseSSH
         {
-            get { return _useSSH; }
+            get => _useSSH;
             set
             {
                 if (value == _useSSH)
@@ -45,7 +37,7 @@ namespace NETworkManager.ViewModels
         private bool _useTelnet;
         public bool UseTelnet
         {
-            get { return _useTelnet; }
+            get => _useTelnet;
             set
             {
                 if (value == _useTelnet)
@@ -65,7 +57,7 @@ namespace NETworkManager.ViewModels
         private bool _useSerial;
         public bool UseSerial
         {
-            get { return _useSerial; }
+            get => _useSerial;
             set
             {
                 if (value == _useSerial)
@@ -85,7 +77,7 @@ namespace NETworkManager.ViewModels
         private bool _useRlogin;
         public bool UseRlogin
         {
-            get { return _useRlogin; }
+            get => _useRlogin;
             set
             {
                 if (value == _useRlogin)
@@ -105,7 +97,7 @@ namespace NETworkManager.ViewModels
         private bool _useRAW;
         public bool UseRAW
         {
-            get { return _useRAW; }
+            get => _useRAW;
             set
             {
                 if (value == _useRAW)
@@ -125,7 +117,7 @@ namespace NETworkManager.ViewModels
         private string _host;
         public string Host
         {
-            get { return _host; }
+            get => _host;
             set
             {
                 if (value == _host)
@@ -139,7 +131,7 @@ namespace NETworkManager.ViewModels
         private string _serialLine;
         public string SerialLine
         {
-            get { return _serialLine; }
+            get => _serialLine;
             set
             {
                 if (value == _serialLine)
@@ -153,7 +145,7 @@ namespace NETworkManager.ViewModels
         private int _port;
         public int Port
         {
-            get { return _port; }
+            get => _port;
             set
             {
                 if (value == _port)
@@ -167,7 +159,7 @@ namespace NETworkManager.ViewModels
         private int _baud;
         public int Baud
         {
-            get { return _baud; }
+            get => _baud;
             set
             {
                 if (value == _baud)
@@ -181,7 +173,7 @@ namespace NETworkManager.ViewModels
         private string _username;
         public string Username
         {
-            get { return _username; }
+            get => _username;
             set
             {
                 if (value == _username)
@@ -195,7 +187,7 @@ namespace NETworkManager.ViewModels
         private string _profile;
         public string Profile
         {
-            get { return _profile; }
+            get => _profile;
             set
             {
                 if (value == _profile)
@@ -209,7 +201,7 @@ namespace NETworkManager.ViewModels
         private string _additionalCommandLine;
         public string AdditionalCommandLine
         {
-            get { return _additionalCommandLine; }
+            get => _additionalCommandLine;
             set
             {
                 if (value == _additionalCommandLine)
@@ -222,53 +214,29 @@ namespace NETworkManager.ViewModels
 
         public ConnectionMode ConnectionMode { get; set; }
 
-        private ICollectionView _hostHistoryView;
-        public ICollectionView HostHistoryView
-        {
-            get { return _hostHistoryView; }
-        }
+        public ICollectionView HostHistoryView { get; }
 
-        private ICollectionView _serialLineHistoryView;
-        public ICollectionView SerialLineHistoryView
-        {
-            get { return _serialLineHistoryView; }
-        }
+        public ICollectionView SerialLineHistoryView { get; }
 
-        private ICollectionView _portHistoryView;
-        public ICollectionView PortHistoryView
-        {
-            get { return _portHistoryView; }
-        }
+        public ICollectionView PortHistoryView { get; }
 
-        private ICollectionView _baudHistoryView;
-        public ICollectionView BaudHistoryView
-        {
-            get { return _baudHistoryView; }
-        }
+        public ICollectionView BaudHistoryView { get; }
 
-        private ICollectionView _usernameHistoryView;
-        public ICollectionView UsernameHistoryView
-        {
-            get { return _usernameHistoryView; }
-        }
+        public ICollectionView UsernameHistoryView { get; }
 
-        private ICollectionView _profileHistoryView;
-        public ICollectionView ProfileHistoryView
-        {
-            get { return _profileHistoryView; }
-        }
+        public ICollectionView ProfileHistoryView { get; }
 
         public PuTTYConnectViewModel(Action<PuTTYConnectViewModel> connectCommand, Action<PuTTYConnectViewModel> cancelHandler)
         {
-            _connectCommand = new RelayCommand(p => connectCommand(this));
-            _cancelCommand = new RelayCommand(p => cancelHandler(this));
+            ConnectCommand = new RelayCommand(p => connectCommand(this));
+            CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_HostHistory);
-            _serialLineHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_SerialLineHistory);
-            _portHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_PortHistory);
-            _baudHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_BaudHistory);
-            _usernameHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_UsernameHistory);
-            _profileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_ProfileHistory);
+            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_HostHistory);
+            SerialLineHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_SerialLineHistory);
+            PortHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_PortHistory);
+            BaudHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_BaudHistory);
+            UsernameHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_UsernameHistory);
+            ProfileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_ProfileHistory);
 
             SerialLine = SettingsManager.Current.PuTTY_SerialLine;
             Profile = SettingsManager.Current.PuTTY_Profile;

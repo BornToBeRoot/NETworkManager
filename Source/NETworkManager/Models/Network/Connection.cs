@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 
@@ -14,12 +15,7 @@ namespace NETworkManager.Models.Network
 
         public static List<ConnectionInfo> GetActiveTcpConnections()
         {
-            List<ConnectionInfo> list = new List<ConnectionInfo>();
-
-            foreach (TcpConnectionInformation tcpInfo in IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpConnections())
-                list.Add(new ConnectionInfo(Protocol.TCP, tcpInfo.LocalEndPoint.Address, tcpInfo.LocalEndPoint.Port, tcpInfo.RemoteEndPoint.Address, tcpInfo.RemoteEndPoint.Port, tcpInfo.State));
-
-            return list;
+            return IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpConnections().Select(tcpInfo => new ConnectionInfo(Protocol.TCP, tcpInfo.LocalEndPoint.Address, tcpInfo.LocalEndPoint.Port, tcpInfo.RemoteEndPoint.Address, tcpInfo.RemoteEndPoint.Port, tcpInfo.State)).ToList();
         }
         #endregion
 

@@ -7,10 +7,8 @@ namespace NETworkManager.ViewModels
     public class SubnetCalculatorHostViewModel : ViewModelBase
     {
         #region Variables
-        public bool ShowCurrentApplicationTitle
-        {
-            get { return SettingsManager.Current.Window_ShowCurrentApplicationTitle; }
-        }
+        public bool ShowCurrentApplicationTitle => SettingsManager.Current.Window_ShowCurrentApplicationTitle;
+
         #endregion
 
         #region Constructor

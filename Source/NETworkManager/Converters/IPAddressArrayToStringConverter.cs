@@ -9,19 +9,19 @@ namespace NETworkManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string result = string.Empty;
-            
-            if (value == null)
-                return result;
+            if (!(value is IPAddress[] ipAddresses))
+                return "-/-";
 
-            foreach (IPAddress ipAddr in value as IPAddress[])
+            var result = string.Empty;
+
+            foreach (var ipAddr in ipAddresses)
             {
                 if (!string.IsNullOrEmpty(result))
                     result += Environment.NewLine;
 
                 result += ipAddr.ToString();
             }
-            
+
             return result;
         }
 

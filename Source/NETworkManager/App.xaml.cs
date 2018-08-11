@@ -12,13 +12,13 @@ namespace NETworkManager
     /// <summary>
     /// Interaktionslogik für "App.xaml"
     /// </summary>
-    public partial class App : Application
+    public partial class App
     {
         // Single instance unique identifier
         private const string Guid = "6A3F34B2-161F-4F70-A8BC-A19C40F79CFB";
-        Mutex _mutex;
+        private Mutex _mutex;
 
-        private bool _singleInstanceClose = false;
+        private bool _singleInstanceClose;
 
         public App()
         {
@@ -33,12 +33,11 @@ namespace NETworkManager
             // If we have restart our application... wait until it has finished
             if (CommandLineManager.Current.RestartPid != 0)
             {
-                Process[] processList = Process.GetProcesses();
+                var processList = Process.GetProcesses();
 
-                Process process = processList.FirstOrDefault(x => x.Id == CommandLineManager.Current.RestartPid);
+                var process = processList.FirstOrDefault(x => x.Id == CommandLineManager.Current.RestartPid);
 
-                if (process != null)
-                    process.WaitForExit();
+                process?.WaitForExit();
             }
 
             // Detect the current configuration
@@ -48,10 +47,20 @@ namespace NETworkManager
             AssemblyManager.Load();
 
             // Load application settings (profiles/Profiles/clients are loaded when needed)
-            SettingsManager.Load();
+            try
+            {
+                SettingsManager.Load();
+            }
+            catch (InvalidOperationException)
+            {
+                SettingsManager.InitDefault();
+                ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
+            }
 
             // Load localization (requires settings to be loaded first)
             LocalizationManager.Load();
+
+            NETworkManager.Resources.Localization.Strings.Culture = LocalizationManager.Culture;
 
             if (CommandLineManager.Current.Help)
             {
@@ -61,7 +70,7 @@ namespace NETworkManager
 
             // Create mutex
             _mutex = new Mutex(true, "{" + Guid + "}");
-            bool mutexIsAcquired = _mutex.WaitOne(TimeSpan.Zero, true);
+            var mutexIsAcquired = _mutex.WaitOne(TimeSpan.Zero, true);
 
             // Release mutex
             if (mutexIsAcquired)
@@ -93,20 +102,20 @@ namespace NETworkManager
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             // Save settings, when the application is normally closed
-            if (!_singleInstanceClose && !ImportExportManager.ForceRestart && !CommandLineManager.Current.Help)
-            {
-                // Save local settings (custom settings path in AppData/Local)
-                Settings.Default.Save();
+            if (_singleInstanceClose || ImportExportManager.ForceRestart || CommandLineManager.Current.Help)
+                return;
 
-                if (SettingsManager.Current.SettingsChanged) // This will also create the "Settings" folder, if it does not exist
-                    SettingsManager.Save();
+            // Save local settings (custom settings path in AppData/Local)
+            Settings.Default.Save();
 
-                if (ProfileManager.ProfilesChanged)
-                    ProfileManager.Save();
+            if (SettingsManager.Current.SettingsChanged) // This will also create the "Settings" folder, if it does not exist
+                SettingsManager.Save();
 
-                if (CredentialManager.CredentialsChanged)
-                    CredentialManager.Save();
-            }
+            if (ProfileManager.ProfilesChanged)
+                ProfileManager.Save();
+
+            if (CredentialManager.CredentialsChanged)
+                CredentialManager.Save();
         }
     }
 }

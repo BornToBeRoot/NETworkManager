@@ -5,13 +5,13 @@ using System;
 using System.Collections.ObjectModel;
 using System.Net.Sockets;
 using NETworkManager.Models.Settings;
-using System.Collections.Generic;
 using NETworkManager.Models.Network;
 using System.Threading;
 using NETworkManager.Utilities;
 using System.Diagnostics;
 using System.Windows.Threading;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Data;
 using System.Linq;
 using Dragablz;
@@ -22,20 +22,20 @@ namespace NETworkManager.ViewModels
     public class TracerouteViewModel : ViewModelBase
     {
         #region Variables
-        CancellationTokenSource cancellationTokenSource;
+        private CancellationTokenSource _cancellationTokenSource;
 
-        private int _tabId;
+        private readonly int _tabId;
         private bool _firstLoad = true;
 
-        DispatcherTimer dispatcherTimer = new DispatcherTimer();
-        Stopwatch stopwatch = new Stopwatch();
+        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
+        private readonly Stopwatch _stopwatch = new Stopwatch();
 
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private string _host;
         public string Host
         {
-            get { return _host; }
+            get => _host;
             set
             {
                 if (value == _host)
@@ -46,16 +46,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _hostHistoryView;
-        public ICollectionView HostHistoryView
-        {
-            get { return _hostHistoryView; }
-        }
+        public ICollectionView HostHistoryView { get; }
 
         private bool _isTraceRunning;
         public bool IsTraceRunning
         {
-            get { return _isTraceRunning; }
+            get => _isTraceRunning;
             set
             {
                 if (value == _isTraceRunning)
@@ -69,7 +65,7 @@ namespace NETworkManager.ViewModels
         private bool _cancelTrace;
         public bool CancelTrace
         {
-            get { return _cancelTrace; }
+            get => _cancelTrace;
             set
             {
                 if (value == _cancelTrace)
@@ -83,26 +79,22 @@ namespace NETworkManager.ViewModels
         private ObservableCollection<TracerouteHopInfo> _traceResult = new ObservableCollection<TracerouteHopInfo>();
         public ObservableCollection<TracerouteHopInfo> TraceResult
         {
-            get { return _traceResult; }
+            get => _traceResult;
             set
             {
-                if (value == _traceResult)
+                if (Equals(value, _traceResult))
                     return;
 
                 _traceResult = value;
             }
         }
 
-        private ICollectionView _traceResultView;
-        public ICollectionView TraceResultView
-        {
-            get { return _traceResultView; }
-        }
+        public ICollectionView TraceResultView { get; }
 
         private TracerouteHopInfo _selectedTraceResult;
         public TracerouteHopInfo SelectedTraceResult
         {
-            get { return _selectedTraceResult; }
+            get => _selectedTraceResult;
             set
             {
                 if (value == _selectedTraceResult)
@@ -113,15 +105,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public bool ResolveHostname
-        {
-            get { return SettingsManager.Current.Traceroute_ResolveHostname; }
-        }
+        public bool ResolveHostname => SettingsManager.Current.Traceroute_ResolveHostname;
 
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
         {
-            get { return _displayStatusMessage; }
+            get => _displayStatusMessage;
             set
             {
                 if (value == _displayStatusMessage)
@@ -135,7 +124,7 @@ namespace NETworkManager.ViewModels
         private string _statusMessage;
         public string StatusMessage
         {
-            get { return _statusMessage; }
+            get => _statusMessage;
             set
             {
                 if (value == _statusMessage)
@@ -149,7 +138,7 @@ namespace NETworkManager.ViewModels
         private DateTime? _startTime;
         public DateTime? StartTime
         {
-            get { return _startTime; }
+            get => _startTime;
             set
             {
                 if (value == _startTime)
@@ -163,7 +152,7 @@ namespace NETworkManager.ViewModels
         private TimeSpan _duration;
         public TimeSpan Duration
         {
-            get { return _duration; }
+            get => _duration;
             set
             {
                 if (value == _duration)
@@ -177,7 +166,7 @@ namespace NETworkManager.ViewModels
         private DateTime? _endTime;
         public DateTime? EndTime
         {
-            get { return _endTime; }
+            get => _endTime;
             set
             {
                 if (value == _endTime)
@@ -191,7 +180,7 @@ namespace NETworkManager.ViewModels
         private bool _expandStatistics;
         public bool ExpandStatistics
         {
-            get { return _expandStatistics; }
+            get => _expandStatistics;
             set
             {
                 if (value == _expandStatistics)
@@ -208,7 +197,7 @@ namespace NETworkManager.ViewModels
         private int _hops;
         public int Hops
         {
-            get { return _hops; }
+            get => _hops;
             set
             {
                 if (value == _hops)
@@ -219,24 +208,24 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public bool ShowStatistics
-        {
-            get { return SettingsManager.Current.Traceroute_ShowStatistics; }
-        }
+        public bool ShowStatistics => SettingsManager.Current.Traceroute_ShowStatistics;
+
         #endregion
 
         #region Constructor, load settings
         public TracerouteViewModel(int tabId, string host)
         {
+            _isLoading = true;
+
             _tabId = tabId;
             Host = host;
 
             // Set collection view
-            _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Traceroute_HostHistory);
+            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Traceroute_HostHistory);
 
             // Result view
-            _traceResultView = CollectionViewSource.GetDefaultView(TraceResult);
-            _traceResultView.SortDescriptions.Add(new SortDescription(nameof(TracerouteHopInfo.Hop), ListSortDirection.Ascending));
+            TraceResultView = CollectionViewSource.GetDefaultView(TraceResult);
+            TraceResultView.SortDescriptions.Add(new SortDescription(nameof(TracerouteHopInfo.Hop), ListSortDirection.Ascending));
 
             LoadSettings();
 
@@ -247,13 +236,13 @@ namespace NETworkManager.ViewModels
 
         public void OnLoaded()
         {
-            if (_firstLoad)
-            {
-                if (!string.IsNullOrEmpty(Host))
-                    StartTrace();
+            if (!_firstLoad)
+                return;
 
-                _firstLoad = false;
-            }
+            if (!string.IsNullOrEmpty(Host))
+                StartTrace();
+
+            _firstLoad = false;
         }
 
         private void LoadSettings()
@@ -373,7 +362,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedTime1Action()
         {
-            Clipboard.SetText(SelectedTraceResult.Time1.ToString());
+            Clipboard.SetText(SelectedTraceResult.Time1.ToString(CultureInfo.CurrentCulture));
         }
 
         public ICommand CopySelectedTime2Command
@@ -383,7 +372,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedTime2Action()
         {
-            Clipboard.SetText(SelectedTraceResult.Time2.ToString());
+            Clipboard.SetText(SelectedTraceResult.Time2.ToString(CultureInfo.CurrentCulture));
         }
 
         public ICommand CopySelectedTime3Command
@@ -393,7 +382,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedTime3Action()
         {
-            Clipboard.SetText(SelectedTraceResult.Time3.ToString());
+            Clipboard.SetText(SelectedTraceResult.Time3.ToString(CultureInfo.CurrentCulture));
         }
 
         public ICommand CopySelectedIPAddressCommand
@@ -421,7 +410,7 @@ namespace NETworkManager.ViewModels
         private void StopTrace()
         {
             CancelTrace = true;
-            cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Cancel();
         }
 
         private async void StartTrace()
@@ -431,64 +420,63 @@ namespace NETworkManager.ViewModels
 
             // Measure the time
             StartTime = DateTime.Now;
-            stopwatch.Start();
-            dispatcherTimer.Tick += DispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            dispatcherTimer.Start();
+            _stopwatch.Start();
+            _dispatcherTimer.Tick += DispatcherTimer_Tick;
+            _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            _dispatcherTimer.Start();
             EndTime = null;
 
             TraceResult.Clear();
             Hops = 0;
 
             // Change the tab title (not nice, but it works)
-            Window window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
             if (window != null)
             {
-                foreach (TabablzControl tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+                foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
                 {
-                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.ID == _tabId).Header = Host;
+                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
                 }
             }
 
-            cancellationTokenSource = new CancellationTokenSource();
+            _cancellationTokenSource = new CancellationTokenSource();
 
             // Try to parse the string into an IP-Address
-            IPAddress.TryParse(Host, out IPAddress ipAddress);
+            IPAddress.TryParse(Host, out var ipAddress);
 
             try
             {
                 // Try to resolve the hostname
                 if (ipAddress == null)
                 {
-                    IPHostEntry ipHostEntrys = await Dns.GetHostEntryAsync(Host);
+                    var ipHostEntrys = await Dns.GetHostEntryAsync(Host);
 
-                    foreach (IPAddress ip in ipHostEntrys.AddressList)
+                    foreach (var ipAddr in ipHostEntrys.AddressList)
                     {
-                        if (ip.AddressFamily == AddressFamily.InterNetwork && SettingsManager.Current.Traceroute_ResolveHostnamePreferIPv4)
+                        switch (ipAddr.AddressFamily)
                         {
-                            ipAddress = ip;
-                            continue;
-                        }
-                        else if (ip.AddressFamily == AddressFamily.InterNetworkV6 && !SettingsManager.Current.Traceroute_ResolveHostnamePreferIPv4)
-                        {
-                            ipAddress = ip;
-                            continue;
+                            case AddressFamily.InterNetwork when SettingsManager.Current.Traceroute_ResolveHostnamePreferIPv4:
+                                ipAddress = ipAddr;
+                                break;
+                            case AddressFamily.InterNetworkV6 when SettingsManager.Current.Traceroute_ResolveHostnamePreferIPv4:
+                                ipAddress = ipAddr;
+                                break;
                         }
                     }
 
                     // Fallback --> If we could not resolve our prefered ip protocol
                     if (ipAddress == null)
                     {
-                        foreach (IPAddress ip in ipHostEntrys.AddressList)
+                        foreach (var ip in ipHostEntrys.AddressList)
                         {
                             ipAddress = ip;
-                            continue;
+                            break;
                         }
                     }
                 }
 
-                TracerouteOptions tracerouteOptions = new TracerouteOptions
+                var tracerouteOptions = new TracerouteOptions
                 {
                     Timeout = SettingsManager.Current.Traceroute_Timeout,
                     Buffer = SettingsManager.Current.Traceroute_Buffer,
@@ -497,14 +485,14 @@ namespace NETworkManager.ViewModels
                     ResolveHostname = SettingsManager.Current.Traceroute_ResolveHostname
                 };
 
-                Traceroute traceroute = new Traceroute();
+                var traceroute = new Traceroute();
 
                 traceroute.HopReceived += Traceroute_HopReceived;
                 traceroute.TraceComplete += Traceroute_TraceComplete;
                 traceroute.MaximumHopsReached += Traceroute_MaximumHopsReached;
                 traceroute.UserHasCanceled += Traceroute_UserHasCanceled;
 
-                traceroute.TraceAsync(ipAddress, tracerouteOptions, cancellationTokenSource.Token);
+                traceroute.TraceAsync(ipAddress, tracerouteOptions, _cancellationTokenSource.Token);
 
                 // Add the host to history
                 AddHostToHistory(Host);
@@ -513,7 +501,7 @@ namespace NETworkManager.ViewModels
             {
                 TracerouteFinished();
 
-                StatusMessage = string.Format(LocalizationManager.GetStringByKey("String_CouldNotResolveHostnameFor"), Host);
+                StatusMessage = string.Format( Resources.Localization.Strings.CouldNotResolveHostnameFor, Host);
                 DisplayStatusMessage = true;
             }
             catch (Exception ex) // This will catch any exception
@@ -528,13 +516,13 @@ namespace NETworkManager.ViewModels
         private void TracerouteFinished()
         {
             // Stop timer and stopwatch
-            stopwatch.Stop();
-            dispatcherTimer.Stop();
+            _stopwatch.Stop();
+            _dispatcherTimer.Stop();
 
-            Duration = stopwatch.Elapsed;
+            Duration = _stopwatch.Elapsed;
             EndTime = DateTime.Now;
 
-            stopwatch.Reset();
+            _stopwatch.Reset();
 
             CancelTrace = false;
             IsTraceRunning = false;
@@ -543,7 +531,7 @@ namespace NETworkManager.ViewModels
         private void AddHostToHistory(string host)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.Traceroute_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.Traceroute_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.Traceroute_HostHistory.Clear();
@@ -563,9 +551,9 @@ namespace NETworkManager.ViewModels
         #region Events
         private void Traceroute_HopReceived(object sender, TracerouteHopReceivedArgs e)
         {
-            TracerouteHopInfo tracerouteInfo = TracerouteHopInfo.Parse(e);
+            var tracerouteInfo = TracerouteHopInfo.Parse(e);
 
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 lock (TraceResult)
                     TraceResult.Add(tracerouteInfo);
@@ -578,35 +566,39 @@ namespace NETworkManager.ViewModels
         {
             TracerouteFinished();
 
-            StatusMessage = string.Format(LocalizationManager.GetStringByKey("String_MaximumNumberOfHopsReached"), e.Hops);
+            StatusMessage = string.Format(Resources.Localization.Strings.MaximumNumberOfHopsReached, e.Hops);
             DisplayStatusMessage = true;
         }
 
-        private void Traceroute_UserHasCanceled(object sender, System.EventArgs e)
+        private void Traceroute_UserHasCanceled(object sender, EventArgs e)
         {
             TracerouteFinished();
 
-            StatusMessage = LocalizationManager.GetStringByKey("String_CanceledByUser");
+            StatusMessage = Resources.Localization.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
         }
 
-        private void Traceroute_TraceComplete(object sender, System.EventArgs e)
+        private void Traceroute_TraceComplete(object sender, EventArgs e)
         {
             TracerouteFinished();
         }
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            Duration = stopwatch.Elapsed;
+            Duration = _stopwatch.Elapsed;
         }
 
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.Traceroute_ResolveHostname))
-                OnPropertyChanged(nameof(ResolveHostname));
-
-            if (e.PropertyName == nameof(SettingsInfo.Traceroute_ShowStatistics))
-                OnPropertyChanged(nameof(ShowStatistics));
+            switch (e.PropertyName)
+            {
+                case nameof(SettingsInfo.Traceroute_ResolveHostname):
+                    OnPropertyChanged(nameof(ResolveHostname));
+                    break;
+                case nameof(SettingsInfo.Traceroute_ShowStatistics):
+                    OnPropertyChanged(nameof(ShowStatistics));
+                    break;
+            }
         }
         #endregion               
     }

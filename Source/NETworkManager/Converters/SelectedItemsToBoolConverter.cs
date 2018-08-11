@@ -9,7 +9,7 @@ namespace NETworkManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (value as IList).Count > 0;
+            return value != null && ((IList) value).Count > 0;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

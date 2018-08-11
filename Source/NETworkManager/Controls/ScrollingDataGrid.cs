@@ -10,7 +10,7 @@ namespace NETworkManager.Controls
             if (e.NewItems == null)
                 return;
 
-            int newItemCount = e.NewItems.Count;
+            var newItemCount = e.NewItems.Count;
 
             if (newItemCount > 0)
                 ScrollIntoView(e.NewItems[newItemCount - 1]);

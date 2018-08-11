@@ -1,5 +1,4 @@
 ﻿using NETworkManager.Models.Settings;
-using System.Collections.Generic;
 using System.Windows.Input;
 using NETworkManager.Utilities;
 using System.Windows.Data;
@@ -7,7 +6,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Numerics;
-using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -17,7 +15,7 @@ namespace NETworkManager.ViewModels
         private string _subnet1;
         public string Subnet1
         {
-            get { return _subnet1; }
+            get => _subnet1;
             set
             {
                 if (value == _subnet1)
@@ -28,16 +26,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _subnet1HistoryView;
-        public ICollectionView Subnet1HistoryView
-        {
-            get { return _subnet1HistoryView; }
-        }
+        public ICollectionView Subnet1HistoryView { get; }
 
         private string _subnet2;
         public string Subnet2
         {
-            get { return _subnet2; }
+            get => _subnet2;
             set
             {
                 if (value == _subnet2)
@@ -48,16 +42,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _subnet2HistoryView;
-        public ICollectionView Subnet2HistoryView
-        {
-            get { return _subnet2HistoryView; }
-        }
+        public ICollectionView Subnet2HistoryView { get; }
 
         private bool _isCalculationRunning;
         public bool IsCalculationRunning
         {
-            get { return _isCalculationRunning; }
+            get => _isCalculationRunning;
             set
             {
                 if (value == _isCalculationRunning)
@@ -71,7 +61,7 @@ namespace NETworkManager.ViewModels
         private bool _isResultVisible;
         public bool IsResultVisible
         {
-            get { return _isResultVisible; }
+            get => _isResultVisible;
             set
             {
                 if (value == _isResultVisible)
@@ -86,10 +76,10 @@ namespace NETworkManager.ViewModels
         private IPAddress _networkAddress;
         public IPAddress NetworkAddress
         {
-            get { return _networkAddress; }
+            get => _networkAddress;
             set
             {
-                if (value == _networkAddress)
+                if (Equals(value, _networkAddress))
                     return;
 
                 _networkAddress = value;
@@ -100,10 +90,10 @@ namespace NETworkManager.ViewModels
         private IPAddress _broadcast;
         public IPAddress Broadcast
         {
-            get { return _broadcast; }
+            get => _broadcast;
             set
             {
-                if (value == _broadcast)
+                if (Equals(value, _broadcast))
                     return;
 
                 _broadcast = value;
@@ -114,7 +104,7 @@ namespace NETworkManager.ViewModels
         private BigInteger _ipAddresses;
         public BigInteger IPAddresses
         {
-            get { return _ipAddresses; }
+            get => _ipAddresses;
             set
             {
                 if (value == _ipAddresses)
@@ -128,10 +118,10 @@ namespace NETworkManager.ViewModels
         private IPAddress _subnetmask;
         public IPAddress Subnetmask
         {
-            get { return _subnetmask; }
+            get => _subnetmask;
             set
             {
-                if (value == _subnetmask)
+                if (Equals(value, _subnetmask))
                     return;
 
                 _subnetmask = value;
@@ -142,7 +132,7 @@ namespace NETworkManager.ViewModels
         private int _cidr;
         public int CIDR
         {
-            get { return _cidr; }
+            get => _cidr;
             set
             {
                 if (value == _cidr)
@@ -156,10 +146,10 @@ namespace NETworkManager.ViewModels
         private IPAddress _firstIPAddress;
         public IPAddress FirstIPAddress
         {
-            get { return _firstIPAddress; }
+            get => _firstIPAddress;
             set
             {
-                if (value == _firstIPAddress)
+                if (Equals(value, _firstIPAddress))
                     return;
 
                 _firstIPAddress = value;
@@ -170,10 +160,10 @@ namespace NETworkManager.ViewModels
         private IPAddress _lastIPAddress;
         public IPAddress LastIPAddress
         {
-            get { return _lastIPAddress; }
+            get => _lastIPAddress;
             set
             {
-                if (value == _lastIPAddress)
+                if (Equals(value, _lastIPAddress))
                     return;
 
                 _lastIPAddress = value;
@@ -184,7 +174,7 @@ namespace NETworkManager.ViewModels
         private BigInteger _hosts;
         public BigInteger Hosts
         {
-            get { return _hosts; }
+            get => _hosts;
             set
             {
                 if (value == _hosts)
@@ -200,8 +190,8 @@ namespace NETworkManager.ViewModels
         public SubnetCalculatorSupernettingViewModel()
         {
             // Set collection view
-            _subnet1HistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Supernetting_Subnet1);
-            _subnet2HistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Supernetting_Subnet2);
+            Subnet1HistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Supernetting_Subnet1);
+            Subnet2HistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Supernetting_Subnet2);
         }
         #endregion
 
@@ -222,10 +212,10 @@ namespace NETworkManager.ViewModels
         {
             IsCalculationRunning = true;
 
-            IPNetwork subnet1 = IPNetwork.Parse(Subnet1);
-            IPNetwork subnet2 = IPNetwork.Parse(Subnet2);
+            var subnet1 = IPNetwork.Parse(Subnet1);
+            var subnet2 = IPNetwork.Parse(Subnet2);
 
-            IPNetwork subnet = subnet1.Supernet(subnet2);
+            var subnet = subnet1.Supernet(subnet2);
 
             NetworkAddress = subnet.Network;
             Broadcast = subnet.Broadcast;
@@ -247,7 +237,7 @@ namespace NETworkManager.ViewModels
         private void AddSubnet1ToHistory(string subnet)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Supernetting_Subnet1.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Supernetting_Subnet1.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.SubnetCalculator_Supernetting_Subnet1.Clear();
@@ -260,7 +250,7 @@ namespace NETworkManager.ViewModels
         private void AddSubnet2ToHistory(string subnet)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Supernetting_Subnet2.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Supernetting_Subnet2.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.SubnetCalculator_Supernetting_Subnet2.Clear();

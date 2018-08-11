@@ -1,16 +1,15 @@
 ﻿using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class RemoteDesktopSettingsView : UserControl
+    public partial class RemoteDesktopSettingsView
     {
-        RemoteDesktopSettingsViewModel viewModel = new RemoteDesktopSettingsViewModel();
+        private readonly RemoteDesktopSettingsViewModel _viewModel = new RemoteDesktopSettingsViewModel();
 
         public RemoteDesktopSettingsView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

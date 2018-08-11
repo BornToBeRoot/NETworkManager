@@ -11,20 +11,16 @@ namespace NETworkManager.ViewModels
     public class SettingsLanguageViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
-        ICollectionView _languages;
-        public ICollectionView Languages
-        {
-            get { return _languages; }
-        }
+        public ICollectionView Languages { get; }
 
         private string _cultureCode = string.Empty;
 
         private LocalizationInfo _selectedLanguage;
         public LocalizationInfo SelectedLangauge
         {
-            get { return _selectedLanguage; }
+            get => _selectedLanguage;
             set
             {
                 if (value == _selectedLanguage)
@@ -47,7 +43,7 @@ namespace NETworkManager.ViewModels
         private string _search;
         public string Search
         {
-            get { return _search; }
+            get => _search;
             set
             {
                 if (value == _search)
@@ -64,7 +60,7 @@ namespace NETworkManager.ViewModels
         private bool _restartRequired;
         public bool RestartRequired
         {
-            get { return _restartRequired; }
+            get => _restartRequired;
             set
             {
                 if (value == _restartRequired)
@@ -79,20 +75,23 @@ namespace NETworkManager.ViewModels
         #region Construtor, LoadSettings
         public SettingsLanguageViewModel()
         {
-            _languages = CollectionViewSource.GetDefaultView(LocalizationManager.List);
-            _languages.SortDescriptions.Add(new SortDescription(nameof(LocalizationInfo.Name), ListSortDirection.Ascending));
+            _isLoading = true;
 
-            _languages.Filter = o =>
+            Languages = CollectionViewSource.GetDefaultView(LocalizationManager.List);
+            Languages.SortDescriptions.Add(new SortDescription(nameof(LocalizationInfo.Name), ListSortDirection.Ascending));
+
+            Languages.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
                     return true;
 
-                LocalizationInfo info = o as LocalizationInfo;
+                if (!(o is LocalizationInfo info))
+                    return false;
 
-                string search = Search.Trim();
+                var search = Search.Trim();
 
                 // Search by: Name
-                return (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.NativeName.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+                return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.NativeName.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
             SelectedLangauge = Languages.Cast<LocalizationInfo>().FirstOrDefault(x => x.Code == LocalizationManager.Current.Code);

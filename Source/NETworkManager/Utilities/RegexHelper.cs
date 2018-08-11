@@ -1,5 +1,8 @@
-﻿namespace NETworkManager.Utilities
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace NETworkManager.Utilities
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static class RegexHelper
     {
         // Match IPv4-Address like 192.168.178.1
@@ -57,11 +60,5 @@
 
         // Match a hostname with subnetmask like server-01.example.com/255.255.255.0
         public const string HostnameSubnetmaskRegex = @"^" + HostnameValues + @"\/" + SubnetmaskValues + @"$";
-
-        // Test for http|https uris
-        public const string httpAndHttpsUriRegex = @"^http(s)?:\/\/([\w-]+.)+[\w-]+(\/[\w- ./?%&=])?$";
-
-        // OID (SNMP)
-        public const string OIDRegex = @"^([1-9][0-9]{0,3}|0)(\.([1-9][0-9]{0,3}|0)){5,13}$";
     }
 }

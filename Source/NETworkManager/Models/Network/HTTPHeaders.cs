@@ -10,11 +10,11 @@ namespace NETworkManager.Models.Network
         {
             WebHeaderCollection headers;
 
-            HttpWebRequest request = WebRequest.CreateHttp(uri);
+            var request = WebRequest.CreateHttp(uri);
 
             request.Timeout = options.Timeout;
 
-            using (HttpWebResponse response = (HttpWebResponse)(await request.GetResponseAsync().ConfigureAwait(false)))
+            using (var response = (HttpWebResponse)(await request.GetResponseAsync().ConfigureAwait(false)))
             {
                 headers = response.Headers;
             }

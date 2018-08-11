@@ -4,24 +4,21 @@ using Dragablz;
 using System.Windows.Input;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
-using NETworkManager.Models.Settings;
 
 namespace NETworkManager.ViewModels
 {
     public class HTTPHeadersHostViewModel : ViewModelBase
     {
         #region Variables
-        public IInterTabClient InterTabClient { get; private set; }
-        public ObservableCollection<DragablzTabItem> TabItems { get; private set; }
+        public IInterTabClient InterTabClient { get; }
+        public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-        private const string tagIdentifier = "tag=";
-
-        private int _tabId = 0;
+        private int _tabId;
 
         private int _selectedTabIndex;
         public int SelectedTabIndex
         {
-            get { return _selectedTabIndex; }
+            get => _selectedTabIndex;
             set
             {
                 if (value == _selectedTabIndex)
@@ -38,9 +35,9 @@ namespace NETworkManager.ViewModels
         {
             InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.HTTPHeaders);
 
-            TabItems = new ObservableCollection<DragablzTabItem>()
+            TabItems = new ObservableCollection<DragablzTabItem>
             {
-                new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new HTTPHeadersView (_tabId), _tabId)
+                new DragablzTabItem(Resources.Localization.Strings.NewTab, new HTTPHeadersView (_tabId), _tabId)
             };
         }
         #endregion
@@ -56,14 +53,11 @@ namespace NETworkManager.ViewModels
             AddTab();
         }
 
-        public ItemActionCallback CloseItemCommand
-        {
-            get { return CloseItemAction; }
-        }
+        public ItemActionCallback CloseItemCommand => CloseItemAction;
 
-        private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
+        private static void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzTabItem).View as HTTPHeadersView).CloseTab();
+            ((args.DragablzItem.Content as DragablzTabItem)?.View as HTTPHeadersView)?.CloseTab();
         }
         #endregion
 
@@ -72,7 +66,7 @@ namespace NETworkManager.ViewModels
         {
             _tabId++;
 
-            TabItems.Add(new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new HTTPHeadersView(_tabId), _tabId));
+            TabItems.Add(new DragablzTabItem(Resources.Localization.Strings.NewTab, new HTTPHeadersView(_tabId), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

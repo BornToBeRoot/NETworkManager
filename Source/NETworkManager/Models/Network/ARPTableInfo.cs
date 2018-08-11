@@ -10,10 +10,7 @@ namespace NETworkManager.Models.Network
         public PhysicalAddress MACAddress { get; set; }
         public bool IsMulticast { get; set; }
 
-        public int IPAddressInt32
-        {
-            get { return IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(IPAddress) : 0; }
-        }
+        public int IPAddressInt32 => IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(IPAddress) : 0;
 
         public ARPTableInfo()
         {

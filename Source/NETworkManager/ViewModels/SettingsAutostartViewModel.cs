@@ -3,21 +3,20 @@ using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace NETworkManager.ViewModels
 {
     public class SettingsAutostartViewModel : ViewModelBase
     {
         #region Variables
-        private IDialogCoordinator dialogCoordinator;
+        private readonly IDialogCoordinator _dialogCoordinator;
 
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private bool _startWithWindows;
         public bool StartWithWindows
         {
-            get { return _startWithWindows; }
+            get => _startWithWindows;
             set
             {
                 if (value == _startWithWindows)
@@ -34,7 +33,7 @@ namespace NETworkManager.ViewModels
         private bool _configuringAutostart;
         public bool ConfiguringAutostart
         {
-            get { return _configuringAutostart; }
+            get => _configuringAutostart;
             set
             {
                 if (value == _configuringAutostart)
@@ -48,7 +47,7 @@ namespace NETworkManager.ViewModels
         private bool _startMinimizedInTray;
         public bool StartMinimizedInTray
         {
-            get { return _startMinimizedInTray; }
+            get => _startMinimizedInTray;
             set
             {
                 if (value == _startMinimizedInTray)
@@ -66,7 +65,9 @@ namespace NETworkManager.ViewModels
         #region Constructor
         public SettingsAutostartViewModel(IDialogCoordinator instance)
         {
-            dialogCoordinator = instance;
+            _isLoading = true;
+
+            _dialogCoordinator = instance;
 
             LoadSettings();
 
@@ -99,7 +100,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Error"), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
 
             ConfiguringAutostart = false;

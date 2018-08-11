@@ -7,7 +7,7 @@ namespace NETworkManager.Utilities{
     {
         public static string ConvertToString(SecureString secureString)
         {
-            IntPtr valuePtr = IntPtr.Zero;
+            var valuePtr = IntPtr.Zero;
             try
             {
                 valuePtr = Marshal.SecureStringToGlobalAllocUnicode(secureString);
@@ -19,14 +19,14 @@ namespace NETworkManager.Utilities{
             }
         }
 
-        public static SecureString ConvertToSecureString(string string1)
+        public static SecureString ConvertToSecureString(string clearText)
         {
-            if (string1 == null)
-                throw new ArgumentNullException("string1");
+            if (clearText == null)
+                throw new ArgumentNullException(nameof(clearText));
 
             var securePassword = new SecureString();
 
-            foreach (char c in string1)
+            foreach (var c in clearText)
                 securePassword.AppendChar(c);
 
             securePassword.MakeReadOnly();

@@ -2,17 +2,14 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System;
 using System.Windows.Threading;
 using NETworkManager.Utilities;
-using NETworkManager.Models.Settings;
-using System.Diagnostics;
 
 namespace NETworkManager.Controls
 {
-    public partial class RemoteDesktopControl : UserControl, INotifyPropertyChanged
+    public partial class RemoteDesktopControl : INotifyPropertyChanged
     {
         #region PropertyChangedEventHandler
         public event PropertyChangedEventHandler PropertyChanged;
@@ -24,19 +21,17 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Variables
-        private bool _initialized = false;
+        private bool _initialized;
 
-        private const string RemoteDesktopDisconnectReasonIdentifier = "String_RemoteDesktopDisconnectReason_";
+        private readonly RemoteDesktopSessionInfo _rdpSessionInfo;
 
-        private RemoteDesktopSessionInfo _rdpProfileInfo;
-
-        DispatcherTimer reconnectAdjustScreenTimer = new DispatcherTimer();
+        private readonly DispatcherTimer _reconnectAdjustScreenTimer = new DispatcherTimer();
 
         // Fix WindowsFormsHost width
         private double _rdpClientWidth;
-        public double RDPClientWidth
+        public double RdpClientWidth
         {
-            get { return _rdpClientWidth; }
+            get => _rdpClientWidth;
             set
             {
                 if (value == _rdpClientWidth)
@@ -49,9 +44,9 @@ namespace NETworkManager.Controls
 
         // Fix WindowsFormsHost height
         private double _rdpClientHeight;
-        public double RDPClientHeight
+        public double RdpClientHeight
         {
-            get { return _rdpClientHeight; }
+            get => _rdpClientHeight;
             set
             {
                 if (value == _rdpClientHeight)
@@ -62,30 +57,30 @@ namespace NETworkManager.Controls
             }
         }
 
-        private bool _connected = true;
-        public bool Connected
+        private bool _isConnected = true;
+        public bool IsConnected
         {
-            get { return _connected; }
+            get => _isConnected;
             set
             {
-                if (value == _connected)
+                if (value == _isConnected)
                     return;
 
-                _connected = value;
+                _isConnected = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _reconnecting;
-        public bool Reconnecting
+        private bool _isReconnecting;
+        public bool IsReconnecting
         {
-            get { return _reconnecting; }
+            get => _isReconnecting;
             set
             {
-                if (value == _reconnecting)
+                if (value == _isReconnecting)
                     return;
 
-                _reconnecting = value;
+                _isReconnecting = value;
                 OnPropertyChanged();
             }
         }
@@ -93,7 +88,7 @@ namespace NETworkManager.Controls
         private string _disconnectReason;
         public string DisconnectReason
         {
-            get { return _disconnectReason; }
+            get => _disconnectReason;
             set
             {
                 if (value == _disconnectReason)
@@ -111,10 +106,10 @@ namespace NETworkManager.Controls
             InitializeComponent();
             DataContext = this;
 
-            _rdpProfileInfo = info;
+            _rdpSessionInfo = info;
 
-            reconnectAdjustScreenTimer.Tick += ReconnectAdjustScreenTimer_Tick;
-            reconnectAdjustScreenTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            _reconnectAdjustScreenTimer.Tick += ReconnectAdjustScreenTimer_Tick;
+            _reconnectAdjustScreenTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
@@ -150,81 +145,88 @@ namespace NETworkManager.Controls
         #region Methods
         private void Connect()
         {
-            rdpClient.Server = _rdpProfileInfo.Hostname;
-            rdpClient.AdvancedSettings9.RDPPort = _rdpProfileInfo.Port;
+            RdpClient.CreateControl();
 
-            if (_rdpProfileInfo.CustomCredentials)
+            RdpClient.Server = _rdpSessionInfo.Hostname;
+            RdpClient.AdvancedSettings9.RDPPort = _rdpSessionInfo.Port;
+
+            if (_rdpSessionInfo.CustomCredentials)
             {
-                rdpClient.UserName = _rdpProfileInfo.Username;
-                rdpClient.AdvancedSettings9.ClearTextPassword = SecureStringHelper.ConvertToString(_rdpProfileInfo.Password);
+                RdpClient.UserName = _rdpSessionInfo.Username;
+                RdpClient.AdvancedSettings9.ClearTextPassword = SecureStringHelper.ConvertToString(_rdpSessionInfo.Password);
             }
 
             // AdvancedSettings
-            rdpClient.AdvancedSettings9.AuthenticationLevel = _rdpProfileInfo.AuthenticationLevel;
-            rdpClient.AdvancedSettings9.EnableCredSspSupport = _rdpProfileInfo.EnableCredSspSupport;
+            RdpClient.AdvancedSettings9.AuthenticationLevel = _rdpSessionInfo.AuthenticationLevel;
+            RdpClient.AdvancedSettings9.EnableCredSspSupport = _rdpSessionInfo.EnableCredSspSupport;
+
+            // Keyboard
+            RdpClient.SecuredSettings3.KeyboardHookMode = _rdpSessionInfo.KeyboardHookMode;
 
             // Devices and resources
-            rdpClient.AdvancedSettings9.RedirectClipboard = _rdpProfileInfo.RedirectClipboard;
-            rdpClient.AdvancedSettings9.RedirectDevices = _rdpProfileInfo.RedirectDevices;
-            rdpClient.AdvancedSettings9.RedirectDrives = _rdpProfileInfo.RedirectDrives;
-            rdpClient.AdvancedSettings9.RedirectPorts = _rdpProfileInfo.RedirectPorts;
-            rdpClient.AdvancedSettings9.RedirectSmartCards = _rdpProfileInfo.RedirectSmartCards;
-            rdpClient.AdvancedSettings9.RedirectPrinters = _rdpProfileInfo.RedirectPrinters;
+            RdpClient.AdvancedSettings9.RedirectClipboard = _rdpSessionInfo.RedirectClipboard;
+            RdpClient.AdvancedSettings9.RedirectDevices = _rdpSessionInfo.RedirectDevices;
+            RdpClient.AdvancedSettings9.RedirectDrives = _rdpSessionInfo.RedirectDrives;
+            RdpClient.AdvancedSettings9.RedirectPorts = _rdpSessionInfo.RedirectPorts;
+            RdpClient.AdvancedSettings9.RedirectSmartCards = _rdpSessionInfo.RedirectSmartCards;
+            RdpClient.AdvancedSettings9.RedirectPrinters = _rdpSessionInfo.RedirectPrinters;
 
             // Display
-            rdpClient.ColorDepth = _rdpProfileInfo.ColorDepth;      // 8, 15, 16, 24
+            RdpClient.ColorDepth = _rdpSessionInfo.ColorDepth;      // 8, 15, 16, 24
 
-            if (_rdpProfileInfo.AdjustScreenAutomatically || _rdpProfileInfo.UseCurrentViewSize)
+            if (_rdpSessionInfo.AdjustScreenAutomatically || _rdpSessionInfo.UseCurrentViewSize)
             {
-                rdpClient.DesktopWidth = (int)rdpGrid.ActualWidth;
-                rdpClient.DesktopHeight = (int)rdpGrid.ActualHeight;
+                RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
+                RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
             }
             else
             {
-                rdpClient.DesktopWidth = _rdpProfileInfo.DesktopWidth;
-                rdpClient.DesktopHeight = _rdpProfileInfo.DesktopHeight;
+                RdpClient.DesktopWidth = _rdpSessionInfo.DesktopWidth;
+                RdpClient.DesktopHeight = _rdpSessionInfo.DesktopHeight;
             }
 
             FixWindowsFormsHostSize();
 
             // Events
-            rdpClient.OnConnected += RdpClient_OnConnected;
-            rdpClient.OnDisconnected += RdpClient_OnDisconnected;
+            RdpClient.OnConnected += RdpClient_OnConnected;
+            RdpClient.OnDisconnected += RdpClient_OnDisconnected;
 
-            rdpClient.Connect();
+            RdpClient.AdvancedSettings9.EnableWindowsKey = 1;
+
+            RdpClient.Connect();
         }
 
         private void Reconnect()
         {
-            Reconnecting = true;
+            IsReconnecting = true;
 
-            if (_rdpProfileInfo.AdjustScreenAutomatically)
+            if (_rdpSessionInfo.AdjustScreenAutomatically)
             {
-                rdpClient.DesktopWidth = (int)rdpGrid.ActualWidth;
-                rdpClient.DesktopHeight = (int)rdpGrid.ActualHeight;
+                RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
+                RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
             }
 
             FixWindowsFormsHostSize();
 
-            rdpClient.Connect();
+            RdpClient.Connect();
         }
 
         private void ReconnectAdjustScreen()
         {
-            rdpClient.Reconnect((uint)rdpGrid.ActualWidth, (uint)rdpGrid.ActualHeight);
+            RdpClient.Reconnect((uint)RdpGrid.ActualWidth, (uint)RdpGrid.ActualHeight);
             FixWindowsFormsHostSize();
         }
 
         private void FixWindowsFormsHostSize()
         {
-            RDPClientWidth = rdpClient.DesktopWidth;
-            RDPClientHeight = rdpClient.DesktopHeight;
+            RdpClientWidth = RdpClient.DesktopWidth;
+            RdpClientHeight = RdpClient.DesktopHeight;
         }
 
         private void Disconnect()
         {
-            if (Connected)
-                rdpClient.Disconnect();
+            if (IsConnected)
+                RdpClient.Disconnect();
         }
 
         public void CloseTab()
@@ -232,117 +234,104 @@ namespace NETworkManager.Controls
             Disconnect();
         }
 
-        // Source: https://msdn.microsoft.com/en-us/library/aa382170(v=vs.85).aspx
-        private string GetDisconnectReasonFromResource(string reason)
-        {
-            try
-            {
-                return LocalizationManager.GetStringByKey(RemoteDesktopDisconnectReasonIdentifier + reason);
-            }
-            catch (NullReferenceException ex) // This happens when the application gets closed and the resources have already been released
-            {
-                return ex.Message; // The user should never see that message
-            }
-        }
-
-        private string GetDisconnectReason(int reason)
+        private static string GetDisconnectReason(int reason)
         {
             switch (reason)
             {
                 case 0:
-                    return GetDisconnectReasonFromResource("NoInfo");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_NoInfo;
                 case 1:
-                    return GetDisconnectReasonFromResource("LocalNotError");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_LocalNotError;
                 case 2:
-                    return GetDisconnectReasonFromResource("RemoteByUser");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_RemoteByUser;
                 case 3:
-                    return GetDisconnectReasonFromResource("ByServer");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_ByServer;
                 case 260:
-                    return GetDisconnectReasonFromResource("DNSLookupFailed");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_DNSLookupFailed;
                 case 262:
-                    return GetDisconnectReasonFromResource("OutOfMemory");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_OutOfMemory;
                 case 264:
-                    return GetDisconnectReasonFromResource("ConnectionTimedOut");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_ConnectionTimedOut;
                 case 516:
-                    return GetDisconnectReasonFromResource("SocketConnectFailed");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SocketConnectFailed;
                 case 518:
-                    return GetDisconnectReasonFromResource("OutOfMemory2");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_OutOfMemory2;
                 case 520:
-                    return GetDisconnectReasonFromResource("HostNotFound");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_HostNotFound;
                 case 772:
-                    return GetDisconnectReasonFromResource("WinsockSendFailed");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_WinsockSendFailed;
                 case 774:
-                    return GetDisconnectReasonFromResource("OutOfMemory3");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_OutOfMemory3;
                 case 776:
-                    return GetDisconnectReasonFromResource("InvalidIPAddr");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InvalidIPAddr;
                 case 1028:
-                    return GetDisconnectReasonFromResource("SocketRecvFailed");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SocketRecvFailed;
                 case 1030:
-                    return GetDisconnectReasonFromResource("InvalidSecurityData");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InvalidSecurityData;
                 case 1032:
-                    return GetDisconnectReasonFromResource("InternalError");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InternalError;
                 case 1286:
-                    return GetDisconnectReasonFromResource("InvalidEncryption");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InvalidEncryption;
                 case 1288:
-                    return GetDisconnectReasonFromResource("DNSLookupFailed2");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_DNSLookupFailed2;
                 case 1540:
-                    return GetDisconnectReasonFromResource("GetHostByNameFailed");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_GetHostByNameFailed;
                 case 1542:
-                    return GetDisconnectReasonFromResource("InvalidServerSecurityInfo");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InvalidServerSecurityInfo;
                 case 1544:
-                    return GetDisconnectReasonFromResource("TimerError");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_TimerError;
                 case 1796:
-                    return GetDisconnectReasonFromResource("TimeoutOccurred");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_TimeoutOccurred;
                 case 1798:
-                    return GetDisconnectReasonFromResource("ServerCertificateUnpackErr");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_ServerCertificateUnpackErr;
                 case 2052:
-                    return GetDisconnectReasonFromResource("InvalidIP");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InvalidIP;
                 case 2055:
-                    return GetDisconnectReasonFromResource("SslErrLogonFailure");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrLogonFailure;
                 case 2056:
-                    return GetDisconnectReasonFromResource("LicensingFailed");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_LicensingFailed;
                 case 2308:
-                    return GetDisconnectReasonFromResource("AtClientWinsockFDCLOSE");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE;
                 case 2310:
-                    return GetDisconnectReasonFromResource("InternalSecurityError");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InternalSecurityError;
                 case 2312:
-                    return GetDisconnectReasonFromResource("LicensingTimeout");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_LicensingTimeout;
                 case 2566:
-                    return GetDisconnectReasonFromResource("InternalSecurityError2");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InternalSecurityError2;
                 case 2567:
-                    return GetDisconnectReasonFromResource("SslErrNoSuchUser");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrNoSuchUser;
                 case 2822:
-                    return GetDisconnectReasonFromResource("EncryptionError");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_EncryptionError;
                 case 2823:
-                    return GetDisconnectReasonFromResource("SslErrAccountDisabled");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrAccountDisabled;
                 case 3078:
-                    return GetDisconnectReasonFromResource("DecryptionError");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_DecryptionError;
                 case 3079:
-                    return GetDisconnectReasonFromResource("SslErrAccountRestriction");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrAccountRestriction;
                 case 3080:
-                    return GetDisconnectReasonFromResource("ClientDecompressionError");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_ClientDecompressionError;
                 case 3335:
-                    return GetDisconnectReasonFromResource("SslErrAccountLockedOut");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrAccountLockedOut;
                 case 3591:
-                    return GetDisconnectReasonFromResource("SslErrAccountExpired");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrAccountExpired;
                 case 3847:
-                    return GetDisconnectReasonFromResource("SslErrPasswordExpired");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrPasswordExpired;
                 case 4615:
-                    return GetDisconnectReasonFromResource("SslErrPasswordMustChange");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrPasswordMustChange;
                 case 5639:
-                    return GetDisconnectReasonFromResource("SslErrDelegationPolicy");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrDelegationPolicy;
                 case 5895:
-                    return GetDisconnectReasonFromResource("SslErrPolicyNTLMOnly");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrPolicyNTLMOnly;
                 case 6151:
-                    return GetDisconnectReasonFromResource("SslErrNoAuthenticatingAuthority");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrNoAuthenticatingAuthority;
                 case 6919:
-                    return GetDisconnectReasonFromResource("SslErrCertExpired");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrCertExpired;
                 case 7175:
-                    return GetDisconnectReasonFromResource("SslErrSmartcardWrongPIN");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrSmartcardWrongPIN;
                 case 8455:
-                    return GetDisconnectReasonFromResource("SslErrFreshCredRequiredByServer");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrFreshCredRequiredByServer;
                 case 8711:
-                    return GetDisconnectReasonFromResource("SslErrSmartcardCardBlocked");
+                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrSmartcardCardBlocked;
                 default:
                     return "reason not found!";
             }
@@ -352,28 +341,28 @@ namespace NETworkManager.Controls
         #region Events
         private void RdpClient_OnConnected(object sender, EventArgs e)
         {
-            Connected = true;
+            IsConnected = true;
         }
 
         private void RdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
         {
-            Connected = false;
-            Reconnecting = false;
+            IsConnected = false;
+            IsReconnecting = false;
 
             DisconnectReason = GetDisconnectReason(e.discReason);
         }
 
-        private void RDPGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void RdpGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             // Prevent with a timer, that the function (rdpClient.Reconnect()) is executed too often
-            if (Connected && _rdpProfileInfo.AdjustScreenAutomatically)
-                reconnectAdjustScreenTimer.Start();
+            if (IsConnected && _rdpSessionInfo.AdjustScreenAutomatically)
+                _reconnectAdjustScreenTimer.Start();
         }
 
         private void ReconnectAdjustScreenTimer_Tick(object sender, EventArgs e)
         {
             // Stop timer
-            reconnectAdjustScreenTimer.Stop();
+            _reconnectAdjustScreenTimer.Stop();
 
             // Reconnect with new resulution
             ReconnectAdjustScreen();

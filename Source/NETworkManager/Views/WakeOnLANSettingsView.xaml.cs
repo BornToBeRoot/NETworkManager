@@ -1,16 +1,15 @@
 ﻿using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class WakeOnLANSettingsView : UserControl
+    public partial class WakeOnLANSettingsView
     {
-        WakeOnLANSettingsViewModel viewModel = new WakeOnLANSettingsViewModel();
+        private readonly WakeOnLANSettingsViewModel _viewModel = new WakeOnLANSettingsViewModel();
 
         public WakeOnLANSettingsView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

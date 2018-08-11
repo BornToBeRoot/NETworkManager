@@ -1,8 +1,6 @@
-﻿using System.Windows.Controls;
-
-namespace NETworkManager.Views
+﻿namespace NETworkManager.Views
 {
-    public partial class ConfirmRemoveDialog : UserControl
+    public partial class ConfirmRemoveDialog
     {
         public ConfirmRemoveDialog()
         {

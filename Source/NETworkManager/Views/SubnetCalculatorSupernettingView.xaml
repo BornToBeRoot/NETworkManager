@@ -3,20 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Validator="clr-namespace:NETworkManager.Validators"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:validators="clr-namespace:NETworkManager.Validators"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        Dialog:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d" >
+        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        dialogs:DialogParticipation.Register="{Binding}"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SubnetCalculatorSupernettingViewModel}">
     <UserControl.Resources>
-        <Converter:BigIntegerToStringConverter x:Key="BigIntegerToStringConverter" />
-        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:BooleanReverseToVisibilityConverter x:Key="BooleanReverseToVisibilityConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <Converter:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
-        <Converter:ValidateSubnetCalculatorSupernettingConverter x:Key="ValidateSubnetCalculatorSupernettingConverter" />
+        <converters:BigIntegerToStringConverter x:Key="BigIntegerToStringConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
+        <converters:ValidateSubnetCalculatorSupernettingConverter x:Key="ValidateSubnetCalculatorSupernettingConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -24,7 +26,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Subnet}" />
+        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Subnet}" />
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -44,24 +46,24 @@
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_Subnet1}" />
-                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="cbSubnet1" Height="{Binding ElementName=cbSubnet2, Path=ActualHeight}" ItemsSource="{Binding Subnet1HistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4IPv6Subnet}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.Subnet1}" />
+                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="ComboBoxSubnet1" Height="{Binding ElementName=ComboBoxSubnet2, Path=ActualHeight}" ItemsSource="{Binding Subnet1HistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4IPv6Subnet}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Subnet1" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>
-                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                <Validator:IPv4IPv6SubnetValidator ValidatesOnTargetUpdated="True" />
+                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                <validators:IPv4IPv6SubnetValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{DynamicResource String_Subnet2}" />
-                <ComboBox x:Name="cbSubnet2" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding Subnet2HistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExampleIPv4IPv6Subnet2}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.Subnet2}" />
+                <ComboBox x:Name="ComboBoxSubnet2" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding Subnet2HistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4IPv6Subnet2}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Subnet2" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>
-                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                <Validator:IPv4IPv6SubnetValidator ValidatesOnTargetUpdated="True" />
+                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                <validators:IPv4IPv6SubnetValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.Text>
@@ -73,8 +75,8 @@
                                 <DataTrigger Value="False">
                                     <DataTrigger.Binding>
                                         <MultiBinding Converter="{StaticResource ValidateSubnetCalculatorSupernettingConverter}">
-                                            <Binding ElementName="cbSubnet1" Path="(Validation.HasError)" />
-                                            <Binding ElementName="cbSubnet2" Path="(Validation.HasError)" />
+                                            <Binding ElementName="ComboBoxSubnet1" Path="(Validation.HasError)" />
+                                            <Binding ElementName="ComboBoxSubnet2" Path="(Validation.HasError)" />
                                             <Binding Path="Subnet1" />
                                             <Binding Path="Subnet2" />
                                         </MultiBinding>
@@ -95,7 +97,7 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Width="20" Height="20" Margin="10,5,0,5">
                                 <Rectangle.Resources>
-                                    <VisualBrush x:Key="VisualCalculator" Stretch="Uniform" Visual="{IconPacks:Material Kind=Calculator}"/>
+                                    <VisualBrush x:Key="VisualCalculator" Stretch="Uniform" Visual="{iconPacks:Material Kind=Calculator}"/>
                                 </Rectangle.Resources>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
@@ -107,7 +109,7 @@
                             <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Text" Value="{DynamicResource String_Button_Calculate}"/>                                       
+                                        <Setter Property="Text" Value="{x:Static localization:Strings.Calculate}"/>                                       
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
@@ -116,8 +118,8 @@
                 </Button>
             </Grid>
         </Grid>
-        <StackPanel Grid.Row="2" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{DynamicResource String_Header_Result}" />
+        <StackPanel Grid.Row="2" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" />
             <ScrollViewer Style="{DynamicResource DefaultScrollViewer}">
                 <Grid>
                     <Grid.Resources>
@@ -142,25 +144,25 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <GridSplitter Grid.Column="1" Grid.RowSpan="14" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False"/>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{DynamicResource String_NetworkAddress}" />
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.NetworkAddress}" />
                     <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding NetworkAddress, Converter={StaticResource IPAddressToStringConverter}}" />
-                    <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource String_Broadcast}" />
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Broadcast}" />
                     <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Broadcast, Converter={StaticResource IPAddressToStringConverter}}" />
-                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{DynamicResource String_IPAddresses}" />
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.IPAddresses}" />
                     <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding IPAddresses, Converter={StaticResource BigIntegerToStringConverter}}" />
-                    <TextBlock Grid.Column="0" Grid.Row="3" Text="{DynamicResource String_Subnetmask}" />
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Subnetmask}" />
                     <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Subnetmask, Converter={StaticResource IPAddressToStringConverter}}" />
-                    <TextBlock Grid.Column="0" Grid.Row="4" Text="{DynamicResource String_CIDR}" />
+                    <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.CIDR}" />
                     <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding CIDR, StringFormat='/{0}'}" />
-                    <TextBlock Grid.Column="0" Grid.Row="5" Text="{DynamicResource String_FirstUsableIPAddress}" />
+                    <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.FirstUsableIPAddress}" />
                     <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding FirstIPAddress, Converter={StaticResource IPAddressToStringConverter}}" />
-                    <TextBlock Grid.Column="0" Grid.Row="6" Text="{DynamicResource String_LastUsableIPAddress}" />
+                    <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.LastUsableIPAddress}" />
                     <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding LastIPAddress, Converter={StaticResource IPAddressToStringConverter}}" />
-                    <TextBlock Grid.Column="0" Grid.Row="7" Text="{DynamicResource String_Hosts}" />
+                    <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.Hosts}" />
                     <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Hosts, Converter={StaticResource BigIntegerToStringConverter}}" />
                 </Grid>
             </ScrollViewer>
         </StackPanel>
-        <TextBlock Grid.Row="2" Foreground="{DynamicResource GrayBrush3}" Text="{DynamicResource String_EnterSubnetsToCreateASupernet}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanReverseToVisibilityConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
+        <TextBlock Grid.Row="2" Foreground="{DynamicResource GrayBrush3}" Text="{x:Static localization:Strings.EnterSubnetsToCreateASupernet}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
     </Grid>
 </UserControl>

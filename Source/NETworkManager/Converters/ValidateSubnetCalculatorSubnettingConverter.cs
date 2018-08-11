@@ -14,45 +14,49 @@ namespace NETworkManager.Converters
             if ((bool)values[0] || (bool)values[1])
                 return false;
 
-            string subnet = values[2] as string;
-            string newSubnetmaskOrCIDR = values[3] as string;
+            var subnet = values[2] as string;
+            var newSubnetmaskOrCidr = values[3] as string;
 
             // Catch null exceptions...
-            if (string.IsNullOrEmpty(subnet) || string.IsNullOrEmpty(newSubnetmaskOrCIDR))
+            if (string.IsNullOrEmpty(subnet) || string.IsNullOrEmpty(newSubnetmaskOrCidr))
                 return false;
 
             // Get the cidr to compare...
-            string[] subnetData = subnet.Split('/');
+            var subnetData = subnet.Split('/');
 
-            IPAddress ipAddress = IPAddress.Parse(subnetData[0]);
-            string subnetmaskOrCIDR = subnetData[1];
+            var ipAddress = IPAddress.Parse(subnetData[0]);
+            var subnetmaskOrCidr = subnetData[1];
             int cidr;
 
-            if (ipAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+            // ReSharper disable once SwitchStatementMissingSomeCases
+            switch (ipAddress.AddressFamily)
             {
-                if (subnetmaskOrCIDR.Length < 3)
-                    cidr = int.Parse(subnetmaskOrCIDR);
-                else
-                    cidr = Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(subnetmaskOrCIDR));
-            }
-            else
-            {
-                cidr = int.Parse(subnetmaskOrCIDR);
+                case System.Net.Sockets.AddressFamily.InterNetwork when subnetmaskOrCidr.Length < 3:
+                    cidr = int.Parse(subnetmaskOrCidr);
+                    break;
+                case System.Net.Sockets.AddressFamily.InterNetwork:
+                    cidr = Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(subnetmaskOrCidr));
+                    break;
+                default:
+                    cidr = int.Parse(subnetmaskOrCidr);
+                    break;
             }
 
-            newSubnetmaskOrCIDR = newSubnetmaskOrCIDR.TrimStart('/');
+            newSubnetmaskOrCidr = newSubnetmaskOrCidr.TrimStart('/');
             int newCidr;
 
-            if (ipAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+            // ReSharper disable once SwitchStatementMissingSomeCases
+            switch (ipAddress.AddressFamily)
             {
-                if (newSubnetmaskOrCIDR.Length < 3)
-                    newCidr = int.Parse(newSubnetmaskOrCIDR);
-                else
-                    newCidr = Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(newSubnetmaskOrCIDR));
-            }
-            else
-            {
-                newCidr = int.Parse(newSubnetmaskOrCIDR);
+                case System.Net.Sockets.AddressFamily.InterNetwork when newSubnetmaskOrCidr.Length < 3:
+                    newCidr = int.Parse(newSubnetmaskOrCidr);
+                    break;
+                case System.Net.Sockets.AddressFamily.InterNetwork:
+                    newCidr = Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(newSubnetmaskOrCidr));
+                    break;
+                default:
+                    newCidr = int.Parse(newSubnetmaskOrCidr);
+                    break;
             }
 
             // Compare

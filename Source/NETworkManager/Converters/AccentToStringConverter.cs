@@ -1,5 +1,4 @@
 ﻿using MahApps.Metro;
-using NETworkManager.Models.Settings;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -11,9 +10,10 @@ namespace NETworkManager.Converters
         /* Translate the name of the accent */
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Accent accent = value as Accent;
+            if (!(value is Accent accent))
+                return "No valid accent passed!";
 
-            string name = LocalizationManager.GetStringByKey("String_Accent_" + accent.Name);
+            var name = Resources.Localization.Strings.ResourceManager.GetString(accent.Name);
 
             if (string.IsNullOrEmpty(name))
                 name = accent.Name;

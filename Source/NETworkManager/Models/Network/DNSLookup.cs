@@ -11,7 +11,7 @@ namespace NETworkManager.Models.Network
     public class DNSLookup
     {
         #region Variables
-        private static Resolver dnsResolver = new Resolver();
+        private static readonly Resolver DNSResolver = new Resolver();
         #endregion
 
         #region Events
@@ -46,27 +46,27 @@ namespace NETworkManager.Models.Network
         public static Tuple<IPAddress, List<string>> ResolvePTR(IPAddress host, DNSLookupOptions options)
         {
             // DNS server list
-            List<string> dnsServers = new List<string>();
+            var dnsServers = new List<string>();
 
             if (options.UseCustomDNSServer)
                 options.CustomDNSServers.ForEach(x => dnsServers.Add(x));
             else // Use windows default dns server, but filter/remove IPv6 site local addresses (fec0:0:0:0:ffff::)
-                dnsResolver.DnsServers.Where(x => !x.Address.ToString().StartsWith(@"fec0")).Select(y => y.Address.ToString()).ToList().ForEach(x => dnsServers.Add(x));
+                DNSResolver.DnsServers.Where(x => !x.Address.ToString().StartsWith(@"fec0")).Select(y => y.Address.ToString()).ToList().ForEach(x => dnsServers.Add(x));
 
             // PTR
-            string name = Resolver.GetArpaFromIp(host);
+            var name = Resolver.GetArpaFromIp(host);
 
-            int port = options.UseCustomDNSServer ? options.Port : Resolver.DefaultPort;
+            var port = options.UseCustomDNSServer ? options.Port : Resolver.DefaultPort;
 
-            string dnsServerIPAddress = string.Empty;
-            List<string> ptrResults = new List<string>();
+            var dnsServerIPAddress = string.Empty;
+            var ptrResults = new List<string>();
 
-            foreach (string dnsServer in dnsServers)
+            foreach (var dnsServer in dnsServers)
             {
                 dnsServerIPAddress = dnsServer;
 
                 // Create a new for each request
-                Resolver resolver = new Resolver(dnsServer, port)
+                var resolver = new Resolver(dnsServer, port)
                 {
                     Recursion = options.Recursion,
                     TransportType = options.TransportType,
@@ -75,14 +75,13 @@ namespace NETworkManager.Models.Network
                     TimeOut = options.Timeout
                 };
 
-                Response dnsResponse = resolver.Query(name, QType.PTR);
+                var dnsResponse = resolver.Query(name, QType.PTR);
 
                 if (!string.IsNullOrEmpty(dnsResponse.Error)) // On error... try next dns server...
                     continue;
 
                 // PTR
-                foreach (RecordPTR r in dnsResponse.RecordsPTR)
-                    ptrResults.Add(r.PTRDNAME);
+                ptrResults.AddRange(dnsResponse.RecordsPTR.Select(r => r.PTRDNAME));
 
                 // If we got results, break... else --> check next dns server
                 if (ptrResults.Count > 0)
@@ -97,53 +96,52 @@ namespace NETworkManager.Models.Network
             Task.Run(() =>
             {
                 // DNS server list
-                List<string> dnsServers = new List<string>();
+                var dnsServers = new List<string>();
 
                 if (options.UseCustomDNSServer)
                     options.CustomDNSServers.ForEach(x => dnsServers.Add(x));
                 else // Use windows default dns server, but filter/remove IPv6 site local addresses (fec0:0:0:0:ffff::)
-                    dnsResolver.DnsServers.Where(x => !x.Address.ToString().StartsWith(@"fec0")).Select(y => y.Address.ToString()).ToList().ForEach(x => dnsServers.Add(x));
+                    DNSResolver.DnsServers.Where(x => !x.Address.ToString().StartsWith(@"fec0")).Select(y => y.Address.ToString()).ToList().ForEach(x => dnsServers.Add(x));
 
                 // Foreach host
-                foreach (string host in hosts)
+                foreach (var host in hosts)
                 {
                     // Default
-                    string name = host;
+                    var name = host;
 
-                    string dnsSuffix = string.Empty;
+                    var dnsSuffix = string.Empty;
 
                     if (name.IndexOf(".", StringComparison.OrdinalIgnoreCase) == -1)
                     {
                         if (options.AddDNSSuffix)
                         {
-                            if (options.UseCustomDNSSuffix)
-                                dnsSuffix = options.CustomDNSSuffix;
-                            else
-                                dnsSuffix = IPGlobalProperties.GetIPGlobalProperties().DomainName;
+                            dnsSuffix = options.UseCustomDNSSuffix ? options.CustomDNSSuffix : IPGlobalProperties.GetIPGlobalProperties().DomainName;
                         }
                     }
 
                     // Append dns suffix to hostname
                     if (!string.IsNullOrEmpty(dnsSuffix))
-                        name += string.Format(".{0}", dnsSuffix);
+                        name += $".{dnsSuffix}";
 
-                    // PTR
-                    if (options.Type == QType.PTR)
+                    switch (options.Type)
                     {
-                        if (IPAddress.TryParse(name, out IPAddress ip))
-                            name = Resolver.GetArpaFromIp(ip);
+                        // PTR
+                        case QType.PTR:
+                            if (IPAddress.TryParse(name, out IPAddress ip))
+                                name = Resolver.GetArpaFromIp(ip);
+                            break;
+                        // NAPTR
+                        case QType.NAPTR:
+                            name = Resolver.GetArpaFromEnum(name);
+                            break;
                     }
 
-                    // NAPTR
-                    if (options.Type == QType.NAPTR)
-                        name = Resolver.GetArpaFromEnum(name);
-
-                    int port = options.UseCustomDNSServer ? options.Port : Resolver.DefaultPort;
+                    var port = options.UseCustomDNSServer ? options.Port : Resolver.DefaultPort;
 
                     Parallel.ForEach(dnsServers, dnsServer =>
                     {
                         // Create a new for each request
-                        Resolver resolver = new Resolver(dnsServer, port)
+                        var resolver = new Resolver(dnsServer, port)
                         {
                             Recursion = options.Recursion,
                             TransportType = options.TransportType,
@@ -152,7 +150,7 @@ namespace NETworkManager.Models.Network
                             TimeOut = options.Timeout
                         };
 
-                        Response dnsResponse = resolver.Query(name, options.Type, options.Class);
+                        var dnsResponse = resolver.Query(name, options.Type, options.Class);
 
                         // If there was an error... return
                         if (!string.IsNullOrEmpty(dnsResponse.Error))
@@ -165,20 +163,20 @@ namespace NETworkManager.Models.Network
                         ProcessResponse(dnsResponse);
 
                         // If we get a CNAME back (from an ANY result), do a second request and try to get the A, AAAA etc... 
-                        if (options.ResolveCNAME && options.Type == QType.ANY)
+                        if (!options.ResolveCNAME || options.Type != QType.ANY)
+                            return;
+
+                        foreach (var record in dnsResponse.RecordsCNAME)
                         {
-                            foreach (RecordCNAME r in dnsResponse.RecordsCNAME)
+                            var dnsResponse2 = resolver.Query(record.CNAME, options.Type, options.Class);
+
+                            if (!string.IsNullOrEmpty(dnsResponse2.Error))
                             {
-                                Response dnsResponse2 = resolver.Query(r.CNAME, options.Type, options.Class);
-
-                                if (!string.IsNullOrEmpty(dnsResponse2.Error))
-                                {
-                                    OnLookupError(new DNSLookupErrorArgs(dnsResponse2.Error, resolver.DnsServer));
-                                    continue;
-                                }
-
-                                ProcessResponse(dnsResponse2);
+                                OnLookupError(new DNSLookupErrorArgs(dnsResponse2.Error, resolver.DnsServer));
+                                continue;
                             }
+
+                            ProcessResponse(dnsResponse2);
                         }
                     });
                 }
@@ -189,39 +187,39 @@ namespace NETworkManager.Models.Network
 
         private void ProcessResponse(Response dnsResponse)
         {
-            string dnsServer = dnsResponse.Server.Address.ToString();
-            int port = dnsResponse.Server.Port;
+            var dnsServer = dnsResponse.Server.Address.ToString();
+            var port = dnsResponse.Server.Port;
 
             // A
-            foreach (RecordA r in dnsResponse.RecordsA)
+            foreach (var r in dnsResponse.RecordsA)
                 OnRecordReceived(new DNSLookupRecordArgs(r.RR, r, dnsServer, port));
 
             // AAAA
-            foreach (RecordAAAA r in dnsResponse.RecordsAAAA)
+            foreach (var r in dnsResponse.RecordsAAAA)
                 OnRecordReceived(new DNSLookupRecordArgs(r.RR, r, dnsServer, port));
 
             // CNAME
-            foreach (RecordCNAME r in dnsResponse.RecordsCNAME)
+            foreach (var r in dnsResponse.RecordsCNAME)
                 OnRecordReceived(new DNSLookupRecordArgs(r.RR, r, dnsServer, port));
 
             // MX
-            foreach (RecordMX r in dnsResponse.RecordsMX)
+            foreach (var r in dnsResponse.RecordsMX)
                 OnRecordReceived(new DNSLookupRecordArgs(r.RR, r, dnsServer, port));
 
             // NS
-            foreach (RecordNS r in dnsResponse.RecordsNS)
+            foreach (var r in dnsResponse.RecordsNS)
                 OnRecordReceived(new DNSLookupRecordArgs(r.RR, r, dnsServer, port));
 
             // PTR
-            foreach (RecordPTR r in dnsResponse.RecordsPTR)
+            foreach (var r in dnsResponse.RecordsPTR)
                 OnRecordReceived(new DNSLookupRecordArgs(r.RR, r, dnsServer, port));
 
             // SOA
-            foreach (RecordSOA r in dnsResponse.RecordsSOA)
+            foreach (var r in dnsResponse.RecordsSOA)
                 OnRecordReceived(new DNSLookupRecordArgs(r.RR, r, dnsServer, port));
 
             // TXT
-            foreach (RecordTXT r in dnsResponse.RecordsTXT)
+            foreach (var r in dnsResponse.RecordsTXT)
                 OnRecordReceived(new DNSLookupRecordArgs(r.RR, r, dnsServer, port));
         }
         #endregion

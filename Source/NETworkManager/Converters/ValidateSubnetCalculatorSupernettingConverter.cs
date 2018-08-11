@@ -13,22 +13,22 @@ namespace NETworkManager.Converters
             if ((bool)values[0] || (bool)values[1])
                 return false;
 
-            string subnet1 = values[2] as string;
-            string subnet2 = values[3] as string;
+            var subnet1 = values[2] as string;
+            var subnet2 = values[3] as string;
 
             // Catch null exceptions...
             if (string.IsNullOrEmpty(subnet1) || string.IsNullOrEmpty(subnet2))
                 return false;
 
             // Compare...
-            string[] subnet1data = subnet1.Split('/');
-            string[] subnet2data = subnet2.Split('/');
+            var subnet1Data = subnet1.Split('/');
+            var subnet2Data = subnet2.Split('/');
 
-            IPAddress subnet1IP = IPAddress.Parse(subnet1data[0]);
-            IPAddress subnet2IP = IPAddress.Parse(subnet2data[0]);
+            var subnet1Ip = IPAddress.Parse(subnet1Data[0]);
+            var subnet2Ip = IPAddress.Parse(subnet2Data[0]);
 
-            if (subnet1IP.AddressFamily == subnet2IP.AddressFamily)
-                return subnet1data[1] == subnet2data[1];
+            if (subnet1Ip.AddressFamily == subnet2Ip.AddressFamily)
+                return subnet1Data[1] == subnet2Data[1];
 
             return false;
         }

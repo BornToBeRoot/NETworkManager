@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace NETworkManager.Models.Network
+﻿namespace NETworkManager.Models.Network
 {
     public class DNSLookupErrorArgs : System.EventArgs
     {

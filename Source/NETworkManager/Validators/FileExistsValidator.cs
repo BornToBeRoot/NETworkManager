@@ -1,7 +1,5 @@
-﻿using NETworkManager.Models.Settings;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace NETworkManager.Validators
@@ -10,10 +8,7 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (File.Exists(value as string))
-                return ValidationResult.ValidResult;
-
-            return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_FileDoesNotExist"));
+            return File.Exists((string)value) ? ValidationResult.ValidResult : new ValidationResult(false, Resources.Localization.Strings.FileDoesNotExist);
         }
     }
 }

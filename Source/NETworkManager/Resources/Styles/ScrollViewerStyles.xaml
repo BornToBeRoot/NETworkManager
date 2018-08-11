@@ -17,7 +17,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <ScrollContentPresenter Grid.ColumnSpan="1" Grid.RowSpan="1" />
-                        <ScrollBar Name="PART_VerticalScrollBar" Width="8" HorizontalAlignment="Right" Grid.Column="1" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Style="{StaticResource ScrollViewerScrollBar}" Margin="10,0,0,0"/>
+                        <ScrollBar Name="PART_VerticalScrollBar" Width="8" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Style="{StaticResource ScrollViewerScrollBar}" Margin="10,0,0,0"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -40,7 +40,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <ScrollContentPresenter Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-                        <ScrollBar Name="PART_VerticalScrollBar" Width="8" HorizontalAlignment="Right" Grid.Column="1" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
+                        <ScrollBar Name="PART_VerticalScrollBar" Width="8" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

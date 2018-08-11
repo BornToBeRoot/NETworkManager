@@ -11,17 +11,15 @@ namespace NETworkManager.ViewModels
     public class SNMPHostViewModel : ViewModelBase
     {
         #region Variables
-        public IInterTabClient InterTabClient { get; private set; }
-        public ObservableCollection<DragablzTabItem> TabItems { get; private set; }
+        public IInterTabClient InterTabClient { get; }
+        public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-        private const string tagIdentifier = "tag=";
-
-        private int _tabId = 0;
+        private int _tabId;
 
         private int _selectedTabIndex;
         public int SelectedTabIndex
         {
-            get { return _selectedTabIndex; }
+            get => _selectedTabIndex;
             set
             {
                 if (value == _selectedTabIndex)
@@ -36,11 +34,11 @@ namespace NETworkManager.ViewModels
         #region Constructor
         public SNMPHostViewModel()
         {
-            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.SNMP);
+            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.PuTTY);
 
-            TabItems = new ObservableCollection<DragablzTabItem>()
+            TabItems = new ObservableCollection<DragablzTabItem>
             {
-                new DragablzTabItem(LocalizationManager.GetStringByKey("String_Header_NewTab"), new SNMPView (_tabId), _tabId)
+                new DragablzTabItem(Resources.Localization.Strings.NewTab, new SNMPView (_tabId), _tabId)
             };
         }
         #endregion
@@ -56,14 +54,11 @@ namespace NETworkManager.ViewModels
             AddTab();
         }
                 
-        public ItemActionCallback CloseItemCommand
-        {
-            get { return CloseItemAction; }
-        }
+        public ItemActionCallback CloseItemCommand => CloseItemAction;
 
-        private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
+        private static void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzTabItem).View as SNMPView).CloseTab();
+            ((args.DragablzItem.Content as DragablzTabItem)?.View as SNMPView)?.CloseTab();
         }
         #endregion
 
@@ -72,7 +67,7 @@ namespace NETworkManager.ViewModels
         {
             _tabId++;
 
-            TabItems.Add(new DragablzTabItem(host ?? LocalizationManager.GetStringByKey("String_Header_NewTab"), new SNMPView(_tabId, host), _tabId));
+            TabItems.Add(new DragablzTabItem(host ?? Resources.Localization.Strings.NewTab, new SNMPView(_tabId, host), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

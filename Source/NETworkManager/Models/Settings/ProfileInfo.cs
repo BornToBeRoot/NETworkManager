@@ -1,12 +1,15 @@
-﻿using static NETworkManager.Models.PuTTY.PuTTY;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using static NETworkManager.Models.PuTTY.PuTTY;
 
 namespace NETworkManager.Models.Settings
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class ProfileInfo
     {
         public string Name { get; set; }
         public string Host { get; set; }
-        public int CredentialID { get; set; } = -1;
+        public Guid CredentialID { get; set; } = Guid.Empty;
         public string Group { get; set; }
         public string Tags { get; set; }
         

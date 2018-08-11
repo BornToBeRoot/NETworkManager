@@ -26,11 +26,11 @@ namespace NETworkManager.Models.Settings
             Current = new CommandLineInfo();
 
             // Detect start parameters
-            string[] parameters = Environment.GetCommandLineArgs();
+            var parameters = Environment.GetCommandLineArgs();
 
-            for (int i = 0; i < parameters.Length; i++)
+            for (var i = 0; i < parameters.Length; i++)
             {
-                string[] param = parameters[i].Split(ParameterSplit);
+                var param = parameters[i].Split(ParameterSplit);
 
                 if (param[0].StartsWith(ParameterIdentifier))
                 {
@@ -61,11 +61,11 @@ namespace NETworkManager.Models.Settings
                 else
                 {
                     // Ignore the first parameter because it's the path of the .exe
-                    if (i != 0)
-                    {
-                        WrongParameterDetected(parameters);
-                        return;
-                    }
+                    if (i == 0)
+                        continue;
+
+                    WrongParameterDetected(parameters);
+                    return;
                 }
             }
         }

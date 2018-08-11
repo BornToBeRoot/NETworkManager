@@ -1,7 +1,5 @@
-﻿using NETworkManager.Models.Settings;
-using NETworkManager.Utilities;
+﻿using Lextm.SharpSnmpLib;
 using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
 namespace NETworkManager.Validators
@@ -10,10 +8,18 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (Regex.IsMatch(value as string, RegexHelper.OIDRegex))
-                return ValidationResult.ValidResult;
+            // Use SharpSNMP new ObjectIdentifiert to validate oid
+            try
+            {
+                // ReSharper disable once UnusedVariable
+                var oid = new ObjectIdentifier(value as string);
+            }
+            catch (System.ArgumentException)
+            {
+                return new ValidationResult(false, Resources.Localization.Strings.EnterValidOID);
+            }
 
-            return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidOID"));
+            return ValidationResult.ValidResult;
         }
     }
 }

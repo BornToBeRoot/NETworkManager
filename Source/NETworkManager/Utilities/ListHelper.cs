@@ -6,7 +6,7 @@ namespace NETworkManager.Utilities
     {
         public static List<string> Modify(List<string> list, string entry, int length)
         {
-            int index = list.IndexOf(entry);
+            var index = list.IndexOf(entry);
 
             if (index != -1)
                 list.RemoveAt(index);

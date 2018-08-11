@@ -4,13 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        mc:Ignorable="d">
-    <UserControl.Resources>
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <Converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
-    </UserControl.Resources>
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:HTTPHeadersHostViewModel}">
     <UserControl.InputBindings>
         <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding AddTabCommand}" />
     </UserControl.InputBindings>
@@ -21,10 +18,10 @@
             </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.HeaderSuffixContent>
                 <Grid HorizontalAlignment="Right" Width="40" Height="44">
-                    <Button Style="{StaticResource CleanButton}" Command="{Binding AddTabCommand}" ToolTip="{DynamicResource String_NewTab}" Focusable="False">
+                    <Button Style="{StaticResource CleanButton}" Command="{Binding AddTabCommand}" ToolTip="{x:Static localization:Strings.NewTab}" Focusable="False">
                         <Rectangle Width="20" Height="20">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
+                                <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
                             </Rectangle.OpacityMask>
                             <Rectangle.Style>
                                 <Style TargetType="{x:Type Rectangle}">
@@ -53,10 +50,10 @@
                 </Style>
             </Grid.Style>
             <StackPanel>
-                <Button HorizontalAlignment="Center" Focusable="False" Command="{Binding AddTabCommand}" ToolTip="{DynamicResource String_NewTab}" Style="{StaticResource CleanButton}" Margin="0,0,0,10">
+                <Button HorizontalAlignment="Center" Focusable="False" Command="{Binding AddTabCommand}" ToolTip="{x:Static localization:Strings.NewTab}" Style="{StaticResource CleanButton}" Margin="0,0,0,10">
                     <Rectangle Width="20" Height="20">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill" Visual="{IconPacks:Material Kind=Plus}" />
+                            <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
                         </Rectangle.OpacityMask>
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}">
@@ -70,7 +67,7 @@
                         </Rectangle.Style>
                     </Rectangle>
                 </Button>
-                <TextBlock Text="{DynamicResource String_AddATabToQueryTheHTTPHeaders}" Style="{StaticResource MessageTextBlock}" />
+                <TextBlock Text="{x:Static localization:Strings.AddATabToQueryTheHTTPHeaders}" Style="{StaticResource MessageTextBlock}" />
             </StackPanel>
         </Grid>
     </Grid>

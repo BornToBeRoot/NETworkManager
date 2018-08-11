@@ -3,8 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Views ="clr-namespace:NETworkManager.Views"
-        mc:Ignorable="d">
+        xmlns:views ="clr-namespace:NETworkManager.Views"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:LookupHostViewModel}">
     <TabControl>
         <TabControl.Style>
             <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource DefaultTabControl}">
@@ -15,11 +17,11 @@
                 </Style.Triggers>
             </Style>
         </TabControl.Style>
-        <TabItem Header="{DynamicResource String_Header_OUI}">
-            <Views:LookupOUILookupView Margin="10" />
+        <TabItem Header="{x:Static localization:Strings.OUI}">
+            <views:LookupOUILookupView Margin="10" />
         </TabItem>
-        <TabItem Header="{DynamicResource String_Header_Port}">
-            <Views:LookupPortLookupView Margin="10" />
+        <TabItem Header="{x:Static localization:Strings.Port}">
+            <views:LookupPortLookupView Margin="10" />
         </TabItem>
     </TabControl>
 </UserControl>

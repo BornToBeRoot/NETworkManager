@@ -10,9 +10,9 @@ namespace NETworkManager.Models.Settings
 
         public static void Detect()
         {
-            string applicationLocation = Assembly.GetExecutingAssembly().Location;
+            var applicationLocation = Assembly.GetExecutingAssembly().Location;
 
-            Current = new ConfigurationInfo()
+            Current = new ConfigurationInfo
             {
                 IsAdmin = (new WindowsPrincipal(WindowsIdentity.GetCurrent())).IsInRole(WindowsBuiltInRole.Administrator),
                 ExecutionPath = Path.GetDirectoryName(applicationLocation),

@@ -8,12 +8,9 @@ namespace NETworkManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string str = value as string;
+            var str = value as string;
 
-            if (string.IsNullOrEmpty(str))
-                return "-/-";
-
-            return str;
+            return string.IsNullOrEmpty(str) ? "-/-" : str;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -1,5 +1,4 @@
 ﻿using MahApps.Metro;
-using NETworkManager.Models.Settings;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -11,9 +10,10 @@ namespace NETworkManager.Converters
         /* Translate the name of the app theme */
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            AppTheme theme = value as AppTheme;
+            if (!(value is AppTheme theme))
+                return "No valid theme passed!";
 
-            string name = LocalizationManager.GetStringByKey("String_AppTheme_" + theme.Name);
+            var name = Resources.Localization.Strings.ResourceManager.GetString(theme.Name);
 
             if (string.IsNullOrEmpty(name))
                 name = theme.Name;

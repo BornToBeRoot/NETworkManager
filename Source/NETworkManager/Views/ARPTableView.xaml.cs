@@ -4,20 +4,20 @@ using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.Views
 {
-    public partial class ARPTableView : UserControl
+    public partial class ARPTableView
     {
-        ARPTableViewModel viewModel = new ARPTableViewModel(DialogCoordinator.Instance);
+        private readonly ARPTableViewModel _viewModel = new ARPTableViewModel(DialogCoordinator.Instance);
 
         public ARPTableView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
 
         private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
         {
-            ContextMenu menu = sender as ContextMenu;
-            menu.DataContext = viewModel;
+            if (sender is ContextMenu menu)
+                menu.DataContext = _viewModel;
         }
     }
 }

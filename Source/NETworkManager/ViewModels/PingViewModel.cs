@@ -1,7 +1,6 @@
 ﻿using NETworkManager.Models.Network;
 using NETworkManager.Models.Settings;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -16,26 +15,27 @@ using Dragablz;
 using NETworkManager.Controls;
 using NETworkManager.Utilities;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace NETworkManager.ViewModels
 {
     public class PingViewModel : ViewModelBase
     {
         #region Variables
-        CancellationTokenSource cancellationTokenSource;
+        private CancellationTokenSource _cancellationTokenSource;
 
-        private int _tabId;
+        private readonly int _tabId;
         private bool _firstLoad = true;
 
-        DispatcherTimer dispatcherTimer = new DispatcherTimer();
-        Stopwatch stopwatch = new Stopwatch();
+        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
+        private readonly Stopwatch _stopwatch = new Stopwatch();
 
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private string _host;
         public string Host
         {
-            get { return _host; }
+            get => _host;
             set
             {
                 if (value == _host)
@@ -46,16 +46,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ICollectionView _hostHistoryView;
-        public ICollectionView HostHistoryView
-        {
-            get { return _hostHistoryView; }
-        }
-              
+        public ICollectionView HostHistoryView { get; }
+
         private bool _isPingRunning;
         public bool IsPingRunning
         {
-            get { return _isPingRunning; }
+            get => _isPingRunning;
             set
             {
                 if (value == _isPingRunning)
@@ -69,7 +65,7 @@ namespace NETworkManager.ViewModels
         private bool _cancelPing;
         public bool CancelPing
         {
-            get { return _cancelPing; }
+            get => _cancelPing;
             set
             {
                 if (value == _cancelPing)
@@ -83,26 +79,22 @@ namespace NETworkManager.ViewModels
         private ObservableCollection<PingInfo> _pingResult = new ObservableCollection<PingInfo>();
         public ObservableCollection<PingInfo> PingResult
         {
-            get { return _pingResult; }
+            get => _pingResult;
             set
             {
-                if (value == _pingResult)
+                if (value != null && value == _pingResult)
                     return;
 
                 _pingResult = value;
             }
         }
 
-        private ICollectionView _pingResultView;
-        public ICollectionView PingResultView
-        {
-            get { return _pingResultView; }
-        }
+        public ICollectionView PingResultView { get; }
 
         private PingInfo _selectedPingResult;
         public PingInfo SelectedPingResult
         {
-            get { return _selectedPingResult; }
+            get => _selectedPingResult;
             set
             {
                 if (value == _selectedPingResult)
@@ -116,7 +108,7 @@ namespace NETworkManager.ViewModels
         private int _pingsTransmitted;
         public int PingsTransmitted
         {
-            get { return _pingsTransmitted; }
+            get => _pingsTransmitted;
             set
             {
                 if (value == _pingsTransmitted)
@@ -130,7 +122,7 @@ namespace NETworkManager.ViewModels
         private int _pingsReceived;
         public int PingsReceived
         {
-            get { return _pingsReceived; }
+            get => _pingsReceived;
             set
             {
                 if (value == _pingsReceived)
@@ -144,7 +136,7 @@ namespace NETworkManager.ViewModels
         private int _pingsLost;
         public int PingsLost
         {
-            get { return _pingsLost; }
+            get => _pingsLost;
             set
             {
                 if (value == _pingsLost)
@@ -158,7 +150,7 @@ namespace NETworkManager.ViewModels
         private long _minimumTime;
         public long MinimumTime
         {
-            get { return _minimumTime; }
+            get => _minimumTime;
             set
             {
                 if (value == _minimumTime)
@@ -172,7 +164,7 @@ namespace NETworkManager.ViewModels
         private long _maximumTime;
         public long MaximumTime
         {
-            get { return _maximumTime; }
+            get => _maximumTime;
             set
             {
                 if (value == _maximumTime)
@@ -186,7 +178,7 @@ namespace NETworkManager.ViewModels
         private int _averageTime;
         public int AverageTime
         {
-            get { return _averageTime; }
+            get => _averageTime;
             set
             {
                 if (value == _averageTime)
@@ -200,7 +192,7 @@ namespace NETworkManager.ViewModels
         private DateTime? _startTime;
         public DateTime? StartTime
         {
-            get { return _startTime; }
+            get => _startTime;
             set
             {
                 if (value == _startTime)
@@ -214,7 +206,7 @@ namespace NETworkManager.ViewModels
         private TimeSpan _duration;
         public TimeSpan Duration
         {
-            get { return _duration; }
+            get => _duration;
             set
             {
                 if (value == _duration)
@@ -228,7 +220,7 @@ namespace NETworkManager.ViewModels
         private DateTime? _endTime;
         public DateTime? EndTime
         {
-            get { return _endTime; }
+            get => _endTime;
             set
             {
                 if (value == _endTime)
@@ -242,7 +234,7 @@ namespace NETworkManager.ViewModels
         private bool _expandStatistics;
         public bool ExpandStatistics
         {
-            get { return _expandStatistics; }
+            get => _expandStatistics;
             set
             {
                 if (value == _expandStatistics)
@@ -259,7 +251,7 @@ namespace NETworkManager.ViewModels
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
         {
-            get { return _displayStatusMessage; }
+            get => _displayStatusMessage;
             set
             {
                 if (value == _displayStatusMessage)
@@ -273,7 +265,7 @@ namespace NETworkManager.ViewModels
         private string _statusMessage;
         public string StatusMessage
         {
-            get { return _statusMessage; }
+            get => _statusMessage;
             set
             {
                 if (value == _statusMessage)
@@ -284,23 +276,23 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public bool ShowStatistics
-        {
-            get { return SettingsManager.Current.Ping_ShowStatistics; }
-        }
+        public bool ShowStatistics => SettingsManager.Current.Ping_ShowStatistics;
+
         #endregion
 
         #region Contructor, load settings    
         public PingViewModel(int tabId, string host)
         {
+            _isLoading = true;
+
             _tabId = tabId;
             Host = host;
 
             // Set collection view
-            _hostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Ping_HostHistory);
+            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Ping_HostHistory);
 
             // Result view
-            _pingResultView = CollectionViewSource.GetDefaultView(PingResult);
+            PingResultView = CollectionViewSource.GetDefaultView(PingResult);
 
             LoadSettings();
 
@@ -312,13 +304,13 @@ namespace NETworkManager.ViewModels
 
         public void OnLoaded()
         {
-            if (_firstLoad)
-            {
-                if (!string.IsNullOrEmpty(Host))
-                    StartPing();
+            if (!_firstLoad)
+                return;
 
-                _firstLoad = false;
-            }
+            if (!string.IsNullOrEmpty(Host))
+                StartPing();
+
+            _firstLoad = false;
         }
 
         private void LoadSettings()
@@ -348,7 +340,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedTimestampAction()
         {
-            Clipboard.SetText(SelectedPingResult.Timestamp.ToString());
+            Clipboard.SetText(SelectedPingResult.Timestamp.ToString(CultureInfo.CurrentCulture));
         }
 
         public ICommand CopySelectedIPAddressCommand
@@ -408,7 +400,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {
-            Clipboard.SetText(LocalizationManager.GetStringByKey("String_IPStatus_" + SelectedPingResult.Status.ToString()));
+            Clipboard.SetText(Resources.Localization.Strings.ResourceManager.GetString("String_IPStatus_" + SelectedPingResult.Status));
         }
         #endregion
 
@@ -420,10 +412,10 @@ namespace NETworkManager.ViewModels
 
             // Measure the time
             StartTime = DateTime.Now;
-            stopwatch.Start();
-            dispatcherTimer.Tick += DispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            dispatcherTimer.Start();
+            _stopwatch.Start();
+            _dispatcherTimer.Tick += DispatcherTimer_Tick;
+            _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            _dispatcherTimer.Start();
             EndTime = null;
 
             // Reset the latest results
@@ -436,48 +428,44 @@ namespace NETworkManager.ViewModels
             MaximumTime = 0;
 
             // Change the tab title (not nice, but it works)
-            Window window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
             if (window != null)
             {
-                foreach (TabablzControl tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+                foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
                 {
-                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.ID == _tabId).Header = Host;
+                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
                 }
             }
 
             // Try to parse the string into an IP-Address
-            bool hostIsIP = IPAddress.TryParse(Host, out IPAddress ipAddress);
+            var hostIsIP = IPAddress.TryParse(Host, out var ipAddress);
 
             try
             {
                 // Try to resolve the hostname
+                var ipHostEntrys = await Dns.GetHostEntryAsync(Host);
+
                 if (!hostIsIP)
                 {
-                    IPHostEntry ipHostEntrys = await Dns.GetHostEntryAsync(Host);
-
-                    foreach (IPAddress ip in ipHostEntrys.AddressList)
+                    foreach (var ip in ipHostEntrys.AddressList)
                     {
-                        if (ip.AddressFamily == AddressFamily.InterNetwork && SettingsManager.Current.Ping_ResolveHostnamePreferIPv4)
+                        switch (ip.AddressFamily)
                         {
-                            ipAddress = ip;
-                            continue;
-                        }
-                        else if (ip.AddressFamily == AddressFamily.InterNetworkV6 && !SettingsManager.Current.Ping_ResolveHostnamePreferIPv4)
-                        {
-                            ipAddress = ip;
-                            continue;
+                            case AddressFamily.InterNetwork when SettingsManager.Current.Ping_ResolveHostnamePreferIPv4:
+                                ipAddress = ip;
+                                break;
+                            case AddressFamily.InterNetworkV6 when !SettingsManager.Current.Ping_ResolveHostnamePreferIPv4:
+                                ipAddress = ip;
+                                break;
                         }
                     }
 
                     // Fallback --> If we could not resolve our prefered ip protocol for the hostname
-                    if (!hostIsIP)
+                    foreach (var ip in ipHostEntrys.AddressList)
                     {
-                        foreach (IPAddress ip in ipHostEntrys.AddressList)
-                        {
-                            ipAddress = ip;
-                            continue;
-                        }
+                        ipAddress = ip;
+                        break;
                     }
                 }
             }
@@ -488,7 +476,7 @@ namespace NETworkManager.ViewModels
                 else
                     PingFinished();
 
-                StatusMessage = string.Format(LocalizationManager.GetStringByKey("String_CouldNotResolveHostnameFor"), Host);
+                StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, Host);
                 DisplayStatusMessage = true;
 
                 return;
@@ -497,9 +485,9 @@ namespace NETworkManager.ViewModels
             // Add the hostname or ip address to the history
             AddHostToHistory(Host);
 
-            cancellationTokenSource = new CancellationTokenSource();
+            _cancellationTokenSource = new CancellationTokenSource();
 
-            PingOptions pingOptions = new PingOptions()
+            var pingOptions = new PingOptions()
             {
                 Attempts = SettingsManager.Current.Ping_Attempts,
                 Timeout = SettingsManager.Current.Ping_Timeout,
@@ -511,22 +499,21 @@ namespace NETworkManager.ViewModels
                 Hostname = hostIsIP ? string.Empty : Host
             };
 
-            Ping ping = new Ping();
+            var ping = new Ping();
 
             ping.PingReceived += Ping_PingReceived;
             ping.PingCompleted += Ping_PingCompleted;
             ping.PingException += Ping_PingException;
             ping.UserHasCanceled += Ping_UserHasCanceled;
 
-            ping.SendAsync(ipAddress, pingOptions, cancellationTokenSource.Token);
+            ping.SendAsync(ipAddress, pingOptions, _cancellationTokenSource.Token);
         }
 
         private void StopPing()
         {
             CancelPing = true;
 
-            if (cancellationTokenSource != null)
-                cancellationTokenSource.Cancel();
+            _cancellationTokenSource?.Cancel();
         }
 
         private void UserHasCanceled()
@@ -541,19 +528,19 @@ namespace NETworkManager.ViewModels
             IsPingRunning = false;
 
             // Stop timer and stopwatch
-            stopwatch.Stop();
-            dispatcherTimer.Stop();
+            _stopwatch.Stop();
+            _dispatcherTimer.Stop();
 
-            Duration = stopwatch.Elapsed;
+            Duration = _stopwatch.Elapsed;
             EndTime = DateTime.Now;
 
-            stopwatch.Reset();
+            _stopwatch.Reset();
         }
 
         private void AddHostToHistory(string host)
         {
             // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.Ping_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.Ping_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.Ping_HostHistory.Clear();
@@ -574,10 +561,10 @@ namespace NETworkManager.ViewModels
         #region Events
         private void Ping_PingReceived(object sender, PingReceivedArgs e)
         {
-            PingInfo pingInfo = PingInfo.Parse(e);
+            var pingInfo = PingInfo.Parse(e);
 
             // Add the result to the collection
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 lock (PingResult)
                     PingResult.Add(pingInfo);
@@ -623,18 +610,20 @@ namespace NETworkManager.ViewModels
         private void Ping_PingException(object sender, PingExceptionArgs e)
         {
             // Get the error code and change the message (maybe we can help the user with troubleshooting)
-            Win32Exception w32ex = e.InnerException as Win32Exception;
 
-            string errorMessage = string.Empty;
+            var errorMessage = string.Empty;
 
-            switch (w32ex.NativeErrorCode)
+            if (e.InnerException is Win32Exception w32Ex)
             {
-                case 1231:
-                    errorMessage = LocalizationManager.GetStringByKey("String_NetworkLocationCannotBeReached");
-                    break;
-                default:
-                    errorMessage = e.InnerException.Message;
-                    break;
+                switch (w32Ex.NativeErrorCode)
+                {
+                    case 1231:
+                        errorMessage = Resources.Localization.Strings.NetworkLocationCannotBeReachedMessage;
+                        break;
+                    default:
+                        errorMessage = e.InnerException.Message;
+                        break;
+                }
             }
 
             PingFinished();
@@ -650,7 +639,7 @@ namespace NETworkManager.ViewModels
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            Duration = stopwatch.Elapsed;
+            Duration = _stopwatch.Elapsed;
         }
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)

@@ -1,17 +1,16 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class SettingsAutostartView : UserControl
+    public partial class SettingsAutostartView
     {
-        SettingsAutostartViewModel viewModel = new SettingsAutostartViewModel(DialogCoordinator.Instance);
+        private readonly SettingsAutostartViewModel _viewModel = new SettingsAutostartViewModel(DialogCoordinator.Instance);
 
         public SettingsAutostartView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

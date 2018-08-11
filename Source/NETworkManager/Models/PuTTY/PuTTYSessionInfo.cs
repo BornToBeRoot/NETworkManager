@@ -20,7 +20,7 @@ namespace NETworkManager.Models.PuTTY
 
         public static PuTTYProfileInfo Parse(ProfileInfo profileInfo)
         {
-            PuTTYProfileInfo info = new PuTTYProfileInfo
+            var info = new PuTTYProfileInfo
             {
                 HostOrSerialLine = profileInfo.PuTTY_HostOrSerialLine,
                 PortOrBaud = profileInfo.PuTTY_PortOrBaud,

@@ -29,68 +29,73 @@ namespace NETworkManager.Models.Network
 
         public static List<NetworkInterfaceInfo> GetNetworkInterfaces()
         {
-            List<NetworkInterfaceInfo> listNetworkInterfaceInfo = new List<NetworkInterfaceInfo>();
+            var listNetworkInterfaceInfo = new List<NetworkInterfaceInfo>();
 
             foreach (System.Net.NetworkInformation.NetworkInterface networkInterface in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
             {
                 if (networkInterface.NetworkInterfaceType != NetworkInterfaceType.Ethernet && networkInterface.NetworkInterfaceType != NetworkInterfaceType.Wireless80211)
                     continue;
 
-                List<IPAddress> listIPv4Address = new List<IPAddress>();
-                List<IPAddress> listSubnetmask = new List<IPAddress>();
-                List<IPAddress> listIPv6AddressLinkLocal = new List<IPAddress>();
-                List<IPAddress> listIPv6Address = new List<IPAddress>();
+                var listIPv4Address = new List<IPAddress>();
+                var listSubnetmask = new List<IPAddress>();
+                var listIPv6AddressLinkLocal = new List<IPAddress>();
+                var listIPv6Address = new List<IPAddress>();
 
-                DateTime dhcpLeaseObtained = new DateTime();
-                DateTime dhcpLeaseExpires = new DateTime();
+                var dhcpLeaseObtained = new DateTime();
+                var dhcpLeaseExpires = new DateTime();
 
-                foreach (UnicastIPAddressInformation unicastIPAddrInfo in networkInterface.GetIPProperties().UnicastAddresses)
+                foreach (var unicastIPAddrInfo in networkInterface.GetIPProperties().UnicastAddresses)
                 {
-                    if (unicastIPAddrInfo.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                    switch (unicastIPAddrInfo.Address.AddressFamily)
                     {
-                        listIPv4Address.Add(unicastIPAddrInfo.Address);
-                        listSubnetmask.Add(unicastIPAddrInfo.IPv4Mask);
-
-                        dhcpLeaseExpires = (DateTime.UtcNow + TimeSpan.FromSeconds(unicastIPAddrInfo.AddressPreferredLifetime)).ToLocalTime();
-                        dhcpLeaseObtained = (DateTime.UtcNow + TimeSpan.FromSeconds(unicastIPAddrInfo.AddressValidLifetime) - TimeSpan.FromSeconds(unicastIPAddrInfo.DhcpLeaseLifetime)).ToLocalTime();
-                    }
-                    else if (unicastIPAddrInfo.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
-                    {
-                        if (unicastIPAddrInfo.Address.IsIPv6LinkLocal)
+                        case System.Net.Sockets.AddressFamily.InterNetwork:
+                            listIPv4Address.Add(unicastIPAddrInfo.Address);
+                            listSubnetmask.Add(unicastIPAddrInfo.IPv4Mask);
+                            dhcpLeaseExpires = (DateTime.UtcNow + TimeSpan.FromSeconds(unicastIPAddrInfo.AddressPreferredLifetime)).ToLocalTime();
+                            dhcpLeaseObtained = (DateTime.UtcNow + TimeSpan.FromSeconds(unicastIPAddrInfo.AddressValidLifetime) - TimeSpan.FromSeconds(unicastIPAddrInfo.DhcpLeaseLifetime)).ToLocalTime();
+                            break;
+                        case System.Net.Sockets.AddressFamily.InterNetworkV6 when unicastIPAddrInfo.Address.IsIPv6LinkLocal:
                             listIPv6AddressLinkLocal.Add(unicastIPAddrInfo.Address);
-                        else
+                            break;
+                        case System.Net.Sockets.AddressFamily.InterNetworkV6:
                             listIPv6Address.Add(unicastIPAddrInfo.Address);
+                            break;
                     }
                 }
 
-                List<IPAddress> listIPv4Gateway = new List<IPAddress>();
-                List<IPAddress> listIPv6Gateway = new List<IPAddress>();
+                var listIPv4Gateway = new List<IPAddress>();
+                var listIPv6Gateway = new List<IPAddress>();
 
                 foreach (GatewayIPAddressInformation gatewayIPAddrInfo in networkInterface.GetIPProperties().GatewayAddresses)
                 {
-                    if (gatewayIPAddrInfo.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                        listIPv4Gateway.Add(gatewayIPAddrInfo.Address);
-                    else if (gatewayIPAddrInfo.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
-                        listIPv6Gateway.Add(gatewayIPAddrInfo.Address);
+                    switch (gatewayIPAddrInfo.Address.AddressFamily)
+                    {
+                        case System.Net.Sockets.AddressFamily.InterNetwork:
+                            listIPv4Gateway.Add(gatewayIPAddrInfo.Address);
+                            break;
+                        case System.Net.Sockets.AddressFamily.InterNetworkV6:
+                            listIPv6Gateway.Add(gatewayIPAddrInfo.Address);
+                            break;
+                    }
                 }
 
-                List<IPAddress> listDhcpServer = new List<IPAddress>();
+                var listDhcpServer = new List<IPAddress>();
 
-                foreach (IPAddress dhcpServerIPAddress in networkInterface.GetIPProperties().DhcpServerAddresses)
+                foreach (var dhcpServerIPAddress in networkInterface.GetIPProperties().DhcpServerAddresses)
                 {
                     if (dhcpServerIPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                         listDhcpServer.Add(dhcpServerIPAddress);
                 }
 
                 // Check if autoconfiguration for DNS is enabled (only via registry key)
-                RegistryKey nameServerKey = Registry.LocalMachine.OpenSubKey(String.Format(@"SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{0}", networkInterface.Id));
-                bool DNSAutoconfigurationEnabled = string.IsNullOrEmpty(nameServerKey.GetValue("NameServer").ToString());
+                var nameServerKey = Registry.LocalMachine.OpenSubKey($@"SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{networkInterface.Id}");
+                var dnsAutoconfigurationEnabled = nameServerKey != null && string.IsNullOrEmpty(nameServerKey.GetValue("NameServer").ToString());
 
-                List<IPAddress> listDNSServer = new List<IPAddress>();
+                var listDNSServer = new List<IPAddress>();
 
-                foreach (IPAddress DNSServerIPAddress in networkInterface.GetIPProperties().DnsAddresses)
+                foreach (var dnsServerIPAddress in networkInterface.GetIPProperties().DnsAddresses)
                 {
-                    listDNSServer.Add(DNSServerIPAddress);
+                    listDNSServer.Add(dnsServerIPAddress);
                 }
 
                 listNetworkInterfaceInfo.Add(new NetworkInterfaceInfo
@@ -101,7 +106,7 @@ namespace NETworkManager.Models.Network
                     Type = networkInterface.NetworkInterfaceType.ToString(),
                     PhysicalAddress = networkInterface.GetPhysicalAddress(),
                     Status = networkInterface.OperationalStatus,
-                    IsOperational = networkInterface.OperationalStatus == OperationalStatus.Up ? true : false,
+                    IsOperational = networkInterface.OperationalStatus == OperationalStatus.Up,
                     Speed = networkInterface.Speed,
                     IPv4Address = listIPv4Address.ToArray(),
                     Subnetmask = listSubnetmask.ToArray(),
@@ -113,7 +118,7 @@ namespace NETworkManager.Models.Network
                     IPv6AddressLinkLocal = listIPv6AddressLinkLocal.ToArray(),
                     IPv6Address = listIPv6Address.ToArray(),
                     IPv6Gateway = listIPv6Gateway.ToArray(),
-                    DNSAutoconfigurationEnabled = DNSAutoconfigurationEnabled,
+                    DNSAutoconfigurationEnabled = dnsAutoconfigurationEnabled,
                     DNSSuffix = networkInterface.GetIPProperties().DnsSuffix,
                     DNSServer = listDNSServer.ToArray()
                 });
@@ -130,7 +135,7 @@ namespace NETworkManager.Models.Network
         public void ConfigureNetworkInterface(NetworkInterfaceConfig config)
         {
             // IP
-            string command = @"netsh interface ipv4 set address name='" + config.Name + @"'";
+            var command = @"netsh interface ipv4 set address name='" + config.Name + @"'";
             command += config.EnableStaticIPAddress ? @" source=static address=" + config.IPAddress + @" mask=" + config.Subnetmask + @" gateway=" + config.Gateway : @" source=dhcp";
 
             // DNS
@@ -142,9 +147,9 @@ namespace NETworkManager.Models.Network
             {
                 PowerShellHelper.RunPSCommand(command, true);
             }
-            catch (Win32Exception win32ex)
+            catch (Win32Exception win32Ex)
             {
-                switch (win32ex.NativeErrorCode)
+                switch (win32Ex.NativeErrorCode)
                 {
                     case 1223:
                         OnUserHasCanceled();
@@ -160,7 +165,8 @@ namespace NETworkManager.Models.Network
 
         public static void FlushDnsResolverCache()
         {
-            UInt32 result = DnsFlushResolverCache();
+            // ReSharper disable once UnusedVariable
+            var result = DnsFlushResolverCache();
         }
         #endregion
     }

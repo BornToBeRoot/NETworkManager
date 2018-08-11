@@ -16,8 +16,6 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
                 <!-- Dragablz -->
                 <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/MahApps.xaml" />
-                <!-- Localization -->
-                <ResourceDictionary Source="/Resources/Localization/en-US.xaml" />
                 <!-- Context menu (import berfore styles)-->
                 <ResourceDictionary Source="/Resources/ContextMenu/ContextMenu.xaml" />
                 <!-- Control templates (import before styles) -->
@@ -28,7 +26,7 @@
                 <ResourceDictionary Source="/Resources/Styles/ContextMenuStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/DataGridStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/GridSplitterStyles.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/GroupBoxStyles.xaml" />                
+                <ResourceDictionary Source="/Resources/Styles/GroupBoxStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/NumericUpDownStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/RadioButtonStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ScrollBarStyles.xaml" />

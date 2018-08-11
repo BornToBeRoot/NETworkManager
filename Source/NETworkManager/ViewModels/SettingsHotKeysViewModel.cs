@@ -7,12 +7,12 @@ namespace NETworkManager.ViewModels
     public class SettingsHotKeysViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private bool _hotKeyShowWindowEnabled;
         public bool HotKeyShowWindowEnabled
         {
-            get { return _hotKeyShowWindowEnabled; }
+            get => _hotKeyShowWindowEnabled;
             set
             {
                 if (value == _hotKeyShowWindowEnabled)
@@ -33,10 +33,10 @@ namespace NETworkManager.ViewModels
         private HotKey _hotKeyShowWindow;
         public HotKey HotKeyShowWindow
         {
-            get { return _hotKeyShowWindow; }
+            get => _hotKeyShowWindow;
             set
             {
-                if (value == _hotKeyShowWindow)
+                if (Equals(value, _hotKeyShowWindow))
                     return;
 
                 if (!_isLoading && value != null)
@@ -56,6 +56,8 @@ namespace NETworkManager.ViewModels
         #region Constructor, LoadSettings
         public SettingsHotKeysViewModel()
         {
+            _isLoading = true;
+
             LoadSettings();
 
             _isLoading = false;

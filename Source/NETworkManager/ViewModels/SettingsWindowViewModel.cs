@@ -6,12 +6,12 @@ namespace NETworkManager.ViewModels
     public class SettingsWindowViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private bool _minimizeInsteadOfTerminating;
         public bool MinimizeInsteadOfTerminating
         {
-            get { return _minimizeInsteadOfTerminating; }
+            get => _minimizeInsteadOfTerminating;
             set
             {
                 if (value == _minimizeInsteadOfTerminating)
@@ -28,7 +28,7 @@ namespace NETworkManager.ViewModels
         private bool _minimizeToTrayInsteadOfTaskbar;
         public bool MinimizeToTrayInsteadOfTaskbar
         {
-            get { return _minimizeToTrayInsteadOfTaskbar; }
+            get => _minimizeToTrayInsteadOfTaskbar;
             set
             {
                 if (value == _minimizeToTrayInsteadOfTaskbar)
@@ -45,7 +45,7 @@ namespace NETworkManager.ViewModels
         private bool _confirmClose;
         public bool ConfirmClose
         {
-            get { return _confirmClose; }
+            get => _confirmClose;
             set
             {
                 if (value == _confirmClose)
@@ -62,7 +62,7 @@ namespace NETworkManager.ViewModels
         private bool _multipleInstances;
         public bool MultipleInstances
         {
-            get { return _multipleInstances; }
+            get => _multipleInstances;
             set
             {
                 if (value == _multipleInstances)
@@ -79,7 +79,7 @@ namespace NETworkManager.ViewModels
         private bool _showCurrentApplicationTitle;
         public bool ShowCurrentApplicationTitle
         {
-            get { return _showCurrentApplicationTitle; }
+            get => _showCurrentApplicationTitle;
             set
             {
                 if (value == _showCurrentApplicationTitle)
@@ -96,7 +96,7 @@ namespace NETworkManager.ViewModels
         private bool _alwaysShowIconInTray;
         public bool AlwaysShowIconInTray
         {
-            get { return _alwaysShowIconInTray; }
+            get => _alwaysShowIconInTray;
             set
             {
                 if (value == _alwaysShowIconInTray)
@@ -114,6 +114,8 @@ namespace NETworkManager.ViewModels
         #region Constructor, LoadSettings
         public SettingsWindowViewModel()
         {
+            _isLoading = true;
+
             LoadSettings();
 
             _isLoading = false;

@@ -1,16 +1,15 @@
 ﻿using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class LookupHostView : UserControl
+    public partial class LookupHostView
     {
-        LookupHostViewModel viewModel = new LookupHostViewModel();
+        private readonly LookupHostViewModel _viewModel = new LookupHostViewModel();
 
         public LookupHostView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

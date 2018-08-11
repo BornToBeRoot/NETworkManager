@@ -1,16 +1,15 @@
 ﻿using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class SettingsLanguageView : UserControl
+    public partial class SettingsLanguageView
     {
-        SettingsLanguageViewModel viewModel = new SettingsLanguageViewModel();
+        private readonly SettingsLanguageViewModel _viewModel = new SettingsLanguageViewModel();
 
         public SettingsLanguageView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
         }
     }
 }

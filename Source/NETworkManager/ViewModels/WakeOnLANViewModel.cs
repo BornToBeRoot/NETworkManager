@@ -17,16 +17,16 @@ namespace NETworkManager.ViewModels
     public class WakeOnLANViewModel : ViewModelBase
     {
         #region  Variables 
-        private IDialogCoordinator dialogCoordinator;
+        private readonly IDialogCoordinator _dialogCoordinator;
 
-        private const string tagIdentifier = "tag=";
+        private const string TagIdentifier = "tag=";
 
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private bool _isSending;
         public bool IsSending
         {
-            get { return _isSending; }
+            get => _isSending;
             set
             {
                 if (value == _isSending)
@@ -37,16 +37,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _MACAddress;
+        private string _macAddress;
         public string MACAddress
         {
-            get { return _MACAddress; }
+            get => _macAddress;
             set
             {
-                if (value == _MACAddress)
+                if (value == _macAddress)
                     return;
 
-                _MACAddress = value;
+                _macAddress = value;
                 OnPropertyChanged();
             }
         }
@@ -54,7 +54,7 @@ namespace NETworkManager.ViewModels
         private bool _macAddressHasError;
         public bool MACAddressHasError
         {
-            get { return _macAddressHasError; }
+            get => _macAddressHasError;
             set
             {
                 if (value == _macAddressHasError)
@@ -68,7 +68,7 @@ namespace NETworkManager.ViewModels
         private string _broadcast;
         public string Broadcast
         {
-            get { return _broadcast; }
+            get => _broadcast;
             set
             {
                 if (value == _broadcast)
@@ -82,7 +82,7 @@ namespace NETworkManager.ViewModels
         private bool _broadcastHasError;
         public bool BroadcastHasError
         {
-            get { return _broadcastHasError; }
+            get => _broadcastHasError;
             set
             {
                 if (value == _broadcastHasError)
@@ -96,7 +96,7 @@ namespace NETworkManager.ViewModels
         private int _port;
         public int Port
         {
-            get { return _port; }
+            get => _port;
             set
             {
                 if (value == _port)
@@ -110,7 +110,7 @@ namespace NETworkManager.ViewModels
         private bool _portHasError;
         public bool PortHasError
         {
-            get { return _portHasError; }
+            get => _portHasError;
             set
             {
                 if (value == _portHasError)
@@ -124,7 +124,7 @@ namespace NETworkManager.ViewModels
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
         {
-            get { return _displayStatusMessage; }
+            get => _displayStatusMessage;
             set
             {
                 if (value == _displayStatusMessage)
@@ -138,7 +138,7 @@ namespace NETworkManager.ViewModels
         private string _statusMessage;
         public string StatusMessage
         {
-            get { return _statusMessage; }
+            get => _statusMessage;
             set
             {
                 if (value == _statusMessage)
@@ -149,17 +149,13 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        #region Clients
-        ICollectionView _profiles;
-        public ICollectionView Profiles
-        {
-            get { return _profiles; }
-        }
+        #region Profiles
+        public ICollectionView Profiles { get; }
 
         private ProfileInfo _selectedProfile;
         public ProfileInfo SelectedProfile
         {
-            get { return _selectedProfile; }
+            get => _selectedProfile;
             set
             {
                 if (value == _selectedProfile)
@@ -180,7 +176,7 @@ namespace NETworkManager.ViewModels
         private string _search;
         public string Search
         {
-            get { return _search; }
+            get => _search;
             set
             {
                 if (value == _search)
@@ -200,7 +196,7 @@ namespace NETworkManager.ViewModels
         private bool _expandProfileView;
         public bool ExpandProfileView
         {
-            get { return _expandProfileView; }
+            get => _expandProfileView;
             set
             {
                 if (value == _expandProfileView)
@@ -212,7 +208,7 @@ namespace NETworkManager.ViewModels
                 _expandProfileView = value;
 
                 if (_canProfileWidthChange)
-                    ResizeClient(dueToChangedSize: false);
+                    ResizeClient(false);
 
                 OnPropertyChanged();
             }
@@ -221,7 +217,7 @@ namespace NETworkManager.ViewModels
         private GridLength _profileWidth;
         public GridLength ProfileWidth
         {
-            get { return _profileWidth; }
+            get => _profileWidth;
             set
             {
                 if (value == _profileWidth)
@@ -233,7 +229,7 @@ namespace NETworkManager.ViewModels
                 _profileWidth = value;
 
                 if (_canProfileWidthChange)
-                    ResizeClient(dueToChangedSize: true);
+                    ResizeClient(true);
 
                 OnPropertyChanged();
             }
@@ -244,33 +240,30 @@ namespace NETworkManager.ViewModels
         #region Constructor, load settings
         public WakeOnLANViewModel(IDialogCoordinator instance)
         {
-            dialogCoordinator = instance;
+            _isLoading = true; 
 
-            _profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
-            _profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
-            _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
-            _profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
-            _profiles.Filter = o =>
+            _dialogCoordinator = instance;
+
+            Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
+            Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
+            Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
+            Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
+            Profiles.Filter = o =>
             {
-                ProfileInfo info = o as ProfileInfo;
+                if (!(o is ProfileInfo info))
+                    return false;
 
                 if (string.IsNullOrEmpty(Search))
                     return info.WakeOnLAN_Enabled;
 
-                string search = Search.Trim();
+                var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
-                if (search.StartsWith(tagIdentifier, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (string.IsNullOrEmpty(info.Tags))
-                        return false;
-                    else
-                        return (info.WakeOnLAN_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(tagIdentifier.Length, search.Length - tagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase)));
-                }
-                else // Search by: Name, PuTTY_HostOrSerialLine
-                {
-                    return (info.WakeOnLAN_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.WakeOnLAN_MACAddress.Replace("-", "").Replace(":", "").IndexOf(search.Replace("-", "").Replace(":", ""), StringComparison.OrdinalIgnoreCase) > -1));
-                }
+                if (search.StartsWith(TagIdentifier, StringComparison.OrdinalIgnoreCase))
+                    return !string.IsNullOrEmpty(info.Tags) && info.WakeOnLAN_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(TagIdentifier.Length, search.Length - TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+
+                // Search by: Name, IPScanner_IPRange
+                return info.WakeOnLAN_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.WakeOnLAN_MACAddress.Replace("-", "").Replace(":", "").IndexOf(search.Replace("-", "").Replace(":", ""), StringComparison.OrdinalIgnoreCase) > -1);
             };
 
             // This will select the first entry as selected item...
@@ -287,10 +280,7 @@ namespace NETworkManager.ViewModels
             Port = SettingsManager.Current.WakeOnLAN_DefaultPort;
             ExpandProfileView = SettingsManager.Current.WakeOnLAN_ExpandClientView;
 
-            if (ExpandProfileView)
-                ProfileWidth = new GridLength(SettingsManager.Current.WakeOnLAN_ClientWidth);
-            else
-                ProfileWidth = new GridLength(40);
+            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.WakeOnLAN_ClientWidth) : new GridLength(40);
 
             _tempProfileWidth = SettingsManager.Current.WakeOnLAN_ClientWidth;
         }
@@ -309,7 +299,7 @@ namespace NETworkManager.ViewModels
 
         private void WakeUpAction()
         {
-            WakeOnLANInfo info = new WakeOnLANInfo
+            var info = new WakeOnLANInfo
             {
                 MagicPacket = WakeOnLAN.CreateMagicPacket(MACAddress),
                 Broadcast = IPAddress.Parse(Broadcast),
@@ -326,7 +316,7 @@ namespace NETworkManager.ViewModels
 
         private void WakeUpProfileAction()
         {
-            WakeOnLANInfo info = new WakeOnLANInfo
+            var info = new WakeOnLANInfo
             {
                 MagicPacket = WakeOnLAN.CreateMagicPacket(SelectedProfile.WakeOnLAN_MACAddress),
                 Broadcast = IPAddress.Parse(SelectedProfile.WakeOnLAN_Broadcast),
@@ -343,19 +333,19 @@ namespace NETworkManager.ViewModels
 
         private async void AddProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_AddProfile")
+                Title = Resources.Localization.Strings.AddProfile
             };
 
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileManager.AddProfile(instance);
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             }, ProfileManager.GetGroups());
 
             customDialog.Content = new ProfileDialog
@@ -363,7 +353,7 @@ namespace NETworkManager.ViewModels
                 DataContext = profileViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand EditProfileCommand
@@ -373,29 +363,29 @@ namespace NETworkManager.ViewModels
 
         private async void EditProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditProfile")
+                Title = Resources.Localization.Strings.EditProfile
             };
 
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileManager.RemoveProfile(SelectedProfile);
 
                 ProfileManager.AddProfile(instance);
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), SelectedProfile);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, ProfileManager.GetGroups(),true, SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
                 DataContext = profileViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand CopyAsProfileCommand
@@ -405,27 +395,27 @@ namespace NETworkManager.ViewModels
 
         private async void CopyAsProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_CopyProfile")
+                Title = Resources.Localization.Strings.CopyProfile
             };
 
-            ProfileViewModel profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileManager.AddProfile(instance);
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), SelectedProfile);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, ProfileManager.GetGroups(), false, SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
                 DataContext = profileViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand DeleteProfileCommand
@@ -435,59 +425,56 @@ namespace NETworkManager.ViewModels
 
         private async void DeleteProfileAction()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_DeleteProfile")
+                Title = Resources.Localization.Strings.DeleteProfile
             };
 
-            ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+            var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileManager.RemoveProfile(SelectedProfile);
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, LocalizationManager.GetStringByKey("String_DeleteProfileMessage"));
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, Resources.Localization.Strings.DeleteProfileMessage);
 
             customDialog.Content = new ConfirmRemoveDialog
             {
                 DataContext = confirmRemoveViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand EditGroupCommand
-        {
-            get { return new RelayCommand(p => EditGroupAction(p)); }
-        }
+        public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
         private async void EditGroupAction(object group)
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditGroup")
+                Title = Resources.Localization.Strings.EditGroup
             };
 
-            GroupViewModel editGroupViewModel = new GroupViewModel(instance =>
+            var editGroupViewModel = new GroupViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
 
                 Refresh();
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, group.ToString());
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, group.ToString(), ProfileManager.GetGroups());
 
             customDialog.Content = new GroupDialog
             {
                 DataContext = editGroupViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand ClearSearchCommand
@@ -513,7 +500,7 @@ namespace NETworkManager.ViewModels
 
                 await Task.Delay(2000); // Make the user happy, let him see a reload animation (and he cannot spam the send command)
 
-                StatusMessage = LocalizationManager.GetStringByKey("String_MagicPacketSuccessfulSended");
+                StatusMessage = Resources.Localization.Strings.MagicPacketSuccessfulSended;
                 DisplayStatusMessage = true;
             }
             catch (Exception ex)
@@ -533,19 +520,13 @@ namespace NETworkManager.ViewModels
 
             if (dueToChangedSize)
             {
-                if (ProfileWidth.Value == 40)
-                    ExpandProfileView = false;
-                else
-                    ExpandProfileView = true;
+                ExpandProfileView = ProfileWidth.Value != 40;
             }
             else
             {
                 if (ExpandProfileView)
                 {
-                    if (_tempProfileWidth == 40)
-                        ProfileWidth = new GridLength(250);
-                    else
-                        ProfileWidth = new GridLength(_tempProfileWidth);
+                    ProfileWidth = _tempProfileWidth == 40 ? new GridLength(250) : new GridLength(_tempProfileWidth);
                 }
                 else
                 {

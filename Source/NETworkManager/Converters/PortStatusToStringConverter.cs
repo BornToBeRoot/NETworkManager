@@ -1,5 +1,4 @@
-﻿using NETworkManager.Models.Settings;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
 using static NETworkManager.Models.Network.PortInfo;
@@ -7,17 +6,15 @@ using static NETworkManager.Models.Network.PortInfo;
 namespace NETworkManager.Converters
 {
     public sealed class PortStatusToStringConverter : IValueConverter
-    {        
+    {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            PortStatus portStatus = (PortStatus)value;
+            if (!(value is PortStatus portStatus))
+                return "-/-";
 
-            string status = LocalizationManager.GetStringByKey("String_PortStatus_" + portStatus.ToString());
+            var status = Resources.Localization.Strings.ResourceManager.GetString("PortState_" + portStatus);
 
-            if (string.IsNullOrEmpty(status))
-                return portStatus.ToString();
-
-            return status;
+            return string.IsNullOrEmpty(status) ? portStatus.ToString() : status;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

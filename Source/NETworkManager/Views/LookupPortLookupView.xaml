@@ -3,16 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Validator="clr-namespace:NETworkManager.Validators"
-        xmlns:Converter="clr-namespace:NETworkManager.Converters"
-        xmlns:WpfHelper="clr-namespace:NETworkManager.WpfHelper"
+        xmlns:validators="clr-namespace:NETworkManager.Validators"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:wpfHelper="clr-namespace:NETworkManager.WpfHelper"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
-        xmlns:IconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        mc:Ignorable="d">
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             
+        xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:lookup="clr-namespace:NETworkManager.Models.Lookup"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:LookupPortLookupViewModel}">
     <UserControl.Resources>
-        <Converter:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <Converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -21,7 +24,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="{DynamicResource String_Header_Lookup}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.Lookup}" Style="{StaticResource HeaderTextBlock}" />
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -36,15 +39,15 @@
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{DynamicResource String_PortOrService}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="txtPortOrService" ItemsSource="{Binding PortsOrServicesHistoryView}" WpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding PortOrServiceHasError}" mah:TextBoxHelper.Watermark="{DynamicResource String_Watermark_ExamplePortPortRangeOrService}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.PortOrService}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
+                <ComboBox Grid.Column="2" x:Name="TextBoxPortOrService" ItemsSource="{Binding PortsOrServicesHistoryView}" wpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding PortOrServiceHasError}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePortPortRangeOrService}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.InputBindings>
                         <KeyBinding Command="{Binding PortLookupCommand}" Key="Return" />
                     </ComboBox.InputBindings>
                     <ComboBox.Text>
                         <Binding Path="PortOrService" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <Validator:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.Text>
@@ -54,7 +57,7 @@
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=txtPortOrService}" Value="True" >
+                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxPortOrService}" Value="True" >
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding IsLookupRunning}" Value="True">
@@ -71,62 +74,62 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=Magnify}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Magnify}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center" Text="{DynamicResource String_Button_Lookup}" />
+                            <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center" Text="{x:Static localization:Strings.Lookup}" />
                         </Grid>
                     </Button.Content>
                 </Button>
             </Grid>
-            <Controls:MetroProgressBar Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True" Visibility="{Binding IsLookupRunning, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,10,0,0"/>
-            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{DynamicResource String_NoPortsFoundCheckYourInput}" Visibility="{Binding NoPortsFound, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+            <mahAppsControls:MetroProgressBar Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True" Visibility="{Binding IsLookupRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,10,0,0"/>
+            <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{x:Static localization:Strings.NoPortsFoundCheckYourInput}" Visibility="{Binding NoPortsFound, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
-        <TextBlock Grid.Row="2" Text="{DynamicResource String_Header_Result}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Grid.Row="2" Text="{x:Static localization:Strings.Result}" Style="{StaticResource HeaderTextBlock}" />
         <DataGrid Grid.Row="3" ItemsSource="{Binding PortLookupResultView}" SelectedItem="{Binding SelectedPortLookupResult}" CanUserSortColumns="False">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
-                    <MenuItem Header="{DynamicResource String_CopyDots}">
+                    <MenuItem Header="{x:Static localization:Strings.CopyDots}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
-                        <MenuItem Header="{DynamicResource String_Port}" Command="{Binding CopySelectedPortCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Port}" Command="{Binding CopySelectedPortCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Protocol}" Command="{Binding CopySelectedProtocolCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Protocol}" Command="{Binding CopySelectedProtocolCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Service}" Command="{Binding CopySelectedServiceCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Service}" Command="{Binding CopySelectedServiceCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource String_Description}" Command="{Binding CopySelectedDescriptionCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Description}" Command="{Binding CopySelectedDescriptionCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{IconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -144,10 +147,10 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource String_Port}" Binding="{Binding Number}" MinWidth="100" />
-                <DataGridTextColumn Header="{DynamicResource String_Protocol}" Binding="{Binding Protocol}" MinWidth="100" />
-                <DataGridTextColumn Header="{DynamicResource String_Service}" Binding="{Binding Service}" MinWidth="150" />
-                <DataGridTextColumn Header="{DynamicResource String_Description}" Binding="{Binding Description}" MinWidth="200" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Port}" Binding="{Binding (lookup:PortLookupInfo.Number)}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}" Binding="{Binding (lookup:PortLookupInfo.Protocol)}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Service}" Binding="{Binding (lookup:PortLookupInfo.Service)}" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Description}" Binding="{Binding (lookup:PortLookupInfo.Description)}" MinWidth="200" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

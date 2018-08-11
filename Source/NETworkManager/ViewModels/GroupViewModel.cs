@@ -1,29 +1,24 @@
 ﻿using NETworkManager.Utilities;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
     public class GroupViewModel : ViewModelBase
     {
-        bool _isLoading = true;
+        private readonly bool _isLoading;
 
-        private readonly ICommand _okCommand;
-        public ICommand OKCommand
-        {
-            get { return _okCommand; }
-        }
+        public ICommand OKCommand { get; }
 
-        private readonly ICommand _cancelCommand;
-        public ICommand CancelCommand
-        {
-            get { return _cancelCommand; }
-        }
+        public ICommand CancelCommand { get; }
 
         private string _oldGroup;
         public string OldGroup
         {
-            get { return _oldGroup; }
+            get => _oldGroup;
             set
             {
                 if (value == _oldGroup)
@@ -37,7 +32,7 @@ namespace NETworkManager.ViewModels
         private string _group;
         public string Group
         {
-            get { return _group; }
+            get => _group;
             set
             {
                 if (value == _group)
@@ -51,10 +46,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        public ICollectionView Groups { get; }
+        
         private bool _groupHasChanged;
         public bool GroupHasChanged
         {
-            get { return _groupHasChanged; }
+            get => _groupHasChanged;
             set
             {
                 if (value == _groupHasChanged)
@@ -65,13 +62,18 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public GroupViewModel(Action<GroupViewModel> okCommand, Action<GroupViewModel> cancelHandler, string group)
+        public GroupViewModel(Action<GroupViewModel> okCommand, Action<GroupViewModel> cancelHandler, string group, IReadOnlyCollection<string> groups)
         {
-            _okCommand = new RelayCommand(p => okCommand(this));
-            _cancelCommand = new RelayCommand(p => cancelHandler(this));
+            _isLoading = true;
+
+            OKCommand = new RelayCommand(p => okCommand(this));
+            CancelCommand = new RelayCommand(p => cancelHandler(this));
 
             OldGroup = group;
             Group = group;
+
+            Groups = CollectionViewSource.GetDefaultView(groups);
+            Groups.SortDescriptions.Add(new SortDescription());
 
             _isLoading = false;
         }

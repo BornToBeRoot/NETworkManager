@@ -17,14 +17,14 @@ namespace NETworkManager.ViewModels
     public class CredentialsViewModel : ViewModelBase
     {
         #region Variables
-        private IDialogCoordinator dialogCoordinator;
-        DispatcherTimer _dispatcherTimer;
-        const int _lockTime = 120; // Seconds remaining until the ui is locked
+        private readonly IDialogCoordinator _dialogCoordinator;
+        private readonly DispatcherTimer _dispatcherTimer;
+        private const int LockTime = 120; // Seconds remaining until the ui is locked
 
         private bool _credentialsFileExists;
         public bool CredentialsFileExists
         {
-            get { return _credentialsFileExists; }
+            get => _credentialsFileExists;
             set
             {
                 if (value == _credentialsFileExists)
@@ -38,7 +38,7 @@ namespace NETworkManager.ViewModels
         private bool _credentialsLoaded;
         public bool CredentialsLoaded
         {
-            get { return _credentialsLoaded; }
+            get => _credentialsLoaded;
             set
             {
                 if (value == _credentialsLoaded)
@@ -50,16 +50,16 @@ namespace NETworkManager.ViewModels
         }
 
         // Indicates that the UI is locked
-        private bool _locked = true;
-        public bool Locked
+        private bool _isLocked = true;
+        public bool IsLocked
         {
-            get { return _locked; }
+            get => _isLocked;
             set
             {
-                if (value == _locked)
+                if (value == _isLocked)
                     return;
 
-                _locked = value;
+                _isLocked = value;
                 OnPropertyChanged();
             }
         }
@@ -67,7 +67,7 @@ namespace NETworkManager.ViewModels
         private TimeSpan _timeRemaining;
         public TimeSpan TimeRemaining
         {
-            get { return _timeRemaining; }
+            get => _timeRemaining;
             set
             {
                 if (value == _timeRemaining)
@@ -78,16 +78,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        ICollectionView _credentials;
-        public ICollectionView Credentials
-        {
-            get { return _credentials; }
-        }
+        public ICollectionView Credentials { get; }
 
         private CredentialInfo _selectedCredential = new CredentialInfo();
         public CredentialInfo SelectedCredential
         {
-            get { return _selectedCredential; }
+            get => _selectedCredential;
             set
             {
                 if (value == _selectedCredential)
@@ -101,10 +97,10 @@ namespace NETworkManager.ViewModels
         private IList _selectedCredentials = new ArrayList();
         public IList SelectedCredentials
         {
-            get { return _selectedCredentials; }
+            get => _selectedCredentials;
             set
             {
-                if (value == _selectedCredentials)
+                if (Equals(value, _selectedCredentials))
                     return;
 
                 _selectedCredentials = value;
@@ -115,7 +111,7 @@ namespace NETworkManager.ViewModels
         private string _search;
         public string Search
         {
-            get { return _search; }
+            get => _search;
             set
             {
                 if (value == _search)
@@ -133,21 +129,19 @@ namespace NETworkManager.ViewModels
         #region Constructor
         public CredentialsViewModel(IDialogCoordinator instance)
         {
-            dialogCoordinator = instance;
+            _dialogCoordinator = instance;
 
-            _credentials = CollectionViewSource.GetDefaultView(CredentialManager.Credentials);
-            _credentials.SortDescriptions.Add(new SortDescription(nameof(CredentialInfo.ID), ListSortDirection.Ascending));
-            _credentials.Filter = o =>
+            Credentials = CollectionViewSource.GetDefaultView(CredentialManager.Credentials);
+            Credentials.SortDescriptions.Add(new SortDescription(nameof(CredentialInfo.ID), ListSortDirection.Ascending));
+            Credentials.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
                     return true;
 
-                CredentialInfo info = o as CredentialInfo;
-
-                string search = Search.Trim();
+                var search = Search.Trim();
 
                 // Search by: Name, Username
-                return (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Username.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+                return o is CredentialInfo info && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Username.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
             CheckCredentialsLoaded();
@@ -161,21 +155,21 @@ namespace NETworkManager.ViewModels
         private void _dispatcherTimer_Tick(object sender, EventArgs e)
         {
             if (TimeRemaining == TimeSpan.Zero)
-                TimerLockUIStop();
+                TimerLockUiStop();
 
             TimeRemaining = TimeRemaining.Add(TimeSpan.FromSeconds(-1));
         }
 
         public void CheckCredentialsLoaded()
         {
-            if (!CredentialsLoaded)
-            {
-                // If file exists, view to decrypt the file is shown
-                CredentialsFileExists = File.Exists(CredentialManager.GetCredentialsFilePath());
+            if (CredentialsLoaded)
+                return;
 
-                // IF credentials are loaded, view to add/edit/remove is shown
-                CredentialsLoaded = CredentialManager.Loaded;
-            }
+            // If file exists, view to decrypt the file is shown
+            CredentialsFileExists = File.Exists(CredentialManager.GetCredentialsFilePath());
+
+            // IF credentials are loaded, view to add/edit/remove is shown
+            CredentialsLoaded = CredentialManager.IsLoaded;
         }
         #endregion
 
@@ -254,14 +248,14 @@ namespace NETworkManager.ViewModels
         #region Methods
         public async void SetMasterPassword()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_SetMasterPassword")
+                Title = Resources.Localization.Strings.SetMasterPassword
             };
 
-            CredentialsSetMasterPasswordViewModel credentialsSetMasterPasswordViewModel = new CredentialsSetMasterPasswordViewModel(instance =>
+            var credentialsSetMasterPasswordViewModel = new CredentialsSetMasterPasswordViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 // Create new collection of credentials and set the password
                 if (CredentialManager.Load(instance.Password))
@@ -269,10 +263,10 @@ namespace NETworkManager.ViewModels
 
                 CheckCredentialsLoaded();
 
-                TimerLockUIStart();
+                TimerLockUiStart();
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             });
 
             customDialog.Content = new CredentialsSetMasterPasswordDialog
@@ -280,29 +274,29 @@ namespace NETworkManager.ViewModels
                 DataContext = credentialsSetMasterPasswordViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public async void DecryptAndLoad()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_MasterPassword")
+                Title = Resources.Localization.Strings.MasterPassword
             };
 
-            CredentialsMasterPasswordViewModel credentialsMasterPasswordViewModel = new CredentialsMasterPasswordViewModel(async instance =>
+            var credentialsMasterPasswordViewModel = new CredentialsMasterPasswordViewModel(async instance =>
             {
-                await dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 if (!CredentialManager.Load(instance.Password))
-                    await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_WrongPassword"), LocalizationManager.GetStringByKey("String_WrongPasswordDecryptionFailed"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.WrongPassword, Resources.Localization.Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
 
                 CheckCredentialsLoaded();
 
-                TimerLockUIStart();
+                TimerLockUiStart();
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             });
 
             customDialog.Content = new CredentialsMasterPasswordDialog
@@ -310,25 +304,25 @@ namespace NETworkManager.ViewModels
                 DataContext = credentialsMasterPasswordViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public async void ChangeMasterPassword()
         {
-            CustomDialog customDialogSetMasterPassword = new CustomDialog()
+            var customDialogSetMasterPassword = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_SetMasterPassword")
+                Title = Resources.Localization.Strings.SetMasterPassword
             };
 
-            CredentialsSetMasterPasswordViewModel credentialsSetMasterPasswordViewModel = new CredentialsSetMasterPasswordViewModel(instance =>
+            var credentialsSetMasterPasswordViewModel = new CredentialsSetMasterPasswordViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialogSetMasterPassword);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialogSetMasterPassword);
 
                 // Set the new master password
                 CredentialManager.SetMasterPassword(instance.Password);
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialogSetMasterPassword);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialogSetMasterPassword);
             });
 
             customDialogSetMasterPassword.Content = new CredentialsSetMasterPasswordDialog
@@ -336,23 +330,23 @@ namespace NETworkManager.ViewModels
                 DataContext = credentialsSetMasterPasswordViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialogSetMasterPassword);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialogSetMasterPassword);
         }
 
         public async void Add()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_AddCredential")
+                Title = Resources.Localization.Strings.AddCredentials
             };
 
-            CredentialViewModel credentialViewModel = new CredentialViewModel(instance =>
+            var credentialViewModel = new CredentialViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                CredentialInfo credentialInfo = new CredentialInfo
+                var credentialInfo = new CredentialInfo
                 {
-                    ID = instance.ID,
+                    ID = instance.Id,
                     Name = instance.Name,
                     Username = instance.Username,
                     Password = instance.Password
@@ -360,36 +354,36 @@ namespace NETworkManager.ViewModels
 
                 CredentialManager.AddCredential(credentialInfo);
 
-                TimerLockUIStart(); // Reset timer
+                TimerLockUiStart(); // Reset timer
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, CredentialManager.GetNextID());
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, false);
 
             customDialog.Content = new CredentialDialog
             {
                 DataContext = credentialViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public async void Edit()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_EditCredential")
+                Title = Resources.Localization.Strings.EditCredentials
             };
 
-            CredentialViewModel credentialViewModel = new CredentialViewModel(instance =>
+            var credentialViewModel = new CredentialViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 CredentialManager.RemoveCredential(SelectedCredential);
 
-                CredentialInfo credentialInfo = new CredentialInfo
+                var credentialInfo = new CredentialInfo
                 {
-                    ID = instance.ID,
+                    ID = instance.Id,
                     Name = instance.Name,
                     Username = instance.Username,
                     Password = instance.Password
@@ -397,70 +391,70 @@ namespace NETworkManager.ViewModels
 
                 CredentialManager.AddCredential(credentialInfo);
 
-                TimerLockUIStart(); // Reset timer
+                TimerLockUiStart(); // Reset timer
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, SelectedCredential.ID, SelectedCredential);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            },true, SelectedCredential);
 
             customDialog.Content = new CredentialDialog
             {
                 DataContext = credentialViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public async void Delete()
         {
-            CustomDialog customDialog = new CustomDialog()
+            var customDialog = new CustomDialog
             {
-                Title = LocalizationManager.GetStringByKey("String_Header_DeleteCredential")
+                Title = Resources.Localization.Strings.DeleteCredentials
             };
 
-            ConfirmRemoveViewModel confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+            var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                List<CredentialInfo> list = new List<CredentialInfo>(SelectedCredentials.Cast<CredentialInfo>());
+                var list = new List<CredentialInfo>(SelectedCredentials.Cast<CredentialInfo>());
 
-                foreach (CredentialInfo credential in list)
+                foreach (var credential in list)
                     CredentialManager.RemoveCredential(credential);
 
-                TimerLockUIStart(); // Reset timer
+                TimerLockUiStart(); // Reset timer
             }, instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, LocalizationManager.GetStringByKey("String_DeleteCredentialMessage"));
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, Resources.Localization.Strings.DeleteCredentialMessage);
 
             customDialog.Content = new ConfirmRemoveDialog
             {
                 DataContext = confirmRemoveViewModel
             };
 
-            await dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public async void LockUnlock()
         {
-            if (Locked)
+            if (IsLocked)
             {
-                CustomDialog customDialogMasterPassword = new CustomDialog()
+                var customDialogMasterPassword = new CustomDialog
                 {
-                    Title = LocalizationManager.GetStringByKey("String_Header_MasterPassword")
+                    Title = Resources.Localization.Strings.MasterPassword
                 };
 
-                CredentialsMasterPasswordViewModel credentialsMasterPasswordViewModel = new CredentialsMasterPasswordViewModel(async instance =>
+                var credentialsMasterPasswordViewModel = new CredentialsMasterPasswordViewModel(async instance =>
                 {
-                    await dialogCoordinator.HideMetroDialogAsync(this, customDialogMasterPassword);
+                    await _dialogCoordinator.HideMetroDialogAsync(this, customDialogMasterPassword);
 
                     if (CredentialManager.VerifyMasterPasword(instance.Password))
-                        TimerLockUIStart();
+                        TimerLockUiStart();
                     else
-                        await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_WrongPassword"), LocalizationManager.GetStringByKey("String_WrongPassword"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                        await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.WrongPassword, Resources.Localization.Strings.WrongPasswordMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
                 }, instance =>
                 {
-                    dialogCoordinator.HideMetroDialogAsync(this, customDialogMasterPassword);
+                    _dialogCoordinator.HideMetroDialogAsync(this, customDialogMasterPassword);
                 });
 
                 customDialogMasterPassword.Content = new CredentialsMasterPasswordDialog
@@ -468,28 +462,28 @@ namespace NETworkManager.ViewModels
                     DataContext = credentialsMasterPasswordViewModel
                 };
 
-                await dialogCoordinator.ShowMetroDialogAsync(this, customDialogMasterPassword);
+                await _dialogCoordinator.ShowMetroDialogAsync(this, customDialogMasterPassword);
             }
             else
             {
-                TimerLockUIStop();
+                TimerLockUiStop();
             }
         }
 
-        private void TimerLockUIStart()
+        private void TimerLockUiStart()
         {
-            Locked = false;
+            IsLocked = false;
 
-            TimeRemaining = TimeSpan.FromSeconds(_lockTime);
+            TimeRemaining = TimeSpan.FromSeconds(LockTime);
 
             _dispatcherTimer.Start();
         }
 
-        private void TimerLockUIStop()
+        private void TimerLockUiStop()
         {
             _dispatcherTimer.Stop();
 
-            Locked = true;
+            IsLocked = true;
         }
         #endregion
     }

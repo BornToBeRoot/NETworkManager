@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace NETworkManager.Models.Network
 {
@@ -44,7 +41,7 @@ namespace NETworkManager.Models.Network
         {
             Task.Run(() =>
             {
-                string hostname = pingOptions.Hostname;
+                var hostname = pingOptions.Hostname;
 
                 // Try to resolve PTR
                 if (string.IsNullOrEmpty(hostname))
@@ -54,52 +51,51 @@ namespace NETworkManager.Models.Network
                         Task.Run(() =>
                         {
                             hostname = Dns.GetHostEntryAsync(ipAddress).Result.HostName;
-                        });
+                        }, cancellationToken);
                     }
                     catch (SocketException) { }
                 }
 
-                int pingTotal = 0;
-                int errorCount = 0;
+                var pingTotal = 0;
+                var errorCount = 0;
 
-                System.Net.NetworkInformation.PingOptions options = new System.Net.NetworkInformation.PingOptions
+                var options = new System.Net.NetworkInformation.PingOptions
                 {
                     Ttl = pingOptions.TTL,
                     DontFragment = pingOptions.DontFragment
                 };
 
-                using (System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping())
+                using (var ping = new System.Net.NetworkInformation.Ping())
                 {
                     do
                     {
-                        PingReply pingReply;
-
                         try
                         {
                             // Get timestamp 
-                            DateTime timestamp = DateTime.Now;
+                            var timestamp = DateTime.Now;
 
                             // Send ping
-                            pingReply = ping.Send(ipAddress, pingOptions.Timeout, pingOptions.Buffer, options);
+                            var pingReply = ping.Send(ipAddress, pingOptions.Timeout, pingOptions.Buffer, options);
 
                             // Reset the error count (if no exception was thrown)
                             errorCount = 0;
 
-                            if (pingReply.Status == IPStatus.Success)
+                            if (pingReply == null || pingReply.Status != IPStatus.Success)
                             {
-                                if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
-                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, hostname, pingReply.Buffer.Count(), pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status));
-                                else
-                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, hostname, pingReply.Buffer.Count(), pingReply.RoundtripTime, pingReply.Status));
+                                if (pingReply != null && pingReply.Address == null)
+                                    OnPingReceived(new PingReceivedArgs(timestamp, ipAddress, hostname, pingReply.Status));
+                                else if (pingReply != null)
+                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, hostname,pingReply.Status));
                             }
                             else
                             {
-                                if (pingReply.Address == null)
-                                    OnPingReceived(new PingReceivedArgs(timestamp, ipAddress, hostname, pingReply.Status));
+                                if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
+                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, hostname,
+                                        pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status));
                                 else
-                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, hostname, pingReply.Status));
+                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, hostname,
+                                        pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Status));
                             }
-
                         }
                         catch (PingException ex)
                         {
@@ -116,7 +112,7 @@ namespace NETworkManager.Models.Network
                         pingTotal++;
 
                         // If ping is canceled... dont wait for example 5 seconds
-                        for (int i = 0; i < pingOptions.WaitTime; i += 100)
+                        for (var i = 0; i < pingOptions.WaitTime; i += 100)
                         {
                             Thread.Sleep(100);
 
@@ -130,7 +126,7 @@ namespace NETworkManager.Models.Network
                     OnUserHasCanceled();
                 else
                     OnPingCompleted();
-            });
+            }, cancellationToken);
         }
     }
 }

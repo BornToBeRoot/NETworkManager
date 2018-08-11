@@ -1,17 +1,16 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Settings;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows;
 using System.Windows.Input;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Settings;
+using NETworkManager.Utilities;
 
-namespace NETworkManager.ViewModels.Settings
+namespace NETworkManager.ViewModels
 {
     public class SettingsImportExportViewModel : ViewModelBase
     {
-        private IDialogCoordinator dialogCoordinator;
+        private readonly IDialogCoordinator _dialogCoordinator;
 
         public Action CloseAction { get; set; }
 
@@ -22,7 +21,7 @@ namespace NETworkManager.ViewModels.Settings
         private string _importFilePath;
         public string ImportFilePath
         {
-            get { return _importFilePath; }
+            get => _importFilePath;
             set
             {
                 if (value == _importFilePath)
@@ -38,7 +37,7 @@ namespace NETworkManager.ViewModels.Settings
         private bool _importFileIsValid;
         public bool ImportFileIsValid
         {
-            get { return _importFileIsValid; }
+            get => _importFileIsValid;
             set
             {
                 if (value == _importFileIsValid)
@@ -48,11 +47,11 @@ namespace NETworkManager.ViewModels.Settings
                 OnPropertyChanged();
             }
         }
-                
-        public bool _importEverything = true;
+
+        private bool _importEverything = true;
         public bool ImportEverything
         {
-            get { return _importEverything; }
+            get => _importEverything;
             set
             {
                 if (value == _importEverything)
@@ -66,7 +65,7 @@ namespace NETworkManager.ViewModels.Settings
         private bool _importSettingsExists;
         public bool ImportSettingsExists
         {
-            get { return _importSettingsExists; }
+            get => _importSettingsExists;
             set
             {
                 if (value == _importSettingsExists)
@@ -80,7 +79,7 @@ namespace NETworkManager.ViewModels.Settings
         private bool _importSettings;
         public bool ImportSettings
         {
-            get { return _importSettings; }
+            get => _importSettings;
             set
             {
                 if (value == _importSettings)
@@ -94,7 +93,7 @@ namespace NETworkManager.ViewModels.Settings
         private bool _importProfilesExists;
         public bool ImportProfilesExists
         {
-            get { return _importProfilesExists; }
+            get => _importProfilesExists;
             set
             {
                 if (value == _importProfilesExists)
@@ -108,7 +107,7 @@ namespace NETworkManager.ViewModels.Settings
         private bool _importProfiles;
         public bool ImportProfiles
         {
-            get { return _importProfiles; }
+            get => _importProfiles;
             set
             {
                 if (value == _importProfiles)
@@ -122,7 +121,7 @@ namespace NETworkManager.ViewModels.Settings
         private bool _importOverrideProfiles = true;
         public bool ImportOverrideProfiles
         {
-            get { return _importOverrideProfiles; }
+            get => _importOverrideProfiles;
             set
             {
                 if (value == _importOverrideProfiles)
@@ -138,7 +137,7 @@ namespace NETworkManager.ViewModels.Settings
         private bool _exportEverything;
         public bool ExportEverything
         {
-            get { return _exportEverything; }
+            get => _exportEverything;
             set
             {
                 if (value == _exportEverything)
@@ -152,7 +151,7 @@ namespace NETworkManager.ViewModels.Settings
         private bool _settingsExists;
         public bool SettingsExists
         {
-            get { return _settingsExists; }
+            get => _settingsExists;
             set
             {
                 if (value == _settingsExists)
@@ -166,7 +165,7 @@ namespace NETworkManager.ViewModels.Settings
         private bool _exportSettings;
         public bool ExportSettings
         {
-            get { return _exportSettings; }
+            get => _exportSettings;
             set
             {
                 if (value == _exportSettings)
@@ -180,7 +179,7 @@ namespace NETworkManager.ViewModels.Settings
         private bool _profilesExists;
         public bool ProfilesExists
         {
-            get { return _profilesExists; }
+            get => _profilesExists;
             set
             {
                 if (value == _profilesExists)
@@ -194,7 +193,7 @@ namespace NETworkManager.ViewModels.Settings
         private bool _exportProfiles;
         public bool ExportProfiles
         {
-            get { return _exportProfiles; }
+            get => _exportProfiles;
             set
             {
                 if (value == _exportProfiles)
@@ -210,7 +209,7 @@ namespace NETworkManager.ViewModels.Settings
         #region Constructor
         public SettingsImportExportViewModel(IDialogCoordinator instance)
         {
-            dialogCoordinator = instance;
+            _dialogCoordinator = instance;
         }
         #endregion
 
@@ -222,7 +221,7 @@ namespace NETworkManager.ViewModels.Settings
 
         private void BrowseFileAction()
         {
-            System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog()
+            var openFileDialog = new System.Windows.Forms.OpenFileDialog
             {
                 Filter = ImportExportFileExtensionFilter
             };
@@ -240,7 +239,7 @@ namespace NETworkManager.ViewModels.Settings
         {
             try
             {
-                List<ImportExportManager.ImportExportOptions> importOptions = ImportExportManager.ValidateImportFile(ImportFilePath);
+                var importOptions = ImportExportManager.ValidateImportFile(ImportFilePath);
 
                 ImportFileIsValid = true;
                 ImportSettingsExists = importOptions.Contains(ImportExportManager.ImportExportOptions.Settings);
@@ -248,7 +247,7 @@ namespace NETworkManager.ViewModels.Settings
             }
             catch (ImportFileNotValidException)
             {
-                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_ValidationFailed"), LocalizationManager.GetStringByKey("String_NoValidFileFoundToImport"), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.ValidationFailed, Resources.Localization.Strings.NoValidFileFoundToImport, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
         }
 
@@ -259,59 +258,59 @@ namespace NETworkManager.ViewModels.Settings
 
         private async void ImportSettingsAction()
         {
-            MetroDialogSettings settings = AppearanceManager.MetroDialog;
+            var settings = AppearanceManager.MetroDialog;
 
-            settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_Continue");
-            settings.NegativeButtonText = LocalizationManager.GetStringByKey("String_Button_Cancel");
+            settings.AffirmativeButtonText = Resources.Localization.Strings.Continue;
+            settings.NegativeButtonText = Resources.Localization.Strings.Cancel;
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            string message = LocalizationManager.GetStringByKey("String_SelectedSettingsAreOverwritten");
+            var message = Resources.Localization.Strings.SelectedSettingsAreOverwritten;
 
             if (ImportSettingsExists && (ImportEverything || ImportSettings))
-                message += Environment.NewLine + Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_ApplicationIsRestartedAfterwards"));
+                message += Environment.NewLine + Environment.NewLine + $"* {Resources.Localization.Strings.ApplicationIsRestartedAfterwards}";
 
-            if (await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_AreYouSure"), message, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
+            if (await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.AreYouSure, message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+                return;
+
+            var importOptions = new List<ImportExportManager.ImportExportOptions>();
+
+            if (ImportSettingsExists && (ImportEverything || ImportSettings))
+                importOptions.Add(ImportExportManager.ImportExportOptions.Settings);
+
+            if (ImportProfilesExists && (ImportEverything || ImportProfiles))
             {
-                List<ImportExportManager.ImportExportOptions> importOptions = new List<ImportExportManager.ImportExportOptions>();
+                importOptions.Add(ImportExportManager.ImportExportOptions.Profiles);
 
-                if (ImportSettingsExists && (ImportEverything || ImportSettings))
-                    importOptions.Add(ImportExportManager.ImportExportOptions.Settings);
-                                
-                if (ImportProfilesExists && (ImportEverything || ImportProfiles))
-                {
-                    importOptions.Add(ImportExportManager.ImportExportOptions.Profiles);
-
-                    // Load network interface profile (option: add)
-                    if (ProfileManager.Profiles == null)
-                        ProfileManager.Load(!ImportOverrideProfiles);
-                }
-
-                // Import (copy) files from zip archive
-                ImportExportManager.Import(ImportFilePath, importOptions);
-
-                // Do the import (replace or add)
-                if (importOptions.Contains(ImportExportManager.ImportExportOptions.Profiles))
-                   ProfileManager.Import(ImportEverything || ImportOverrideProfiles);
-
-                // Show the user a message what happened
-                if (!ImportExportManager.ForceRestart)
-                {
-                    settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
-
-                    message = LocalizationManager.GetStringByKey("String_SettingsSuccessfullyImported") + Environment.NewLine;
-
-                    if (importOptions.Contains(ImportExportManager.ImportExportOptions.Profiles))
-                        message += Environment.NewLine + string.Format("* {0}", LocalizationManager.GetStringByKey("String_ProfilesReloaded"));
-
-                    await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Success"), message, MessageDialogStyle.Affirmative, settings);
-
-                    return;
-                }
-
-                // Close this view (this will restart the application)
-                CloseAction();
+                // Load network interface profile (option: add)
+                if (ProfileManager.Profiles == null)
+                    ProfileManager.Load(!ImportOverrideProfiles);
             }
+
+            // Import (copy) files from zip archive
+            ImportExportManager.Import(ImportFilePath, importOptions);
+
+            // Do the import (replace or add)
+            if (importOptions.Contains(ImportExportManager.ImportExportOptions.Profiles))
+                ProfileManager.Import(ImportEverything || ImportOverrideProfiles);
+
+            // Show the user a message what happened
+            if (!ImportExportManager.ForceRestart)
+            {
+                settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                message = Resources.Localization.Strings.SettingsSuccessfullyImported + Environment.NewLine;
+
+                if (importOptions.Contains(ImportExportManager.ImportExportOptions.Profiles))
+                    message += Environment.NewLine + $"* {Resources.Localization.Strings.ProfilesReloaded}";
+
+                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Success, message, MessageDialogStyle.Affirmative, settings);
+
+                return;
+            }
+
+            // Close this view (this will restart the application)
+            CloseAction();
         }
 
         public ICommand ExportSettingsCommand
@@ -321,7 +320,7 @@ namespace NETworkManager.ViewModels.Settings
 
         private async void ExportSettingsAction()
         {
-            List<ImportExportManager.ImportExportOptions> exportOptions = new List<ImportExportManager.ImportExportOptions>();
+            var exportOptions = new List<ImportExportManager.ImportExportOptions>();
 
             if (SettingsExists && (ExportEverything || ExportSettings))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.Settings);
@@ -329,22 +328,22 @@ namespace NETworkManager.ViewModels.Settings
             if (ProfilesExists && (ExportEverything || ExportProfiles))
                 exportOptions.Add(ImportExportManager.ImportExportOptions.Profiles);
 
-            System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog()
+            var saveFileDialog = new System.Windows.Forms.SaveFileDialog()
             {
                 Filter = ImportExportFileExtensionFilter,
-                FileName = string.Format("{0}_{1}_{2}{3}", LocalizationManager.GetStringByKey("String_ProductName"), LocalizationManager.GetStringByKey("String_Backup"), TimestampHelper.GetTimestamp(), ImportExportManager.ImportExportFileExtension)
+                FileName = $"{Resources.Localization.StaticStrings.ProductName}_{Resources.Localization.Strings.Backup}_{TimestampHelper.GetTimestamp()}{ImportExportManager.ImportExportFileExtension}"
             };
 
-            if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                ImportExportManager.Export(exportOptions, saveFileDialog.FileName);
+            if (saveFileDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                return;
 
-                MetroDialogSettings settings = AppearanceManager.MetroDialog;
+            ImportExportManager.Export(exportOptions, saveFileDialog.FileName);
 
-                settings.AffirmativeButtonText = LocalizationManager.GetStringByKey("String_Button_OK");
+            var settings = AppearanceManager.MetroDialog;
 
-                await dialogCoordinator.ShowMessageAsync(this, LocalizationManager.GetStringByKey("String_Header_Success"), string.Format("{0}\n\n{1}: {2}", LocalizationManager.GetStringByKey("String_SettingsSuccessfullyExported"), LocalizationManager.GetStringByKey("String_Path"), saveFileDialog.FileName), MessageDialogStyle.Affirmative, settings);
-            }
+            settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+            await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Success, $"{Resources.Localization.Strings.SettingsSuccessfullyExported}\n\n{Resources.Localization.Strings.Path}: {saveFileDialog.FileName}", MessageDialogStyle.Affirmative, settings);
         }
         #endregion
 
@@ -366,7 +365,7 @@ namespace NETworkManager.ViewModels.Settings
         public void SetImportLocationFilePathFromDragDrop(string filePath)
         {
             ImportFilePath = filePath;
-                        
+
             OnPropertyChanged(nameof(ImportFilePath));
         }
         #endregion

@@ -1,23 +1,22 @@
 ﻿using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class SNMPHostView : UserControl
+    public partial class SNMPHostView
     {
-        SNMPHostViewModel viewModel = new SNMPHostViewModel();
+        private readonly SNMPHostViewModel _viewModel = new SNMPHostViewModel();
 
         public SNMPHostView()
         {
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = _viewModel;
 
-            InterTabController.Partition = ApplicationViewManager.Name.SNMP.ToString();
+            InterTabController.Partition = ApplicationViewManager.Name.PuTTY.ToString();
         }
 
         public void AddTab(string host)
         {
-            viewModel.AddTab(host);
+            _viewModel.AddTab(host);
         }
     }
 }

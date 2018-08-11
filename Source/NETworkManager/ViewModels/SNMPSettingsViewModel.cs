@@ -9,14 +9,14 @@ namespace NETworkManager.ViewModels
     public class SNMPSettingsViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
                 
         public List<WalkMode> WalkModes { get; set; }
 
         private WalkMode _walkMode;
         public WalkMode WalkMode
         {
-            get { return _walkMode; }
+            get => _walkMode;
             set
             {
                 if (value == _walkMode)
@@ -33,7 +33,7 @@ namespace NETworkManager.ViewModels
         private int _timeout;
         public int Timeout
         {
-            get { return _timeout; }
+            get => _timeout;
             set
             {
                 if (value == _timeout)
@@ -50,7 +50,7 @@ namespace NETworkManager.ViewModels
         private int _port;
         public int Port
         {
-            get { return _port; }
+            get => _port;
             set
             {
                 if (value == _port)
@@ -67,7 +67,7 @@ namespace NETworkManager.ViewModels
         private bool _resolveHostnamePreferIPv4;
         public bool ResolveHostnamePreferIPv4
         {
-            get { return _resolveHostnamePreferIPv4; }
+            get => _resolveHostnamePreferIPv4;
             set
             {
                 if (value == _resolveHostnamePreferIPv4)
@@ -84,7 +84,7 @@ namespace NETworkManager.ViewModels
         private bool _resolveHostnamePreferIPv6;
         public bool ResolveHostnamePreferIPv6
         {
-            get { return _resolveHostnamePreferIPv6; }
+            get => _resolveHostnamePreferIPv6;
             set
             {
                 if (value == _resolveHostnamePreferIPv6)
@@ -98,7 +98,7 @@ namespace NETworkManager.ViewModels
         private bool _showStatistics;
         public bool ShowStatistics
         {
-            get { return _showStatistics; }
+            get => _showStatistics;
             set
             {
                 if (value == _showStatistics)
@@ -116,6 +116,8 @@ namespace NETworkManager.ViewModels
         #region Contructor, load settings
         public SNMPSettingsViewModel()
         {
+            _isLoading = true;
+
             LoadSettings();
 
             _isLoading = false;

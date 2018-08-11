@@ -3,7 +3,6 @@ using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using NETworkManager.Utilities;
 using System.Net;
-using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Validators
 {
@@ -11,9 +10,12 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            bool isValid = true;
+            var isValid = true;
 
-            foreach (string ipHostOrRange in (value as string).Replace(" ", "").Split(';'))
+            if (value == null)
+                return new ValidationResult(false, Resources.Localization.Strings.EnterValidIPScanRange);
+
+            foreach (var ipHostOrRange in ((string) value).Replace(" ", "").Split(';'))
             {
                 // like 192.168.0.1
                 if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRegex))
@@ -30,9 +32,10 @@ namespace NETworkManager.Validators
                 // like 192.168.0.0 - 192.168.0.100
                 if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRangeRegex))
                 {
-                    string[] range = ipHostOrRange.Split('-');
+                    var range = ipHostOrRange.Split('-');
 
-                    if (IPv4AddressHelper.ConvertToInt32(IPAddress.Parse(range[0])) >= IPv4AddressHelper.ConvertToInt32(IPAddress.Parse(range[1])))
+                    if (IPv4AddressHelper.ConvertToInt32(IPAddress.Parse(range[0])) >=
+                        IPv4AddressHelper.ConvertToInt32(IPAddress.Parse(range[1])))
                         isValid = false;
 
                     continue;
@@ -41,24 +44,24 @@ namespace NETworkManager.Validators
                 // like 192.168.[50-100].1
                 if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSpecialRangeRegex))
                 {
-                    string[] octets = ipHostOrRange.Split('.');
+                    var octets = ipHostOrRange.Split('.');
 
-                    foreach (string octet in octets)
+                    foreach (var octet in octets)
                     {
                         // Match [50-100]
-                        if (Regex.IsMatch(octet, RegexHelper.SpecialRangeRegex))
-                        {
-                            foreach (string numberOrRange in octet.Substring(1, octet.Length - 2).Split(','))
-                            {
-                                if (numberOrRange.Contains("-"))
-                                {
-                                    // 50-100 --> {50, 100}
-                                    string[] rangeNumber = numberOrRange.Split('-');
+                        if (!Regex.IsMatch(octet, RegexHelper.SpecialRangeRegex))
+                            continue;
 
-                                    if (int.Parse(rangeNumber[0]) > int.Parse(rangeNumber[1]))
-                                        isValid = false;
-                                }
-                            }
+                        foreach (var numberOrRange in octet.Substring(1, octet.Length - 2).Split(','))
+                        {
+                            if (!numberOrRange.Contains("-"))
+                                continue;
+
+                            // 50-100 --> {50, 100}
+                            var rangeNumber = numberOrRange.Split('-');
+
+                            if (int.Parse(rangeNumber[0]) > int.Parse(rangeNumber[1]))
+                                isValid = false;
                         }
                     }
 
@@ -80,10 +83,7 @@ namespace NETworkManager.Validators
                 isValid = false;
             }
 
-            if (isValid)
-                return ValidationResult.ValidResult;
-            else
-                return new ValidationResult(false, LocalizationManager.GetStringByKey("String_ValidationError_EnterValidIPScanRange"));
+            return isValid ? ValidationResult.ValidResult : new ValidationResult(false, Resources.Localization.Strings.EnterValidIPScanRange);
         }
     }
 }

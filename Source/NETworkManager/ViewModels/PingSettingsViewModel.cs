@@ -6,12 +6,12 @@ namespace NETworkManager.ViewModels
     public class PingSettingsViewModel : ViewModelBase
     {
         #region Variables
-        private bool _isLoading = true;
+        private readonly bool _isLoading;
 
         private int _attempts;
         public int Attempts
         {
-            get { return _attempts; }
+            get => _attempts;
             set
             {
                 if (value == _attempts)
@@ -28,7 +28,7 @@ namespace NETworkManager.ViewModels
         private int _timeout;
         public int Timeout
         {
-            get { return _timeout; }
+            get => _timeout;
             set
             {
                 if (value == _timeout)
@@ -45,7 +45,7 @@ namespace NETworkManager.ViewModels
         private int _buffer;
         public int Buffer
         {
-            get { return _buffer; }
+            get => _buffer;
             set
             {
                 if (value == _buffer)
@@ -62,7 +62,7 @@ namespace NETworkManager.ViewModels
         private int _ttl;
         public int TTL
         {
-            get { return _ttl; }
+            get => _ttl;
             set
             {
                 if (value == _ttl)
@@ -79,7 +79,7 @@ namespace NETworkManager.ViewModels
         private bool _dontFragment;
         public bool DontFragment
         {
-            get { return _dontFragment; }
+            get => _dontFragment;
             set
             {
                 if (value == _dontFragment)
@@ -96,7 +96,7 @@ namespace NETworkManager.ViewModels
         private int _waitTime;
         public int WaitTime
         {
-            get { return _waitTime; }
+            get => _waitTime;
             set
             {
                 if (value == _waitTime)
@@ -113,7 +113,7 @@ namespace NETworkManager.ViewModels
         private int _exceptionCancelCount;
         public int ExceptionCancelCount
         {
-            get { return _exceptionCancelCount; }
+            get => _exceptionCancelCount;
             set
             {
                 if (value == _exceptionCancelCount)
@@ -130,7 +130,7 @@ namespace NETworkManager.ViewModels
         private bool _resolveHostnamePreferIPv4;
         public bool ResolveHostnamePreferIPv4
         {
-            get { return _resolveHostnamePreferIPv4; }
+            get => _resolveHostnamePreferIPv4;
             set
             {
                 if (value == _resolveHostnamePreferIPv4)
@@ -147,7 +147,7 @@ namespace NETworkManager.ViewModels
         private bool _resolveHostnamePreferIPv6;
         public bool ResolveHostnamePreferIPv6
         {
-            get { return _resolveHostnamePreferIPv6; }
+            get => _resolveHostnamePreferIPv6;
             set
             {
                 if (value == _resolveHostnamePreferIPv6)
@@ -161,7 +161,7 @@ namespace NETworkManager.ViewModels
         private bool _showStatistics;
         public bool ShowStatistics
         {
-            get { return _showStatistics; }
+            get => _showStatistics;
             set
             {
                 if (value == _showStatistics)
@@ -179,6 +179,8 @@ namespace NETworkManager.ViewModels
         #region Contructor, load settings
         public PingSettingsViewModel()
         {
+            _isLoading = true;
+
             LoadSettings();
 
             _isLoading = false;

@@ -1,5 +1,5 @@
-﻿using MahApps.Metro.IconPacks;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
+using MahApps.Metro.IconPacks;
 
 namespace NETworkManager
 
@@ -14,7 +14,6 @@ namespace NETworkManager
 
         public SettingsViewInfo()
         {
-
         }
 
         public SettingsViewInfo(SettingsViewManager.Name name, Canvas icon, SettingsViewManager.Group group)
@@ -30,7 +29,7 @@ namespace NETworkManager
         {
             Name = name;
             TranslatedName = SettingsViewManager.TranslateName(name, group);
-            Canvas canvas = new Canvas();
+            var canvas = new Canvas();
             canvas.Children.Add(packIconModern);
             Icon = canvas;
             Group = group;
@@ -41,7 +40,7 @@ namespace NETworkManager
         {
             Name = name;
             TranslatedName = SettingsViewManager.TranslateName(name, group);
-            Canvas canvas = new Canvas();
+            var canvas = new Canvas();
             canvas.Children.Add(packIconMaterial);
             Icon = canvas;
             Group = group;
@@ -52,7 +51,7 @@ namespace NETworkManager
         {
             Name = name;
             TranslatedName = SettingsViewManager.TranslateName(name, group);
-            Canvas canvas = new Canvas();
+            var canvas = new Canvas();
             canvas.Children.Add(packIconMaterialLight);
             Icon = canvas;
             Group = group;
@@ -63,7 +62,7 @@ namespace NETworkManager
         {
             Name = name;
             TranslatedName = SettingsViewManager.TranslateName(name, group);
-            Canvas canvas = new Canvas();
+            var canvas = new Canvas();
             canvas.Children.Add(packIconEntypo);
             Icon = canvas;
             Group = group;
@@ -74,7 +73,7 @@ namespace NETworkManager
         {
             Name = name;
             TranslatedName = SettingsViewManager.TranslateName(name, group);
-            Canvas canvas = new Canvas();
+            var canvas = new Canvas();
             canvas.Children.Add(packIconOcticons);
             Icon = canvas;
             Group = group;
@@ -85,7 +84,7 @@ namespace NETworkManager
         {
             Name = name;
             TranslatedName = SettingsViewManager.TranslateName(name, group);
-            Canvas canvas = new Canvas();
+            var canvas = new Canvas();
             canvas.Children.Add(packIconFontAwesome);
             Icon = canvas;
             Group = group;

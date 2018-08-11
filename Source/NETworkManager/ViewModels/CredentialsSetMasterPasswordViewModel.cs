@@ -7,22 +7,14 @@ namespace NETworkManager.ViewModels
 {
     public class CredentialsSetMasterPasswordViewModel : ViewModelBase
     {
-        private readonly ICommand _saveCommand;
-        public ICommand SaveCommand
-        {
-            get { return _saveCommand; }
-        }
+        public ICommand SaveCommand { get; }
 
-        private readonly ICommand _cancelCommand;
-        public ICommand CancelCommand
-        {
-            get { return _cancelCommand; }
-        }
+        public ICommand CancelCommand { get; }
 
         private SecureString _password = new SecureString();
         public SecureString Password
         {
-            get { return _password; }
+            get => _password;
             set
             {
                 if (value == _password)
@@ -39,7 +31,7 @@ namespace NETworkManager.ViewModels
         private SecureString _passwordRepeat = new SecureString();
         public SecureString PasswordRepeat
         {
-            get { return _passwordRepeat; }
+            get => _passwordRepeat;
             set
             {
                 if (value == _passwordRepeat)
@@ -53,45 +45,45 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _passwordIsEmpty = true;
-        public bool PasswordIsEmpty
+        private bool _isPasswordEmpty = true;
+        public bool IsPasswordIsEmpty
         {
-            get { return _passwordIsEmpty; }
+            get => _isPasswordEmpty;
             set
             {
-                if (value == _passwordIsEmpty)
+                if (value == _isPasswordEmpty)
                     return;
 
-                _passwordIsEmpty = value;
+                _isPasswordEmpty = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _passwordsMatch = false;
-        public bool PasswordsMatch
+        private bool _isRepeatPasswordsEqual;
+        public bool IsRepeatPasswordsEqual
         {
-            get { return _passwordsMatch; }
+            get => _isRepeatPasswordsEqual;
             set
             {
-                if (value == _passwordsMatch)
+                if (value == _isRepeatPasswordsEqual)
                     return;
 
-                _passwordsMatch = value;
+                _isRepeatPasswordsEqual = value;
                 OnPropertyChanged();
             }
         }
 
         private void ValidatePassword()
         {
-            PasswordIsEmpty = ((Password == null || Password.Length == 0) || (PasswordRepeat == null || PasswordRepeat.Length == 0));
+            IsPasswordIsEmpty = ((Password == null || Password.Length == 0) || (PasswordRepeat == null || PasswordRepeat.Length == 0));
 
-            PasswordsMatch = PasswordIsEmpty ? false : SecureStringHelper.ConvertToString(Password).Equals(SecureStringHelper.ConvertToString(PasswordRepeat));
+            IsRepeatPasswordsEqual = !IsPasswordIsEmpty && SecureStringHelper.ConvertToString(Password).Equals(SecureStringHelper.ConvertToString(PasswordRepeat));
         }
 
         public CredentialsSetMasterPasswordViewModel(Action<CredentialsSetMasterPasswordViewModel> saveCommand, Action<CredentialsSetMasterPasswordViewModel> cancelHandler)
         {
-            _saveCommand = new RelayCommand(p => saveCommand(this));
-            _cancelCommand = new RelayCommand(p => cancelHandler(this));
+            SaveCommand = new RelayCommand(p => saveCommand(this));
+            CancelCommand = new RelayCommand(p => cancelHandler(this));
         }
     }
 }
