@@ -10,10 +10,10 @@ namespace NETworkManager.Views
             InitializeComponent();
         }
 
-        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             // Need to be in loaded event, focusmanger won't work...
-            TextBoxName.Focus();       
+            TextBoxName.Focus();
         }
 
         // Set name as hostname (if empty or identical)
@@ -26,7 +26,7 @@ namespace NETworkManager.Views
 
         private void TextBoxName_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if(_oldName == TextBoxHost.Text)
+            if (_oldName == TextBoxHost.Text)
                 TextBoxHost.Text = TextBoxName.Text;
 
             _oldName = TextBoxName.Text;
