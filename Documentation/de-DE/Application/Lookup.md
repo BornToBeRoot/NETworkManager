@@ -2,10 +2,10 @@
 
 ## OUI
 
-![Lookup_OUI](../../_images/Lookup_OUI.de-DE.png)
+![Lookup_OUI](../../_images/Lookup_OUI.png)
 
 ## Port
 
-![Lookup_Port](../../_images/Lookup_Port.de-DE.png)
+![Lookup_Port](../../_images/Lookup_Port.png)
 
 [zurück](../README.md)
