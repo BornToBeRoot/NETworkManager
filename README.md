@@ -26,8 +26,8 @@
 <div align="center"> 
   <p>      
     :package: Download:
-      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.3.0/NETworkManager_v1.6.3.0_Portable.zip">Portable</a>, 
-      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.3.0/NETworkManager_v1.6.3.0_Setup.msi">MSI</a> or
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.7.0.0/NETworkManager_v1.7.0.0_Portable.zip">Portable</a>, 
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.7.0.0/NETworkManager_v1.7.0.0_Setup.msi">MSI</a> or
       <a href="https://chocolatey.org/packages/networkmanager">Chocolatey</a>
   </p>
   <p>
@@ -72,13 +72,13 @@
 
 <h2>Found an issue or have a feature request?</h2>
 
-Check the [Issues](https://github.com/BornToBeRoot/NETworkManager/issues) if the problem/feature request has already been reported. If not, submit a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new).
+Check the [Issues](https://github.com/BornToBeRoot/NETworkManager/issues) if the issue/feature request has already been reported. If not, submit a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new). Provide as many informations as you can.
 
 <h2>Want to help?</h2>
 
-- Add new features ([Issues](https://github.com/BornToBeRoot/NETworkManager/issues?q=is%3Aopen+is%3Aissue+label%3AFeature-Request), [Roadmap](https://github.com/BornToBeRoot/NETworkManager/wiki/Roadmap))
+- Add features ([Issues](https://github.com/BornToBeRoot/NETworkManager/issues?q=is%3Aopen+is%3Aissue+label%3AFeature-Request), [Roadmap](https://github.com/BornToBeRoot/NETworkManager/wiki/Roadmap))
 - Fix bugs ([Issues](https://github.com/BornToBeRoot/NETworkManager/issues))
-- Improve translation / add new languages on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager)
+- Add languages / improve the translation ([Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager))
 - Improve the [documentation](https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation)
 
 Fork the repository, do your changes and send me a pull request!
