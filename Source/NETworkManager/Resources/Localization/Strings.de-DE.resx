@@ -325,7 +325,7 @@
     <value>Zurücksetzen</value>
   </data>
   <data name="ResolvePTR" xml:space="preserve">
-    <value>Resolve PTR</value>
+    <value>PTR auflösen</value>
   </data>
   <data name="Resources" xml:space="preserve">
     <value>Ressourcen</value>
@@ -1928,5 +1928,17 @@
   </data>
   <data name="EnterValidValueBetween25and100" xml:space="preserve">
     <value>Geben Sie einen gültigen Wert ein zwischen 25 und 100!</value>
+  </data>
+  <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
+    <value>Ein Profil mit diesem Namen existiert bereits!</value>
+  </data>
+  <data name="CredentialWithThisNameAlreadyExists" xml:space="preserve">
+    <value>Eine Anmeldeinformation mit diesem Namen existiert bereits!</value>
+  </data>
+  <data name="PortState_Closed" xml:space="preserve">
+    <value>Geschlossen</value>
+  </data>
+  <data name="PortState_Open" xml:space="preserve">
+    <value>Offen</value>
   </data>
 </root>

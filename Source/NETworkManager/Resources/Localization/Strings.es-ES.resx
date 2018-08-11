@@ -253,7 +253,7 @@
     <value>Escáner de IP</value>
   </data>
   <data name="Keyboard" xml:space="preserve">
-    <value>Keyboard</value>
+    <value>Teclado</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Idioma</value>
@@ -352,7 +352,7 @@
     <value>Configuración</value>
   </data>
   <data name="SettingsHaveBeenReset" xml:space="preserve">
-    <value>Settings have been reset!</value>
+    <value>¡La configuración ha sido restablecida!</value>
   </data>
   <data name="SNMP" xml:space="preserve">
     <value>SNMP</value>
@@ -430,7 +430,7 @@
     <value>Tiempo promedio</value>
   </data>
   <data name="Broadcast" xml:space="preserve">
-    <value>Broadcast</value>
+    <value>Transmisión</value>
   </data>
   <data name="Buffer" xml:space="preserve">
     <value>Buffer</value>
@@ -466,7 +466,7 @@
     <value>Servidor DHCP</value>
   </data>
   <data name="DNSServers" xml:space="preserve">
-    <value>Servidor DNS</value>
+    <value>Servidor/es DNS</value>
   </data>
   <data name="DNSSuffix" xml:space="preserve">
     <value>Sufijo de DNS</value>
@@ -628,10 +628,10 @@
     <value>Hora 3</value>
   </data>
   <data name="Timeout" xml:space="preserve">
-    <value>Tiempo finalizado</value>
+    <value>Tiempo de espera</value>
   </data>
   <data name="TimeoutMS" xml:space="preserve">
-    <value>Timeout (ms)</value>
+    <value>Tiempo de espera (ms)</value>
   </data>
   <data name="TimeToWaitBetweenEachPing" xml:space="preserve">
     <value>Tiempo de espera entre cada ping</value>
@@ -706,7 +706,7 @@
     <value>Aplicar</value>
   </data>
   <data name="ApplyWindowsKeyCombinationsLikeAltTab" xml:space="preserve">
-    <value>Apply Windows key combinations (e.g. ALT+TAB):</value>
+    <value>Aplicar combinaciones de teclas de Windows (ej. ALT+TAB):</value>
   </data>
   <data name="Auth" xml:space="preserve">
     <value>Aute.</value>
@@ -862,7 +862,7 @@
     <value>Habilitar proveedor de soporte de seguridad de credenciales</value>
   </data>
   <data name="EnableTheProfileInAtLeastOneTool" xml:space="preserve">
-    <value>Enable the profile in at least one tool! Click on a tab and select "Enable"...</value>
+    <value>¡Habilite el perfil en al menos una herramienta! Haga clic en una pestaña y seleccione "Habilitar"...</value>
   </data>
   <data name="EnableTransparency" xml:space="preserve">
     <value>Habilitar transparencia</value>
@@ -964,7 +964,7 @@
     <value>No se puede localizar la dirección de red. Compruebe si el equipo está conectado a la red. Para obtener información acerca de la solución de problemas de red, consulte la Ayuda de Windows.</value>
   </data>
   <data name="NewConnectionDots" xml:space="preserve">
-    <value>New connection...</value>
+    <value>Nueva conexión...</value>
   </data>
   <data name="NoDNSRecordFoundCheckYourInputAndSettings" xml:space="preserve">
     <value>¡No se encontró registro DNS para "{0}"! Compruebe su entrada y la configuración.</value>
@@ -1003,13 +1003,13 @@
     <value>OID</value>
   </data>
   <data name="OnlyWhenUsingTheFullScreen" xml:space="preserve">
-    <value>Only when using the full screen</value>
+    <value>Solo cuando se usa la pantalla completa</value>
   </data>
   <data name="OnTheRemoteComputer" xml:space="preserve">
-    <value>On the remote computer</value>
+    <value>En el equipo remoto</value>
   </data>
   <data name="OnThisComputer" xml:space="preserve">
-    <value>On this computer</value>
+    <value>En este equipo</value>
   </data>
   <data name="Open" xml:space="preserve">
     <value>Abrir</value>
@@ -1042,7 +1042,7 @@
     <value>Puerto o servicio</value>
   </data>
   <data name="Ports" xml:space="preserve">
-    <value>Puerto(s)</value>
+    <value>Puerto/s</value>
   </data>
   <data name="Priv" xml:space="preserve">
     <value>Priv.</value>
@@ -1156,7 +1156,7 @@
     <value>Servicio</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>The settings file found was corrupted or is not compatible with this version. All settings have been reset (profiles and credentials are not affected!)</value>
+    <value>El archivo de configuración encontrado estaba dañado o no es compatible con esta versión. Se han restablecido todas las configuraciones (¡los perfiles y las credenciales no se ven afectados!)</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>¡Configuración exportada con éxito!</value>
@@ -1222,7 +1222,7 @@
     <value>La ubicación de configuración no está afectada</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
-    <value>Tiempo finalizado en consulta SNMP.</value>
+    <value>Tiempo de espera de consulta SNMP.</value>
   </data>
   <data name="TimeoutWhenQueryingDNSServerMessage" xml:space="preserve">
     <value>¡Tiempo de espera al consultar el servidor DNS con la dirección IP "{0}"!</value>
@@ -1270,7 +1270,7 @@
     <value>Versión</value>
   </data>
   <data name="VersionxxIsAvailable" xml:space="preserve">
-    <value>Version {0} is available!</value>
+    <value>¡La versión {0}está disponible! </value>
   </data>
   <data name="WalkMode" xml:space="preserve">
     <value>Modo de prueba</value>
@@ -1450,7 +1450,7 @@
     <value>1.3.6.1.2.1.1</value>
   </data>
   <data name="ExampleSNMPUsername" xml:space="preserve">
-    <value>usuario-snmp</value>
+    <value>snmp-user</value>
   </data>
   <data name="ExampleSuffix" xml:space="preserve">
     <value>fritz.box</value>
@@ -1492,13 +1492,13 @@
     <value>Las etiquetas le ayudan a organizar perfiles, por temas/proyectos. Se pueden usar múltiples etiquetas con ";" separadas. Buscar por etiquetas con "tag=xxx".</value>
   </data>
   <data name="TimeUnit_Hour" xml:space="preserve">
-    <value>Hora(s)</value>
+    <value>Hora/s</value>
   </data>
   <data name="LocationOfTheImport" xml:space="preserve">
     <value>Ubicación del archivo de importación...</value>
   </data>
   <data name="TimeUnit_Minute" xml:space="preserve">
-    <value>Minuto(s)</value>
+    <value>Minuto/s</value>
   </data>
   <data name="MoveAndRestart" xml:space="preserve">
     <value>Mover y reiniciar</value>
@@ -1549,7 +1549,7 @@
     <value>Buscar...</value>
   </data>
   <data name="TimeUnit_Second" xml:space="preserve">
-    <value>Segundo(s)</value>
+    <value>Segundo/s</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>Enviar</value>
@@ -1855,7 +1855,7 @@
     <value>Se presentó un PIN incorrecto a la tarjeta inteligente.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TimeoutOccurred" xml:space="preserve">
-    <value>Tiempo ocurrido finalizado.</value>
+    <value>Tiempo de espera transcurrido.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TimerError" xml:space="preserve">
     <value>Error interno del temporizador.</value>
@@ -1928,5 +1928,17 @@
   </data>
   <data name="EnterValidValueBetween25and100" xml:space="preserve">
     <value>¡Ingrese un valor válido entre 25 y 100!</value>
+  </data>
+  <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
+    <value>A profile with this name already exists!</value>
+  </data>
+  <data name="CredentialWithThisNameAlreadyExists" xml:space="preserve">
+    <value>A Credential with this name already exists!</value>
+  </data>
+  <data name="PortState_Closed" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="PortState_Open" xml:space="preserve">
+    <value>Open</value>
   </data>
 </root>
