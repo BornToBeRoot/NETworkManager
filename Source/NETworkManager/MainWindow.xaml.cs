@@ -310,11 +310,9 @@ namespace NETworkManager
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
                 HideWindowToTray();
 
-#if (!DEBUG)
             // Chech for updates...
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
                 CheckForUpdates();
-#endif
         }
 
         private void LoadApplicationList()
@@ -714,7 +712,7 @@ namespace NETworkManager
             }
 
             // Ask the user to restart (if he has changed the language)
-            if ((_cultureCode != SettingsManager.Current.Localization_CultureCode) || (AllowsTransparency != SettingsManager.Current.Appearance_EnableTransparency))
+            if (_cultureCode != SettingsManager.Current.Localization_CultureCode || AllowsTransparency != SettingsManager.Current.Appearance_EnableTransparency)
             {
                 ShowWindowAction();
 

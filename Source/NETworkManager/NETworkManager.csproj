@@ -105,11 +105,11 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>obj\Debug\MSTSCLib.dll</HintPath>
     </Reference>
-    <Reference Include="Octokit, Version=0.29.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Octokit.0.29.0\lib\net45\Octokit.dll</HintPath>
+    <Reference Include="Octokit, Version=0.31.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Octokit.0.31.0\lib\net45\Octokit.dll</HintPath>
     </Reference>
-    <Reference Include="SharpSnmpLib, Version=10.0.7.0, Culture=neutral, PublicKeyToken=4c00852d3788e005, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lextm.SharpSnmpLib.10.0.7\lib\net452\SharpSnmpLib.dll</HintPath>
+    <Reference Include="SharpSnmpLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=4c00852d3788e005, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lextm.SharpSnmpLib.10.0.10\lib\net452\SharpSnmpLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
