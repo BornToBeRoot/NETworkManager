@@ -34,8 +34,7 @@ namespace NETworkManager.Models.Settings
 
         public static bool CredentialsChanged { get; set; }
 
-        private static bool _loaded;
-        public static bool IsLoaded => _loaded;
+        public static bool IsLoaded { get; private set; }
 
         private static SecureString _masterPassword;
 
@@ -77,7 +76,7 @@ namespace NETworkManager.Models.Settings
 
                 Credentials.CollectionChanged += Credentials_CollectionChanged;
 
-                _loaded = true;
+                IsLoaded = true;
 
                 return true;
             }
@@ -155,7 +154,7 @@ namespace NETworkManager.Models.Settings
 
         #region Encryption / Decryption
         private const int KeySize = 256;
-        private const int Iterations = 25000;
+        private const int Iterations = 100000;
 
         private static byte[] Encrypt(byte[] text, string password)
         {
