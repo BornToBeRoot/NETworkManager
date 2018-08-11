@@ -1,9 +1,5 @@
 # Ping
 
-![Ping](../../_images/Ping.de-DE.png)
-
-# Profil
-
-![Ping_Profile](../../_images/Ping_Profile.de-DE.png)
+![Ping](../../_images/Ping.png)
 
 [zurück](../README.md)

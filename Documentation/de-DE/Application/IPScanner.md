@@ -1,9 +1,5 @@
 # IP-Scanner
 
-![IPScanner](../../_images/IPScanner.de-DE.png)
-
-## Profil
-
-![IPScanner_Profile](../../_images/IPScanner_Profile.de-DE.png)
+![IPScanner](../../_images/IPScanner.png)
 
 [zurück](../README.md)

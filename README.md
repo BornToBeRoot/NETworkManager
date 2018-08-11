@@ -26,8 +26,8 @@
 <div align="center"> 
   <p>      
     :package: Download:
-      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.3.0/NETworkManager_v1.6.3.0_Portable.zip">Portable</a>, 
-      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.6.3.0/NETworkManager_v1.6.3.0_Setup.msi">MSI</a> or
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.7.0.0/NETworkManager_v1.7.0.0_Portable.zip">Portable</a>, 
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.7.0.0/NETworkManager_v1.7.0.0_Setup.msi">MSI</a> or
       <a href="https://chocolatey.org/packages/networkmanager">Chocolatey</a>
   </p>
   <p>
@@ -62,27 +62,29 @@
 - English
 - German
 - Russian
+- Spanish
 
 <h2>System requirements</h2>
 
-- Windows 7 or later
+- Windows 7/Server 2008 R2 or later
 - .NET-Framework 4.6
 - RDP 8.1 ([How to install RDP 8.1 on Windows 7/Server 2008 R2?](Documentation/en-US/HowTo/Install_RDP_8dot1_on_Windows6dot1.md))
 
-<h2>Found an issue?</h2>
+<h2>Found an issue or have a feature request?</h2>
 
-Check the [Issues](https://github.com/BornToBeRoot/NETworkManager/issues) if the problem has already been reported. If not, submit a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new).
+Check the [Issues](https://github.com/BornToBeRoot/NETworkManager/issues) if the issue/feature request has already been reported. If not, submit a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new). Provide as many informations as you can.
 
-The more information you can provide me, the quicker I can reproduce and solve the issue.
+<h2>Want to help?</h2>
 
-You can also fork the repository, fix the issue by yourself and send me a pull request.
+- Add features ([Issues](https://github.com/BornToBeRoot/NETworkManager/issues?q=is%3Aopen+is%3Aissue+label%3AFeature-Request), [Roadmap](https://github.com/BornToBeRoot/NETworkManager/wiki/Roadmap))
+- Fix bugs ([Issues](https://github.com/BornToBeRoot/NETworkManager/issues))
+- Add languages / improve the translation ([Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager))
+- Improve the [documentation](https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation)
 
-<h2>Feature request are welcome!</h2>
-
-Please submit your feature request as Github issue: [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new)
-
-You can also help developing! Fork the repository, do your changes and send me a pull request. 
+Fork the repository, do your changes and send me a pull request!
 
 <h2>License</h2>
 
-This software is published under the [GNU GENERAL PUBLIC LICENSE](https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE).
+This software is published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE).
+
+The licenses of the libraries, which are used in the program, can be found [here](https://github.com/BornToBeRoot/NETworkManager/tree/master/Source/NETworkManager/Licenses).
