@@ -268,10 +268,6 @@ namespace NETworkManager
             if (ConfigurationManager.Current.IsAdmin)
                 Title = $"[{NETworkManager.Resources.Localization.Strings.Administrator}] {Title}";
 
-#if DEBUG
-            Title += $" - Debug ({AssemblyManager.Current.Version} | {AssemblyManager.Current.BuildDate.ToString(CultureInfo.CurrentCulture)})";
-#endif
-
             // Load Profiles
             ProfileManager.Load();
 

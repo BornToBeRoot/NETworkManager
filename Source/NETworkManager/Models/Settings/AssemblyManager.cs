@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System;
 
 namespace NETworkManager.Models.Settings
 {
@@ -14,11 +13,10 @@ namespace NETworkManager.Models.Settings
             var title = assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false)[0] as AssemblyTitleAttribute;
             var name = assembly.GetName();
 
-            Current = new AssemblyInfo()
+            Current = new AssemblyInfo
             {
                 Title = title?.Title,
-                Version = name.Version,
-                BuildDate = new DateTime(2000, 1, 1).Add(new TimeSpan((TimeSpan.TicksPerDay * name.Version.Build) + (TimeSpan.TicksPerSecond * 2 * name.Version.Revision)))                
+                Version = name.Version
             };
         }
     }

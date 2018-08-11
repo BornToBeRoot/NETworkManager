@@ -4,9 +4,9 @@ using System.Diagnostics;
 using NETworkManager.Models.Update;
 using System;
 using System.ComponentModel;
-using System.Globalization;
 using NETworkManager.Models.Documentation;
 using System.Windows.Data;
+using NETworkManager.Resources.Localization;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
@@ -14,9 +14,7 @@ namespace NETworkManager.ViewModels
     public class AboutViewModel : ViewModelBase
     {
         #region Variables
-        public string Version => AssemblyManager.Current.Version.ToString();
-
-        public string BuildDate => AssemblyManager.Current.BuildDate.ToString(CultureInfo.CurrentCulture);
+        public string Version => $"{Strings.Version} {AssemblyManager.Current.Version}";
 
         private bool _isUpdateCheckRunning;
         public bool IsUpdateCheckRunning

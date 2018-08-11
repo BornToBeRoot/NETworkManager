@@ -6,7 +6,6 @@ namespace NETworkManager.Models.Settings
     {
         public string Title { get; set; }
         public Version Version { get; set; }
-        public DateTime BuildDate { get; set; }
 
         public AssemblyInfo()
         {
