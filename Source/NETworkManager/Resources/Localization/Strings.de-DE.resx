@@ -1027,7 +1027,9 @@
     <value>überschreiben</value>
   </data>
   <data name="OverwriteSettingsInTheDestinationFolder" xml:space="preserve">
-    <value>Einstellungen im Zielordner überschreiben?\n\nWenn Sie auf "Verschieben &amp;amp; neu starten" klicken, werden die restlichen Dateien kopiert und die Anwendung danach mit den neuen Einstellungen neu gestartet!</value>
+    <value>Einstellungen im Zielordner überschreiben?
+
+Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Dateien kopiert und die Anwendung danach mit den neuen Einstellungen neu gestartet!</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Passwort</value>
