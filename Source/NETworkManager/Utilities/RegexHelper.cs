@@ -26,7 +26,7 @@ namespace NETworkManager.Utilities
         private const string CidrRegex = @"([1-9]|[1-2][0-9]|3[0-2])";
 
         // Match a Subnetmask like 255.255.255.0
-        public const string SubnetmaskRegex = @"^" + SubnetmaskValues + @"&";
+        public const string SubnetmaskRegex = @"^" + SubnetmaskValues + @"$";
 
         // Match a subnet from 192.168.178.0/1 to 192.168.178.0/32
         public const string IPv4AddressCidrRegex = @"^" + IPv4AddressValues + @"\/" + CidrRegex + @"$";
