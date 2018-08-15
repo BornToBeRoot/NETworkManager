@@ -907,7 +907,7 @@
     <value>Grupo</value>
   </data>
   <data name="Height" xml:space="preserve">
-    <value>Height</value>
+    <value>Altura</value>
   </data>
   <data name="Host" xml:space="preserve">
     <value>Host</value>
@@ -922,7 +922,7 @@
     <value>ID</value>
   </data>
   <data name="InheritHostFromDefault" xml:space="preserve">
-    <value>Inherit host from default</value>
+    <value>Heredar el host de forma predeterminada</value>
   </data>
   <data name="InstallRDP8dot1Message" xml:space="preserve">
     <value>¡Debe instalar la versión 8.1 del protocolo de escritorio remoto (RDP) en su sistema para usar la funcionalidad de escritorio remoto!</value>
@@ -1027,7 +1027,9 @@
     <value>anular</value>
   </data>
   <data name="OverwriteSettingsInTheDestinationFolder" xml:space="preserve">
-    <value>¿Sobrescribir la configuración del directorio de destino?\n\n¡Si hace clic en "Mover y reiniciar", los archivos restantes se copiarán y la aplicación se reiniciará con la nueva configuración!</value>
+    <value>¿Sobrescribir la configuración del directorio de destino?
+
+¡Si hace clic en "Mover y reiniciar", los archivos restantes se copiarán y la aplicación se reiniciará con la nueva configuración!</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Contraseña</value>
@@ -1444,7 +1446,7 @@
     <value>COM5</value>
   </data>
   <data name="ExampleSNMPCommunity" xml:space="preserve">
-    <value>public</value>
+    <value>público</value>
   </data>
   <data name="ExampleSNMPOID" xml:space="preserve">
     <value>1.3.6.1.2.1.1</value>
@@ -1930,15 +1932,15 @@
     <value>¡Ingrese un valor válido entre 25 y 100!</value>
   </data>
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
-    <value>A profile with this name already exists!</value>
+    <value>¡Ya existe un perfil con este nombre!</value>
   </data>
   <data name="CredentialWithThisNameAlreadyExists" xml:space="preserve">
-    <value>A Credential with this name already exists!</value>
+    <value>¡Ya existe una credencial con este nombre!</value>
   </data>
   <data name="PortState_Closed" xml:space="preserve">
-    <value>Closed</value>
+    <value>Cerrado</value>
   </data>
   <data name="PortState_Open" xml:space="preserve">
-    <value>Open</value>
+    <value>Abrir</value>
   </data>
 </root>

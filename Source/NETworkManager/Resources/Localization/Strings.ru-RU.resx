@@ -1027,7 +1027,9 @@
     <value>перезаписать</value>
   </data>
   <data name="OverwriteSettingsInTheDestinationFolder" xml:space="preserve">
-    <value>Перезаписать настройки в папке назначения?\n\nЕсли Вы нажмете "Move &amp;amp; Restart", остальные файлы будут скопированы и приложение будет перезапущено с новыми настройками!</value>
+    <value>Перезаписать настройки в папке назначения?
+
+Если Вы нажмете "Move &amp; Restart", остальные файлы будут скопированы и приложение будет перезапущено с новыми настройками!</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Пароль</value>
