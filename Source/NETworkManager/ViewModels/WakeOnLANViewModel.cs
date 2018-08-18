@@ -500,7 +500,7 @@ namespace NETworkManager.ViewModels
 
                 await Task.Delay(2000); // Make the user happy, let him see a reload animation (and he cannot spam the send command)
 
-                StatusMessage = Resources.Localization.Strings.MagicPacketSuccessfulSended;
+                StatusMessage = Resources.Localization.Strings.MagicPacketSentMessage;
                 DisplayStatusMessage = true;
             }
             catch (Exception ex)

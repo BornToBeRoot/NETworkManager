@@ -942,8 +942,8 @@
   <data name="MACAddressOrVendor" xml:space="preserve">
     <value>MAC address or vendor</value>
   </data>
-  <data name="MagicPacketSuccessfulSended" xml:space="preserve">
-    <value>Magic packet successful sended!</value>
+  <data name="MagicPacketSentMessage" xml:space="preserve">
+    <value>Magic packet successfully sent!</value>
   </data>
   <data name="MaximumNumberOfHopsReached" xml:space="preserve">
     <value>Maximum number ({0}) of hops/router reached!</value>

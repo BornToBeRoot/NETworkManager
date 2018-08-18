@@ -2743,11 +2743,11 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Magic packet successful sended!.
+        ///   Looks up a localized string similar to Magic packet successfully sent!.
         /// </summary>
-        public static string MagicPacketSuccessfulSended {
+        public static string MagicPacketSentMessage {
             get {
-                return ResourceManager.GetString("MagicPacketSuccessfulSended", resourceCulture);
+                return ResourceManager.GetString("MagicPacketSentMessage", resourceCulture);
             }
         }
         
