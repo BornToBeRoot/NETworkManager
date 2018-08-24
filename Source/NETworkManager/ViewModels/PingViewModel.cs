@@ -400,7 +400,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {
-            Clipboard.SetText(Resources.Localization.Strings.ResourceManager.GetString("String_IPStatus_" + SelectedPingResult.Status));
+            Clipboard.SetText(Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + SelectedPingResult.Status));
         }
         #endregion
 

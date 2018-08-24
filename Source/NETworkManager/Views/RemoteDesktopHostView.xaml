@@ -48,7 +48,7 @@
                     </dragablz:TabablzControl.InterTabController>
                     <dragablz:TabablzControl.HeaderSuffixContent>
                         <Grid HorizontalAlignment="Right" Width="40" Height="44">
-                            <Button Style="{StaticResource CleanButton}" Command="{Binding ConnectCommand}" ToolTip="{x:Static localization:Strings.NewTab}" Focusable="False">
+                            <Button Style="{StaticResource CleanButton}" Command="{Binding ConnectCommand}" ToolTip="{x:Static localization:Strings.NewConnectionDots}" Focusable="False">
                                 <Rectangle Width="20" Height="20">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />

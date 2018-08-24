@@ -467,7 +467,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {
-            Clipboard.SetText(Resources.Localization.Strings.ResourceManager.GetString("String_IPStatus_" + SelectedIPScanResult.PingInfo.Status));
+            Clipboard.SetText(Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + SelectedIPScanResult.PingInfo.Status));
         }
         #endregion
 
