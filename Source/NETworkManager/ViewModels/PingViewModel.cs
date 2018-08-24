@@ -340,7 +340,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedTimestampAction()
         {
-            Clipboard.SetText(SelectedPingResult.Timestamp.ToString(CultureInfo.CurrentCulture));
+            CommonMethods.SetClipboard(SelectedPingResult.Timestamp.ToString(CultureInfo.CurrentCulture));
         }
 
         public ICommand CopySelectedIPAddressCommand
@@ -350,7 +350,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedIPAddressAction()
         {
-            Clipboard.SetText(SelectedPingResult.IPAddress.ToString());
+            CommonMethods.SetClipboard(SelectedPingResult.IPAddress.ToString());
         }
 
         public ICommand CopySelectedHostnameCommand
@@ -360,7 +360,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedHostnameAction()
         {
-            Clipboard.SetText(SelectedPingResult.Hostname);
+            CommonMethods.SetClipboard(SelectedPingResult.Hostname);
         }
 
         public ICommand CopySelectedBytesCommand
@@ -370,7 +370,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedBytesAction()
         {
-            Clipboard.SetText(SelectedPingResult.Bytes.ToString());
+            CommonMethods.SetClipboard(SelectedPingResult.Bytes.ToString());
         }
 
         public ICommand CopySelectedTimeCommand
@@ -380,7 +380,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedTimeAction()
         {
-            Clipboard.SetText(SelectedPingResult.Time.ToString());
+            CommonMethods.SetClipboard(SelectedPingResult.Time.ToString());
         }
 
         public ICommand CopySelectedTTLCommand
@@ -390,7 +390,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedTTLAction()
         {
-            Clipboard.SetText(SelectedPingResult.TTL.ToString());
+            CommonMethods.SetClipboard(SelectedPingResult.TTL.ToString());
         }
 
         public ICommand CopySelectedStatusCommand
@@ -400,7 +400,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {
-            Clipboard.SetText(Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + SelectedPingResult.Status));
+            CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + SelectedPingResult.Status));
         }
         #endregion
 

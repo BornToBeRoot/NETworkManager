@@ -323,7 +323,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedIPAddressAction()
         {
-            Clipboard.SetText(SelectedARPTableInfo.IPAddress.ToString());
+            CommonMethods.SetClipboard(SelectedARPTableInfo.IPAddress.ToString());
         }
 
         public ICommand CopySelectedMACAddressCommand
@@ -333,7 +333,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedMACAddressAction()
         {
-            Clipboard.SetText(MACAddressHelper.GetDefaultFormat(SelectedARPTableInfo.MACAddress.ToString()));
+            CommonMethods.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedARPTableInfo.MACAddress.ToString()));
         }
 
         public ICommand CopySelectedMulticastCommand
@@ -343,7 +343,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedMulticastAction()
         {
-            Clipboard.SetText(SelectedARPTableInfo.IsMulticast ? Resources.Localization.Strings.Yes : Resources.Localization.Strings.No);
+            CommonMethods.SetClipboard(SelectedARPTableInfo.IsMulticast ? Resources.Localization.Strings.Yes : Resources.Localization.Strings.No);
         }
         #endregion
 

@@ -278,7 +278,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedNameAction()
         {
-            Clipboard.SetText(SelectedLookupResult.Name);
+            CommonMethods.SetClipboard(SelectedLookupResult.Name);
         }
 
         public ICommand CopySelectedTTLCommand
@@ -288,7 +288,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedTTLAction()
         {
-            Clipboard.SetText(SelectedLookupResult.TTL.ToString());
+            CommonMethods.SetClipboard(SelectedLookupResult.TTL.ToString());
         }
 
         public ICommand CopySelectedClassCommand
@@ -298,7 +298,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedClassAction()
         {
-            Clipboard.SetText(SelectedLookupResult.Class);
+            CommonMethods.SetClipboard(SelectedLookupResult.Class);
         }
 
         public ICommand CopySelectedTypeCommand
@@ -308,7 +308,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedTypeAction()
         {
-            Clipboard.SetText(SelectedLookupResult.Type);
+            CommonMethods.SetClipboard(SelectedLookupResult.Type);
         }
 
         public ICommand CopySelectedResultCommand
@@ -318,7 +318,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedResultAction()
         {
-            Clipboard.SetText(SelectedLookupResult.Result);
+            CommonMethods.SetClipboard(SelectedLookupResult.Result);
         }
         #endregion
 

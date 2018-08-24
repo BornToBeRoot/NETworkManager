@@ -173,7 +173,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedMACAddressAction()
         {
-            Clipboard.SetText(SelectedOUILookup.MACAddress);
+            CommonMethods.SetClipboard(SelectedOUILookup.MACAddress);
         }
 
         public ICommand CopySelectedVendorCommand
@@ -183,7 +183,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedVendorAction()
         {
-            Clipboard.SetText(SelectedOUILookup.Vendor);
+            CommonMethods.SetClipboard(SelectedOUILookup.Vendor);
         }
         #endregion
 

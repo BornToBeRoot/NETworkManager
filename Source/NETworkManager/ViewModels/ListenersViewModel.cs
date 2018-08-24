@@ -222,7 +222,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedProtocolAction()
         {
-            Clipboard.SetText(SelectedListenerInfo.Protocol.ToString());
+            CommonMethods.SetClipboard(SelectedListenerInfo.Protocol.ToString());
         }
         
         public ICommand CopySelectedIPAddressCommand
@@ -232,7 +232,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedIPAddressAction()
         {
-            Clipboard.SetText(SelectedListenerInfo.IPAddress.ToString());
+            CommonMethods.SetClipboard(SelectedListenerInfo.IPAddress.ToString());
         }
 
         public ICommand CopySelectedPortCommand
@@ -242,7 +242,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedPortAction()
         {
-            Clipboard.SetText(SelectedListenerInfo.Port.ToString());
+            CommonMethods.SetClipboard(SelectedListenerInfo.Port.ToString());
         }
         #endregion
 

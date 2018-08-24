@@ -397,7 +397,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedIPAddressAction()
         {
-            Clipboard.SetText(SelectedIPScanResult.PingInfo.IPAddress.ToString());
+            CommonMethods.SetClipboard(SelectedIPScanResult.PingInfo.IPAddress.ToString());
         }
 
         public ICommand CopySelectedHostnameCommand
@@ -407,7 +407,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedHostnameAction()
         {
-            Clipboard.SetText(SelectedIPScanResult.Hostname);
+            CommonMethods.SetClipboard(SelectedIPScanResult.Hostname);
         }
 
         public ICommand CopySelectedMACAddressCommand
@@ -417,7 +417,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedMACAddressAction()
         {
-            Clipboard.SetText(MACAddressHelper.GetDefaultFormat(SelectedIPScanResult.MACAddress.ToString()));
+            CommonMethods.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedIPScanResult.MACAddress.ToString()));
         }
 
         public ICommand CopySelectedVendorCommand
@@ -427,7 +427,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedVendorAction()
         {
-            Clipboard.SetText(SelectedIPScanResult.Vendor);
+            CommonMethods.SetClipboard(SelectedIPScanResult.Vendor);
         }
 
         public ICommand CopySelectedBytesCommand
@@ -437,7 +437,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedBytesAction()
         {
-            Clipboard.SetText(SelectedIPScanResult.PingInfo.Bytes.ToString());
+            CommonMethods.SetClipboard(SelectedIPScanResult.PingInfo.Bytes.ToString());
         }
 
         public ICommand CopySelectedTimeCommand
@@ -447,7 +447,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedTimeAction()
         {
-            Clipboard.SetText(SelectedIPScanResult.PingInfo.Time.ToString());
+            CommonMethods.SetClipboard(SelectedIPScanResult.PingInfo.Time.ToString());
         }
 
         public ICommand CopySelectedTTLCommand
@@ -457,7 +457,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedTTLAction()
         {
-            Clipboard.SetText(SelectedIPScanResult.PingInfo.TTL.ToString());
+            CommonMethods.SetClipboard(SelectedIPScanResult.PingInfo.TTL.ToString());
         }
 
         public ICommand CopySelectedStatusCommand
@@ -467,7 +467,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {
-            Clipboard.SetText(Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + SelectedIPScanResult.PingInfo.Status));
+            CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + SelectedIPScanResult.PingInfo.Status));
         }
         #endregion
 

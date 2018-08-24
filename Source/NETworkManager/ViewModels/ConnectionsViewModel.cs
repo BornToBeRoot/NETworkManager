@@ -217,7 +217,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedLocalIpAddressAction()
         {
-            Clipboard.SetText(SelectedConnectionInfo.LocalIPAddress.ToString());
+            CommonMethods.SetClipboard(SelectedConnectionInfo.LocalIPAddress.ToString());
         }
 
         public ICommand CopySelectedLocalPortCommand
@@ -227,7 +227,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedLocalPortAction()
         {
-            Clipboard.SetText(SelectedConnectionInfo.LocalPort.ToString());
+            CommonMethods.SetClipboard(SelectedConnectionInfo.LocalPort.ToString());
         }
 
         public ICommand CopySelectedRemoteIpAddressCommand
@@ -237,7 +237,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedRemoteIpAddressAction()
         {
-            Clipboard.SetText(SelectedConnectionInfo.RemoteIPAddress.ToString());
+            CommonMethods.SetClipboard(SelectedConnectionInfo.RemoteIPAddress.ToString());
         }
 
         public ICommand CopySelectedRemotePortCommand
@@ -247,7 +247,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedRemotePortAction()
         {
-            Clipboard.SetText(SelectedConnectionInfo.RemotePort.ToString());
+            CommonMethods.SetClipboard(SelectedConnectionInfo.RemotePort.ToString());
         }
 
         public ICommand CopySelectedProtocolCommand
@@ -257,7 +257,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedProtocolAction()
         {
-            Clipboard.SetText(SelectedConnectionInfo.Protocol.ToString());
+            CommonMethods.SetClipboard(SelectedConnectionInfo.Protocol.ToString());
         }
 
         public ICommand CopySelectedStateCommand
@@ -267,7 +267,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStateAction()
         {
-            Clipboard.SetText(Resources.Localization.Strings.ResourceManager.GetString("TcpState_" + SelectedConnectionInfo.State));
+            CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString("TcpState_" + SelectedConnectionInfo.State));
         }
         #endregion
 

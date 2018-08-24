@@ -207,7 +207,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedPortAction()
         {
-            Clipboard.SetText(SelectedPortLookupResult.Number.ToString());
+            CommonMethods.SetClipboard(SelectedPortLookupResult.Number.ToString());
         }
 
         public ICommand CopySelectedProtocolCommand
@@ -217,7 +217,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedProtocolAction()
         {
-            Clipboard.SetText(SelectedPortLookupResult.Protocol.ToString());
+            CommonMethods.SetClipboard(SelectedPortLookupResult.Protocol.ToString());
         }
 
         public ICommand CopySelectedServiceCommand
@@ -227,7 +227,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedServiceAction()
         {
-            Clipboard.SetText(SelectedPortLookupResult.Service);
+            CommonMethods.SetClipboard(SelectedPortLookupResult.Service);
         }
 
         public ICommand CopySelectedDescriptionCommand
@@ -237,7 +237,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedDescriptionAction()
         {
-            Clipboard.SetText(SelectedPortLookupResult.Description);
+            CommonMethods.SetClipboard(SelectedPortLookupResult.Description);
         }
         #endregion
 

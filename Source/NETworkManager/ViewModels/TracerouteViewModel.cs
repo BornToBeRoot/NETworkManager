@@ -352,7 +352,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedHopAction()
         {
-            Clipboard.SetText(SelectedTraceResult.Hop.ToString());
+            CommonMethods.SetClipboard(SelectedTraceResult.Hop.ToString());
         }
 
         public ICommand CopySelectedTime1Command
@@ -362,7 +362,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedTime1Action()
         {
-            Clipboard.SetText(SelectedTraceResult.Time1.ToString(CultureInfo.CurrentCulture));
+            CommonMethods.SetClipboard(SelectedTraceResult.Time1.ToString(CultureInfo.CurrentCulture));
         }
 
         public ICommand CopySelectedTime2Command
@@ -372,7 +372,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedTime2Action()
         {
-            Clipboard.SetText(SelectedTraceResult.Time2.ToString(CultureInfo.CurrentCulture));
+            CommonMethods.SetClipboard(SelectedTraceResult.Time2.ToString(CultureInfo.CurrentCulture));
         }
 
         public ICommand CopySelectedTime3Command
@@ -382,7 +382,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedTime3Action()
         {
-            Clipboard.SetText(SelectedTraceResult.Time3.ToString(CultureInfo.CurrentCulture));
+            CommonMethods.SetClipboard(SelectedTraceResult.Time3.ToString(CultureInfo.CurrentCulture));
         }
 
         public ICommand CopySelectedIPAddressCommand
@@ -392,7 +392,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedIPAddressAction()
         {
-            Clipboard.SetText(SelectedTraceResult.IPAddress.ToString());
+            CommonMethods.SetClipboard(SelectedTraceResult.IPAddress.ToString());
         }
 
         public ICommand CopySelectedHostnameCommand
@@ -402,7 +402,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedHostnameAction()
         {
-            Clipboard.SetText(SelectedTraceResult.Hostname);
+            CommonMethods.SetClipboard(SelectedTraceResult.Hostname);
         }
         #endregion
 

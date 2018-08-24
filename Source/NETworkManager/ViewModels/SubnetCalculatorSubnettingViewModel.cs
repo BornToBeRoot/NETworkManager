@@ -171,7 +171,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedNetworkAddressAction()
         {
-            Clipboard.SetText(SelectedSubnetResult.Network.ToString());
+            CommonMethods.SetClipboard(SelectedSubnetResult.Network.ToString());
         }
 
         public ICommand CopySelectedBroadcastCommand
@@ -181,7 +181,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedBroadcastAction()
         {
-            Clipboard.SetText(SelectedSubnetResult.Broadcast.ToString());
+            CommonMethods.SetClipboard(SelectedSubnetResult.Broadcast.ToString());
         }
 
         public ICommand CopySelectedIPAddressesCommand
@@ -191,7 +191,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedIPAddressesAction()
         {
-            Clipboard.SetText(SelectedSubnetResult.Total.ToString());
+            CommonMethods.SetClipboard(SelectedSubnetResult.Total.ToString());
         }
 
         public ICommand CopySelectedSubnetmaskCommand
@@ -201,7 +201,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedSubnetmaskAction()
         {
-            Clipboard.SetText(SelectedSubnetResult.Netmask.ToString());
+            CommonMethods.SetClipboard(SelectedSubnetResult.Netmask.ToString());
         }
 
         public ICommand CopySelectedCIDRCommand
@@ -211,7 +211,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedCIDRAction()
         {
-            Clipboard.SetText(SelectedSubnetResult.Cidr.ToString());
+            CommonMethods.SetClipboard(SelectedSubnetResult.Cidr.ToString());
         }
 
         public ICommand CopySelectedFirstIPAddressCommand
@@ -221,7 +221,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedFirstIPAddressAction()
         {
-            Clipboard.SetText(SelectedSubnetResult.FirstUsable.ToString());
+            CommonMethods.SetClipboard(SelectedSubnetResult.FirstUsable.ToString());
         }
 
         public ICommand CopySelectedLastIPAddressCommand
@@ -231,7 +231,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedLastIPAddressAction()
         {
-            Clipboard.SetText(SelectedSubnetResult.LastUsable.ToString());
+            CommonMethods.SetClipboard(SelectedSubnetResult.LastUsable.ToString());
         }
 
         public ICommand CopySelectedHostCommand
@@ -241,7 +241,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedHostAction()
         {
-            Clipboard.SetText(SelectedSubnetResult.Usable.ToString());
+            CommonMethods.SetClipboard(SelectedSubnetResult.Usable.ToString());
         }
         #endregion
 

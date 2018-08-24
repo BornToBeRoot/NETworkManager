@@ -440,7 +440,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedOIDAction()
         {
-            Clipboard.SetText(SelectedQueryResult.OID);
+            CommonMethods.SetClipboard(SelectedQueryResult.OID);
         }
 
         public ICommand CopySelectedDataCommand
@@ -450,7 +450,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedDataAction()
         {
-            Clipboard.SetText(SelectedQueryResult.Data);
+            CommonMethods.SetClipboard(SelectedQueryResult.Data);
         }
 
         #endregion

@@ -339,7 +339,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedIPAddressAction()
         {
-            Clipboard.SetText(SelectedScanResult.Host.Item1.ToString());
+            CommonMethods.SetClipboard(SelectedScanResult.Host.Item1.ToString());
         }
 
         public ICommand CopySelectedHostnameCommand
@@ -349,7 +349,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedHostnameAction()
         {
-            Clipboard.SetText(SelectedScanResult.Host.Item2);
+            CommonMethods.SetClipboard(SelectedScanResult.Host.Item2);
         }
 
         public ICommand CopySelectedPortCommand
@@ -359,7 +359,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedPortAction()
         {
-            Clipboard.SetText(SelectedScanResult.Port.ToString());
+            CommonMethods.SetClipboard(SelectedScanResult.Port.ToString());
         }
 
         public ICommand CopySelectedStatusCommand
@@ -369,7 +369,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {
-            Clipboard.SetText(Resources.Localization.Strings.ResourceManager.GetString(SelectedScanResult.Status.ToString()));
+            CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString(SelectedScanResult.Status.ToString()));
         }
 
         public ICommand CopySelectedProtocolCommand
@@ -379,7 +379,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedProtocolAction()
         {
-            Clipboard.SetText(SelectedScanResult.LookupInfo.Protocol.ToString());
+            CommonMethods.SetClipboard(SelectedScanResult.LookupInfo.Protocol.ToString());
         }
 
         public ICommand CopySelectedServiceCommand
@@ -389,7 +389,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedServiceAction()
         {
-            Clipboard.SetText(SelectedScanResult.LookupInfo.Service);
+            CommonMethods.SetClipboard(SelectedScanResult.LookupInfo.Service);
         }
 
         public ICommand CopySelectedDescriptionCommand
@@ -399,7 +399,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedDescriptionAction()
         {
-            Clipboard.SetText(SelectedScanResult.LookupInfo.Description);
+            CommonMethods.SetClipboard(SelectedScanResult.LookupInfo.Description);
         }
         #endregion
 
