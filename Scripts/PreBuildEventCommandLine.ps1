@@ -38,7 +38,7 @@ if([String]::IsNullOrEmpty($AximpPath))
 }
 else 
 {
-    Write-Host "Using aximp.exe form: $AximpPath"    
+    Write-Host "Using aximp.exe from: $AximpPath"    
 }
 
 # Change location
