@@ -101,7 +101,7 @@ namespace NETworkManager.Models.Settings
 
                 using (var fileStream = new FileStream(GetSettingsFilePath(), FileMode.Open))
                 {
-                    settingsInfo = (SettingsInfo)(xmlSerializer.Deserialize(fileStream));
+                    settingsInfo = (SettingsInfo)xmlSerializer.Deserialize(fileStream);
                 }
 
                 Current = settingsInfo;
@@ -143,7 +143,7 @@ namespace NETworkManager.Models.Settings
             // Create the dircetory and copy the files to the new location
             Directory.CreateDirectory(targedLocation);
 
-            foreach (string file in sourceFiles)
+            foreach (var file in sourceFiles)
             {
                 // Skip if file exists and user don't want to overwrite it
                 if (!overwrite && (filesTargedLocation ?? throw new ArgumentNullException(nameof(filesTargedLocation))).Any(x => Path.GetFileName(x) == Path.GetFileName(file)))
@@ -153,7 +153,7 @@ namespace NETworkManager.Models.Settings
             }
 
             // Delete the old files
-            foreach (string file in sourceFiles)
+            foreach (var file in sourceFiles)
                 File.Delete(file);
 
             // Delete the folder, if it is not the default settings locations and does not contain any files or directories

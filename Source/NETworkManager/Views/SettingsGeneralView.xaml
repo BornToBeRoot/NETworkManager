@@ -6,11 +6,21 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsGeneralViewModel}">
+    <UserControl.Resources>
+        <converters:ApplicationNameToTranslatedStringConverter x:Key="ApplicationNameToTranslatedStringConverter" />
+    </UserControl.Resources>
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.DefaultApplication}" />
         <TextBlock Text="{x:Static localization:Strings.ShowTheFollowingApplicationOnStartup}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <ComboBox FontSize="14" ItemsSource="{Binding ApplicationViewCollection}" DisplayMemberPath="TranslatedName" SelectedItem="{Binding DefaultApplicationViewSelectedItem}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,20"/>
+        <ComboBox ItemsSource="{Binding ApplicationViewCollection}" SelectedItem="{Binding DefaultApplicationViewSelectedItem}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,20">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name, Converter={StaticResource ApplicationNameToTranslatedStringConverter}}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.History}" />
         <TextBlock Text="{x:Static localization:Strings.NumberOfStoredEntries}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding HistoryListEntries}" Maximum="50" Minimum="0" Interval="1" />

@@ -59,7 +59,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            ApplicationViewCollection = new ObservableCollection<ApplicationViewInfo>(ApplicationViewManager.List.OrderBy(x => x.Name));
+            ApplicationViewCollection = new ObservableCollection<ApplicationViewInfo>(SettingsManager.Current.General_ApplicationList);
 
             DefaultApplicationViewSelectedItem = ApplicationViewCollection.FirstOrDefault(x => x.Name == SettingsManager.Current.General_DefaultApplicationViewName);
             HistoryListEntries = SettingsManager.Current.General_HistoryListEntries;

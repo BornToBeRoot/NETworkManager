@@ -14,7 +14,7 @@ using NETworkManager.Models.Settings;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Collections.ObjectModel;
 using NETworkManager.Utilities;
 using System.Runtime.CompilerServices;
 using System.Windows.Markup;
@@ -297,7 +297,7 @@ namespace NETworkManager
 
                 ConfigurationManager.Current.IsDialogOpen = true;
 
-                await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.SettingsHaveBeenReset, NETworkManager.Resources.Localization.Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage , MessageDialogStyle.Affirmative, settings);
+                await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.SettingsHaveBeenReset, NETworkManager.Resources.Localization.Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage, MessageDialogStyle.Affirmative, settings);
 
                 ConfigurationManager.Current.IsDialogOpen = false;
             }
@@ -313,20 +313,27 @@ namespace NETworkManager
 
         private void LoadApplicationList()
         {
-            Applications = CollectionViewSource.GetDefaultView(ApplicationViewManager.List);
+            // Need to add items here... if in SettingsInfo/Constructor --> same item will appear multiple times...
+            if (SettingsManager.Current.General_ApplicationList.Count == 0)
+                SettingsManager.Current.General_ApplicationList = new ObservableCollection<ApplicationViewInfo>(ApplicationViewManager.GetList());
+
+            Applications = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
 
             Applications.SortDescriptions.Add(new SortDescription(nameof(ApplicationViewInfo.Name), ListSortDirection.Ascending)); // Always have the same order, even if it is translated...
             Applications.Filter = o =>
             {
+                if (!(o is ApplicationViewInfo info))
+                    return false;
+
                 if (string.IsNullOrEmpty(Search))
-                    return true;
+                    return info.IsVisible;
 
                 var regex = new Regex(@" |-");
 
                 var search = regex.Replace(Search, "");
 
                 // Search by TranslatedName and Name
-                return o is ApplicationViewInfo info && (regex.Replace(info.TranslatedName, "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
+                return info.IsVisible && (regex.Replace(ApplicationViewManager.GetTranslatedNameByName(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
             };
 
             // Get application from settings
