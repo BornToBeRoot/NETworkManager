@@ -358,6 +358,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to At least one application must be visible!.
+        /// </summary>
+        public static string AtLeastOneApplicationMustBeVisible {
+            get {
+                return ResourceManager.GetString("AtLeastOneApplicationMustBeVisible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Attempts.
         /// </summary>
         public static string Attempts {
@@ -2280,6 +2289,15 @@ namespace NETworkManager.Resources.Localization {
         public static string HelpMessage_Tags {
             get {
                 return ResourceManager.GetString("HelpMessage_Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hidden applications.
+        /// </summary>
+        public static string HiddenApplications {
+            get {
+                return ResourceManager.GetString("HiddenApplications", resourceCulture);
             }
         }
         
@@ -5414,6 +5432,24 @@ namespace NETworkManager.Resources.Localization {
         public static string Violet {
             get {
                 return ResourceManager.GetString("Violet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visible applications.
+        /// </summary>
+        public static string VisibleApplications {
+            get {
+                return ResourceManager.GetString("VisibleApplications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visible applications in the bar:.
+        /// </summary>
+        public static string VisibleApplicationsInTheBar {
+            get {
+                return ResourceManager.GetString("VisibleApplicationsInTheBar", resourceCulture);
             }
         }
         

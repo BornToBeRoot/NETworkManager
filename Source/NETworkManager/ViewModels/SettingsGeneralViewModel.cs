@@ -44,6 +44,23 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _visibleApplicationSelectedItem = value;
+
+                ValidateHideVisibleApplications();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isVisibleToHideApplicationEnabled;
+        public bool IsVisibleToHideApplicationEnabled
+        {
+            get => _isVisibleToHideApplicationEnabled;
+            set
+            {
+                if(value == _isVisibleToHideApplicationEnabled)
+                    return;
+
+                _isVisibleToHideApplicationEnabled = value;
                 OnPropertyChanged();
             }
         }
@@ -60,6 +77,23 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _hiddenApplicationSelectedItem = value;
+
+                ValidateHideVisibleApplications();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isHideToVisibleApplicationEnabled;
+        public bool IsHideToVisibleApplicationEnabled
+        {
+            get => _isHideToVisibleApplicationEnabled;
+            set
+            {
+                if (value == _isHideToVisibleApplicationEnabled)
+                    return;
+
+                _isHideToVisibleApplicationEnabled = value;
                 OnPropertyChanged();
             }
         }
@@ -124,6 +158,8 @@ namespace NETworkManager.ViewModels
                 return !info.IsVisible;
             };
 
+            ValidateHideVisibleApplications();
+
             DefaultApplicationSelectedItem = Applications.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.General_DefaultApplicationViewName);
             HistoryListEntries = SettingsManager.Current.General_HistoryListEntries;
         }
@@ -138,6 +174,8 @@ namespace NETworkManager.ViewModels
         private void VisibleToHideApplicationAction()
         {
             var index = 0;
+
+            bool newDefaultApplication = DefaultApplicationSelectedItem.Name == VisibleApplicationSelectedItem.Name;
 
             for (var i = 0; i < SettingsManager.Current.General_ApplicationList.Count; i++)
             {
@@ -155,6 +193,11 @@ namespace NETworkManager.ViewModels
 
             SettingsManager.Current.General_ApplicationList.RemoveAt(index);
             SettingsManager.Current.General_ApplicationList.Insert(index, info);
+
+            if (newDefaultApplication)
+                DefaultApplicationSelectedItem = ApplicationsVisible.Cast<ApplicationViewInfo>().FirstOrDefault();
+
+            ValidateHideVisibleApplications();
         }
 
         public ICommand HideToVisibleApplicationCommand
@@ -182,6 +225,17 @@ namespace NETworkManager.ViewModels
 
             SettingsManager.Current.General_ApplicationList.RemoveAt(index);
             SettingsManager.Current.General_ApplicationList.Insert(index, info);
+
+            ValidateHideVisibleApplications();
+        }
+        #endregion
+
+        #region Methods
+
+        private void ValidateHideVisibleApplications()
+        {
+            IsVisibleToHideApplicationEnabled = ApplicationsVisible.Cast<ApplicationViewInfo>().Count() > 1 && VisibleApplicationSelectedItem != null;
+            IsHideToVisibleApplicationEnabled = ApplicationsHidden.Cast<ApplicationViewInfo>().Any() && HiddenApplicationSelectedItem != null;
         }
         #endregion
     }

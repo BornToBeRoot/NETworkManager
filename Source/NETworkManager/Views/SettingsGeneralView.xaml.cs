@@ -15,12 +15,18 @@ namespace NETworkManager.Views
 
         private void ListBoxVisibleToHide_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if(!_viewModel.IsVisibleToHideApplicationEnabled)
+                return;
+
             if (e.ChangedButton == MouseButton.Left)
                 _viewModel.VisibleToHideApplicationCommand.Execute(null);
         }
 
         private void ListBoxHideToVisible_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if (!_viewModel.IsHideToVisibleApplicationEnabled)
+                return;
+
             if (e.ChangedButton == MouseButton.Left)
                 _viewModel.HideToVisibleApplicationCommand.Execute(null);
         }
