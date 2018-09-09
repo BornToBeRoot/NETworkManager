@@ -130,9 +130,9 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
-            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.PuTTY);
+            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.IPScanner);
 
-            TabItems = new ObservableCollection<DragablzTabItem>()
+            TabItems = new ObservableCollection<DragablzTabItem>
             {
                 new DragablzTabItem(Resources.Localization.Strings.NewTab, new IPScannerView(_tabId), _tabId)
             };

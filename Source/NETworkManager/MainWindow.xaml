@@ -16,6 +16,8 @@
         d:DataContext="{d:DesignInstance networkManager:MainWindow}">
     <mahAppsControls:MetroWindow.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:ApplicationNameToTranslatedStringConverter x:Key="ApplicationNameToTranslatedStringConverter" />
+        <converters:ApplicationNameToIconConverter x:Key="ApplicationNameToIconConverter" />
         <!-- ReSharper disable once Xaml.RedundantResource, because MainWindow uses FindResource("ContextMenuNotifyIcon") -->
         <ContextMenu x:Key="ContextMenuNotifyIcon" MinWidth="200" Opened="ContextMenu_Opened" x:Shared="False">
             <MenuItem Header="{x:Static localization:Strings.Show}" Command="{Binding ShowWindowCommand}">
@@ -334,7 +336,7 @@
                                         </Grid.ColumnDefinitions>
                                         <Grid.Style>
                                             <Style TargetType="{x:Type Grid}">
-                                                <Setter Property="ToolTip" Value="{Binding TranslatedName}" />
+                                                <Setter Property="ToolTip" Value="{Binding Name, Converter={StaticResource ApplicationNameToTranslatedStringConverter}}" />
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ExpandApplicationView}" Value="True">
                                                         <Setter Property="ToolTip" Value="{x:Null}" />
@@ -362,7 +364,7 @@
                                         </Grid.Style>
                                         <Rectangle Grid.Column="0" Width="24" Height="24">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{Binding Icon}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{Binding Name, Converter={StaticResource ApplicationNameToIconConverter}}" />
                                             </Rectangle.OpacityMask>
                                             <Rectangle.Style>
                                                 <Style TargetType="{x:Type Rectangle}">
@@ -378,7 +380,7 @@
                                                 </Style>
                                             </Rectangle.Style>
                                         </Rectangle>
-                                        <TextBlock Grid.Column="1" Text="{Binding TranslatedName}">
+                                        <TextBlock Grid.Column="1" Text="{Binding Name, Converter={StaticResource ApplicationNameToTranslatedStringConverter}}">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                                     <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
@@ -590,7 +592,7 @@
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
-                    <TextBlock VerticalAlignment="Center" Height="48" TextAlignment="Center" FontSize="22" Style="{StaticResource HeaderTextBlock}" Text="{Binding SelectedApplication.TranslatedName}" Foreground="{DynamicResource GrayBrush3}" Margin="0" />
+                    <TextBlock VerticalAlignment="Center" Height="48" TextAlignment="Center" FontSize="22" Style="{StaticResource HeaderTextBlock}" Text="{Binding SelectedApplication.Name, Converter={StaticResource ApplicationNameToTranslatedStringConverter}}" Foreground="{DynamicResource GrayBrush3}" Margin="0" />
                 </Border>
                 <ContentControl x:Name="ContentControlApplication" Grid.Row="1" Focusable="False">
                     <ContentControl.Style>

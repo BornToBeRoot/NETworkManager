@@ -1943,4 +1943,16 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="PortState_Open" xml:space="preserve">
     <value>Open</value>
   </data>
+  <data name="AtLeastOneApplicationMustBeVisible" xml:space="preserve">
+    <value>At least one application must be visible!</value>
+  </data>
+  <data name="HiddenApplications" xml:space="preserve">
+    <value>Hidden applications</value>
+  </data>
+  <data name="VisibleApplications" xml:space="preserve">
+    <value>Visible applications</value>
+  </data>
+  <data name="VisibleApplicationsInTheBar" xml:space="preserve">
+    <value>Visible applications in the bar:</value>
+  </data>
 </root>

@@ -4,7 +4,6 @@ using Dragablz;
 using System.Windows.Input;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
-using NETworkManager.Models.Settings;
 
 namespace NETworkManager.ViewModels
 {
@@ -34,7 +33,7 @@ namespace NETworkManager.ViewModels
         #region Constructor
         public SNMPHostViewModel()
         {
-            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.PuTTY);
+            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.SNMP);
 
             TabItems = new ObservableCollection<DragablzTabItem>
             {

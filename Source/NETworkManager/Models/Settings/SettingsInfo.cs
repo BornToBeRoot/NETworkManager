@@ -58,6 +58,23 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private ObservableCollection<ApplicationViewInfo> _general_ApplicationList = new ObservableCollection<ApplicationViewInfo>();
+        public ObservableCollection<ApplicationViewInfo> General_ApplicationList
+        {
+            get => _general_ApplicationList;
+            set
+            {
+                if(value == _general_ApplicationList)
+                    return;
+
+                _general_ApplicationList = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
+        
         // Window
         private bool _window_ConfirmClose;
         public bool Window_ConfirmClose
@@ -2408,6 +2425,9 @@ namespace NETworkManager.Models.Settings
         #region Constructor
         public SettingsInfo()
         {
+            // General
+            General_ApplicationList.CollectionChanged += CollectionChanged;
+
             // IP Scanner
             IPScanner_IPRangeHistory.CollectionChanged += CollectionChanged;
 

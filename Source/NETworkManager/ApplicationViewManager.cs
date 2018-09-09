@@ -1,30 +1,25 @@
-using MahApps.Metro.IconPacks;
+using System;
 using System.Collections.Generic;
+using System.Windows.Controls;
+using MahApps.Metro.IconPacks;
 
 namespace NETworkManager
 {
     public static class ApplicationViewManager
     {
         // List of all applications
-        public static List<ApplicationViewInfo> List => new List<ApplicationViewInfo>
+        public static List<ApplicationViewInfo> GetList()
         {
-            new ApplicationViewInfo(Name.NetworkInterface, new PackIconModern { Kind = PackIconModernKind.Network }),
-            new ApplicationViewInfo(Name.IPScanner, new PackIconMaterial { Kind = PackIconMaterialKind.Sitemap }),
-            new ApplicationViewInfo(Name.PortScanner, new PackIconModern { Kind = PackIconModernKind.NetworkPort}),
-            new ApplicationViewInfo(Name.Ping, new PackIconMaterial { Kind = PackIconMaterialKind.LanConnect }),
-            new ApplicationViewInfo(Name.Traceroute,  new PackIconModern { Kind = PackIconModernKind.TransitConnection }),
-            new ApplicationViewInfo(Name.DNSLookup, new PackIconMaterial { Kind= PackIconMaterialKind.SearchWeb }),
-            new ApplicationViewInfo(Name.RemoteDesktop, new PackIconMaterial{ Kind = PackIconMaterialKind.RemoteDesktop }),
-            new ApplicationViewInfo(Name.PuTTY, new PackIconOcticons {Kind = PackIconOcticonsKind.Terminal }),
-            new ApplicationViewInfo(Name.SNMP, new PackIconMaterial {Kind = PackIconMaterialKind.Switch }),
-            new ApplicationViewInfo(Name.WakeOnLAN, new PackIconMaterial { Kind = PackIconMaterialKind.Power }),
-            new ApplicationViewInfo(Name.HTTPHeaders, new PackIconMaterial { Kind = PackIconMaterialKind.Web }),
-            new ApplicationViewInfo(Name.SubnetCalculator, new PackIconModern { Kind = PackIconModernKind.Calculator }),
-            new ApplicationViewInfo(Name.Lookup, new PackIconMaterial { Kind = PackIconMaterialKind.Magnify }),
-            new ApplicationViewInfo(Name.Connections, new PackIconModern {Kind = PackIconModernKind.Connect }),
-            new ApplicationViewInfo(Name.Listeners, new PackIconMaterial {Kind = PackIconMaterialKind.Wan}),
-            new ApplicationViewInfo(Name.ARPTable, new PackIconMaterial { Kind = PackIconMaterialKind.TableOfContents })
-        };
+            var list = new List<ApplicationViewInfo>();
+
+            foreach (Name name in Enum.GetValues(typeof(Name)))
+            {
+                if (name != Name.None)
+                    list.Add(new ApplicationViewInfo(name));
+            }
+
+            return list;
+        }
 
         public static string GetTranslatedNameByName(Name name)
         {
@@ -63,8 +58,70 @@ namespace NETworkManager
                 case Name.ARPTable:
                     return Resources.Localization.Strings.ARPTable;
                 default:
-                    return "";
+                    return "Name not found!";
             }
+        }
+
+        public static Canvas GetIconByName(Name name)
+        {
+            var canvas = new Canvas();
+
+            switch (name)
+            {
+                case Name.NetworkInterface:
+                    canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Network });
+                    break;
+                case Name.IPScanner:
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Sitemap });
+                    break;
+                case Name.PortScanner:
+                    canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.NetworkPort });
+                    break;
+                case Name.Ping:
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.LanConnect });
+                    break;
+                case Name.Traceroute:
+                    canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.TransitConnection });
+                    break;
+                case Name.DNSLookup:
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.SearchWeb });
+                    break;
+                case Name.RemoteDesktop:
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.RemoteDesktop });
+                    break;
+                case Name.PuTTY:
+                    canvas.Children.Add(new PackIconOcticons { Kind = PackIconOcticonsKind.Terminal });
+                    break;
+                case Name.SNMP:
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Switch });
+                    break;
+                case Name.WakeOnLAN:
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Power });
+                    break;
+                case Name.HTTPHeaders:
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Web });
+                    break;
+                case Name.SubnetCalculator:
+                    canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Calculator });
+                    break;
+                case Name.Lookup:
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Magnify });
+                    break;
+                case Name.Connections:
+                    canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Connect });
+                    break;
+                case Name.Listeners:
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Wan });
+                    break;
+                case Name.ARPTable:
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.TableOfContents });
+                    break;
+                default:
+                    canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.SmileyFrown });
+                    break;
+            }
+
+            return canvas;
         }
 
         public enum Name
