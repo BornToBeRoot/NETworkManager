@@ -1,4 +1,5 @@
-﻿using NETworkManager.ViewModels;
+﻿using System.Windows.Input;
+using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
 {
@@ -10,6 +11,18 @@ namespace NETworkManager.Views
         {
             InitializeComponent();
             DataContext = _viewModel;
+        }
+
+        private void ListBoxVisibleToHide_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                _viewModel.VisibleToHideApplicationCommand.Execute(null);
+        }
+
+        private void ListBoxHideToVisible_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                _viewModel.HideToVisibleApplicationCommand.Execute(null);
         }
     }
 }

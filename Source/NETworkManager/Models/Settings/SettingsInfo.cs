@@ -2425,6 +2425,9 @@ namespace NETworkManager.Models.Settings
         #region Constructor
         public SettingsInfo()
         {
+            // General
+            General_ApplicationList.CollectionChanged += CollectionChanged;
+
             // IP Scanner
             IPScanner_IPRangeHistory.CollectionChanged += CollectionChanged;
 

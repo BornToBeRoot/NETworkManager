@@ -7,6 +7,8 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:networkManager="clr-namespace:NETworkManager"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsGeneralViewModel}">
     <UserControl.Resources>
         <converters:ApplicationNameToTranslatedStringConverter x:Key="ApplicationNameToTranslatedStringConverter" />
@@ -14,13 +16,81 @@
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.DefaultApplication}" />
         <TextBlock Text="{x:Static localization:Strings.ShowTheFollowingApplicationOnStartup}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <ComboBox ItemsSource="{Binding ApplicationViewCollection}" SelectedItem="{Binding DefaultApplicationViewSelectedItem}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,20">
+        <ComboBox ItemsSource="{Binding ApplicationsVisible}" IsSynchronizedWithCurrentItem="False" SelectedItem="{Binding DefaultApplicationSelectedItem}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,20">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name, Converter={StaticResource ApplicationNameToTranslatedStringConverter}}"/>
+                    <TextBlock Text="{Binding Name, Converter={StaticResource ApplicationNameToTranslatedStringConverter}}"
+                               d:DataContext="{d:DesignInstance networkManager:ApplicationViewInfo}" />
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="~~Select the applications to be displayed in the overview:" />
+        <Grid Margin="0,0,0,20" Width="520" MaxHeight="300" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="~~Visible Applications"/>
+            <ListBox Grid.Column="0" Grid.Row="2" ItemsSource="{Binding ApplicationsVisible}" SelectedItem="{Binding VisibleApplicationSelectedItem}" MouseDoubleClick="ListBoxVisibleToHide_OnMouseDoubleClick">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name, Converter={StaticResource ApplicationNameToTranslatedStringConverter}}" d:DataContext="{d:DesignInstance networkManager:ApplicationViewInfo}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <StackPanel Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" >
+                <Button Style="{StaticResource CleanButton}" Command="{Binding VisibleToHideApplicationCommand}" Margin="0,0,0,10">
+                    <Rectangle Width="24" Height="24">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronDoubleRight}" />
+                        </Rectangle.OpacityMask>
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </Button>
+                <Button Style="{StaticResource CleanButton}" Command="{Binding HideToVisibleApplicationCommand}">
+                    <Rectangle Width="24" Height="24">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronDoubleLeft}" />
+                        </Rectangle.OpacityMask>
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </Button>
+            </StackPanel>
+            <TextBlock Grid.Column="4" Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="~~Hidden Applications"/>
+            <ListBox Grid.Column="4" Grid.Row="2" ItemsSource="{Binding ApplicationsHidden}" SelectedItem="{Binding HiddenApplicationSelectedItem}" MouseDoubleClick="ListBoxHideToVisible_OnMouseDoubleClick">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name, Converter={StaticResource ApplicationNameToTranslatedStringConverter}}" d:DataContext="{d:DesignInstance networkManager:ApplicationViewInfo}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.History}" />
         <TextBlock Text="{x:Static localization:Strings.NumberOfStoredEntries}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding HistoryListEntries}" Maximum="50" Minimum="0" Interval="1" />

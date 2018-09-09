@@ -133,7 +133,7 @@ namespace NETworkManager.ViewModels
 
             InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.Traceroute);
 
-            TabItems = new ObservableCollection<DragablzTabItem>()
+            TabItems = new ObservableCollection<DragablzTabItem>
             {
                 new DragablzTabItem(Resources.Localization.Strings.NewTab, new TracerouteView(_tabId), _tabId)
             };

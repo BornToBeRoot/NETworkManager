@@ -336,6 +336,8 @@ namespace NETworkManager
                 return info.IsVisible && (regex.Replace(ApplicationViewManager.GetTranslatedNameByName(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
             };
 
+            SettingsManager.Current.General_ApplicationList.CollectionChanged += (sender, args) => Applications.Refresh();
+
             // Get application from settings
             SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.General_DefaultApplicationViewName);
 

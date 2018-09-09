@@ -11,7 +11,6 @@ using System.Windows.Data;
 using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
-using NETworkManager.Converters;
 
 namespace NETworkManager.ViewModels
 {
