@@ -21,6 +21,7 @@
     
     <Style x:Key="SearchTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource SearchMetroTextBox}">
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="ContextMenu" Value="{StaticResource CutCopyPasteContextMenu}" />

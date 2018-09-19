@@ -186,7 +186,7 @@ namespace NETworkManager.ViewModels
         #region Events
         private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
         {
-            UpdateText = string.Format(Resources.Localization.Strings.VersionxxIsAvailable, e.Version);
+            UpdateText = string.Format(Strings.VersionxxIsAvailable, e.Version);
 
             IsUpdateCheckRunning = false;
             UpdateAvailable = true;
@@ -194,7 +194,7 @@ namespace NETworkManager.ViewModels
 
         private void Updater_NoUpdateAvailable(object sender, EventArgs e)
         {
-            UpdaterMessage = Resources.Localization.Strings.NoUpdateAvailable;
+            UpdaterMessage = Strings.NoUpdateAvailable;
 
             IsUpdateCheckRunning = false;
             ShowUpdaterMessage = true;
@@ -202,7 +202,7 @@ namespace NETworkManager.ViewModels
 
         private void Updater_Error(object sender, EventArgs e)
         {
-            UpdaterMessage = Resources.Localization.Strings.ErrorCheckingApiGithubComVerifyYourNetworkConnection;
+            UpdaterMessage = Strings.ErrorCheckingApiGithubComVerifyYourNetworkConnection;
 
             IsUpdateCheckRunning = false;
             ShowUpdaterMessage = true;

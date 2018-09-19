@@ -53,18 +53,6 @@
     <mahAppsControls:MetroWindow.WindowButtonCommands>
         <mahAppsControls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </mahAppsControls:MetroWindow.WindowButtonCommands>
-    <mahAppsControls:MetroWindow.IconTemplate>
-        <DataTemplate>
-            <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" >
-                <Rectangle.LayoutTransform>
-                    <RotateTransform Angle="-90"/>
-                </Rectangle.LayoutTransform>
-                <Rectangle.OpacityMask>
-                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Sitemap}" />
-                </Rectangle.OpacityMask>
-            </Rectangle>
-        </DataTemplate>
-    </mahAppsControls:MetroWindow.IconTemplate>
     <mahAppsControls:MetroWindow.RightWindowCommands>
         <mahAppsControls:WindowCommands>
             <Button Focusable="False" Command="{Binding OpenWebsiteCommand}" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" CommandParameter="{x:Static resources:Resources.NETworkManager_LatestReleaseURL}" Cursor="Hand">
@@ -203,7 +191,7 @@
                                     </Rectangle.Style>
                                 </Rectangle>
                             </Button>
-                            <TextBox x:Name="TextBoxSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.Search}" mahAppsControls:TextBoxHelper.ClearTextButton="True">
+                            <TextBox x:Name="TextBoxSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.SearchDots}" mahAppsControls:TextBoxHelper.ClearTextButton="True">
                                 <TextBox.Style>
                                     <Style BasedOn="{StaticResource SearchTextBox}" TargetType="{x:Type TextBox}">
                                         <Setter Property="Visibility" Value="Hidden" />
