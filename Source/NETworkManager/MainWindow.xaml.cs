@@ -20,6 +20,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using NETworkManager.Models.Update;
 using NETworkManager.Models.Documentation;
+using NETworkManager.Models.Network;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 
 namespace NETworkManager
@@ -313,6 +314,18 @@ namespace NETworkManager
             // Search for updates...
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
                 CheckForUpdates();
+
+
+            // -----------------------------------------------------
+            // Test below!!
+
+            var whois = new Whois();
+
+            var result = whois.Query("google.de", "whois.internic.com");
+
+            Debug.WriteLine(result);
+            
+            // End test
         }
 
         private void LoadApplicationList()

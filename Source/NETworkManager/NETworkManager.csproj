@@ -244,6 +244,7 @@
     <Compile Include="Models\Network\ListenerInfo.cs" />
     <Compile Include="Models\Network\ConnectionInfo.cs" />
     <Compile Include="Models\Network\HostNotFoundException.cs" />
+    <Compile Include="Models\Network\Whois.cs" />
     <Compile Include="Models\PuTTY\PuTTYSessionInfo.cs" />
     <Compile Include="Models\PuTTY\PuTTY.cs" />
     <Compile Include="Models\Settings\ProfileInfo.cs" />
