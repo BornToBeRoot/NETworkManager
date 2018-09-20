@@ -27,8 +27,22 @@ namespace NETworkManager.Models.Settings
 
         #region Variables
         [XmlIgnore] public bool SettingsChanged { get; set; }
-        #region General 
 
+        private string _settingsVersion = "1.7.2.0";
+        public string SettingsVersion
+        {
+            get => _settingsVersion;
+            set
+            {
+                if(value == _settingsVersion)
+                    return;
+
+                _settingsVersion = value;
+                SettingsChanged = true;
+            }
+        } 
+        
+        #region General 
         // General        
         private ApplicationViewManager.Name _general_DefaultApplicationViewName = ApplicationViewManager.Name.NetworkInterface;
         public ApplicationViewManager.Name General_DefaultApplicationViewName

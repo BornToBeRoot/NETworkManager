@@ -248,6 +248,10 @@ namespace NETworkManager
             // Language Meta
             LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
 
+            // Update settings
+            if (AssemblyManager.Current.Version > new Version(SettingsManager.Current.SettingsVersion))
+                SettingsManager.Update(AssemblyManager.Current.Version, new Version(SettingsManager.Current.SettingsVersion));
+            
             // Load appearance
             AppearanceManager.Load();
 
@@ -306,7 +310,7 @@ namespace NETworkManager
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
                 HideWindowToTray();
 
-            // Chech for updates...
+            // Search for updates...
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
                 CheckForUpdates();
         }
@@ -495,13 +499,6 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _wakeOnLanView;
                     break;
-
-                case ApplicationViewManager.Name.HTTPHeaders:
-                    if (_httpHeadersHostView == null)
-                        _httpHeadersHostView = new HTTPHeadersHostView();
-
-                    ContentControlApplication.Content = _httpHeadersHostView;
-                    break;
                 case ApplicationViewManager.Name.SubnetCalculator:
                     if (_subnetCalculatorHostView == null)
                         _subnetCalculatorHostView = new SubnetCalculatorHostView();
@@ -513,6 +510,15 @@ namespace NETworkManager
                         _lookupHostView = new LookupHostView();
 
                     ContentControlApplication.Content = _lookupHostView;
+                    break;
+                case ApplicationViewManager.Name.Whois:
+
+                    break;
+                case ApplicationViewManager.Name.HTTPHeaders:
+                    if (_httpHeadersHostView == null)
+                        _httpHeadersHostView = new HTTPHeadersHostView();
+
+                    ContentControlApplication.Content = _httpHeadersHostView;
                     break;
                 case ApplicationViewManager.Name.Connections:
                     if (_connectionsView == null)
