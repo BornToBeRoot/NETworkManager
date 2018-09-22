@@ -319,12 +319,16 @@ namespace NETworkManager
             // -----------------------------------------------------
             // Test below!!
 
+          Debug.WriteLine(  Whois.GetWhoisServer("test.de"));
+
+            /*
             var whois = new Whois();
 
             var result = whois.Query("google.de", "whois.internic.com");
 
             Debug.WriteLine(result);
-            
+            */
+
             // End test
         }
 

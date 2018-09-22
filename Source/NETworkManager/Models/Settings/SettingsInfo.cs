@@ -28,7 +28,7 @@ namespace NETworkManager.Models.Settings
         #region Variables
         [XmlIgnore] public bool SettingsChanged { get; set; }
 
-        private string _settingsVersion = "1.7.2.0";
+        private string _settingsVersion = "0.0.0.0";
         public string SettingsVersion
         {
             get => _settingsVersion;

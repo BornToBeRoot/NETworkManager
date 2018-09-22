@@ -204,18 +204,25 @@ namespace NETworkManager.Models.Settings
 
         public static void Update(Version programmVersion, Version settingsVersion)
         {
-            var reorderApplications = false;
-            // Features added in 1.7.3.0
-            if (settingsVersion < new Version("1.7.3.0"))
+            Debug.WriteLine(settingsVersion);
+
+            // Version is 0.0.0.0 on first run or settings reset --> skip updates 
+            if (settingsVersion > new Version("0.0.0.0"))
             {
-                Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.Whois));
+                var reorderApplications = false;
 
-                reorderApplications = true;
+                // Features added in 1.7.3.0
+                if (settingsVersion < new Version("1.7.3.0"))
+                {
+                    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.Whois));
+
+                    reorderApplications = true;
+                }
+
+                // Reorder application view
+                if (reorderApplications)
+                    Current.General_ApplicationList = new ObservableCollection<ApplicationViewInfo>(Current.General_ApplicationList.OrderBy(info => info.Name));
             }
-
-            // Reorder application view
-            if(reorderApplications)
-                Current.General_ApplicationList = new ObservableCollection<ApplicationViewInfo>(Current.General_ApplicationList.OrderBy(info => info.Name));
 
             // Update settings version
             Current.SettingsVersion = programmVersion.ToString();

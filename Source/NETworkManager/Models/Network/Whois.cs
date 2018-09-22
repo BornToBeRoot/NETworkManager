@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +7,11 @@ namespace NETworkManager.Models.Network
 {
     public class Whois
     {
+        public Task<string> QueryAsync(string domain, string whoisServer)
+        {
+            return Task.Run(() => Query(domain, whoisServer));
+        }
+
         public string Query(string domain, string whoisServer)
         {
             var tcpClient = new TcpClient(whoisServer, 43);
@@ -31,6 +33,23 @@ namespace NETworkManager.Models.Network
                 stringBuilder.AppendLine(streamReader.ReadLine());
 
             return stringBuilder.ToString();
+        }
+
+        public static string GetWhoisServer(string domain)
+        {
+            var domainParts = domain.Split('.');
+
+            var server = string.Empty;
+
+            switch (domainParts[domainParts.Length - 1])
+            {
+                case "de":
+                    server = "de";
+
+                    break;
+            }
+
+            return server;
         }
     }
 }
