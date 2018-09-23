@@ -1,7 +1,7 @@
 # Filepath in the resources
 [string]$OutFilePath = Join-Path -Path (Split-Path $PSScriptRoot -Parent) -ChildPath "Source\NETworkManager\Resources\WhoisServers.xml"
 
-$IANA_TLDs = (Invoke-WebRequest -Uri "https://data.iana.org/TLD/tlds-alpha-by-domain.txt").Content
+$IANA_TLDs = (Invoke-WebRequest -Uri "https://data.iana.org/TLD/tlds-alpha-by-domain.txt").Content -split "[`r|`n]" | Where-Object -FilterScript {-not($_.StartsWith('#')) -or -not([String]::IsNullOrEmpty($_))}
 
 # Create xml document
 [xml]$Document = New-Object System.Xml.XmlDocument
@@ -18,17 +18,14 @@ Generated $(Get-Date)
 [void]$Document.AppendChild($Document.CreateComment($Description))
 
 # Root node
-$RootNode = $Document.CreateNode("element", "Ports", $null)
+$RootNode = $Document.CreateNode("element", "WhoisServers", $null)
 
-foreach($Tld in ($IANA_TLDs -split "[`r|`n]"))
+$ProgressCount = 0
+
+foreach($Tld in $IANA_TLDs)
 {
-    $trimTld = $Tld.Trim()
+    $currentTld = $Tld.Trim()
 
-    if($trimTld.StartsWith('#') -or [String]::IsNullOrEmpty($trimTld))
-    {
-        continue
-    }    
-        
     $tcpClient = New-Object System.Net.Sockets.TcpClient("whois.iana.org", 43)
 
     $networkStream= $tcpClient.GetStream()
@@ -37,7 +34,7 @@ foreach($Tld in ($IANA_TLDs -split "[`r|`n]"))
 
     $streamWriter = New-Object System.IO.StreamWriter($bufferedStream)
 
-    $streamWriter.WriteLine("de")
+    $streamWriter.WriteLine($currentTld)
     $streamWriter.Flush()
 
     $streamReader = New-Object System.IO.StreamReader($bufferedStream)
@@ -54,7 +51,7 @@ foreach($Tld in ($IANA_TLDs -split "[`r|`n]"))
     $WhoisServerNode = $Document.CreateNode("element", "WhoisServer", $null)
     
     $TldElement = $Document.CreateElement("TLD")
-    $TldElement.InnerText = $tld
+    $TldElement.InnerText = $currentTld
     [void]$WhoisServerNode.AppendChild($TldElement)
 
     $ServerElement = $Document.CreateElement("Server")
@@ -62,6 +59,9 @@ foreach($Tld in ($IANA_TLDs -split "[`r|`n]"))
     [void]$WhoisServerNode.AppendChild($ServerElement)
 
     [void]$RootNode.AppendChild($WhoisServerNode)
+
+    Write-Host -Object "Progress: $ProgressCount from $($IANA_TLDs.Count)"
+    $ProgressCount ++
 }           
 
 [void]$Document.AppendChild($RootNode)
