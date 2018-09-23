@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--Whois servers by domain from IANA
+Generated 09/23/2018 21:42:21-->
+<Ports>
+  <WhoisServer>
+    <TLD>AAA</TLD>
+    <Server>whois.denic.de</Server>
+  </WhoisServer>
+</Ports>
