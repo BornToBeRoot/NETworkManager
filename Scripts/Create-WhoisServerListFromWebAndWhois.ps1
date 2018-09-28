@@ -1,7 +1,7 @@
 # Filepath in the resources
 [string]$OutFilePath = Join-Path -Path (Split-Path $PSScriptRoot -Parent) -ChildPath "Source\NETworkManager\Resources\WhoisServers.xml"
 
-$IANA_TLDs = (Invoke-WebRequest -Uri "https://data.iana.org/TLD/tlds-alpha-by-domain.txt").Content -split "[`r|`n]" | Where-Object -FilterScript {-not($_.StartsWith('#')) -or -not([String]::IsNullOrEmpty($_))}
+$IANA_TLDs = (Invoke-WebRequest -Uri "https://data.iana.org/TLD/tlds-alpha-by-domain.txt").Content -split "[`r|`n]"
 
 # Create xml document
 [xml]$Document = New-Object System.Xml.XmlDocument
@@ -24,6 +24,11 @@ $ProgressCount = 0
 
 foreach($Tld in $IANA_TLDs)
 {
+    if($Tld.StartsWith("#"))
+    {
+        continue
+    }
+
     $currentTld = $Tld.Trim()
 
     $tcpClient = New-Object System.Net.Sockets.TcpClient("whois.iana.org", 43)
