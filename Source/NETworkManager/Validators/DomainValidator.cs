@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using NETworkManager.Resources.Localization;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators
@@ -9,7 +10,7 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            return Regex.IsMatch((string) value, RegexHelper.DomainRegex) ? ValidationResult.ValidResult : new ValidationResult(false,"** Enter string**");
+            return Regex.IsMatch((string) value, RegexHelper.DomainRegex) ? ValidationResult.ValidResult : new ValidationResult(false,Strings.EnterValidDomain);
         }
     }
 }

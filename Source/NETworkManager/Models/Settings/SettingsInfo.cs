@@ -2345,16 +2345,16 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region Whois
-        private ObservableCollection<string> _whois_WebsiteUriHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> Whois_WebsiteUriHistory
+        private ObservableCollection<string> _whois_DomainHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> Whois_DomainHistory
         {
-            get => _whois_WebsiteUriHistory;
+            get => _whois_DomainHistory;
             set
             {
-                if (value == _whois_WebsiteUriHistory)
+                if (value == _whois_DomainHistory)
                     return;
 
-                _whois_WebsiteUriHistory = value;
+                _whois_DomainHistory = value;
                 SettingsChanged = true;
             }
         }

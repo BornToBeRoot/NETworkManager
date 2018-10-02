@@ -67,7 +67,7 @@
                         </Rectangle.Style>
                     </Rectangle>
                 </Button>
-                <TextBlock Text="** ADD STRING HERE***" Style="{StaticResource MessageTextBlock}" />
+                <TextBlock Text="{x:Static localization:Strings.AddATabToQueryWhois}" Style="{StaticResource MessageTextBlock}" />
             </StackPanel>
         </Grid>
     </Grid>

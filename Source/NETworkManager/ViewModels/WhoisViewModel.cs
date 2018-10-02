@@ -11,6 +11,7 @@ using NETworkManager.Utilities;
 using System.Windows;
 using NETworkManager.Controls;
 using Dragablz;
+using NETworkManager.Resources.Localization;
 
 namespace NETworkManager.ViewModels
 {
@@ -162,14 +163,14 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.HTTPHeaders_ExpandStatistics = value;
+                    SettingsManager.Current.Whois_ExpandStatistics = value;
 
                 _expandStatistics = value;
                 OnPropertyChanged();
             }
         }
 
-        public bool ShowStatistics => SettingsManager.Current.HTTPHeaders_ShowStatistics;
+        public bool ShowStatistics => SettingsManager.Current.Whois_ShowStatistics;
 
         #endregion
 
@@ -180,7 +181,7 @@ namespace NETworkManager.ViewModels
             _tabId = tabId;
 
             // Set collection view
-            WebsiteUriHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Whois_WebsiteUriHistory);
+            WebsiteUriHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Whois_DomainHistory);
 
             LoadSettings();
 
@@ -240,16 +241,23 @@ namespace NETworkManager.ViewModels
             {
                 var whoisServer = Whois.GetWhoisServer(Domain);
 
-                // check null
-                WhoisResult = await Whois.QueryAsync(Domain, whoisServer);
+                if (string.IsNullOrEmpty(whoisServer))
+                {
+                    StatusMessage = string.Format(Strings.WhoisServerNotFoundForTheDomain, Domain);
+                    DisplayStatusMessage = true;
+                }
+                else
+                {
+                    WhoisResult = await Whois.QueryAsync(Domain, whoisServer);
+
+                    AddDomainToHistory(Domain);
+                }
             }
             catch (Exception ex)
             {
                 StatusMessage = ex.Message;
                 DisplayStatusMessage = true;
             }
-
-            AddWebsiteUriToHistory(Domain);
 
             // Stop timer and stopwatch
             _stopwatch.Stop();
@@ -268,17 +276,17 @@ namespace NETworkManager.ViewModels
 
         }
 
-        private void AddWebsiteUriToHistory(string websiteUri)
+        private void AddDomainToHistory(string websiteUri)
         {
             // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.Whois_WebsiteUriHistory.ToList(), websiteUri, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.Whois_DomainHistory.ToList(), websiteUri, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
-            SettingsManager.Current.Whois_WebsiteUriHistory.Clear();
+            SettingsManager.Current.Whois_DomainHistory.Clear();
             OnPropertyChanged(nameof(Domain)); // Raise property changed again, after the collection has been cleared
 
             // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.Whois_WebsiteUriHistory.Add(x));
+            list.ForEach(x => SettingsManager.Current.Whois_DomainHistory.Add(x));
         }
         #endregion
 
