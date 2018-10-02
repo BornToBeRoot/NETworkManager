@@ -111,6 +111,9 @@ namespace NETworkManager.Controls
                     break;
                 case ApplicationViewManager.Name.Lookup:
                     break;
+                case ApplicationViewManager.Name.Whois:
+                    ((WhoisView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
+                    break;
                 case ApplicationViewManager.Name.Connections:
                     break;
                 case ApplicationViewManager.Name.Listeners:

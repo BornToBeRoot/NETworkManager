@@ -314,22 +314,6 @@ namespace NETworkManager
             // Search for updates...
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
                 CheckForUpdates();
-
-
-            // -----------------------------------------------------
-            // Test below!!
-
-          Debug.WriteLine(  Whois.GetWhoisServer("test.de"));
-
-            /*
-            var whois = new Whois();
-
-            var result = whois.Query("google.de", "whois.internic.com");
-
-            Debug.WriteLine(result);
-            */
-
-            // End test
         }
 
         private void LoadApplicationList()
@@ -441,6 +425,7 @@ namespace NETworkManager
         private SubnetCalculatorHostView _subnetCalculatorHostView;
         private HTTPHeadersHostView _httpHeadersHostView;
         private LookupHostView _lookupHostView;
+        private WhoisHostView _whoisHostView;
         private ConnectionsView _connectionsView;
         private ListenersView _listenersView;
         private ARPTableView _arpTableView;
@@ -529,7 +514,10 @@ namespace NETworkManager
                     ContentControlApplication.Content = _lookupHostView;
                     break;
                 case ApplicationViewManager.Name.Whois:
+                    if(_whoisHostView ==null)
+                        _whoisHostView = new WhoisHostView();
 
+                    ContentControlApplication.Content = _whoisHostView;
                     break;
                 case ApplicationViewManager.Name.HTTPHeaders:
                     if (_httpHeadersHostView == null)

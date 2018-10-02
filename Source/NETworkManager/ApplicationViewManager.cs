@@ -100,7 +100,6 @@ namespace NETworkManager
                 case Name.WakeOnLAN:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Power });
                     break;
-               
                 case Name.SubnetCalculator:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Calculator });
                     break;

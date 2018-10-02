@@ -60,5 +60,8 @@ namespace NETworkManager.Utilities
 
         // Match a hostname with subnetmask like server-01.example.com/255.255.255.0
         public const string HostnameSubnetmaskRegex = @"^" + HostnameValues + @"\/" + SubnetmaskValues + @"$";
+
+        // Match a domain local.example.com
+        public const string DomainRegex = @"^(?!:\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-_]+\.[a-zA-Z]{2,11}?$";
     }
 }

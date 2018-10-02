@@ -2344,6 +2344,53 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
+        #region Whois
+        private ObservableCollection<string> _whois_WebsiteUriHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> Whois_WebsiteUriHistory
+        {
+            get => _whois_WebsiteUriHistory;
+            set
+            {
+                if (value == _whois_WebsiteUriHistory)
+                    return;
+
+                _whois_WebsiteUriHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _whois_ExpandStatistics = true;
+        public bool Whois_ExpandStatistics
+        {
+            get => _whois_ExpandStatistics;
+            set
+            {
+                if (value == _whois_ExpandStatistics)
+                    return;
+
+                _whois_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _whois_ShowStatistics = true;
+        public bool Whois_ShowStatistics
+        {
+            get => _whois_ShowStatistics;
+            set
+            {
+                if (value == _whois_ShowStatistics)
+                    return;
+
+                _whois_ShowStatistics = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
         #region Connections
         private bool _connections_AutoRefresh;
         public bool Connections_AutoRefresh
