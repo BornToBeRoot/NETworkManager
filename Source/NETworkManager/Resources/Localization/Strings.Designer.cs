@@ -1753,6 +1753,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to example.com.
+        /// </summary>
+        public static string ExampleDomain {
+            get {
+                return ResourceManager.GetString("ExampleDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Servers.
         /// </summary>
         public static string ExampleGroupServers {

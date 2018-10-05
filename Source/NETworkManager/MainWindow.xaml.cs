@@ -591,6 +591,8 @@ namespace NETworkManager
                     break;
                 case ApplicationViewManager.Name.Lookup:
                     break;
+                case ApplicationViewManager.Name.Whois:
+                    break;
                 case ApplicationViewManager.Name.Connections:
                     break;
                 case ApplicationViewManager.Name.Listeners:
