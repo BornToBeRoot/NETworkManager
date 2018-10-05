@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="NETworkManager.Views.WhoisHostView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WhoisHostViewModel}">
+    <UserControl.InputBindings>
+        <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding AddTabCommand}" />
+    </UserControl.InputBindings>
+    <Grid>
+        <dragablz:TabablzControl ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
+            <dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" MoveWindowWithSolitaryTabs="False" x:Name="InterTabController" />
+            </dragablz:TabablzControl.InterTabController>
+            <dragablz:TabablzControl.HeaderSuffixContent>
+                <Grid HorizontalAlignment="Right" Width="40" Height="44">
+                    <Button Style="{StaticResource CleanButton}" Command="{Binding AddTabCommand}" ToolTip="{x:Static localization:Strings.NewTab}" Focusable="False">
+                        <Rectangle Width="20" Height="20">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
+                            </Rectangle.OpacityMask>
+                            <Rectangle.Style>
+                                <Style TargetType="{x:Type Rectangle}">
+                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                        </Rectangle>
+                    </Button>
+                </Grid>
+            </dragablz:TabablzControl.HeaderSuffixContent>
+        </dragablz:TabablzControl>
+        <Grid VerticalAlignment="Center">
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding TabItems.Count}" Value="0">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <StackPanel>
+                <Button HorizontalAlignment="Center" Focusable="False" Command="{Binding AddTabCommand}" ToolTip="{x:Static localization:Strings.NewTab}" Style="{StaticResource CleanButton}" Margin="0,0,0,10">
+                    <Rectangle Width="20" Height="20">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
+                        </Rectangle.OpacityMask>
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </Button>
+                <TextBlock Text="{x:Static localization:Strings.AddATabToQueryWhois}" Style="{StaticResource MessageTextBlock}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

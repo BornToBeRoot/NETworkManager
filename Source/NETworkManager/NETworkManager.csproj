@@ -244,6 +244,8 @@
     <Compile Include="Models\Network\ListenerInfo.cs" />
     <Compile Include="Models\Network\ConnectionInfo.cs" />
     <Compile Include="Models\Network\HostNotFoundException.cs" />
+    <Compile Include="Models\Network\Whois.cs" />
+    <Compile Include="Models\Network\WhoisServerInfo.cs" />
     <Compile Include="Models\PuTTY\PuTTYSessionInfo.cs" />
     <Compile Include="Models\PuTTY\PuTTY.cs" />
     <Compile Include="Models\Settings\ProfileInfo.cs" />
@@ -287,6 +289,7 @@
     <Compile Include="Models\Settings\CredentialManager.cs" />
     <Compile Include="Models\Update\UpdateAvailableArgs.cs" />
     <Compile Include="Models\Update\Updater.cs" />
+    <Compile Include="Validators\DomainValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetmaskOrCIDRValidator.cs" />
     <Compile Include="Validators\IsCredentialNameUnique.cs" />
     <Compile Include="Validators\NoSpacesValidator.cs" />
@@ -299,6 +302,8 @@
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="Validators\IsProfileNameUnique.cs" />
+    <Compile Include="ViewModels\WhoisHostViewModel.cs" />
+    <Compile Include="ViewModels\WhoisViewModel.cs" />
     <Compile Include="ViewModels\ProfilesViewModel.cs" />
     <Compile Include="ViewModels\ListenersViewModel.cs" />
     <Compile Include="ViewModels\ConnectionsViewModel.cs" />
@@ -351,6 +356,12 @@
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
+    <Compile Include="Views\WhoisHostView.xaml.cs">
+      <DependentUpon>WhoisHostView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WhoisView.xaml.cs">
+      <DependentUpon>WhoisView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProfilesView.xaml.cs">
       <DependentUpon>ProfilesView.xaml</DependentUpon>
     </Compile>
@@ -592,6 +603,9 @@
     <Resource Include="Resources\Localization\Flags\en-US.png" />
     <Resource Include="Resources\Localization\Flags\ru-RU.png" />
     <Resource Include="Resources\Localization\Flags\es-ES.png" />
+    <Content Include="Resources\WhoisServers.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Themes\Black.Accent.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -607,6 +621,14 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Page Include="Views\WhoisHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WhoisView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ProfilesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

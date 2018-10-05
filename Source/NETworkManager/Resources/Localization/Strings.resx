@@ -1955,4 +1955,19 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="VisibleApplicationsInTheBar" xml:space="preserve">
     <value>Visible applications in the bar:</value>
   </data>
+  <data name="Whois" xml:space="preserve">
+    <value>Whois</value>
+  </data>
+  <data name="AddATabToQueryWhois" xml:space="preserve">
+    <value>Add a tab to query whois...</value>
+  </data>
+  <data name="EnterValidDomain" xml:space="preserve">
+    <value>Enter a valid domain (like "example.com")!</value>
+  </data>
+  <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
+    <value>Whois server not found for the domain: "{0}"</value>
+  </data>
+  <data name="ExampleDomain" xml:space="preserve">
+    <value>example.com</value>
+  </data>
 </root>

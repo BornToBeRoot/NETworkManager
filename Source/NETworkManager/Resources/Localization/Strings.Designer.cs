@@ -160,6 +160,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add a tab to query whois....
+        /// </summary>
+        public static string AddATabToQueryWhois {
+            get {
+                return ResourceManager.GetString("AddATabToQueryWhois", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add credentials.
         /// </summary>
         public static string AddCredentials {
@@ -1546,6 +1555,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter a valid domain (like &quot;example.com&quot;)!.
+        /// </summary>
+        public static string EnterValidDomain {
+            get {
+                return ResourceManager.GetString("EnterValidDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter valid hosts (multiple hosts can not end with &quot;;&quot;)!.
         /// </summary>
         public static string EnterValidHosts {
@@ -1731,6 +1749,15 @@ namespace NETworkManager.Resources.Localization {
         public static string ExampleCredentialName {
             get {
                 return ResourceManager.GetString("ExampleCredentialName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to example.com.
+        /// </summary>
+        public static string ExampleDomain {
+            get {
+                return ResourceManager.GetString("ExampleDomain", resourceCulture);
             }
         }
         
@@ -5504,6 +5531,24 @@ namespace NETworkManager.Resources.Localization {
         public static string White {
             get {
                 return ResourceManager.GetString("White", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whois.
+        /// </summary>
+        public static string Whois {
+            get {
+                return ResourceManager.GetString("Whois", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whois server not found for the domain: &quot;{0}&quot;.
+        /// </summary>
+        public static string WhoisServerNotFoundForTheDomain {
+            get {
+                return ResourceManager.GetString("WhoisServerNotFoundForTheDomain", resourceCulture);
             }
         }
         

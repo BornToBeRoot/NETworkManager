@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -16,7 +18,7 @@ namespace NETworkManager.Models.Settings
         private const string IsPortableExtension = "settings";
 
         public static SettingsInfo Current { get; set; }
-        
+
         public static bool ForceRestart { get; set; }
         public static bool HotKeysChanged { get; set; }
 
@@ -198,6 +200,32 @@ namespace NETworkManager.Models.Settings
             InitDefault();
 
             ForceRestart = true;
+        }
+
+        public static void Update(Version programmVersion, Version settingsVersion)
+        {
+            Debug.WriteLine(settingsVersion);
+
+            // Version is 0.0.0.0 on first run or settings reset --> skip updates 
+            if (settingsVersion > new Version("0.0.0.0"))
+            {
+                var reorderApplications = false;
+
+                // Features added in 1.7.3.0
+                if (settingsVersion < new Version("1.7.3.0"))
+                {
+                    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.Whois));
+
+                    reorderApplications = true;
+                }
+
+                // Reorder application view
+                if (reorderApplications)
+                    Current.General_ApplicationList = new ObservableCollection<ApplicationViewInfo>(Current.General_ApplicationList.OrderBy(info => info.Name));
+            }
+
+            // Update settings version
+            Current.SettingsVersion = programmVersion.ToString();
         }
     }
 }

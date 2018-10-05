@@ -20,6 +20,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using NETworkManager.Models.Update;
 using NETworkManager.Models.Documentation;
+using NETworkManager.Models.Network;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 
 namespace NETworkManager
@@ -248,6 +249,10 @@ namespace NETworkManager
             // Language Meta
             LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
 
+            // Update settings
+            if (AssemblyManager.Current.Version > new Version(SettingsManager.Current.SettingsVersion))
+                SettingsManager.Update(AssemblyManager.Current.Version, new Version(SettingsManager.Current.SettingsVersion));
+            
             // Load appearance
             AppearanceManager.Load();
 
@@ -306,7 +311,7 @@ namespace NETworkManager
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
                 HideWindowToTray();
 
-            // Chech for updates...
+            // Search for updates...
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
                 CheckForUpdates();
         }
@@ -420,6 +425,7 @@ namespace NETworkManager
         private SubnetCalculatorHostView _subnetCalculatorHostView;
         private HTTPHeadersHostView _httpHeadersHostView;
         private LookupHostView _lookupHostView;
+        private WhoisHostView _whoisHostView;
         private ConnectionsView _connectionsView;
         private ListenersView _listenersView;
         private ARPTableView _arpTableView;
@@ -495,13 +501,6 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _wakeOnLanView;
                     break;
-
-                case ApplicationViewManager.Name.HTTPHeaders:
-                    if (_httpHeadersHostView == null)
-                        _httpHeadersHostView = new HTTPHeadersHostView();
-
-                    ContentControlApplication.Content = _httpHeadersHostView;
-                    break;
                 case ApplicationViewManager.Name.SubnetCalculator:
                     if (_subnetCalculatorHostView == null)
                         _subnetCalculatorHostView = new SubnetCalculatorHostView();
@@ -513,6 +512,18 @@ namespace NETworkManager
                         _lookupHostView = new LookupHostView();
 
                     ContentControlApplication.Content = _lookupHostView;
+                    break;
+                case ApplicationViewManager.Name.Whois:
+                    if(_whoisHostView ==null)
+                        _whoisHostView = new WhoisHostView();
+
+                    ContentControlApplication.Content = _whoisHostView;
+                    break;
+                case ApplicationViewManager.Name.HTTPHeaders:
+                    if (_httpHeadersHostView == null)
+                        _httpHeadersHostView = new HTTPHeadersHostView();
+
+                    ContentControlApplication.Content = _httpHeadersHostView;
                     break;
                 case ApplicationViewManager.Name.Connections:
                     if (_connectionsView == null)
@@ -579,6 +590,8 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.SubnetCalculator:
                     break;
                 case ApplicationViewManager.Name.Lookup:
+                    break;
+                case ApplicationViewManager.Name.Whois:
                     break;
                 case ApplicationViewManager.Name.Connections:
                     break;

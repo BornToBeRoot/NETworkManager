@@ -27,8 +27,22 @@ namespace NETworkManager.Models.Settings
 
         #region Variables
         [XmlIgnore] public bool SettingsChanged { get; set; }
-        #region General 
 
+        private string _settingsVersion = "0.0.0.0";
+        public string SettingsVersion
+        {
+            get => _settingsVersion;
+            set
+            {
+                if(value == _settingsVersion)
+                    return;
+
+                _settingsVersion = value;
+                SettingsChanged = true;
+            }
+        } 
+        
+        #region General 
         // General        
         private ApplicationViewManager.Name _general_DefaultApplicationViewName = ApplicationViewManager.Name.NetworkInterface;
         public ApplicationViewManager.Name General_DefaultApplicationViewName
@@ -2325,6 +2339,53 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _lookup_Port_PortsHistory = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
+        #region Whois
+        private ObservableCollection<string> _whois_DomainHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> Whois_DomainHistory
+        {
+            get => _whois_DomainHistory;
+            set
+            {
+                if (value == _whois_DomainHistory)
+                    return;
+
+                _whois_DomainHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _whois_ExpandStatistics = true;
+        public bool Whois_ExpandStatistics
+        {
+            get => _whois_ExpandStatistics;
+            set
+            {
+                if (value == _whois_ExpandStatistics)
+                    return;
+
+                _whois_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _whois_ShowStatistics = true;
+        public bool Whois_ShowStatistics
+        {
+            get => _whois_ShowStatistics;
+            set
+            {
+                if (value == _whois_ShowStatistics)
+                    return;
+
+                _whois_ShowStatistics = value;
+
+                OnPropertyChanged();
+
                 SettingsChanged = true;
             }
         }
