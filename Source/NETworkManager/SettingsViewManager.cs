@@ -1,8 +1,5 @@
-﻿using System;
-using MahApps.Metro.IconPacks;
-using NETworkManager.Models.Settings;
+﻿using MahApps.Metro.IconPacks;
 using System.Collections.Generic;
-using NETworkManager.Models.Network;
 
 namespace NETworkManager
 {
@@ -32,7 +29,8 @@ namespace NETworkManager
             new SettingsViewInfo(Name.PuTTY, new PackIconOcticons {Kind = PackIconOcticonsKind.Terminal}, Group.Applications),
             new SettingsViewInfo(Name.SNMP,new PackIconMaterial {Kind = PackIconMaterialKind.Switch }, Group.Applications),
             new SettingsViewInfo(Name.WakeOnLAN, new PackIconMaterial {Kind = PackIconMaterialKind.Power} , Group.Applications),
-            new SettingsViewInfo(Name.HTTPHeaders, new PackIconMaterial {Kind = PackIconMaterialKind.Web}, Group.Applications)
+            new SettingsViewInfo(Name.HTTPHeaders, new PackIconMaterial {Kind = PackIconMaterialKind.Web}, Group.Applications),
+            new SettingsViewInfo(Name.Whois, new PackIconMaterial {Kind = PackIconMaterialKind.CloudSearchOutline}, Group.Applications)
         };
 
         public static string TranslateName(Name name, Group group)
@@ -77,6 +75,8 @@ namespace NETworkManager
                     return Resources.Localization.Strings.WakeOnLAN;
                 case Name.HTTPHeaders:
                     return Resources.Localization.Strings.HTTPHeaders;
+                case Name.Whois:
+                    return Resources.Localization.Strings.Whois;
                 default:
                     return "Translation of name not found";
             }
@@ -115,7 +115,8 @@ namespace NETworkManager
             PuTTY,
             SNMP,
             WakeOnLAN,
-            HTTPHeaders
+            HTTPHeaders,
+            Whois
         }
 
         public enum Group

@@ -1970,4 +1970,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="ExampleDomain" xml:space="preserve">
     <value>example.com</value>
   </data>
+  <data name="Routing" xml:space="preserve">
+    <value>Routing</value>
+  </data>
 </root>

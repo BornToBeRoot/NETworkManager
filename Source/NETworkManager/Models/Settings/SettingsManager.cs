@@ -204,8 +204,6 @@ namespace NETworkManager.Models.Settings
 
         public static void Update(Version programmVersion, Version settingsVersion)
         {
-            Debug.WriteLine(settingsVersion);
-
             // Version is 0.0.0.0 on first run or settings reset --> skip updates 
             if (settingsVersion > new Version("0.0.0.0"))
             {
@@ -215,6 +213,14 @@ namespace NETworkManager.Models.Settings
                 if (settingsVersion < new Version("1.7.3.0"))
                 {
                     Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.Whois));
+
+                    reorderApplications = true;
+                }
+
+                // Features added in 1.7.4.0
+                if (settingsVersion < new Version("1.7.4.0"))
+                {
+                    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.Routing));
 
                     reorderApplications = true;
                 }

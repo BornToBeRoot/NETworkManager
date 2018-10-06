@@ -4311,6 +4311,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Routing.
+        /// </summary>
+        public static string Routing {
+            get {
+                return ResourceManager.GetString("Routing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {

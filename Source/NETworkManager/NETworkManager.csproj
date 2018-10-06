@@ -302,6 +302,7 @@
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="Validators\IsProfileNameUnique.cs" />
+    <Compile Include="ViewModels\WhoisSettingsViewModel.cs" />
     <Compile Include="ViewModels\WhoisHostViewModel.cs" />
     <Compile Include="ViewModels\WhoisViewModel.cs" />
     <Compile Include="ViewModels\ProfilesViewModel.cs" />
@@ -356,6 +357,9 @@
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
+    <Compile Include="Views\WhoisSettingsView.xaml.cs">
+      <DependentUpon>WhoisSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WhoisHostView.xaml.cs">
       <DependentUpon>WhoisHostView.xaml</DependentUpon>
     </Compile>
@@ -621,6 +625,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Page Include="Views\WhoisSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\WhoisHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

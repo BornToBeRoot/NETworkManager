@@ -20,7 +20,6 @@ using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using NETworkManager.Models.Update;
 using NETworkManager.Models.Documentation;
-using NETworkManager.Models.Network;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 
 namespace NETworkManager
@@ -252,7 +251,7 @@ namespace NETworkManager
             // Update settings
             if (AssemblyManager.Current.Version > new Version(SettingsManager.Current.SettingsVersion))
                 SettingsManager.Update(AssemblyManager.Current.Version, new Version(SettingsManager.Current.SettingsVersion));
-            
+
             // Load appearance
             AppearanceManager.Load();
 
@@ -501,6 +500,18 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _wakeOnLanView;
                     break;
+                case ApplicationViewManager.Name.HTTPHeaders:
+                    if (_httpHeadersHostView == null)
+                        _httpHeadersHostView = new HTTPHeadersHostView();
+
+                    ContentControlApplication.Content = _httpHeadersHostView;
+                    break;
+                case ApplicationViewManager.Name.Whois:
+                    if (_whoisHostView == null)
+                        _whoisHostView = new WhoisHostView();
+
+                    ContentControlApplication.Content = _whoisHostView;
+                    break;
                 case ApplicationViewManager.Name.SubnetCalculator:
                     if (_subnetCalculatorHostView == null)
                         _subnetCalculatorHostView = new SubnetCalculatorHostView();
@@ -508,22 +519,13 @@ namespace NETworkManager
                     ContentControlApplication.Content = _subnetCalculatorHostView;
                     break;
                 case ApplicationViewManager.Name.Lookup:
-                    if (_lookupHostView == null)
+                    if (_lookupHostView == null)    
                         _lookupHostView = new LookupHostView();
 
                     ContentControlApplication.Content = _lookupHostView;
                     break;
-                case ApplicationViewManager.Name.Whois:
-                    if(_whoisHostView ==null)
-                        _whoisHostView = new WhoisHostView();
-
-                    ContentControlApplication.Content = _whoisHostView;
-                    break;
-                case ApplicationViewManager.Name.HTTPHeaders:
-                    if (_httpHeadersHostView == null)
-                        _httpHeadersHostView = new HTTPHeadersHostView();
-
-                    ContentControlApplication.Content = _httpHeadersHostView;
+                case ApplicationViewManager.Name.Routing:
+                    // Change view...
                     break;
                 case ApplicationViewManager.Name.Connections:
                     if (_connectionsView == null)
@@ -587,11 +589,13 @@ namespace NETworkManager
                     break;
                 case ApplicationViewManager.Name.HTTPHeaders:
                     break;
+                case ApplicationViewManager.Name.Whois:
+                    break;
                 case ApplicationViewManager.Name.SubnetCalculator:
                     break;
                 case ApplicationViewManager.Name.Lookup:
                     break;
-                case ApplicationViewManager.Name.Whois:
+                case ApplicationViewManager.Name.Routing:
                     break;
                 case ApplicationViewManager.Name.Connections:
                     break;
