@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
+<Style x:Key="ImageButtonForDropDown" TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButton}">
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+    
+
+<Style x:Key="ImageDropDrownButton" TargetType="{x:Type mah:DropDownButton}">
+<Setter Property="Height" Value="35" />
+    <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="ButtonStyle" Value="{StaticResource ImageButtonForDropDown}" />
+        <Setter Property="ArrowBrush" Value="{DynamicResource GrayBrush3}" />
+        <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource GrayBrush5}" />
+        <Setter Property="ArrowPressedBrush" Value="{DynamicResource GrayBrush5}" />
+        <Setter Property="MenuStyle" Value ="{StaticResource DefaultContextMenu}" />
+            
+    </Style>
+</ResourceDictionary>

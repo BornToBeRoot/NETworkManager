@@ -559,22 +559,70 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" HorizontalAlignment="Left" Command="{Binding FlushDNSCacheCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}">
-                            <Button.Content>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ListDelete}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.FlushDNSCache}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
-                                </Grid>
-                            </Button.Content>
-                        </Button>
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                            <Button HorizontalAlignment="Left" Command="{Binding FlushDNSCacheCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}">
+                                <Button.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ListDelete}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.FlushDNSCache}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                                    </Grid>
+                                </Button.Content>
+                            </Button>
+                            <mah:DropDownButton Margin="10,0,0,0" Style="{StaticResource ImageDropDrownButton}">                         
+                                <mah:DropDownButton.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Width="20" Height="20" Margin="10,4,0,4" Fill="{DynamicResource GrayBrush3}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.ReleaseRenew}" FontSize="14" Margin="10,4" TextAlignment="Center"/>
+                                    </Grid>
+                                </mah:DropDownButton.Content>
+                                <mah:DropDownButton.Items>
+                                    <MenuItem Header="{x:Static localization:Strings.ReleaseRenew}">
+                                        <MenuItem.Icon>
+                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <Separator />
+                                    <MenuItem Header="{x:Static localization:Strings.Release}">
+                                        <MenuItem.Icon>
+                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="{x:Static localization:Strings.Renew}" >
+                                        <MenuItem.Icon>
+                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </mah:DropDownButton.Items>
+                            </mah:DropDownButton>
+                        </StackPanel>
                         <Button Grid.Column="1" Command="{Binding ApplyNetworkInterfaceConfigCommand}">
                             <Button.Content>
                                 <Grid>

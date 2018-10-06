@@ -1973,4 +1973,13 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="Routing" xml:space="preserve">
     <value>Routing</value>
   </data>
+  <data name="Release" xml:space="preserve">
+    <value>Release</value>
+  </data>
+  <data name="ReleaseRenew" xml:space="preserve">
+    <value>Release &amp; Renew</value>
+  </data>
+  <data name="Renew" xml:space="preserve">
+    <value>Renew</value>
+  </data>
 </root>

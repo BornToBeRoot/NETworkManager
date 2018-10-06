@@ -3726,6 +3726,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Release.
+        /// </summary>
+        public static string Release {
+            get {
+                return ResourceManager.GetString("Release", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Release &amp; Renew.
+        /// </summary>
+        public static string ReleaseRenew {
+            get {
+                return ResourceManager.GetString("ReleaseRenew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remaining time.
         /// </summary>
         public static string RemainingTime {
@@ -4181,6 +4199,15 @@ namespace NETworkManager.Resources.Localization {
         public static string RemotePort {
             get {
                 return ResourceManager.GetString("RemotePort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Renew.
+        /// </summary>
+        public static string Renew {
+            get {
+                return ResourceManager.GetString("Renew", resourceCulture);
             }
         }
         
