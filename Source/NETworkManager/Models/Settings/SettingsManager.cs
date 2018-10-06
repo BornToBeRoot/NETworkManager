@@ -218,12 +218,12 @@ namespace NETworkManager.Models.Settings
                 }
 
                 // Features added in 1.7.4.0
-                if (settingsVersion < new Version("1.7.4.0"))
-                {
-                    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.Routing));
+                //if (settingsVersion < new Version("1.7.4.0"))
+                //{
+                //    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.Routing));
 
-                    reorderApplications = true;
-                }
+                //    reorderApplications = true;
+                //}
 
                 // Reorder application view
                 if (reorderApplications)

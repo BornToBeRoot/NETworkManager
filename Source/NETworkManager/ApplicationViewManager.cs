@@ -53,8 +53,8 @@ namespace NETworkManager
                     return Resources.Localization.Strings.SubnetCalculator;
                 case Name.Lookup:
                     return Resources.Localization.Strings.Lookup;
-                case Name.Routing:
-                    return Resources.Localization.Strings.Routing;
+                //case Name.Routing:
+                //    return Resources.Localization.Strings.Routing;
                 case Name.Connections:
                     return Resources.Localization.Strings.Connections;
                 case Name.Listeners:
@@ -114,9 +114,9 @@ namespace NETworkManager
                 case Name.Lookup:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Magnify });
                     break;
-                case Name.Routing:
-                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Routes });
-                    break;
+                //case Name.Routing:
+                //    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Routes });
+                //    break;
                 case Name.Connections:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Connect });
                     break;
@@ -151,7 +151,7 @@ namespace NETworkManager
             Whois,
             SubnetCalculator,
             Lookup,
-            Routing,
+            //Routing,
             Connections,
             Listeners,
             ARPTable

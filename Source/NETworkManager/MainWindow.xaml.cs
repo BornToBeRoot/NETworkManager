@@ -524,9 +524,9 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _lookupHostView;
                     break;
-                case ApplicationViewManager.Name.Routing:
-                    // Change view...
-                    break;
+                //case ApplicationViewManager.Name.Routing:
+                //    // Change view...
+                //    break;
                 case ApplicationViewManager.Name.Connections:
                     if (_connectionsView == null)
                         _connectionsView = new ConnectionsView();
@@ -595,8 +595,8 @@ namespace NETworkManager
                     break;
                 case ApplicationViewManager.Name.Lookup:
                     break;
-                case ApplicationViewManager.Name.Routing:
-                    break;
+                //case ApplicationViewManager.Name.Routing:
+                //    break;
                 case ApplicationViewManager.Name.Connections:
                     break;
                 case ApplicationViewManager.Name.Listeners:
