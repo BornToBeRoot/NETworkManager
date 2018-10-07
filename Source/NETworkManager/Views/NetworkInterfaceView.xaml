@@ -576,7 +576,7 @@
                                     </Grid>
                                 </Button.Content>
                             </Button>
-                            <mah:DropDownButton Margin="10,0,0,0" Style="{StaticResource ImageDropDrownButton}">                         
+                            <mah:DropDownButton Margin="10,0,0,0" Style="{StaticResource ImageDropDrownButton}">
                                 <mah:DropDownButton.Content>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -592,7 +592,7 @@
                                     </Grid>
                                 </mah:DropDownButton.Content>
                                 <mah:DropDownButton.Items>
-                                    <MenuItem Header="{x:Static localization:Strings.ReleaseRenew}">
+                                    <MenuItem Header="{x:Static localization:Strings.ReleaseRenew}" Command="{Binding IPConfigReleaseRenewCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
                                                 <Rectangle.OpacityMask>
@@ -602,7 +602,7 @@
                                         </MenuItem.Icon>
                                     </MenuItem>
                                     <Separator />
-                                    <MenuItem Header="{x:Static localization:Strings.Release}">
+                                    <MenuItem Header="{x:Static localization:Strings.Release}" Command="{Binding IPConfigReleaseCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
                                                 <Rectangle.OpacityMask>
@@ -611,7 +611,7 @@
                                             </Rectangle>
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="{x:Static localization:Strings.Renew}" >
+                                    <MenuItem Header="{x:Static localization:Strings.Renew}" Command="{Binding IPConfigRenewCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
                                                 <Rectangle.OpacityMask>

@@ -14,6 +14,7 @@ using System.Diagnostics;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
 using System.Windows;
+using NetworkInterface = System.Net.NetworkInformation.NetworkInterface;
 
 namespace NETworkManager.ViewModels
 {
@@ -969,9 +970,14 @@ namespace NETworkManager.ViewModels
             get { return new RelayCommand(p => FlushDNSCacheAction()); }
         }
 
-        private void FlushDNSCacheAction()
+        private async void FlushDNSCacheAction()
         {
-            FlushDNSCache();
+            IsConfigurationRunning = true;
+            DisplayStatusMessage = false;
+
+            await Models.Network.NetworkInterface.FlushDnsResolverCacheAsync();
+            
+            IsConfigurationRunning = false;
         }
 
         public ICommand ClearSearchCommand
@@ -982,6 +988,48 @@ namespace NETworkManager.ViewModels
         private void ClearSearchAction()
         {
             Search = string.Empty;
+        }
+
+        public ICommand IPConfigReleaseRenewCommand
+        {
+            get { return new RelayCommand(p => IPConfigReleaseRenewAction()); }
+        }
+
+        private async void IPConfigReleaseRenewAction()
+        {
+            IsConfigurationRunning = true;
+
+            await Models.Network.NetworkInterface.IPConfigReleaseRenewAsync(Models.Network.NetworkInterface.IPConfigReleaseRenewMode.ReleaseRenew);
+
+            IsConfigurationRunning = false;
+        }
+
+        public ICommand IPConfigReleaseCommand
+        {
+            get { return new RelayCommand(p => IPConfigReleaseAction()); }
+        }
+
+        private async void IPConfigReleaseAction()
+        {
+            IsConfigurationRunning = true;
+
+            await Models.Network.NetworkInterface.IPConfigReleaseRenewAsync(Models.Network.NetworkInterface.IPConfigReleaseRenewMode.Release);
+
+            IsConfigurationRunning = false;
+        }
+
+        public ICommand IPConfigRenewCommand
+        {
+            get { return new RelayCommand(p => IPConfigRenewAction()); }
+        }
+
+        private async void IPConfigRenewAction()
+        {
+            IsConfigurationRunning = true;
+
+            await Models.Network.NetworkInterface.IPConfigReleaseRenewAsync(Models.Network.NetworkInterface.IPConfigReleaseRenewMode.Renew);
+
+            IsConfigurationRunning = false;
         }
         #endregion
 
@@ -1008,7 +1056,7 @@ namespace NETworkManager.ViewModels
                 ConfigSecondaryDNSServer = string.Empty;
             }
 
-            NetworkInterfaceConfig config = new NetworkInterfaceConfig
+            var config = new NetworkInterfaceConfig
             {
                 Name = SelectedNetworkInterface.Name,
                 EnableStaticIPAddress = ConfigEnableStaticIPAddress,
@@ -1100,17 +1148,7 @@ namespace NETworkManager.ViewModels
                 IsConfigurationRunning = false;
             }
         }
-
-        public void FlushDNSCache()
-        {
-            IsConfigurationRunning = true;
-            DisplayStatusMessage = false;
-
-            Models.Network.NetworkInterface.FlushDnsResolverCache();
-
-            IsConfigurationRunning = false;
-        }
-
+        
         private void ResizeProfile(bool dueToChangedSize)
         {
             _canProfileWidthChange = false;
