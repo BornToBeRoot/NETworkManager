@@ -14,7 +14,6 @@ using System.Diagnostics;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
 using System.Windows;
-using NetworkInterface = System.Net.NetworkInformation.NetworkInterface;
 
 namespace NETworkManager.ViewModels
 {

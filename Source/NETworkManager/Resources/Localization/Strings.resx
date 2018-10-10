@@ -1982,4 +1982,19 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="Renew" xml:space="preserve">
     <value>Renew</value>
   </data>
+  <data name="WindowsDNSSettings" xml:space="preserve">
+    <value>Windows DNS settings</value>
+  </data>
+  <data name="DeleteDNSServer" xml:space="preserve">
+    <value>Delete DNS server</value>
+  </data>
+  <data name="DeleteDNSServerMessage" xml:space="preserve">
+    <value>The selected DNS server will be deleted permanently.</value>
+  </data>
+  <data name="AddDNSServer" xml:space="preserve">
+    <value>Add DNS server</value>
+  </data>
+  <data name="EditDNSServer" xml:space="preserve">
+    <value>Edit DNS server</value>
+  </data>
 </root>

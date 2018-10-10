@@ -44,6 +44,25 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView HostHistoryView { get; }
 
+        public ICollectionView DNSServers { get; }
+
+        private DNSServerInfo _dnsServer = new DNSServerInfo();
+        public DNSServerInfo DNSServer
+        {
+            get => _dnsServer;
+            set
+            {
+                if (value == _dnsServer)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.DNSLookup_SelectedDNSServer = value;
+
+                _dnsServer = value;
+                OnPropertyChanged();
+            }
+        }
+
         private List<QType> _types = new List<QType>();
         public List<QType> Types
         {
@@ -217,6 +236,14 @@ namespace NETworkManager.ViewModels
             Host = host;
 
             HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_HostHistory);
+
+            if (SettingsManager.Current.DNSLookup_DNSServers.Count == 0)
+                SettingsManager.Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerInfo>(Models.Network.DNSServer.DefaultDNSServerList());
+
+            DNSServers = new CollectionViewSource { Source = SettingsManager.Current.DNSLookup_DNSServers }.View;
+            DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerInfo.UseWindowsDNSServer), ListSortDirection.Descending));
+            DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerInfo.Name), ListSortDirection.Ascending));
+
             LookupResultView = CollectionViewSource.GetDefaultView(LookupResult);
             LookupResultView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.DNSServer)));
 
@@ -241,8 +268,10 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
+            DNSServer = DNSServers.SourceCollection.Cast<DNSServerInfo>().FirstOrDefault(x => x == SettingsManager.Current.DNSLookup_SelectedDNSServer) ?? DNSServers.SourceCollection.Cast<DNSServerInfo>().First();
+
             LoadTypes();
-            
+
             ExpandStatistics = SettingsManager.Current.DNSLookup_ExpandStatistics;
         }
 
@@ -354,32 +383,32 @@ namespace NETworkManager.ViewModels
 
             AddHostToHistory(Host);
 
-            DNSLookupOptions dnsLookupOptions = new DNSLookupOptions();
-
-            if (SettingsManager.Current.DNSLookup_UseCustomDNSServer)
+            var dnsLookupOptions = new DNSLookupOptions
             {
-                dnsLookupOptions.UseCustomDNSServer = SettingsManager.Current.DNSLookup_UseCustomDNSServer;
-                dnsLookupOptions.CustomDNSServers = SettingsManager.Current.DNSLookup_CustomDNSServer.Select(x => x.Trim()).ToList();
-                dnsLookupOptions.Port = SettingsManager.Current.DNSLookup_Port;
-            }
+                AddDNSSuffix = SettingsManager.Current.DNSLookup_AddDNSSuffix,
+                Class = SettingsManager.Current.DNSLookup_Class,
+                Type = Type,
+                Recursion = SettingsManager.Current.DNSLookup_Recursion,
+                UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache,
+                TransportType = SettingsManager.Current.DNSLookup_TransportType,
+                Attempts = SettingsManager.Current.DNSLookup_Attempts,
+                Timeout = SettingsManager.Current.DNSLookup_Timeout,
+                ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME
+            };
 
-            dnsLookupOptions.AddDNSSuffix = SettingsManager.Current.DNSLookup_AddDNSSuffix;
+            if (!DNSServer.UseWindowsDNSServer)
+            {
+                dnsLookupOptions.UseCustomDNSServer = true;
+                dnsLookupOptions.CustomDNSServers = DNSServer.Server;
+                dnsLookupOptions.Port = DNSServer.Port;
+            }
 
             if (SettingsManager.Current.DNSLookup_UseCustomDNSSuffix)
             {
                 dnsLookupOptions.UseCustomDNSSuffix = true;
                 dnsLookupOptions.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix.TrimStart('.');
             }
-
-            dnsLookupOptions.Class = SettingsManager.Current.DNSLookup_Class;
-            dnsLookupOptions.Type = Type;
-            dnsLookupOptions.Recursion = SettingsManager.Current.DNSLookup_Recursion;
-            dnsLookupOptions.UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache;
-            dnsLookupOptions.TransportType = SettingsManager.Current.DNSLookup_TransportType;
-            dnsLookupOptions.Attempts = SettingsManager.Current.DNSLookup_Attempts;
-            dnsLookupOptions.Timeout = SettingsManager.Current.DNSLookup_Timeout;
-            dnsLookupOptions.ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME;
-
+            
             var dnsLookup = new DNSLookup();
 
             dnsLookup.RecordReceived += DNSLookup_RecordReceived;

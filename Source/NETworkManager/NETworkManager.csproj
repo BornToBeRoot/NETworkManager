@@ -222,9 +222,11 @@
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DNSServerInfoToString.cs" />
     <Compile Include="Converters\ApplicationNameToIconConverter.cs" />
     <Compile Include="Converters\AutoRefreshTimeToStringConverter.cs" />
     <Compile Include="Converters\BigIntegerToStringConverter.cs" />
+    <Compile Include="Converters\ListToStringConverter.cs" />
     <Compile Include="Converters\BooleanReverseToVisibilityHiddenConverter.cs" />
     <Compile Include="Converters\ApplicationNameToTranslatedStringConverter.cs" />
     <Compile Include="Converters\TcpStateToStringConverter.cs" />
@@ -239,6 +241,8 @@
     <Compile Include="Models\Documentation\CommunityManager.cs" />
     <Compile Include="Models\Documentation\ResourceInfo.cs" />
     <Compile Include="Models\Documentation\ResourceManager.cs" />
+    <Compile Include="Models\Network\DNSServer.cs" />
+    <Compile Include="Models\Network\DNSServerInfo.cs" />
     <Compile Include="Models\Network\Listener.cs" />
     <Compile Include="Models\Network\Connection.cs" />
     <Compile Include="Models\Network\ListenerInfo.cs" />
@@ -302,6 +306,7 @@
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="Validators\IsProfileNameUnique.cs" />
+    <Compile Include="ViewModels\DNSServerViewModel.cs" />
     <Compile Include="ViewModels\WhoisSettingsViewModel.cs" />
     <Compile Include="ViewModels\WhoisHostViewModel.cs" />
     <Compile Include="ViewModels\WhoisViewModel.cs" />
@@ -357,6 +362,9 @@
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
+    <Compile Include="Views\DNSServerDialog.xaml.cs">
+      <DependentUpon>DNSServerDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WhoisSettingsView.xaml.cs">
       <DependentUpon>WhoisSettingsView.xaml</DependentUpon>
     </Compile>
@@ -629,6 +637,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Page Include="Views\DNSServerDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\WhoisSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using Heijden.DNS;
 using Lextm.SharpSnmpLib.Messaging;
+using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
 using static NETworkManager.Models.Network.SNMP;
 
@@ -34,14 +36,14 @@ namespace NETworkManager.Models.Settings
             get => _settingsVersion;
             set
             {
-                if(value == _settingsVersion)
+                if (value == _settingsVersion)
                     return;
 
                 _settingsVersion = value;
                 SettingsChanged = true;
             }
-        } 
-        
+        }
+
         #region General 
         // General        
         private ApplicationViewManager.Name _general_DefaultApplicationViewName = ApplicationViewManager.Name.NetworkInterface;
@@ -78,7 +80,7 @@ namespace NETworkManager.Models.Settings
             get => _general_ApplicationList;
             set
             {
-                if(value == _general_ApplicationList)
+                if (value == _general_ApplicationList)
                     return;
 
                 _general_ApplicationList = value;
@@ -88,7 +90,7 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
-        
+
         // Window
         private bool _window_ConfirmClose;
         public bool Window_ConfirmClose
@@ -1171,7 +1173,37 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private ObservableCollection<DNSServerInfo> _dnsLookup_DNSServers = new ObservableCollection<DNSServerInfo>();
+        public ObservableCollection<DNSServerInfo> DNSLookup_DNSServers
+        {
+            get => _dnsLookup_DNSServers;
+            set
+            {
+                if (value == _dnsLookup_DNSServers)
+                    return;
+
+                _dnsLookup_DNSServers = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private DNSServerInfo _dnsLookup_SelectedDNSServer;
+        public DNSServerInfo DNSLookup_SelectedDNSServer
+        {
+            get => _dnsLookup_SelectedDNSServer;
+            set
+            {
+                if (value == _dnsLookup_SelectedDNSServer)
+                    return;
+
+                _dnsLookup_SelectedDNSServer = value;
+                SettingsChanged = true;
+            }
+        }
+
+        [Obsolete("Use DNSServerInfo")]
         private bool _dnsLookup_UseCustomDNSServer;
+        [Obsolete("Use DNSServerInfo")]
         public bool DNSLookup_UseCustomDNSServer
         {
             get => _dnsLookup_UseCustomDNSServer;
@@ -1185,7 +1217,9 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        [Obsolete("Use DNSServerInfo")]
         private List<string> _dnsLookup_CustomDNSServer = new List<string>();
+        [Obsolete("Use DNSServerInfo")]
         public List<string> DNSLookup_CustomDNSServer
         {
             get => _dnsLookup_CustomDNSServer;
@@ -1199,7 +1233,9 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        [Obsolete("Use DNSServerInfo")]
         private int _dnsLookup_Port = 53;
+        [Obsolete("Use DNSServerInfo")]
         public int DNSLookup_Port
         {
             get => _dnsLookup_Port;
@@ -2504,6 +2540,7 @@ namespace NETworkManager.Models.Settings
 
             // DNS Lookup
             DNSLookup_HostHistory.CollectionChanged += CollectionChanged;
+            DNSLookup_DNSServers.CollectionChanged += CollectionChanged;
 
             // Remote Desktop
             RemoteDesktop_HostHistory.CollectionChanged += CollectionChanged;

@@ -178,6 +178,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add DNS server.
+        /// </summary>
+        public static string AddDNSServer {
+            get {
+                return ResourceManager.GetString("AddDNSServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add DNS suffix (primary) to hostname.
         /// </summary>
         public static string AddDNSSuffixToHostname {
@@ -1132,6 +1141,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete DNS server.
+        /// </summary>
+        public static string DeleteDNSServer {
+            get {
+                return ResourceManager.GetString("DeleteDNSServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected DNS server will be deleted permanently..
+        /// </summary>
+        public static string DeleteDNSServerMessage {
+            get {
+                return ResourceManager.GetString("DeleteDNSServerMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete....
         /// </summary>
         public static string DeleteDots {
@@ -1416,6 +1443,15 @@ namespace NETworkManager.Resources.Localization {
         public static string EditCredentials {
             get {
                 return ResourceManager.GetString("EditCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit DNS server.
+        /// </summary>
+        public static string EditDNSServer {
+            get {
+                return ResourceManager.GetString("EditDNSServer", resourceCulture);
             }
         }
         
@@ -5603,6 +5639,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Window {
             get {
                 return ResourceManager.GetString("Window", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows DNS settings.
+        /// </summary>
+        public static string WindowsDNSSettings {
+            get {
+                return ResourceManager.GetString("WindowsDNSSettings", resourceCulture);
             }
         }
         

@@ -3,7 +3,13 @@ using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows.Data;
+using System.Windows.Input;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Network;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
@@ -12,53 +18,20 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly bool _isLoading;
 
-        private bool _useCustomDNSServer;
-        public bool UseCustomDNSServer
+        private readonly IDialogCoordinator _dialogCoordinator;
+
+        public ICollectionView DNSServers { get; }
+
+        private DNSServerInfo _selectedDNSServer = new DNSServerInfo();
+        public DNSServerInfo SelectedDNSServer
         {
-            get => _useCustomDNSServer;
+            get => _selectedDNSServer;
             set
             {
-                if (value == _useCustomDNSServer)
+                if (value == _selectedDNSServer)
                     return;
 
-                if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_UseCustomDNSServer = value;
-
-                _useCustomDNSServer = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _customDNSServer;
-        public string CustomDNSServer
-        {
-            get => _customDNSServer;
-            set
-            {
-                if (value == _customDNSServer)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_CustomDNSServer = value.Split(';').ToList();
-
-                _customDNSServer = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _port;
-        public int Port
-        {
-            get => _port;
-            set
-            {
-                if (value == _port)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_Port = value;
-
-                _port = value;
+                _selectedDNSServer = value;
                 OnPropertyChanged();
             }
         }
@@ -273,9 +246,21 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings
-        public DNSLookupSettingsViewModel()
+        public DNSLookupSettingsViewModel(IDialogCoordinator instance)
         {
             _isLoading = true;
+
+            _dialogCoordinator = instance;
+            
+            DNSServers = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_DNSServers);
+            DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerInfo.Name), ListSortDirection.Ascending));
+            DNSServers.Filter = o =>
+            {
+                if (!(o is DNSServerInfo info))
+                    return false;
+
+                return !info.UseWindowsDNSServer;
+            };
 
             LoadSettings();
 
@@ -284,12 +269,6 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            UseCustomDNSServer = SettingsManager.Current.DNSLookup_UseCustomDNSServer;
-
-            if (SettingsManager.Current.DNSLookup_CustomDNSServer != null)
-                CustomDNSServer = string.Join("; ", SettingsManager.Current.DNSLookup_CustomDNSServer);
-
-            Port = SettingsManager.Current.DNSLookup_Port;
             AddDNSSuffix = SettingsManager.Current.DNSLookup_AddDNSSuffix;
             UseCustomDNSSuffix = SettingsManager.Current.DNSLookup_UseCustomDNSSuffix;
             CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix;
@@ -304,6 +283,123 @@ namespace NETworkManager.ViewModels
             Attempts = SettingsManager.Current.DNSLookup_Attempts;
             Timeout = SettingsManager.Current.DNSLookup_Timeout;
             ShowStatistics = SettingsManager.Current.DNSLookup_ShowStatistics;
+        }
+        #endregion
+
+        #region ICommand & Actions
+        public ICommand AddDNSServerCommand
+        {
+            get { return new RelayCommand(p => AddDNSServerAction()); }
+        }
+
+        private void AddDNSServerAction()
+        {
+            AddDNSServer();
+        }
+
+        public ICommand EditDNSServerCommand
+        {
+            get { return new RelayCommand(p => EditDNSServerAction()); }
+        }
+
+        private void EditDNSServerAction()
+        {
+            EditDNSServer();
+        }
+
+        public ICommand DeleteDNSServerCommand
+        {
+            get { return new RelayCommand(p => DeleteDNSServerAction()); }
+        }
+
+        private void DeleteDNSServerAction()
+        {
+            DeleteDNSServer();
+        }
+        #endregion
+
+        #region Methods
+
+        public async void AddDNSServer()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.AddDNSServer
+            };
+
+            var dnsServerViewModel = new DNSServerViewModel(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                SettingsManager.Current.DNSLookup_DNSServers.Add(new DNSServerInfo(instance.Name, instance.DNSServer.Replace(" ", "").Split(';').ToList(), instance.Port));
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            });
+
+            customDialog.Content = new DNSServerDialog
+            {
+                DataContext = dnsServerViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public async void EditDNSServer()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.EditDNSServer
+            };
+
+            var dnsServerViewModel = new DNSServerViewModel(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                
+                SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
+                SettingsManager.Current.DNSLookup_DNSServers.Add(new DNSServerInfo(instance.Name, instance.DNSServer.Replace(" ","").Split(';').ToList(), instance.Port));
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, true, SelectedDNSServer);
+
+            customDialog.Content = new DNSServerDialog
+            {
+                DataContext = dnsServerViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public async void DeleteDNSServer()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.DeleteDNSServer
+            };
+
+            var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, Resources.Localization.Strings.DeleteDNSServerMessage);
+
+            customDialog.Content = new ConfirmRemoveDialog
+            {
+                DataContext = confirmRemoveViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public void Refresh()
+        {
+            // Refresh
+            DNSServers.Refresh();
         }
         #endregion
     }

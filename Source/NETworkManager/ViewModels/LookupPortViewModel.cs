@@ -4,7 +4,6 @@ using NETworkManager.Models.Settings;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Data;
-using System.Windows;
 using NETworkManager.Models.Lookup;
 using System.Linq;
 using NETworkManager.Utilities;
