@@ -991,6 +991,9 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.HTTPHeaders:
                     DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationHttpHeaders);
                     break;
+                case ApplicationViewManager.Name.Whois:
+                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationWhois);
+                    break;
                 case ApplicationViewManager.Name.SubnetCalculator:
                     DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationSubnetCalculator);
                     break;

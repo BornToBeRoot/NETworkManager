@@ -14,6 +14,7 @@
         ApplicationSnmp,
         ApplicationWakeOnLan,
         ApplicationHttpHeaders,
+        ApplicationWhois,
         ApplicationSubnetCalculator,
         ApplicationLookup,
         ApplicationConnections,

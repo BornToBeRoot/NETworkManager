@@ -1187,7 +1187,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private DNSServerInfo _dnsLookup_SelectedDNSServer;
+        private DNSServerInfo _dnsLookup_SelectedDNSServer = new DNSServerInfo();
         public DNSServerInfo DNSLookup_SelectedDNSServer
         {
             get => _dnsLookup_SelectedDNSServer;
