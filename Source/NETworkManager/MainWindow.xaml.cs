@@ -247,11 +247,7 @@ namespace NETworkManager
 
             // Language Meta
             LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
-
-            // Update settings
-            if (AssemblyManager.Current.Version > new Version(SettingsManager.Current.SettingsVersion))
-                SettingsManager.Update(AssemblyManager.Current.Version, new Version(SettingsManager.Current.SettingsVersion));
-
+            
             // Load appearance
             AppearanceManager.Load();
 
