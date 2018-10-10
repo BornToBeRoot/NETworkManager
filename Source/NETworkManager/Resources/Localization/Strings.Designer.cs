@@ -1357,6 +1357,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A DNS server with this name already exists!.
+        /// </summary>
+        public static string DNSServerWithThisNameAlreadyExists {
+            get {
+                return ResourceManager.GetString("DNSServerWithThisNameAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DNS suffix.
         /// </summary>
         public static string DNSSuffix {

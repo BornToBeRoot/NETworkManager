@@ -243,6 +243,7 @@ namespace NETworkManager.ViewModels
             DNSServers = new CollectionViewSource { Source = SettingsManager.Current.DNSLookup_DNSServers }.View;
             DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerInfo.UseWindowsDNSServer), ListSortDirection.Descending));
             DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerInfo.Name), ListSortDirection.Ascending));
+            DNSServer = DNSServers.SourceCollection.Cast<DNSServerInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.DNSLookup_SelectedDNSServer.Name) ?? DNSServers.SourceCollection.Cast<DNSServerInfo>().First();
 
             LookupResultView = CollectionViewSource.GetDefaultView(LookupResult);
             LookupResultView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.DNSServer)));
@@ -268,8 +269,6 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            DNSServer = DNSServers.SourceCollection.Cast<DNSServerInfo>().FirstOrDefault(x => x == SettingsManager.Current.DNSLookup_SelectedDNSServer) ?? DNSServers.SourceCollection.Cast<DNSServerInfo>().First();
-
             LoadTypes();
 
             ExpandStatistics = SettingsManager.Current.DNSLookup_ExpandStatistics;
@@ -284,7 +283,6 @@ namespace NETworkManager.ViewModels
             // Fallback
             if (Type == 0)
                 Type = QType.ANY;
-
         }
         #endregion
 

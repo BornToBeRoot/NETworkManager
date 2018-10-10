@@ -210,7 +210,7 @@ namespace NETworkManager.Models.Settings
                 var reorderApplications = false;
 
                 // Features added in 1.7.3.0
-                if (settingsVersion < new Version("1.7.3.0"))
+                if (settingsVersion < new Version("1.8.0.0"))
                 {
                     Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.Whois));
 

@@ -296,6 +296,7 @@
     <Compile Include="Validators\DomainValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetmaskOrCIDRValidator.cs" />
     <Compile Include="Validators\IsCredentialNameUnique.cs" />
+    <Compile Include="Validators\IsDNSServerNameUnique.cs" />
     <Compile Include="Validators\NoSpacesValidator.cs" />
     <Compile Include="Validators\BaudValidator.cs" />
     <Compile Include="Validators\PrivacyAESValidator.cs" />
