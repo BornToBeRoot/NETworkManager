@@ -1,9 +1,6 @@
 <div align="center">  
   <img alt="NETworkManager" src="NETworkManager.svg" height="128" width="128" />
-  <h1>NETworkManager</h1>
-  <a href="https://twitter.com/intent/tweet?text=NETworkManager%20-%20A%20powerful%20tool%20for%20managing%20networks%20and%20troubleshoot network problems!&url=https%3A%2F%2Fgithub.com%2FBornToBeRoot%2FNETworkManager" target="_blank">
-     <img alt="Tweet" src="https://img.shields.io/twitter/url/https/github.com/BornToBeRoot/NETworkManager.svg?style=sociale" />
-  </a>        
+  <h1>NETworkManager</h1>  
   <p>A powerful tool for managing networks and troubleshoot network problems!</p>
   <p>   
   <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
@@ -23,6 +20,11 @@
     <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/master">
       <img alt="AppVeyor Master" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/master.svg?style=flat-square&&label=master" />
     </a>    
+  </p>
+  </p>
+  <a href="https://twitter.com/intent/tweet?text=NETworkManager%20-%20A%20powerful%20tool%20for%20managing%20networks%20and%20troubleshoot network problems!&url=https%3A%2F%2Fgithub.com%2FBornToBeRoot%2FNETworkManager&hashtags=networkmanager,ipscanner,portscanner,ssh,remotedesktop,snmp,dns,traceroute" target="_blank">
+     <img alt="Tweet" src="https://img.shields.io/twitter/url/https/github.com/BornToBeRoot/NETworkManager.svg?style=flat-square" />
+  </a>        
   </p>
 </div>
 
