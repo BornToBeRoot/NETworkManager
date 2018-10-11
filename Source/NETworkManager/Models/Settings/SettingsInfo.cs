@@ -1201,54 +1201,6 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        [Obsolete("Use DNSServerInfo")]
-        private bool _dnsLookup_UseCustomDNSServer;
-        [Obsolete("Use DNSServerInfo")]
-        public bool DNSLookup_UseCustomDNSServer
-        {
-            get => _dnsLookup_UseCustomDNSServer;
-            set
-            {
-                if (value == _dnsLookup_UseCustomDNSServer)
-                    return;
-
-                _dnsLookup_UseCustomDNSServer = value;
-                SettingsChanged = true;
-            }
-        }
-
-        [Obsolete("Use DNSServerInfo")]
-        private List<string> _dnsLookup_CustomDNSServer = new List<string>();
-        [Obsolete("Use DNSServerInfo")]
-        public List<string> DNSLookup_CustomDNSServer
-        {
-            get => _dnsLookup_CustomDNSServer;
-            set
-            {
-                if (value == _dnsLookup_CustomDNSServer)
-                    return;
-
-                _dnsLookup_CustomDNSServer = value;
-                SettingsChanged = true;
-            }
-        }
-
-        [Obsolete("Use DNSServerInfo")]
-        private int _dnsLookup_Port = 53;
-        [Obsolete("Use DNSServerInfo")]
-        public int DNSLookup_Port
-        {
-            get => _dnsLookup_Port;
-            set
-            {
-                if (value == _dnsLookup_Port)
-                    return;
-
-                _dnsLookup_Port = value;
-                SettingsChanged = true;
-            }
-        }
-
         private QClass _dnsLookup_Class = QClass.IN;
         public QClass DNSLookup_Class
         {
@@ -1430,6 +1382,34 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _dnsLookup_ExpandProfileView = true;
+        public bool DNSLookup_ExpandProfileView
+        {
+            get => _dnsLookup_ExpandProfileView;
+            set
+            {
+                if (value == _dnsLookup_ExpandProfileView)
+                    return;
+
+                _dnsLookup_ExpandProfileView = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private double _dnsLookup_ProfileWidth = 250;
+        public double DNSLookup_ProfileWidth
+        {
+            get => _dnsLookup_ProfileWidth;
+            set
+            {
+                if (value == _dnsLookup_ProfileWidth)
+                    return;
+
+                _dnsLookup_ProfileWidth = value;
                 SettingsChanged = true;
             }
         }

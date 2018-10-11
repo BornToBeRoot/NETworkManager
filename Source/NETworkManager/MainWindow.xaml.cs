@@ -580,6 +580,7 @@ namespace NETworkManager
                     _wakeOnLanView.Refresh();
                     break;
                 case ApplicationViewManager.Name.DNSLookup:
+                    _dnsLookupHostView.Refresh();
                     break;
                 case ApplicationViewManager.Name.SNMP:
                     break;

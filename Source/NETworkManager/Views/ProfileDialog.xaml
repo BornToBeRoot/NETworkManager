@@ -546,6 +546,78 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
+            <TabItem Header="{x:Static localization:Strings.DNSLookup}">
+                <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,10">
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="34" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
+                            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding DNSLookup_Enabled}" />
+                        </Grid>
+                        <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
+                        <StackPanel IsEnabled="{Binding DNSLookup_Enabled}">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding DNSLookup_InheritHost}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
+                                <TextBox x:Name="TextBoxDNSLookupHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding DNSLookup_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}">
+                                    <TextBox.Style>
+                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding DNSLookup_InheritHost}" Value="True">
+                                                    <Setter Property="TextBox.Text">
+                                                        <Setter.Value>
+                                                            <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Traceroute_InheritHost}" Value="False">
+                                                    <Setter Property="TextBox.Text">
+                                                        <Setter.Value>
+                                                            <Binding Path="DNSLookup_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                                <Binding.ValidationRules>
+                                                                    <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                </Binding.ValidationRules>
+                                                            </Binding>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
             <TabItem Header="{x:Static localization:Strings.RemoteDesktop}">
                 <ScrollViewer Style="{StaticResource DefaultScrollViewer}" Margin="0,20,0,0">
                     <StackPanel>
@@ -987,6 +1059,17 @@
                                     <Condition Binding="{Binding Traceroute_Enabled}" Value="True"/>
                                     <Condition Binding="{Binding Traceroute_InheritHost}" Value="False"/>
                                     <Condition Binding="{Binding ElementName=TextBoxTracerouteHost, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- DNS Lookup -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding DNSLookup_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding DNSLookup_InheritHost}" Value="False"/>
+                                    <Condition Binding="{Binding ElementName=TextBoxDNSLookupHost, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />

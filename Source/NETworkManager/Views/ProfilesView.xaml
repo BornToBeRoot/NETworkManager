@@ -129,6 +129,7 @@
                 <DataGridCheckBoxColumn Header="{x:Static localization:Strings.PortScanner}" Binding="{Binding (settings:ProfileInfo.PortScanner_Enabled)}" />
                 <DataGridCheckBoxColumn Header="{x:Static localization:Strings.Ping}" Binding="{Binding (settings:ProfileInfo.Ping_Enabled)}" />
                 <DataGridCheckBoxColumn Header="{x:Static localization:Strings.Traceroute}" Binding="{Binding (settings:ProfileInfo.Traceroute_Enabled)}" />
+                <DataGridCheckBoxColumn Header="{x:Static localization:Strings.DNSLookup}" Binding="{Binding (settings:ProfileInfo.DNSLookup_Enabled)}" />
                 <DataGridCheckBoxColumn Header="{x:Static localization:Strings.RemoteDesktop}" Binding="{Binding (settings:ProfileInfo.RemoteDesktop_Enabled)}" />
                 <DataGridCheckBoxColumn Header="{x:Static localization:Strings.PuTTY}" Binding="{Binding (settings:ProfileInfo.PuTTY_Enabled)}" />
                 <DataGridCheckBoxColumn Header="{x:Static localization:Strings.WakeOnLAN}" Binding="{Binding (settings:ProfileInfo.WakeOnLAN_Enabled)}" />

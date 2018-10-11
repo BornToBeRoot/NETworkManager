@@ -138,6 +138,10 @@ namespace NETworkManager.Models.Settings
                 Traceroute_InheritHost = instance.Traceroute_InheritHost,
                 Traceroute_Host = instance.Traceroute_InheritHost ? instance.Host?.Trim() : instance.Traceroute_Host?.Trim(),
 
+                DNSLookup_Enabled =  instance.DNSLookup_Enabled,
+                DNSLookup_InheritHost = instance.Traceroute_InheritHost,
+                DNSLookup_Host = instance.DNSLookup_InheritHost ? instance.Host?.Trim() : instance.DNSLookup_Host?.Trim(),
+
                 RemoteDesktop_Enabled = instance.RemoteDesktop_Enabled,
                 RemoteDesktop_InheritHost = instance.RemoteDesktop_InheritHost,
                 RemoteDesktop_Host = instance.RemoteDesktop_InheritHost ? instance.Host?.Trim() : instance.RemoteDesktop_Host?.Trim(),

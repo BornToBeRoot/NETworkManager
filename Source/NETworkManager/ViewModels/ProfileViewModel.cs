@@ -145,7 +145,7 @@ namespace NETworkManager.ViewModels
             get => _isEdited;
             set
             {
-                if(value == _isEdited)
+                if (value == _isEdited)
                     return;
 
                 _isEdited = value;
@@ -577,6 +577,63 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _traceroute_Host = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region DNS Lookup
+        private bool _dnsLookup_Enabled;
+        public bool DNSLookup_Enabled
+        {
+            get => _dnsLookup_Enabled;
+            set
+            {
+                if (value == _dnsLookup_Enabled)
+                    return;
+
+                _dnsLookup_Enabled = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _dnsLookup_InheritHost;
+        public bool DNSLookup_InheritHost
+        {
+            get => _dnsLookup_InheritHost;
+            set
+            {
+                if (value == _dnsLookup_InheritHost)
+                    return;
+
+                _dnsLookup_InheritHost = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _dnsLookup_Host;
+        public string DNSLookup_Host
+        {
+            get => _dnsLookup_Host;
+            set
+            {
+                if (value == _dnsLookup_Host)
+                    return;
+
+                _dnsLookup_Host = value;
 
                 if (!_isLoading)
                     Validate();
@@ -1065,6 +1122,11 @@ namespace NETworkManager.ViewModels
             Traceroute_InheritHost = profileInfo2.Traceroute_InheritHost;
             Traceroute_Host = profileInfo2.Traceroute_Host;
 
+            // DNS Lookup
+            DNSLookup_Enabled = profileInfo2.DNSLookup_Enabled;
+            DNSLookup_InheritHost = profileInfo2.DNSLookup_InheritHost;
+            DNSLookup_Host = profileInfo2.DNSLookup_Host;
+
             // Remote Desktop
             RemoteDesktop_Enabled = profileInfo2.RemoteDesktop_Enabled;
             RemoteDesktop_InheritHost = profileInfo2.RemoteDesktop_InheritHost;
@@ -1110,6 +1172,7 @@ namespace NETworkManager.ViewModels
             PuTTY_Profile = profileInfo2.PuTTY_Profile;
             PuTTY_AdditionalCommandLine = profileInfo2.PuTTY_AdditionalCommandLine;
 
+            // Wake on LAN
             WakeOnLAN_Enabled = profileInfo2.WakeOnLAN_Enabled;
             WakeOnLAN_MACAddress = profileInfo2.WakeOnLAN_MACAddress;
             WakeOnLAN_Broadcast = profileInfo2.WakeOnLAN_Broadcast;
@@ -1123,7 +1186,7 @@ namespace NETworkManager.ViewModels
         private void Validate()
         {
             // Note
-            IsTabEnabled = NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || RemoteDesktop_Enabled || PuTTY_Enabled || WakeOnLAN_Enabled;
+            IsTabEnabled = NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || DNSLookup_Enabled || RemoteDesktop_Enabled || PuTTY_Enabled || WakeOnLAN_Enabled;
         }
 
         #region ICommands & Actions

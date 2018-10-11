@@ -39,6 +39,10 @@ namespace NETworkManager.Models.Settings
         public bool Traceroute_InheritHost { get; set; } = true;
         public string Traceroute_Host { get; set; }
 
+        public bool DNSLookup_Enabled { get; set; }
+        public bool DNSLookup_InheritHost { get; set; } = true;
+        public string DNSLookup_Host { get; set; }
+
         public bool RemoteDesktop_Enabled { get; set; }
         public bool RemoteDesktop_InheritHost { get; set; } = true;
         public string RemoteDesktop_Host { get; set; }
