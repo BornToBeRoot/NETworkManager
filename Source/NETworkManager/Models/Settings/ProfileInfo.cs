@@ -66,7 +66,7 @@ namespace NETworkManager.Models.Settings
 
         public bool Whois_Enabled { get; set; }
         public bool Whois_InheritHost { get; set; } = true;
-        public string Whois_Host { get; set; }
+        public string Whois_Domain { get; set; }
 
         public ProfileInfo()
         {

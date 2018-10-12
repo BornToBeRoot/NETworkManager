@@ -1129,16 +1129,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _whois_Host;
-        public string Whois_Host
+        private string _whois_Domain;
+        public string Whois_Domain
         {
-            get => _whois_Host;
+            get => _whois_Domain;
             set
             {
-                if (value == _whois_Host)
+                if (value == _whois_Domain)
                     return;
 
-                _whois_Host = value;
+                _whois_Domain = value;
 
                 if (!_isLoading)
                     Validate();
@@ -1278,7 +1278,7 @@ namespace NETworkManager.ViewModels
             // Whois
             Whois_Enabled = profileInfo2.Whois_Enabled;
             Whois_InheritHost = profileInfo2.Whois_InheritHost;
-            Whois_Host = profileInfo2.Whois_Host;
+            Whois_Domain = profileInfo2.Whois_Domain;
 
             Validate();
 

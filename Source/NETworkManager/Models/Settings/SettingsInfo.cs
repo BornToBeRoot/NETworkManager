@@ -2417,6 +2417,34 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private bool _whois_ExpandProfileView = true;
+        public bool Whois_ExpandProfileView
+        {
+            get => _whois_ExpandProfileView;
+            set
+            {
+                if (value == _whois_ExpandProfileView)
+                    return;
+
+                _whois_ExpandProfileView = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private double _whois_ProfileWidth = 250;
+        public double Whois_ProfileWidth
+        {
+            get => _whois_ProfileWidth;
+            set
+            {
+                if (value == _whois_ProfileWidth)
+                    return;
+
+                _whois_ProfileWidth = value;
+                SettingsChanged = true;
+            }
+        }
+
         private bool _whois_ShowStatistics = true;
         public bool Whois_ShowStatistics
         {

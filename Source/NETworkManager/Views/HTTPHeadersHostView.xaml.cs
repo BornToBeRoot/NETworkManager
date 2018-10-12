@@ -28,12 +28,7 @@ namespace NETworkManager.Views
             if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
                 _viewModel.CheckProfileCommand.Execute(null);
         }
-
-        public void AddTab(string host)
-        {
-            _viewModel.AddTab(host);
-        }
-
+        
         public void Refresh()
         {
             _viewModel.Refresh();

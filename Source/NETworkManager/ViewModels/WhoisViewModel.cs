@@ -19,6 +19,7 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private readonly int _tabId;
+        private bool _firstLoad = true;
 
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
         private readonly Stopwatch _stopwatch = new Stopwatch();
@@ -175,10 +176,12 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public WhoisViewModel(int tabId)
+        public WhoisViewModel(int tabId, string domain)
         {
             _isLoading = true;
+
             _tabId = tabId;
+            Domain = domain;
 
             // Set collection view
             WebsiteUriHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Whois_DomainHistory);
@@ -189,6 +192,17 @@ namespace NETworkManager.ViewModels
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
             _isLoading = false;
+        }
+
+        public void OnLoaded()
+        {
+            if (!_firstLoad)
+                return;
+
+            if (!string.IsNullOrEmpty(Domain))
+                Query();
+
+            _firstLoad = false;
         }
 
         private void LoadSettings()
@@ -205,12 +219,12 @@ namespace NETworkManager.ViewModels
 
         private void QueryAction()
         {
-            Check();
+            Query();
         }
         #endregion
 
         #region Methods
-        private async void Check()
+        private async void Query()
         {
             DisplayStatusMessage = false;
             IsWhoisRunning = true;

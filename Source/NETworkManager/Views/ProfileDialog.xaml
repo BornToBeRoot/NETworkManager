@@ -1031,8 +1031,8 @@
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Whois_InheritHost}" />
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
-                                <TextBox x:Name="TextBoxWhoisHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Whois_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}">
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Domain}" />
+                                <TextBox x:Name="TextBoxWhoisDomain" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Whois_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}">
                                     <TextBox.Style>
                                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                                             <Style.Triggers>
@@ -1046,7 +1046,7 @@
                                                 <DataTrigger Binding="{Binding Whois_InheritHost}" Value="False">
                                                     <Setter Property="TextBox.Text">
                                                         <Setter.Value>
-                                                            <Binding Path="Whois_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                            <Binding Path="Whois_Domain" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                 <Binding.ValidationRules>
                                                                     <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                                                 </Binding.ValidationRules>
@@ -1295,7 +1295,7 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding Whois_Enabled}" Value="True"/>
                                     <Condition Binding="{Binding Whois_InheritHost}" Value="False"/>
-                                    <Condition Binding="{Binding ElementName=TextBoxWhoisHost, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxWhoisDomain, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />

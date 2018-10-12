@@ -165,7 +165,7 @@ namespace NETworkManager.Models.Settings
 
                 Whois_Enabled = instance.Whois_Enabled,
                 Whois_InheritHost =  instance.Whois_InheritHost,
-                Whois_Host = instance.Whois_InheritHost ? instance.Host?.Trim() : instance.Whois_Host?.Trim()
+                Whois_Domain = instance.Whois_InheritHost ? instance.Host?.Trim() : instance.Whois_Domain?.Trim()
             });
         }
 
