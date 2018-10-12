@@ -158,7 +158,14 @@ namespace NETworkManager.Models.Settings
                 WakeOnLAN_Enabled = instance.WakeOnLAN_Enabled,
                 WakeOnLAN_MACAddress = instance.WakeOnLAN_MACAddress?.Trim(),
                 WakeOnLAN_Broadcast = instance.WakeOnLAN_Broadcast?.Trim(),
-                WakeOnLAN_Port = instance.WakeOnLAN_Port
+                WakeOnLAN_Port = instance.WakeOnLAN_Port,
+
+                HTTPHeaders_Enabled = instance.HTTPHeaders_Enabled,
+                HTTPHeaders_Website = instance.HTTPHeaders_Website,
+
+                Whois_Enabled = instance.Whois_Enabled,
+                Whois_InheritHost =  instance.Whois_InheritHost,
+                Whois_Host = instance.Whois_InheritHost ? instance.Host?.Trim() : instance.Whois_Host?.Trim()
             });
         }
 

@@ -641,7 +641,6 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
         #endregion
 
         #region RemoteDesktop
@@ -1054,6 +1053,100 @@ namespace NETworkManager.ViewModels
             }
         }
         #endregion
+
+        #region HTTP Headers
+        private bool _httpHeaders_Enabled;
+        public bool HTTPHeaders_Enabled
+        {
+            get => _httpHeaders_Enabled;
+            set
+            {
+                if (value == _httpHeaders_Enabled)
+                    return;
+
+                _httpHeaders_Enabled = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _httpHeaders_Website;
+        public string HTTPHeaders_Website
+        {
+            get => _httpHeaders_Website;
+            set
+            {
+                if (value == _httpHeaders_Website)
+                    return;
+
+                _httpHeaders_Website = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Whois
+        private bool _whois_Enabled;
+        public bool Whois_Enabled
+        {
+            get => _whois_Enabled;
+            set
+            {
+                if (value == _whois_Enabled)
+                    return;
+
+                _whois_Enabled = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _whois_InheritHost;
+        public bool Whois_InheritHost
+        {
+            get => _whois_InheritHost;
+            set
+            {
+                if (value == _whois_InheritHost)
+                    return;
+
+                _whois_InheritHost = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _whois_Host;
+        public string Whois_Host
+        {
+            get => _whois_Host;
+            set
+            {
+                if (value == _whois_Host)
+                    return;
+
+                _whois_Host = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+        #endregion
         #endregion
 
         public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, bool isEdited = false, ProfileInfo profileInfo = null)
@@ -1178,6 +1271,15 @@ namespace NETworkManager.ViewModels
             WakeOnLAN_Broadcast = profileInfo2.WakeOnLAN_Broadcast;
             WakeOnLAN_Port = profileInfo2.WakeOnLAN_Port == 0 ? SettingsManager.Current.WakeOnLAN_DefaultPort : profileInfo2.WakeOnLAN_Port;
 
+            // HTTP Headers
+            HTTPHeaders_Enabled = profileInfo2.HTTPHeaders_Enabled;
+            HTTPHeaders_Website = profileInfo2.HTTPHeaders_Website;
+
+            // Whois
+            Whois_Enabled = profileInfo2.Whois_Enabled;
+            Whois_InheritHost = profileInfo2.Whois_InheritHost;
+            Whois_Host = profileInfo2.Whois_Host;
+
             Validate();
 
             _isLoading = false;
@@ -1186,7 +1288,7 @@ namespace NETworkManager.ViewModels
         private void Validate()
         {
             // Note
-            IsTabEnabled = NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || DNSLookup_Enabled || RemoteDesktop_Enabled || PuTTY_Enabled || WakeOnLAN_Enabled;
+            IsTabEnabled = NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || DNSLookup_Enabled || RemoteDesktop_Enabled || PuTTY_Enabled || WakeOnLAN_Enabled || HTTPHeaders_Enabled || Whois_Enabled;
         }
 
         #region ICommands & Actions

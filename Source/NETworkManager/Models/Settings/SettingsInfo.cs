@@ -343,7 +343,7 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
-        #region NetworkInterface       
+        #region Network Interface       
         private string _networkInterface_SelectedInterfaceId;
         public string NetworkInterface_SelectedInterfaceId
         {
@@ -678,7 +678,7 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
-        #region PortScanner
+        #region Port Scanner
         private ObservableCollection<string> _portScanner_HostHistory = new ObservableCollection<string>();
         public ObservableCollection<string> PortScanner_HostHistory
         {
@@ -2227,6 +2227,34 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _httpHeaders_ExpandProfileView = true;
+        public bool HTTPHeaders_ExpandProfileView
+        {
+            get => _httpHeaders_ExpandProfileView;
+            set
+            {
+                if (value == _httpHeaders_ExpandProfileView)
+                    return;
+
+                _httpHeaders_ExpandProfileView = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private double _httpHeaders_ProfileWidth = 250;
+        public double HTTPHeaders_ProfileWidth
+        {
+            get => _httpHeaders_ProfileWidth;
+            set
+            {
+                if (value == _httpHeaders_ProfileWidth)
+                    return;
+
+                _httpHeaders_ProfileWidth = value;
                 SettingsChanged = true;
             }
         }

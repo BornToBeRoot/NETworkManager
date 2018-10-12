@@ -18,6 +18,7 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private readonly int _tabId;
+        private bool _firstLoad = true;
 
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
         private readonly Stopwatch _stopwatch = new Stopwatch();
@@ -174,10 +175,12 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public HTTPHeadersViewModel(int tabId)
+        public HTTPHeadersViewModel(int tabId, string websiteUri)
         {
             _isLoading = true;
+
             _tabId = tabId;
+            WebsiteUri = websiteUri;
 
             // Set collection view
             WebsiteUriHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.HTTPHeaders_WebsiteUriHistory);
@@ -188,6 +191,17 @@ namespace NETworkManager.ViewModels
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
             _isLoading = false;
+        }
+
+        public void OnLoaded()
+        {
+            if(!_firstLoad)
+                return;
+
+            if(!string.IsNullOrEmpty(WebsiteUri))
+                Check();
+            
+            _firstLoad = false;
         }
 
         private void LoadSettings()

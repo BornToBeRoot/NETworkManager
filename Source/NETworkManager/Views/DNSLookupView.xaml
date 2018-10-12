@@ -17,7 +17,6 @@
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:DNSServerInfoToString x:Key="DNSServerInfoToString" />
-        <converters:ListToStringConverter x:Key="ListToStringConverter" />
         <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
