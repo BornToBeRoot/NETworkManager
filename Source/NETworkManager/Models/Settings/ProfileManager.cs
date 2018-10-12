@@ -10,6 +10,8 @@ namespace NETworkManager.Models.Settings
     {
         public const string ProfilesFileName = "Profiles.xml";
 
+        public const string TagIdentifier = "tag=";
+
         public static ObservableCollection<ProfileInfo> Profiles { get; set; }
         public static bool ProfilesChanged { get; set; }
 

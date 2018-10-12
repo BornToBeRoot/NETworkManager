@@ -21,8 +21,6 @@ namespace NETworkManager.ViewModels
         
         public IInterTabClient InterTabClient { get; }
         public ObservableCollection<DragablzTabItem> TabItems { get; }
-
-        private const string TagIdentifier = "tag=";
         
         private readonly bool _isLoading;
         
@@ -152,8 +150,8 @@ namespace NETworkManager.ViewModels
                 var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
-                if (search.StartsWith(TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                    return !string.IsNullOrEmpty(info.Tags) && info.HTTPHeaders_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(TagIdentifier.Length, search.Length - TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+                if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
+                    return !string.IsNullOrEmpty(info.Tags) && info.HTTPHeaders_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
 
                 // Search by: Name, HTTPHeaders_Website
                 return info.HTTPHeaders_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.HTTPHeaders_Website.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
