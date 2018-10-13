@@ -53,7 +53,7 @@ namespace NETworkManager.ViewModels
                 _selectedTabIndex = value;
                 OnPropertyChanged();
             }
-        }              
+        }
 
         #region Profiles
 
@@ -207,6 +207,14 @@ namespace NETworkManager.ViewModels
             ((args.DragablzItem.Content as DragablzTabItem)?.View as PuttyControl)?.CloseTab();
         }
 
+        public ICommand RestartPuTTYSessionCommand => new RelayCommand(RestartPuTTYSessionAction);
+
+        private void RestartPuTTYSessionAction(object view)
+        {
+            if (view is PuttyControl puttyControl)
+                puttyControl.RestartPuTTYSession();
+        }
+
         public ICommand ConnectCommand
         {
             get { return new RelayCommand(p => ConnectAction(), Connect_CanExecute); }
@@ -299,7 +307,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
-            }, ProfileManager.GetGroups(), true,SelectedProfile);
+            }, ProfileManager.GetGroups(), true, SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -332,7 +340,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
-            }, ProfileManager.GetGroups(), false,SelectedProfile);
+            }, ProfileManager.GetGroups(), false, SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -507,7 +515,7 @@ namespace NETworkManager.ViewModels
             // Add PuTTY path here...
             profileInfo.PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
 
-            TabItems.Add(new DragablzTabItem(header ?? profileInfo.HostOrSerialLine, new PuttyControl(profileInfo)));
+           TabItems.Add(new DragablzTabItem(header ?? profileInfo.HostOrSerialLine, new PuttyControl(profileInfo)));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

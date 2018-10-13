@@ -141,7 +141,7 @@ namespace NETworkManager.Controls
             catch (Exception ex)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText =  NETworkManager.Resources.Localization.Strings.OK;
+                settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
 
                 ConfigurationManager.Current.IsDialogOpen = true;
 
@@ -168,6 +168,12 @@ namespace NETworkManager.Controls
                 _puttyProcess.Kill();
         }
 
+        public void RestartPuTTYSession()
+        {
+            if (Connected)
+                NativeMethods.SendMessage(_puttyProcess.MainWindowHandle, (uint) NativeMethods.WM.SYSCOMMAND, new IntPtr(64), new IntPtr(0));
+        }
+        
         public void CloseTab()
         {
             Disconnect();

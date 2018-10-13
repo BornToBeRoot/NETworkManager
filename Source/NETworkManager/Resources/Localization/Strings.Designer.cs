@@ -4347,6 +4347,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restart session.
+        /// </summary>
+        public static string RestartSession {
+            get {
+                return ResourceManager.GetString("RestartSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Restart the application so that all settings are applied!.
         /// </summary>
         public static string RestartTheApplicationSoThatAllChangesAreApplied {

@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace NETworkManager.Views
@@ -27,7 +28,8 @@ namespace NETworkManager.Views
 
         private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (sender is ContextMenu menu) menu.DataContext = _viewModel;
+            if (sender is ContextMenu menu)
+                menu.DataContext = _viewModel;
         }
 
         private void ListBoxItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)

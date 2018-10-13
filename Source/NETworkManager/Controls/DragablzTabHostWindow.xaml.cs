@@ -5,6 +5,7 @@ using NETworkManager.Views;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Controls
 {
@@ -66,7 +67,6 @@ namespace NETworkManager.Controls
         #endregion
 
         #region ICommand & Actions
-
         public ItemActionCallback CloseItemCommand => CloseItemAction;
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
@@ -98,7 +98,7 @@ namespace NETworkManager.Controls
                     ((PuttyControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.SNMP:
-                    ((TracerouteView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
+                    ((SNMPView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.HTTPHeaders:
                     ((HTTPHeadersView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
@@ -123,8 +123,17 @@ namespace NETworkManager.Controls
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
         }
+
+        #region PuTTY Commands
+        public ICommand RestartPuTTYSessionCommand => new RelayCommand(RestartPuTTYSessionAction);
+
+        private void RestartPuTTYSessionAction(object view)
+        {
+            if (view is PuttyControl puttyControl)
+                puttyControl.RestartPuTTYSession();
+        }
+        #endregion
         #endregion
 
         #region Events

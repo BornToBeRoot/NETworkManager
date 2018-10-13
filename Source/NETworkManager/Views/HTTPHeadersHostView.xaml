@@ -9,6 +9,7 @@
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:controls="clr-namespace:NETworkManager.Controls"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:HTTPHeadersHostViewModel}">
     <UserControl.Resources>

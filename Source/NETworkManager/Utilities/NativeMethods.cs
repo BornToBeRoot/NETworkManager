@@ -3,13 +3,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace NETworkManager.Utilities
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     internal class NativeMethods
     {
-        #region Win32 Constants/Enums
+        #region Win32 Constants
         public const int GWL_STYLE = -16;
         public const int WS_THICKFRAME = 0x00040000;
         public const int SWP_NOZORDER = 0x0004;
@@ -19,6 +20,7 @@ namespace NETworkManager.Utilities
         #endregion
 
         #region Enum
+
         public enum WindowShowStyle : uint
         {
             Hide = 0,
@@ -35,15 +37,20 @@ namespace NETworkManager.Utilities
             ShowDefault = 10,
             ForceMinimized = 11
         }
+
+        public enum WM : uint
+        {
+            SYSCOMMAND = 0x0112
+        }
         #endregion
-        
+
         #region Pinvoke/Win32 Methods
         [DllImport("user32.dll", SetLastError = true)]
         public static extern long SetParent(IntPtr hWndChild, IntPtr hWndParent);
 
         [DllImport("user32.dll", EntryPoint = "GetWindowLongA", SetLastError = true)]
         public static extern long GetWindowLong(IntPtr hWnd, int nIndex);
-        
+
         // http://msdn.microsoft.com/en-us/library/windows/desktop/ms644898%28v=vs.85%29.aspx
         public static IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
         {
@@ -59,9 +66,12 @@ namespace NETworkManager.Utilities
         [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
         public static extern IntPtr SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool MoveWindow(IntPtr hWnd, int x, int y, int cx, int cy, bool repaint);
-        
+
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(IntPtr hWnd, WindowShowStyle nCmdShow);
         #endregion

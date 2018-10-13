@@ -2000,4 +2000,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="DNSServerWithThisNameAlreadyExists" xml:space="preserve">
     <value>A DNS server with this name already exists!</value>
   </data>
+  <data name="RestartSession" xml:space="preserve">
+    <value>Restart session</value>
+  </data>
 </root>
