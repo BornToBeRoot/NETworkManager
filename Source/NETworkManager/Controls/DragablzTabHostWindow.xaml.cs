@@ -38,6 +38,20 @@ namespace NETworkManager.Controls
             }
         }
 
+        private bool _isPuTTYControl;
+        public bool IsPuTTYControl
+        {
+            get => _isPuTTYControl;
+            set
+            {
+                if(value == _isPuTTYControl)
+                    return;
+
+                _isPuTTYControl = value;
+                OnPropertyChanged();
+            }
+        }
+
         public bool ShowCurrentApplicationTitle => SettingsManager.Current.Window_ShowCurrentApplicationTitle;
         #endregion
 
@@ -61,6 +75,9 @@ namespace NETworkManager.Controls
             InterTabController.Partition = applicationName.ToString();
 
             ApplicationTitle = ApplicationViewManager.GetTranslatedNameByName(applicationName);
+
+            if (applicationName == ApplicationViewManager.Name.PuTTY)
+                IsPuTTYControl = true;
 
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
         }
