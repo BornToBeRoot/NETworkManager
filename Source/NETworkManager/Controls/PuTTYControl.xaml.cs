@@ -6,6 +6,7 @@ using System.Windows;
 using System;
 using System.Windows.Threading;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using NETworkManager.Utilities;
 using NETworkManager.Models.PuTTY;
 using System.Windows.Input;
@@ -113,10 +114,25 @@ namespace NETworkManager.Controls
                     _puttyProcess.EnableRaisingEvents = true;
                     _puttyProcess.Exited += PuTTYProcess_Exited;
 
-                    _puttyProcess.WaitForInputIdle();
-
                     // Embed putty window into panel, remove border etc.
+                    _puttyProcess.WaitForInputIdle();
                     _appWin = _puttyProcess.MainWindowHandle;
+
+                    if (_appWin == IntPtr.Zero)
+                    {
+                        var startTime = DateTime.Now;
+
+                        while ((DateTime.Now - startTime).TotalSeconds < 10)
+                        {
+                            _puttyProcess.Refresh();
+                            _appWin = _puttyProcess.MainWindowHandle;
+
+                            if (IntPtr.Zero != _appWin)
+                                break;
+
+                            await Task.Delay(50);
+                        }
+                    }
 
                     NativeMethods.SetParent(_appWin, PuttyHost.Handle);
 
@@ -171,9 +187,9 @@ namespace NETworkManager.Controls
         public void RestartPuTTYSession()
         {
             if (Connected)
-                NativeMethods.SendMessage(_puttyProcess.MainWindowHandle, (uint) NativeMethods.WM.SYSCOMMAND, new IntPtr(64), new IntPtr(0));
+                NativeMethods.SendMessage(_puttyProcess.MainWindowHandle, (uint)NativeMethods.WM.SYSCOMMAND, new IntPtr(64), new IntPtr(0));
         }
-        
+
         public void CloseTab()
         {
             Disconnect();
