@@ -4,17 +4,17 @@ using System.Windows;
 
 namespace NETworkManager.Views
 {
-    public partial class PuTTYSettingsView
+    public partial class TightVNCSettingsView
     {
-        private readonly PuTTYSettingsViewModel _viewModel = new PuTTYSettingsViewModel(DialogCoordinator.Instance);
+        private readonly TightVNCSettingsViewModel _viewModel = new TightVNCSettingsViewModel(DialogCoordinator.Instance);
 
-        public PuTTYSettingsView()
+        public TightVNCSettingsView()
         {
             InitializeComponent();
             DataContext = _viewModel;
         }
 
-        private void TextBoxPuTTYLocation_Drop(object sender, DragEventArgs e)
+        private void TextBoxTightVNCLocation_Drop(object sender, DragEventArgs e)
         {
             if (!e.Data.GetDataPresent(DataFormats.FileDrop))
                 return;
@@ -25,7 +25,7 @@ namespace NETworkManager.Views
                 _viewModel.SetFilePathFromDragDrop(files[0]);
         }
 
-        private void TextBoxPuTTYLocation_PreviewDragOver(object sender, DragEventArgs e)
+        private void TextBoxTightVNCLocation_PreviewDragOver(object sender, DragEventArgs e)
         {
             e.Effects = DragDropEffects.Copy;
             e.Handled = true;

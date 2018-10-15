@@ -8,14 +8,14 @@ using System.Windows.Threading;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using NETworkManager.Utilities;
-using NETworkManager.Models.PuTTY;
+using NETworkManager.Models.TightVNC;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Controls
 {
-    public partial class PuTTYControl : INotifyPropertyChanged
+    public partial class TightVNCControl : INotifyPropertyChanged
     {
         #region PropertyChangedEventHandler
         public event PropertyChangedEventHandler PropertyChanged;
@@ -30,9 +30,9 @@ namespace NETworkManager.Controls
         private bool _initialized;
         private readonly IDialogCoordinator _dialogCoordinator;
 
-        private readonly PuTTYSessionInfo _puttySessionInfo;
+        private readonly TightVNCSessionInfo _tightVNCSessionInfo;
 
-        Process _puttyProcess;
+        Process _tightVNCProcess;
         private IntPtr _appWin;
 
         private readonly DispatcherTimer _resizeTimer = new DispatcherTimer();
@@ -53,14 +53,14 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Constructor, load
-        public PuTTYControl(PuTTYSessionInfo info)
+        public TightVNCControl(TightVNCSessionInfo info)
         {
             InitializeComponent();
             DataContext = this;
 
             _dialogCoordinator = DialogCoordinator.Instance;
 
-            _puttySessionInfo = info;
+            _tightVNCSessionInfo = info;
 
             _resizeTimer.Tick += ResizeTimer_Tick;
             _resizeTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
@@ -101,22 +101,22 @@ namespace NETworkManager.Controls
         {
             var info = new ProcessStartInfo
             {
-                FileName = _puttySessionInfo.PuTTYLocation,
-                Arguments = PuTTY.BuildCommandLine(_puttySessionInfo)
+                FileName = _tightVNCSessionInfo.TightVNCLocation,
+                Arguments = TightVNC.BuildCommandLine(_tightVNCSessionInfo)
             };
 
             try
             {
-                _puttyProcess = Process.Start(info);
+                _tightVNCProcess = Process.Start(info);
 
-                if (_puttyProcess != null)
+                if (_tightVNCProcess != null)
                 {
-                    _puttyProcess.EnableRaisingEvents = true;
-                    _puttyProcess.Exited += PuTTYProcess_Exited;
+                    _tightVNCProcess.EnableRaisingEvents = true;
+                    _tightVNCProcess.Exited += TightVNCProcess_Exited;
 
-                    // Embed putty window into panel, remove border etc.
-                    _puttyProcess.WaitForInputIdle();
-                    _appWin = _puttyProcess.MainWindowHandle;
+                    // Embed tightvnc window into panel, remove border etc.
+                    _tightVNCProcess.WaitForInputIdle();
+                    _appWin = _tightVNCProcess.MainWindowHandle;
 
                     if (_appWin == IntPtr.Zero)
                     {
@@ -124,8 +124,8 @@ namespace NETworkManager.Controls
 
                         while ((DateTime.Now - startTime).TotalSeconds < 10)
                         {
-                            _puttyProcess.Refresh();
-                            _appWin = _puttyProcess.MainWindowHandle;
+                            _tightVNCProcess.Refresh();
+                            _appWin = _tightVNCProcess.MainWindowHandle;
 
                             if (IntPtr.Zero != _appWin)
                                 break;
@@ -134,7 +134,7 @@ namespace NETworkManager.Controls
                         }
                     }
 
-                    NativeMethods.SetParent(_appWin, PuTTYHost.Handle);
+                    NativeMethods.SetParent(_appWin, PuttyHost.Handle);
 
                     // Show window before set style and resize
                     NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
@@ -145,13 +145,13 @@ namespace NETworkManager.Controls
                     NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
 
                     // Resize embedded application & refresh       
-                    ResizeEmbeddedPutty();
+                    ResizeEmbeddedTightVNC();
 
                     Connected = true;
                 }
                 else
                 {
-                    throw new Exception("PuTTY process could not be started!");
+                    throw new Exception("TightVNC process could not be started!");
                 }
             }
             catch (Exception ex)
@@ -167,27 +167,21 @@ namespace NETworkManager.Controls
             }
         }
 
-        private void PuTTYProcess_Exited(object sender, EventArgs e)
+        private void TightVNCProcess_Exited(object sender, EventArgs e)
         {
             // This happens when the user exit the process
             Connected = false;
         }
 
-        private void ResizeEmbeddedPutty()
+        private void ResizeEmbeddedTightVNC()
         {
-            NativeMethods.SetWindowPos(_puttyProcess.MainWindowHandle, IntPtr.Zero, 0, 0, PuTTYHost.ClientSize.Width, PuTTYHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
+            NativeMethods.SetWindowPos(_tightVNCProcess.MainWindowHandle, IntPtr.Zero, 0, 0, PuttyHost.ClientSize.Width, PuttyHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
         }
 
         public void Disconnect()
         {
-            if (_puttyProcess != null && !_puttyProcess.HasExited)
-                _puttyProcess.Kill();
-        }
-
-        public void RestartPuTTYSession()
-        {
-            if (Connected)
-                NativeMethods.SendMessage(_puttyProcess.MainWindowHandle, (uint)NativeMethods.WM.SYSCOMMAND, new IntPtr(64), new IntPtr(0));
+            if (_tightVNCProcess != null && !_tightVNCProcess.HasExited)
+                _tightVNCProcess.Kill();
         }
 
         public void CloseTab()
@@ -197,17 +191,17 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Events
-        private void PuTTYGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void TightVNCGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (_puttyProcess != null)
-                ResizeEmbeddedPutty();
+            if (_tightVNCProcess != null)
+                ResizeEmbeddedTightVNC();
         }
 
         private void ResizeTimer_Tick(object sender, EventArgs e)
         {
             _resizeTimer.Stop();
 
-            ResizeEmbeddedPutty();
+            ResizeEmbeddedTightVNC();
         }
         #endregion
     }

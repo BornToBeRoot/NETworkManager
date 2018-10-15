@@ -980,6 +980,80 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
+        #region TightVNC
+        private bool _tightVNC_Enabled;
+        public bool TightVNC_Enabled
+        {
+            get => _tightVNC_Enabled;
+            set
+            {
+                if (value == _tightVNC_Enabled)
+                    return;
+
+                _tightVNC_Enabled = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _tightVNC_InheritHost;
+        public bool TightVNC_InheritHost
+        {
+            get => _tightVNC_InheritHost;
+            set
+            {
+                if (value == _tightVNC_InheritHost)
+                    return;
+
+                _tightVNC_InheritHost = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _tightVNC_Host;
+        public string TightVNC_Host
+        {
+            get => _tightVNC_Host;
+            set
+            {
+                if (value == _tightVNC_Host)
+                    return;
+
+                _tightVNC_Host = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private int _tightVNC_Port;
+        public int TightVNC_Port
+        {
+            get => _tightVNC_Port;
+            set
+            {
+                if (value == _tightVNC_Port)
+                    return;
+
+                _tightVNC_Port = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         #region Wake on LAN
         private bool _wakeOnLAN_Enabled;
         public bool WakeOnLAN_Enabled
@@ -1265,11 +1339,17 @@ namespace NETworkManager.ViewModels
             PuTTY_Profile = profileInfo2.PuTTY_Profile;
             PuTTY_AdditionalCommandLine = profileInfo2.PuTTY_AdditionalCommandLine;
 
+            // TightVNC
+            TightVNC_Enabled = profileInfo2.TightVNC_Enabled;
+            TightVNC_InheritHost = profileInfo2.TightVNC_InheritHost;
+            TightVNC_Host = profileInfo2.TightVNC_Host;
+            TightVNC_Port = profileInfo2.TightVNC_Port == 0 ? SettingsManager.Current.TightVNC_VNCPort : profileInfo2.TightVNC_Port;
+
             // Wake on LAN
             WakeOnLAN_Enabled = profileInfo2.WakeOnLAN_Enabled;
             WakeOnLAN_MACAddress = profileInfo2.WakeOnLAN_MACAddress;
             WakeOnLAN_Broadcast = profileInfo2.WakeOnLAN_Broadcast;
-            WakeOnLAN_Port = profileInfo2.WakeOnLAN_Port == 0 ? SettingsManager.Current.WakeOnLAN_DefaultPort : profileInfo2.WakeOnLAN_Port;
+            WakeOnLAN_Port = profileInfo2.WakeOnLAN_Port == 0 ? SettingsManager.Current.WakeOnLAN_Port : profileInfo2.WakeOnLAN_Port;
 
             // HTTP Headers
             HTTPHeaders_Enabled = profileInfo2.HTTPHeaders_Enabled;
@@ -1288,7 +1368,7 @@ namespace NETworkManager.ViewModels
         private void Validate()
         {
             // Note
-            IsTabEnabled = NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || DNSLookup_Enabled || RemoteDesktop_Enabled || PuTTY_Enabled || WakeOnLAN_Enabled || HTTPHeaders_Enabled || Whois_Enabled;
+            IsTabEnabled = NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || DNSLookup_Enabled || RemoteDesktop_Enabled || PuTTY_Enabled || TightVNC_Enabled || WakeOnLAN_Enabled || HTTPHeaders_Enabled || Whois_Enabled;
         }
 
         #region ICommands & Actions

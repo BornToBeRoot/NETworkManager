@@ -2003,4 +2003,28 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="RestartSession" xml:space="preserve">
     <value>Restart session</value>
   </data>
+  <data name="ExamplePort5900" xml:space="preserve">
+    <value>5900</value>
+  </data>
+  <data name="TightVNC" xml:space="preserve">
+    <value>TightVNC</value>
+  </data>
+  <data name="ConfigureThePathToTightVNCInTheSettingsDots" xml:space="preserve">
+    <value>Configure the path to TightVNC in the settings...</value>
+  </data>
+  <data name="ConfigureTightVNC" xml:space="preserve">
+    <value>Configure TightVNC</value>
+  </data>
+  <data name="DefaultVNCPort" xml:space="preserve">
+    <value>Default VNC port</value>
+  </data>
+  <data name="DisableTransparencyInTheSettingsToUseTightVNC" xml:space="preserve">
+    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TightVNC.</value>
+  </data>
+  <data name="TightVNCLocationDots" xml:space="preserve">
+    <value>TightVNC location...</value>
+  </data>
+  <data name="TightVNCProcessHasEnded" xml:space="preserve">
+    <value>TightVNC process has ended!</value>
+  </data>
 </root>

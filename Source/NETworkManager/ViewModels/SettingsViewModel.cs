@@ -96,6 +96,7 @@ namespace NETworkManager.ViewModels
         private DNSLookupSettingsView _dnsLookupSettingsViewModel;
         private RemoteDesktopSettingsView _remoteDesktopSettingsView;
         private PuTTYSettingsView _puTTYSettingsView;
+        private TightVNCSettingsView _tightVNCSettingsView;
         private SNMPSettingsView _snmpSettingsView;
         private WakeOnLANSettingsView _wakeOnLANSettingsView;
         private HTTPHeadersSettingsView _httpHeadersSettingsView;
@@ -265,6 +266,12 @@ namespace NETworkManager.ViewModels
                         _puTTYSettingsView = new PuTTYSettingsView();
 
                     SettingsContent = _puTTYSettingsView;
+                    break;
+                case SettingsViewManager.Name.TightVNC:
+                    if(_tightVNCSettingsView == null)
+                        _tightVNCSettingsView = new TightVNCSettingsView();
+
+                    SettingsContent = _tightVNCSettingsView;
                     break;
                 case SettingsViewManager.Name.SNMP:
                     if (_snmpSettingsView == null)

@@ -112,7 +112,10 @@ namespace NETworkManager.Controls
                     ((RemoteDesktopControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.PuTTY:
-                    ((PuttyControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
+                    ((PuTTYControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
+                    break;
+                case ApplicationViewManager.Name.TightVNC:
+                    ((TightVNCControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.SNMP:
                     ((SNMPView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
@@ -147,7 +150,7 @@ namespace NETworkManager.Controls
 
         private void RestartPuTTYSessionAction(object view)
         {
-            if (view is PuttyControl puttyControl)
+            if (view is PuTTYControl puttyControl)
                 puttyControl.RestartPuTTYSession();
         }
         #endregion

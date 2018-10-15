@@ -18,7 +18,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.WakeOnLAN_DefaultPort = value;
+                    SettingsManager.Current.WakeOnLAN_Port = value;
 
                 _defaultPort = value;
                 OnPropertyChanged();
@@ -38,7 +38,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            DefaultPort = SettingsManager.Current.WakeOnLAN_DefaultPort;
+            DefaultPort = SettingsManager.Current.WakeOnLAN_Port;
         }
         #endregion
     }

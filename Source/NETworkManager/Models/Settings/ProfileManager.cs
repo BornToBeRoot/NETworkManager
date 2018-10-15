@@ -157,6 +157,11 @@ namespace NETworkManager.Models.Settings
                 PuTTY_Profile = instance.PuTTY_Profile?.Trim(),
                 PuTTY_AdditionalCommandLine = instance.PuTTY_AdditionalCommandLine?.Trim(),
 
+                TightVNC_Enabled = instance.TightVNC_Enabled,
+                TightVNC_InheritHost =  instance.TightVNC_InheritHost,
+                TightVNC_Host = instance.TightVNC_InheritHost ? instance.Host?.Trim() : instance.TightVNC_Host?.Trim(),
+                TightVNC_Port = instance.TightVNC_Port,
+
                 WakeOnLAN_Enabled = instance.WakeOnLAN_Enabled,
                 WakeOnLAN_MACAddress = instance.WakeOnLAN_MACAddress?.Trim(),
                 WakeOnLAN_Broadcast = instance.WakeOnLAN_Broadcast?.Trim(),

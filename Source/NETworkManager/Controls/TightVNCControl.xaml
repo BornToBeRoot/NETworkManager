@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NETworkManager.Controls.PuTTYControl"
+﻿<UserControl x:Class="NETworkManager.Controls.TightVNCControl"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,14 +9,14 @@
         xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mah:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:PuTTYControl}">
+        mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:TightVNCControl}">
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
-    <Grid SizeChanged="PuTTYGrid_SizeChanged">
+    <Grid SizeChanged="TightVNCGrid_SizeChanged">
         <WindowsFormsHost Visibility="{Binding Connected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">  
-            <windowsForms:Panel x:Name="PuTTYHost" />
+            <windowsForms:Panel x:Name="PuttyHost" />
         </WindowsFormsHost>
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding Connected, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
             <Grid.RowDefinitions>
@@ -26,7 +26,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.Disconnected}" Style="{StaticResource HeaderTextBlock}" />
-            <TextBlock Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{x:Static localization:Strings.PuTTYProcessHasEnded}" Style="{DynamicResource DefaultTextBlock}" />
+            <TextBlock Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{x:Static localization:Strings.TightVNCProcessHasEnded}" Style="{DynamicResource DefaultTextBlock}" />
             <Button Grid.Row="3" Content="{x:Static localization:Strings.Reconnect}" Command="{Binding ReconnectCommand}" IsDefault="True" Style="{StaticResource DefaultButton}"/>
         </Grid>
     </Grid>

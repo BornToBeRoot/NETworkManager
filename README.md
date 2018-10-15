@@ -52,7 +52,8 @@
 - Traceroute
 - DNS Lookup
 - Remote Desktop
-- PuTTY
+- PuTTY ([requires PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html))
+- TightVNC ([requires TightVNC](https://www.tightvnc.com/download.php))
 - SNMP - Get, Walk, Set (v1, v2c, v3)
 - Wake on LAN
 - HTTP Headers

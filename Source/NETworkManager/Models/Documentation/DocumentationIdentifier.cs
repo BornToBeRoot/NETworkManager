@@ -11,6 +11,7 @@
         ApplicationDnsLookup,
         ApplicationRemoteDesktop,
         ApplicationPutty,
+        ApplicationTightVNC,
         ApplicationSnmp,
         ApplicationWakeOnLan,
         ApplicationHttpHeaders,

@@ -208,21 +208,14 @@ namespace NETworkManager.Models.Settings
             {
                 var reorderApplications = false;
 
-                // Features added in 1.7.3.0
+                // Features added in 1.8.0.0
                 if (settingsVersion < new Version("1.8.0.0"))
                 {
+                    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.TightVNC));
                     Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.Whois));
 
                     reorderApplications = true;
                 }
-
-                // Features added in 1.7.4.0
-                //if (settingsVersion < new Version("1.7.4.0"))
-                //{
-                //    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.Routing));
-
-                //    reorderApplications = true;
-                //}
 
                 // Reorder application view
                 if (reorderApplications)

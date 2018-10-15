@@ -9,15 +9,15 @@ using NETworkManager.Views;
 using System.ComponentModel;
 using System.Windows.Data;
 using System;
+using System.Diagnostics;
 using System.IO;
 using NETworkManager.Utilities;
-using System.Diagnostics;
-using NETworkManager.Models.PuTTY;
 using System.Windows;
+using NETworkManager.Models.TightVNC;
 
 namespace NETworkManager.ViewModels
 {
-    public class PuTTYHostViewModel : ViewModelBase
+    public class TightVNCHostViewModel : ViewModelBase
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
@@ -27,16 +27,16 @@ namespace NETworkManager.ViewModels
 
         private readonly bool _isLoading;
 
-        private bool _isPuTTYConfigured;
-        public bool IsPuTTYConfigured
+        private bool _isTightVNCConfigured;
+        public bool IsTightVNCConfigured
         {
-            get => _isPuTTYConfigured;
+            get => _isTightVNCConfigured;
             set
             {
-                if (value == _isPuTTYConfigured)
+                if (value == _isTightVNCConfigured)
                     return;
 
-                _isPuTTYConfigured = value;
+                _isTightVNCConfigured = value;
                 OnPropertyChanged();
             }
         }
@@ -103,7 +103,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PuTTY_ExpandProfileView = value;
+                    SettingsManager.Current.TightVNC_ExpandProfileView = value;
 
                 _expandProfileView = value;
 
@@ -124,7 +124,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading && value.Value != 40) // Do not save the size when collapsed
-                    SettingsManager.Current.PuTTY_ProfileWidth = value.Value;
+                    SettingsManager.Current.TightVNC_ProfileWidth = value.Value;
 
                 _profileWidth = value;
 
@@ -138,16 +138,16 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings
-        public PuTTYHostViewModel(IDialogCoordinator instance)
+        public TightVNCHostViewModel(IDialogCoordinator instance)
         {
             _isLoading = true;
 
             _dialogCoordinator = instance;
 
             // Check if putty is available...
-            CheckIfPuTTYConfigured();
+            CheckIfTightVNCConfigured();
 
-            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.PuTTY);
+            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.TightVNC);
 
             TabItems = new ObservableCollection<DragablzTabItem>();
 
@@ -161,20 +161,20 @@ namespace NETworkManager.ViewModels
                     return false;
 
                 if (string.IsNullOrEmpty(Search))
-                    return info.PuTTY_Enabled;
+                    return info.TightVNC_Enabled;
 
                 var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
                 if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                    return !string.IsNullOrEmpty(info.Tags) && info.PuTTY_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+                    return !string.IsNullOrEmpty(info.Tags) && info.TightVNC_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
 
-                // Search by: Name, PuTTY_HostOrSerialLine
-                return info.PuTTY_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PuTTY_HostOrSerialLine.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+                // Search by: Name, TightVNC_Host
+                return info.TightVNC_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.TightVNC_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
             // This will select the first entry as selected item...
-            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.PuTTY_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.TightVNC_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
 
             LoadSettings();
 
@@ -185,17 +185,17 @@ namespace NETworkManager.ViewModels
 
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.PuTTY_PuTTYLocation))
-                CheckIfPuTTYConfigured();
+            if (e.PropertyName == nameof(SettingsInfo.TightVNC_TightVNCLocation))
+                CheckIfTightVNCConfigured();
         }
 
         private void LoadSettings()
         {
-            ExpandProfileView = SettingsManager.Current.PuTTY_ExpandProfileView;
+            ExpandProfileView = SettingsManager.Current.TightVNC_ExpandProfileView;
 
-            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.PuTTY_ProfileWidth) : new GridLength(40);
+            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.TightVNC_ProfileWidth) : new GridLength(40);
 
-            _tempProfileWidth = SettingsManager.Current.PuTTY_ProfileWidth;
+            _tempProfileWidth = SettingsManager.Current.TightVNC_ProfileWidth;
         }
         #endregion
 
@@ -204,15 +204,7 @@ namespace NETworkManager.ViewModels
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzTabItem)?.View as PuTTYControl)?.CloseTab();
-        }
-
-        public ICommand RestartPuTTYSessionCommand => new RelayCommand(RestartPuTTYSessionAction);
-
-        private void RestartPuTTYSessionAction(object view)
-        {
-            if (view is PuTTYControl puttyControl)
-                puttyControl.RestartPuTTYSession();
+            ((args.DragablzItem.Content as DragablzTabItem)?.View as TightVNCControl)?.CloseTab();
         }
 
         public ICommand ConnectCommand
@@ -222,7 +214,7 @@ namespace NETworkManager.ViewModels
 
         private bool Connect_CanExecute(object obj)
         {
-            return IsPuTTYConfigured && !ConfigurationManager.Current.IsTransparencyEnabled;
+            return IsTightVNCConfigured && !ConfigurationManager.Current.IsTransparencyEnabled;
         }
 
         private void ConnectAction()
@@ -438,84 +430,83 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void CheckIfPuTTYConfigured()
+        private void CheckIfTightVNCConfigured()
         {
-            IsPuTTYConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PuTTY_PuTTYLocation) && File.Exists(SettingsManager.Current.PuTTY_PuTTYLocation);
+            IsTightVNCConfigured = !string.IsNullOrEmpty(SettingsManager.Current.TightVNC_TightVNCLocation) && File.Exists(SettingsManager.Current.TightVNC_TightVNCLocation);
         }
 
         private async void Connect(string host = null)
         {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.Connect
-            };
+            //var customDialog = new CustomDialog
+            //{
+            //    Title = Resources.Localization.Strings.Connect
+            //};
 
-            var puTTYConnectViewModel = new PuTTYConnectViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.IsDialogOpen = false;
+            //var puTTYConnectViewModel = new PuTTYConnectViewModel(instance =>
+            //{
+            //    _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            //    ConfigurationManager.Current.IsDialogOpen = false;
 
-                // Add host to history
-                AddHostToHistory(instance.Host);
-                AddSerialLineToHistory(instance.SerialLine);
-                AddPortToHistory(instance.Port.ToString());
-                AddBaudToHistory(instance.Baud.ToString());
-                AddUsernameToHistory(instance.Username);
-                AddProfileToHistory(instance.Profile);
+            //    // Add host to history
+            //    AddHostToHistory(instance.Host);
+            //    AddSerialLineToHistory(instance.SerialLine);
+            //    AddPortToHistory(instance.Port.ToString());
+            //    AddBaudToHistory(instance.Baud.ToString());
+            //    AddUsernameToHistory(instance.Username);
+            //    AddProfileToHistory(instance.Profile);
 
-                // Create Profile info
-                var puTTYProfileInfo = new PuTTYSessionInfo
-                {
-                    HostOrSerialLine = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
-                    Mode = instance.ConnectionMode,
-                    PortOrBaud = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port,
-                    Username = instance.Username,
-                    Profile = instance.Profile,
-                    AdditionalCommandLine = instance.AdditionalCommandLine
-                };
+            //    // Create Profile info
+            //    var puTTYProfileInfo = new PuTTYProfileInfo
+            //    {
+            //        HostOrSerialLine = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
+            //        Mode = instance.ConnectionMode,
+            //        PortOrBaud = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port,
+            //        Username = instance.Username,
+            //        Profile = instance.Profile,
+            //        AdditionalCommandLine = instance.AdditionalCommandLine
+            //    };
 
-                // Connect
-                Connect(puTTYProfileInfo);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.IsDialogOpen = false;
-            })
-            {
-                Host = host
-            };
+            //    // Connect
+            //    Connect(puTTYProfileInfo);
+            //}, instance =>
+            //{
+            //    _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            //    ConfigurationManager.Current.IsDialogOpen = false;
+            //})
+            //{
+            //    Host = host
+            //};
 
-            customDialog.Content = new PuTTYConnectDialog
-            {
-                DataContext = puTTYConnectViewModel
-            };
+            //customDialog.Content = new PuTTYConnectDialog
+            //{
+            //    DataContext = puTTYConnectViewModel
+            //};
 
-            ConfigurationManager.Current.IsDialogOpen = true;
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            //ConfigurationManager.Current.IsDialogOpen = true;
+            //await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         private void ConnectProfile()
         {
-            Connect(PuTTYSessionInfo.Parse(SelectedProfile), SelectedProfile.Name);
+            Connect(TightVNCSessionInfo.Parse(SelectedProfile), SelectedProfile.Name);
         }
 
         private void ConnectProfileExternal()
         {
             var info = new ProcessStartInfo
             {
-                FileName = SettingsManager.Current.PuTTY_PuTTYLocation,
-                Arguments = PuTTY.BuildCommandLine(PuTTYSessionInfo.Parse(SelectedProfile))
+                FileName = SettingsManager.Current.TightVNC_TightVNCLocation,
+                Arguments = TightVNC.BuildCommandLine(TightVNCSessionInfo.Parse(SelectedProfile))
             };
 
             Process.Start(info);
         }
 
-        private void Connect(PuTTYSessionInfo profileInfo, string header = null)
+        private void Connect(TightVNCSessionInfo sessionInfo, string header = null)
         {
-            // Add PuTTY path here...
-            profileInfo.PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
+            sessionInfo.TightVNCLocation = SettingsManager.Current.TightVNC_TightVNCLocation;
 
-           TabItems.Add(new DragablzTabItem(header ?? profileInfo.HostOrSerialLine, new PuTTYControl(profileInfo)));
+            TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host, new TightVNCControl(sessionInfo)));
 
             SelectedTabIndex = TabItems.Count - 1;
         }
@@ -529,73 +520,13 @@ namespace NETworkManager.ViewModels
         private static void AddHostToHistory(string host)
         {
             // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.TightVNC_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
-            SettingsManager.Current.PuTTY_HostHistory.Clear();
+            SettingsManager.Current.TightVNC_HostHistory.Clear();
 
             // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_HostHistory.Add(x));
-        }
-
-        private static void AddSerialLineToHistory(string serialLine)
-        {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_SerialLineHistory.ToList(), serialLine, SettingsManager.Current.General_HistoryListEntries);
-
-            // Clear the old items
-            SettingsManager.Current.PuTTY_SerialLineHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_SerialLineHistory.Add(x));
-        }
-
-        private static void AddPortToHistory(string host)
-        {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_PortHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
-
-            // Clear the old items
-            SettingsManager.Current.PuTTY_PortHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_PortHistory.Add(x));
-        }
-
-        private static void AddBaudToHistory(string host)
-        {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_BaudHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
-
-            // Clear the old items
-            SettingsManager.Current.PuTTY_BaudHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_BaudHistory.Add(x));
-        }
-
-        private static void AddUsernameToHistory(string host)
-        {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_UsernameHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
-
-            // Clear the old items
-            SettingsManager.Current.PuTTY_UsernameHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_UsernameHistory.Add(x));
-        }
-
-        private static void AddProfileToHistory(string host)
-        {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_ProfileHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
-
-            // Clear the old items
-            SettingsManager.Current.PuTTY_ProfileHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_ProfileHistory.Add(x));
+            list.ForEach(x => SettingsManager.Current.TightVNC_HostHistory.Add(x));
         }
 
         private void ResizeProfile(bool dueToChangedSize)

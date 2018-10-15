@@ -132,6 +132,7 @@
                 <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.DNSLookup}" Binding="{Binding (settings:ProfileInfo.DNSLookup_Enabled)}" />
                 <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.RemoteDesktop}" Binding="{Binding (settings:ProfileInfo.RemoteDesktop_Enabled)}" />
                 <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.PuTTY}" Binding="{Binding (settings:ProfileInfo.PuTTY_Enabled)}" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.TightVNC}" Binding="{Binding (settings:ProfileInfo.TightVNC_Enabled)}" />
                 <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.WakeOnLAN}" Binding="{Binding (settings:ProfileInfo.WakeOnLAN_Enabled)}" />
                 <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.HTTPHeaders}" Binding="{Binding (settings:ProfileInfo.HTTPHeaders_Enabled)}" />
                 <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.Whois}" Binding="{Binding (settings:ProfileInfo.Whois_Enabled)}" />

@@ -41,6 +41,8 @@ namespace NETworkManager
                     return Resources.Localization.Strings.RemoteDesktop;
                 case Name.PuTTY:
                     return Resources.Localization.Strings.PuTTY;
+                case Name.TightVNC:
+                    return Resources.Localization.Strings.TightVNC;
                 case Name.SNMP:
                     return Resources.Localization.Strings.SNMP;
                 case Name.WakeOnLAN:
@@ -53,8 +55,6 @@ namespace NETworkManager
                     return Resources.Localization.Strings.SubnetCalculator;
                 case Name.Lookup:
                     return Resources.Localization.Strings.Lookup;
-                //case Name.Routing:
-                //    return Resources.Localization.Strings.Routing;
                 case Name.Connections:
                     return Resources.Localization.Strings.Connections;
                 case Name.Listeners:
@@ -96,6 +96,9 @@ namespace NETworkManager
                 case Name.PuTTY:
                     canvas.Children.Add(new PackIconOcticons { Kind = PackIconOcticonsKind.Terminal });
                     break;
+                case Name.TightVNC:
+                    canvas.Children.Add(new PackIconMaterial {Kind = PackIconMaterialKind.EyeOutline});
+                    break;
                 case Name.SNMP:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Switch });
                     break;
@@ -114,9 +117,6 @@ namespace NETworkManager
                 case Name.Lookup:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Magnify });
                     break;
-                //case Name.Routing:
-                //    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Routes });
-                //    break;
                 case Name.Connections:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Connect });
                     break;
@@ -145,6 +145,7 @@ namespace NETworkManager
             DNSLookup,
             RemoteDesktop,
             PuTTY,
+            TightVNC,
             SNMP,
             WakeOnLAN,
             HTTPHeaders,

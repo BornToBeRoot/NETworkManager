@@ -763,6 +763,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Configure the path to TightVNC in the settings....
+        /// </summary>
+        public static string ConfigureThePathToTightVNCInTheSettingsDots {
+            get {
+                return ResourceManager.GetString("ConfigureThePathToTightVNCInTheSettingsDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configure TightVNC.
+        /// </summary>
+        public static string ConfigureTightVNC {
+            get {
+                return ResourceManager.GetString("ConfigureTightVNC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
         public static string Confirm {
@@ -1114,6 +1132,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default VNC port.
+        /// </summary>
+        public static string DefaultVNCPort {
+            get {
+                return ResourceManager.GetString("DefaultVNCPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -1281,6 +1308,15 @@ namespace NETworkManager.Resources.Localization {
         public static string DisableTransparencyInTheSettingsToUseRemoteDesktop {
             get {
                 return ResourceManager.GetString("DisableTransparencyInTheSettingsToUseRemoteDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TightVNC..
+        /// </summary>
+        public static string DisableTransparencyInTheSettingsToUseTightVNC {
+            get {
+                return ResourceManager.GetString("DisableTransparencyInTheSettingsToUseTightVNC", resourceCulture);
             }
         }
         
@@ -2037,6 +2073,15 @@ namespace NETworkManager.Resources.Localization {
         public static string ExamplePort53 {
             get {
                 return ResourceManager.GetString("ExamplePort53", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5900.
+        /// </summary>
+        public static string ExamplePort5900 {
+            get {
+                return ResourceManager.GetString("ExamplePort5900", resourceCulture);
             }
         }
         
@@ -5189,6 +5234,33 @@ namespace NETworkManager.Resources.Localization {
         public static string Threads {
             get {
                 return ResourceManager.GetString("Threads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TightVNC.
+        /// </summary>
+        public static string TightVNC {
+            get {
+                return ResourceManager.GetString("TightVNC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TightVNC location....
+        /// </summary>
+        public static string TightVNCLocationDots {
+            get {
+                return ResourceManager.GetString("TightVNCLocationDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TightVNC process has ended!.
+        /// </summary>
+        public static string TightVNCProcessHasEnded {
+            get {
+                return ResourceManager.GetString("TightVNCProcessHasEnded", resourceCulture);
             }
         }
         

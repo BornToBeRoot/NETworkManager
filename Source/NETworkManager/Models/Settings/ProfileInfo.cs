@@ -56,6 +56,11 @@ namespace NETworkManager.Models.Settings
         public string PuTTY_Profile { get; set; }
         public string PuTTY_AdditionalCommandLine { get; set; }
 
+        public bool TightVNC_Enabled { get; set; }
+        public bool TightVNC_InheritHost { get; set; } = true;
+        public string TightVNC_Host { get; set; }
+        public int TightVNC_Port { get; set; }
+
         public bool WakeOnLAN_Enabled { get; set; }
         public string WakeOnLAN_MACAddress { get; set; }
         public string WakeOnLAN_Broadcast { get; set; }

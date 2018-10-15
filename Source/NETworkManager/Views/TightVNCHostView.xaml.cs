@@ -6,19 +6,19 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class PuTTYHostView
+    public partial class TightVNCHostView
     {
-        private readonly PuTTYHostViewModel _viewModel = new PuTTYHostViewModel(DialogCoordinator.Instance);
+        private readonly TightVNCHostViewModel _viewModel = new TightVNCHostViewModel(DialogCoordinator.Instance);
 
         private bool _loaded;
 
 
-        public PuTTYHostView()
+        public TightVNCHostView()
         {
             InitializeComponent();
             DataContext = _viewModel;
 
-            InterTabController.Partition = ApplicationViewManager.Name.PuTTY.ToString();
+            InterTabController.Partition = ApplicationViewManager.Name.TightVNC.ToString();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -45,7 +45,7 @@ namespace NETworkManager.Views
             while (!_loaded)
                 await Task.Delay(100);
 
-            if (_viewModel.IsPuTTYConfigured)
+            if (_viewModel.IsTightVNCConfigured)
                 _viewModel.AddTab(host);
         }
 

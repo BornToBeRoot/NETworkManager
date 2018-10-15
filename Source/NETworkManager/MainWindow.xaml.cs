@@ -415,6 +415,7 @@ namespace NETworkManager
         private DNSLookupHostView _dnsLookupHostView;
         private RemoteDesktopHostView _remoteDesktopHostView;
         private PuTTYHostView _puttyHostView;
+        private TightVNCHostView _tightVncHostView;
         private SNMPHostView _snmpHostView;
         private WakeOnLANView _wakeOnLanView;
         private SubnetCalculatorHostView _subnetCalculatorHostView;
@@ -445,44 +446,66 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.IPScanner:
                     if (_ipScannerHostView == null)
                         _ipScannerHostView = new IPScannerHostView();
+                    else
+                        RefreshApplicationView(name);
 
                     ContentControlApplication.Content = _ipScannerHostView;
                     break;
                 case ApplicationViewManager.Name.PortScanner:
                     if (_portScannerHostView == null)
                         _portScannerHostView = new PortScannerHostView();
+                    else
+                        RefreshApplicationView(name);
 
                     ContentControlApplication.Content = _portScannerHostView;
                     break;
                 case ApplicationViewManager.Name.Ping:
                     if (_pingHostView == null)
                         _pingHostView = new PingHostView();
+                    else
+                        RefreshApplicationView(name);
 
                     ContentControlApplication.Content = _pingHostView;
                     break;
                 case ApplicationViewManager.Name.Traceroute:
                     if (_tracerouteHostView == null)
                         _tracerouteHostView = new TracerouteHostView();
+                    else
+                        RefreshApplicationView(name);
 
                     ContentControlApplication.Content = _tracerouteHostView;
                     break;
                 case ApplicationViewManager.Name.DNSLookup:
                     if (_dnsLookupHostView == null)
                         _dnsLookupHostView = new DNSLookupHostView();
+                    else
+                        RefreshApplicationView(name);
 
                     ContentControlApplication.Content = _dnsLookupHostView;
                     break;
                 case ApplicationViewManager.Name.RemoteDesktop:
                     if (_remoteDesktopHostView == null)
                         _remoteDesktopHostView = new RemoteDesktopHostView();
+                    else
+                        RefreshApplicationView(name);
 
                     ContentControlApplication.Content = _remoteDesktopHostView;
                     break;
                 case ApplicationViewManager.Name.PuTTY:
                     if (_puttyHostView == null)
                         _puttyHostView = new PuTTYHostView();
+                    else
+                        RefreshApplicationView(name);
 
                     ContentControlApplication.Content = _puttyHostView;
+                    break;
+                case ApplicationViewManager.Name.TightVNC:
+                    if(_tightVncHostView == null)
+                        _tightVncHostView = new TightVNCHostView();
+                    else
+                        RefreshApplicationView(name);
+
+                    ContentControlApplication.Content = _tightVncHostView;
                     break;
                 case ApplicationViewManager.Name.SNMP:
                     if (_snmpHostView == null)
@@ -493,18 +516,24 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.WakeOnLAN:
                     if (_wakeOnLanView == null)
                         _wakeOnLanView = new WakeOnLANView();
+                    else
+                        RefreshApplicationView(name);
 
                     ContentControlApplication.Content = _wakeOnLanView;
                     break;
                 case ApplicationViewManager.Name.HTTPHeaders:
                     if (_httpHeadersHostView == null)
                         _httpHeadersHostView = new HTTPHeadersHostView();
+                    else
+                        RefreshApplicationView(name);
 
                     ContentControlApplication.Content = _httpHeadersHostView;
                     break;
                 case ApplicationViewManager.Name.Whois:
                     if (_whoisHostView == null)
                         _whoisHostView = new WhoisHostView();
+                    else
+                        RefreshApplicationView(name);
 
                     ContentControlApplication.Content = _whoisHostView;
                     break;
@@ -520,9 +549,6 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _lookupHostView;
                     break;
-                //case ApplicationViewManager.Name.Routing:
-                //    // Change view...
-                //    break;
                 case ApplicationViewManager.Name.Connections:
                     if (_connectionsView == null)
                         _connectionsView = new ConnectionsView();
@@ -549,8 +575,7 @@ namespace NETworkManager
 
             _currentApplicationViewName = name;
         }
-
-
+        
         private void RefreshApplicationView(ApplicationViewManager.Name name)
         {
             switch (name)
@@ -576,6 +601,9 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.PuTTY:
                     _puttyHostView.Refresh();
                     break;
+                case ApplicationViewManager.Name.TightVNC:
+                    _tightVncHostView.Refresh();
+                    break;
                 case ApplicationViewManager.Name.WakeOnLAN:
                     _wakeOnLanView.Refresh();
                     break;
@@ -585,15 +613,15 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.SNMP:
                     break;
                 case ApplicationViewManager.Name.HTTPHeaders:
+                    _httpHeadersHostView.Refresh();
                     break;
                 case ApplicationViewManager.Name.Whois:
+                    _whoisHostView.Refresh();
                     break;
                 case ApplicationViewManager.Name.SubnetCalculator:
                     break;
                 case ApplicationViewManager.Name.Lookup:
                     break;
-                //case ApplicationViewManager.Name.Routing:
-                //    break;
                 case ApplicationViewManager.Name.Connections:
                     break;
                 case ApplicationViewManager.Name.Listeners:
@@ -982,6 +1010,9 @@ namespace NETworkManager
                     break;
                 case ApplicationViewManager.Name.PuTTY:
                     DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationPutty);
+                    break;
+                case ApplicationViewManager.Name.TightVNC:
+                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationTightVNC);
                     break;
                 case ApplicationViewManager.Name.SNMP:
                     DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationSnmp);

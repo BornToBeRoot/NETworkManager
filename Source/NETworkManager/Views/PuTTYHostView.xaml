@@ -381,7 +381,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Settings}" />
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:MaterialLight Kind=Cog}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.OpenSettings}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
@@ -400,7 +400,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Settings}" />
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:MaterialLight Kind=Cog}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.OpenSettings}" FontSize="14" Margin="10,5" TextAlignment="Center"/>

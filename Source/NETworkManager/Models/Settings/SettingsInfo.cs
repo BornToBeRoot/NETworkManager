@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -1957,6 +1956,81 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
+        #region TightVNC
+        private ObservableCollection<string> _tightVNC_HostHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> TightVNC_HostHistory
+        {
+            get => _tightVNC_HostHistory;
+            set
+            {
+                if (value == _tightVNC_HostHistory)
+                    return;
+
+                _tightVNC_HostHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _tightVNC_ExpandProfileView = true;
+        public bool TightVNC_ExpandProfileView
+        {
+            get => _tightVNC_ExpandProfileView;
+            set
+            {
+                if (value == _tightVNC_ExpandProfileView)
+                    return;
+
+                _tightVNC_ExpandProfileView = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private double _tightVNC_ProfileWidth = 250;
+        public double TightVNC_ProfileWidth
+        {
+            get => _tightVNC_ProfileWidth;
+            set
+            {
+                if (value == _tightVNC_ProfileWidth)
+                    return;
+
+                _tightVNC_ProfileWidth = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private string _tightVNC_TightVNCLocation;
+        public string TightVNC_TightVNCLocation
+        {
+            get => _tightVNC_TightVNCLocation;
+            set
+            {
+                if (value == _tightVNC_TightVNCLocation)
+                    return;
+
+                _tightVNC_TightVNCLocation = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
+
+        private int _tightVNC_VNCPort = 5900;
+        public int TightVNC_VNCPort
+        {
+            get => _tightVNC_VNCPort;
+            set
+            {
+                if (value == _tightVNC_VNCPort)
+                    return;
+
+                _tightVNC_VNCPort = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
         #region SNMP
         private WalkMode _snmp_WalkMode = WalkMode.WithinSubtree;
         public WalkMode SNMP_WalkMode
@@ -2145,16 +2219,16 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region WakeOnLAN
-        private int _wakeOnLAN_DefaultPort = 7;
-        public int WakeOnLAN_DefaultPort
+        private int _wakeOnLAN_Port = 7;
+        public int WakeOnLAN_Port
         {
-            get => _wakeOnLAN_DefaultPort;
+            get => _wakeOnLAN_Port;
             set
             {
-                if (value == _wakeOnLAN_DefaultPort)
+                if (value == _wakeOnLAN_Port)
                     return;
 
-                _wakeOnLAN_DefaultPort = value;
+                _wakeOnLAN_Port = value;
                 SettingsChanged = true;
             }
         }
@@ -2588,6 +2662,9 @@ namespace NETworkManager.Models.Settings
             PuTTY_BaudHistory.CollectionChanged += CollectionChanged;
             PuTTY_UsernameHistory.CollectionChanged += CollectionChanged;
             PuTTY_ProfileHistory.CollectionChanged += CollectionChanged;
+
+            // TightVNC
+            TightVNC_HostHistory.CollectionChanged += CollectionChanged; 
 
             // SNMP
             SNMP_HostHistory.CollectionChanged += CollectionChanged;

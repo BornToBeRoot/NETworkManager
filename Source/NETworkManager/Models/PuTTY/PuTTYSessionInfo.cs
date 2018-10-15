@@ -3,7 +3,7 @@ using static NETworkManager.Models.PuTTY.PuTTY;
 
 namespace NETworkManager.Models.PuTTY
 {
-    public class PuTTYProfileInfo
+    public class PuTTYSessionInfo
     {
         public string PuTTYLocation { get; set; }
         public string HostOrSerialLine { get; set; }
@@ -13,14 +13,14 @@ namespace NETworkManager.Models.PuTTY
         public string Username { get; set; }
         public string AdditionalCommandLine { get; set; }
 
-        public PuTTYProfileInfo()
+        public PuTTYSessionInfo()
         {
 
         }
 
-        public static PuTTYProfileInfo Parse(ProfileInfo profileInfo)
+        public static PuTTYSessionInfo Parse(ProfileInfo profileInfo)
         {
-            var info = new PuTTYProfileInfo
+            var info = new PuTTYSessionInfo
             {
                 HostOrSerialLine = profileInfo.PuTTY_HostOrSerialLine,
                 PortOrBaud = profileInfo.PuTTY_PortOrBaud,

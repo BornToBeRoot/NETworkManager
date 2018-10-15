@@ -219,6 +219,9 @@
       <DependentUpon>DragablzTabHostWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DragablzTabItem.cs" />
+    <Compile Include="Controls\TightVNCControl.xaml.cs">
+      <DependentUpon>TightVNCControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
@@ -254,6 +257,8 @@
     <Compile Include="Models\PuTTY\PuTTY.cs" />
     <Compile Include="Models\Settings\ProfileInfo.cs" />
     <Compile Include="Models\Settings\ProfileManager.cs" />
+    <Compile Include="Models\TightVNC\TightVNC.cs" />
+    <Compile Include="Models\TightVNC\TightVNCSessionInfo.cs" />
     <Compile Include="Resources\Localization\StaticStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -308,6 +313,8 @@
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="Validators\IsProfileNameUnique.cs" />
     <Compile Include="ViewModels\DNSServerViewModel.cs" />
+    <Compile Include="ViewModels\TightVNCSettingsViewModel.cs" />
+    <Compile Include="ViewModels\TightVNCHostViewModel.cs" />
     <Compile Include="ViewModels\WhoisSettingsViewModel.cs" />
     <Compile Include="ViewModels\WhoisHostViewModel.cs" />
     <Compile Include="ViewModels\WhoisViewModel.cs" />
@@ -365,6 +372,12 @@
     <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
     <Compile Include="Views\DNSServerDialog.xaml.cs">
       <DependentUpon>DNSServerDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TightVNCSettingsView.xaml.cs">
+      <DependentUpon>TightVNCSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TightVNCHostView.xaml.cs">
+      <DependentUpon>TightVNCHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WhoisSettingsView.xaml.cs">
       <DependentUpon>WhoisSettingsView.xaml</DependentUpon>
@@ -495,6 +508,10 @@
     <Compile Include="WpfHelper\PasswordBoxBindingBehavior.cs" />
     <Compile Include="WpfHelper\ProtocolSettingsLayout.cs" />
     <Page Include="Controls\DragablzTabHostWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\TightVNCControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -639,6 +656,14 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Page Include="Views\DNSServerDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TightVNCSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TightVNCHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
