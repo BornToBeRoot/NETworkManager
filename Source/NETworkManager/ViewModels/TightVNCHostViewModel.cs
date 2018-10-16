@@ -437,127 +437,131 @@ namespace NETworkManager.ViewModels
 
         private async void Connect(string host = null)
         {
-            //var customDialog = new CustomDialog
-            //{
-            //    Title = Resources.Localization.Strings.Connect
-            //};
-
-            //var puTTYConnectViewModel = new PuTTYConnectViewModel(instance =>
-            //{
-            //    _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            //    ConfigurationManager.Current.IsDialogOpen = false;
-
-            //    // Add host to history
-            //    AddHostToHistory(instance.Host);
-            //    AddSerialLineToHistory(instance.SerialLine);
-            //    AddPortToHistory(instance.Port.ToString());
-            //    AddBaudToHistory(instance.Baud.ToString());
-            //    AddUsernameToHistory(instance.Username);
-            //    AddProfileToHistory(instance.Profile);
-
-            //    // Create Profile info
-            //    var puTTYProfileInfo = new PuTTYProfileInfo
-            //    {
-            //        HostOrSerialLine = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
-            //        Mode = instance.ConnectionMode,
-            //        PortOrBaud = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port,
-            //        Username = instance.Username,
-            //        Profile = instance.Profile,
-            //        AdditionalCommandLine = instance.AdditionalCommandLine
-            //    };
-
-            //    // Connect
-            //    Connect(puTTYProfileInfo);
-            //}, instance =>
-            //{
-            //    _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            //    ConfigurationManager.Current.IsDialogOpen = false;
-            //})
-            //{
-            //    Host = host
-            //};
-
-            //customDialog.Content = new PuTTYConnectDialog
-            //{
-            //    DataContext = puTTYConnectViewModel
-            //};
-
-            //ConfigurationManager.Current.IsDialogOpen = true;
-            //await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        private void ConnectProfile()
-        {
-            Connect(TightVNCSessionInfo.Parse(SelectedProfile), SelectedProfile.Name);
-        }
-
-        private void ConnectProfileExternal()
-        {
-            var info = new ProcessStartInfo
+            var customDialog = new CustomDialog
             {
-                FileName = SettingsManager.Current.TightVNC_TightVNCLocation,
-                Arguments = TightVNC.BuildCommandLine(TightVNCSessionInfo.Parse(SelectedProfile))
+                Title = Resources.Localization.Strings.Connect
             };
 
-            Process.Start(info);
-        }
-
-        private void Connect(TightVNCSessionInfo sessionInfo, string header = null)
-        {
-            sessionInfo.TightVNCLocation = SettingsManager.Current.TightVNC_TightVNCLocation;
-
-            TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host, new TightVNCControl(sessionInfo)));
-
-            SelectedTabIndex = TabItems.Count - 1;
-        }
-
-        public void AddTab(string host)
-        {
-            Connect(host);
-        }
-
-        // Modify history list
-        private static void AddHostToHistory(string host)
-        {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.TightVNC_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
-
-            // Clear the old items
-            SettingsManager.Current.TightVNC_HostHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.TightVNC_HostHistory.Add(x));
-        }
-
-        private void ResizeProfile(bool dueToChangedSize)
-        {
-            _canProfileWidthChange = false;
-
-            if (dueToChangedSize)
+            var tightVNCConnectViewModel = new TightVNCConnectViewModel(instance =>
             {
-                ExpandProfileView = ProfileWidth.Value != 40;
-            }
-            else
-            {
-                if (ExpandProfileView)
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ConfigurationManager.Current.IsDialogOpen = false;
+
+                // Add host to history
+                AddHostToHistory(instance.Host);
+                AddPortToHistory(instance.Port);
+
+                // Create Profile info
+                var tightVNCSessionInfo = new TightVNCSessionInfo
                 {
-                    ProfileWidth = _tempProfileWidth == 40 ? new GridLength(250) : new GridLength(_tempProfileWidth);
+                    Host = instance.Host,
+                    Port = instance.Port
+                };
+
+                    // Connect
+                    Connect(tightVNCSessionInfo);
+                }, instance =>
+                {
+                    _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                    ConfigurationManager.Current.IsDialogOpen = false;
+                })
+                {
+                    Host = host
+                };
+
+                customDialog.Content = new TightVNCConnectDialog
+                {
+                    DataContext = tightVNCConnectViewModel
+                };
+
+                ConfigurationManager.Current.IsDialogOpen = true;
+                await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            }
+
+        private void ConnectProfile()
+            {
+                Connect(TightVNCSessionInfo.Parse(SelectedProfile), SelectedProfile.Name);
+            }
+
+            private void ConnectProfileExternal()
+            {
+                var info = new ProcessStartInfo
+                {
+                    FileName = SettingsManager.Current.TightVNC_TightVNCLocation,
+                    Arguments = TightVNC.BuildCommandLine(TightVNCSessionInfo.Parse(SelectedProfile))
+                };
+
+                Process.Start(info);
+            }
+
+            private void Connect(TightVNCSessionInfo sessionInfo, string header = null)
+            {
+                sessionInfo.TightVNCLocation = SettingsManager.Current.TightVNC_TightVNCLocation;
+
+                TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host, new TightVNCControl(sessionInfo)));
+
+                SelectedTabIndex = TabItems.Count - 1;
+            }
+
+            public void AddTab(string host)
+            {
+                Connect(host);
+            }
+
+            // Modify history list
+            private static void AddHostToHistory(string host)
+            {
+                // Create the new list
+                var list = ListHelper.Modify(SettingsManager.Current.TightVNC_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+                // Clear the old items
+                SettingsManager.Current.TightVNC_HostHistory.Clear();
+
+                // Fill with the new items
+                list.ForEach(x => SettingsManager.Current.TightVNC_HostHistory.Add(x));
+            }
+
+            private static void AddPortToHistory(int port)
+            {
+                // Create the new list
+                var list = ListHelper.Modify(SettingsManager.Current.TightVNC_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
+
+                // Clear the old items
+                SettingsManager.Current.TightVNC_PortHistory.Clear();
+
+                // Fill with the new items
+                list.ForEach(x => SettingsManager.Current.TightVNC_PortHistory.Add(x));
+            }
+
+            private void ResizeProfile(bool dueToChangedSize)
+            {
+                _canProfileWidthChange = false;
+
+                if (dueToChangedSize)
+                {
+                    ExpandProfileView = ProfileWidth.Value != 40;
                 }
                 else
                 {
-                    _tempProfileWidth = ProfileWidth.Value;
-                    ProfileWidth = new GridLength(40);
+                    if (ExpandProfileView)
+                    {
+                        ProfileWidth = _tempProfileWidth == 40 ? new GridLength(250) : new GridLength(_tempProfileWidth);
+                    }
+                    else
+                    {
+                        _tempProfileWidth = ProfileWidth.Value;
+                        ProfileWidth = new GridLength(40);
+                    }
                 }
+
+                _canProfileWidthChange = true;
             }
 
-            _canProfileWidthChange = true;
+            public void Refresh()
+            {
+                // Refresh profiles
+                Profiles.Refresh();
+            }
+            #endregion
         }
-
-        public void Refresh()
-        {
-            // Refresh profiles
-            Profiles.Refresh();
-        }
-        #endregion
     }
-}

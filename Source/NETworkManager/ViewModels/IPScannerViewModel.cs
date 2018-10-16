@@ -31,7 +31,7 @@ namespace NETworkManager.ViewModels
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
         private readonly bool _isLoading;
-            
+
         private string _ipRange;
         public string IPRange
         {
@@ -310,34 +310,23 @@ namespace NETworkManager.ViewModels
                 StartScan();
         }
 
-        public ICommand PerformPortScanCommand
+        public ICommand RedirectToApplicationCommand
         {
-            get { return new RelayCommand(p => PerformPortScanAction()); }
+            get { return new RelayCommand(p => RedirectToApplicationAction(p)); }
         }
 
-        private void PerformPortScanAction()
+        private void RedirectToApplicationAction(object name)
         {
-            EventSystem.RedirectToApplication(ApplicationViewManager.Name.PortScanner, SelectedIPScanResult.PingInfo.IPAddress.ToString());
-        }
+            if (!(name is string appName))
+                return;
 
-        public ICommand PerformPingCommand
-        {
-            get { return new RelayCommand(p => PerformPingAction()); }
-        }
+            if(!Enum.TryParse(appName, out ApplicationViewManager.Name app))
+                return;
 
-        private void PerformPingAction()
-        {
-            EventSystem.RedirectToApplication(ApplicationViewManager.Name.Ping, SelectedIPScanResult.PingInfo.IPAddress.ToString());
-        }
+            var host = !string.IsNullOrEmpty(SelectedIPScanResult.Hostname) ? SelectedIPScanResult.Hostname : SelectedIPScanResult
+                .PingInfo.IPAddress.ToString();
 
-        public ICommand PerformTracerouteCommand
-        {
-            get { return new RelayCommand(p => PerformTracerouteAction()); }
-        }
-
-        private void PerformTracerouteAction()
-        {
-            EventSystem.RedirectToApplication(ApplicationViewManager.Name.Traceroute, SelectedIPScanResult.PingInfo.IPAddress.ToString());
+            EventSystem.RedirectToApplication(app, host);
         }
 
         public ICommand PerformDNSLookupIPAddressCommand
@@ -359,37 +348,7 @@ namespace NETworkManager.ViewModels
         {
             EventSystem.RedirectToApplication(ApplicationViewManager.Name.DNSLookup, SelectedIPScanResult.Hostname);
         }
-
-        public ICommand ConnectRemoteDesktopCommand
-        {
-            get { return new RelayCommand(p => ConnectRemoteDesktopAction()); }
-        }
-
-        private void ConnectRemoteDesktopAction()
-        {
-            EventSystem.RedirectToApplication(ApplicationViewManager.Name.RemoteDesktop, SelectedIPScanResult.PingInfo.IPAddress.ToString());
-        }
-
-        public ICommand ConnectPuTTYCommand
-        {
-            get { return new RelayCommand(p => ConnectPuTTYAction()); }
-        }
-
-        private void ConnectPuTTYAction()
-        {
-            EventSystem.RedirectToApplication(ApplicationViewManager.Name.PuTTY, SelectedIPScanResult.PingInfo.IPAddress.ToString());
-        }
-
-        public ICommand PerformSNMPCommand
-        {
-            get { return new RelayCommand(p => PerformSNMPAction()); }
-        }
-
-        private void PerformSNMPAction()
-        {
-            EventSystem.RedirectToApplication(ApplicationViewManager.Name.SNMP, SelectedIPScanResult.PingInfo.IPAddress.ToString());
-        }
-
+        
         public ICommand CopySelectedIPAddressCommand
         {
             get { return new RelayCommand(p => CopySelectedIPAddressAction()); }

@@ -12,6 +12,7 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:network="clr-namespace:NETworkManager.Models.Network"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:neTworkManager="clr-namespace:NETworkManager"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:IPScannerViewModel}">
     <UserControl.Resources>
@@ -166,7 +167,7 @@
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <wpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{x:Static localization:Strings.PortScanner}" Command="{Binding PerformPortScanCommand}">
+                    <MenuItem Header="{x:Static localization:Strings.PortScanner}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="PortScanner">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -175,7 +176,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.Ping}" Command="{Binding PerformPingCommand}">
+                    <MenuItem Header="{x:Static localization:Strings.Ping}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="Ping">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -184,7 +185,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.Traceroute}" Command="{Binding PerformTracerouteCommand}">
+                    <MenuItem Header="{x:Static localization:Strings.Traceroute}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="Traceroute">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -220,7 +221,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.RemoteDesktop}" Command="{Binding ConnectRemoteDesktopCommand}">
+                    <MenuItem Header="{x:Static localization:Strings.RemoteDesktop}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="RemoteDesktop">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -229,7 +230,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.PuTTY}" Command="{Binding ConnectPuTTYCommand}">
+                    <MenuItem Header="{x:Static localization:Strings.PuTTY}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="PuTTY">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -238,7 +239,16 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.SNMP}" Command="{Binding PerformSNMPCommand}">
+                    <MenuItem Header="{x:Static localization:Strings.TightVNC}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="TightVNC">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=EyeOutline}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{x:Static localization:Strings.SNMP}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="SNMP">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>

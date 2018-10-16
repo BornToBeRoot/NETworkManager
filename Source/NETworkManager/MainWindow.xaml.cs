@@ -684,6 +684,9 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.PuTTY:
                     _puttyHostView.AddTab(args.Data);
                     break;
+                case ApplicationViewManager.Name.TightVNC:
+                    _tightVncHostView.AddTab(args.Data);
+                    break;
                 case ApplicationViewManager.Name.SNMP:
                     _snmpHostView.AddTab(args.Data);
                     break;
@@ -692,6 +695,8 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.WakeOnLAN:
                     break;
                 case ApplicationViewManager.Name.HTTPHeaders:
+                    break;
+                case ApplicationViewManager.Name.Whois:
                     break;
                 case ApplicationViewManager.Name.SubnetCalculator:
                     break;

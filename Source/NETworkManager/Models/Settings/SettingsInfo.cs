@@ -1971,6 +1971,20 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private ObservableCollection<int> _tightVNC_PortHistory = new ObservableCollection<int>();
+        public ObservableCollection<int> TightVNC_PortHistory
+        {
+            get => _tightVNC_PortHistory;
+            set
+            {
+                if (value == _tightVNC_PortHistory)
+                    return;
+
+                _tightVNC_PortHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
         private bool _tightVNC_ExpandProfileView = true;
         public bool TightVNC_ExpandProfileView
         {

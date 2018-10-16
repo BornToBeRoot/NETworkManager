@@ -313,6 +313,7 @@
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="Validators\IsProfileNameUnique.cs" />
     <Compile Include="ViewModels\DNSServerViewModel.cs" />
+    <Compile Include="ViewModels\TightVNCConnectViewModel.cs" />
     <Compile Include="ViewModels\TightVNCSettingsViewModel.cs" />
     <Compile Include="ViewModels\TightVNCHostViewModel.cs" />
     <Compile Include="ViewModels\WhoisSettingsViewModel.cs" />
@@ -372,6 +373,9 @@
     <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
     <Compile Include="Views\DNSServerDialog.xaml.cs">
       <DependentUpon>DNSServerDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TightVNCConnectDialog.xaml.cs">
+      <DependentUpon>TightVNCConnectDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TightVNCSettingsView.xaml.cs">
       <DependentUpon>TightVNCSettingsView.xaml</DependentUpon>
@@ -656,6 +660,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Page Include="Views\DNSServerDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TightVNCConnectDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
