@@ -28,6 +28,8 @@ namespace NETworkManager.Controls
 
         #region Variables
         private bool _initialized;
+        private bool _closing;       // When the tab is closed --> OnClose()
+
         private readonly IDialogCoordinator _dialogCoordinator;
 
         private readonly PuTTYSessionInfo _puttySessionInfo;
@@ -118,7 +120,7 @@ namespace NETworkManager.Controls
         private async void Connect()
         {
             IsConnecting = true;
-            
+
             var info = new ProcessStartInfo
             {
                 FileName = _puttySessionInfo.PuTTYLocation,
@@ -162,7 +164,7 @@ namespace NETworkManager.Controls
                         NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
 
                         // Remove border etc.
-                        long style = (int) NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
+                        long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
                         style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME);
                         NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
 
@@ -179,14 +181,18 @@ namespace NETworkManager.Controls
             }
             catch (Exception ex)
             {
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
+                if (!_closing)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
 
-                ConfigurationManager.Current.IsDialogOpen = true;
+                    ConfigurationManager.Current.IsDialogOpen = true;
 
-                await _dialogCoordinator.ShowMessageAsync(this, NETworkManager.Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, NETworkManager.Resources.Localization.Strings.Error,
+                        ex.Message, MessageDialogStyle.Affirmative, settings);
 
-                ConfigurationManager.Current.IsDialogOpen = false;
+                    ConfigurationManager.Current.IsDialogOpen = false;
+                }
             }
 
             IsConnecting = false;
@@ -200,7 +206,8 @@ namespace NETworkManager.Controls
 
         private void ResizeEmbeddedPutty()
         {
-            NativeMethods.SetWindowPos(_puttyProcess.MainWindowHandle, IntPtr.Zero, 0, 0, PuTTYHost.ClientSize.Width, PuTTYHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
+            if (IsConnected)
+                NativeMethods.SetWindowPos(_puttyProcess.MainWindowHandle, IntPtr.Zero, 0, 0, PuTTYHost.ClientSize.Width, PuTTYHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
         }
 
         public void Disconnect()
@@ -217,6 +224,8 @@ namespace NETworkManager.Controls
 
         public void CloseTab()
         {
+            _closing = true;
+
             Disconnect();
         }
         #endregion

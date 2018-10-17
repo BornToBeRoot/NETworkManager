@@ -28,11 +28,13 @@ namespace NETworkManager.Controls
 
         #region Variables
         private bool _initialized;
+        private bool _closing;      // When the tab is closed --> OnClose()
+
         private readonly IDialogCoordinator _dialogCoordinator;
 
         private readonly TightVNCSessionInfo _tightVNCSessionInfo;
 
-        Process _tightVNCProcess;
+        private Process _tightVNCProcess;
         private IntPtr _appWin;
 
         private readonly DispatcherTimer _resizeTimer = new DispatcherTimer();
@@ -80,7 +82,7 @@ namespace NETworkManager.Controls
             _resizeTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
-            }
+        }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -118,7 +120,7 @@ namespace NETworkManager.Controls
         private async void Connect()
         {
             IsConnecting = true;
-            
+
             var info = new ProcessStartInfo
             {
                 FileName = _tightVNCSessionInfo.TightVNCLocation,
@@ -137,7 +139,7 @@ namespace NETworkManager.Controls
                     // Embed tightvnc window into panel, remove border etc.
                     _tightVNCProcess.WaitForInputIdle();
                     _appWin = _tightVNCProcess.MainWindowHandle;
-                    
+
                     if (_appWin == IntPtr.Zero)
                     {
                         var startTime = DateTime.Now;
@@ -162,7 +164,7 @@ namespace NETworkManager.Controls
                         NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
 
                         // Remove border etc.
-                        long style = (int) NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
+                        long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
                         style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME);
                         NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
 
@@ -179,14 +181,18 @@ namespace NETworkManager.Controls
             }
             catch (Exception ex)
             {
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
+                if (!_closing)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
 
-                ConfigurationManager.Current.IsDialogOpen = true;
+                    ConfigurationManager.Current.IsDialogOpen = true;
 
-                await _dialogCoordinator.ShowMessageAsync(this, NETworkManager.Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, NETworkManager.Resources.Localization.Strings.Error,
+                        ex.Message, MessageDialogStyle.Affirmative, settings);
 
-                ConfigurationManager.Current.IsDialogOpen = false;
+                    ConfigurationManager.Current.IsDialogOpen = false;
+                }
             }
 
             IsConnecting = false;
@@ -200,7 +206,8 @@ namespace NETworkManager.Controls
 
         private void ResizeEmbeddedTightVNC()
         {
-            NativeMethods.SetWindowPos(_tightVNCProcess.MainWindowHandle, IntPtr.Zero, 0, 0, TightVNCHost.ClientSize.Width, TightVNCHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
+            if (IsConnected)
+                NativeMethods.SetWindowPos(_tightVNCProcess.MainWindowHandle, IntPtr.Zero, 0, 0, TightVNCHost.ClientSize.Width, TightVNCHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
         }
 
         public void Disconnect()
@@ -211,6 +218,8 @@ namespace NETworkManager.Controls
 
         public void CloseTab()
         {
+            _closing = true;
+
             Disconnect();
         }
         #endregion
