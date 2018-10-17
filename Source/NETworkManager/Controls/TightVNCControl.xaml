@@ -11,23 +11,27 @@
         mah:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:TightVNCControl}">
     <UserControl.Resources>
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:BooleanReverseToVisibilityHiddenConverter x:Key="BooleanReverseToVisibilityHiddenConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid SizeChanged="TightVNCGrid_SizeChanged">
-        <WindowsFormsHost Visibility="{Binding Connected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">  
-            <windowsForms:Panel x:Name="PuttyHost" />
+        <WindowsFormsHost Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">  
+            <windowsForms:Panel x:Name="TightVNCHost" />
         </WindowsFormsHost>
-        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding Connected, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding IsConnected, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="20" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.Disconnected}" Style="{StaticResource HeaderTextBlock}" />
-            <TextBlock Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{x:Static localization:Strings.TightVNCProcessHasEnded}" Style="{DynamicResource DefaultTextBlock}" />
-            <Button Grid.Row="3" Content="{x:Static localization:Strings.Reconnect}" Command="{Binding ReconnectCommand}" IsDefault="True" Style="{StaticResource DefaultButton}"/>
+            <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.Disconnected}" Style="{StaticResource HeaderTextBlock}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}" />
+            <TextBlock Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{x:Static localization:Strings.TightVNCProcessHasEnded}" Style="{DynamicResource DefaultTextBlock}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}" />
+            <mah:ProgressRing Grid.Row="0" Grid.RowSpan="2" Height="50" Width="50" IsActive="{Binding IsConnecting}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"/>
+            <Button Grid.Row="3" Content="{x:Static localization:Strings.Reconnect}" Command="{Binding ReconnectCommand}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" IsDefault="True" IsEnabled="{Binding IsConnecting, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultButton}"/>
+            <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.ConnectingDots}" Style="{StaticResource HeaderTextBlock}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
         </Grid>
     </Grid>
 </UserControl>

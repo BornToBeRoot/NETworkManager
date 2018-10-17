@@ -37,16 +37,30 @@ namespace NETworkManager.Controls
 
         private readonly DispatcherTimer _resizeTimer = new DispatcherTimer();
 
-        private bool _connected = true;
-        public bool Connected
+        private bool _isConnected;
+        public bool IsConnected
         {
-            get => _connected;
+            get => _isConnected;
             set
             {
-                if (value == _connected)
+                if (value == _isConnected)
                     return;
 
-                _connected = value;
+                _isConnected = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isConnecting;
+        public bool IsConnecting
+        {
+            get => _isConnecting;
+            set
+            {
+                if (value == _isConnecting)
+                    return;
+
+                _isConnecting = value;
                 OnPropertyChanged();
             }
         }
@@ -66,13 +80,17 @@ namespace NETworkManager.Controls
             _resizeTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
-        }
+            }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             // Connect after the control is drawn and only on the first init
             if (_initialized)
                 return;
+
+            // Fix: The control is not visible by default, thus height and width is not set. If the values are not set, the size does not scale properly
+            TightVNCHost.Height = (int)ActualHeight;
+            TightVNCHost.Width = (int)ActualWidth;
 
             Connect();
             _initialized = true;
@@ -99,6 +117,8 @@ namespace NETworkManager.Controls
         #region Methods       
         private async void Connect()
         {
+            IsConnecting = true;
+            
             var info = new ProcessStartInfo
             {
                 FileName = _tightVNCSessionInfo.TightVNCLocation,
@@ -117,7 +137,7 @@ namespace NETworkManager.Controls
                     // Embed tightvnc window into panel, remove border etc.
                     _tightVNCProcess.WaitForInputIdle();
                     _appWin = _tightVNCProcess.MainWindowHandle;
-
+                    
                     if (_appWin == IntPtr.Zero)
                     {
                         var startTime = DateTime.Now;
@@ -134,20 +154,23 @@ namespace NETworkManager.Controls
                         }
                     }
 
-                    NativeMethods.SetParent(_appWin, PuttyHost.Handle);
+                    if (_appWin != IntPtr.Zero)
+                    {
+                        NativeMethods.SetParent(_appWin, TightVNCHost.Handle);
 
-                    // Show window before set style and resize
-                    NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
+                        // Show window before set style and resize
+                        NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
 
-                    // Remove border etc.
-                    long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
-                    style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME);
-                    NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
+                        // Remove border etc.
+                        long style = (int) NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
+                        style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME);
+                        NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
 
-                    // Resize embedded application & refresh       
-                    ResizeEmbeddedTightVNC();
+                        // Resize embedded application & refresh       
+                        ResizeEmbeddedTightVNC();
 
-                    Connected = true;
+                        IsConnected = true;
+                    }
                 }
                 else
                 {
@@ -165,17 +188,19 @@ namespace NETworkManager.Controls
 
                 ConfigurationManager.Current.IsDialogOpen = false;
             }
+
+            IsConnecting = false;
         }
 
         private void TightVNCProcess_Exited(object sender, EventArgs e)
         {
             // This happens when the user exit the process
-            Connected = false;
+            IsConnected = false;
         }
 
         private void ResizeEmbeddedTightVNC()
         {
-            NativeMethods.SetWindowPos(_tightVNCProcess.MainWindowHandle, IntPtr.Zero, 0, 0, PuttyHost.ClientSize.Width, PuttyHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
+            NativeMethods.SetWindowPos(_tightVNCProcess.MainWindowHandle, IntPtr.Zero, 0, 0, TightVNCHost.ClientSize.Width, TightVNCHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
         }
 
         public void Disconnect()
