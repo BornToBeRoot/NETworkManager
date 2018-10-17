@@ -57,7 +57,7 @@ namespace NETworkManager.Controls
             }
         }
 
-        private bool _isConnected = true;
+        private bool _isConnected;
         public bool IsConnected
         {
             get => _isConnected;
@@ -71,16 +71,16 @@ namespace NETworkManager.Controls
             }
         }
 
-        private bool _isReconnecting;
-        public bool IsReconnecting
+        private bool _isConnecting;
+        public bool IsConnecting
         {
-            get => _isReconnecting;
+            get => _isConnecting;
             set
             {
-                if (value == _isReconnecting)
+                if (value == _isConnecting)
                     return;
 
-                _isReconnecting = value;
+                _isConnecting = value;
                 OnPropertyChanged();
             }
         }
@@ -145,6 +145,8 @@ namespace NETworkManager.Controls
         #region Methods
         private void Connect()
         {
+            IsConnecting = true;
+
             RdpClient.CreateControl();
 
             RdpClient.Server = _rdpSessionInfo.Hostname;
@@ -198,7 +200,7 @@ namespace NETworkManager.Controls
 
         private void Reconnect()
         {
-            IsReconnecting = true;
+            IsConnecting = true;
 
             if (_rdpSessionInfo.AdjustScreenAutomatically)
             {
@@ -342,12 +344,13 @@ namespace NETworkManager.Controls
         private void RdpClient_OnConnected(object sender, EventArgs e)
         {
             IsConnected = true;
+            IsConnecting = false;
         }
 
         private void RdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
         {
             IsConnected = false;
-            IsReconnecting = false;
+            IsConnecting = false;
 
             DisconnectReason = GetDisconnectReason(e.discReason);
         }
