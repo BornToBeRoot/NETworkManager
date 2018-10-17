@@ -1371,7 +1371,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _dnsLookup_ExpandStatistics;
+        private bool _dnsLookup_ExpandStatistics = true;
         public bool DNSLookup_ExpandStatistics
         {
             get => _dnsLookup_ExpandStatistics;

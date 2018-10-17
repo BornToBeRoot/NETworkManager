@@ -69,7 +69,7 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
                 <TextBlock Grid.Column="8" Grid.Row="0" Text="{x:Static localization:Strings.Type}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox x:Name="ComboBoxTypes" Grid.Column="10" Grid.Row="0" ItemsSource="{Binding Types}" SelectedItem="{Binding Type}" Width="100" HorizontalAlignment="Left" />
+                <ComboBox x:Name="ComboBoxTypes" Grid.Column="10" Grid.Row="0" ItemsSource="{Binding Types}" SelectedItem="{Binding Type}" Width="80" HorizontalAlignment="Left" />
                 <Button Grid.Column="12" Grid.Row="0" Command="{Binding LookupCommand}" IsDefault="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" HorizontalAlignment="Right">
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">

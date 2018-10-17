@@ -655,7 +655,7 @@
     <value>Yes</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>add</value>
+    <value>Add</value>
   </data>
   <data name="AddATabToOpenANewConnection" xml:space="preserve">
     <value>Add a tab to open a new connection...</value>

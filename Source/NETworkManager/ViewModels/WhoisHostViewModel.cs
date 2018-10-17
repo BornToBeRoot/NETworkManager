@@ -87,7 +87,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.HTTPHeaders_ExpandProfileView = value;
+                    SettingsManager.Current.Whois_ExpandProfileView = value;
 
                 _expandProfileView = value;
 
@@ -108,7 +108,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading && value.Value != 40) // Do not save the size when collapsed
-                    SettingsManager.Current.HTTPHeaders_ProfileWidth = value.Value;
+                    SettingsManager.Current.Whois_ProfileWidth = value.Value;
 
                 _profileWidth = value;
 
@@ -145,20 +145,20 @@ namespace NETworkManager.ViewModels
                     return false;
 
                 if (string.IsNullOrEmpty(Search))
-                    return info.HTTPHeaders_Enabled;
+                    return info.Whois_Enabled;
 
                 var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
                 if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                    return !string.IsNullOrEmpty(info.Tags) && info.HTTPHeaders_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+                    return !string.IsNullOrEmpty(info.Tags) && info.Whois_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
 
                 // Search by: Name, HTTPHeaders_Website
-                return info.HTTPHeaders_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.HTTPHeaders_Website.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+                return info.Whois_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.HTTPHeaders_Website.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
             // This will select the first entry as selected item...
-            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.HTTPHeaders_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.Whois_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
 
             LoadSettings();
 

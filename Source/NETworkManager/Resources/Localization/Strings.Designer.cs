@@ -79,7 +79,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to add.
+        ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string Add {
             get {
