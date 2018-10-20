@@ -352,7 +352,7 @@
     <value>Установки</value>
   </data>
   <data name="SettingsHaveBeenReset" xml:space="preserve">
-    <value>Settings have been reset!</value>
+    <value>Настройки сброшены!</value>
   </data>
   <data name="SNMP" xml:space="preserve">
     <value>SNMP</value>
@@ -631,7 +631,7 @@
     <value>Таймаут</value>
   </data>
   <data name="TimeoutMS" xml:space="preserve">
-    <value>Timeout (ms)</value>
+    <value>Время ожидания (мс)</value>
   </data>
   <data name="TimeToWaitBetweenEachPing" xml:space="preserve">
     <value>Время ожидания между каждым ping</value>
@@ -655,7 +655,7 @@
     <value>Да</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>добавить</value>
+    <value>Add</value>
   </data>
   <data name="AddATabToOpenANewConnection" xml:space="preserve">
     <value>Добавить вкладку, чтобы открыть новое соединение...</value>
@@ -706,7 +706,7 @@
     <value>Применить</value>
   </data>
   <data name="ApplyWindowsKeyCombinationsLikeAltTab" xml:space="preserve">
-    <value>Apply Windows key combinations (e.g. ALT+TAB):</value>
+    <value>Применение комбинаций клавиш Windows (например, ALT + TAB):</value>
   </data>
   <data name="Auth" xml:space="preserve">
     <value>Auth</value>
@@ -826,13 +826,13 @@
     <value>Удалить запись</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
-    <value>Selected profiles will be deleted permanently.</value>
+    <value>Выбранные профили будут удалены навсегда.</value>
   </data>
   <data name="DisableTransparencyInTheSettingsToUsePuTTY" xml:space="preserve">
-    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PuTTY.</value>
+    <value>Отключить прозрачность в настройках (Общие/внешний вид) и перезапустите приложение после использования PuTTY.</value>
   </data>
   <data name="DisableTransparencyInTheSettingsToUseRemoteDesktop" xml:space="preserve">
-    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use Remote Desktop.</value>
+    <value>Отключите прозрачность в настройках (Общие / внешний вид) и перезапустите приложение после этого, чтобы использовать Remote Desktop.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>Автоматическая настройка DNS</value>
@@ -856,13 +856,13 @@
     <value>Изменить...</value>
   </data>
   <data name="Enable" xml:space="preserve">
-    <value>Enable</value>
+    <value>Включить</value>
   </data>
   <data name="EnableCredentialSecuritySupportProvider" xml:space="preserve">
     <value>Включить поддержку Security Support Provider</value>
   </data>
   <data name="EnableTheProfileInAtLeastOneTool" xml:space="preserve">
-    <value>Enable the profile in at least one tool! Click on a tab and select "Enable"...</value>
+    <value>Включите профиль хотя бы в одном инструменте! Нажмите на вкладку и выберите "включить"...</value>
   </data>
   <data name="EnableTransparency" xml:space="preserve">
     <value>Включить прозрачность</value>
@@ -922,7 +922,7 @@
     <value>ID</value>
   </data>
   <data name="InheritHostFromDefault" xml:space="preserve">
-    <value>Inherit host from default</value>
+    <value>Наследовать узел от значения по умолчанию</value>
   </data>
   <data name="InstallRDP8dot1Message" xml:space="preserve">
     <value>Для использования функций удаленного рабочего стола необходимо установить протокол удаленного рабочего стола (RDP) версии 8.1 в системе!</value>
@@ -942,7 +942,7 @@
   <data name="MACAddressOrVendor" xml:space="preserve">
     <value>MAC-адрес или поставщик</value>
   </data>
-  <data name="MagicPacketSuccessfulSended" xml:space="preserve">
+  <data name="MagicPacketSentMessage" xml:space="preserve">
     <value>Magic пакет успешно отправлен!</value>
   </data>
   <data name="MaximumNumberOfHopsReached" xml:space="preserve">
@@ -964,7 +964,7 @@
     <value>Не удается получить сетевой адрес. Проверьте, подключен ли компьютер к сети. Дополнительные сведения об устранении неполадок сети см. в справке Windows.</value>
   </data>
   <data name="NewConnectionDots" xml:space="preserve">
-    <value>New connection...</value>
+    <value>Новое соединение.</value>
   </data>
   <data name="NoDNSRecordFoundCheckYourInputAndSettings" xml:space="preserve">
     <value>Запись DNS для "{0}"не найдена! Проверьте ввод и настройки.</value>
@@ -1003,19 +1003,19 @@
     <value>OID</value>
   </data>
   <data name="OnlyWhenUsingTheFullScreen" xml:space="preserve">
-    <value>Only when using the full screen</value>
+    <value>Только в полноэкранном режиме</value>
   </data>
   <data name="OnTheRemoteComputer" xml:space="preserve">
-    <value>On the remote computer</value>
+    <value>На удаленном компьютере</value>
   </data>
   <data name="OnThisComputer" xml:space="preserve">
-    <value>On this computer</value>
+    <value>На этом компьютере</value>
   </data>
   <data name="Open" xml:space="preserve">
     <value>Открытый</value>
   </data>
   <data name="OpenLicense" xml:space="preserve">
-    <value>Open license</value>
+    <value>Открытая лицензия</value>
   </data>
   <data name="OpenProject" xml:space="preserve">
     <value>Открыть проект</value>
@@ -1053,7 +1053,7 @@
     <value>Профиль</value>
   </data>
   <data name="ProfilesReloaded" xml:space="preserve">
-    <value>Profiles reloaded</value>
+    <value>Профили перезагружены</value>
   </data>
   <data name="Protocol" xml:space="preserve">
     <value>Протокол</value>
@@ -1122,7 +1122,7 @@
     <value>Приложение не найдено!</value>
   </data>
   <data name="SearchedLanguageNotFound" xml:space="preserve">
-    <value>Searched language not found!</value>
+    <value>Язык поиска не найден!</value>
   </data>
   <data name="SearchedSettingNotFound" xml:space="preserve">
     <value>Параметр не найден!</value>
@@ -1158,7 +1158,7 @@
     <value>Служба</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>The settings file found was corrupted or is not compatible with this version. All settings have been reset (profiles and credentials are not affected!)</value>
+    <value>Найденный файл настроек поврежден или несовместим с этой версией. Все настройки были сброшены (профили и учетные данные не затрагиваются!)</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>Настройки успешно экспортированы!</value>
@@ -1176,7 +1176,7 @@
     <value>Показать заголовок текущего приложения</value>
   </data>
   <data name="ShowOnlyMostCommonQueryTypes" xml:space="preserve">
-    <value>Show only most common query types</value>
+    <value>Показывать только наиболее распространенные типы запросов</value>
   </data>
   <data name="ShowScanResultForAllIPAddresses" xml:space="preserve">
     <value>Показать результат сканирования, для всех IP-адресов</value>
@@ -1272,7 +1272,7 @@
     <value>Версия</value>
   </data>
   <data name="VersionxxIsAvailable" xml:space="preserve">
-    <value>Version {0} is available!</value>
+    <value>Версия {0}доступна!</value>
   </data>
   <data name="WalkMode" xml:space="preserve">
     <value>Walk mode</value>
@@ -1509,7 +1509,7 @@
     <value>Сетевое подключение...</value>
   </data>
   <data name="NotChanged" xml:space="preserve">
-    <value>(not changed)</value>
+    <value>(без изменений)</value>
   </data>
   <data name="Off" xml:space="preserve">
     <value>Выключен</value>
@@ -1932,15 +1932,102 @@
     <value>Введите допустимое значение от 25 до 100!</value>
   </data>
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
-    <value>A profile with this name already exists!</value>
+    <value>Профиль с таким именем уже существует!</value>
   </data>
   <data name="CredentialWithThisNameAlreadyExists" xml:space="preserve">
-    <value>A Credential with this name already exists!</value>
+    <value>Учетные данные с таким именем уже существуют!</value>
   </data>
   <data name="PortState_Closed" xml:space="preserve">
-    <value>Closed</value>
+    <value>Закрыть</value>
   </data>
   <data name="PortState_Open" xml:space="preserve">
-    <value>Open</value>
+    <value>Открыть</value>
+  </data>
+  <data name="AtLeastOneApplicationMustBeVisible" xml:space="preserve">
+    <value>Хотя бы одно приложение должно быть видно!</value>
+  </data>
+  <data name="HiddenApplications" xml:space="preserve">
+    <value>Скрытые приложения</value>
+  </data>
+  <data name="VisibleApplications" xml:space="preserve">
+    <value>Видимые приложения</value>
+  </data>
+  <data name="VisibleApplicationsInTheBar" xml:space="preserve">
+    <value>Видимые приложения в панели:</value>
+  </data>
+  <data name="Whois" xml:space="preserve">
+    <value>Whois</value>
+  </data>
+  <data name="AddATabToQueryWhois" xml:space="preserve">
+    <value>Add a tab to query whois...</value>
+  </data>
+  <data name="EnterValidDomain" xml:space="preserve">
+    <value>Enter a valid domain (like "example.com")!</value>
+  </data>
+  <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
+    <value>Whois server not found for the domain: "{0}"</value>
+  </data>
+  <data name="ExampleDomain" xml:space="preserve">
+    <value>example.com</value>
+  </data>
+  <data name="Routing" xml:space="preserve">
+    <value>Routing</value>
+  </data>
+  <data name="Release" xml:space="preserve">
+    <value>Release</value>
+  </data>
+  <data name="ReleaseRenew" xml:space="preserve">
+    <value>Release &amp; Renew</value>
+  </data>
+  <data name="Renew" xml:space="preserve">
+    <value>Renew</value>
+  </data>
+  <data name="WindowsDNSSettings" xml:space="preserve">
+    <value>Windows DNS settings</value>
+  </data>
+  <data name="DeleteDNSServer" xml:space="preserve">
+    <value>Delete DNS server</value>
+  </data>
+  <data name="DeleteDNSServerMessage" xml:space="preserve">
+    <value>The selected DNS server will be deleted permanently.</value>
+  </data>
+  <data name="AddDNSServer" xml:space="preserve">
+    <value>Add DNS server</value>
+  </data>
+  <data name="EditDNSServer" xml:space="preserve">
+    <value>Edit DNS server</value>
+  </data>
+  <data name="DNSServerWithThisNameAlreadyExists" xml:space="preserve">
+    <value>A DNS server with this name already exists!</value>
+  </data>
+  <data name="RestartSession" xml:space="preserve">
+    <value>Restart session</value>
+  </data>
+  <data name="ExamplePort5900" xml:space="preserve">
+    <value>5900</value>
+  </data>
+  <data name="TightVNC" xml:space="preserve">
+    <value>TightVNC</value>
+  </data>
+  <data name="ConfigureThePathToTightVNCInTheSettingsDots" xml:space="preserve">
+    <value>Configure the path to TightVNC in the settings...</value>
+  </data>
+  <data name="ConfigureTightVNC" xml:space="preserve">
+    <value>Configure TightVNC</value>
+  </data>
+  <data name="DefaultVNCPort" xml:space="preserve">
+    <value>Default VNC port</value>
+  </data>
+  <data name="DisableTransparencyInTheSettingsToUseTightVNC" xml:space="preserve">
+    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TightVNC.</value>
+  </data>
+  <data name="TightVNCLocationDots" xml:space="preserve">
+    <value>TightVNC location...</value>
+  </data>
+  <data name="TightVNCProcessHasEnded" xml:space="preserve">
+    <value>TightVNC process has ended!</value>
+  </data>
+  <data name="ConnectingDots" xml:space="preserve">
+    <value>Connecting...</value>
   </data>
 </root>

@@ -655,7 +655,7 @@
     <value>Ja</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>hinzufügen</value>
+    <value>Hinzufügen</value>
   </data>
   <data name="AddATabToOpenANewConnection" xml:space="preserve">
     <value>Füge eine Registerkarte hinzu, um eine neue Verbindung herzustellen...</value>
@@ -942,7 +942,7 @@
   <data name="MACAddressOrVendor" xml:space="preserve">
     <value>MAC-Adresse oder Hersteller</value>
   </data>
-  <data name="MagicPacketSuccessfulSended" xml:space="preserve">
+  <data name="MagicPacketSentMessage" xml:space="preserve">
     <value>Magic Packet erfolgreich gesendet!</value>
   </data>
   <data name="MaximumNumberOfHopsReached" xml:space="preserve">
@@ -1533,7 +1533,7 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
     <value>Einfügen</value>
   </data>
   <data name="PuTTYLocationDots" xml:space="preserve">
-    <value>PuTTY Speicherort...</value>
+    <value>PuTTY-Speicherort...</value>
   </data>
   <data name="Reconnect" xml:space="preserve">
     <value>Wiederverbinden</value>
@@ -1942,5 +1942,92 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
   </data>
   <data name="PortState_Open" xml:space="preserve">
     <value>Offen</value>
+  </data>
+  <data name="AtLeastOneApplicationMustBeVisible" xml:space="preserve">
+    <value>Mindestens eine Anwendung muss sichtbar sein!</value>
+  </data>
+  <data name="HiddenApplications" xml:space="preserve">
+    <value>Ausgeblendete Anwendungen</value>
+  </data>
+  <data name="VisibleApplications" xml:space="preserve">
+    <value>Sichtbare Anwendungen</value>
+  </data>
+  <data name="VisibleApplicationsInTheBar" xml:space="preserve">
+    <value>Sichtbare Anwendungen in der Leiste:</value>
+  </data>
+  <data name="Whois" xml:space="preserve">
+    <value>Whois</value>
+  </data>
+  <data name="AddATabToQueryWhois" xml:space="preserve">
+    <value>Füge eine Registerkarte hinzu, um eine Whois abfrage durchzuführen...</value>
+  </data>
+  <data name="EnterValidDomain" xml:space="preserve">
+    <value>Geben Sie eine gültige Domain ein (z.B. "example.com")!</value>
+  </data>
+  <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
+    <value>Whois-Server nicht gefunden für die Domain: "{0}"</value>
+  </data>
+  <data name="ExampleDomain" xml:space="preserve">
+    <value>example.com</value>
+  </data>
+  <data name="Routing" xml:space="preserve">
+    <value>Routing</value>
+  </data>
+  <data name="Release" xml:space="preserve">
+    <value>Release</value>
+  </data>
+  <data name="ReleaseRenew" xml:space="preserve">
+    <value>Release &amp; Renew</value>
+  </data>
+  <data name="Renew" xml:space="preserve">
+    <value>Renew</value>
+  </data>
+  <data name="WindowsDNSSettings" xml:space="preserve">
+    <value>Windows DNS-Einstellungen</value>
+  </data>
+  <data name="DeleteDNSServer" xml:space="preserve">
+    <value>DNS-Server löschen</value>
+  </data>
+  <data name="DeleteDNSServerMessage" xml:space="preserve">
+    <value>Der ausgewählte DNS-Server wird unwiederbringlich gelöscht.</value>
+  </data>
+  <data name="AddDNSServer" xml:space="preserve">
+    <value>DNS-Server hinzufügen</value>
+  </data>
+  <data name="EditDNSServer" xml:space="preserve">
+    <value>DNS-Server bearbeiten</value>
+  </data>
+  <data name="DNSServerWithThisNameAlreadyExists" xml:space="preserve">
+    <value>Ein DNS-Server mit diesem Namen existiert bereits!</value>
+  </data>
+  <data name="RestartSession" xml:space="preserve">
+    <value>Session neu starten</value>
+  </data>
+  <data name="ExamplePort5900" xml:space="preserve">
+    <value>5900</value>
+  </data>
+  <data name="TightVNC" xml:space="preserve">
+    <value>TightVNC</value>
+  </data>
+  <data name="ConfigureThePathToTightVNCInTheSettingsDots" xml:space="preserve">
+    <value>Konfiguriere den Pfad zu TightVNC in den Einstellungen...</value>
+  </data>
+  <data name="ConfigureTightVNC" xml:space="preserve">
+    <value>TightVNC konfigurieren</value>
+  </data>
+  <data name="DefaultVNCPort" xml:space="preserve">
+    <value>Standard VNC Port</value>
+  </data>
+  <data name="DisableTransparencyInTheSettingsToUseTightVNC" xml:space="preserve">
+    <value>Deaktivieren Sie die Transparenz in den Einstellungen (Allgemein/Aussehen) und starten Sie anschließend die Anwendung neu, um TightVNC zu verwenden.</value>
+  </data>
+  <data name="TightVNCLocationDots" xml:space="preserve">
+    <value>TightVNC-Speicherort...</value>
+  </data>
+  <data name="TightVNCProcessHasEnded" xml:space="preserve">
+    <value>TightVNC-Prozess wurde beendet!</value>
+  </data>
+  <data name="ConnectingDots" xml:space="preserve">
+    <value>Verbinde...</value>
   </data>
 </root>
