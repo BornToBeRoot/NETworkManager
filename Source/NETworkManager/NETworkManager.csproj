@@ -229,6 +229,7 @@
     <Compile Include="Converters\ApplicationNameToIconConverter.cs" />
     <Compile Include="Converters\AutoRefreshTimeToStringConverter.cs" />
     <Compile Include="Converters\BigIntegerToStringConverter.cs" />
+    <Compile Include="Converters\OperationalStatusToStringConverter.cs" />
     <Compile Include="Converters\ListToStringConverter.cs" />
     <Compile Include="Converters\BooleanReverseToVisibilityHiddenConverter.cs" />
     <Compile Include="Converters\ApplicationNameToTranslatedStringConverter.cs" />

@@ -118,6 +118,7 @@ namespace NETworkManager
         }
 
         public ICollectionView Applications { get; private set; }
+        
 
         private ApplicationViewInfo _selectedApplication;
         public ApplicationViewInfo SelectedApplication
@@ -139,7 +140,7 @@ namespace NETworkManager
         private ApplicationViewManager.Name _filterLastViewName;
         private int? _filterLastCount;
 
-        private string _search;
+        private string _search = string.Empty;
         public string Search
         {
             get => _search;
@@ -197,6 +198,8 @@ namespace NETworkManager
             get => _showSettingsView;
             set
             {
+
+
                 if (value == _showSettingsView)
                     return;
 
@@ -247,7 +250,7 @@ namespace NETworkManager
 
             // Language Meta
             LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
-            
+
             // Load appearance
             AppearanceManager.Load();
 
@@ -500,7 +503,7 @@ namespace NETworkManager
                     ContentControlApplication.Content = _puttyHostView;
                     break;
                 case ApplicationViewManager.Name.TightVNC:
-                    if(_tightVncHostView == null)
+                    if (_tightVncHostView == null)
                         _tightVncHostView = new TightVNCHostView();
                     else
                         RefreshApplicationView(name);
@@ -544,7 +547,7 @@ namespace NETworkManager
                     ContentControlApplication.Content = _subnetCalculatorHostView;
                     break;
                 case ApplicationViewManager.Name.Lookup:
-                    if (_lookupHostView == null)    
+                    if (_lookupHostView == null)
                         _lookupHostView = new LookupHostView();
 
                     ContentControlApplication.Content = _lookupHostView;
@@ -575,7 +578,7 @@ namespace NETworkManager
 
             _currentApplicationViewName = name;
         }
-        
+
         private void RefreshApplicationView(ApplicationViewManager.Name name)
         {
             switch (name)
@@ -827,6 +830,7 @@ namespace NETworkManager
             RegisterHotKeys();
         }
 
+        [DebuggerStepThrough]
         private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             // Single instance or Hotkey --> Show window

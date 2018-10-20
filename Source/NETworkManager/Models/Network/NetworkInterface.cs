@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
-using System.Runtime.InteropServices;
 
 namespace NETworkManager.Models.Network
 {
@@ -66,7 +65,7 @@ namespace NETworkManager.Models.Network
                 var listIPv4Gateway = new List<IPAddress>();
                 var listIPv6Gateway = new List<IPAddress>();
 
-                foreach (GatewayIPAddressInformation gatewayIPAddrInfo in networkInterface.GetIPProperties().GatewayAddresses)
+                foreach (var gatewayIPAddrInfo in networkInterface.GetIPProperties().GatewayAddresses)
                 {
                     switch (gatewayIPAddrInfo.Address.AddressFamily)
                     {

@@ -24,6 +24,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />
         <converters:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
+        <converters:OperationalStatusToStringConverter x:Key="OperationalStatusToStringConverter" />
         <converters:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
         <converters:ValidateNetworkInterfaceConfigConverter x:Key="ValidateNetworkInterfaceConfigConverter" />
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
@@ -220,7 +221,7 @@
                             <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.PhysicalAddress}" />
                             <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding DetailsPhysicalAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" />
                             <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Status}" />
-                            <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding DetailsStatus}" />
+                            <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding DetailsStatus, Converter={StaticResource OperationalStatusToStringConverter}}" />
                             <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.Speed}" />
                             <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding DetailsSpeed, Converter={StaticResource BitsToHumanReadableSizeConverter}}" />
                             <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.IPv4Address}" />
