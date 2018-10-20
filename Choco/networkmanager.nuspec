@@ -3,7 +3,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>NETworkManager</id>
-    <version>1.7.1.0</version>
+    <version>1.8.0.0</version>
     <owners>BornToBeRoot</owners>
     <title>NETworkManager</title>
     <authors>BornToBeRoot</authors>
@@ -14,7 +14,7 @@
     <projectSourceUrl>https://github.com/BornToBeRoot/NETworkManager</projectSourceUrl>
     <docsUrl>https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</docsUrl>
     <bugTrackerUrl>https://github.com/BornToBeRoot/NETworkManager/issues</bugTrackerUrl>
-    <tags>networkinterface ipscanner portscanner wakeonlan traceroute ping dnslookup subnetcalculator snmp remotedesktop ssh putty</tags>
+    <tags>networkinterface ipscanner portscanner wakeonlan traceroute ping dnslookup whois subnetcalculator snmp remotedesktop ssh putty tightvnc</tags>
     <summary>A powerful tool for managing networks and troubleshoot network problems!</summary>
     <description>A powerful tool for managing networks and troubleshoot network problems!</description>
     <dependencies>
