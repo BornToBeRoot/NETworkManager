@@ -5,6 +5,7 @@ using NETworkManager.Views;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Controls
 {
@@ -37,6 +38,20 @@ namespace NETworkManager.Controls
             }
         }
 
+        private bool _isPuTTYControl;
+        public bool IsPuTTYControl
+        {
+            get => _isPuTTYControl;
+            set
+            {
+                if(value == _isPuTTYControl)
+                    return;
+
+                _isPuTTYControl = value;
+                OnPropertyChanged();
+            }
+        }
+
         public bool ShowCurrentApplicationTitle => SettingsManager.Current.Window_ShowCurrentApplicationTitle;
         #endregion
 
@@ -61,12 +76,14 @@ namespace NETworkManager.Controls
 
             ApplicationTitle = ApplicationViewManager.GetTranslatedNameByName(applicationName);
 
+            if (applicationName == ApplicationViewManager.Name.PuTTY)
+                IsPuTTYControl = true;
+
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
         }
         #endregion
 
         #region ICommand & Actions
-
         public ItemActionCallback CloseItemCommand => CloseItemAction;
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
@@ -95,10 +112,13 @@ namespace NETworkManager.Controls
                     ((RemoteDesktopControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.PuTTY:
-                    ((PuttyControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
+                    ((PuTTYControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
+                    break;
+                case ApplicationViewManager.Name.TightVNC:
+                    ((TightVNCControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.SNMP:
-                    ((TracerouteView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
+                    ((SNMPView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.HTTPHeaders:
                     ((HTTPHeadersView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
@@ -123,8 +143,17 @@ namespace NETworkManager.Controls
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
         }
+
+        #region PuTTY Commands
+        public ICommand RestartPuTTYSessionCommand => new RelayCommand(RestartPuTTYSessionAction);
+
+        private void RestartPuTTYSessionAction(object view)
+        {
+            if (view is PuTTYControl puttyControl)
+                puttyControl.RestartPuTTYSession();
+        }
+        #endregion
         #endregion
 
         #region Events

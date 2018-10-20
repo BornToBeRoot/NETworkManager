@@ -2,7 +2,7 @@
 {
     public class PuTTY
     {
-        public static string BuildCommandLine(PuTTYProfileInfo ProfileInfo)
+        public static string BuildCommandLine(PuTTYSessionInfo ProfileInfo)
         {
             var command = string.Empty;
 

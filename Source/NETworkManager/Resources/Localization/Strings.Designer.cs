@@ -79,7 +79,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to add.
+        ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string Add {
             get {
@@ -174,6 +174,15 @@ namespace NETworkManager.Resources.Localization {
         public static string AddCredentials {
             get {
                 return ResourceManager.GetString("AddCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add DNS server.
+        /// </summary>
+        public static string AddDNSServer {
+            get {
+                return ResourceManager.GetString("AddDNSServer", resourceCulture);
             }
         }
         
@@ -754,6 +763,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Configure the path to TightVNC in the settings....
+        /// </summary>
+        public static string ConfigureThePathToTightVNCInTheSettingsDots {
+            get {
+                return ResourceManager.GetString("ConfigureThePathToTightVNCInTheSettingsDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configure TightVNC.
+        /// </summary>
+        public static string ConfigureTightVNC {
+            get {
+                return ResourceManager.GetString("ConfigureTightVNC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
         public static string Confirm {
@@ -813,6 +840,15 @@ namespace NETworkManager.Resources.Localization {
         public static string ConnectExternal {
             get {
                 return ResourceManager.GetString("ConnectExternal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connecting....
+        /// </summary>
+        public static string ConnectingDots {
+            get {
+                return ResourceManager.GetString("ConnectingDots", resourceCulture);
             }
         }
         
@@ -1105,6 +1141,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default VNC port.
+        /// </summary>
+        public static string DefaultVNCPort {
+            get {
+                return ResourceManager.GetString("DefaultVNCPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -1128,6 +1173,24 @@ namespace NETworkManager.Resources.Localization {
         public static string DeleteCredentials {
             get {
                 return ResourceManager.GetString("DeleteCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete DNS server.
+        /// </summary>
+        public static string DeleteDNSServer {
+            get {
+                return ResourceManager.GetString("DeleteDNSServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected DNS server will be deleted permanently..
+        /// </summary>
+        public static string DeleteDNSServerMessage {
+            get {
+                return ResourceManager.GetString("DeleteDNSServerMessage", resourceCulture);
             }
         }
         
@@ -1258,6 +1321,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TightVNC..
+        /// </summary>
+        public static string DisableTransparencyInTheSettingsToUseTightVNC {
+            get {
+                return ResourceManager.GetString("DisableTransparencyInTheSettingsToUseTightVNC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disconnected.
         /// </summary>
         public static string Disconnected {
@@ -1326,6 +1398,15 @@ namespace NETworkManager.Resources.Localization {
         public static string DNSServers {
             get {
                 return ResourceManager.GetString("DNSServers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A DNS server with this name already exists!.
+        /// </summary>
+        public static string DNSServerWithThisNameAlreadyExists {
+            get {
+                return ResourceManager.GetString("DNSServerWithThisNameAlreadyExists", resourceCulture);
             }
         }
         
@@ -1416,6 +1497,15 @@ namespace NETworkManager.Resources.Localization {
         public static string EditCredentials {
             get {
                 return ResourceManager.GetString("EditCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit DNS server.
+        /// </summary>
+        public static string EditDNSServer {
+            get {
+                return ResourceManager.GetString("EditDNSServer", resourceCulture);
             }
         }
         
@@ -1992,6 +2082,15 @@ namespace NETworkManager.Resources.Localization {
         public static string ExamplePort53 {
             get {
                 return ResourceManager.GetString("ExamplePort53", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5900.
+        /// </summary>
+        public static string ExamplePort5900 {
+            get {
+                return ResourceManager.GetString("ExamplePort5900", resourceCulture);
             }
         }
         
@@ -3726,6 +3825,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Release.
+        /// </summary>
+        public static string Release {
+            get {
+                return ResourceManager.GetString("Release", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Release &amp; Renew.
+        /// </summary>
+        public static string ReleaseRenew {
+            get {
+                return ResourceManager.GetString("ReleaseRenew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remaining time.
         /// </summary>
         public static string RemainingTime {
@@ -4185,6 +4302,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Renew.
+        /// </summary>
+        public static string Renew {
+            get {
+                return ResourceManager.GetString("Renew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Repeat.
         /// </summary>
         public static string Repeat {
@@ -4275,6 +4401,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restart session.
+        /// </summary>
+        public static string RestartSession {
+            get {
+                return ResourceManager.GetString("RestartSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Restart the application so that all settings are applied!.
         /// </summary>
         public static string RestartTheApplicationSoThatAllChangesAreApplied {
@@ -4307,6 +4442,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Route {
             get {
                 return ResourceManager.GetString("Route", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Routing.
+        /// </summary>
+        public static string Routing {
+            get {
+                return ResourceManager.GetString("Routing", resourceCulture);
             }
         }
         
@@ -5103,6 +5247,33 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TightVNC.
+        /// </summary>
+        public static string TightVNC {
+            get {
+                return ResourceManager.GetString("TightVNC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TightVNC location....
+        /// </summary>
+        public static string TightVNCLocationDots {
+            get {
+                return ResourceManager.GetString("TightVNCLocationDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TightVNC process has ended!.
+        /// </summary>
+        public static string TightVNCProcessHasEnded {
+            get {
+                return ResourceManager.GetString("TightVNCProcessHasEnded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time.
         /// </summary>
         public static string Time {
@@ -5567,6 +5738,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Window {
             get {
                 return ResourceManager.GetString("Window", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows DNS settings.
+        /// </summary>
+        public static string WindowsDNSSettings {
+            get {
+                return ResourceManager.GetString("WindowsDNSSettings", resourceCulture);
             }
         }
         

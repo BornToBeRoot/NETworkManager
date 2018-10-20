@@ -1,11 +1,16 @@
 # Subnet Calculator
 
-## IPv4 Calculator
+## Calculator
 
-![SubnetCalculator_IPv4Calculator](../../_images/SubnetCalculator_IPv4Calculator.png)
+![SubnetCalculator_Calculator](../../_images/SubnetCalculator_Calculator.png)
 
-## IPv4 Splitter
+## Subnetting
 
-![SubnetCalculator_IPv4Splitter](../../_images/SubnetCalculator_IPv4Splitter.png)
+![SubnetCalculator_Subnetting](../../_images/SubnetCalculator_Subnetting.png)
+
+## Subnetting
+
+![SubnetCalculator_Supernetting](../../_images/SubnetCalculator_Supernetting.png)
+
 
 [back](../README.md)

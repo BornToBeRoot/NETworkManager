@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
-using System.Runtime.InteropServices;
 
 namespace NETworkManager.Models.Network
 {
@@ -31,7 +30,7 @@ namespace NETworkManager.Models.Network
         {
             var listNetworkInterfaceInfo = new List<NetworkInterfaceInfo>();
 
-            foreach (System.Net.NetworkInformation.NetworkInterface networkInterface in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
+            foreach (var networkInterface in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
             {
                 if (networkInterface.NetworkInterfaceType != NetworkInterfaceType.Ethernet && networkInterface.NetworkInterfaceType != NetworkInterfaceType.Wireless80211)
                     continue;
@@ -66,7 +65,7 @@ namespace NETworkManager.Models.Network
                 var listIPv4Gateway = new List<IPAddress>();
                 var listIPv6Gateway = new List<IPAddress>();
 
-                foreach (GatewayIPAddressInformation gatewayIPAddrInfo in networkInterface.GetIPProperties().GatewayAddresses)
+                foreach (var gatewayIPAddrInfo in networkInterface.GetIPProperties().GatewayAddresses)
                 {
                     switch (gatewayIPAddrInfo.Address.AddressFamily)
                     {
@@ -160,13 +159,47 @@ namespace NETworkManager.Models.Network
             }
         }
 
-        [DllImport("dnsapi.dll", EntryPoint = "DnsFlushResolverCache")]
-        private static extern UInt32 DnsFlushResolverCache();
+        public static Task FlushDnsResolverCacheAsync()
+        {
+            return Task.Run(() => FlushDnsResolverCache());
+        }
 
         public static void FlushDnsResolverCache()
         {
-            // ReSharper disable once UnusedVariable
-            var result = DnsFlushResolverCache();
+            const string command = @"ipconfig /flushdns";
+
+            PowerShellHelper.RunPSCommand(command);
+        }
+
+        public static Task IPConfigReleaseRenewAsync(IPConfigReleaseRenewMode mode)
+        {
+            return Task.Run(() => IPConfigReleaseRenew(mode));
+        }
+
+        public static void IPConfigReleaseRenew(IPConfigReleaseRenewMode mode)
+        {
+            if (mode == IPConfigReleaseRenewMode.ReleaseRenew || mode == IPConfigReleaseRenewMode.Release)
+            {
+                const string releaseCommand = @"ipconfig /release";
+
+                PowerShellHelper.RunPSCommand(releaseCommand);
+            }
+
+            if (mode == IPConfigReleaseRenewMode.ReleaseRenew || mode == IPConfigReleaseRenewMode.Renew)
+            {
+                const string renewCommand = @"ipconfig /renew";
+
+                PowerShellHelper.RunPSCommand(renewCommand);
+            }
+        }
+        #endregion
+
+        #region Enum
+        public enum IPConfigReleaseRenewMode
+        {
+            ReleaseRenew,
+            Release,
+            Renew
         }
         #endregion
     }

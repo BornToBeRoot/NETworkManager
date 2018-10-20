@@ -1,8 +1,5 @@
-﻿using System;
-using MahApps.Metro.IconPacks;
-using NETworkManager.Models.Settings;
+﻿using MahApps.Metro.IconPacks;
 using System.Collections.Generic;
-using NETworkManager.Models.Network;
 
 namespace NETworkManager
 {
@@ -13,26 +10,28 @@ namespace NETworkManager
         {
             // General
             new SettingsViewInfo(Name.General, new PackIconModern{ Kind = PackIconModernKind.Box }, Group.General),
-            new SettingsViewInfo(Name.Window, new PackIconMaterial {Kind = PackIconMaterialKind.Application }, Group.General),
+            new SettingsViewInfo(Name.Window, new PackIconMaterial { Kind = PackIconMaterialKind.Application }, Group.General),
             new SettingsViewInfo(Name.Appearance, new PackIconMaterial { Kind = PackIconMaterialKind.AutoFix }, Group.General),
-            new SettingsViewInfo(Name.Language, new PackIconMaterial { Kind = PackIconMaterialKind.Flag}, Group.General),
+            new SettingsViewInfo(Name.Language, new PackIconMaterial { Kind = PackIconMaterialKind.Flag }, Group.General),
             new SettingsViewInfo(Name.HotKeys, new PackIconOcticons { Kind = PackIconOcticonsKind.Keyboard }, Group.General),
             new SettingsViewInfo(Name.Autostart, new PackIconMaterial { Kind = PackIconMaterialKind.Power }, Group.General),
-            new SettingsViewInfo(Name.Update, new PackIconMaterial {Kind = PackIconMaterialKind.Download }, Group.General),
-            new SettingsViewInfo(Name.ImportExport, new PackIconMaterial { Kind = PackIconMaterialKind.Import}, Group.General),
+            new SettingsViewInfo(Name.Update, new PackIconMaterial { Kind = PackIconMaterialKind.Download }, Group.General),
+            new SettingsViewInfo(Name.ImportExport, new PackIconMaterial { Kind = PackIconMaterialKind.Import }, Group.General),
             new SettingsViewInfo(Name.Settings, new PackIconMaterialLight { Kind = PackIconMaterialLightKind.Cog }, Group.General),
 
             // Applications
-            new SettingsViewInfo(Name.IPScanner, new PackIconMaterial {Kind = PackIconMaterialKind.Sitemap }, Group.Applications),
-            new SettingsViewInfo(Name.PortScanner, new PackIconModern{Kind = PackIconModernKind.NetworkPort }, Group.Applications),
-            new SettingsViewInfo(Name.Ping, new PackIconMaterial{ Kind = PackIconMaterialKind.LanConnect }, Group.Applications),
-            new SettingsViewInfo(Name.Traceroute, new PackIconModern {Kind = PackIconModernKind.TransitConnection}, Group.Applications),
-            new SettingsViewInfo(Name.DNSLookup, new PackIconMaterial { Kind= PackIconMaterialKind.SearchWeb }, Group.Applications ),
-            new SettingsViewInfo(Name.RemoteDesktop, new PackIconMaterial{ Kind = PackIconMaterialKind.RemoteDesktop}, Group.Applications),
-            new SettingsViewInfo(Name.PuTTY, new PackIconOcticons {Kind = PackIconOcticonsKind.Terminal}, Group.Applications),
-            new SettingsViewInfo(Name.SNMP,new PackIconMaterial {Kind = PackIconMaterialKind.Switch }, Group.Applications),
-            new SettingsViewInfo(Name.WakeOnLAN, new PackIconMaterial {Kind = PackIconMaterialKind.Power} , Group.Applications),
-            new SettingsViewInfo(Name.HTTPHeaders, new PackIconMaterial {Kind = PackIconMaterialKind.Web}, Group.Applications)
+            new SettingsViewInfo(Name.IPScanner, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.IPScanner), Group.Applications),
+            new SettingsViewInfo(Name.PortScanner,ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PortScanner), Group.Applications),
+            new SettingsViewInfo(Name.Ping, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Ping), Group.Applications),
+            new SettingsViewInfo(Name.Traceroute, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Traceroute), Group.Applications),
+            new SettingsViewInfo(Name.DNSLookup, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.DNSLookup), Group.Applications ),
+            new SettingsViewInfo(Name.RemoteDesktop, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PuTTY), Group.Applications),
+            new SettingsViewInfo(Name.PuTTY, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.TightVNC), Group.Applications),
+            new SettingsViewInfo(Name.TightVNC, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.IPScanner), Group.Applications),
+            new SettingsViewInfo(Name.SNMP, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.SNMP), Group.Applications),
+            new SettingsViewInfo(Name.WakeOnLAN, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.WakeOnLAN), Group.Applications),
+            new SettingsViewInfo(Name.HTTPHeaders, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.HTTPHeaders), Group.Applications),
+            new SettingsViewInfo(Name.Whois, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Whois), Group.Applications)
         };
 
         public static string TranslateName(Name name, Group group)
@@ -40,7 +39,7 @@ namespace NETworkManager
             switch (name)
             {
                 case Name.General:
-                return Resources.Localization.Strings.General;
+                    return Resources.Localization.Strings.General;
                 case Name.Window:
                     return Resources.Localization.Strings.Window;
                 case Name.Appearance:
@@ -71,12 +70,16 @@ namespace NETworkManager
                     return Resources.Localization.Strings.RemoteDesktop;
                 case Name.PuTTY:
                     return Resources.Localization.Strings.PuTTY;
+                case Name.TightVNC:
+                    return Resources.Localization.Strings.TightVNC;
                 case Name.SNMP:
                     return Resources.Localization.Strings.SNMP;
                 case Name.WakeOnLAN:
                     return Resources.Localization.Strings.WakeOnLAN;
                 case Name.HTTPHeaders:
                     return Resources.Localization.Strings.HTTPHeaders;
+                case Name.Whois:
+                    return Resources.Localization.Strings.Whois;
                 default:
                     return "Translation of name not found";
             }
@@ -113,9 +116,11 @@ namespace NETworkManager
             DNSLookup,
             RemoteDesktop,
             PuTTY,
+            TightVNC,
             SNMP,
             WakeOnLAN,
-            HTTPHeaders
+            HTTPHeaders,
+            Whois
         }
 
         public enum Group

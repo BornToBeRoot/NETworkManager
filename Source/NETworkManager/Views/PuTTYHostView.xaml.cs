@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace NETworkManager.Views
@@ -20,14 +21,15 @@ namespace NETworkManager.Views
             InterTabController.Partition = ApplicationViewManager.Name.PuTTY.ToString();
         }
 
-        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             _loaded = true;
         }
 
-        private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
+        private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
-            if (sender is ContextMenu menu) menu.DataContext = _viewModel;
+            if (sender is ContextMenu menu)
+                menu.DataContext = _viewModel;
         }
 
         private void ListBoxItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -38,7 +40,7 @@ namespace NETworkManager.Views
 
         public async void AddTab(string host)
         {
-            // Wait for the interface to load, before displaying the dialog to connect a new Profile... 
+            // Wait for the interface to load, before displaying the dialog to connect a new profile... 
             // MahApps will throw an exception... 
             while (!_loaded)
                 await Task.Delay(100);

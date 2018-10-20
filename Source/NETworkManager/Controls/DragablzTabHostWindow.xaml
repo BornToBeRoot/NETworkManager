@@ -7,10 +7,13 @@
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:controls="clr-namespace:NETworkManager.Controls"
         xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:wpfHelper="clr-namespace:NETworkManager.WpfHelper"
         mc:Ignorable="d"
         Title="NETworkManager" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" TitleAlignment="Left"
-        d:DataContext="{d:DesignInstance networkManagerControls:DragablzTabHostWindow}">    
+        d:DataContext="{d:DesignInstance networkManagerControls:DragablzTabHostWindow}">
     <mahAppsControls:MetroWindow.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </mahAppsControls:MetroWindow.Resources>
@@ -26,11 +29,14 @@
             <TextBlock VerticalAlignment="Center" Height="48" TextAlignment="Center" FontSize="22" Style="{StaticResource HeaderTextBlock}" Text="{Binding ApplicationTitle}" Foreground="{DynamicResource GrayBrush3}" Margin="0" />
         </Border>
         <dragablz:TabablzControl Focusable="False" Grid.Row="1" Name="TabsContainer" ClosingItemCallback="{Binding CloseItemCommand}">
+            <dragablz:TabablzControl.Resources>
+                <wpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+            </dragablz:TabablzControl.Resources>
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" x:Name="InterTabController" />
             </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.Style>
-                <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">                
+                <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}">
                     <!-- If not null, the header suffix will be removed in the main window -->
                     <Setter Property="HeaderSuffixContent" Value="{x:Null}" />
                     <Setter Property="ContentTemplate">
@@ -40,6 +46,73 @@
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>
+                    <Style.Triggers>
+                        <!-- Add ContextMenu for PuTTY -->
+                        <DataTrigger Binding="{Binding IsPuTTYControl}" Value="True">
+                            <DataTrigger.Setters>
+                                <Setter Property="HeaderItemTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate DataType="controls:DragablzTabItem">
+                                            <Border BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,1,0">
+                                                <Grid>
+                                                    <Grid.ContextMenu>
+                                                        <ContextMenu>
+                                                            <MenuItem Header="{x:Static localization:Strings.RestartSession}" Command="{Binding Data.RestartPuTTYSessionCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                                                <MenuItem.Icon>
+                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                                        <Rectangle.OpacityMask>
+                                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
+                                                                        </Rectangle.OpacityMask>
+                                                                    </Rectangle>
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                        </ContextMenu>
+                                                    </Grid.ContextMenu>
+                                                    <Grid.InputBindings>
+                                                        <MouseBinding Command="dragablz:TabablzControl.CloseItemCommand" Gesture="MiddleClick" />
+                                                    </Grid.InputBindings>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Grid ToolTip="{Binding Header}">
+                                                            <TextBlock Text="{Binding Header}" VerticalAlignment="Center" Width="150" Margin="10">
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+                                                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
+                                                                                <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                            </TextBlock>
+                                                            <Thumb Style="{DynamicResource InvisibleThumbStyle}" dragablz:DragablzItem.IsCustomThumb="True" />
+                                                        </Grid>
+                                                        <Button Style="{StaticResource CleanButton}" Command="dragablz:TabablzControl.CloseItemCommand" ToolTip="{x:Static localization:Strings.Close}" Margin="0,0,10,0">
+                                                            <Rectangle Width="16" Height="16">
+                                                                <Rectangle.OpacityMask>
+                                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=WindowClose}" />
+                                                                </Rectangle.OpacityMask>
+                                                                <Rectangle.Style>
+                                                                    <Style TargetType="{x:Type Rectangle}">
+                                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Rectangle.Style>
+                                                            </Rectangle>
+                                                        </Button>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                    </Style.Triggers>
                 </Style>
             </dragablz:TabablzControl.Style>
         </dragablz:TabablzControl>

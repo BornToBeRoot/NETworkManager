@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -204,16 +203,15 @@ namespace NETworkManager.Models.Settings
 
         public static void Update(Version programmVersion, Version settingsVersion)
         {
-            Debug.WriteLine(settingsVersion);
-
             // Version is 0.0.0.0 on first run or settings reset --> skip updates 
             if (settingsVersion > new Version("0.0.0.0"))
             {
                 var reorderApplications = false;
 
-                // Features added in 1.7.3.0
-                if (settingsVersion < new Version("1.7.3.0"))
+                // Features added in 1.8.0.0
+                if (settingsVersion < new Version("1.8.0.0"))
                 {
+                    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.TightVNC));
                     Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.Whois));
 
                     reorderApplications = true;

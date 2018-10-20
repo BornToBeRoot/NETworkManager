@@ -145,7 +145,7 @@ namespace NETworkManager.ViewModels
             get => _isEdited;
             set
             {
-                if(value == _isEdited)
+                if (value == _isEdited)
                     return;
 
                 _isEdited = value;
@@ -587,6 +587,62 @@ namespace NETworkManager.ViewModels
 
         #endregion
 
+        #region DNS Lookup
+        private bool _dnsLookup_Enabled;
+        public bool DNSLookup_Enabled
+        {
+            get => _dnsLookup_Enabled;
+            set
+            {
+                if (value == _dnsLookup_Enabled)
+                    return;
+
+                _dnsLookup_Enabled = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _dnsLookup_InheritHost;
+        public bool DNSLookup_InheritHost
+        {
+            get => _dnsLookup_InheritHost;
+            set
+            {
+                if (value == _dnsLookup_InheritHost)
+                    return;
+
+                _dnsLookup_InheritHost = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _dnsLookup_Host;
+        public string DNSLookup_Host
+        {
+            get => _dnsLookup_Host;
+            set
+            {
+                if (value == _dnsLookup_Host)
+                    return;
+
+                _dnsLookup_Host = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         #region RemoteDesktop
         private bool _remoteDesktop_Enabled;
         public bool RemoteDesktop_Enabled
@@ -924,6 +980,80 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
+        #region TightVNC
+        private bool _tightVNC_Enabled;
+        public bool TightVNC_Enabled
+        {
+            get => _tightVNC_Enabled;
+            set
+            {
+                if (value == _tightVNC_Enabled)
+                    return;
+
+                _tightVNC_Enabled = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _tightVNC_InheritHost;
+        public bool TightVNC_InheritHost
+        {
+            get => _tightVNC_InheritHost;
+            set
+            {
+                if (value == _tightVNC_InheritHost)
+                    return;
+
+                _tightVNC_InheritHost = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _tightVNC_Host;
+        public string TightVNC_Host
+        {
+            get => _tightVNC_Host;
+            set
+            {
+                if (value == _tightVNC_Host)
+                    return;
+
+                _tightVNC_Host = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private int _tightVNC_Port;
+        public int TightVNC_Port
+        {
+            get => _tightVNC_Port;
+            set
+            {
+                if (value == _tightVNC_Port)
+                    return;
+
+                _tightVNC_Port = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         #region Wake on LAN
         private bool _wakeOnLAN_Enabled;
         public bool WakeOnLAN_Enabled
@@ -989,6 +1119,100 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _wakeOnLAN_Port = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region HTTP Headers
+        private bool _httpHeaders_Enabled;
+        public bool HTTPHeaders_Enabled
+        {
+            get => _httpHeaders_Enabled;
+            set
+            {
+                if (value == _httpHeaders_Enabled)
+                    return;
+
+                _httpHeaders_Enabled = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _httpHeaders_Website;
+        public string HTTPHeaders_Website
+        {
+            get => _httpHeaders_Website;
+            set
+            {
+                if (value == _httpHeaders_Website)
+                    return;
+
+                _httpHeaders_Website = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Whois
+        private bool _whois_Enabled;
+        public bool Whois_Enabled
+        {
+            get => _whois_Enabled;
+            set
+            {
+                if (value == _whois_Enabled)
+                    return;
+
+                _whois_Enabled = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _whois_InheritHost;
+        public bool Whois_InheritHost
+        {
+            get => _whois_InheritHost;
+            set
+            {
+                if (value == _whois_InheritHost)
+                    return;
+
+                _whois_InheritHost = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _whois_Domain;
+        public string Whois_Domain
+        {
+            get => _whois_Domain;
+            set
+            {
+                if (value == _whois_Domain)
+                    return;
+
+                _whois_Domain = value;
 
                 if (!_isLoading)
                     Validate();
@@ -1065,6 +1289,11 @@ namespace NETworkManager.ViewModels
             Traceroute_InheritHost = profileInfo2.Traceroute_InheritHost;
             Traceroute_Host = profileInfo2.Traceroute_Host;
 
+            // DNS Lookup
+            DNSLookup_Enabled = profileInfo2.DNSLookup_Enabled;
+            DNSLookup_InheritHost = profileInfo2.DNSLookup_InheritHost;
+            DNSLookup_Host = profileInfo2.DNSLookup_Host;
+
             // Remote Desktop
             RemoteDesktop_Enabled = profileInfo2.RemoteDesktop_Enabled;
             RemoteDesktop_InheritHost = profileInfo2.RemoteDesktop_InheritHost;
@@ -1110,10 +1339,26 @@ namespace NETworkManager.ViewModels
             PuTTY_Profile = profileInfo2.PuTTY_Profile;
             PuTTY_AdditionalCommandLine = profileInfo2.PuTTY_AdditionalCommandLine;
 
+            // TightVNC
+            TightVNC_Enabled = profileInfo2.TightVNC_Enabled;
+            TightVNC_InheritHost = profileInfo2.TightVNC_InheritHost;
+            TightVNC_Host = profileInfo2.TightVNC_Host;
+            TightVNC_Port = profileInfo2.TightVNC_Port == 0 ? SettingsManager.Current.TightVNC_VNCPort : profileInfo2.TightVNC_Port;
+
+            // Wake on LAN
             WakeOnLAN_Enabled = profileInfo2.WakeOnLAN_Enabled;
             WakeOnLAN_MACAddress = profileInfo2.WakeOnLAN_MACAddress;
             WakeOnLAN_Broadcast = profileInfo2.WakeOnLAN_Broadcast;
-            WakeOnLAN_Port = profileInfo2.WakeOnLAN_Port == 0 ? SettingsManager.Current.WakeOnLAN_DefaultPort : profileInfo2.WakeOnLAN_Port;
+            WakeOnLAN_Port = profileInfo2.WakeOnLAN_Port == 0 ? SettingsManager.Current.WakeOnLAN_Port : profileInfo2.WakeOnLAN_Port;
+
+            // HTTP Headers
+            HTTPHeaders_Enabled = profileInfo2.HTTPHeaders_Enabled;
+            HTTPHeaders_Website = profileInfo2.HTTPHeaders_Website;
+
+            // Whois
+            Whois_Enabled = profileInfo2.Whois_Enabled;
+            Whois_InheritHost = profileInfo2.Whois_InheritHost;
+            Whois_Domain = profileInfo2.Whois_Domain;
 
             Validate();
 
@@ -1123,7 +1368,7 @@ namespace NETworkManager.ViewModels
         private void Validate()
         {
             // Note
-            IsTabEnabled = NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || RemoteDesktop_Enabled || PuTTY_Enabled || WakeOnLAN_Enabled;
+            IsTabEnabled = NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || DNSLookup_Enabled || RemoteDesktop_Enabled || PuTTY_Enabled || TightVNC_Enabled || WakeOnLAN_Enabled || HTTPHeaders_Enabled || Whois_Enabled;
         }
 
         #region ICommands & Actions

@@ -16,6 +16,7 @@
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:DNSServerInfoToString x:Key="DNSServerInfoToString" />
         <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
@@ -37,7 +38,11 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
@@ -55,9 +60,17 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static localization:Strings.Type}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox x:Name="ComboBoxTypes" Grid.Column="6" Grid.Row="0" ItemsSource="{Binding Types}" SelectedItem="{Binding Type}" Width="150" HorizontalAlignment="Left" />
-                <Button Grid.Column="8" Grid.Row="0" Command="{Binding LookupCommand}" IsDefault="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" HorizontalAlignment="Right">
+                <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static localization:Strings.DNSServers}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
+                <ComboBox x:Name="ComboBoxDNSServers" Grid.Column="6" Grid.Row="0" ItemsSource="{Binding DNSServers}" SelectedItem="{Binding DNSServer}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=., Converter={StaticResource DNSServerInfoToString}}" d:DataContext="{d:DesignInstance network:DNSServerInfo}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <TextBlock Grid.Column="8" Grid.Row="0" Text="{x:Static localization:Strings.Type}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
+                <ComboBox x:Name="ComboBoxTypes" Grid.Column="10" Grid.Row="0" ItemsSource="{Binding Types}" SelectedItem="{Binding Type}" Width="80" HorizontalAlignment="Left" />
+                <Button Grid.Column="12" Grid.Row="0" Command="{Binding LookupCommand}" IsDefault="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" HorizontalAlignment="Right">
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />

@@ -96,9 +96,11 @@ namespace NETworkManager.ViewModels
         private DNSLookupSettingsView _dnsLookupSettingsViewModel;
         private RemoteDesktopSettingsView _remoteDesktopSettingsView;
         private PuTTYSettingsView _puTTYSettingsView;
+        private TightVNCSettingsView _tightVNCSettingsView;
         private SNMPSettingsView _snmpSettingsView;
         private WakeOnLANSettingsView _wakeOnLANSettingsView;
         private HTTPHeadersSettingsView _httpHeadersSettingsView;
+        private WhoisSettingsView _whoisSettingsView;
         #endregion
 
         #region Contructor, load settings
@@ -265,6 +267,12 @@ namespace NETworkManager.ViewModels
 
                     SettingsContent = _puTTYSettingsView;
                     break;
+                case SettingsViewManager.Name.TightVNC:
+                    if(_tightVNCSettingsView == null)
+                        _tightVNCSettingsView = new TightVNCSettingsView();
+
+                    SettingsContent = _tightVNCSettingsView;
+                    break;
                 case SettingsViewManager.Name.SNMP:
                     if (_snmpSettingsView == null)
                         _snmpSettingsView = new SNMPSettingsView();
@@ -282,6 +290,12 @@ namespace NETworkManager.ViewModels
                         _httpHeadersSettingsView = new HTTPHeadersSettingsView();
 
                     SettingsContent = _httpHeadersSettingsView;
+                    break;
+                case SettingsViewManager.Name.Whois:
+                    if (_whoisSettingsView == null)
+                        _whoisSettingsView = new WhoisSettingsView();
+
+                    SettingsContent = _whoisSettingsView;
                     break;
             }
         }

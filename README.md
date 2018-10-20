@@ -21,6 +21,11 @@
       <img alt="AppVeyor Master" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/master.svg?style=flat-square&&label=master" />
     </a>    
   </p>
+  </p>
+  <a href="https://twitter.com/intent/tweet?text=NETworkManager%20-%20A%20powerful%20tool%20for%20managing%20networks%20and%20troubleshoot network problems!&url=https%3A%2F%2Fgithub.com%2FBornToBeRoot%2FNETworkManager&hashtags=networkmanager,ipscanner,portscanner,ssh,remotedesktop,snmp,dns,traceroute" target="_blank">
+     <img alt="Tweet" src="https://img.shields.io/twitter/url/https/github.com/BornToBeRoot/NETworkManager.svg?style=flat-square" />
+  </a>        
+  </p>
 </div>
 
 <div align="center"> 
@@ -47,10 +52,12 @@
 - Traceroute
 - DNS Lookup
 - Remote Desktop
-- PuTTY
+- PuTTY ([requires PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html))
+- TightVNC ([requires TightVNC](https://www.tightvnc.com/download.php))
 - SNMP - Get, Walk, Set (v1, v2c, v3)
 - Wake on LAN
 - HTTP Headers
+- Whois
 - Subnet Calculator - Calculator, Subnetting, Supernetting
 - Lookup - OUI, Port
 - Connections

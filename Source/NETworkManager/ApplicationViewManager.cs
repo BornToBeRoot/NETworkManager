@@ -41,24 +41,26 @@ namespace NETworkManager
                     return Resources.Localization.Strings.RemoteDesktop;
                 case Name.PuTTY:
                     return Resources.Localization.Strings.PuTTY;
+                case Name.TightVNC:
+                    return Resources.Localization.Strings.TightVNC;
                 case Name.SNMP:
                     return Resources.Localization.Strings.SNMP;
                 case Name.WakeOnLAN:
-                    return Resources.Localization.Strings.WakeOnLAN;        
+                    return Resources.Localization.Strings.WakeOnLAN;
+                case Name.HTTPHeaders:
+                    return Resources.Localization.Strings.HTTPHeaders;
+                case Name.Whois:
+                    return Resources.Localization.Strings.Whois;
                 case Name.SubnetCalculator:
                     return Resources.Localization.Strings.SubnetCalculator;
                 case Name.Lookup:
                     return Resources.Localization.Strings.Lookup;
-                case Name.Whois:
-                    return Resources.Localization.Strings.Whois;
-                case Name.HTTPHeaders:
-                    return Resources.Localization.Strings.HTTPHeaders;
                 case Name.Connections:
                     return Resources.Localization.Strings.Connections;
                 case Name.Listeners:
                     return Resources.Localization.Strings.Listeners;
                 case Name.ARPTable:
-                    return Resources.Localization.Strings.ARPTable;                
+                    return Resources.Localization.Strings.ARPTable;
                 default:
                     return "Name not found!";
             }
@@ -94,23 +96,26 @@ namespace NETworkManager
                 case Name.PuTTY:
                     canvas.Children.Add(new PackIconOcticons { Kind = PackIconOcticonsKind.Terminal });
                     break;
+                case Name.TightVNC:
+                    canvas.Children.Add(new PackIconMaterial {Kind = PackIconMaterialKind.EyeOutline});
+                    break;
                 case Name.SNMP:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Switch });
                     break;
                 case Name.WakeOnLAN:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Power });
                     break;
+                case Name.HTTPHeaders:
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Web });
+                    break;
+                case Name.Whois:
+                    canvas.Children.Add(new PackIconMaterial {Kind = PackIconMaterialKind.CloudSearchOutline});
+                    break;
                 case Name.SubnetCalculator:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Calculator });
                     break;
                 case Name.Lookup:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Magnify });
-                    break;
-                case Name.Whois:
-                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.CloudSearchOutline });
-                    break;
-                case Name.HTTPHeaders:
-                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Web });
                     break;
                 case Name.Connections:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Connect });
@@ -140,12 +145,14 @@ namespace NETworkManager
             DNSLookup,
             RemoteDesktop,
             PuTTY,
+            TightVNC,
             SNMP,
-            WakeOnLAN,            
+            WakeOnLAN,
+            HTTPHeaders,
+            Whois,
             SubnetCalculator,
             Lookup,
-            Whois,
-            HTTPHeaders,
+            //Routing,
             Connections,
             Listeners,
             ARPTable

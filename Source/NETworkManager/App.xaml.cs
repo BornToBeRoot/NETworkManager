@@ -49,7 +49,19 @@ namespace NETworkManager
             // Load application settings (profiles/Profiles/clients are loaded when needed)
             try
             {
+                // Update integrated settings %LocalAppData%\NETworkManager\NETworkManager_GUID (custom settings path)
+                if (Settings.Default.UpgradeRequired)
+                {
+                    Debug.Write("Upgrade settings...");
+                    Settings.Default.Upgrade();
+                    Settings.Default.UpgradeRequired = false;
+                }
+                
                 SettingsManager.Load();
+
+                // Update settings (Default --> %AppData%\NETworkManager\Settings)
+                if (AssemblyManager.Current.Version > new Version(SettingsManager.Current.SettingsVersion))
+                    SettingsManager.Update(AssemblyManager.Current.Version, new Version(SettingsManager.Current.SettingsVersion));
             }
             catch (InvalidOperationException)
             {

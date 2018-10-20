@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using Heijden.DNS;
 using Lextm.SharpSnmpLib.Messaging;
+using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
 using static NETworkManager.Models.Network.SNMP;
 
@@ -34,14 +35,14 @@ namespace NETworkManager.Models.Settings
             get => _settingsVersion;
             set
             {
-                if(value == _settingsVersion)
+                if (value == _settingsVersion)
                     return;
 
                 _settingsVersion = value;
                 SettingsChanged = true;
             }
-        } 
-        
+        }
+
         #region General 
         // General        
         private ApplicationViewManager.Name _general_DefaultApplicationViewName = ApplicationViewManager.Name.NetworkInterface;
@@ -78,7 +79,7 @@ namespace NETworkManager.Models.Settings
             get => _general_ApplicationList;
             set
             {
-                if(value == _general_ApplicationList)
+                if (value == _general_ApplicationList)
                     return;
 
                 _general_ApplicationList = value;
@@ -88,7 +89,7 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
-        
+
         // Window
         private bool _window_ConfirmClose;
         public bool Window_ConfirmClose
@@ -341,7 +342,7 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
-        #region NetworkInterface       
+        #region Network Interface       
         private string _networkInterface_SelectedInterfaceId;
         public string NetworkInterface_SelectedInterfaceId
         {
@@ -676,7 +677,7 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
-        #region PortScanner
+        #region Port Scanner
         private ObservableCollection<string> _portScanner_HostHistory = new ObservableCollection<string>();
         public ObservableCollection<string> PortScanner_HostHistory
         {
@@ -1171,44 +1172,30 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _dnsLookup_UseCustomDNSServer;
-        public bool DNSLookup_UseCustomDNSServer
+        private ObservableCollection<DNSServerInfo> _dnsLookup_DNSServers = new ObservableCollection<DNSServerInfo>();
+        public ObservableCollection<DNSServerInfo> DNSLookup_DNSServers
         {
-            get => _dnsLookup_UseCustomDNSServer;
+            get => _dnsLookup_DNSServers;
             set
             {
-                if (value == _dnsLookup_UseCustomDNSServer)
+                if (value == _dnsLookup_DNSServers)
                     return;
 
-                _dnsLookup_UseCustomDNSServer = value;
+                _dnsLookup_DNSServers = value;
                 SettingsChanged = true;
             }
         }
 
-        private List<string> _dnsLookup_CustomDNSServer = new List<string>();
-        public List<string> DNSLookup_CustomDNSServer
+        private DNSServerInfo _dnsLookup_SelectedDNSServer = new DNSServerInfo();
+        public DNSServerInfo DNSLookup_SelectedDNSServer
         {
-            get => _dnsLookup_CustomDNSServer;
+            get => _dnsLookup_SelectedDNSServer;
             set
             {
-                if (value == _dnsLookup_CustomDNSServer)
+                if (value == _dnsLookup_SelectedDNSServer)
                     return;
 
-                _dnsLookup_CustomDNSServer = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private int _dnsLookup_Port = 53;
-        public int DNSLookup_Port
-        {
-            get => _dnsLookup_Port;
-            set
-            {
-                if (value == _dnsLookup_Port)
-                    return;
-
-                _dnsLookup_Port = value;
+                _dnsLookup_SelectedDNSServer = value;
                 SettingsChanged = true;
             }
         }
@@ -1384,7 +1371,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _dnsLookup_ExpandStatistics;
+        private bool _dnsLookup_ExpandStatistics = true;
         public bool DNSLookup_ExpandStatistics
         {
             get => _dnsLookup_ExpandStatistics;
@@ -1394,6 +1381,34 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _dnsLookup_ExpandProfileView = true;
+        public bool DNSLookup_ExpandProfileView
+        {
+            get => _dnsLookup_ExpandProfileView;
+            set
+            {
+                if (value == _dnsLookup_ExpandProfileView)
+                    return;
+
+                _dnsLookup_ExpandProfileView = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private double _dnsLookup_ProfileWidth = 250;
+        public double DNSLookup_ProfileWidth
+        {
+            get => _dnsLookup_ProfileWidth;
+            set
+            {
+                if (value == _dnsLookup_ProfileWidth)
+                    return;
+
+                _dnsLookup_ProfileWidth = value;
                 SettingsChanged = true;
             }
         }
@@ -1941,6 +1956,95 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
+        #region TightVNC
+        private ObservableCollection<string> _tightVNC_HostHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> TightVNC_HostHistory
+        {
+            get => _tightVNC_HostHistory;
+            set
+            {
+                if (value == _tightVNC_HostHistory)
+                    return;
+
+                _tightVNC_HostHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<int> _tightVNC_PortHistory = new ObservableCollection<int>();
+        public ObservableCollection<int> TightVNC_PortHistory
+        {
+            get => _tightVNC_PortHistory;
+            set
+            {
+                if (value == _tightVNC_PortHistory)
+                    return;
+
+                _tightVNC_PortHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _tightVNC_ExpandProfileView = true;
+        public bool TightVNC_ExpandProfileView
+        {
+            get => _tightVNC_ExpandProfileView;
+            set
+            {
+                if (value == _tightVNC_ExpandProfileView)
+                    return;
+
+                _tightVNC_ExpandProfileView = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private double _tightVNC_ProfileWidth = 250;
+        public double TightVNC_ProfileWidth
+        {
+            get => _tightVNC_ProfileWidth;
+            set
+            {
+                if (value == _tightVNC_ProfileWidth)
+                    return;
+
+                _tightVNC_ProfileWidth = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private string _tightVNC_TightVNCLocation;
+        public string TightVNC_TightVNCLocation
+        {
+            get => _tightVNC_TightVNCLocation;
+            set
+            {
+                if (value == _tightVNC_TightVNCLocation)
+                    return;
+
+                _tightVNC_TightVNCLocation = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
+
+        private int _tightVNC_VNCPort = 5900;
+        public int TightVNC_VNCPort
+        {
+            get => _tightVNC_VNCPort;
+            set
+            {
+                if (value == _tightVNC_VNCPort)
+                    return;
+
+                _tightVNC_VNCPort = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
         #region SNMP
         private WalkMode _snmp_WalkMode = WalkMode.WithinSubtree;
         public WalkMode SNMP_WalkMode
@@ -2129,16 +2233,16 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region WakeOnLAN
-        private int _wakeOnLAN_DefaultPort = 7;
-        public int WakeOnLAN_DefaultPort
+        private int _wakeOnLAN_Port = 7;
+        public int WakeOnLAN_Port
         {
-            get => _wakeOnLAN_DefaultPort;
+            get => _wakeOnLAN_Port;
             set
             {
-                if (value == _wakeOnLAN_DefaultPort)
+                if (value == _wakeOnLAN_Port)
                     return;
 
-                _wakeOnLAN_DefaultPort = value;
+                _wakeOnLAN_Port = value;
                 SettingsChanged = true;
             }
         }
@@ -2211,6 +2315,34 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_ExpandStatistics = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _httpHeaders_ExpandProfileView = true;
+        public bool HTTPHeaders_ExpandProfileView
+        {
+            get => _httpHeaders_ExpandProfileView;
+            set
+            {
+                if (value == _httpHeaders_ExpandProfileView)
+                    return;
+
+                _httpHeaders_ExpandProfileView = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private double _httpHeaders_ProfileWidth = 250;
+        public double HTTPHeaders_ProfileWidth
+        {
+            get => _httpHeaders_ProfileWidth;
+            set
+            {
+                if (value == _httpHeaders_ProfileWidth)
+                    return;
+
+                _httpHeaders_ProfileWidth = value;
                 SettingsChanged = true;
             }
         }
@@ -2373,6 +2505,34 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private bool _whois_ExpandProfileView = true;
+        public bool Whois_ExpandProfileView
+        {
+            get => _whois_ExpandProfileView;
+            set
+            {
+                if (value == _whois_ExpandProfileView)
+                    return;
+
+                _whois_ExpandProfileView = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private double _whois_ProfileWidth = 250;
+        public double Whois_ProfileWidth
+        {
+            get => _whois_ProfileWidth;
+            set
+            {
+                if (value == _whois_ProfileWidth)
+                    return;
+
+                _whois_ProfileWidth = value;
+                SettingsChanged = true;
+            }
+        }
+
         private bool _whois_ShowStatistics = true;
         public bool Whois_ShowStatistics
         {
@@ -2504,6 +2664,7 @@ namespace NETworkManager.Models.Settings
 
             // DNS Lookup
             DNSLookup_HostHistory.CollectionChanged += CollectionChanged;
+            DNSLookup_DNSServers.CollectionChanged += CollectionChanged;
 
             // Remote Desktop
             RemoteDesktop_HostHistory.CollectionChanged += CollectionChanged;
@@ -2515,6 +2676,9 @@ namespace NETworkManager.Models.Settings
             PuTTY_BaudHistory.CollectionChanged += CollectionChanged;
             PuTTY_UsernameHistory.CollectionChanged += CollectionChanged;
             PuTTY_ProfileHistory.CollectionChanged += CollectionChanged;
+
+            // TightVNC
+            TightVNC_HostHistory.CollectionChanged += CollectionChanged; 
 
             // SNMP
             SNMP_HostHistory.CollectionChanged += CollectionChanged;

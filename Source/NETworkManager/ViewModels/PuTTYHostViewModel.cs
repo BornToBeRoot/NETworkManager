@@ -25,8 +25,6 @@ namespace NETworkManager.ViewModels
         public IInterTabClient InterTabClient { get; }
         public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-        private const string TagIdentifier = "tag=";
-
         private readonly bool _isLoading;
 
         private bool _isPuTTYConfigured;
@@ -55,7 +53,7 @@ namespace NETworkManager.ViewModels
                 _selectedTabIndex = value;
                 OnPropertyChanged();
             }
-        }              
+        }
 
         #region Profiles
 
@@ -168,8 +166,8 @@ namespace NETworkManager.ViewModels
                 var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
-                if (search.StartsWith(TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                    return !string.IsNullOrEmpty(info.Tags) && info.PuTTY_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(TagIdentifier.Length, search.Length - TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+                if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
+                    return !string.IsNullOrEmpty(info.Tags) && info.PuTTY_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
 
                 // Search by: Name, PuTTY_HostOrSerialLine
                 return info.PuTTY_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PuTTY_HostOrSerialLine.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
@@ -206,7 +204,15 @@ namespace NETworkManager.ViewModels
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzTabItem)?.View as PuttyControl)?.CloseTab();
+            ((args.DragablzItem.Content as DragablzTabItem)?.View as PuTTYControl)?.CloseTab();
+        }
+
+        public ICommand RestartPuTTYSessionCommand => new RelayCommand(RestartPuTTYSessionAction);
+
+        private void RestartPuTTYSessionAction(object view)
+        {
+            if (view is PuTTYControl puttyControl)
+                puttyControl.RestartPuTTYSession();
         }
 
         public ICommand ConnectCommand
@@ -301,7 +307,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
-            }, ProfileManager.GetGroups(), true,SelectedProfile);
+            }, ProfileManager.GetGroups(), true, SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -334,7 +340,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
-            }, ProfileManager.GetGroups(), false,SelectedProfile);
+            }, ProfileManager.GetGroups(), false, SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -458,7 +464,7 @@ namespace NETworkManager.ViewModels
                 AddProfileToHistory(instance.Profile);
 
                 // Create Profile info
-                var puTTYProfileInfo = new PuTTYProfileInfo
+                var puTTYProfileInfo = new PuTTYSessionInfo
                 {
                     HostOrSerialLine = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
                     Mode = instance.ConnectionMode,
@@ -490,7 +496,7 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfile()
         {
-            Connect(PuTTYProfileInfo.Parse(SelectedProfile), SelectedProfile.Name);
+            Connect(PuTTYSessionInfo.Parse(SelectedProfile), SelectedProfile.Name);
         }
 
         private void ConnectProfileExternal()
@@ -498,18 +504,18 @@ namespace NETworkManager.ViewModels
             var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.PuTTY_PuTTYLocation,
-                Arguments = PuTTY.BuildCommandLine(PuTTYProfileInfo.Parse(SelectedProfile))
+                Arguments = PuTTY.BuildCommandLine(PuTTYSessionInfo.Parse(SelectedProfile))
             };
 
             Process.Start(info);
         }
 
-        private void Connect(PuTTYProfileInfo profileInfo, string header = null)
+        private void Connect(PuTTYSessionInfo profileInfo, string header = null)
         {
             // Add PuTTY path here...
             profileInfo.PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
 
-            TabItems.Add(new DragablzTabItem(header ?? profileInfo.HostOrSerialLine, new PuttyControl(profileInfo)));
+           TabItems.Add(new DragablzTabItem(header ?? profileInfo.HostOrSerialLine, new PuTTYControl(profileInfo)));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

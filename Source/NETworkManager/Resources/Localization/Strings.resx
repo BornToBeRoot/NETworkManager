@@ -655,7 +655,7 @@
     <value>Yes</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>add</value>
+    <value>Add</value>
   </data>
   <data name="AddATabToOpenANewConnection" xml:space="preserve">
     <value>Add a tab to open a new connection...</value>
@@ -1969,5 +1969,65 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   </data>
   <data name="ExampleDomain" xml:space="preserve">
     <value>example.com</value>
+  </data>
+  <data name="Routing" xml:space="preserve">
+    <value>Routing</value>
+  </data>
+  <data name="Release" xml:space="preserve">
+    <value>Release</value>
+  </data>
+  <data name="ReleaseRenew" xml:space="preserve">
+    <value>Release &amp; Renew</value>
+  </data>
+  <data name="Renew" xml:space="preserve">
+    <value>Renew</value>
+  </data>
+  <data name="WindowsDNSSettings" xml:space="preserve">
+    <value>Windows DNS settings</value>
+  </data>
+  <data name="DeleteDNSServer" xml:space="preserve">
+    <value>Delete DNS server</value>
+  </data>
+  <data name="DeleteDNSServerMessage" xml:space="preserve">
+    <value>The selected DNS server will be deleted permanently.</value>
+  </data>
+  <data name="AddDNSServer" xml:space="preserve">
+    <value>Add DNS server</value>
+  </data>
+  <data name="EditDNSServer" xml:space="preserve">
+    <value>Edit DNS server</value>
+  </data>
+  <data name="DNSServerWithThisNameAlreadyExists" xml:space="preserve">
+    <value>A DNS server with this name already exists!</value>
+  </data>
+  <data name="RestartSession" xml:space="preserve">
+    <value>Restart session</value>
+  </data>
+  <data name="ExamplePort5900" xml:space="preserve">
+    <value>5900</value>
+  </data>
+  <data name="TightVNC" xml:space="preserve">
+    <value>TightVNC</value>
+  </data>
+  <data name="ConfigureThePathToTightVNCInTheSettingsDots" xml:space="preserve">
+    <value>Configure the path to TightVNC in the settings...</value>
+  </data>
+  <data name="ConfigureTightVNC" xml:space="preserve">
+    <value>Configure TightVNC</value>
+  </data>
+  <data name="DefaultVNCPort" xml:space="preserve">
+    <value>Default VNC port</value>
+  </data>
+  <data name="DisableTransparencyInTheSettingsToUseTightVNC" xml:space="preserve">
+    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TightVNC.</value>
+  </data>
+  <data name="TightVNCLocationDots" xml:space="preserve">
+    <value>TightVNC location...</value>
+  </data>
+  <data name="TightVNCProcessHasEnded" xml:space="preserve">
+    <value>TightVNC process has ended!</value>
+  </data>
+  <data name="ConnectingDots" xml:space="preserve">
+    <value>Connecting...</value>
   </data>
 </root>

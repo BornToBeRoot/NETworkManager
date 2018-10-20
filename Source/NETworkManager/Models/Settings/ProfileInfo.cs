@@ -39,6 +39,10 @@ namespace NETworkManager.Models.Settings
         public bool Traceroute_InheritHost { get; set; } = true;
         public string Traceroute_Host { get; set; }
 
+        public bool DNSLookup_Enabled { get; set; }
+        public bool DNSLookup_InheritHost { get; set; } = true;
+        public string DNSLookup_Host { get; set; }
+
         public bool RemoteDesktop_Enabled { get; set; }
         public bool RemoteDesktop_InheritHost { get; set; } = true;
         public string RemoteDesktop_Host { get; set; }
@@ -52,10 +56,22 @@ namespace NETworkManager.Models.Settings
         public string PuTTY_Profile { get; set; }
         public string PuTTY_AdditionalCommandLine { get; set; }
 
+        public bool TightVNC_Enabled { get; set; }
+        public bool TightVNC_InheritHost { get; set; } = true;
+        public string TightVNC_Host { get; set; }
+        public int TightVNC_Port { get; set; }
+
         public bool WakeOnLAN_Enabled { get; set; }
         public string WakeOnLAN_MACAddress { get; set; }
         public string WakeOnLAN_Broadcast { get; set; }
         public int WakeOnLAN_Port { get; set; }
+
+        public bool HTTPHeaders_Enabled { get; set; }
+        public string HTTPHeaders_Website { get; set; }
+
+        public bool Whois_Enabled { get; set; }
+        public bool Whois_InheritHost { get; set; } = true;
+        public string Whois_Domain { get; set; }
 
         public ProfileInfo()
         {

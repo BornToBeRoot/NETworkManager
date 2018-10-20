@@ -219,12 +219,18 @@
       <DependentUpon>DragablzTabHostWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DragablzTabItem.cs" />
+    <Compile Include="Controls\TightVNCControl.xaml.cs">
+      <DependentUpon>TightVNCControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DNSServerInfoToString.cs" />
     <Compile Include="Converters\ApplicationNameToIconConverter.cs" />
     <Compile Include="Converters\AutoRefreshTimeToStringConverter.cs" />
     <Compile Include="Converters\BigIntegerToStringConverter.cs" />
+    <Compile Include="Converters\OperationalStatusToStringConverter.cs" />
+    <Compile Include="Converters\ListToStringConverter.cs" />
     <Compile Include="Converters\BooleanReverseToVisibilityHiddenConverter.cs" />
     <Compile Include="Converters\ApplicationNameToTranslatedStringConverter.cs" />
     <Compile Include="Converters\TcpStateToStringConverter.cs" />
@@ -239,6 +245,8 @@
     <Compile Include="Models\Documentation\CommunityManager.cs" />
     <Compile Include="Models\Documentation\ResourceInfo.cs" />
     <Compile Include="Models\Documentation\ResourceManager.cs" />
+    <Compile Include="Models\Network\DNSServer.cs" />
+    <Compile Include="Models\Network\DNSServerInfo.cs" />
     <Compile Include="Models\Network\Listener.cs" />
     <Compile Include="Models\Network\Connection.cs" />
     <Compile Include="Models\Network\ListenerInfo.cs" />
@@ -250,6 +258,8 @@
     <Compile Include="Models\PuTTY\PuTTY.cs" />
     <Compile Include="Models\Settings\ProfileInfo.cs" />
     <Compile Include="Models\Settings\ProfileManager.cs" />
+    <Compile Include="Models\TightVNC\TightVNC.cs" />
+    <Compile Include="Models\TightVNC\TightVNCSessionInfo.cs" />
     <Compile Include="Resources\Localization\StaticStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -292,6 +302,7 @@
     <Compile Include="Validators\DomainValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetmaskOrCIDRValidator.cs" />
     <Compile Include="Validators\IsCredentialNameUnique.cs" />
+    <Compile Include="Validators\IsDNSServerNameUnique.cs" />
     <Compile Include="Validators\NoSpacesValidator.cs" />
     <Compile Include="Validators\BaudValidator.cs" />
     <Compile Include="Validators\PrivacyAESValidator.cs" />
@@ -302,6 +313,11 @@
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="Validators\IsProfileNameUnique.cs" />
+    <Compile Include="ViewModels\DNSServerViewModel.cs" />
+    <Compile Include="ViewModels\TightVNCConnectViewModel.cs" />
+    <Compile Include="ViewModels\TightVNCSettingsViewModel.cs" />
+    <Compile Include="ViewModels\TightVNCHostViewModel.cs" />
+    <Compile Include="ViewModels\WhoisSettingsViewModel.cs" />
     <Compile Include="ViewModels\WhoisHostViewModel.cs" />
     <Compile Include="ViewModels\WhoisViewModel.cs" />
     <Compile Include="ViewModels\ProfilesViewModel.cs" />
@@ -356,6 +372,21 @@
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
+    <Compile Include="Views\DNSServerDialog.xaml.cs">
+      <DependentUpon>DNSServerDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TightVNCConnectDialog.xaml.cs">
+      <DependentUpon>TightVNCConnectDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TightVNCSettingsView.xaml.cs">
+      <DependentUpon>TightVNCSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TightVNCHostView.xaml.cs">
+      <DependentUpon>TightVNCHostView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WhoisSettingsView.xaml.cs">
+      <DependentUpon>WhoisSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WhoisHostView.xaml.cs">
       <DependentUpon>WhoisHostView.xaml</DependentUpon>
     </Compile>
@@ -485,11 +516,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\TightVNCControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\PuTTYControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\ContextMenu\ContextMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\DropDownButtonStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -621,6 +660,26 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Page Include="Views\DNSServerDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TightVNCConnectDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TightVNCSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TightVNCHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WhoisSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\WhoisHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

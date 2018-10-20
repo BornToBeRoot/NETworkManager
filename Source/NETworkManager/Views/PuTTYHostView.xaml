@@ -11,7 +11,9 @@
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
-        dialogs:DialogParticipation.Register="{Binding}"
+        xmlns:controls="clr-namespace:NETworkManager.Controls"
+             xmlns:wpfHelper="clr-namespace:NETworkManager.WpfHelper"
+             dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PuTTYHostViewModel}">
     <UserControl.Resources>
@@ -43,6 +45,9 @@
             </Grid.ColumnDefinitions>
             <airspaceFixer:AirspacePanel Grid.Column="0" Grid.Row="0" FixAirspace="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsDialogOpen}">
                 <dragablz:TabablzControl ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsDialogOpen, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                    <dragablz:TabablzControl.Resources>
+                        <wpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+                    </dragablz:TabablzControl.Resources>
                     <dragablz:TabablzControl.InterTabController>
                         <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" MoveWindowWithSolitaryTabs="False" x:Name="InterTabController" />
                     </dragablz:TabablzControl.InterTabController>
@@ -67,6 +72,64 @@
                             </Button>
                         </Grid>
                     </dragablz:TabablzControl.HeaderSuffixContent>
+                    <dragablz:TabablzControl.HeaderItemTemplate>
+                        <DataTemplate DataType="controls:DragablzTabItem">
+                            <Border BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,1,0">
+                                <Grid>
+                                    <Grid.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="{x:Static localization:Strings.RestartSession}" Command="{Binding Data.RestartPuTTYSessionCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                                <MenuItem.Icon>
+                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                        <Rectangle.OpacityMask>
+                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
+                                                        </Rectangle.OpacityMask>
+                                                    </Rectangle>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </Grid.ContextMenu>
+                                    <Grid.InputBindings>
+                                        <MouseBinding Command="dragablz:TabablzControl.CloseItemCommand" Gesture="MiddleClick" />
+                                    </Grid.InputBindings>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Grid ToolTip="{Binding Header}">
+                                            <TextBlock Text="{Binding Header}" VerticalAlignment="Center" Width="150" Margin="10">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+                                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
+                                                                <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                            <Thumb Style="{DynamicResource InvisibleThumbStyle}" dragablz:DragablzItem.IsCustomThumb="True" />
+                                        </Grid>
+                                        <Button Style="{StaticResource CleanButton}" Command="dragablz:TabablzControl.CloseItemCommand" ToolTip="{x:Static localization:Strings.Close}" Margin="0,0,10,0">
+                                            <Rectangle Width="16" Height="16">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=WindowClose}" />
+                                                </Rectangle.OpacityMask>
+                                                <Rectangle.Style>
+                                                    <Style TargetType="{x:Type Rectangle}">
+                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Rectangle.Style>
+                                            </Rectangle>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </dragablz:TabablzControl.HeaderItemTemplate>
                 </dragablz:TabablzControl>
             </airspaceFixer:AirspacePanel>
             <Grid Grid.Column="0" VerticalAlignment="Center">
@@ -318,7 +381,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Settings}" />
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:MaterialLight Kind=Cog}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.OpenSettings}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
@@ -337,7 +400,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Settings}" />
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:MaterialLight Kind=Cog}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.OpenSettings}" FontSize="14" Margin="10,5" TextAlignment="Center"/>

@@ -14,7 +14,7 @@ namespace NETworkManager.Views
             DataContext = _viewModel;
         }
 
-        private void TextBoxPuTTYLocation_Drop(object sender, System.Windows.DragEventArgs e)
+        private void TextBoxPuTTYLocation_Drop(object sender, DragEventArgs e)
         {
             if (!e.Data.GetDataPresent(DataFormats.FileDrop))
                 return;
@@ -25,7 +25,7 @@ namespace NETworkManager.Views
                 _viewModel.SetFilePathFromDragDrop(files[0]);
         }
 
-        private void TextBoxPuTTYLocation_PreviewDragOver(object sender, System.Windows.DragEventArgs e)
+        private void TextBoxPuTTYLocation_PreviewDragOver(object sender, DragEventArgs e)
         {
             e.Effects = DragDropEffects.Copy;
             e.Handled = true;

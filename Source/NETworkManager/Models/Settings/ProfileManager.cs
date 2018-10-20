@@ -10,6 +10,8 @@ namespace NETworkManager.Models.Settings
     {
         public const string ProfilesFileName = "Profiles.xml";
 
+        public const string TagIdentifier = "tag=";
+
         public static ObservableCollection<ProfileInfo> Profiles { get; set; }
         public static bool ProfilesChanged { get; set; }
 
@@ -138,6 +140,10 @@ namespace NETworkManager.Models.Settings
                 Traceroute_InheritHost = instance.Traceroute_InheritHost,
                 Traceroute_Host = instance.Traceroute_InheritHost ? instance.Host?.Trim() : instance.Traceroute_Host?.Trim(),
 
+                DNSLookup_Enabled =  instance.DNSLookup_Enabled,
+                DNSLookup_InheritHost = instance.Traceroute_InheritHost,
+                DNSLookup_Host = instance.DNSLookup_InheritHost ? instance.Host?.Trim() : instance.DNSLookup_Host?.Trim(),
+
                 RemoteDesktop_Enabled = instance.RemoteDesktop_Enabled,
                 RemoteDesktop_InheritHost = instance.RemoteDesktop_InheritHost,
                 RemoteDesktop_Host = instance.RemoteDesktop_InheritHost ? instance.Host?.Trim() : instance.RemoteDesktop_Host?.Trim(),
@@ -151,10 +157,22 @@ namespace NETworkManager.Models.Settings
                 PuTTY_Profile = instance.PuTTY_Profile?.Trim(),
                 PuTTY_AdditionalCommandLine = instance.PuTTY_AdditionalCommandLine?.Trim(),
 
+                TightVNC_Enabled = instance.TightVNC_Enabled,
+                TightVNC_InheritHost =  instance.TightVNC_InheritHost,
+                TightVNC_Host = instance.TightVNC_InheritHost ? instance.Host?.Trim() : instance.TightVNC_Host?.Trim(),
+                TightVNC_Port = instance.TightVNC_Port,
+
                 WakeOnLAN_Enabled = instance.WakeOnLAN_Enabled,
                 WakeOnLAN_MACAddress = instance.WakeOnLAN_MACAddress?.Trim(),
                 WakeOnLAN_Broadcast = instance.WakeOnLAN_Broadcast?.Trim(),
-                WakeOnLAN_Port = instance.WakeOnLAN_Port
+                WakeOnLAN_Port = instance.WakeOnLAN_Port,
+
+                HTTPHeaders_Enabled = instance.HTTPHeaders_Enabled,
+                HTTPHeaders_Website = instance.HTTPHeaders_Website,
+
+                Whois_Enabled = instance.Whois_Enabled,
+                Whois_InheritHost =  instance.Whois_InheritHost,
+                Whois_Domain = instance.Whois_InheritHost ? instance.Host?.Trim() : instance.Whois_Domain?.Trim()
             });
         }
 
