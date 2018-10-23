@@ -171,7 +171,7 @@ namespace NETworkManager.Controls
                         IsConnected = true;
 
                         // Resize embedded application & refresh       
-                        ResizeEmbeddedPutty();
+                        ResizeEmbeddedPuTTY();
                     }
                 }
                 else
@@ -204,7 +204,7 @@ namespace NETworkManager.Controls
             IsConnected = false;
         }
 
-        private void ResizeEmbeddedPutty()
+        private void ResizeEmbeddedPuTTY()
         {
             if (IsConnected)
                 NativeMethods.SetWindowPos(_puttyProcess.MainWindowHandle, IntPtr.Zero, 0, 0, PuTTYHost.ClientSize.Width, PuTTYHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
@@ -234,14 +234,14 @@ namespace NETworkManager.Controls
         private void PuTTYGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (_puttyProcess != null)
-                ResizeEmbeddedPutty();
+                ResizeEmbeddedPuTTY();
         }
 
         private void ResizeTimer_Tick(object sender, EventArgs e)
         {
             _resizeTimer.Stop();
 
-            ResizeEmbeddedPutty();
+            ResizeEmbeddedPuTTY();
         }
         #endregion
     }
