@@ -52,7 +52,6 @@ namespace NETworkManager
                 // Update integrated settings %LocalAppData%\NETworkManager\NETworkManager_GUID (custom settings path)
                 if (Settings.Default.UpgradeRequired)
                 {
-                    Debug.Write("Upgrade settings...");
                     Settings.Default.Upgrade();
                     Settings.Default.UpgradeRequired = false;
                 }
