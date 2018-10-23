@@ -168,10 +168,10 @@ namespace NETworkManager.Controls
                         style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME);
                         NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
 
+                        IsConnected = true;
+
                         // Resize embedded application & refresh       
                         ResizeEmbeddedPutty();
-
-                        IsConnected = true;
                     }
                 }
                 else
