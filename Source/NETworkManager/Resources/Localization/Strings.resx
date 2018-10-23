@@ -561,9 +561,6 @@
   <data name="PrimaryDNSServer" xml:space="preserve">
     <value>Primary DNS server</value>
   </data>
-  <data name="ReadTheMACAddressFromTheArpCache" xml:space="preserve">
-    <value>Read the MAC address from the ARP cache</value>
-  </data>
   <data name="ReceivedLost" xml:space="preserve">
     <value>Received / Lost</value>
   </data>
@@ -2029,5 +2026,11 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   </data>
   <data name="ConnectingDots" xml:space="preserve">
     <value>Connecting...</value>
+  </data>
+  <data name="ResolveMACAddressAndVendor" xml:space="preserve">
+    <value>Resolve MAC address and vendor</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
   </data>
 </root>

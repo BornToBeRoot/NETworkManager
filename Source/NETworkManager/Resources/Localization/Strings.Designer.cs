@@ -3717,15 +3717,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Read the MAC address from the ARP cache.
-        /// </summary>
-        public static string ReadTheMACAddressFromTheArpCache {
-            get {
-                return ResourceManager.GetString("ReadTheMACAddressFromTheArpCache", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Received / Lost.
         /// </summary>
         public static string ReceivedLost {
@@ -4347,6 +4338,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resolve MAC address and vendor.
+        /// </summary>
+        public static string ResolveMACAddressAndVendor {
+            get {
+                return ResourceManager.GetString("ResolveMACAddressAndVendor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resolve PTR.
         /// </summary>
         public static string ResolvePTR {
@@ -4937,6 +4937,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Steel {
             get {
                 return ResourceManager.GetString("Steel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         
