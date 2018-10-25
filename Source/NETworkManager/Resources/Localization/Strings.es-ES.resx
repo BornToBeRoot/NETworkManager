@@ -561,9 +561,6 @@
   <data name="PrimaryDNSServer" xml:space="preserve">
     <value>Servidor DNS primario</value>
   </data>
-  <data name="ReadTheMACAddressFromTheArpCache" xml:space="preserve">
-    <value>Leer la dirección MAC de la caché ARP</value>
-  </data>
   <data name="ReceivedLost" xml:space="preserve">
     <value>Recibido / Perdido</value>
   </data>
@@ -655,7 +652,7 @@
     <value>Sí</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>Add</value>
+    <value>Añadir</value>
   </data>
   <data name="AddATabToOpenANewConnection" xml:space="preserve">
     <value>Añadir una pestaña para abrir una nueva conexión...</value>
@@ -751,7 +748,7 @@
     <value>Comunidad</value>
   </data>
   <data name="ConfigureThePathToPuTTYInTheSettingsDots" xml:space="preserve">
-    <value>Configure la ruta a PuTTY en la configuración...</value>
+    <value>Configure la ruta de PuTTY en la configuración...</value>
   </data>
   <data name="ConfirmClose" xml:space="preserve">
     <value>Confirmar cierre</value>
@@ -829,10 +826,10 @@
     <value>Los perfiles seleccionados se eliminarán permanentemente.</value>
   </data>
   <data name="DisableTransparencyInTheSettingsToUsePuTTY" xml:space="preserve">
-    <value>Desactive la transparencia en la configuración (General/Apariencia) y reinicie la aplicación luego puede usar PuTTY.</value>
+    <value>Desactive la transparencia en la configuración (General/Apariencia) y luego reinicie la aplicación para usar PuTTY.</value>
   </data>
   <data name="DisableTransparencyInTheSettingsToUseRemoteDesktop" xml:space="preserve">
-    <value>Desactive la transparencia en la configuración (General/Apariencia) y reinicie la aplicación luego puede usar el Escritorio remoto.</value>
+    <value>Desactive la transparencia en la configuración (General/Apariencia) y luego reinicie la aplicación para usar el Escritorio remoto.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>Configuración automática de DNS</value>
@@ -1971,37 +1968,37 @@
     <value>ejemplo.com</value>
   </data>
   <data name="Routing" xml:space="preserve">
-    <value>Routing</value>
+    <value>Enrutado</value>
   </data>
   <data name="Release" xml:space="preserve">
-    <value>Release</value>
+    <value>Liberar</value>
   </data>
   <data name="ReleaseRenew" xml:space="preserve">
-    <value>Release &amp; Renew</value>
+    <value>Liberar y renovar</value>
   </data>
   <data name="Renew" xml:space="preserve">
-    <value>Renew</value>
+    <value>Renovar</value>
   </data>
   <data name="WindowsDNSSettings" xml:space="preserve">
-    <value>Windows DNS settings</value>
+    <value>Configuración DNS de Windows</value>
   </data>
   <data name="DeleteDNSServer" xml:space="preserve">
-    <value>Delete DNS server</value>
+    <value>Eliminar servidor DNS</value>
   </data>
   <data name="DeleteDNSServerMessage" xml:space="preserve">
-    <value>The selected DNS server will be deleted permanently.</value>
+    <value>El servidor DNS seleccionado será eliminado permanentemente.</value>
   </data>
   <data name="AddDNSServer" xml:space="preserve">
-    <value>Add DNS server</value>
+    <value>Añadir servidor DNS</value>
   </data>
   <data name="EditDNSServer" xml:space="preserve">
-    <value>Edit DNS server</value>
+    <value>Editar servidor DNS</value>
   </data>
   <data name="DNSServerWithThisNameAlreadyExists" xml:space="preserve">
-    <value>A DNS server with this name already exists!</value>
+    <value>¡Ya existe un servidor DNS con este nombre!</value>
   </data>
   <data name="RestartSession" xml:space="preserve">
-    <value>Restart session</value>
+    <value>Reiniciar sesión</value>
   </data>
   <data name="ExamplePort5900" xml:space="preserve">
     <value>5900</value>
@@ -2010,24 +2007,30 @@
     <value>TightVNC</value>
   </data>
   <data name="ConfigureThePathToTightVNCInTheSettingsDots" xml:space="preserve">
-    <value>Configure the path to TightVNC in the settings...</value>
+    <value>Configure la ruta de TightVNC en la configuración...</value>
   </data>
   <data name="ConfigureTightVNC" xml:space="preserve">
-    <value>Configure TightVNC</value>
+    <value>Configurar TightVNC</value>
   </data>
   <data name="DefaultVNCPort" xml:space="preserve">
-    <value>Default VNC port</value>
+    <value>Puerto VNC predeterminado</value>
   </data>
   <data name="DisableTransparencyInTheSettingsToUseTightVNC" xml:space="preserve">
-    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TightVNC.</value>
+    <value>Desactive la transparencia en la configuración (General/Apariencia) y luego reinicie la aplicación para usar TightVNC.</value>
   </data>
   <data name="TightVNCLocationDots" xml:space="preserve">
-    <value>TightVNC location...</value>
+    <value>Ubicación de TightVNC...</value>
   </data>
   <data name="TightVNCProcessHasEnded" xml:space="preserve">
-    <value>TightVNC process has ended!</value>
+    <value>¡El proceso de TightVNC ha finalizado!</value>
   </data>
   <data name="ConnectingDots" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>Conectando...</value>
+  </data>
+  <data name="ResolveMACAddressAndVendor" xml:space="preserve">
+    <value>Resolve MAC address and vendor</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value/>
   </data>
 </root>
