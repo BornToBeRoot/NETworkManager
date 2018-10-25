@@ -335,7 +335,7 @@ namespace NETworkManager.Controls
                 case 8711:
                     return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrSmartcardCardBlocked;
                 default:
-                    return "reason not found!";
+                    return string.Empty;
             }
         }
         #endregion
