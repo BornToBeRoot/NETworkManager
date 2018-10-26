@@ -561,9 +561,6 @@
   <data name="PrimaryDNSServer" xml:space="preserve">
     <value>Primärer DNS-Server</value>
   </data>
-  <data name="ReadTheMACAddressFromTheArpCache" xml:space="preserve">
-    <value>MAC-Adresse aus dem ARP-Cache auslesen</value>
-  </data>
   <data name="ReceivedLost" xml:space="preserve">
     <value>Empfangen / Verloren</value>
   </data>
@@ -2029,5 +2026,11 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
   </data>
   <data name="ConnectingDots" xml:space="preserve">
     <value>Verbinde...</value>
+  </data>
+  <data name="ResolveMACAddressAndVendor" xml:space="preserve">
+    <value>MAC-Adresse und Hersteller auflösen</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value/>
   </data>
 </root>

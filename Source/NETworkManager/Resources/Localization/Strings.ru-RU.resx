@@ -561,9 +561,6 @@
   <data name="PrimaryDNSServer" xml:space="preserve">
     <value>Первичный DNS-сервер</value>
   </data>
-  <data name="ReadTheMACAddressFromTheArpCache" xml:space="preserve">
-    <value>Чтение MAC-адреса в кэше ARP</value>
-  </data>
   <data name="ReceivedLost" xml:space="preserve">
     <value>Получено / Потеряно</value>
   </data>
@@ -2029,5 +2026,11 @@
   </data>
   <data name="ConnectingDots" xml:space="preserve">
     <value>Connecting...</value>
+  </data>
+  <data name="ResolveMACAddressAndVendor" xml:space="preserve">
+    <value>Resolve MAC address and vendor</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value/>
   </data>
 </root>

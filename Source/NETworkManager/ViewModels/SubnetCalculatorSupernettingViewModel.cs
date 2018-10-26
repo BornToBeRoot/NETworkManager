@@ -1,4 +1,5 @@
-﻿using NETworkManager.Models.Settings;
+﻿using System;
+using NETworkManager.Models.Settings;
 using System.Windows.Input;
 using NETworkManager.Utilities;
 using System.Windows.Data;
@@ -6,12 +7,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Numerics;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.ViewModels
 {
     public class SubnetCalculatorSupernettingViewModel : ViewModelBase
     {
         #region Variables
+        private readonly IDialogCoordinator _dialogCoordinator;
+
         private string _subnet1;
         public string Subnet1
         {
@@ -187,8 +191,10 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings
-        public SubnetCalculatorSupernettingViewModel()
+        public SubnetCalculatorSupernettingViewModel(IDialogCoordinator instance)
         {
+            _dialogCoordinator = instance;
+
             // Set collection view
             Subnet1HistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Supernetting_Subnet1);
             Subnet2HistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Supernetting_Subnet2);
@@ -208,30 +214,47 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void Calculate()
+        private async void Calculate()
         {
-            IsCalculationRunning = true;
+            try
+            {
+                IsCalculationRunning = true;
 
-            var subnet1 = IPNetwork.Parse(Subnet1);
-            var subnet2 = IPNetwork.Parse(Subnet2);
+                var subnet1 = IPNetwork.Parse(Subnet1);
+                var subnet2 = IPNetwork.Parse(Subnet2);
 
-            var subnet = subnet1.Supernet(subnet2);
+                var subnet = subnet1.Supernet(subnet2);
 
-            NetworkAddress = subnet.Network;
-            Broadcast = subnet.Broadcast;
-            Subnetmask = subnet.Netmask;
-            CIDR = subnet.Cidr;
-            IPAddresses = subnet.Total;
-            FirstIPAddress = subnet.FirstUsable;
-            LastIPAddress = subnet.LastUsable;
-            Hosts = subnet.Usable;
+                NetworkAddress = subnet.Network;
+                Broadcast = subnet.Broadcast;
+                Subnetmask = subnet.Netmask;
+                CIDR = subnet.Cidr;
+                IPAddresses = subnet.Total;
+                FirstIPAddress = subnet.FirstUsable;
+                LastIPAddress = subnet.LastUsable;
+                Hosts = subnet.Usable;
 
-            IsResultVisible = true;
+                IsResultVisible = true;
 
-            AddSubnet1ToHistory(Subnet1);
-            AddSubnet2ToHistory(Subnet2);
+                AddSubnet1ToHistory(Subnet1);
+                AddSubnet2ToHistory(Subnet2);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                var settings = AppearanceManager.MetroDialog;
+                settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
 
-            IsCalculationRunning = false;
+                ConfigurationManager.Current.IsDialogOpen = true;
+
+                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, "This is a known error, see:\n\nhttps://github.com/BornToBeRoot/NETworkManager/issues/151\n\n\n--- Error message ---\n" + 
+                    ex.Message, MessageDialogStyle.Affirmative, settings);
+
+                ConfigurationManager.Current.IsDialogOpen = false;
+            }
+            finally
+            {
+                IsCalculationRunning = false;
+            }
         }
 
         private void AddSubnet1ToHistory(string subnet)
