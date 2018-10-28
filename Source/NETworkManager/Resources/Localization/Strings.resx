@@ -2033,4 +2033,22 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="String1" xml:space="preserve">
     <value />
   </data>
+  <data name="ExportAll" xml:space="preserve">
+    <value>Export all</value>
+  </data>
+  <data name="ExportDots" xml:space="preserve">
+    <value>Export...</value>
+  </data>
+  <data name="ExportSelected" xml:space="preserve">
+    <value>Export selected</value>
+  </data>
+  <data name="CSV" xml:space="preserve">
+    <value>CSV</value>
+  </data>
+  <data name="ExportLocationDots" xml:space="preserve">
+    <value>Export location...</value>
+  </data>
+  <data name="XML" xml:space="preserve">
+    <value>XML</value>
+  </data>
 </root>

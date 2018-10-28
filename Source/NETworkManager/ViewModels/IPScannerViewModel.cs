@@ -14,13 +14,16 @@ using System.Windows.Data;
 using System.Linq;
 using NETworkManager.Utilities;
 using Dragablz;
+using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
     public class IPScannerViewModel : ViewModelBase
     {
         #region Variables
+        private readonly IDialogCoordinator _dialogCoordinator;
 
         private CancellationTokenSource _cancellationTokenSource;
 
@@ -257,9 +260,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings, shutdown
-        public IPScannerViewModel(int tabId, string ipRange)
+        public IPScannerViewModel(IDialogCoordinator instance, int tabId, string ipRange)
         {
             _isLoading = true;
+
+            _dialogCoordinator = instance;
 
             _tabId = tabId;
             IPRange = ipRange;
@@ -320,7 +325,7 @@ namespace NETworkManager.ViewModels
             if (!(name is string appName))
                 return;
 
-            if(!Enum.TryParse(appName, out ApplicationViewManager.Name app))
+            if (!Enum.TryParse(appName, out ApplicationViewManager.Name app))
                 return;
 
             var host = !string.IsNullOrEmpty(SelectedIPScanResult.Hostname) ? SelectedIPScanResult.Hostname : SelectedIPScanResult
@@ -348,7 +353,7 @@ namespace NETworkManager.ViewModels
         {
             EventSystem.RedirectToApplication(ApplicationViewManager.Name.DNSLookup, SelectedIPScanResult.Hostname);
         }
-        
+
         public ICommand CopySelectedIPAddressCommand
         {
             get { return new RelayCommand(p => CopySelectedIPAddressAction()); }
@@ -427,6 +432,45 @@ namespace NETworkManager.ViewModels
         private void CopySelectedStatusAction()
         {
             CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + SelectedIPScanResult.PingInfo.Status));
+        }
+
+        public ICommand ExportAllCommand
+        {
+            get { return new RelayCommand(p => ExportAllAction()); }
+        }
+
+        private async void ExportAllAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            });
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand ExportSelectedCommand
+        {
+            get { return new RelayCommand(p => ExportSelectedAction()); }
+        }
+
+        private void ExportSelectedAction()
+        {
+
         }
         #endregion
 

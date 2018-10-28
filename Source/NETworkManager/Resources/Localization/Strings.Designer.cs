@@ -988,6 +988,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CSV.
+        /// </summary>
+        public static string CSV {
+            get {
+                return ResourceManager.GetString("CSV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Custom.
         /// </summary>
         public static string Custom {
@@ -2226,6 +2235,42 @@ namespace NETworkManager.Resources.Localization {
         public static string Export {
             get {
                 return ResourceManager.GetString("Export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export all.
+        /// </summary>
+        public static string ExportAll {
+            get {
+                return ResourceManager.GetString("ExportAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export....
+        /// </summary>
+        public static string ExportDots {
+            get {
+                return ResourceManager.GetString("ExportDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export location....
+        /// </summary>
+        public static string ExportLocationDots {
+            get {
+                return ResourceManager.GetString("ExportLocationDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export selected.
+        /// </summary>
+        public static string ExportSelected {
+            get {
+                return ResourceManager.GetString("ExportSelected", resourceCulture);
             }
         }
         
@@ -5783,6 +5828,15 @@ namespace NETworkManager.Resources.Localization {
         public static string WrongPasswordMessage {
             get {
                 return ResourceManager.GetString("WrongPasswordMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XML.
+        /// </summary>
+        public static string XML {
+            get {
+                return ResourceManager.GetString("XML", resourceCulture);
             }
         }
         
