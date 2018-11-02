@@ -36,6 +36,7 @@
                     <Binding Path="ExportFilePath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <validators:FilePathValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
@@ -43,7 +44,17 @@
         </Grid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
-            <Button Content="{x:Static localization:Strings.Export}" Command="{Binding ExportCommand}" IsDefault="True" Style="{StaticResource HighlightedButton}" Margin="10,0,0,0" />
+            <Button Content="{x:Static localization:Strings.Export}" Command="{Binding ExportCommand}" IsDefault="True" Margin="10,0,0,0">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=TextBoxExportFilePath, Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </StackPanel>
     </Grid>
 </UserControl>

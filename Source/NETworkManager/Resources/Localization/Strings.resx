@@ -2051,4 +2051,10 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="XML" xml:space="preserve">
     <value>XML</value>
   </data>
+  <data name="File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="EnterValidFilePath" xml:space="preserve">
+    <value>Enter valid file path!</value>
+  </data>
 </root>

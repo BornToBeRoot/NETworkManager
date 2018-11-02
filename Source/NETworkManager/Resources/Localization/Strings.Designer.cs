@@ -1663,6 +1663,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter valid file path!.
+        /// </summary>
+        public static string EnterValidFilePath {
+            get {
+                return ResourceManager.GetString("EnterValidFilePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter valid hosts (multiple hosts can not end with &quot;;&quot;)!.
         /// </summary>
         public static string EnterValidHosts {
@@ -2280,6 +2289,15 @@ namespace NETworkManager.Resources.Localization {
         public static string FieldCannotBeEmpty {
             get {
                 return ResourceManager.GetString("FieldCannotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        public static string File {
+            get {
+                return ResourceManager.GetString("File", resourceCulture);
             }
         }
         

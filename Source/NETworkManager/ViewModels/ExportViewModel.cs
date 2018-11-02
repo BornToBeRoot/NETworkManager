@@ -2,6 +2,7 @@
 using System;
 using System.Windows.Forms;
 using System.Windows.Input;
+using NETworkManager.Resources.Localization;
 
 namespace NETworkManager.ViewModels
 {
@@ -70,6 +71,12 @@ namespace NETworkManager.ViewModels
         private void BrowseFileAction()
         {
             var saveFileDialog = new SaveFileDialog();
+
+            if (UseCSV)
+                saveFileDialog.Filter = $@"CSV-{Strings.File} | *.csv";
+
+            if(UseXML)
+                saveFileDialog.Filter = $@"XML-{Strings.File} | *.xml";
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {

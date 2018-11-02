@@ -299,6 +299,7 @@
     <Compile Include="Models\Settings\CredentialManager.cs" />
     <Compile Include="Models\Update\UpdateAvailableArgs.cs" />
     <Compile Include="Models\Update\Updater.cs" />
+    <Compile Include="Validators\FilePathValidator.cs" />
     <Compile Include="Validators\DomainValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetmaskOrCIDRValidator.cs" />
     <Compile Include="Validators\IsCredentialNameUnique.cs" />
