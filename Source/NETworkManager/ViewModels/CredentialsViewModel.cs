@@ -358,7 +358,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, false);
+            });
 
             customDialog.Content = new CredentialDialog
             {

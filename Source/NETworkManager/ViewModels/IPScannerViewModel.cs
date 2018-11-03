@@ -4,6 +4,7 @@ using System.Net;
 using System.Windows.Input;
 using System.Windows;
 using System;
+using System.Collections;
 using System.Threading;
 using System.Collections.Generic;
 using NETworkManager.Models.Network;
@@ -12,6 +13,7 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Linq;
+using System.Management.Instrumentation;
 using NETworkManager.Utilities;
 using Dragablz;
 using MahApps.Metro.Controls.Dialogs;
@@ -82,16 +84,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<IPScannerHostInfo> _ipScanResult = new ObservableCollection<IPScannerHostInfo>();
-        public ObservableCollection<IPScannerHostInfo> IPScanResult
+        private ObservableCollection<IPScannerHostInfo> _ipScanResults = new ObservableCollection<IPScannerHostInfo>();
+        public ObservableCollection<IPScannerHostInfo> IPScanResults
         {
-            get => _ipScanResult;
+            get => _ipScanResults;
             set
             {
-                if (value != null && value == _ipScanResult)
+                if (value != null && value == _ipScanResults)
                     return;
 
-                _ipScanResult = value;
+                _ipScanResults = value;
             }
         }
 
@@ -107,6 +109,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _selectedIPScanResult = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IList _selectedIPScanResults = new ArrayList();
+        public IList SelectedIPScanResults
+        {
+            get => _selectedIPScanResults;
+            set
+            {
+                if (Equals(value, _selectedIPScanResults))
+                    return;
+
+                _selectedIPScanResults = value;
                 OnPropertyChanged();
             }
         }
@@ -275,7 +291,7 @@ namespace NETworkManager.ViewModels
             IPRangeHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_IPRangeHistory);
 
             // Result view
-            IPScanResultView = CollectionViewSource.GetDefaultView(IPScanResult);
+            IPScanResultView = CollectionViewSource.GetDefaultView(IPScanResults);
             IPScanResultView.SortDescriptions.Add(new SortDescription(
                 nameof(IPScannerHostInfo.PingInfo) + "." + nameof(PingInfo.IPAddressInt32),
                 ListSortDirection.Ascending));
@@ -458,7 +474,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                ExportManager.Export(instance.FilePath, instance.FileType, IPScanResult);
+                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? IPScanResults : new ObservableCollection<IPScannerHostInfo>(SelectedIPScanResults.Cast<IPScannerHostInfo>().ToArray()));
 
             }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
 
@@ -486,7 +502,7 @@ namespace NETworkManager.ViewModels
             _dispatcherTimer.Start();
             EndTime = null;
 
-            IPScanResult.Clear();
+            IPScanResults.Clear();
             HostsFound = 0;
 
             // Change the tab title (not nice, but it works)
@@ -626,8 +642,8 @@ namespace NETworkManager.ViewModels
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                lock (IPScanResult)
-                    IPScanResult.Add(ipScannerHostInfo);
+                lock (IPScanResults)
+                    IPScanResults.Add(ipScannerHostInfo);
             }));
 
             HostsFound++;
