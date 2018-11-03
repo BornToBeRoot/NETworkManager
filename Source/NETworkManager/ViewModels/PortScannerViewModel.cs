@@ -369,7 +369,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {
-            CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString(SelectedScanResult.Status.ToString()));
+            CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString(SelectedScanResult.Status.ToString(), LocalizationManager.Culture));
         }
 
         public ICommand CopySelectedProtocolCommand

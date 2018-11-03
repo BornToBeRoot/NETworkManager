@@ -2,6 +2,7 @@
 using System;
 using System.Windows.Forms;
 using System.Windows.Input;
+using NETworkManager.Models.Export;
 using NETworkManager.Resources.Localization;
 
 namespace NETworkManager.ViewModels
@@ -12,14 +13,19 @@ namespace NETworkManager.ViewModels
 
         public ICommand CancelCommand { get; }
 
+        public ExportManager.ExportFileType FileType;
+
         private bool _useCSV;
         public bool UseCSV
         {
             get => _useCSV;
             set
             {
-                if(value == _useCSV)
+                if (value == _useCSV)
                     return;
+
+                if (value)
+                    FileType = ExportManager.ExportFileType.CSV;
 
                 _useCSV = value;
                 OnPropertyChanged();
@@ -32,24 +38,27 @@ namespace NETworkManager.ViewModels
             get => _useXML;
             set
             {
-                if(value== _useXML)
+                if (value == _useXML)
                     return;
+
+                if (value)
+                    FileType = ExportManager.ExportFileType.XML;
 
                 _useXML = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _exportFilePath;
-        public string ExportFilePath
+        private string _filePath;
+        public string FilePath
         {
-            get => _exportFilePath;
+            get => _filePath;
             set
             {
-                if(value == _exportFilePath)
+                if (value == _filePath)
                     return;
 
-                _exportFilePath = value;
+                _filePath = value;
                 OnPropertyChanged();
             }
         }
@@ -72,17 +81,14 @@ namespace NETworkManager.ViewModels
         {
             var saveFileDialog = new SaveFileDialog();
 
-            if (UseCSV)
-                saveFileDialog.Filter = $@"CSV-{Strings.File} | *.csv";
+            var fileExtension = ExportManager.GetFileExtensionAsString(FileType);
 
-            if(UseXML)
-                saveFileDialog.Filter = $@"XML-{Strings.File} | *.xml";
+            saveFileDialog.Filter = $@"{fileExtension}-{Strings.File} | *.{fileExtension.ToLower()}";
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                ExportFilePath = saveFileDialog.FileName;
+                FilePath = saveFileDialog.FileName;
             }
-
         }
     }
 }

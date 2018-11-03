@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
+using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Converters
 {
@@ -13,7 +14,7 @@ namespace NETworkManager.Converters
             if (!(value is Accent accent))
                 return "No valid accent passed!";
 
-            var name = Resources.Localization.Strings.ResourceManager.GetString(accent.Name);
+            var name = Resources.Localization.Strings.ResourceManager.GetString(accent.Name, LocalizationManager.Culture);
 
             if (string.IsNullOrEmpty(name))
                 name = accent.Name;

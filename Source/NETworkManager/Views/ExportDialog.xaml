@@ -33,7 +33,7 @@
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Path}" Style="{StaticResource DefaultTextBlock}" />
             <TextBox Grid.Column="2" Grid.Row="2"  x:Name="TextBoxExportFilePath" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExportLocationDots}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}">
                 <TextBox.Text>
-                    <Binding Path="ExportFilePath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="FilePath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                             <validators:FilePathValidator ValidatesOnTargetUpdated="True" />
