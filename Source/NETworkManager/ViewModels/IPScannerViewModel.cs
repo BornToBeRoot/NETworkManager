@@ -442,12 +442,12 @@ namespace NETworkManager.ViewModels
             CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + SelectedIPScanResult.PingInfo.Status, LocalizationManager.Culture));
         }
 
-        public ICommand ExportAllCommand
+        public ICommand ExportCommand
         {
-            get { return new RelayCommand(p => ExportAllAction()); }
+            get { return new RelayCommand(p => ExportAction()); }
         }
 
-        private async void ExportAllAction()
+        private async void ExportAction()
         {
             var customDialog = new CustomDialog
             {
@@ -458,14 +458,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                var info = new ExportInfo
-                {
-                    ApplicationName = ApplicationViewManager.Name.IPScanner,
-                    FilePath = instance.FilePath,
-                    Data = ExportManager.CreateData(IPScanResult, instance.FileType)
-                };
-
-                ExportManager.Export(info);
+                ExportManager.Export(instance.FilePath, instance.FileType, IPScanResult);
 
             }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
 
@@ -476,16 +469,6 @@ namespace NETworkManager.ViewModels
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
-
-        public ICommand ExportSelectedCommand
-        {
-            get { return new RelayCommand(p => ExportSelectedAction()); }
-        }
-
-        private void ExportSelectedAction()
-        {
-        }
-
         #endregion
 
         #region Methods

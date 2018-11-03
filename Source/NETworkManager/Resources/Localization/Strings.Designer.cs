@@ -277,6 +277,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string All {
+            get {
+                return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Always show icon in tray.
         /// </summary>
         public static string AlwaysShowIconInTray {
@@ -2370,6 +2379,15 @@ namespace NETworkManager.Resources.Localization {
         public static string ForkMeOnGitHub {
             get {
                 return ResourceManager.GetString("ForkMeOnGitHub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format.
+        /// </summary>
+        public static string Format {
+            get {
+                return ResourceManager.GetString("Format", resourceCulture);
             }
         }
         
@@ -4631,6 +4649,15 @@ namespace NETworkManager.Resources.Localization {
         public static string SelectAScreenResolution {
             get {
                 return ResourceManager.GetString("SelectAScreenResolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected.
+        /// </summary>
+        public static string Selected {
+            get {
+                return ResourceManager.GetString("Selected", resourceCulture);
             }
         }
         

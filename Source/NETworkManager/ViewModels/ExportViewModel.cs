@@ -13,6 +13,34 @@ namespace NETworkManager.ViewModels
 
         public ICommand CancelCommand { get; }
 
+        public bool _exportAll;
+        public bool ExportAll
+        {
+            get => _exportAll;
+            set
+            {
+                if(value==_exportAll)
+                    return;
+
+                _exportAll = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool _exportSelected;
+        public bool ExportSelected
+        {
+            get => _exportSelected;
+            set
+            {
+                if (value == _exportSelected)
+                    return;
+
+                _exportSelected = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ExportManager.ExportFileType FileType;
 
         private bool _useCSV;
@@ -69,6 +97,7 @@ namespace NETworkManager.ViewModels
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
             // Default
+            ExportAll = true;
             UseCSV = true;
         }
 
