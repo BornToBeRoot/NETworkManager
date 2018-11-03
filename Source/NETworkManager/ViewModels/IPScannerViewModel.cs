@@ -13,7 +13,6 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Linq;
-using System.Management.Instrumentation;
 using NETworkManager.Utilities;
 using Dragablz;
 using MahApps.Metro.Controls.Dialogs;
@@ -349,10 +348,7 @@ namespace NETworkManager.ViewModels
             if (!Enum.TryParse(appName, out ApplicationViewManager.Name app))
                 return;
 
-            var host = !string.IsNullOrEmpty(SelectedIPScanResult.Hostname)
-                ? SelectedIPScanResult.Hostname
-                : SelectedIPScanResult
-                    .PingInfo.IPAddress.ToString();
+            var host = !string.IsNullOrEmpty(SelectedIPScanResult.Hostname)? SelectedIPScanResult.Hostname: SelectedIPScanResult.PingInfo.IPAddress.ToString();
 
             EventSystem.RedirectToApplication(app, host);
         }
@@ -476,7 +472,9 @@ namespace NETworkManager.ViewModels
 
                 ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? IPScanResults : new ObservableCollection<IPScannerHostInfo>(SelectedIPScanResults.Cast<IPScannerHostInfo>().ToArray()));
 
-            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
+                SettingsManager.Current.IPScanner_ExportFileType = instance.FileType;
+                SettingsManager.Current.IPScanner_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
 
             customDialog.Content = new ExportDialog
             {
@@ -661,8 +659,7 @@ namespace NETworkManager.ViewModels
 
         private void IPScanner_DnsResolveFailed(AggregateException e)
         {
-            StatusMessage =
-                $"{Resources.Localization.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
+            StatusMessage =$"{Resources.Localization.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
             DisplayStatusMessage = true;
 
             ScanFinished();

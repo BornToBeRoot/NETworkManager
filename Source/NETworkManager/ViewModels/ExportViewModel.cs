@@ -41,7 +41,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ExportManager.ExportFileType FileType;
+        public ExportManager.ExportFileType FileType { get; set; }
 
         private bool _useCSV;
         public bool UseCSV
@@ -54,6 +54,8 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                     FileType = ExportManager.ExportFileType.CSV;
+
+                ChangeFilePathExtension(FileType);
 
                 _useCSV = value;
                 OnPropertyChanged();
@@ -71,6 +73,8 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                     FileType = ExportManager.ExportFileType.XML;
+
+                ChangeFilePathExtension(FileType);
 
                 _useXML = value;
                 OnPropertyChanged();
@@ -91,14 +95,25 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler)
+        public ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler, ExportManager.ExportFileType fileType = ExportManager.ExportFileType.CSV, string filePath = "")
         {
             ExportCommand = new RelayCommand(p => deleteCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
             // Default
             ExportAll = true;
-            UseCSV = true;
+
+            switch (fileType)
+            {
+                case ExportManager.ExportFileType.CSV:
+                    UseCSV = true;
+                    break;
+                case ExportManager.ExportFileType.XML:
+                    UseXML = true;
+                    break;
+            }
+
+            FilePath = filePath;
         }
 
         public ICommand BrowseFileCommand
@@ -117,6 +132,19 @@ namespace NETworkManager.ViewModels
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 FilePath = saveFileDialog.FileName;
+            }
+        }
+
+        private void ChangeFilePathExtension(ExportManager.ExportFileType fileType)
+        {
+            if (fileType == ExportManager.ExportFileType.CSV)
+            {
+               
+            }
+
+            if (fileType == ExportManager.ExportFileType.XML)
+            {
+
             }
         }
     }

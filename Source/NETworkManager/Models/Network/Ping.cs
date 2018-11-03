@@ -85,7 +85,7 @@ namespace NETworkManager.Models.Network
                                 if (pingReply != null && pingReply.Address == null)
                                     OnPingReceived(new PingReceivedArgs(timestamp, ipAddress, hostname, pingReply.Status));
                                 else if (pingReply != null)
-                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, hostname,pingReply.Status));
+                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, hostname, pingReply.Status));
                             }
                             else
                             {
@@ -127,6 +127,17 @@ namespace NETworkManager.Models.Network
                 else
                     OnPingCompleted();
             }, cancellationToken);
+        }
+
+        // Param: disableSpecialChar --> ExportManager --> "<" this char cannot be displayed in xml
+        public static string TimeToString(IPStatus status, long time, bool disableSpecialChar = false)
+        {
+            if (status != IPStatus.Success && status != IPStatus.TtlExpired)
+                return "-/-";
+
+            long.TryParse(time.ToString(), out var t);
+
+            return disableSpecialChar ? $"{t} ms" : t == 0 ? "<1 ms" : $"{t} ms";
         }
     }
 }

@@ -9,16 +9,7 @@ namespace NETworkManager.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var status = (IPStatus)values[0];
-
-
-            if (status != IPStatus.Success && status != IPStatus.TtlExpired)
-                return "-/-";
-
-            long.TryParse(values[1].ToString(), out var time);
-
-            return time == 0 ? "<1 ms" : $"{time} ms";
-
+            return Models.Network.Ping.TimeToString((IPStatus)values[0], (long)values[1]);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

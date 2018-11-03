@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using Heijden.DNS;
 using Lextm.SharpSnmpLib.Messaging;
+using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
 using static NETworkManager.Models.Network.SNMP;
@@ -669,6 +670,40 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ShowStatistics = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
+
+        private string _ipScanner_ExportFilePath;
+        public string IPScanner_ExportFilePath
+        {
+            get => _ipScanner_ExportFilePath;
+            set
+            {
+                if (value == _ipScanner_ExportFilePath)
+                    return;
+
+                _ipScanner_ExportFilePath = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _ipScanner_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType IPScanner_ExportFileType
+        {
+            get => _ipScanner_ExportFileType;
+            set
+            {
+                if(value == _ipScanner_ExportFileType)
+                    return;
+
+                _ipScanner_ExportFileType = value;
 
                 OnPropertyChanged();
 
@@ -2678,7 +2713,7 @@ namespace NETworkManager.Models.Settings
             PuTTY_ProfileHistory.CollectionChanged += CollectionChanged;
 
             // TightVNC
-            TightVNC_HostHistory.CollectionChanged += CollectionChanged; 
+            TightVNC_HostHistory.CollectionChanged += CollectionChanged;
 
             // SNMP
             SNMP_HostHistory.CollectionChanged += CollectionChanged;
