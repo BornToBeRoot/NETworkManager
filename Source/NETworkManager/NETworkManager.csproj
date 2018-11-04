@@ -105,6 +105,9 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>obj\Debug\MSTSCLib.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Octokit, Version=0.32.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Octokit.0.32.0\lib\net45\Octokit.dll</HintPath>
     </Reference>
@@ -995,8 +998,8 @@
     <Compile Include="Models\Network\ProgressChangedArgs.cs" />
     <Compile Include="Models\Network\TracerouteHopInfo.cs" />
     <Compile Include="Models\Network\TracerouteHopReceivedArgs.cs" />
-    <Compile Include="Models\Network\IPScannerHostFoundArgs.cs" />
-    <Compile Include="Models\Network\IPScannerHostInfo.cs" />
+    <Compile Include="Models\Network\HostFoundArgs.cs" />
+    <Compile Include="Models\Network\HostInfo.cs" />
     <Compile Include="Models\Network\IPScanner.cs" />
     <Compile Include="Models\Network\IPScannerOptions.cs" />
     <Compile Include="Models\Network\MaximumHopsReachedArgs.cs" />

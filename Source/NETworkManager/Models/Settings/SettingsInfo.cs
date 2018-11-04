@@ -855,6 +855,40 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private string _portScanner_ExportFilePath;
+        public string PortScanner_ExportFilePath
+        {
+            get => _portScanner_ExportFilePath;
+            set
+            {
+                if (value == _portScanner_ExportFilePath)
+                    return;
+
+                _portScanner_ExportFilePath = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _portScanner_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType PortScanner_ExportFileType
+        {
+            get => _portScanner_ExportFileType;
+            set
+            {
+                if (value == _portScanner_ExportFileType)
+                    return;
+
+                _portScanner_ExportFileType = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Ping

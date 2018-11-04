@@ -304,6 +304,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occurred while exporting the data. See error message for details:.
+        /// </summary>
+        public static string AnErrorOccurredWhileExportingTheData {
+            get {
+                return ResourceManager.GetString("AnErrorOccurredWhileExportingTheData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Answers.
         /// </summary>
         public static string Answers {

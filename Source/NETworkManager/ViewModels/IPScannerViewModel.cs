@@ -25,7 +25,6 @@ namespace NETworkManager.ViewModels
     public class IPScannerViewModel : ViewModelBase
     {
         #region Variables
-
         private readonly IDialogCoordinator _dialogCoordinator;
 
         private CancellationTokenSource _cancellationTokenSource;
@@ -83,8 +82,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<IPScannerHostInfo> _ipScanResults = new ObservableCollection<IPScannerHostInfo>();
-        public ObservableCollection<IPScannerHostInfo> IPScanResults
+        private ObservableCollection<HostInfo> _ipScanResults = new ObservableCollection<HostInfo>();
+        public ObservableCollection<HostInfo> IPScanResults
         {
             get => _ipScanResults;
             set
@@ -98,8 +97,8 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView IPScanResultView { get; }
 
-        private IPScannerHostInfo _selectedIPScanResult;
-        public IPScannerHostInfo SelectedIPScanResult
+        private HostInfo _selectedIPScanResult;
+        public HostInfo SelectedIPScanResult
         {
             get => _selectedIPScanResult;
             set
@@ -292,7 +291,7 @@ namespace NETworkManager.ViewModels
             // Result view
             IPScanResultView = CollectionViewSource.GetDefaultView(IPScanResults);
             IPScanResultView.SortDescriptions.Add(new SortDescription(
-                nameof(IPScannerHostInfo.PingInfo) + "." + nameof(PingInfo.IPAddressInt32),
+                nameof(HostInfo.PingInfo) + "." + nameof(PingInfo.IPAddressInt32),
                 ListSortDirection.Ascending));
 
             LoadSettings();
@@ -348,7 +347,7 @@ namespace NETworkManager.ViewModels
             if (!Enum.TryParse(appName, out ApplicationViewManager.Name app))
                 return;
 
-            var host = !string.IsNullOrEmpty(SelectedIPScanResult.Hostname)? SelectedIPScanResult.Hostname: SelectedIPScanResult.PingInfo.IPAddress.ToString();
+            var host = !string.IsNullOrEmpty(SelectedIPScanResult.Hostname) ? SelectedIPScanResult.Hostname : SelectedIPScanResult.PingInfo.IPAddress.ToString();
 
             EventSystem.RedirectToApplication(app, host);
         }
@@ -466,12 +465,22 @@ namespace NETworkManager.ViewModels
                 Title = Resources.Localization.Strings.Export
             };
 
-            var exportViewModel = new ExportViewModel(instance =>
+            var exportViewModel = new ExportViewModel(async instance =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? IPScanResults : new ObservableCollection<IPScannerHostInfo>(SelectedIPScanResults.Cast<IPScannerHostInfo>().ToArray()));
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? IPScanResults : new ObservableCollection<HostInfo>(SelectedIPScanResults.Cast<HostInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
 
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+                
                 SettingsManager.Current.IPScanner_ExportFileType = instance.FileType;
                 SettingsManager.Current.IPScanner_ExportFilePath = instance.FilePath;
             }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
@@ -634,9 +643,9 @@ namespace NETworkManager.ViewModels
 
         #region Events
 
-        private void IpScanner_HostFound(object sender, IPScannerHostFoundArgs e)
+        private void IpScanner_HostFound(object sender, HostFoundArgs e)
         {
-            var ipScannerHostInfo = IPScannerHostInfo.Parse(e);
+            var ipScannerHostInfo = HostInfo.Parse(e);
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
@@ -659,7 +668,7 @@ namespace NETworkManager.ViewModels
 
         private void IPScanner_DnsResolveFailed(AggregateException e)
         {
-            StatusMessage =$"{Resources.Localization.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
+            StatusMessage = $"{Resources.Localization.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
             DisplayStatusMessage = true;
 
             ScanFinished();

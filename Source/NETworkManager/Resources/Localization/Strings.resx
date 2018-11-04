@@ -2066,4 +2066,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="Selected" xml:space="preserve">
     <value>Selected</value>
   </data>
+  <data name="AnErrorOccurredWhileExportingTheData" xml:space="preserve">
+    <value>An error occurred while exporting the data. See error message for details:</value>
+  </data>
 </root>

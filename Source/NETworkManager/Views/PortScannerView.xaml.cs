@@ -1,17 +1,18 @@
 ﻿using NETworkManager.ViewModels;
 using System.Windows.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.Views
 {
-      public partial class PortScannerView
-      {
-          private readonly PortScannerViewModel _viewModel;
+    public partial class PortScannerView
+    {
+        private readonly PortScannerViewModel _viewModel;
 
         public PortScannerView(int tabId, string host = null, string ports = null)
         {
             InitializeComponent();
 
-            _viewModel = new PortScannerViewModel(tabId, host, ports);
+            _viewModel = new PortScannerViewModel(DialogCoordinator.Instance, tabId, host, ports);
 
             DataContext = _viewModel;
 
