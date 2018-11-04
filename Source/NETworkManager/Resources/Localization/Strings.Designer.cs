@@ -2824,6 +2824,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to JSON.
+        /// </summary>
+        public static string JSON {
+            get {
+                return ResourceManager.GetString("JSON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Keyboard.
         /// </summary>
         public static string Keyboard {

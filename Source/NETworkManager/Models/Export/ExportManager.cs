@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 using NETworkManager.Models.Lookup;
 using NETworkManager.Models.Network;
 
@@ -11,6 +12,11 @@ namespace NETworkManager.Models.Export
 {
     public static class ExportManager
     {
+        #region Variables
+        private static readonly XDeclaration DefaultXDeclaration = new XDeclaration("1.0", "utf-8", "yes");
+
+        #endregion
+
         #region Methods
         public static void Export(string filePath, ExportFileType fileType, ObservableCollection<HostInfo> collection)
         {
@@ -18,11 +24,12 @@ namespace NETworkManager.Models.Export
             {
                 case ExportFileType.CSV:
                     CreateCSV(collection, filePath);
-
                     break;
                 case ExportFileType.XML:
-                    CreateXMLData(collection, filePath);
-
+                    CreateXML(collection, filePath);
+                    break;
+                case ExportFileType.JSON:
+                    CreateJSON(collection, filePath);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
@@ -35,11 +42,12 @@ namespace NETworkManager.Models.Export
             {
                 case ExportFileType.CSV:
                     CreateCSV(collection, filePath);
-
                     break;
                 case ExportFileType.XML:
-                    CreateXMLData(collection, filePath);
-
+                    CreateXML(collection, filePath);
+                    break;
+                case ExportFileType.JSON:
+                    CreateJSON(collection, filePath);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
@@ -70,10 +78,9 @@ namespace NETworkManager.Models.Export
             System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
         }
 
-        public static void CreateXMLData(IEnumerable<HostInfo> collection, string filePath)
+        public static void CreateXML(IEnumerable<HostInfo> collection, string filePath)
         {
-            var document = new XDocument(
-                new XDeclaration("1.0", "utf-8", "yes"),
+            var document = new XDocument(DefaultXDeclaration,
 
                 new XElement(ApplicationViewManager.Name.IPScanner.ToString(),
                     new XElement(nameof(HostInfo) + "s",
@@ -92,11 +99,10 @@ namespace NETworkManager.Models.Export
 
             document.Save(filePath);
         }
-        
-        public static void CreateXMLData(IEnumerable<PortInfo> collection, string filePath)
+
+        public static void CreateXML(IEnumerable<PortInfo> collection, string filePath)
         {
-            var document = new XDocument(
-                new XDeclaration("1.0", "utf-8", "yes"),
+            var document = new XDocument(DefaultXDeclaration,
 
                 new XElement(ApplicationViewManager.Name.PortScanner.ToString(),
                     new XElement(nameof(PortInfo) + "s",
@@ -115,9 +121,14 @@ namespace NETworkManager.Models.Export
             document.Save(filePath);
         }
 
-        public static string CreateXAttributeString(string s)
+        public static void CreateJSON(IEnumerable<HostInfo> collection, string filePath)
         {
-            return s.Replace(" ", "").Replace("-", "");
+            System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(collection,Formatting.Indented));
+        }
+
+        public static void CreateJSON(IEnumerable<PortInfo> collection, string filePath)
+        {
+            System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(collection, Formatting.Indented));
         }
 
         public static string GetFileExtensionAsString(ExportFileType fileExtension)
@@ -128,6 +139,8 @@ namespace NETworkManager.Models.Export
                     return "CSV";
                 case ExportFileType.XML:
                     return "XML";
+                case ExportFileType.JSON:
+                    return "JSON";
                 default:
                     return string.Empty;
             }
@@ -137,7 +150,8 @@ namespace NETworkManager.Models.Export
         public enum ExportFileType
         {
             CSV,
-            XML
+            XML,
+            JSON
         }
     }
 }

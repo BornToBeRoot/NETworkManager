@@ -5,6 +5,8 @@ using System.IO;
 using NETworkManager.Models.Settings;
 using System;
 using System.Xml;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace NETworkManager.Models.Lookup
 {
@@ -75,6 +77,7 @@ namespace NETworkManager.Models.Lookup
         }
         #endregion
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public enum Protocol
         {
             Tcp,

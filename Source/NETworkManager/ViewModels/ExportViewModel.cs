@@ -84,6 +84,27 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _useJSON;
+        public bool UseJSON
+        {
+            get => _useJSON;
+            set
+            {
+                if (value == _useJSON)
+                    return;
+
+                if (value)
+                {
+                    FileType = ExportManager.ExportFileType.JSON;
+                    ChangeFilePathExtension(FileType);
+                }
+
+                _useJSON = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         private string _filePath;
         public string FilePath
         {
@@ -114,6 +135,11 @@ namespace NETworkManager.ViewModels
                 case ExportManager.ExportFileType.XML:
                     UseXML = true;
                     break;
+                case ExportManager.ExportFileType.JSON:
+                    UseJSON = true;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
             }
 
             FilePath = filePath;

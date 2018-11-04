@@ -280,6 +280,7 @@
     <Compile Include="Utilities\AutoRefreshTimeInfo.cs" />
     <Compile Include="Utilities\EventSystemRedirectApplicationArgs.cs" />
     <Compile Include="Utilities\EventSystem.cs" />
+    <Compile Include="Utilities\JsonIPAddressConverter.cs" />
     <Compile Include="Utilities\NativeMethods.cs" />
     <Compile Include="Utilities\PowerShellHelper.cs" />
     <Compile Include="Utilities\SecureStringHelper.cs" />

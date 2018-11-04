@@ -2,17 +2,24 @@
 using System;
 using System.Net;
 using System.Net.NetworkInformation;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace NETworkManager.Models.Network
 {
     public class PingInfo
     {
         public DateTime Timestamp { get; set; }
+
+        [JsonConverter(typeof(JsonIPAddressConverter))]
         public IPAddress IPAddress { get; set; }
+
         public string Hostname { get; set; }
         public int Bytes { get; set; }
         public long Time { get; set; }
         public int TTL { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
         public IPStatus Status { get; set; }
 
         public int IPAddressInt32 => IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(IPAddress) : 0;

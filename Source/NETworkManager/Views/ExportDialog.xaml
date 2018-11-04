@@ -28,15 +28,26 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Export}" Style="{StaticResource DefaultTextBlock}" />
-            <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal">
+            <WrapPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal">
+                <WrapPanel.Resources>
+                    <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource DefaultRadioButton}">
+                        <Setter Property="Margin" Value="0,5,10,5" />
+                    </Style>
+                </WrapPanel.Resources>
                 <RadioButton Content="{x:Static localization:Strings.All}" IsChecked="{Binding ExportAll}" />
                 <RadioButton Content="{x:Static localization:Strings.Selected}" IsChecked="{Binding ExportSelected}" Margin="10,0,0,0" />
-            </StackPanel>
+            </WrapPanel>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Format}" Style="{StaticResource DefaultTextBlock}" />
-            <StackPanel Grid.Column="2" Grid.Row="2" Orientation="Horizontal">
+            <WrapPanel Grid.Column="2" Grid.Row="2" Orientation="Horizontal">
+                <WrapPanel.Resources>
+                    <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource DefaultRadioButton}">
+                        <Setter Property="Margin" Value="0,5,10,5" />
+                    </Style>
+                </WrapPanel.Resources>
                 <RadioButton Content="{x:Static localization:Strings.CSV}" IsChecked="{Binding UseCSV}" />
                 <RadioButton Content="{x:Static localization:Strings.XML}" IsChecked="{Binding UseXML}" Margin="10,0,0,0" />
-            </StackPanel>
+                <RadioButton Content="{x:Static localization:Strings.JSON}" IsChecked="{Binding UseJSON}" Margin="10,0,0,0" />
+            </WrapPanel>
             <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Path}" Style="{StaticResource DefaultTextBlock}" />
             <TextBox Grid.Column="2" Grid.Row="4"  x:Name="TextBoxExportFilePath" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExportLocationDots}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}">
                 <TextBox.Text>
