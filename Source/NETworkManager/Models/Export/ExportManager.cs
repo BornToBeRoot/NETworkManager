@@ -2,11 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Windows.Markup;
 using System.Xml.Linq;
 using NETworkManager.Models.Network;
-using NETworkManager.Models.Settings;
-using NETworkManager.Resources.Localization;
 
 namespace NETworkManager.Models.Export
 {
@@ -28,7 +25,6 @@ namespace NETworkManager.Models.Export
                 default:
                     throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
             }
-
         }
 
         // IPScannerHostInfo

@@ -1,5 +1,6 @@
 ﻿using NETworkManager.Utilities;
 using System;
+using System.IO;
 using System.Windows.Forms;
 using System.Windows.Input;
 using NETworkManager.Models.Export;
@@ -13,13 +14,13 @@ namespace NETworkManager.ViewModels
 
         public ICommand CancelCommand { get; }
 
-        public bool _exportAll;
+        private bool _exportAll;
         public bool ExportAll
         {
             get => _exportAll;
             set
             {
-                if(value==_exportAll)
+                if (value == _exportAll)
                     return;
 
                 _exportAll = value;
@@ -27,7 +28,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public bool _exportSelected;
+        private bool _exportSelected;
         public bool ExportSelected
         {
             get => _exportSelected;
@@ -53,9 +54,10 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (value)
+                {
                     FileType = ExportManager.ExportFileType.CSV;
-
-                ChangeFilePathExtension(FileType);
+                    ChangeFilePathExtension(FileType);
+                }
 
                 _useCSV = value;
                 OnPropertyChanged();
@@ -72,9 +74,10 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (value)
+                {
                     FileType = ExportManager.ExportFileType.XML;
-
-                ChangeFilePathExtension(FileType);
+                    ChangeFilePathExtension(FileType);
+                }
 
                 _useXML = value;
                 OnPropertyChanged();
@@ -137,15 +140,17 @@ namespace NETworkManager.ViewModels
 
         private void ChangeFilePathExtension(ExportManager.ExportFileType fileType)
         {
-            if (fileType == ExportManager.ExportFileType.CSV)
-            {
-               
-            }
+            if (string.IsNullOrEmpty(FilePath))
+                return;
 
-            if (fileType == ExportManager.ExportFileType.XML)
-            {
+            var extension = Path.GetExtension(FilePath).Replace(".", "");
 
-            }
+            if (extension.Equals(ExportManager.GetFileExtensionAsString(fileType), StringComparison.CurrentCultureIgnoreCase))
+                return;
+
+            FilePath = FilePath.Substring(0, FilePath.Length - extension.Length);
+
+            FilePath += ExportManager.GetFileExtensionAsString(fileType).ToLower();
         }
     }
 }
