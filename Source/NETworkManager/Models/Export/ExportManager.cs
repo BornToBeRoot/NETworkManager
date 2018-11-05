@@ -121,14 +121,48 @@ namespace NETworkManager.Models.Export
             document.Save(filePath);
         }
 
-        public static void CreateJSON(IEnumerable<HostInfo> collection, string filePath)
+        // This might be a horror to maintain, but i have no other idea...
+        public static void CreateJSON(ObservableCollection<HostInfo> collection, string filePath)
         {
-            System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(collection,Formatting.Indented));
+            var jsonData = new object[collection.Count];
+
+            for (var i = 0; i < collection.Count; i++)
+            {
+                jsonData[i] = new
+                {
+                    IPAddress = collection[i].PingInfo.IPAddress.ToString(),
+                    collection[i].Hostname,
+                    MACAddress = collection[i].MACAddress.ToString(),
+                    collection[i].Vendor,
+                    collection[i].PingInfo.Bytes,
+                    Time = Ping.TimeToString(collection[i].PingInfo.Status, collection[i].PingInfo.Time, true),
+                    collection[i].PingInfo.TTL,
+                    Status = collection[i].PingInfo.Status.ToString()
+                };
+            }
+
+            System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
         }
 
-        public static void CreateJSON(IEnumerable<PortInfo> collection, string filePath)
+        public static void CreateJSON(ObservableCollection<PortInfo> collection, string filePath)
         {
-            System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(collection, Formatting.Indented));
+            var jsonData = new object[collection.Count];
+
+            for (var i = 0; i < collection.Count; i++)
+            {
+                jsonData[i] = new
+                {
+                    IPAddress = collection[i].IPAddress.ToString(),
+                    collection[i].Hostname,
+                    collection[i].Port,
+                    Protocol = collection[i].LookupInfo.Protocol.ToString(),
+                    collection[i].LookupInfo.Service,
+                    collection[i].LookupInfo.Description,
+                    Status = collection[i].Status.ToString()
+                };
+            }
+
+            System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
         }
 
         public static string GetFileExtensionAsString(ExportFileType fileExtension)

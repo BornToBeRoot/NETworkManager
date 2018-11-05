@@ -77,7 +77,6 @@ namespace NETworkManager.Models.Lookup
         }
         #endregion
 
-        [JsonConverter(typeof(StringEnumConverter))]
         public enum Protocol
         {
             Tcp,
