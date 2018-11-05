@@ -2045,8 +2045,8 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="CSV" xml:space="preserve">
     <value>CSV</value>
   </data>
-  <data name="ExportLocationDots" xml:space="preserve">
-    <value>Export location...</value>
+  <data name="LocationDots" xml:space="preserve">
+    <value>Location...</value>
   </data>
   <data name="XML" xml:space="preserve">
     <value>XML</value>

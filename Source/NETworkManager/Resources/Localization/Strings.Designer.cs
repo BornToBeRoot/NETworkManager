@@ -2284,15 +2284,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export location....
-        /// </summary>
-        public static string ExportLocationDots {
-            get {
-                return ResourceManager.GetString("ExportLocationDots", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Export selected.
         /// </summary>
         public static string ExportSelected {
@@ -2937,6 +2928,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Location {
             get {
                 return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location....
+        /// </summary>
+        public static string LocationDots {
+            get {
+                return ResourceManager.GetString("LocationDots", resourceCulture);
             }
         }
         
