@@ -9,6 +9,8 @@ namespace NETworkManager.Models.Network
         public PhysicalAddress MACAddress { get; set; }
         public string Vendor { get; set; }
 
+        public string MACAddressString => MACAddress.ToString();
+
         public HostInfo()
         {
 

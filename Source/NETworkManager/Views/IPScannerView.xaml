@@ -379,11 +379,11 @@
             <controls:MultiSelectDataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" Binding="{Binding (network:HostInfo.PingInfo).IPAddress}" SortMemberPath="PingInfo.IPAddressInt32" MinWidth="150" />
                 <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" Binding="{Binding (network:HostInfo.Hostname)}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" Binding="{Binding (network:HostInfo.Hostname)}" SortMemberPath="Hostname" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
                 <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" Binding="{Binding (network:HostInfo.MACAddress), Converter={StaticResource PhysicalAddressToStringConverter}}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" Binding="{Binding (network:HostInfo.MACAddress), Converter={StaticResource PhysicalAddressToStringConverter}}" SortMemberPath="MACAddressString" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
                 <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                <DataGridTextColumn Header="{x:Static localization:Strings.Vendor}" Binding="{Binding (network:HostInfo.Vendor)}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="200" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Vendor}" Binding="{Binding (network:HostInfo.Vendor)}" SortMemberPath="Vendor" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="200" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Bytes}" Binding="{Binding (network:HostInfo.PingInfo).Bytes, Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Time}" SortMemberPath="PingInfo.Time" MinWidth="80">
                     <DataGridTextColumn.Binding>
