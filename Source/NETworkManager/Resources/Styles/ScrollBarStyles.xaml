@@ -51,7 +51,7 @@
                 <Setter Property="Width" Value="8"/>
                 <Setter Property="Height" Value="Auto" />
             </Trigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type networkManagerControls:ScrollingDataGrid}}, Path=IsMouseOver}" Value="False">
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type networkManagerControls:MultiSelectScrollingDataGrid}}, Path=IsMouseOver}" Value="False">
                 <Setter Property="Opacity" Value="0.5" />
             </DataTrigger>
         </Style.Triggers>

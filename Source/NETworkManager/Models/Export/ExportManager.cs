@@ -18,6 +18,8 @@ namespace NETworkManager.Models.Export
         #endregion
 
         #region Methods
+
+        #region Export
         public static void Export(string filePath, ExportFileType fileType, ObservableCollection<HostInfo> collection)
         {
             switch (fileType)
@@ -54,6 +56,26 @@ namespace NETworkManager.Models.Export
             }
         }
 
+        public static void Export(string filePath, ExportFileType fileType, ObservableCollection<PingInfo> collection)
+        {
+            switch (fileType)
+            {
+                case ExportFileType.CSV:
+                    CreateCSV(collection, filePath);
+                    break;
+                case ExportFileType.XML:
+                    CreateXML(collection, filePath);
+                    break;
+                case ExportFileType.JSON:
+                    CreateJSON(collection, filePath);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
+            }
+        }
+        #endregion
+
+        #region CreateCSV
         private static void CreateCSV(IEnumerable<HostInfo> collection, string filePath)
         {
             var stringBuilder = new StringBuilder();
@@ -78,6 +100,20 @@ namespace NETworkManager.Models.Export
             System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
         }
 
+        private static void CreateCSV(IEnumerable<PingInfo> collection, string filePath)
+        {
+            var stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine($"{nameof(PingInfo.Timestamp)},{nameof(PingInfo.IPAddress)},{nameof(PingInfo.Hostname)},{nameof(PingInfo.Bytes)},{nameof(PingInfo.Time)},{nameof(PingInfo.TTL)},{nameof(PingInfo.Status)}");
+
+            foreach (var info in collection)
+                stringBuilder.AppendLine($"{info.Timestamp},{info.IPAddress},{info.Hostname},{info.Bytes},{Ping.TimeToString(info.Status, info.Time, true)},{info.TTL},{info.Status}");
+
+            System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
+        }
+        #endregion
+
+        #region CreateXML
         public static void CreateXML(IEnumerable<HostInfo> collection, string filePath)
         {
             var document = new XDocument(DefaultXDeclaration,
@@ -121,6 +157,29 @@ namespace NETworkManager.Models.Export
             document.Save(filePath);
         }
 
+        public static void CreateXML(IEnumerable<PingInfo> collection, string filePath)
+        {
+            var document = new XDocument(DefaultXDeclaration,
+
+                new XElement(ApplicationViewManager.Name.PortScanner.ToString(),
+                    new XElement(nameof(PingInfo) + "s",
+
+                        from info in collection
+                        select
+                            new XElement(nameof(PingInfo),
+                                new XElement(nameof(info.Timestamp), info.Timestamp),
+                                new XElement(nameof(PingInfo.IPAddress), info.IPAddress),
+                                new XElement(nameof(PingInfo.Hostname), info.Hostname),
+                                new XElement(nameof(PingInfo.Bytes), info.Bytes),
+                                new XElement(nameof(PingInfo.Time), Ping.TimeToString(info.Status, info.Time, true)),
+                                new XElement(nameof(PingInfo.TTL), info.TTL),
+                                new XElement(nameof(PingInfo.Status), info.Status)))));
+
+            document.Save(filePath);
+        }
+        #endregion
+
+        #region CreateJSON
         // This might be a horror to maintain, but i have no other idea...
         public static void CreateJSON(ObservableCollection<HostInfo> collection, string filePath)
         {
@@ -164,6 +223,28 @@ namespace NETworkManager.Models.Export
 
             System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
         }
+
+        public static void CreateJSON(ObservableCollection<PingInfo> collection, string filePath)
+        {
+            var jsonData = new object[collection.Count];
+
+            for (var i = 0; i < collection.Count; i++)
+            {
+                jsonData[i] = new
+                {
+                    collection[i].Timestamp,
+                    IPAddress = collection[i].IPAddress.ToString(),
+                    collection[i].Hostname,
+                    collection[i].Bytes,
+                    Time = Ping.TimeToString(collection[i].Status, collection[i].Time, true),
+                    collection[i].TTL,
+                    Status = collection[i].Status.ToString()
+                };
+            }
+
+            System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
+        }
+        #endregion
 
         public static string GetFileExtensionAsString(ExportFileType fileExtension)
         {

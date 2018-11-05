@@ -955,7 +955,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controls\MultiSelectDataGrid.cs" />
-    <Compile Include="Controls\ScrollingDataGrid.cs" />
+    <Compile Include="Controls\MultiSelectScrollingDataGrid.cs" />
     <Compile Include="Converters\PortStatusToStringConverter.cs" />
     <Compile Include="Converters\IPAddressToStringConverter.cs" />
     <Compile Include="Converters\ValidateSettingsImportConverter.cs" />

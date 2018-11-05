@@ -112,7 +112,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ICollectionView PortScanResultView { get; }
+        public ICollectionView PortScanResultsView { get; }
 
         private PortInfo _selectedPortScanResult;
         public PortInfo SelectedPortScanResult
@@ -305,8 +305,8 @@ namespace NETworkManager.ViewModels
             PortHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortHistory);
 
             // Result view
-            PortScanResultView = CollectionViewSource.GetDefaultView(PortScanResult);
-            PortScanResultView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortInfo.IPAddress)));
+            PortScanResultsView = CollectionViewSource.GetDefaultView(PortScanResult);
+            PortScanResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortInfo.IPAddress)));
 
             LoadSettings();
 

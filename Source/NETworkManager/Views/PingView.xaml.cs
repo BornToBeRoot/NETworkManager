@@ -1,6 +1,7 @@
 ﻿using NETworkManager.ViewModels;
 using System;
 using System.Windows.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.Views
 {
@@ -12,7 +13,7 @@ namespace NETworkManager.Views
         {
             InitializeComponent();
 
-            _viewModel = new PingViewModel(tabId, host);
+            _viewModel = new PingViewModel(DialogCoordinator.Instance,tabId, host);
 
             DataContext = _viewModel;
 

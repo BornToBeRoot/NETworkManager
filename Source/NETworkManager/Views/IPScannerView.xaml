@@ -164,7 +164,7 @@
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" />
-        <controls:MultiSelectDataGrid Grid.Row="3" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding IPScanResultView}" SelectedItem="{Binding SelectedIPScanResult}" SelectedItemsList="{Binding SelectedIPScanResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <controls:MultiSelectDataGrid Grid.Row="3" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding IPScanResultsView}" SelectedItem="{Binding SelectedIPScanResult}" SelectedItemsList="{Binding SelectedIPScanResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:MultiSelectDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <wpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />

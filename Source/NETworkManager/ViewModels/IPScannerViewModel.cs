@@ -95,7 +95,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ICollectionView IPScanResultView { get; }
+        public ICollectionView IPScanResultsView { get; }
 
         private HostInfo _selectedIPScanResult;
         public HostInfo SelectedIPScanResult
@@ -289,8 +289,8 @@ namespace NETworkManager.ViewModels
             IPRangeHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_IPRangeHistory);
 
             // Result view
-            IPScanResultView = CollectionViewSource.GetDefaultView(IPScanResults);
-            IPScanResultView.SortDescriptions.Add(new SortDescription(
+            IPScanResultsView = CollectionViewSource.GetDefaultView(IPScanResults);
+            IPScanResultsView.SortDescriptions.Add(new SortDescription(
                 nameof(HostInfo.PingInfo) + "." + nameof(PingInfo.IPAddressInt32),
                 ListSortDirection.Ascending));
 
