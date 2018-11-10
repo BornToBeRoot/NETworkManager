@@ -14,7 +14,6 @@ namespace NETworkManager.Models.Export
     {
         #region Variables
         private static readonly XDeclaration DefaultXDeclaration = new XDeclaration("1.0", "utf-8", "yes");
-
         #endregion
 
         #region Methods
@@ -73,6 +72,24 @@ namespace NETworkManager.Models.Export
                     throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
             }
         }
+
+        public static void Export(string filePath, ExportFileType fileType, ObservableCollection<TracerouteHopInfo> collection)
+        {
+            switch (fileType)
+            {
+                case ExportFileType.CSV:
+                    CreateCSV(collection, filePath);
+                    break;
+                case ExportFileType.XML:
+                //    CreateXML(collection, filePath);
+                    break;
+                case ExportFileType.JSON:
+                //    CreateJSON(collection, filePath);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
+            }
+        }
         #endregion
 
         #region CreateCSV
@@ -108,6 +125,18 @@ namespace NETworkManager.Models.Export
 
             foreach (var info in collection)
                 stringBuilder.AppendLine($"{info.Timestamp},{info.IPAddress},{info.Hostname},{info.Bytes},{Ping.TimeToString(info.Status, info.Time, true)},{info.TTL},{info.Status}");
+
+            System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
+        }
+
+          private static void CreateCSV(IEnumerable<TracerouteHopInfo> collection, string filePath)
+        {
+            var stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine($"{nameof(TracerouteHopInfo.Hop)},{nameof(TracerouteHopInfo.Time1)},{nameof(TracerouteHopInfo.Time2)},{nameof(TracerouteHopInfo.Time3)},{nameof(TracerouteHopInfo.IPAddress)},{nameof(TracerouteHopInfo.Hostname)},{nameof(TracerouteHopInfo.Status1)},{nameof(TracerouteHopInfo.Status2)},{nameof(TracerouteHopInfo.Status3)}");
+
+            foreach (var info in collection)
+                stringBuilder.AppendLine($"{info.Hop},{Ping.TimeToString(info.Status1, info.Time1, true)},{Ping.TimeToString(info.Status2, info.Time2, true)},{Ping.TimeToString(info.Status3, info.Time3, true)},{info.IPAddress},{info.Hostname},{info.Status1},{info.Status2},{info.Status3}");
 
             System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
         }

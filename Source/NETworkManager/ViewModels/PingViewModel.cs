@@ -27,7 +27,7 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
-        
+
         private CancellationTokenSource _cancellationTokenSource;
 
         private readonly int _tabId;
@@ -301,7 +301,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings    
-        public PingViewModel(IDialogCoordinator instance,int tabId, string host)
+        public PingViewModel(IDialogCoordinator instance, int tabId, string host)
         {
             _isLoading = true;
 
@@ -453,9 +453,9 @@ namespace NETworkManager.ViewModels
                     await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
-                SettingsManager.Current.IPScanner_ExportFileType = instance.FileType;
-                SettingsManager.Current.IPScanner_ExportFilePath = instance.FilePath;
-            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
+                SettingsManager.Current.Ping_ExportFileType = instance.FileType;
+                SettingsManager.Current.Ping_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.Ping_ExportFileType, SettingsManager.Current.Ping_ExportFilePath);
 
             customDialog.Content = new ExportDialog
             {
@@ -542,7 +542,7 @@ namespace NETworkManager.ViewModels
                 DisplayStatusMessage = true;
 
                 return;
-            }                                            
+            }
 
             // Add the hostname or ip address to the history
             AddHostToHistory(Host);

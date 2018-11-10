@@ -1076,6 +1076,40 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private string _ping_ExportFilePath;
+        public string Ping_ExportFilePath
+        {
+            get => _ping_ExportFilePath;
+            set
+            {
+                if (value == _ping_ExportFilePath)
+                    return;
+
+                _ping_ExportFilePath = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _ping_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType Ping_ExportFileType
+        {
+            get => _ping_ExportFileType;
+            set
+            {
+                if (value == _ping_ExportFileType)
+                    return;
+
+                _ping_ExportFileType = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Traceroute
@@ -1218,6 +1252,40 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ShowStatistics = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
+
+        private string _traceroute_ExportFilePath;
+        public string Traceroute_ExportFilePath
+        {
+            get => _traceroute_ExportFilePath;
+            set
+            {
+                if (value == _traceroute_ExportFilePath)
+                    return;
+
+                _traceroute_ExportFilePath = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _traceroute_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType Traceroute_ExportFileType
+        {
+            get => _traceroute_ExportFileType;
+            set
+            {
+                if (value == _traceroute_ExportFileType)
+                    return;
+
+                _traceroute_ExportFileType = value;
 
                 OnPropertyChanged();
 

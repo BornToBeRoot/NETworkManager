@@ -642,6 +642,7 @@
     <Content Include="Licenses\NETworkManager.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Licenses\Newtonsoft.Json.txt" />
     <Content Include="Licenses\Octokit.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

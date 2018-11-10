@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using System.Windows;
 using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Net.Sockets;
 using NETworkManager.Models.Settings;
@@ -15,13 +16,18 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Linq;
 using Dragablz;
+using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
+using NETworkManager.Models.Export;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
     public class TracerouteViewModel : ViewModelBase
     {
         #region Variables
+        private readonly IDialogCoordinator _dialogCoordinator;
+
         private CancellationTokenSource _cancellationTokenSource;
 
         private readonly int _tabId;
@@ -76,20 +82,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<TracerouteHopInfo> _traceResult = new ObservableCollection<TracerouteHopInfo>();
-        public ObservableCollection<TracerouteHopInfo> TraceResult
+        private ObservableCollection<TracerouteHopInfo> _traceResults = new ObservableCollection<TracerouteHopInfo>();
+        public ObservableCollection<TracerouteHopInfo> TraceResults
         {
-            get => _traceResult;
+            get => _traceResults;
             set
             {
-                if (Equals(value, _traceResult))
+                if (Equals(value, _traceResults))
                     return;
 
-                _traceResult = value;
+                _traceResults = value;
             }
         }
 
-        public ICollectionView TraceResultView { get; }
+        public ICollectionView TraceResultsView { get; }
 
         private TracerouteHopInfo _selectedTraceResult;
         public TracerouteHopInfo SelectedTraceResult
@@ -101,6 +107,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _selectedTraceResult = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IList _selectedTraceResults = new ArrayList();
+        public IList SelectedTraceResults
+        {
+            get => _selectedTraceResults;
+            set
+            {
+                if (Equals(value, _selectedTraceResults))
+                    return;
+
+                _selectedTraceResults = value;
                 OnPropertyChanged();
             }
         }
@@ -213,9 +233,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings
-        public TracerouteViewModel(int tabId, string host)
+        public TracerouteViewModel(IDialogCoordinator instance, int tabId, string host)
         {
             _isLoading = true;
+
+            _dialogCoordinator = instance;
 
             _tabId = tabId;
             Host = host;
@@ -224,8 +246,8 @@ namespace NETworkManager.ViewModels
             HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Traceroute_HostHistory);
 
             // Result view
-            TraceResultView = CollectionViewSource.GetDefaultView(TraceResult);
-            TraceResultView.SortDescriptions.Add(new SortDescription(nameof(TracerouteHopInfo.Hop), ListSortDirection.Ascending));
+            TraceResultsView = CollectionViewSource.GetDefaultView(TraceResults);
+            TraceResultsView.SortDescriptions.Add(new SortDescription(nameof(TracerouteHopInfo.Hop), ListSortDirection.Ascending));
 
             LoadSettings();
 
@@ -363,6 +385,46 @@ namespace NETworkManager.ViewModels
         {
             CommonMethods.SetClipboard(SelectedTraceResult.Hostname);
         }
+
+        public ICommand ExportCommand
+        {
+            get { return new RelayCommand(p => ExportAction()); }
+        }
+
+        private async void ExportAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? TraceResults : new ObservableCollection<TracerouteHopInfo>(SelectedTraceResults.Cast<TracerouteHopInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.Traceroute_ExportFileType = instance.FileType;
+                SettingsManager.Current.Traceroute_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.Traceroute_ExportFileType, SettingsManager.Current.Traceroute_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
         #endregion
 
         #region Methods
@@ -385,7 +447,7 @@ namespace NETworkManager.ViewModels
             _dispatcherTimer.Start();
             EndTime = null;
 
-            TraceResult.Clear();
+            TraceResults.Clear();
             Hops = 0;
 
             // Change the tab title (not nice, but it works)
@@ -514,8 +576,8 @@ namespace NETworkManager.ViewModels
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                lock (TraceResult)
-                    TraceResult.Add(tracerouteInfo);
+                lock (TraceResults)
+                    TraceResults.Add(tracerouteInfo);
             }));
 
             Hops++;

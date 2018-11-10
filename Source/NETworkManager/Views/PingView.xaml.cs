@@ -13,7 +13,7 @@ namespace NETworkManager.Views
         {
             InitializeComponent();
 
-            _viewModel = new PingViewModel(DialogCoordinator.Instance,tabId, host);
+            _viewModel = new PingViewModel(DialogCoordinator.Instance, tabId, host);
 
             DataContext = _viewModel;
 
