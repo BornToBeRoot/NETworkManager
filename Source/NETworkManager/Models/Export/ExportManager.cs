@@ -81,10 +81,10 @@ namespace NETworkManager.Models.Export
                     CreateCSV(collection, filePath);
                     break;
                 case ExportFileType.XML:
-                //    CreateXML(collection, filePath);
+                    CreateXML(collection, filePath);
                     break;
                 case ExportFileType.JSON:
-                //    CreateJSON(collection, filePath);
+                    CreateJSON(collection, filePath);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
@@ -129,7 +129,7 @@ namespace NETworkManager.Models.Export
             System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
         }
 
-          private static void CreateCSV(IEnumerable<TracerouteHopInfo> collection, string filePath)
+        private static void CreateCSV(IEnumerable<TracerouteHopInfo> collection, string filePath)
         {
             var stringBuilder = new StringBuilder();
 
@@ -175,7 +175,7 @@ namespace NETworkManager.Models.Export
                         from info in collection
                         select
                             new XElement(nameof(PortInfo),
-                                new XElement(nameof(info.IPAddress), info.IPAddress),
+                                new XElement(nameof(PortInfo.IPAddress), info.IPAddress),
                                 new XElement(nameof(PortInfo.Hostname), info.Hostname),
                                 new XElement(nameof(PortInfo.Port), info.Port),
                                 new XElement(nameof(PortLookupInfo.Protocol), info.LookupInfo.Protocol),
@@ -190,19 +190,42 @@ namespace NETworkManager.Models.Export
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(ApplicationViewManager.Name.PortScanner.ToString(),
+                new XElement(ApplicationViewManager.Name.Ping.ToString(),
                     new XElement(nameof(PingInfo) + "s",
 
                         from info in collection
                         select
                             new XElement(nameof(PingInfo),
-                                new XElement(nameof(info.Timestamp), info.Timestamp),
+                                new XElement(nameof(PingInfo.Timestamp), info.Timestamp),
                                 new XElement(nameof(PingInfo.IPAddress), info.IPAddress),
                                 new XElement(nameof(PingInfo.Hostname), info.Hostname),
                                 new XElement(nameof(PingInfo.Bytes), info.Bytes),
                                 new XElement(nameof(PingInfo.Time), Ping.TimeToString(info.Status, info.Time, true)),
                                 new XElement(nameof(PingInfo.TTL), info.TTL),
                                 new XElement(nameof(PingInfo.Status), info.Status)))));
+
+            document.Save(filePath);
+        }
+
+        public static void CreateXML(IEnumerable<TracerouteHopInfo> collection, string filePath)
+        {
+            var document = new XDocument(DefaultXDeclaration,
+
+                new XElement(ApplicationViewManager.Name.Traceroute.ToString(),
+                    new XElement(nameof(TracerouteHopInfo) + "s",
+
+                        from info in collection
+                        select
+                            new XElement(nameof(TracerouteHopInfo),
+                                new XElement(nameof(TracerouteHopInfo.Hop), info.Hop),
+                                new XElement(nameof(TracerouteHopInfo.Time1), Ping.TimeToString(info.Status1, info.Time1, true)),
+                                new XElement(nameof(TracerouteHopInfo.Time2), Ping.TimeToString(info.Status2, info.Time2, true)),
+                                new XElement(nameof(TracerouteHopInfo.Time3), Ping.TimeToString(info.Status3, info.Time3, true)),
+                                new XElement(nameof(TracerouteHopInfo.IPAddress), info.IPAddress),
+                                new XElement(nameof(TracerouteHopInfo.Hostname), info.Hostname),
+                                new XElement(nameof(TracerouteHopInfo.Status1), info.Status1),
+                                new XElement(nameof(TracerouteHopInfo.Status2), info.Status2),
+                                new XElement(nameof(TracerouteHopInfo.Status3), info.Status3)))));
 
             document.Save(filePath);
         }
@@ -268,6 +291,29 @@ namespace NETworkManager.Models.Export
                     Time = Ping.TimeToString(collection[i].Status, collection[i].Time, true),
                     collection[i].TTL,
                     Status = collection[i].Status.ToString()
+                };
+            }
+
+            System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
+        }
+
+        public static void CreateJSON(ObservableCollection<TracerouteHopInfo> collection, string filePath)
+        {
+            var jsonData = new object[collection.Count];
+
+            for (var i = 0; i < collection.Count; i++)
+            {
+                jsonData[i] = new
+                {
+                    collection[i].Hop,
+                    Time1 = Ping.TimeToString(collection[i].Status1, collection[i].Time1, true),
+                    Time2 = Ping.TimeToString(collection[i].Status2, collection[i].Time2, true),
+                    Time3 = Ping.TimeToString(collection[i].Status3, collection[i].Time3, true),
+                    IPAddress = collection[i].IPAddress.ToString(),
+                    collection[i].Hostname,
+                    Status1 = collection[i].Status1.ToString(),
+                    Status2 = collection[i].Status2.ToString(),
+                    Status3 = collection[i].Status3.ToString()
                 };
             }
 

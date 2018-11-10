@@ -642,7 +642,9 @@
     <Content Include="Licenses\NETworkManager.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Licenses\Newtonsoft.Json.txt" />
+    <Content Include="Licenses\Newtonsoft.Json.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Licenses\Octokit.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -653,6 +655,7 @@
     <Resource Include="Resources\Localization\Flags\en-US.png" />
     <Resource Include="Resources\Localization\Flags\ru-RU.png" />
     <Resource Include="Resources\Localization\Flags\es-ES.png" />
+    <SplashScreen Include="Resources\Images\SplashScreen.png" />
     <Content Include="Resources\WhoisServers.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
