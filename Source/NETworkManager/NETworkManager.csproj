@@ -236,6 +236,7 @@
     <Compile Include="Converters\ListToStringConverter.cs" />
     <Compile Include="Converters\BooleanReverseToVisibilityHiddenConverter.cs" />
     <Compile Include="Converters\ApplicationNameToTranslatedStringConverter.cs" />
+    <Compile Include="Converters\PingStatusToBoolConverter.cs" />
     <Compile Include="Converters\TcpStateToStringConverter.cs" />
     <Compile Include="Converters\StringIsNotNullOrEmptyToBoolConverter.cs" />
     <Compile Include="Converters\StringIsNotNullOrEmptyToVisibilityConverter.cs" />

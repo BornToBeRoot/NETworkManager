@@ -687,9 +687,6 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ExportFilePath = value;
-
-                OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -704,9 +701,6 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ExportFileType = value;
-
-                OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -866,9 +860,6 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_ExportFilePath = value;
-
-                OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -883,9 +874,6 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_ExportFileType = value;
-
-                OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -1087,9 +1075,6 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_ExportFilePath = value;
-
-                OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -1104,7 +1089,21 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_ExportFileType = value;
+                SettingsChanged = true;
+            }
+        }
 
+        private bool _ping_EnableVisualization = true;
+        public bool Ping_EnableVisualization
+        {
+            get => _ping_EnableVisualization;
+            set
+            {
+                if(value == _ping_EnableVisualization)
+                    return;
+
+                _ping_EnableVisualization = value;
+                
                 OnPropertyChanged();
 
                 SettingsChanged = true;
@@ -1269,9 +1268,6 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ExportFilePath = value;
-
-                OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -1286,9 +1282,6 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ExportFileType = value;
-
-                OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }

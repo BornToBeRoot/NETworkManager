@@ -21,6 +21,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:IntToStringConverter x:Key="IntToStringConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
+        <converters:PingStatusToBoolConverter x:Key="PingStatusToBoolConverter" />
         <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
         <converters:PercentConverter x:Key="PercentConverter" />
         <converters:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
@@ -243,6 +244,17 @@
                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
                     <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}"/>
                     <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding DataContext.EnableVisualization, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True" />
+                                <Condition Binding="{Binding (network:PingInfo.Status), Converter={StaticResource PingStatusToBoolConverter}}" Value="False" />
+                                <Condition Binding="{Binding (DataGridRow.IsSelected), RelativeSource={RelativeSource Self}}" Value="False" />
+                                <Condition Binding="{Binding (DataGridRow.IsMouseOver), RelativeSource={RelativeSource Self}}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="Foreground" Value="Red" />
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
                         <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" Value="1" >
                             <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
                         </DataTrigger>

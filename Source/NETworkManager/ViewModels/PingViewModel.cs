@@ -298,6 +298,7 @@ namespace NETworkManager.ViewModels
 
         public bool ShowStatistics => SettingsManager.Current.Ping_ShowStatistics;
 
+        public bool EnableVisualization => SettingsManager.Current.Ping_EnableVisualization;
         #endregion
 
         #region Contructor, load settings    
@@ -708,6 +709,9 @@ namespace NETworkManager.ViewModels
         {
             if (e.PropertyName == nameof(SettingsInfo.Ping_ShowStatistics))
                 OnPropertyChanged(nameof(ShowStatistics));
+
+            if(e.PropertyName == nameof(SettingsInfo.Ping_EnableVisualization))
+                OnPropertyChanged(nameof(EnableVisualization));
         }
         #endregion
     }
