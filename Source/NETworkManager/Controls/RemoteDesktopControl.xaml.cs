@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System;
-using System.Windows.Threading;
+using System.Threading.Tasks;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Controls
@@ -24,8 +24,6 @@ namespace NETworkManager.Controls
         private bool _initialized;
 
         private readonly RemoteDesktopSessionInfo _rdpSessionInfo;
-
-        private readonly DispatcherTimer _reconnectAdjustScreenTimer = new DispatcherTimer();
 
         // Fix WindowsFormsHost width
         private double _rdpClientWidth;
@@ -98,6 +96,20 @@ namespace NETworkManager.Controls
                 OnPropertyChanged();
             }
         }
+
+        private bool _isReconnecting;
+        public bool IsReconnecting
+        {
+            get => _isReconnecting;
+            set
+            {
+                if (value == _isReconnecting)
+                    return;
+
+                _isReconnecting = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, load
@@ -108,20 +120,17 @@ namespace NETworkManager.Controls
 
             _rdpSessionInfo = info;
 
-            _reconnectAdjustScreenTimer.Tick += ReconnectAdjustScreenTimer_Tick;
-            _reconnectAdjustScreenTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
-
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             // Connect after the control is drawn and only on the first init
-            if (!_initialized)
-            {
-                Connect();
-                _initialized = true;
-            }
+            if (_initialized)
+                return;
+
+            Connect();
+            _initialized = true;
         }
 
         private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
@@ -357,18 +366,23 @@ namespace NETworkManager.Controls
 
         private void RdpGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            // Prevent with a timer, that the function (rdpClient.Reconnect()) is executed too often
-            if (IsConnected && _rdpSessionInfo.AdjustScreenAutomatically)
-                _reconnectAdjustScreenTimer.Start();
+            if (IsConnected && _rdpSessionInfo.AdjustScreenAutomatically && !IsReconnecting)
+                InitiateReconnection();
         }
 
-        private void ReconnectAdjustScreenTimer_Tick(object sender, EventArgs e)
+        private async void InitiateReconnection()
         {
-            // Stop timer
-            _reconnectAdjustScreenTimer.Stop();
+            IsReconnecting = true;
 
-            // Reconnect with new resulution
+            do
+            {
+                await Task.Delay(500);
+
+            } while (Mouse.LeftButton == MouseButtonState.Pressed);
+
             ReconnectAdjustScreen();
+
+            IsReconnecting = false;
         }
         #endregion
     }
