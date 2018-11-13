@@ -110,7 +110,12 @@ namespace NETworkManager.ViewModels
 
         public ICommand EditProfileCommand
         {
-            get { return new RelayCommand(p => EditProfileAction()); }
+            get { return new RelayCommand(p => EditProfileAction(), EditProfile_CanExecute); }
+        }
+
+        private bool EditProfile_CanExecute(object paramter)
+        {
+            return SelectedProfiles.Count == 1;
         }
 
         private void EditProfileAction()
@@ -122,7 +127,7 @@ namespace NETworkManager.ViewModels
         {
             get { return new RelayCommand(p => CopyAsProfileAction()); }
         }
-
+        
         private void CopyAsProfileAction()
         {
             CopyAsProfile();
@@ -132,7 +137,7 @@ namespace NETworkManager.ViewModels
         {
             get { return new RelayCommand(p => DeleteProfileAction()); }
         }
-
+        
         private void DeleteProfileAction()
         {
             DeleteProfile();

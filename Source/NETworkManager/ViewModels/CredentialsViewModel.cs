@@ -216,7 +216,12 @@ namespace NETworkManager.ViewModels
 
         public ICommand EditCommand
         {
-            get { return new RelayCommand(p => EditAction()); }
+            get { return new RelayCommand(p => EditAction(), Edit_CanExecute); }
+        }
+
+        private bool Edit_CanExecute(object paramter)
+        {
+            return SelectedCredentials.Count == 1;
         }
 
         private void EditAction()

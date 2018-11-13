@@ -2,6 +2,7 @@
 using NETworkManager.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace NETworkManager.Views
 {
@@ -25,9 +26,10 @@ namespace NETworkManager.Views
             _viewModel.CheckCredentialsLoaded();
         }
 
-        private void DataGridRow_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            _viewModel.Edit();
+            if (e.ChangedButton == MouseButton.Left)
+                _viewModel.Edit();
         }
     }
 }

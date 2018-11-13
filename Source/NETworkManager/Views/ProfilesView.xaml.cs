@@ -2,6 +2,7 @@
 using NETworkManager.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace NETworkManager.Views
 {
@@ -20,9 +21,10 @@ namespace NETworkManager.Views
             if (sender is ContextMenu menu) menu.DataContext = _viewModel;
         }
 
-        private void DataGridRow_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            _viewModel.EditProfile();
+            if (e.ChangedButton == MouseButton.Left)
+                _viewModel.EditProfile();
         }
 
         public void Refresh()
