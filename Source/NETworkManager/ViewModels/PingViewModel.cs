@@ -504,13 +504,14 @@ namespace NETworkManager.ViewModels
             // Try to parse the string into an IP-Address
             var hostIsIP = IPAddress.TryParse(Host, out var ipAddress);
 
-            try
+            if (!hostIsIP)
             {
-                // Try to resolve the hostname
-                var ipHostEntrys = await Dns.GetHostEntryAsync(Host);
-
-                if (!hostIsIP)
+                try
                 {
+                    // Try to resolve the hostname
+                    var ipHostEntrys = await Dns.GetHostEntryAsync(Host);
+
+
                     foreach (var ip in ipHostEntrys.AddressList)
                     {
                         switch (ip.AddressFamily)
@@ -531,18 +532,18 @@ namespace NETworkManager.ViewModels
                         break;
                     }
                 }
-            }
-            catch (SocketException) // This will catch DNS resolve errors
-            {
-                if (CancelPing)
-                    UserHasCanceled();
-                else
-                    PingFinished();
+                catch (SocketException) // This will catch DNS resolve errors
+                {
+                    if (CancelPing)
+                        UserHasCanceled();
+                    else
+                        PingFinished();
 
-                StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, Host);
-                DisplayStatusMessage = true;
+                    StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, Host);
+                    DisplayStatusMessage = true;
 
-                return;
+                    return;
+                }
             }
 
             // Add the hostname or ip address to the history
@@ -550,7 +551,7 @@ namespace NETworkManager.ViewModels
 
             _cancellationTokenSource = new CancellationTokenSource();
 
-            var pingOptions = new PingOptions()
+            var pingOptions = new PingOptions
             {
                 Attempts = SettingsManager.Current.Ping_Attempts,
                 Timeout = SettingsManager.Current.Ping_Timeout,
@@ -710,7 +711,7 @@ namespace NETworkManager.ViewModels
             if (e.PropertyName == nameof(SettingsInfo.Ping_ShowStatistics))
                 OnPropertyChanged(nameof(ShowStatistics));
 
-            if(e.PropertyName == nameof(SettingsInfo.Ping_HighlightTimeouts))
+            if (e.PropertyName == nameof(SettingsInfo.Ping_HighlightTimeouts))
                 OnPropertyChanged(nameof(HighlightTimeouts));
         }
         #endregion
