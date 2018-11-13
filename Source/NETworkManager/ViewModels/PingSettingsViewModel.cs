@@ -158,6 +158,23 @@ namespace NETworkManager.ViewModels
             }
         }
         
+        private bool _highlightTimeouts;
+        public bool HighlightTimeouts
+        {
+            get => _highlightTimeouts;
+            set
+            {
+                if (value == _highlightTimeouts)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.Ping_HighlightTimeouts = value;
+
+                _highlightTimeouts = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _showStatistics;
         public bool ShowStatistics
         {
@@ -201,6 +218,7 @@ namespace NETworkManager.ViewModels
             else
                 ResolveHostnamePreferIPv6 = true;
 
+            HighlightTimeouts = SettingsManager.Current.Ping_HighlightTimeouts;
             ShowStatistics = SettingsManager.Current.Ping_ShowStatistics;
         }
         #endregion

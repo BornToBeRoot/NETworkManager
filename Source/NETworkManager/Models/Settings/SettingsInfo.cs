@@ -1093,16 +1093,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _ping_EnableVisualization = true;
-        public bool Ping_EnableVisualization
+        private bool _ping_HighlightTimeouts = true;
+        public bool Ping_HighlightTimeouts
         {
-            get => _ping_EnableVisualization;
+            get => _ping_HighlightTimeouts;
             set
             {
-                if(value == _ping_EnableVisualization)
+                if(value == _ping_HighlightTimeouts)
                     return;
 
-                _ping_EnableVisualization = value;
+                _ping_HighlightTimeouts = value;
                 
                 OnPropertyChanged();
 

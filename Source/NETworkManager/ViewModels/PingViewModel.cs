@@ -298,7 +298,7 @@ namespace NETworkManager.ViewModels
 
         public bool ShowStatistics => SettingsManager.Current.Ping_ShowStatistics;
 
-        public bool EnableVisualization => SettingsManager.Current.Ping_EnableVisualization;
+        public bool HighlightTimeouts => SettingsManager.Current.Ping_HighlightTimeouts;
         #endregion
 
         #region Contructor, load settings    
@@ -710,8 +710,8 @@ namespace NETworkManager.ViewModels
             if (e.PropertyName == nameof(SettingsInfo.Ping_ShowStatistics))
                 OnPropertyChanged(nameof(ShowStatistics));
 
-            if(e.PropertyName == nameof(SettingsInfo.Ping_EnableVisualization))
-                OnPropertyChanged(nameof(EnableVisualization));
+            if(e.PropertyName == nameof(SettingsInfo.Ping_HighlightTimeouts))
+                OnPropertyChanged(nameof(HighlightTimeouts));
         }
         #endregion
     }

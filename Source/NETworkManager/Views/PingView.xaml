@@ -246,7 +246,7 @@
                     <Style.Triggers>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding DataContext.EnableVisualization, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True" />
+                                <Condition Binding="{Binding DataContext.HighlightTimeouts, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True" />
                                 <Condition Binding="{Binding (network:PingInfo.Status), Converter={StaticResource PingStatusToBoolConverter}}" Value="False" />
                                 <Condition Binding="{Binding (DataGridRow.IsSelected), RelativeSource={RelativeSource Self}}" Value="False" />
                                 <Condition Binding="{Binding (DataGridRow.IsMouseOver), RelativeSource={RelativeSource Self}}" Value="False" />
