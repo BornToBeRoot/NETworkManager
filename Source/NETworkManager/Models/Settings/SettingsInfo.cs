@@ -1559,6 +1559,34 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private string _dnsLookup_ExportFilePath;
+        public string DNSLookup_ExportFilePath
+        {
+            get => _dnsLookup_ExportFilePath;
+            set
+            {
+                if (value == _dnsLookup_ExportFilePath)
+                    return;
+
+                _dnsLookup_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _dnsLookup_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType DNSLookup_ExportFileType
+        {
+            get => _dnsLookup_ExportFileType;
+            set
+            {
+                if (value == _dnsLookup_ExportFileType)
+                    return;
+
+                _dnsLookup_ExportFileType = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region RemoteDesktop 

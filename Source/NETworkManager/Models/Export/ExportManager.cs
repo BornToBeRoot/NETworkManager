@@ -90,6 +90,24 @@ namespace NETworkManager.Models.Export
                     throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
             }
         }
+
+        public static void Export(string filePath, ExportFileType fileType, ObservableCollection<DNSLookupRecordInfo> collection)
+        {
+            switch (fileType)
+            {
+                case ExportFileType.CSV:
+                    CreateCSV(collection, filePath);
+                    break;
+                case ExportFileType.XML:
+                     CreateXML(collection, filePath);
+                    break;
+                case ExportFileType.JSON:
+                   CreateJSON(collection, filePath);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
+            }
+        }
         #endregion
 
         #region CreateCSV
@@ -140,6 +158,19 @@ namespace NETworkManager.Models.Export
 
             System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
         }
+
+        private static void CreateCSV(IEnumerable<DNSLookupRecordInfo> collection, string filePath)
+        {
+            var stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine($"{nameof(DNSLookupRecordInfo.Name)},{nameof(DNSLookupRecordInfo.TTL)},{nameof(DNSLookupRecordInfo.Class)},{nameof(DNSLookupRecordInfo.Type)},{nameof(DNSLookupRecordInfo.Result)},{nameof(DNSLookupRecordInfo.DNSServer)},{nameof(DNSLookupRecordInfo.Port)}");
+
+            foreach (var info in collection)
+                stringBuilder.AppendLine($"{info.Name},{info.TTL},{info.Class},{info.Type},{info.Result},{info.DNSServer},{info.Port}");
+
+            System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
+        }
+
         #endregion
 
         #region CreateXML
@@ -229,6 +260,27 @@ namespace NETworkManager.Models.Export
 
             document.Save(filePath);
         }
+
+        public static void CreateXML(IEnumerable<DNSLookupRecordInfo> collection, string filePath)
+        {
+            var document = new XDocument(DefaultXDeclaration,
+
+                new XElement(ApplicationViewManager.Name.Traceroute.ToString(),
+                    new XElement(nameof(DNSLookupRecordInfo) + "s",
+
+                        from info in collection
+                        select
+                            new XElement(nameof(DNSLookupRecordInfo),
+                                new XElement(nameof(DNSLookupRecordInfo.Name), info.Name),
+                                new XElement(nameof(DNSLookupRecordInfo.TTL), info.TTL),
+                                new XElement(nameof(DNSLookupRecordInfo.Class), info.Class ),
+                                new XElement(nameof(DNSLookupRecordInfo.Type), info.Type),
+                                new XElement(nameof(DNSLookupRecordInfo.Result), info.Result),
+                                new XElement(nameof(DNSLookupRecordInfo.DNSServer), info.DNSServer),
+                                new XElement(nameof(DNSLookupRecordInfo.Port), info.Port)))));
+
+            document.Save(filePath);
+        }
         #endregion
 
         #region CreateJSON
@@ -314,6 +366,27 @@ namespace NETworkManager.Models.Export
                     Status1 = collection[i].Status1.ToString(),
                     Status2 = collection[i].Status2.ToString(),
                     Status3 = collection[i].Status3.ToString()
+                };
+            }
+
+            System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
+        }
+
+        public static void CreateJSON(ObservableCollection<DNSLookupRecordInfo> collection, string filePath)
+        {
+            var jsonData = new object[collection.Count];
+
+            for (var i = 0; i < collection.Count; i++)
+            {
+                jsonData[i] = new
+                {
+                    collection[i].Name,
+                    collection[i].TTL,
+                    collection[i].Class,
+                    collection[i].Type,
+                    collection[i].Result,
+                    collection[i].DNSServer,
+                    collection[i].Port
                 };
             }
 

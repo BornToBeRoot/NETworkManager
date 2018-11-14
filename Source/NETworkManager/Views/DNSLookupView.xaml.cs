@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
@@ -12,7 +13,7 @@ namespace NETworkManager.Views
         {
             InitializeComponent();
 
-            _viewModel = new DNSLookupViewModel(tabId, host);
+            _viewModel = new DNSLookupViewModel(DialogCoordinator.Instance, tabId, host);
 
             DataContext = _viewModel;
         }

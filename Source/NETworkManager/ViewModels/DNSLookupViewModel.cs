@@ -1,6 +1,7 @@
 ﻿using NETworkManager.Models.Network;
 using NETworkManager.Models.Settings;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
@@ -14,12 +15,17 @@ using NETworkManager.Utilities;
 using System.Collections.ObjectModel;
 using NETworkManager.Controls;
 using Dragablz;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Export;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
     public class DNSLookupViewModel : ViewModelBase
     {
         #region Variables
+        private readonly IDialogCoordinator _dialogCoordinator;
+        
         private readonly int _tabId;
         private bool _firstLoad = true;
 
@@ -108,20 +114,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<DNSLookupRecordInfo> _lookupResult = new ObservableCollection<DNSLookupRecordInfo>();
-        public ObservableCollection<DNSLookupRecordInfo> LookupResult
+        private ObservableCollection<DNSLookupRecordInfo> _lookupResults = new ObservableCollection<DNSLookupRecordInfo>();
+        public ObservableCollection<DNSLookupRecordInfo> LookupResults
         {
-            get => _lookupResult;
+            get => _lookupResults;
             set
             {
-                if (value != null && value == _lookupResult)
-                    return;
+               if(Equals(value, _lookupResults))
+                   return;
 
-                _lookupResult = value;
+                _lookupResults = value;
             }
         }
 
-        public ICollectionView LookupResultView { get; }
+        public ICollectionView LookupResultsView { get; }
 
         private DNSLookupRecordInfo _selectedLookupResult;
         public DNSLookupRecordInfo SelectedLookupResult
@@ -133,6 +139,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _selectedLookupResult = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IList _selectedLookupResults = new ArrayList();
+        public IList SelectedLookupResults
+        {
+            get => _selectedLookupResults;
+            set
+            {
+                if (Equals(value, _selectedLookupResults))
+                    return;
+
+                _selectedLookupResults = value;
                 OnPropertyChanged();
             }
         }
@@ -228,9 +248,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public DNSLookupViewModel(int tabId, string host)
+        public DNSLookupViewModel(IDialogCoordinator instance, int tabId, string host)
         {
             _isLoading = true;
+
+            _dialogCoordinator = instance;
 
             _tabId = tabId;
             Host = host;
@@ -245,8 +267,8 @@ namespace NETworkManager.ViewModels
             DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerInfo.Name), ListSortDirection.Ascending));
             DNSServer = DNSServers.SourceCollection.Cast<DNSServerInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.DNSLookup_SelectedDNSServer.Name) ?? DNSServers.SourceCollection.Cast<DNSServerInfo>().First();
 
-            LookupResultView = CollectionViewSource.GetDefaultView(LookupResult);
-            LookupResultView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.DNSServer)));
+            LookupResultsView = CollectionViewSource.GetDefaultView(LookupResults);
+            LookupResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.DNSServer)));
 
             LoadSettings();
 
@@ -347,6 +369,46 @@ namespace NETworkManager.ViewModels
         {
             CommonMethods.SetClipboard(SelectedLookupResult.Result);
         }
+
+        public ICommand ExportCommand
+        {
+            get { return new RelayCommand(p => ExportAction()); }
+        }
+
+        private async void ExportAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? LookupResults : new ObservableCollection<DNSLookupRecordInfo>(SelectedLookupResults.Cast<DNSLookupRecordInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.DNSLookup_ExportFileType = instance.FileType;
+                SettingsManager.Current.DNSLookup_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.DNSLookup_ExportFileType, SettingsManager.Current.DNSLookup_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
         #endregion
 
         #region Methods      
@@ -366,7 +428,7 @@ namespace NETworkManager.ViewModels
             EndTime = null;
 
             // Reset the latest results
-            LookupResult.Clear();
+            LookupResults.Clear();
 
             // Change the tab title (not nice, but it works)
             var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -457,8 +519,8 @@ namespace NETworkManager.ViewModels
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                lock (LookupResult)
-                    LookupResult.Add(dnsLookupRecordInfo);
+                lock (LookupResults)
+                    LookupResults.Add(dnsLookupRecordInfo);
             }));
         }
 
