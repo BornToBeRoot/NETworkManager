@@ -2030,8 +2030,8 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="ResolveMACAddressAndVendor" xml:space="preserve">
     <value>Resolve MAC address and vendor</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
+  <data name="Note" xml:space="preserve">
+    <value>Note</value>
   </data>
   <data name="ExportAll" xml:space="preserve">
     <value>Export all</value>
@@ -2077,5 +2077,17 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   </data>
   <data name="HighlightTimeouts" xml:space="preserve">
     <value>Highlight timeouts</value>
+  </data>
+  <data name="EnterSubnetsToCreateAWideSubnet" xml:space="preserve">
+    <value>Enter subnets to create a wide subnet...</value>
+  </data>
+  <data name="ExampleIPv4IPv6Subnet3" xml:space="preserve">
+    <value>192.168.180.0/24 or 2001:0db9::/54</value>
+  </data>
+  <data name="WideSubnet" xml:space="preserve">
+    <value>Wide Subnet</value>
+  </data>
+  <data name="WideSubnetFeatureNote" xml:space="preserve">
+    <value>Supernet requires consecutive subnet without missing IP addresses. Try the Wide Subnet feature to create a larger subnet of two smaller ones that are far apart.</value>
   </data>
 </root>
