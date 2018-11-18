@@ -108,6 +108,24 @@ namespace NETworkManager.Models.Export
                     throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
             }
         }
+
+        public static void Export(string filePath, ExportFileType fileType, ObservableCollection<SNMPReceivedInfo> collection)
+        {
+            switch (fileType)
+            {
+                case ExportFileType.CSV:
+                    CreateCSV(collection, filePath);
+                    break;
+                case ExportFileType.XML:
+                    CreateXML(collection, filePath);
+                    break;
+                case ExportFileType.JSON:
+                    CreateJSON(collection, filePath);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
+            }
+        }
         #endregion
 
         #region CreateCSV
@@ -167,6 +185,18 @@ namespace NETworkManager.Models.Export
 
             foreach (var info in collection)
                 stringBuilder.AppendLine($"{info.Name},{info.TTL},{info.Class},{info.Type},{info.Result},{info.DNSServer},{info.Port}");
+
+            System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
+        }
+
+        private static void CreateCSV(IEnumerable<SNMPReceivedInfo> collection, string filePath)
+        {
+            var stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine($"{nameof(SNMPReceivedInfo.OID)},{nameof(SNMPReceivedInfo.Data)}");
+
+            foreach (var info in collection)
+                stringBuilder.AppendLine($"{info.OID},{info.Data}");
 
             System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
         }
@@ -281,6 +311,23 @@ namespace NETworkManager.Models.Export
 
             document.Save(filePath);
         }
+
+
+        public static void CreateXML(IEnumerable<SNMPReceivedInfo> collection, string filePath)
+        {
+            var document = new XDocument(DefaultXDeclaration,
+
+                new XElement(ApplicationViewManager.Name.Traceroute.ToString(),
+                    new XElement(nameof(SNMPReceivedInfo) + "s",
+
+                        from info in collection
+                        select
+                            new XElement(nameof(SNMPReceivedInfo),
+                                new XElement(nameof(SNMPReceivedInfo.OID), info.OID),
+                                new XElement(nameof(SNMPReceivedInfo.Data), info.Data)))));
+
+            document.Save(filePath);
+        }
         #endregion
 
         #region CreateJSON
@@ -387,6 +434,22 @@ namespace NETworkManager.Models.Export
                     collection[i].Result,
                     collection[i].DNSServer,
                     collection[i].Port
+                };
+            }
+
+            System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
+        }
+
+        public static void CreateJSON(ObservableCollection<SNMPReceivedInfo> collection, string filePath)
+        {
+            var jsonData = new object[collection.Count];
+
+            for (var i = 0; i < collection.Count; i++)
+            {
+                jsonData[i] = new
+                {
+                    collection[i].OID,
+                    collection[i].Data
                 };
             }
 

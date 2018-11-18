@@ -2388,6 +2388,34 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private string _snmp_ExportFilePath;
+        public string SNMP_ExportFilePath
+        {
+            get => _snmp_ExportFilePath;
+            set
+            {
+                if (value == _snmp_ExportFilePath)
+                    return;
+
+                _snmp_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _snmp_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType SNMP_ExportFileType
+        {
+            get => _snmp_ExportFileType;
+            set
+            {
+                if (value == _snmp_ExportFileType)
+                    return;
+
+                _snmp_ExportFileType = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region WakeOnLAN

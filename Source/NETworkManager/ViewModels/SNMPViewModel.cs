@@ -2,6 +2,7 @@
 using NETworkManager.Models.Network;
 using NETworkManager.Models.Settings;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -16,12 +17,17 @@ using System.Windows.Threading;
 using static NETworkManager.Models.Network.SNMP;
 using NETworkManager.Controls;
 using Dragablz;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Export;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
     public class SNMPViewModel : ViewModelBase
     {
         #region Variables
+        private readonly IDialogCoordinator _dialogCoordinator;
+
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
@@ -240,20 +246,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<SNMPReceivedInfo> _queryResult = new ObservableCollection<SNMPReceivedInfo>();
-        public ObservableCollection<SNMPReceivedInfo> QueryResult
+        private ObservableCollection<SNMPReceivedInfo> _queryResults = new ObservableCollection<SNMPReceivedInfo>();
+        public ObservableCollection<SNMPReceivedInfo> QueryResults
         {
-            get => _queryResult;
+            get => _queryResults;
             set
             {
-                if (Equals(value, _queryResult))
+                if (Equals(value, _queryResults))
                     return;
 
-                _queryResult = value;
+                _queryResults = value;
             }
         }
 
-        public ICollectionView QueryResultView { get; }
+        public ICollectionView QueryResultsView { get; }
 
         private SNMPReceivedInfo _selectedQueryResult;
         public SNMPReceivedInfo SelectedQueryResult
@@ -268,6 +274,21 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private IList _selectedQueryResults = new ArrayList();
+        public IList SelectedQueryResults
+        {
+            get => _selectedQueryResults;
+            set
+            {
+                if (Equals(value, _selectedQueryResults))
+                    return;
+
+                _selectedQueryResults = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
@@ -375,10 +396,12 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public SNMPViewModel(int tabId, string host)
+        public SNMPViewModel(IDialogCoordinator instance, int tabId, string host)
         {
             _isLoading = true;
 
+            _dialogCoordinator = instance;
+            
             _tabId = tabId;
             Host = host;
 
@@ -387,21 +410,21 @@ namespace NETworkManager.ViewModels
             OIDHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OIDHistory);
 
             // Result view
-            QueryResultView = CollectionViewSource.GetDefaultView(QueryResult);
-            QueryResultView.SortDescriptions.Add(new SortDescription(nameof(SNMPReceivedInfo.OID), ListSortDirection.Ascending));
+            QueryResultsView = CollectionViewSource.GetDefaultView(QueryResults);
+            QueryResultsView.SortDescriptions.Add(new SortDescription(nameof(SNMPReceivedInfo.OID), ListSortDirection.Ascending));
 
             // Versions (v1, v2c, v3)
             Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
 
             // Modes
-            Modes = new List<SNMPMode>() { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
+            Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
 
             // Security
-            Securitys = new List<SNMPV3Security>() { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
+            Securitys = new List<SNMPV3Security> { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
 
             // Auth / Priv
-            AuthenticationProviders = new List<SNMPV3AuthenticationProvider>() { SNMPV3AuthenticationProvider.MD5, SNMPV3AuthenticationProvider.SHA1 };
-            PrivacyProviders = new List<SNMPV3PrivacyProvider>() { SNMPV3PrivacyProvider.DES, SNMPV3PrivacyProvider.AES };
+            AuthenticationProviders = new List<SNMPV3AuthenticationProvider> { SNMPV3AuthenticationProvider.MD5, SNMPV3AuthenticationProvider.SHA1 };
+            PrivacyProviders = new List<SNMPV3PrivacyProvider> { SNMPV3PrivacyProvider.DES, SNMPV3PrivacyProvider.AES };
 
             LoadSettings();
 
@@ -453,6 +476,45 @@ namespace NETworkManager.ViewModels
             CommonMethods.SetClipboard(SelectedQueryResult.Data);
         }
 
+        public ICommand ExportCommand
+        {
+            get { return new RelayCommand(p => ExportAction()); }
+        }
+
+        private async void ExportAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? QueryResults : new ObservableCollection<SNMPReceivedInfo>(SelectedQueryResults.Cast<SNMPReceivedInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.SNMP_ExportFileType = instance.FileType;
+                SettingsManager.Current.SNMP_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.SNMP_ExportFileType, SettingsManager.Current.SNMP_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
         #endregion
 
         #region Methods
@@ -469,7 +531,7 @@ namespace NETworkManager.ViewModels
             _dispatcherTimer.Start();
             EndTime = null;
 
-            QueryResult.Clear();
+            QueryResults.Clear();
             Responses = 0;
 
             // Change the tab title (not nice, but it works)
@@ -622,8 +684,8 @@ namespace NETworkManager.ViewModels
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                lock (QueryResult)
-                    QueryResult.Add(snmpReceivedInfo);
+                lock (QueryResults)
+                    QueryResults.Add(snmpReceivedInfo);
             }));
 
             Responses++;
