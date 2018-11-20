@@ -1,11 +1,12 @@
 ﻿using NETworkManager.ViewModels;
 using System.Windows.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.Views
 {
     public partial class ListenersView
     {
-        private readonly ListenersViewModel _viewModel = new ListenersViewModel();
+        private readonly ListenersViewModel _viewModel = new ListenersViewModel(DialogCoordinator.Instance);
 
         public ListenersView()
         {

@@ -2824,6 +2824,34 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private string _listeners_ExportFilePath;
+        public string Listeners_ExportFilePath
+        {
+            get => _listeners_ExportFilePath;
+            set
+            {
+                if (value == _listeners_ExportFilePath)
+                    return;
+
+                _listeners_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _listeners_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType Listeners_ExportFileType
+        {
+            get => _listeners_ExportFileType;
+            set
+            {
+                if (value == _listeners_ExportFileType)
+                    return;
+
+                _listeners_ExportFileType = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region ARPTable
