@@ -4,7 +4,7 @@ using System.Net.NetworkInformation;
 
 namespace NETworkManager.Models.Network
 {
-    public class ARPTableInfo
+    public class ARPInfo
     {
         public IPAddress IPAddress { get; set; }
         public PhysicalAddress MACAddress { get; set; }
@@ -12,12 +12,12 @@ namespace NETworkManager.Models.Network
 
         public int IPAddressInt32 => IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(IPAddress) : 0;
 
-        public ARPTableInfo()
+        public ARPInfo()
         {
 
         }
 
-        public ARPTableInfo(IPAddress ipAddress, PhysicalAddress macAddress, bool isMulticast)
+        public ARPInfo(IPAddress ipAddress, PhysicalAddress macAddress, bool isMulticast)
         {
             IPAddress = ipAddress;
             MACAddress = macAddress;

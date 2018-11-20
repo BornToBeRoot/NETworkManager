@@ -128,7 +128,7 @@ namespace NETworkManager.Models.Network
                             if (ipScannerOptions.ResolveMACAddress)
                             {
                                 // Get info from arp table
-                                var arpTableInfo = ARPTable.GetTable().FirstOrDefault(p => p.IPAddress.ToString() == ipAddress.ToString());
+                                var arpTableInfo = ARP.GetTable().FirstOrDefault(p => p.IPAddress.ToString() == ipAddress.ToString());
 
                                 if (arpTableInfo != null)
                                     macAddress = arpTableInfo.MACAddress;

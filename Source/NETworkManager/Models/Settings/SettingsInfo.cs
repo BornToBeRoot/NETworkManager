@@ -2854,6 +2854,34 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private string _arpTable_ExportFilePath;
+        public string ARPTable_ExportFilePath
+        {
+            get => _arpTable_ExportFilePath;
+            set
+            {
+                if (value == _arpTable_ExportFilePath)
+                    return;
+
+                _arpTable_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _arpTable_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType ARPTable_ExportFileType
+        {
+            get => _arpTable_ExportFileType;
+            set
+            {
+                if (value == _arpTable_ExportFileType)
+                    return;
+
+                _arpTable_ExportFileType = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #endregion
