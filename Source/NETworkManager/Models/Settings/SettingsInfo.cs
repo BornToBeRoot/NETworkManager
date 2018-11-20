@@ -2794,6 +2794,34 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+    
+        private string _connections_ExportFilePath;
+        public string Connections_ExportFilePath
+        {
+            get => _connections_ExportFilePath;
+            set
+            {
+                if (value == _connections_ExportFilePath)
+                    return;
+
+                _connections_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _connections_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType Connections_ExportFileType
+        {
+            get => _connections_ExportFileType;
+            set
+            {
+                if (value == _connections_ExportFileType)
+                    return;
+
+                _connections_ExportFileType = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Listeners

@@ -1,11 +1,12 @@
 ﻿using NETworkManager.ViewModels;
 using System.Windows.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.Views
 {
     public partial class ConnectionsView
     {
-        private readonly ConnectionsViewModel _viewModel = new ConnectionsViewModel();
+        private readonly ConnectionsViewModel _viewModel = new ConnectionsViewModel(DialogCoordinator.Instance);
 
         public ConnectionsView()
         {

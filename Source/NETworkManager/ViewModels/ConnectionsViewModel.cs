@@ -1,20 +1,25 @@
 ﻿using NETworkManager.Models.Network;
 using System;
+using System.Collections;
 using System.Windows.Input;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
 using NETworkManager.Utilities;
-using System.Windows;
 using NETworkManager.Models.Settings;
 using System.Windows.Threading;
 using System.Linq;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Export;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
     public class ConnectionsViewModel : ViewModelBase
     {
         #region Variables
+        private readonly IDialogCoordinator _dialogCoordinator;
+
         private readonly bool _isLoading;
         private readonly DispatcherTimer _autoRefreshTimer = new DispatcherTimer();
 
@@ -29,27 +34,27 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                ConnectionsView.Refresh();
+                ConnectionResultsView.Refresh();
 
                 OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<ConnectionInfo> _connections = new ObservableCollection<ConnectionInfo>();
-        public ObservableCollection<ConnectionInfo> Connections
+        private ObservableCollection<ConnectionInfo> _connectionResults = new ObservableCollection<ConnectionInfo>();
+        public ObservableCollection<ConnectionInfo> ConnectionResults
         {
-            get => _connections;
+            get => _connectionResults;
             set
             {
-                if (value == _connections)
+                if (value == _connectionResults)
                     return;
 
-                _connections = value;
+                _connectionResults = value;
                 OnPropertyChanged();
             }
         }
 
-        public ICollectionView ConnectionsView { get; }
+        public ICollectionView ConnectionResultsView { get; }
 
         private ConnectionInfo _selectedConnectionInfo;
         public ConnectionInfo SelectedConnectionInfo
@@ -61,6 +66,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _selectedConnectionInfo = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IList _selectedConnectionInfos = new ArrayList();
+        public IList SelectedConnectionInfos
+        {
+            get => _selectedConnectionInfos;
+            set
+            {
+                if (Equals(value, _selectedConnectionInfos))
+                    return;
+
+                _selectedConnectionInfos = value;
                 OnPropertyChanged();
             }
         }
@@ -159,13 +178,15 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public ConnectionsViewModel()
+        public ConnectionsViewModel(IDialogCoordinator instance)
         {
             _isLoading = true;
 
-            ConnectionsView = CollectionViewSource.GetDefaultView(Connections);
-            ConnectionsView.SortDescriptions.Add(new SortDescription(nameof(ConnectionInfo.LocalIPAddressInt32), ListSortDirection.Ascending));
-            ConnectionsView.Filter = o =>
+            _dialogCoordinator = instance;
+
+            ConnectionResultsView = CollectionViewSource.GetDefaultView(ConnectionResults);
+            ConnectionResultsView.SortDescriptions.Add(new SortDescription(nameof(ConnectionInfo.LocalIPAddressInt32), ListSortDirection.Ascending));
+            ConnectionResultsView.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
                     return true;
@@ -173,7 +194,7 @@ namespace NETworkManager.ViewModels
                 var filter = Search.Replace(" ", "").Replace("-", "").Replace(":", "");
 
                 // Search by local/remote IP Address, local/remote Port, Protocol and State
-                return o is ConnectionInfo info && (info.LocalIPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.LocalPort.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteIPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.RemotePort.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || Resources.Localization.Strings.ResourceManager.GetString("TcpState_" + info.State.ToString(), LocalizationManager.Culture).IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1);
+                return o is ConnectionInfo info && (info.LocalIPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.LocalPort.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteIPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.RemotePort.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || Resources.Localization.Strings.ResourceManager.GetString("TcpState_" + info.TcpState.ToString(), LocalizationManager.Culture).IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
             AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);
@@ -267,7 +288,47 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStateAction()
         {
-            CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString("TcpState_" + SelectedConnectionInfo.State, LocalizationManager.Culture));
+            CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString("TcpState_" + SelectedConnectionInfo.TcpState, LocalizationManager.Culture));
+        }
+
+        public ICommand ExportCommand
+        {
+            get { return new RelayCommand(p => ExportAction()); }
+        }
+
+        private async void ExportAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? ConnectionResults : new ObservableCollection<ConnectionInfo>(SelectedConnectionInfos.Cast<ConnectionInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.Connections_ExportFileType = instance.FileType;
+                SettingsManager.Current.Connections_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.Connections_ExportFileType, SettingsManager.Current.Connections_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
         #endregion
 
@@ -276,9 +337,9 @@ namespace NETworkManager.ViewModels
         {
             IsRefreshing = true;
 
-            Connections.Clear();
+            ConnectionResults.Clear();
 
-            (await Connection.GetActiveTcpConnectionsAsync()).ForEach(x => Connections.Add(x));
+            (await Connection.GetActiveTcpConnectionsAsync()).ForEach(x => ConnectionResults.Add(x));
 
             IsRefreshing = false;
         }         

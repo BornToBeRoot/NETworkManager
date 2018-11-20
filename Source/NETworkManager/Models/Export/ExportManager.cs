@@ -127,6 +127,24 @@ namespace NETworkManager.Models.Export
             }
         }
 
+        public static void Export(string filePath, ExportFileType fileType, ObservableCollection<ConnectionInfo> collection)
+        {
+            switch (fileType)
+            {
+                case ExportFileType.CSV:
+                    CreateCSV(collection, filePath);
+                    break;
+                case ExportFileType.XML:
+                    CreateXML(collection, filePath);
+                    break;
+                case ExportFileType.JSON:
+                    CreateJSON(collection, filePath);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
+            }
+        }
+
         public static void Export(string filePath, ExportFileType fileType, ObservableCollection<ListenerInfo> collection)
         {
             switch (fileType)
@@ -237,6 +255,18 @@ namespace NETworkManager.Models.Export
             System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
         }
 
+        private static void CreateCSV(IEnumerable<ConnectionInfo> collection, string filePath)
+        {
+            var stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine($"{nameof(ConnectionInfo.Protocol)},{nameof(ConnectionInfo.LocalIPAddress)},{nameof(ConnectionInfo.LocalPort)},{nameof(ConnectionInfo.RemoteIPAddress)},{nameof(ConnectionInfo.RemotePort)},{nameof(ConnectionInfo.TcpState)}");
+
+            foreach (var info in collection)
+                stringBuilder.AppendLine($"{info.Protocol},{info.LocalIPAddress},{info.LocalPort},{info.RemoteIPAddress},{info.RemotePort},{info.TcpState}");
+
+            System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
+        }
+        
         private static void CreateCSV(IEnumerable<ListenerInfo> collection, string filePath)
         {
             var stringBuilder = new StringBuilder();
@@ -383,6 +413,26 @@ namespace NETworkManager.Models.Export
                             new XElement(nameof(SNMPReceivedInfo),
                                 new XElement(nameof(SNMPReceivedInfo.OID), info.OID),
                                 new XElement(nameof(SNMPReceivedInfo.Data), info.Data)))));
+
+            document.Save(filePath);
+        }
+
+        public static void CreateXML(IEnumerable<ConnectionInfo> collection, string filePath)
+        {
+            var document = new XDocument(DefaultXDeclaration,
+
+                new XElement(ApplicationViewManager.Name.Traceroute.ToString(),
+                    new XElement(nameof(ConnectionInfo) + "s",
+
+                        from info in collection
+                        select
+                            new XElement(nameof(ConnectionInfo),
+                                new XElement(nameof(ConnectionInfo.Protocol), info.Protocol),
+                                new XElement(nameof(ConnectionInfo.LocalIPAddress), info.LocalIPAddress),
+                                new XElement(nameof(ConnectionInfo.LocalPort), info.LocalPort),
+                                new XElement(nameof(ConnectionInfo.RemoteIPAddress), info.RemoteIPAddress),
+                                new XElement(nameof(ConnectionInfo.RemotePort), info.RemotePort),
+                                new XElement(nameof(ConnectionInfo.TcpState), info.TcpState)))));
 
             document.Save(filePath);
         }
@@ -542,6 +592,26 @@ namespace NETworkManager.Models.Export
                 {
                     collection[i].OID,
                     collection[i].Data
+                };
+            }
+
+            System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
+        }
+        
+        public static void CreateJSON(ObservableCollection<ConnectionInfo> collection, string filePath)
+        {
+            var jsonData = new object[collection.Count];
+
+            for (var i = 0; i < collection.Count; i++)
+            {
+                jsonData[i] = new
+                {
+                    Protocol = collection[i].Protocol.ToString(),
+                    LocalIPAddress = collection[i].LocalIPAddress.ToString(),
+                    collection[i].LocalPort,
+                    RemoteIPAddress = collection[i].RemoteIPAddress.ToString(),
+                    collection[i].RemotePort,
+                    TcpState = collection[i].TcpState.ToString()
                 };
             }
 
