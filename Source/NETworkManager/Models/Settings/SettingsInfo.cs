@@ -2676,6 +2676,34 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private string _lookup_OUI_ExportFilePath;
+        public string Lookup_OUI_ExportFilePath
+        {
+            get => _lookup_OUI_ExportFilePath;
+            set
+            {
+                if (value == _lookup_OUI_ExportFilePath)
+                    return;
+
+                _lookup_OUI_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _lookup_OUI_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType Lookup_OUI_ExportFileType
+        {
+            get => _lookup_OUI_ExportFileType;
+            set
+            {
+                if (value == _lookup_OUI_ExportFileType)
+                    return;
+
+                _lookup_OUI_ExportFileType = value;
+                SettingsChanged = true;
+            }
+        }
+
         private ObservableCollection<string> _lookup_Port_PortsHistory = new ObservableCollection<string>();
         public ObservableCollection<string> Lookup_Port_PortsHistory
         {
@@ -2686,6 +2714,34 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _lookup_Port_PortsHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private string _lookup_Port_ExportFilePath;
+        public string Lookup_Port_ExportFilePath
+        {
+            get => _lookup_Port_ExportFilePath;
+            set
+            {
+                if (value == _lookup_Port_ExportFilePath)
+                    return;
+
+                _lookup_Port_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _lookup_Port_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType Lookup_Port_ExportFileType
+        {
+            get => _lookup_Port_ExportFileType;
+            set
+            {
+                if (value == _lookup_Port_ExportFileType)
+                    return;
+
+                _lookup_Port_ExportFileType = value;
                 SettingsChanged = true;
             }
         }

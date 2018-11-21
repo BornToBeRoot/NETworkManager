@@ -127,6 +127,42 @@ namespace NETworkManager.Models.Export
             }
         }
 
+        public static void Export(string filePath, ExportFileType fileType, ObservableCollection<OUIInfo> collection)
+        {
+            switch (fileType)
+            {
+                case ExportFileType.CSV:
+                    CreateCSV(collection, filePath);
+                    break;
+                case ExportFileType.XML:
+                    CreateXML(collection, filePath);
+                    break;
+                case ExportFileType.JSON:
+                    CreateJSON(collection, filePath);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
+            }
+        }
+
+        public static void Export(string filePath, ExportFileType fileType, ObservableCollection<PortLookupInfo> collection)
+        {
+            switch (fileType)
+            {
+                case ExportFileType.CSV:
+                    CreateCSV(collection, filePath);
+                    break;
+                case ExportFileType.XML:
+                    CreateXML(collection, filePath);
+                    break;
+                case ExportFileType.JSON:
+                    CreateJSON(collection, filePath);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
+            }
+        }
+
         public static void Export(string filePath, ExportFileType fileType, ObservableCollection<ConnectionInfo> collection)
         {
             switch (fileType)
@@ -251,6 +287,30 @@ namespace NETworkManager.Models.Export
 
             foreach (var info in collection)
                 stringBuilder.AppendLine($"{info.OID},{info.Data}");
+
+            System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
+        }
+
+        private static void CreateCSV(IEnumerable<OUIInfo> collection, string filePath)
+        {
+            var stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine($"{nameof(OUIInfo.MACAddress)},{nameof(OUIInfo.Vendor)}");
+
+            foreach (var info in collection)
+                stringBuilder.AppendLine($"{info.MACAddress},{info.Vendor}");
+
+            System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
+        }
+
+        private static void CreateCSV(IEnumerable<PortLookupInfo> collection, string filePath)
+        {
+            var stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine($"{nameof(PortLookupInfo.Number)},{nameof(PortLookupInfo.Protocol)},{nameof(PortLookupInfo.Service)},{nameof(PortLookupInfo.Description)}");
+
+            foreach (var info in collection)
+                stringBuilder.AppendLine($"{info.Number},{info.Protocol},{info.Service},{info.Description}");
 
             System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
         }
@@ -384,7 +444,7 @@ namespace NETworkManager.Models.Export
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(ApplicationViewManager.Name.Traceroute.ToString(),
+                new XElement(ApplicationViewManager.Name.DNSLookup.ToString(),
                     new XElement(nameof(DNSLookupRecordInfo) + "s",
 
                         from info in collection
@@ -405,7 +465,7 @@ namespace NETworkManager.Models.Export
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(ApplicationViewManager.Name.Traceroute.ToString(),
+                new XElement(ApplicationViewManager.Name.SNMP.ToString(),
                     new XElement(nameof(SNMPReceivedInfo) + "s",
 
                         from info in collection
@@ -417,11 +477,45 @@ namespace NETworkManager.Models.Export
             document.Save(filePath);
         }
 
+        public static void CreateXML(IEnumerable<OUIInfo> collection, string filePath)
+        {
+            var document = new XDocument(DefaultXDeclaration,
+
+                new XElement(ApplicationViewManager.Name.Lookup.ToString(),
+                    new XElement(nameof(OUIInfo) + "s",
+
+                        from info in collection
+                        select
+                            new XElement(nameof(OUIInfo),
+                                new XElement(nameof(OUIInfo.MACAddress), info.MACAddress),
+                                new XElement(nameof(OUIInfo.Vendor), info.Vendor)))));
+
+            document.Save(filePath);
+        }
+        
+        public static void CreateXML(IEnumerable<PortLookupInfo> collection, string filePath)
+        {
+            var document = new XDocument(DefaultXDeclaration,
+
+                new XElement(ApplicationViewManager.Name.Lookup.ToString(),
+                    new XElement(nameof(PortLookupInfo) + "s",
+
+                        from info in collection
+                        select
+                            new XElement(nameof(PortLookupInfo),
+                                new XElement(nameof(PortLookupInfo.Number), info.Number),
+                                new XElement(nameof(PortLookupInfo.Protocol), info.Protocol),
+                                new XElement(nameof(PortLookupInfo.Service), info.Service),
+                                new XElement(nameof(PortLookupInfo.Description), info.Description)))));
+
+            document.Save(filePath);
+        }
+        
         public static void CreateXML(IEnumerable<ConnectionInfo> collection, string filePath)
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(ApplicationViewManager.Name.Traceroute.ToString(),
+                new XElement(ApplicationViewManager.Name.Connections.ToString(),
                     new XElement(nameof(ConnectionInfo) + "s",
 
                         from info in collection
@@ -441,7 +535,7 @@ namespace NETworkManager.Models.Export
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(ApplicationViewManager.Name.Traceroute.ToString(),
+                new XElement(ApplicationViewManager.Name.Listeners.ToString(),
                     new XElement(nameof(ListenerInfo) + "s",
 
                         from info in collection
@@ -458,7 +552,7 @@ namespace NETworkManager.Models.Export
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(ApplicationViewManager.Name.Traceroute.ToString(),
+                new XElement(ApplicationViewManager.Name.ARPTable.ToString(),
                     new XElement(nameof(ARPInfo) + "s",
 
                         from info in collection
@@ -597,7 +691,41 @@ namespace NETworkManager.Models.Export
 
             System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
         }
-        
+
+        public static void CreateJSON(ObservableCollection<OUIInfo> collection, string filePath)
+        {
+            var jsonData = new object[collection.Count];
+
+            for (var i = 0; i < collection.Count; i++)
+            {
+                jsonData[i] = new
+                {
+                    collection[i].MACAddress,
+                    collection[i].Vendor
+                };
+            }
+
+            System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
+        }
+
+        public static void CreateJSON(ObservableCollection<PortLookupInfo> collection, string filePath)
+        {
+            var jsonData = new object[collection.Count];
+
+            for (var i = 0; i < collection.Count; i++)
+            {
+                jsonData[i] = new
+                {
+                    collection[i].Number,
+                    Protocol = collection[i].Protocol.ToString(),
+                    collection[i].Service,
+                    collection[i].Description
+                };
+            }
+
+            System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
+        }
+
         public static void CreateJSON(ObservableCollection<ConnectionInfo> collection, string filePath)
         {
             var jsonData = new object[collection.Count];
