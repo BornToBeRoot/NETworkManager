@@ -42,6 +42,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _textOnly;
+        public bool TextOnly
+        {
+            get => _textOnly;
+            set
+            {
+                if (value == _textOnly)
+                    return;
+
+                _textOnly = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ExportManager.ExportFileType FileType { get; set; }
 
         private bool _useCSV;
@@ -104,6 +118,25 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _useTXT;
+        public bool UseTXT
+        {
+            get => _useTXT;
+            set
+            {
+                if (value == _useTXT)
+                    return;
+
+                if (value)
+                {
+                    FileType = ExportManager.ExportFileType.TXT;
+                    ChangeFilePathExtension(FileType);
+                }
+
+                _useTXT = value;
+                OnPropertyChanged();
+            }
+        }
 
         private string _filePath;
         public string FilePath
@@ -127,6 +160,8 @@ namespace NETworkManager.ViewModels
             // Default
             ExportAll = true;
 
+            FilePath = filePath;
+            
             switch (fileType)
             {
                 case ExportManager.ExportFileType.CSV:
@@ -138,13 +173,15 @@ namespace NETworkManager.ViewModels
                 case ExportManager.ExportFileType.JSON:
                     UseJSON = true;
                     break;
+                case ExportManager.ExportFileType.TXT:
+                    UseTXT = true;
+                    TextOnly = true;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
             }
-
-            FilePath = filePath;
         }
-
+       
         public ICommand BrowseFileCommand
         {
             get { return new RelayCommand(p => BrowseFileAction()); }

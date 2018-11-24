@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CSV" xml:space="preserve">
+    <value>CSV</value>
+  </data>
   <data name="GitHub" xml:space="preserve">
     <value>GitHub</value>
   </data>
@@ -126,7 +129,16 @@
   <data name="HiddenPassword" xml:space="preserve">
     <value>••••••••••••</value>
   </data>
+  <data name="JSON" xml:space="preserve">
+    <value>JSON</value>
+  </data>
   <data name="ProductName" xml:space="preserve">
     <value>NETworkManager</value>
+  </data>
+  <data name="TXT" xml:space="preserve">
+    <value>TXT</value>
+  </data>
+  <data name="XML" xml:space="preserve">
+    <value>XML</value>
   </data>
 </root>

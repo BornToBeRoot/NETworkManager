@@ -83,4 +83,45 @@
             </MenuItem.Icon>
         </MenuItem>
     </ContextMenu>
+
+    <ContextMenu x:Key="CopyExportContextMenu" MinWidth="150">
+        <MenuItem Header="{x:Static localization:Strings.Copy}" Command="Copy">
+            <MenuItem.Icon>
+                <Rectangle Width="16" Height="16">
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="{DynamicResource BlackColorBrush}" />
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Fill" Value="{DynamicResource MenuItemDisabledBrush}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
+            <MenuItem.Icon>
+                <Rectangle Width="16" Height="16">
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="{DynamicResource BlackColorBrush}" />
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Fill" Value="{DynamicResource MenuItemDisabledBrush}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </MenuItem.Icon>
+        </MenuItem>
+    </ContextMenu>
 </ResourceDictionary>

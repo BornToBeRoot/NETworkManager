@@ -216,6 +216,11 @@ namespace NETworkManager.Models.Export
                     throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
             }
         }
+
+        public static void Export(string filePath, string content)
+        {
+            CreateTXT(content, filePath);
+        }
         #endregion
 
         #region CreateCSV
@@ -326,7 +331,7 @@ namespace NETworkManager.Models.Export
 
             System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
         }
-        
+
         private static void CreateCSV(IEnumerable<ListenerInfo> collection, string filePath)
         {
             var stringBuilder = new StringBuilder();
@@ -492,7 +497,7 @@ namespace NETworkManager.Models.Export
 
             document.Save(filePath);
         }
-        
+
         public static void CreateXML(IEnumerable<PortLookupInfo> collection, string filePath)
         {
             var document = new XDocument(DefaultXDeclaration,
@@ -510,7 +515,7 @@ namespace NETworkManager.Models.Export
 
             document.Save(filePath);
         }
-        
+
         public static void CreateXML(IEnumerable<ConnectionInfo> collection, string filePath)
         {
             var document = new XDocument(DefaultXDeclaration,
@@ -781,6 +786,14 @@ namespace NETworkManager.Models.Export
         }
         #endregion
 
+        #region CreateTXT
+
+        public static void CreateTXT(string content, string filePath)
+        {
+            System.IO.File.WriteAllText(filePath, content);
+        }
+        #endregion
+
         public static string GetFileExtensionAsString(ExportFileType fileExtension)
         {
             switch (fileExtension)
@@ -791,6 +804,8 @@ namespace NETworkManager.Models.Export
                     return "XML";
                 case ExportFileType.JSON:
                     return "JSON";
+                case ExportFileType.TXT:
+                    return "TXT";
                 default:
                     return string.Empty;
             }
@@ -801,7 +816,8 @@ namespace NETworkManager.Models.Export
         {
             CSV,
             XML,
-            JSON
+            JSON,
+            TXT
         }
     }
 }

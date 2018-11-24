@@ -7,7 +7,12 @@
              xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:validators="clr-namespace:NETworkManager.Validators"
+             xmlns:converters="clr-namespace:NETworkManager.Converters"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ExportViewModel}">
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+</UserControl.Resources>
     <Grid Margin="0,20">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -35,7 +40,7 @@
                     </Style>
                 </WrapPanel.Resources>
                 <RadioButton Content="{x:Static localization:Strings.All}" IsChecked="{Binding ExportAll}" />
-                <RadioButton Content="{x:Static localization:Strings.Selected}" IsChecked="{Binding ExportSelected}" Margin="10,0,0,0" />
+                <RadioButton Content="{x:Static localization:Strings.Selected}" IsChecked="{Binding ExportSelected}" Visibility="{Binding TextOnly, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Margin="10,0,0,0" />
             </WrapPanel>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Format}" Style="{StaticResource DefaultTextBlock}" />
             <WrapPanel Grid.Column="2" Grid.Row="2" Orientation="Horizontal">
@@ -44,9 +49,10 @@
                         <Setter Property="Margin" Value="0,5,10,5" />
                     </Style>
                 </WrapPanel.Resources>
-                <RadioButton Content="{x:Static localization:Strings.CSV}" IsChecked="{Binding UseCSV}" />
-                <RadioButton Content="{x:Static localization:Strings.XML}" IsChecked="{Binding UseXML}" Margin="10,0,0,0" />
-                <RadioButton Content="{x:Static localization:Strings.JSON}" IsChecked="{Binding UseJSON}" Margin="10,0,0,0" />
+                <RadioButton Content="{x:Static localization:StaticStrings.CSV}" IsChecked="{Binding UseCSV}" Visibility="{Binding TextOnly, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                <RadioButton Content="{x:Static localization:StaticStrings.XML}" IsChecked="{Binding UseXML}" Visibility="{Binding TextOnly, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Margin="10,0,0,0" />
+                <RadioButton Content="{x:Static localization:StaticStrings.JSON}" IsChecked="{Binding UseJSON}" Visibility="{Binding TextOnly, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Margin="10,0,0,0" />
+                <RadioButton Content="{x:Static localization:StaticStrings.TXT}" IsChecked="{Binding UseTXT}" Visibility="{Binding TextOnly, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
             </WrapPanel>
             <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Path}" Style="{StaticResource DefaultTextBlock}" />
             <TextBox Grid.Column="2" Grid.Row="4"  x:Name="TextBoxExportFilePath" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.Location}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}">

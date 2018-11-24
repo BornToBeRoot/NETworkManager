@@ -61,6 +61,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CSV.
+        /// </summary>
+        public static string CSV {
+            get {
+                return ResourceManager.GetString("CSV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GitHub.
         /// </summary>
         public static string GitHub {
@@ -88,11 +97,38 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to JSON.
+        /// </summary>
+        public static string JSON {
+            get {
+                return ResourceManager.GetString("JSON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NETworkManager.
         /// </summary>
         public static string ProductName {
             get {
                 return ResourceManager.GetString("ProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TXT.
+        /// </summary>
+        public static string TXT {
+            get {
+                return ResourceManager.GetString("TXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XML.
+        /// </summary>
+        public static string XML {
+            get {
+                return ResourceManager.GetString("XML", resourceCulture);
             }
         }
     }

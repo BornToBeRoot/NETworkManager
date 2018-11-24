@@ -2820,6 +2820,34 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private string _whois_ExportFilePath;
+        public string Whois_ExportFilePath
+        {
+            get => _whois_ExportFilePath;
+            set
+            {
+                if (value == _whois_ExportFilePath)
+                    return;
+
+                _whois_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _whois_ExportFileType = ExportManager.ExportFileType.TXT;
+        public ExportManager.ExportFileType Whois_ExportFileType
+        {
+            get => _whois_ExportFileType;
+            set
+            {
+                if (value == _whois_ExportFileType)
+                    return;
+
+                _whois_ExportFileType = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Connections

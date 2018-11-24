@@ -1,5 +1,6 @@
 ﻿using NETworkManager.Models.Network;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using NETworkManager.Models.Settings;
 using System.Windows.Threading;
@@ -11,13 +12,18 @@ using NETworkManager.Utilities;
 using System.Windows;
 using NETworkManager.Controls;
 using Dragablz;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Export;
 using NETworkManager.Resources.Localization;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
     public class WhoisViewModel : ViewModelBase
     {
         #region Variables
+        private readonly IDialogCoordinator _dialogCoordinator;
+        
         private readonly int _tabId;
         private bool _firstLoad = true;
 
@@ -176,9 +182,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public WhoisViewModel(int tabId, string domain)
+        public WhoisViewModel(IDialogCoordinator instance ,int tabId, string domain)
         {
             _isLoading = true;
+
+            _dialogCoordinator = instance;
 
             _tabId = tabId;
             Domain = domain;
@@ -220,6 +228,46 @@ namespace NETworkManager.ViewModels
         private void QueryAction()
         {
             Query();
+        }
+
+        public ICommand ExportCommand
+        {
+            get { return new RelayCommand(p => ExportAction()); }
+        }
+
+        private async void ExportAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, WhoisResult);
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.Whois_ExportFileType = instance.FileType;
+                SettingsManager.Current.Whois_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.Whois_ExportFileType, SettingsManager.Current.Whois_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
         #endregion
 
