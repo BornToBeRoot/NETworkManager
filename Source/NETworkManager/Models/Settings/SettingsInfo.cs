@@ -2549,6 +2549,34 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private string _httpHeaders_ExportFilePath;
+        public string HTTPHeaders_ExportFilePath
+        {
+            get => _httpHeaders_ExportFilePath;
+            set
+            {
+                if (value == _httpHeaders_ExportFilePath)
+                    return;
+
+                _httpHeaders_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _httpHeaders_ExportFileType = ExportManager.ExportFileType.TXT;
+        public ExportManager.ExportFileType HTTPHeaders_ExportFileType
+        {
+            get => _httpHeaders_ExportFileType;
+            set
+            {
+                if (value == _httpHeaders_ExportFileType)
+                    return;
+
+                _httpHeaders_ExportFileType = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Subnet Calculator

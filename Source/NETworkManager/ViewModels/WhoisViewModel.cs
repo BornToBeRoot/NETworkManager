@@ -239,7 +239,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Export
+                Title = Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>

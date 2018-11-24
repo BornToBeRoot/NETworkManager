@@ -104,24 +104,24 @@
                 <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
             </Grid>
             <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" />
-                <TextBox Grid.Row="3" VerticalScrollBarVisibility="Auto" Text="{Binding WhoisResult}" IsReadOnly="True" MinWidth="150" >
-                    <TextBox.Resources>
-                        <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource TextBoxScrollBar}" />
-                    </TextBox.Resources>
-                    <TextBox.Style>
-                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource ConsoleTextBox}">
-                            <Setter Property="ContextMenu" Value="{StaticResource CopyExportContextMenu}" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding WhoisResult}" Value="{x:Static sys:String.Empty}">
-                                    <Setter Property="ContextMenu" Value="{x:Null}" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding WhoisResult}" Value="{x:Null}">
-                                    <Setter Property="ContextMenu" Value="{x:Null}" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBox.Style>
-                </TextBox>
+            <TextBox Grid.Row="3" VerticalScrollBarVisibility="Auto" Text="{Binding WhoisResult}" IsReadOnly="True" >
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource TextBoxScrollBar}" />
+                </TextBox.Resources>
+                <TextBox.Style>
+                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource ConsoleTextBox}">
+                        <Setter Property="ContextMenu" Value="{StaticResource CopyExportContextMenu}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding WhoisResult}" Value="{x:Static sys:String.Empty}">
+                                <Setter Property="ContextMenu" Value="{x:Null}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding WhoisResult}" Value="{x:Null}">
+                                <Setter Property="ContextMenu" Value="{x:Null}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
             <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">
                 <Expander.Header>
                     <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
