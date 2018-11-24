@@ -2627,36 +2627,6 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
-        #region Supernetting
-        private ObservableCollection<string> _subnetCalculator_Supernetting_Subnet1 = new ObservableCollection<string>();
-        public ObservableCollection<string> SubnetCalculator_Supernetting_Subnet1
-        {
-            get => _subnetCalculator_Supernetting_Subnet1;
-            set
-            {
-                if (value == _subnetCalculator_Supernetting_Subnet1)
-                    return;
-
-                _subnetCalculator_Supernetting_Subnet1 = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private ObservableCollection<string> _subnetCalculator_Supernetting_Subnet2 = new ObservableCollection<string>();
-        public ObservableCollection<string> SubnetCalculator_Supernetting_Subnet2
-        {
-            get => _subnetCalculator_Supernetting_Subnet2;
-            set
-            {
-                if (value == _subnetCalculator_Supernetting_Subnet2)
-                    return;
-
-                _subnetCalculator_Supernetting_Subnet2 = value;
-                SettingsChanged = true;
-            }
-        }
-        #endregion
-
         #region WideSubnet
         private ObservableCollection<string> _subnetCalculator_WideSubnet_Subnet1 = new ObservableCollection<string>();
         public ObservableCollection<string> SubnetCalculator_WideSubnet_Subnet1
@@ -3106,8 +3076,8 @@ namespace NETworkManager.Models.Settings
             SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory.CollectionChanged += CollectionChanged;
 
             // Subnet Calculator / Supernetting
-            SubnetCalculator_Supernetting_Subnet1.CollectionChanged += CollectionChanged;
-            SubnetCalculator_Supernetting_Subnet2.CollectionChanged += CollectionChanged;
+            SubnetCalculator_WideSubnet_Subnet1.CollectionChanged += CollectionChanged;
+            SubnetCalculator_WideSubnet_Subnet2.CollectionChanged += CollectionChanged;
 
             // Lookup / OUI
             Lookup_OUI_MACAddressOrVendorHistory.CollectionChanged += CollectionChanged;

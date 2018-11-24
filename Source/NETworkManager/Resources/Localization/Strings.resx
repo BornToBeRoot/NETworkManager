@@ -375,9 +375,6 @@
   <data name="Success" xml:space="preserve">
     <value>Success!</value>
   </data>
-  <data name="Supernetting" xml:space="preserve">
-    <value>Supernetting</value>
-  </data>
   <data name="Theme" xml:space="preserve">
     <value>Theme</value>
   </data>
@@ -872,9 +869,6 @@
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
     <value>Enter subnet and a new subnet mask to create subnets...</value>
-  </data>
-  <data name="EnterSubnetsToCreateASupernet" xml:space="preserve">
-    <value>Enter subnets to create a supernet...</value>
   </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
     <value>Error checking 'api.github.com', check your network connection!</value>

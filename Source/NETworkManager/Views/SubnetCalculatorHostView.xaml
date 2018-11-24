@@ -23,9 +23,6 @@
         <TabItem Header="{x:Static localization:Strings.Subnetting}">
             <views:SubnetCalculatorSubnettingView Margin="10" />
         </TabItem>
-        <TabItem Header="{x:Static localization:Strings.Supernetting}">
-            <views:SubnetCalculatorSupernettingView Margin="10" />
-        </TabItem>
         <TabItem Header="{x:Static localization:Strings.WideSubnet}">
             <views:SubnetCalculatorWideSubnetView Margin="10" />
         </TabItem>

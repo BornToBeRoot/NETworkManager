@@ -339,7 +339,6 @@
     <Compile Include="ViewModels\DNSLookupHostViewModel.cs" />
     <Compile Include="ViewModels\HTTPHeadersHostViewModel.cs" />
     <Compile Include="ViewModels\SNMPHostViewModel.cs" />
-    <Compile Include="ViewModels\SubnetCalculatorSupernettingViewModel.cs" />
     <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\TracerouteHostViewModel.cs" />
     <Compile Include="ViewModels\PuTTYHostViewModel.cs" />
@@ -431,9 +430,6 @@
     </Compile>
     <Compile Include="Views\SNMPHostView.xaml.cs">
       <DependentUpon>SNMPHostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SubnetCalculatorSupernettingView.xaml.cs">
-      <DependentUpon>SubnetCalculatorSupernettingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProfileDialog.xaml.cs">
       <DependentUpon>ProfileDialog.xaml</DependentUpon>
@@ -744,10 +740,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SNMPHostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SubnetCalculatorSupernettingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

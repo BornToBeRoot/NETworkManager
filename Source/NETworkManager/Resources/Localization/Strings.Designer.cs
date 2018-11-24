@@ -1654,15 +1654,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter subnets to create a supernet....
-        /// </summary>
-        public static string EnterSubnetsToCreateASupernet {
-            get {
-                return ResourceManager.GetString("EnterSubnetsToCreateASupernet", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Enter subnets to create a wide subnet....
         /// </summary>
         public static string EnterSubnetsToCreateAWideSubnet {
@@ -5144,15 +5135,6 @@ namespace NETworkManager.Resources.Localization {
         public static string Success {
             get {
                 return ResourceManager.GetString("Success", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Supernetting.
-        /// </summary>
-        public static string Supernetting {
-            get {
-                return ResourceManager.GetString("Supernetting", resourceCulture);
             }
         }
         
