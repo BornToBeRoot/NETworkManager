@@ -9,8 +9,12 @@ using MahApps.Metro.Controls.Dialogs;
 using System.Linq;
 using System.Net;
 using System;
+using System.Collections;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
@@ -94,7 +98,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ICollectionView SubnetsResultView { get; }
+        public ICollectionView SubnetsResultsView { get; }
 
         private IPNetwork _selectedSubnetResult;
         public IPNetwork SelectedSubnetResult
@@ -109,6 +113,22 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+
+        private IList _selectedSubnetResults = new ArrayList();
+        public IList SelectedSubnetResults
+        {
+            get => _selectedSubnetResults;
+            set
+            {
+                if (Equals(value, _selectedSubnetResults))
+                    return;
+
+                _selectedSubnetResults = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
@@ -149,7 +169,7 @@ namespace NETworkManager.ViewModels
             NewSubnetmaskOrCIDRHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory);
 
             // Result view
-            SubnetsResultView = CollectionViewSource.GetDefaultView(SubnetsResult);
+            SubnetsResultsView = CollectionViewSource.GetDefaultView(SubnetsResult);
         }
         #endregion
 
@@ -243,6 +263,46 @@ namespace NETworkManager.ViewModels
         {
             CommonMethods.SetClipboard(SelectedSubnetResult.Usable.ToString());
         }
+
+        public ICommand ExportCommand
+        {
+            get { return new RelayCommand(p => ExportAction()); }
+        }
+
+        private async void ExportAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? SubnetsResult : new ObservableCollection<IPNetwork>(SelectedSubnetResults.Cast<IPNetwork>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType = instance.FileType;
+                SettingsManager.Current.SubnetCalculator_Subnetting_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType, SettingsManager.Current.SubnetCalculator_Subnetting_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
         #endregion
 
         #region Methods
@@ -259,7 +319,7 @@ namespace NETworkManager.ViewModels
             // Ask the user if there is a large calculation...
             var baseCidr = subnet.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? 32 : 128;
 
-            if (65535 < (Math.Pow(2, baseCidr - subnet.Cidr) / Math.Pow(2, (baseCidr - newCidr))))
+            if (65535 < Math.Pow(2, baseCidr - subnet.Cidr) / Math.Pow(2, (baseCidr - newCidr)))
             {
                 var settings = AppearanceManager.MetroDialog;
 
@@ -281,7 +341,7 @@ namespace NETworkManager.ViewModels
             {
                 foreach (var network in subnet.Subnet(newCidr))
                 {
-                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
                     {
                         lock (SubnetsResult)
                             SubnetsResult.Add(network);

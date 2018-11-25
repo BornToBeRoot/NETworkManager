@@ -2625,6 +2625,34 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private string _subnetCalculator_Subnetting_ExportFilePath;
+        public string SubnetCalculator_Subnetting_ExportFilePath
+        {
+            get => _subnetCalculator_Subnetting_ExportFilePath;
+            set
+            {
+                if (value == _subnetCalculator_Subnetting_ExportFilePath)
+                    return;
+
+                _subnetCalculator_Subnetting_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _subnetCalculator_Subnetting_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType SubnetCalculator_Subnetting_ExportFileType
+        {
+            get => _subnetCalculator_Subnetting_ExportFileType;
+            set
+            {
+                if (value == _subnetCalculator_Subnetting_ExportFileType)
+                    return;
+
+                _subnetCalculator_Subnetting_ExportFileType = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region WideSubnet

@@ -12,6 +12,7 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:net="clr-namespace:System.Net;assembly=System.Net.IPNetwork"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:controls="clr-namespace:NETworkManager.Controls"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SubnetCalculatorSubnettingViewModel}">
     <UserControl.Resources>
@@ -134,8 +135,8 @@
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{x:Static localization:Strings.Result}" Style="{StaticResource HeaderTextBlock}" />
-        <DataGrid Grid.Row="3" ItemsSource="{Binding SubnetsResultView}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" SelectedItem="{Binding SelectedSubnetResult}">
-            <DataGrid.Resources>
+        <controls:MultiSelectDataGrid Grid.Row="3" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding SubnetsResultsView}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" SelectedItem="{Binding SelectedSubnetResult}" SelectedItemsList="{Binding SelectedSubnetResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <controls:MultiSelectDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.CopyDots}">
@@ -219,18 +220,39 @@
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
+                    <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </ContextMenu>
-            </DataGrid.Resources>
-            <DataGrid.RowStyle>
+                <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                    <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </controls:MultiSelectDataGrid.Resources>
+            <controls:MultiSelectDataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                    <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding SelectedItems.Count,RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" Value="1" >
                             <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </DataGrid.RowStyle>
-            <DataGrid.Columns>
+            </controls:MultiSelectDataGrid.RowStyle>
+            <controls:MultiSelectDataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static localization:Strings.NetworkAddress}" Binding="{Binding (net:IPNetwork.Network), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Broadcast}" Binding="{Binding (net:IPNetwork.Broadcast), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.IPAddresses}" Binding="{Binding (net:IPNetwork.Total), Converter={StaticResource BigIntegerToStringConverter}}" MinWidth="150"  Width="Auto" />
@@ -239,8 +261,8 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.FirstUsableIPAddress}" Binding="{Binding (net:IPNetwork.FirstUsable), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.LastUsableIPAddress}" Binding="{Binding (net:IPNetwork.LastUsable), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Hosts}" Binding="{Binding (net:IPNetwork.Usable), Converter={StaticResource BigIntegerToStringConverter}}" MinWidth="80" Width="Auto" />
-            </DataGrid.Columns>
-        </DataGrid>
+            </controls:MultiSelectDataGrid.Columns>
+        </controls:MultiSelectDataGrid>
         <TextBlock Grid.Row="3" Foreground="{DynamicResource GrayBrush3}" Text="{x:Static localization:Strings.EnterSubnetAndANewSubnetmaskToCreateSubnets}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
     </Grid>
 </UserControl>
