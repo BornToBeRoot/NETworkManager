@@ -2014,11 +2014,20 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 192.168.178.133/22 or 192.168.178.133/255.255.252.0.
+        ///   Looks up a localized string similar to 192.168.178.0/24 or 192.168.178.0/255.255.255.0.
         /// </summary>
         public static string ExampleIPv4Subnet {
             get {
                 return ResourceManager.GetString("ExampleIPv4Subnet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 192.168.179.0/24 or 192.168.179.0/255.255.255.0.
+        /// </summary>
+        public static string ExampleIPv4Subnet2 {
+            get {
+                return ResourceManager.GetString("ExampleIPv4Subnet2", resourceCulture);
             }
         }
         
