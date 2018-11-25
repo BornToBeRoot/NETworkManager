@@ -1947,4 +1947,8 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="AddTabDots" xml:space="preserve">
     <value>Add tab...</value>
   </data>
+  <data name="ResetCredentialsMessage" xml:space="preserve">
+    <value>If you have forgotten your password and want to start over, delete the following file and restart the application.
+Path: "{0}"</value>
+  </data>
 </root>

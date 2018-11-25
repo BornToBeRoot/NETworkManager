@@ -4051,6 +4051,16 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to If you have forgotten your password and want to start over, delete the following file and restart the application.
+        ///Path: &quot;{0}&quot;.
+        /// </summary>
+        public static string ResetCredentialsMessage {
+            get {
+                return ResourceManager.GetString("ResetCredentialsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resolve CNAME on ANY requests.
         /// </summary>
         public static string ResolveCNAMEOnANYRequests {

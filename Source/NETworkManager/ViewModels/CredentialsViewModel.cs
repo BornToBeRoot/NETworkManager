@@ -11,6 +11,7 @@ using NETworkManager.Utilities;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using NETworkManager.Resources.Localization;
 
 namespace NETworkManager.ViewModels
 {
@@ -294,7 +295,7 @@ namespace NETworkManager.ViewModels
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 if (!CredentialManager.Load(instance.Password))
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.WrongPassword, Resources.Localization.Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.WrongPassword, Resources.Localization.Strings.WrongPasswordDecryptionFailedMessage + Environment.NewLine + Environment.NewLine + string.Format(Strings.ResetCredentialsMessage,CredentialManager.GetCredentialsFilePath()), MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
 
                 CheckCredentialsLoaded();
 
