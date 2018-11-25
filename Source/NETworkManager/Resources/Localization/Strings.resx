@@ -967,7 +967,8 @@
     <value>No ports found. Check your input!</value>
   </data>
   <data name="NoProfilesFoundCreateOne" xml:space="preserve">
-    <value>No profiles found! Create one...</value>
+    <value>No profiles found!
+Create one...</value>
   </data>
   <data name="NothingFound" xml:space="preserve">
     <value>Nothing found!</value>
@@ -1942,5 +1943,8 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   </data>
   <data name="WideSubnetFeatureNote" xml:space="preserve">
     <value>Supernet requires consecutive subnet without missing IP addresses. Try the Wide Subnet feature to create a larger subnet of two smaller ones that are far apart.</value>
+  </data>
+  <data name="AddTabDots" xml:space="preserve">
+    <value>Add tab...</value>
   </data>
 </root>

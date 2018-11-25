@@ -259,6 +259,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add tab....
+        /// </summary>
+        public static string AddTabDots {
+            get {
+                return ResourceManager.GetString("AddTabDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adjust screen automatically.
         /// </summary>
         public static string AdjustScreenAutomatically {
@@ -2851,7 +2860,8 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No profiles found! Create one....
+        ///   Looks up a localized string similar to No profiles found!
+        ///Create one....
         /// </summary>
         public static string NoProfilesFoundCreateOne {
             get {

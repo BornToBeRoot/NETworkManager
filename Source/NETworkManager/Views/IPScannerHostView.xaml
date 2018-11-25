@@ -61,26 +61,42 @@
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-            <StackPanel>
-                <Button HorizontalAlignment="Center" Focusable="False" Command="{Binding AddTabCommand}" ToolTip="{x:Static localization:Strings.NewTab}" Style="{StaticResource CleanButton}" Margin="0,0,0,10">
-                    <Rectangle Width="20" Height="20">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
-                        </Rectangle.OpacityMask>
-                        <Rectangle.Style>
-                            <Style TargetType="{x:Type Rectangle}">
-                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Rectangle.Style>
-                    </Rectangle>
-                </Button>
-                <TextBlock Text="{x:Static localization:Strings.AddATabToPerformANetworkScan}" Style="{StaticResource MessageTextBlock}" />
-            </StackPanel>
+            <Button HorizontalAlignment="Center" Command="{Binding AddTabCommand}" Style="{StaticResource CleanButton}">
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
+                            </Rectangle.OpacityMask>
+                            <Rectangle.Style>
+                                <Style TargetType="{x:Type Rectangle}">
+                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddATabToPerformANetworkScan}">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
         </Grid>
         <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
         <Expander Grid.Column="2" x:Name="ExpanderProfiles" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
