@@ -30,7 +30,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.IPAddress}" />
-            <TextBox x:Name="TextBoxIpAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Address}">
+            <TextBox x:Name="TextBoxIpAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Address}">
                 <TextBox.Text>
                     <Binding Path="IpAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -41,7 +41,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.MACAddress}" />
-            <TextBox x:Name="TextBoxMacAddress" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleMACAddress}">
+            <TextBox x:Name="TextBoxMacAddress" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMACAddress}">
                 <TextBox.Text>
                     <Binding Path="MacAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

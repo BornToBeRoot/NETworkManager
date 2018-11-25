@@ -145,7 +145,7 @@
         </StackPanel>
         <mah:ToggleSwitch Header="{x:Static localization:Strings.AddDNSSuffixToHostname}" IsChecked="{Binding AddDNSSuffix}" Margin="0,0,0,10"/>
         <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCustomDNSSuffix}" IsEnabled="{Binding AddDNSSuffix}" IsChecked="{Binding UseCustomDNSSuffix}" Margin="0,0,0,10"/>
-        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleSuffix}" Margin="0,0,0,10">
+        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSuffix}" Margin="0,0,0,10">
             <TextBox.Resources>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                     <Setter Property="IsEnabled" Value="False" />

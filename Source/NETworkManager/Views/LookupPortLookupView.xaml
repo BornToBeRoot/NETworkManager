@@ -43,7 +43,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.PortOrService}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="TextBoxPortOrService" ItemsSource="{Binding PortsOrServicesHistoryView}" wpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding PortOrServiceHasError}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePortPortRangeOrService}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" x:Name="TextBoxPortOrService" ItemsSource="{Binding PortsOrServicesHistoryView}" wpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding PortOrServiceHasError}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortPortRangeOrService}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.InputBindings>
                         <KeyBinding Command="{Binding PortLookupCommand}" Key="Return" />
                     </ComboBox.InputBindings>

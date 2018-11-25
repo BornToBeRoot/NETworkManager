@@ -61,7 +61,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Host}" Style="{StaticResource CenterTextBlock}" />
-            <ComboBox Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3" x:Name="ComboBoxHost" Height="{Binding ElementName=ComboBoxOID, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+            <ComboBox Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3" x:Name="ComboBoxHost" Height="{Binding ElementName=ComboBoxOID, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -75,7 +75,7 @@
             <TextBlock Grid.Column="10" Grid.Row="0" Text="{x:Static localization:Strings.Mode}" Style="{StaticResource CenterTextBlock}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
             <ComboBox Grid.Column="12" Grid.Row="0" ItemsSource="{Binding Modes}" SelectedItem="{Binding Mode}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.OID}" Style="{StaticResource CenterTextBlock}" />
-            <ComboBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3" x:Name="ComboBoxOID" Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" ItemsSource="{Binding OIDHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleSNMPOID}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+            <ComboBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3" x:Name="ComboBoxOID" Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" ItemsSource="{Binding OIDHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSNMPOID}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                 <ComboBox.Text>
                     <Binding Path="OID" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -97,7 +97,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <TextBox Grid.Column="8" Grid.Row="2" Grid.ColumnSpan="5" Name="TextBoxCommunity" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleSNMPCommunity}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
+            <TextBox Grid.Column="8" Grid.Row="2" Grid.ColumnSpan="5" Name="TextBoxCommunity" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSNMPCommunity}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                         <Setter Property="Visibility" Value="Visible" />
@@ -152,7 +152,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <TextBox Grid.Column="12" Grid.Row="2" x:Name="TextBoxUsername" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleUsername}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
+            <TextBox Grid.Column="12" Grid.Row="2" x:Name="TextBoxUsername" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                         <Setter Property="Visibility" Value="Collapsed" />

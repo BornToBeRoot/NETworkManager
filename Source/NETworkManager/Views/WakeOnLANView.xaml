@@ -49,7 +49,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.MACAddress}" />
-                <TextBox Grid.Column="2" Grid.Row="0" x:Name="TextBoxMACAddress" Height="{Binding ElementName=TextBoxPort, Path=ActualHeight}" wpfHelpers:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressHasError}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleMACAddress}">
+                <TextBox Grid.Column="2" Grid.Row="0" x:Name="TextBoxMACAddress" Height="{Binding ElementName=TextBoxPort, Path=ActualHeight}" wpfHelpers:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressHasError}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMACAddress}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
                     </TextBox.InputBindings>
@@ -63,7 +63,7 @@
                     </TextBox.Text>
                 </TextBox>
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Broadcast}" Style="{StaticResource CenterTextBlock}" />
-                <TextBox x:Name="TextBoxBroadcast" Grid.Column="2" Grid.Row="2" Height="{Binding ElementName=TextBoxPort, Path=ActualHeight}" wpfHelpers:ProtocolSettingsLayout.MVVMHasError="{Binding BroadcastHasError}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Broadcast}">
+                <TextBox x:Name="TextBoxBroadcast" Grid.Column="2" Grid.Row="2" Height="{Binding ElementName=TextBoxPort, Path=ActualHeight}" wpfHelpers:ProtocolSettingsLayout.MVVMHasError="{Binding BroadcastHasError}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Broadcast}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
                     </TextBox.InputBindings>
@@ -77,7 +77,7 @@
                     </TextBox.Text>
                 </TextBox>
                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Port}" Style="{StaticResource CenterTextBlock}" />
-                <TextBox x:Name="TextBoxPort" Grid.Column="2" Grid.Row="4" wpfHelpers:ProtocolSettingsLayout.MVVMHasError="{Binding PortHasError}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePort7}" HorizontalAlignment="Left" Width="65" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                <TextBox x:Name="TextBoxPort" Grid.Column="2" Grid.Row="4" wpfHelpers:ProtocolSettingsLayout.MVVMHasError="{Binding PortHasError}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort7}" HorizontalAlignment="Left" Width="65" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
                     </TextBox.InputBindings>

@@ -43,7 +43,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" Visibility="{Binding ConnectAs, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,10" />
-            <TextBox x:Name="TextBoxName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleRemoteDesktopProfileName}" Visibility="{Binding ConnectAs, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}" Margin="0,0,0,10">
+            <TextBox x:Name="TextBoxName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleRemoteDesktopProfileName}" Visibility="{Binding ConnectAs, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}" Margin="0,0,0,10">
                 <TextBox.Text>
                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -53,7 +53,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Host}" />
-            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="1" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="1" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -88,7 +88,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Username}" />
-                <TextBox x:Name="TextBoxUsername" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleUsername}">
+                <TextBox x:Name="TextBoxUsername" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}">
                     <TextBox.Text>
                         <Binding Path="Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>

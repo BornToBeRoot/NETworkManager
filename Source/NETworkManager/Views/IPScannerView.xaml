@@ -51,7 +51,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.IPRange}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="ComboBoxIPRange" ItemsSource="{Binding IPRangeHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPScanRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" x:Name="ComboBoxIPRange" ItemsSource="{Binding IPRangeHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPScanRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="IPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>

@@ -446,7 +446,7 @@
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.IPv4Address}" />
-                                        <TextBox x:Name="TextBoxConfigIPAddress" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Address}">
+                                        <TextBox x:Name="TextBoxConfigIPAddress" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Address}">
                                             <TextBox.Text>
                                                 <Binding Path="ConfigIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
@@ -457,7 +457,7 @@
                                             </TextBox.Text>
                                         </TextBox>
                                         <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.SubnetmaskOrCIDR}" />
-                                        <ComboBox x:Name="ComboBoxConfigSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4SubnetmaskIPv4CIDR}" ItemsSource="{x:Static network:Subnetmask.List}">
+                                        <ComboBox x:Name="ComboBoxConfigSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4SubnetmaskIPv4CIDR}" ItemsSource="{x:Static network:Subnetmask.List}">
                                             <ComboBox.Text>
                                                 <Binding Path="ConfigSubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
@@ -483,7 +483,7 @@
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
                                         <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource CenterTextBlock}"  Text="{x:Static localization:Strings.DefaultGateway}"  />
-                                        <TextBox x:Name="TextBoxConfigGateway" Grid.Column="1" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Gateway}">
+                                        <TextBox x:Name="TextBoxConfigGateway" Grid.Column="1" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Gateway}">
                                             <TextBox.Text>
                                                 <Binding Path="ConfigGateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
@@ -518,7 +518,7 @@
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}"  Text="{x:Static localization:Strings.PrimaryDNSServer}"  />
-                                        <TextBox x:Name="TextBoxConfigPrimaryDNSServer" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Gateway}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                        <TextBox x:Name="TextBoxConfigPrimaryDNSServer" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Gateway}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                             <TextBox.Text>
                                                 <Binding Path="ConfigPrimaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
@@ -528,7 +528,7 @@
                                             </TextBox.Text>
                                         </TextBox>
                                         <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}"  Text="{x:Static localization:Strings.SecondaryDNSServer}"  />
-                                        <TextBox x:Name="TextBoxConfigSecondaryDNSServer" Grid.Column="1" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4DNSServer}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                        <TextBox x:Name="TextBoxConfigSecondaryDNSServer" Grid.Column="1" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4DNSServer}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                             <TextBox.Text>
                                                 <Binding Path="ConfigSecondaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>

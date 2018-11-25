@@ -46,7 +46,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.Subnet1}" />
-                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="ComboBoxSubnet1" Height="{Binding ElementName=ComboBoxSubnet2, Path=ActualHeight}" ItemsSource="{Binding Subnet1HistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Subnet}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="ComboBoxSubnet1" Height="{Binding ElementName=ComboBoxSubnet2, Path=ActualHeight}" ItemsSource="{Binding Subnet1HistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Subnet}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Subnet1" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>
@@ -57,7 +57,7 @@
                     </ComboBox.Text>
                 </ComboBox>
                 <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.Subnet2}" />
-                <ComboBox x:Name="ComboBoxSubnet2" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding Subnet2HistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Subnet2}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox x:Name="ComboBoxSubnet2" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding Subnet2HistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Subnet2}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Subnet2" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>

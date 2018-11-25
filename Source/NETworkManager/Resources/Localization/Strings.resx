@@ -1337,129 +1337,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="Everything" xml:space="preserve">
     <value>Everything</value>
   </data>
-  <data name="ExampleBaud9600" xml:space="preserve">
-    <value>9600</value>
-  </data>
-  <data name="ExampleCredentialName" xml:space="preserve">
-    <value>Windows-Testuser</value>
-  </data>
-  <data name="ExampleGroupServers" xml:space="preserve">
-    <value>Servers</value>
-  </data>
-  <data name="ExampleGroupSwitche" xml:space="preserve">
-    <value>Switche</value>
-  </data>
-  <data name="ExampleHostname" xml:space="preserve">
-    <value>SERVER-01</value>
-  </data>
-  <data name="ExampleHostnameAndOrIPAddress" xml:space="preserve">
-    <value>192.168.178.1; fritz.box</value>
-  </data>
-  <data name="ExampleHostnameOrIPAddress" xml:space="preserve">
-    <value>SERVER-01 or 172.16.0.100</value>
-  </data>
-  <data name="ExampleIPScanRange" xml:space="preserve">
-    <value>192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150; server-01/24</value>
-  </data>
-  <data name="ExampleIPv4Address" xml:space="preserve">
-    <value>192.168.178.55</value>
-  </data>
-  <data name="ExampleIPv4Broadcast" xml:space="preserve">
-    <value>192.168.178.255</value>
-  </data>
-  <data name="ExampleIPv4DNSServer" xml:space="preserve">
-    <value>8.8.8.8</value>
-  </data>
-  <data name="ExampleIPv4DNSServers" xml:space="preserve">
-    <value>192.168.178.1; 8.8.8.8; 8.8.4.4</value>
-  </data>
-  <data name="ExampleIPv4Gateway" xml:space="preserve">
-    <value>192.168.178.1</value>
-  </data>
-  <data name="ExampleIPv4IPv6Subnet" xml:space="preserve">
-    <value>192.168.178.133/255.255.255.0 or 2001:0db8::/64</value>
-  </data>
-  <data name="ExampleIPv4IPv6Subnet2" xml:space="preserve">
-    <value>192.168.178.134/255.255.255.0 or 2001:0db9::/64</value>
-  </data>
-  <data name="ExampleIPv4Subnet" xml:space="preserve">
-    <value>192.168.178.0/24 or 192.168.178.0/255.255.255.0</value>
-  </data>
-  <data name="ExampleIPv4Subnetmask" xml:space="preserve">
-    <value>255.255.255.0</value>
-  </data>
-  <data name="ExampleIPv4SubnetmaskIPv4CIDR" xml:space="preserve">
-    <value>/24 or 255.255.255.0</value>
-  </data>
-  <data name="ExampleIPv4SubnetmaskIPv6CIDR" xml:space="preserve">
-    <value>255.255.255.0 or /64</value>
-  </data>
-  <data name="ExampleIPv4SubnetWithCIDR" xml:space="preserve">
-    <value>192.168.100.0/24</value>
-  </data>
-  <data name="ExampleMACAddress" xml:space="preserve">
-    <value>00:F1:21:AB:0B:35</value>
-  </data>
-  <data name="ExampleMACAddressesOrVendor" xml:space="preserve">
-    <value>01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5; Intel Corp; Asus</value>
-  </data>
-  <data name="ExamplePort161" xml:space="preserve">
-    <value>161</value>
-  </data>
-  <data name="ExamplePort22" xml:space="preserve">
-    <value>22</value>
-  </data>
-  <data name="ExamplePort23" xml:space="preserve">
-    <value>23</value>
-  </data>
-  <data name="ExamplePort3389" xml:space="preserve">
-    <value>3389</value>
-  </data>
-  <data name="ExamplePort513" xml:space="preserve">
-    <value>513</value>
-  </data>
-  <data name="ExamplePort53" xml:space="preserve">
-    <value>53</value>
-  </data>
-  <data name="ExamplePort7" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="ExamplePortPortRangeOrService" xml:space="preserve">
-    <value>22; 80; https; ldaps; 777 - 999; 8080</value>
-  </data>
-  <data name="ExamplePortScanRange" xml:space="preserve">
-    <value>22; 80; 443; 500 - 999; 8080</value>
-  </data>
-  <data name="ExampleRemoteDesktopProfileName" xml:space="preserve">
-    <value>Webserver</value>
-  </data>
-  <data name="ExampleSerialLine" xml:space="preserve">
-    <value>COM5</value>
-  </data>
-  <data name="ExampleSNMPCommunity" xml:space="preserve">
-    <value>public</value>
-  </data>
-  <data name="ExampleSNMPOID" xml:space="preserve">
-    <value>1.3.6.1.2.1.1</value>
-  </data>
-  <data name="ExampleSNMPUsername" xml:space="preserve">
-    <value>snmp-user</value>
-  </data>
-  <data name="ExampleSuffix" xml:space="preserve">
-    <value>fritz.box</value>
-  </data>
-  <data name="ExampleTags" xml:space="preserve">
-    <value>server; dmz</value>
-  </data>
-  <data name="ExampleUsername" xml:space="preserve">
-    <value>Admin</value>
-  </data>
-  <data name="ExampleWebserverPorts" xml:space="preserve">
-    <value>80; 443; 8080; 8443</value>
-  </data>
-  <data name="ExampleWebsiteUri" xml:space="preserve">
-    <value>http(s)://example.com/index.html</value>
-  </data>
   <data name="FilterDots" xml:space="preserve">
     <value>Filter...</value>
   </data>
@@ -1958,9 +1835,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>Whois server not found for the domain: "{0}"</value>
   </data>
-  <data name="ExampleDomain" xml:space="preserve">
-    <value>example.com</value>
-  </data>
   <data name="Routing" xml:space="preserve">
     <value>Routing</value>
   </data>
@@ -1993,9 +1867,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   </data>
   <data name="RestartSession" xml:space="preserve">
     <value>Restart session</value>
-  </data>
-  <data name="ExamplePort5900" xml:space="preserve">
-    <value>5900</value>
   </data>
   <data name="TightVNC" xml:space="preserve">
     <value>TightVNC</value>
@@ -2066,16 +1937,10 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="EnterSubnetsToCreateAWideSubnet" xml:space="preserve">
     <value>Enter subnets to create a wide subnet...</value>
   </data>
-  <data name="ExampleIPv4IPv6Subnet3" xml:space="preserve">
-    <value>192.168.180.0/24 or 2001:0db9::/54</value>
-  </data>
   <data name="WideSubnet" xml:space="preserve">
     <value>Wide Subnet</value>
   </data>
   <data name="WideSubnetFeatureNote" xml:space="preserve">
     <value>Supernet requires consecutive subnet without missing IP addresses. Try the Wide Subnet feature to create a larger subnet of two smaller ones that are far apart.</value>
-  </data>
-  <data name="ExampleIPv4Subnet2" xml:space="preserve">
-    <value>192.168.179.0/24 or 192.168.179.0/255.255.255.0</value>
   </data>
 </root>

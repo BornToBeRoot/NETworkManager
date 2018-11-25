@@ -67,7 +67,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -77,7 +77,7 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <ComboBox x:Name="ComboBoxSerialLine" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding SerialLineHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleSerialLine}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxSerialLine" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding SerialLineHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSerialLine}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="SerialLine" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -99,7 +99,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ComboBox x:Name="ComboBoxPort" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding PortHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePort22}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxPort" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding PortHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort22}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -109,7 +109,7 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <ComboBox x:Name="ComboBoxBaud" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding BaudHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleBaud9600}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxBaud" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding BaudHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleBaud9600}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Baud" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -120,7 +120,7 @@
                 </ComboBox.Text>
             </ComboBox>
             <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.Username}" />
-            <ComboBox x:Name="ComboBoxUsername" Grid.Column="2" Grid.Row="6" ItemsSource="{Binding UsernameHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleUsername}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxUsername" Grid.Column="2" Grid.Row="6" ItemsSource="{Binding UsernameHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
