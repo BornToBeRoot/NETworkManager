@@ -5474,15 +5474,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Supernet requires consecutive subnet without missing IP addresses. Try the Wide Subnet feature to create a larger subnet of two smaller ones that are far apart..
-        /// </summary>
-        public static string WideSubnetFeatureNote {
-            get {
-                return ResourceManager.GetString("WideSubnetFeatureNote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Width.
         /// </summary>
         public static string Width {
