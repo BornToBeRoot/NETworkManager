@@ -6,4 +6,15 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AirspaceFixer" Version="1.0.5" />
+    <PackageReference Include="ControlzEx" Version="3.0.2.4" />
+    <PackageReference Include="Dragablz" Version="0.0.3.203" />
+    <PackageReference Include="IPNetwork2" Version="2.1.2" />
+    <PackageReference Include="Lextm.SharpSnmpLib" Version="10.0.11" />
+    <PackageReference Include="MahApps.Metro" Version="1.6.5" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="2.3.0" />
+    <PackageReference Include="Octokit" Version="0.32.0" />
+  </ItemGroup>
+
 </Project>
