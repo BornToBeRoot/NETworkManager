@@ -30,6 +30,10 @@
     <Reference Include="AxMSTSCLib">
       <HintPath>$(TargetDir)\AxMSTSCLib.dll</HintPath>
     </Reference>
+
+    <Reference Include="MSTSCLib">
+      <HintPath>$(TargetDir)\MSTSCLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
