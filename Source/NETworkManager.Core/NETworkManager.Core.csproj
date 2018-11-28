@@ -26,6 +26,10 @@
     <PackageReference Include="MahApps.Metro" Version="1.6.5" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="2.3.0" />
     <PackageReference Include="Octokit" Version="0.32.0" />
+
+    <Reference Include="AxMSTSCLib">
+      <HintPath>$(TargetDir)\AxMSTSCLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
@@ -90,7 +94,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>    
   </ItemGroup>
-  
+
   <ItemGroup>
     <ApplicationDefinition Update="..\NETworkManager\App.xaml">
       <Generator>MSBuild:Compile</Generator>
