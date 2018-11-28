@@ -33,6 +33,7 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="../NETworkManager/**/*.xaml" />
+    <Page Remove="../NETworkManager/App.xaml" />
     <Content Include="../NETworkManager/**/*.xml" />
     <Resource Include="../NETworkManager/**/*.png" />
     <Resource Include="../NETworkManager/**/*.ico" />
