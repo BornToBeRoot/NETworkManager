@@ -8,6 +8,7 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:localization ="clr-namespace:NETworkManager.Resources.Localization"
         xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
+        xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"             
         mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:RemoteDesktopControl}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
@@ -16,9 +17,9 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid x:Name="RdpGrid" SizeChanged="RdpGrid_SizeChanged">
-        <WindowsFormsHost MaxWidth="{Binding RdpClientWidth, Mode=OneWay}" MaxHeight="{Binding RdpClientHeight, Mode=OneWay}" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+        <wfi:WindowsFormsHost MaxWidth="{Binding RdpClientWidth, Mode=OneWay}" MaxHeight="{Binding RdpClientHeight, Mode=OneWay}" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
             <mstsc:AxMsRdpClient9NotSafeForScripting x:Name="RdpClient" />
-        </WindowsFormsHost>
+        </wfi:WindowsFormsHost>
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding IsConnected, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

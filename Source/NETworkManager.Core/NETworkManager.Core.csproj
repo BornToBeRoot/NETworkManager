@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>NETworkManager</RootNamespace>
     <AssemblyName>NETworkManager</AssemblyName>
     <ApplicationIcon>NETworkManager.ico</ApplicationIcon>
