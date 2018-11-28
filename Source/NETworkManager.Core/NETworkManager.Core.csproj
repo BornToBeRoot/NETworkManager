@@ -4,8 +4,18 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWPF>true</UseWPF>
+    <RootNamespace>NETworkManager</RootNamespace>
+    <AssemblyName>NETworkManager</AssemblyName>
+    <ApplicationIcon>NETworkManager.ico</ApplicationIcon>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
+  <!-- Pre/Post build events should be migrated to be targets (as per https://github.com/dotnet/sdk/issues/1055) -->
+  <Target Name="ExecutePreBuildScript" BeforeTargets="PreBuildEvent">
+    <Exec Command="PowerShell.exe -ExecutionPolicy Bypass -NoProfile -File &quot;$(ProjectDir)..\..\Scripts\PreBuildEventCommandLine.ps1&quot; &quot;$(TargetDir)&quot;" />
+  </Target>
+  
   <ItemGroup>
     <PackageReference Include="AirspaceFixer" Version="1.0.5" />
     <PackageReference Include="ControlzEx" Version="3.0.2.4" />
@@ -17,4 +27,387 @@
     <PackageReference Include="Octokit" Version="0.32.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="../NETworkManager/**/*.cs" />
+    <ApplicationDefinition Include="../NETworkManager/App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Page Include="../NETworkManager/**/*.xaml" />
+    <Content Include="../NETworkManager/**/*.xml" />
+    <Resource Include="../NETworkManager/**/*.png" />
+    <Resource Include="../NETworkManager/**/*.ico" />
+    <EmbeddedResource Include="../NETworkManager/**/*.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="..\NETworkManager\3rdParty\Heijden.DNS\Records\totla.txt" />
+    <Resource Include="..\NETworkManager\3rdParty\Heijden.DNS\Root\named_root.txt" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include="..\NETworkManager\Licenses\AirspaceFixer.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\NETworkManager\Licenses\ControlsEx.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\NETworkManager\Licenses\Dragablz.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\NETworkManager\Licenses\Heijden.DNS.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\NETworkManager\Licenses\IPNetwork.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\NETworkManager\Licenses\MahApps.Metro.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\NETworkManager\Licenses\MahApps.Metro.IconPack.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\NETworkManager\Licenses\NETworkManager.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\NETworkManager\Licenses\Octokit.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\NETworkManager\Licenses\SharpSnmpLib.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\NETworkManager\Themes\Black.Accent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\NETworkManager\Themes\Black.Theme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\NETworkManager\Themes\White.Theme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>    
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ApplicationDefinition Update="..\NETworkManager\App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Page Update="..\NETworkManager\bin\Debug\Themes\Black.Accent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\bin\Debug\Themes\Black.Theme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\bin\Debug\Themes\White.Theme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Controls\DragablzTabHostWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Controls\PuTTYControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Controls\RemoteDesktopControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Controls\TightVNCControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\ContextMenu\ContextMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\ButtonStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\CheckBoxStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\ComboBoxStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\ContextMenuStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\DataGridStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\DragablzStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\DropDownButtonStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\ExpanderStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\GridSplitterStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\GroupBoxStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\ListBoxStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\MetroDialogStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\NumericUpDownStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\PasswordBoxStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\RadioButtonStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\RectangleStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\ScrollBarStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\ScrollViewerStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\TabControlStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\TextBlockStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\TextBoxStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\ToogleSwitchStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\ToolTipStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Styles\WindowStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Resources\Templates\ValidationErrorTemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Themes\Black.Accent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Themes\Black.Theme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Themes\White.Theme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\AboutView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\ARPTableAddEntryDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\ARPTableView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\CommandLineHelpWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\ConfirmRemoveDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\ConnectionsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\CredentialDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\CredentialsMasterPasswordDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\CredentialsSetMasterPasswordDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\CredentialsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\DNSLookupHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\DNSLookupSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\DNSLookupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\DNSServerDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\GroupDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\HTTPHeadersHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\HTTPHeadersSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\HTTPHeadersView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\IPScannerHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\IPScannerSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\IPScannerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\ListenersView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\LookupHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\LookupOUILookupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\LookupPortLookupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\NetworkInterfaceView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\PingHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\PingSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\PingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\PortScannerHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\PortScannerSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\PortScannerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\ProfileDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\ProfilesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\PuTTYConnectDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\PuTTYHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\PuTTYSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\RemoteDesktopConnectDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\RemoteDesktopHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\RemoteDesktopSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\SettingsAppearanceView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\SettingsAutostartView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\SettingsGeneralView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\SettingsHotKeysView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\SettingsImportExportView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\SettingsLanguageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\SettingsSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\SettingsUpdateView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\SettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\SettingsWindowView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\SNMPHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\SNMPSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\SNMPView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\SubnetCalculatorCalculatorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\SubnetCalculatorHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\SubnetCalculatorSubnettingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\SubnetCalculatorSupernettingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\TightVNCConnectDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\TightVNCHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\TightVNCSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\TracerouteHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\TracerouteSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\TracerouteView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\WakeOnLANSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\WakeOnLANView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\WhoisHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\WhoisSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Views\WhoisView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  
 </Project>
