@@ -7,7 +7,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>NETworkManager</RootNamespace>
     <AssemblyName>NETworkManager</AssemblyName>
-    <ApplicationIcon>NETworkManager.ico</ApplicationIcon>
+    <ApplicationIcon>../NETworkManager/NETworkManager.ico</ApplicationIcon>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <DefineConstants>$(DefineConstants);NETCORE</DefineConstants>
@@ -47,7 +47,7 @@
     <Page Remove="../NETworkManager/App.xaml" />
     <Content Include="../NETworkManager/**/*.xml" />
     <Resource Include="../NETworkManager/**/*.png" />
-    <Resource Include="../NETworkManager/**/*.ico" />
+    <Resource Include="../NETworkManager/Resources/Images/NETworkManager.ico" />
     <EmbeddedResource Include="../NETworkManager/**/*.resx" />
   </ItemGroup>
 
