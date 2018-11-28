@@ -7,7 +7,10 @@ using System.Net;
 using System.Text;
 using System.Net.Sockets;
 using System.Net.NetworkInformation;
+
+#if !NETCORE
 using System.Runtime.Remoting.Messaging;
+#endif
 
 
 /*
@@ -674,6 +677,7 @@ namespace Heijden.DNS
 
         private delegate IPAddress[] GetHostAddressesDelegate(string hostNameOrAddress);
 
+#if !NETCORE // .NET Core doesn't support AsyncResult or BeginInvoke/EndInvoke
         /// <summary>
         ///		Asynchronously returns the Internet Protocol (IP) addresses for the specified
         ///     host.
@@ -708,6 +712,7 @@ namespace Heijden.DNS
             GetHostAddressesDelegate g = (GetHostAddressesDelegate)aResult.AsyncDelegate;
             return g.EndInvoke(AsyncResult);
         }
+#endif // !NETCORE
 
         /// <summary>
         ///		Creates an System.Net.IPHostEntry instance from the specified System.Net.IPAddress.
@@ -741,6 +746,7 @@ namespace Heijden.DNS
 
         private delegate IPHostEntry GetHostByNameDelegate(string hostName);
 
+#if !NETCORE // .NET Core doesn't support AsyncResult or BeginInvoke/EndInvoke
         /// <summary>
         ///		Asynchronously resolves an IP address to an System.Net.IPHostEntry instance.
         /// </summary>
@@ -771,6 +777,7 @@ namespace Heijden.DNS
             GetHostByNameDelegate g = (GetHostByNameDelegate)aResult.AsyncDelegate;
             return g.EndInvoke(AsyncResult);
         }
+#endif // !NETCORE
 
         /// <summary>
         ///		Resolves a host name or IP address to an System.Net.IPHostEntry instance.
@@ -785,6 +792,7 @@ namespace Heijden.DNS
 
         private delegate IPHostEntry ResolveDelegate(string hostName);
 
+#if !NETCORE // .NET Core doesn't support AsyncResult or BeginInvoke/EndInvoke
         /// <summary>
         ///		Begins an asynchronous request to resolve a DNS host name or IP address to
         ///     an System.Net.IPAddress instance.
@@ -819,7 +827,8 @@ namespace Heijden.DNS
             ResolveDelegate g = (ResolveDelegate)aResult.AsyncDelegate;
             return g.EndInvoke(AsyncResult);
         }
-        #endregion
+#endif // !NETCORE
+#endregion
 
         /// <summary>
         ///		Resolves an IP address to an System.Net.IPHostEntry instance.
@@ -858,6 +867,7 @@ namespace Heijden.DNS
         private delegate IPHostEntry GetHostEntryViaIPDelegate(IPAddress ip);
         private delegate IPHostEntry GetHostEntryDelegate(string hostNameOrAddress);
 
+#if !NETCORE // .NET Core doesn't support AsyncResult or BeginInvoke/EndInvoke
         /// <summary>
         /// Asynchronously resolves a host name or IP address to an System.Net.IPHostEntry instance.
         /// </summary>
@@ -922,6 +932,7 @@ namespace Heijden.DNS
             }
             return null;
         }
+#endif // !NETCORE
 
         private enum RRRecordStatus
         {

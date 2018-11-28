@@ -10,6 +10,7 @@
     <ApplicationIcon>NETworkManager.ico</ApplicationIcon>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <DefineConstants>$(DefineConstants);NETCORE</DefineConstants>
   </PropertyGroup>
 
   <!-- Pre/Post build events should be migrated to be targets (as per https://github.com/dotnet/sdk/issues/1055) -->
