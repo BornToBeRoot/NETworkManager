@@ -89,14 +89,17 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\NETworkManager\Themes\Black.Accent.xaml">
+      <Link>Themes/Black.Accent.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\NETworkManager\Themes\Black.Theme.xaml">
+      <Link>Themes/Black.Theme.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\NETworkManager\Themes\White.Theme.xaml">
+      <Link>Themes/White.Theme.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>    
@@ -179,6 +182,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\MetroDialogStyles.xaml">
+      <Link>Resources/Styles/MetroDialogStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\NumericUpDownStyles.xaml">
