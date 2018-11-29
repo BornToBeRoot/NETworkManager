@@ -130,81 +130,106 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\ContextMenu\ContextMenu.xaml">
+      <Link>Resources/ContextMenu/ContextMenu.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\ButtonStyles.xaml">
+      <Link>Resources/Styles/ButtonStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\CheckBoxStyles.xaml">
+      <Link>Resources/Styles/CheckBoxStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\ComboBoxStyles.xaml">
+      <Link>Resources/Styles/ComboBoxStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\ContextMenuStyles.xaml">
+      <Link>Resources/Styles/ContextMenuStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\DataGridStyles.xaml">
+      <Link>Resources/Styles/DataGridStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\DragablzStyles.xaml">
+      <Link>Resources/Styles/DragablzStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\DropDownButtonStyles.xaml">
+      <Link>Resources/Styles/DropDownButtonStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\ExpanderStyles.xaml">
+      <Link>Resources/Styles/ExpanderStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\GridSplitterStyles.xaml">
+      <Link>Resources/Styles/GridSplitterStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\GroupBoxStyles.xaml">
+      <Link>Resources/Styles/GroupBoxStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\ListBoxStyle.xaml">
+      <Link>Resources/Styles/ListBoxStyle.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\MetroDialogStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\NumericUpDownStyles.xaml">
+      <Link>Resources/Styles/NumericUpDownStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\PasswordBoxStyles.xaml">
+      <Link>Resources/Styles/PasswordBoxStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\RadioButtonStyles.xaml">
+      <Link>Resources/Styles/RadioButtonStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\RectangleStyles.xaml">
+      <Link>Resources/Styles/RectangleStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\ScrollBarStyles.xaml">
+      <Link>Resources/Styles/ScrollBarStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\ScrollViewerStyles.xaml">
+      <Link>Resources/Styles/ScrollViewerStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\TabControlStyles.xaml">
+      <Link>Resources/Styles/TabControlStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\TextBlockStyles.xaml">
+      <Link>Resources/Styles/TextBlockStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\TextBoxStyles.xaml">
+      <Link>Resources/Styles/TextBoxStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\ToogleSwitchStyles.xaml">
+      <Link>Resources/Styles/ToogleSwitchStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\ToolTipStyles.xaml">
+      <Link>Resources/Styles/ToolTipStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Styles\WindowStyles.xaml">
+      <Link>Resources/Styles/WindowStyles.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Resources\Templates\ValidationErrorTemplates.xaml">
+      <Link>Resources/Templates/ValidationErrorTemplates.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Themes\Black.Accent.xaml">
