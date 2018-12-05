@@ -576,6 +576,22 @@
                                         <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.FlushDNSCache}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
                                     </Grid>
                                 </Button.Content>
+                            </Button> 
+                            <Button HorizontalAlignment="Left" Command="{Binding AddIPv4AddressCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
+                                <Button.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ListAddBelow}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddIPv4AddressDots}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                                    </Grid>
+                                </Button.Content>
                             </Button>
                             <mah:DropDownButton Margin="10,0,0,0" Style="{StaticResource ImageDropDrownButton}">
                                 <mah:DropDownButton.Content>
@@ -623,6 +639,7 @@
                                     </MenuItem>
                                 </mah:DropDownButton.Items>
                             </mah:DropDownButton>
+                           
                         </StackPanel>
                         <Button Grid.Column="1" Command="{Binding ApplyNetworkInterfaceConfigCommand}">
                             <Button.Content>

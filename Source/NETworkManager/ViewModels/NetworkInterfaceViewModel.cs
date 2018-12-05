@@ -1028,6 +1028,17 @@ namespace NETworkManager.ViewModels
 
             IsConfigurationRunning = false;
         }
+        
+        public ICommand AddIPv4AddressCommand
+        {
+            get { return new RelayCommand(p => AddIPv4AddressAction());}
+        }
+
+        private void AddIPv4AddressAction()
+        {
+            // netsh int ip add address "NIC name" 10.0.0.2 255.255.255.0
+        }
+
         #endregion
 
         #region Methods

@@ -1948,4 +1948,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>If you have forgotten your password and want to start over, delete the following file and restart the application.
 Path: "{0}"</value>
   </data>
+  <data name="AddIPv4AddressDots" xml:space="preserve">
+    <value>Add IPv4 address...</value>
+  </data>
 </root>
