@@ -108,7 +108,7 @@ namespace NETworkManager.ViewModels
                 if (value == _profileWidth)
                     return;
 
-                if (!_isLoading && value.Value != 40) // Do not save the size when collapsed
+                if (!_isLoading && value.Value != GlobalStaticConfiguration.ProfileWidthCollapsed) // Do not save the size when collapsed
                     SettingsManager.Current.Traceroute_ProfileWidth = value.Value;
 
                 _profileWidth = value;
@@ -170,7 +170,7 @@ namespace NETworkManager.ViewModels
         {
             ExpandProfileView = SettingsManager.Current.Traceroute_ExpandProfileView;
 
-            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.Traceroute_ProfileWidth) : new GridLength(40);
+            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.Traceroute_ProfileWidth) : new GridLength(GlobalStaticConfiguration.ProfileWidthCollapsed);
 
             _tempProfileWidth = SettingsManager.Current.Traceroute_ProfileWidth;
         }
@@ -373,18 +373,18 @@ namespace NETworkManager.ViewModels
 
             if (dueToChangedSize)
             {
-                ExpandProfileView = ProfileWidth.Value != 40;
+                ExpandProfileView = ProfileWidth.Value != GlobalStaticConfiguration.ProfileWidthCollapsed;
             }
             else
             {
                 if (ExpandProfileView)
                 {
-                    ProfileWidth = _tempProfileWidth == 40 ? new GridLength(250) : new GridLength(_tempProfileWidth);
+                    ProfileWidth = _tempProfileWidth == GlobalStaticConfiguration.ProfileWidthCollapsed ? new GridLength(GlobalStaticConfiguration.ProfileDefaultWidthExpanded) : new GridLength(_tempProfileWidth);
                 }
                 else
                 {
                     _tempProfileWidth = ProfileWidth.Value;
-                    ProfileWidth = new GridLength(40);
+                    ProfileWidth = new GridLength(GlobalStaticConfiguration.ProfileWidthCollapsed);
                 }
             }
 

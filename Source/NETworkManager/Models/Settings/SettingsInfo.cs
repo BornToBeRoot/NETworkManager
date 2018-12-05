@@ -372,7 +372,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _networkInterface_ProfileWidth = 250;
+        private double _networkInterface_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double NetworkInterface_ProfileWidth
         {
             get => _networkInterface_ProfileWidth;
@@ -646,7 +646,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _ipScanner_ProfileWidth = 250;
+        private double _ipScanner_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double IPScanner_ProfileWidth
         {
             get => _ipScanner_ProfileWidth;
@@ -819,7 +819,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _portScanner_ProfileWidth = 250;
+        private double _portScanner_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double PortScanner_ProfileWidth
         {
             get => _portScanner_ProfileWidth;
@@ -1034,7 +1034,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _ping_ProfileWidth = 250;
+        private double _ping_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double Ping_ProfileWidth
         {
             get => _ping_ProfileWidth;
@@ -1227,7 +1227,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _traceroute_ProfileWidth = 250;
+        private double _traceroute_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double Traceroute_ProfileWidth
         {
             get => _traceroute_ProfileWidth;
@@ -1529,7 +1529,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _dnsLookup_ProfileWidth = 250;
+        private double _dnsLookup_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double DNSLookup_ProfileWidth
         {
             get => _dnsLookup_ProfileWidth;
@@ -1884,7 +1884,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _remoteDesktop_ProfileWidth = 250;
+        private double _remoteDesktop_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double RemoteDesktop_ProfileWidth
         {
             get => _remoteDesktop_ProfileWidth;
@@ -1998,7 +1998,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _puTTY_ProfileWidth = 250;
+        private double _puTTY_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double PuTTY_ProfileWidth
         {
             get => _puTTY_ProfileWidth;
@@ -2157,7 +2157,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _tightVNC_ProfileWidth = 250;
+        private double _tightVNC_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double TightVNC_ProfileWidth
         {
             get => _tightVNC_ProfileWidth;
@@ -2447,7 +2447,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _wakeOnLAN_ClientWidth = 250;
+        private double _wakeOnLAN_ClientWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double WakeOnLAN_ClientWidth
         {
             get => _wakeOnLAN_ClientWidth;
@@ -2519,7 +2519,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _httpHeaders_ProfileWidth = 250;
+        private double _httpHeaders_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double HTTPHeaders_ProfileWidth
         {
             get => _httpHeaders_ProfileWidth;
@@ -2816,7 +2816,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _whois_ProfileWidth = 250;
+        private double _whois_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double Whois_ProfileWidth
         {
             get => _whois_ProfileWidth;

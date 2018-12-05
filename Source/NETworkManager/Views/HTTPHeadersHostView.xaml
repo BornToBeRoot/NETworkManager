@@ -10,6 +10,7 @@
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:controls="clr-namespace:NETworkManager.Controls"
+        xmlns:networkManager="clr-namespace:NETworkManager"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:HTTPHeadersHostViewModel}">
     <UserControl.Resources>
@@ -23,7 +24,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition MinWidth="40" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="350" />
+            <ColumnDefinition MinWidth="{x:Static networkManager:GlobalStaticConfiguration.ProfileWidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static networkManager:GlobalStaticConfiguration.ProfileMaxWidthExpanded}" />
         </Grid.ColumnDefinitions>
         <dragablz:TabablzControl Grid.Column="0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
             <dragablz:TabablzControl.InterTabController>

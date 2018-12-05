@@ -12,6 +12,7 @@
         xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:networkManager="clr-namespace:NETworkManager"
         dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:NetworkInterfaceViewModel}">
     <UserControl.InputBindings>
@@ -308,7 +309,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition MinWidth="40" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="350" />
+                    <ColumnDefinition MinWidth="{x:Static networkManager:GlobalStaticConfiguration.ProfileWidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static networkManager:GlobalStaticConfiguration.ProfileMaxWidthExpanded}" />
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0" Margin="10">
                     <Grid.RowDefinitions>
@@ -639,7 +640,6 @@
                                     </MenuItem>
                                 </mah:DropDownButton.Items>
                             </mah:DropDownButton>
-                           
                         </StackPanel>
                         <Button Grid.Column="1" Command="{Binding ApplyNetworkInterfaceConfigCommand}">
                             <Button.Content>

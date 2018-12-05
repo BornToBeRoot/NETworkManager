@@ -12,6 +12,7 @@
         xmlns:asf="clr-namespace:AirspaceFixer;assembly=AirspaceFixer"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:networkManager="clr-namespace:NETworkManager"
         dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:RemoteDesktopHostViewModel}">
@@ -39,7 +40,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition MinWidth="40" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="350" />
+                <ColumnDefinition MinWidth="{x:Static networkManager:GlobalStaticConfiguration.ProfileWidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static networkManager:GlobalStaticConfiguration.ProfileMaxWidthExpanded}" />
             </Grid.ColumnDefinitions>
             <asf:AirspacePanel Grid.Column="0" Grid.Row="0" FixAirspace="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsDialogOpen}">
                 <dragablz:TabablzControl ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
