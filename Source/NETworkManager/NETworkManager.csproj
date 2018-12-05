@@ -275,6 +275,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="GlobalStaticConfiguration.cs" />
     <Compile Include="Utilities\CommonMethods.cs" />
     <Compile Include="Utilities\ArrayHelper.cs" />
     <Compile Include="Utilities\AutoRefreshTime.cs" />
