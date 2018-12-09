@@ -75,7 +75,7 @@
                     </dragablz:TabablzControl.HeaderSuffixContent>
                     <dragablz:TabablzControl.HeaderItemTemplate>
                         <DataTemplate DataType="controls:DragablzTabItem">
-                            <Border BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,1,0">
+                            <Border BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1,1,1,0" Margin="-1,0,0,0" CornerRadius="15,15,0,0">
                                 <Grid>
                                     <Grid.ContextMenu>
                                         <ContextMenu>
@@ -100,6 +100,9 @@
                                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                                         <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
                                                         <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsMouseOver}" Value="True">
+                                                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                                            </DataTrigger>
                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
                                                                 <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
                                                             </DataTrigger>
