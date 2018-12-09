@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
-    public class ArpTableAddEntryViewModel : ViewModelBase
+    public class NetworkInterfaceAddIPAddressViewModel : ViewModelBase
     {
         public ICommand AddCommand { get; }
 
@@ -24,21 +24,21 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _macAddress;
-        public string MACAddress
+        private string _subnetmaskOrCidr;
+        public string SubnetmaskOrCidr
         {
-            get => _macAddress;
+            get => _subnetmaskOrCidr;
             set
             {
-                if (value == _macAddress)
+                if (value == _subnetmaskOrCidr)
                     return;
 
-                _macAddress = value;
+                _subnetmaskOrCidr = value;
                 OnPropertyChanged();
             }
         }
 
-        public ArpTableAddEntryViewModel(Action<ArpTableAddEntryViewModel> addCommand, Action<ArpTableAddEntryViewModel> cancelHandler)
+        public NetworkInterfaceAddIPAddressViewModel(Action<NetworkInterfaceAddIPAddressViewModel> addCommand, Action<NetworkInterfaceAddIPAddressViewModel> cancelHandler)
         {
             AddCommand = new RelayCommand(p => addCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));

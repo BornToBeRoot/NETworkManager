@@ -144,7 +144,7 @@ namespace NETworkManager.Models.Network
 
             try
             {
-                PowerShellHelper.RunPSCommand(command, true);
+                PowerShellHelper.ExecuteCommand(command, true);
             }
             catch (Win32Exception win32Ex)
             {
@@ -159,39 +159,52 @@ namespace NETworkManager.Models.Network
             }
         }
 
-        public static Task FlushDnsResolverCacheAsync()
+        public static Task FlushDnsAsync()
         {
-            return Task.Run(() => FlushDnsResolverCache());
+            return Task.Run(() => FlushDns());
         }
 
-        public static void FlushDnsResolverCache()
+        public static void FlushDns()
         {
             const string command = @"ipconfig /flushdns";
 
-            PowerShellHelper.RunPSCommand(command);
+            PowerShellHelper.ExecuteCommand(command);
         }
 
-        public static Task IPConfigReleaseRenewAsync(IPConfigReleaseRenewMode mode)
+        public static Task ReleaseRenewAsync(IPConfigReleaseRenewMode mode)
         {
-            return Task.Run(() => IPConfigReleaseRenew(mode));
+            return Task.Run(() => ReleaseRenew(mode));
         }
 
-        public static void IPConfigReleaseRenew(IPConfigReleaseRenewMode mode)
+        public static void ReleaseRenew(IPConfigReleaseRenewMode mode)
         {
             if (mode == IPConfigReleaseRenewMode.ReleaseRenew || mode == IPConfigReleaseRenewMode.Release)
             {
-                const string releaseCommand = @"ipconfig /release";
+                const string command = @"ipconfig /release";
 
-                PowerShellHelper.RunPSCommand(releaseCommand);
+                PowerShellHelper.ExecuteCommand(command);
             }
 
             if (mode == IPConfigReleaseRenewMode.ReleaseRenew || mode == IPConfigReleaseRenewMode.Renew)
             {
-                const string renewCommand = @"ipconfig /renew";
+                const string command = @"ipconfig /renew";
 
-                PowerShellHelper.RunPSCommand(renewCommand);
+                PowerShellHelper.ExecuteCommand(command);
             }
         }
+
+        public static Task AddIPAddressToNetworkInterfaceAsync(NetworkInterfaceConfig config)
+        {
+            return Task.Run(() => AddIPAddressToNetworkInterface(config));
+        }
+
+        public static void AddIPAddressToNetworkInterface(NetworkInterfaceConfig config)
+        {
+            var command = @"netsh interface ipv4 add address '" + config.Name + @"' " + config.IPAddress + @" " + config.Subnetmask;
+
+            PowerShellHelper.ExecuteCommand(command, true);
+        }
+
         #endregion
 
         #region Enum
@@ -202,5 +215,7 @@ namespace NETworkManager.Models.Network
             Renew
         }
         #endregion
+
+
     }
 }

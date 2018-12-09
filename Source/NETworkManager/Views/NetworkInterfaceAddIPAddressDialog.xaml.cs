@@ -1,8 +1,8 @@
 ﻿namespace NETworkManager.Views
 {
-    public partial class ARPTableAddEntryDialog
+    public partial class NetworkInterfaceAddIPAddressDialog
     {
-        public ARPTableAddEntryDialog()
+        public NetworkInterfaceAddIPAddressDialog()
         {
             InitializeComponent();
         }

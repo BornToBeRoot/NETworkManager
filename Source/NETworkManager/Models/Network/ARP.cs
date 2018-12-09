@@ -167,7 +167,7 @@ namespace NETworkManager.Models.Network
         {
             try
             {
-                PowerShellHelper.RunPSCommand(command, true);
+                PowerShellHelper.ExecuteCommand(command, true);
             }
             catch (Win32Exception win32Ex)
             {

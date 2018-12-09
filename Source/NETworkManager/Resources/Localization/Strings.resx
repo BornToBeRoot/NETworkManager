@@ -1951,4 +1951,7 @@ Path: "{0}"</value>
   <data name="AddIPv4AddressDots" xml:space="preserve">
     <value>Add IPv4 address...</value>
   </data>
+  <data name="AddIPv4Address" xml:space="preserve">
+    <value>Add IPv4 address</value>
+  </data>
 </root>

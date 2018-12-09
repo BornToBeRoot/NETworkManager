@@ -562,7 +562,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Orientation="Horizontal">
-                            <Button HorizontalAlignment="Left" Command="{Binding FlushDNSCacheCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}">
+                            <Button HorizontalAlignment="Left" Command="{Binding FlushDNSCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}">
                                 <Button.Content>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -610,7 +610,7 @@
                                     </Grid>
                                 </mah:DropDownButton.Content>
                                 <mah:DropDownButton.Items>
-                                    <MenuItem Header="{x:Static localization:Strings.ReleaseRenew}" Command="{Binding IPConfigReleaseRenewCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
+                                    <MenuItem Header="{x:Static localization:Strings.ReleaseRenew}" Command="{Binding ReleaseRenewCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
                                                 <Rectangle.OpacityMask>
@@ -620,7 +620,7 @@
                                         </MenuItem.Icon>
                                     </MenuItem>
                                     <Separator />
-                                    <MenuItem Header="{x:Static localization:Strings.Release}" Command="{Binding IPConfigReleaseCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
+                                    <MenuItem Header="{x:Static localization:Strings.Release}" Command="{Binding ReleaseCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
                                                 <Rectangle.OpacityMask>
@@ -629,7 +629,7 @@
                                             </Rectangle>
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="{x:Static localization:Strings.Renew}" Command="{Binding IPConfigRenewCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
+                                    <MenuItem Header="{x:Static localization:Strings.Renew}" Command="{Binding RenewCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
                                                 <Rectangle.OpacityMask>
@@ -699,7 +699,7 @@
                         <ListBox Grid.Column="0" Grid.Row="2" x:Name="ListBoxProfiles" ItemsSource="{Binding Profiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                             <ListBox.Resources>
                                 <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                                    <MenuItem Header="{x:Static localization:Strings.Apply}" Command="{Binding ApplyProfileCommand}">
+                                    <MenuItem Header="{x:Static localization:Strings.Apply}" Command="{Binding ApplyProfileConfigCommand}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                                 <Rectangle.OpacityMask>

@@ -309,7 +309,7 @@ namespace NETworkManager.ViewModels
 
                     arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
 
-                    await arpTable.AddEntryAsync(instance.IpAddress, MACAddressHelper.Format(instance.MacAddress, "-"));
+                    await arpTable.AddEntryAsync(instance.IPAddress, MACAddressHelper.Format(instance.MACAddress, "-"));
 
                     Refresh();
                 }
