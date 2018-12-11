@@ -3,13 +3,23 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+
+    <!-- Both UseWPF and UseWindowsForms are required since WindowsFormsHost
+         is used to embed WinForms panels in some XAML controls -->
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
+
     <RootNamespace>NETworkManager</RootNamespace>
     <AssemblyName>NETworkManager</AssemblyName>
     <ApplicationIcon>../NETworkManager/NETworkManager.ico</ApplicationIcon>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+
+    <!-- GenerateAssemblyInfo is set to false so that assembly info attributes 
+         can be used from the existing AssemblyInfo.cs file -->
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+
+    <!-- Define the NETCORE constant in order to enable slightly different source
+         in some cases when NetFx APIs are unavailalbe -->
     <DefineConstants>$(DefineConstants);NETCORE</DefineConstants>
   </PropertyGroup>
 
@@ -19,6 +29,11 @@
   </Target>
   
   <ItemGroup>
+    <!-- Some of these packages target NetFx but seem to work in 
+         my ad hoc testing. NetFx binaries can be referenced from 
+         .NET Core since their surface areas are so close, but there's
+         a risk that if the dependencies make use of APIs not available on
+         .NET Core, there could be failures at runtime. -->
     <PackageReference Include="AirspaceFixer" Version="1.0.5" />
     <PackageReference Include="ControlzEx" Version="3.0.2.4" />
     <PackageReference Include="Dragablz" Version="0.0.3.203" />
@@ -39,14 +54,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Globbing patterns are used to include source from the NETworkManager directory. -->
     <Compile Include="../NETworkManager/**/*.cs" />
     <Compile Remove="../NETworkManager/obj/**/*.cs" />
+    <Page Include="../NETworkManager/**/*.xaml" />
+    <Page Remove="../NETworkManager/App.xaml" />
     <ApplicationDefinition Include="../NETworkManager/App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
-    <Page Include="../NETworkManager/**/*.xaml" />
-    <Page Remove="../NETworkManager/App.xaml" />
     <Content Include="../NETworkManager/**/*.xml" />
+    <Content Include="../NETworkManager/**/*.txt" />
+    <Content Include="../NETworkManager/**/*.htm" />
     <Resource Include="../NETworkManager/**/*.png" />
     <Resource Include="../NETworkManager/Resources/Images/NETworkManager.ico" />
     <EmbeddedResource Include="../NETworkManager/**/*.resx" />
@@ -58,34 +76,34 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Content Include="..\NETworkManager\Licenses\AirspaceFixer.txt">
+    <Content Update="..\NETworkManager\Licenses\AirspaceFixer.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\NETworkManager\Licenses\ControlsEx.txt">
+    <Content Update="..\NETworkManager\Licenses\ControlsEx.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\NETworkManager\Licenses\Dragablz.txt">
+    <Content Update="..\NETworkManager\Licenses\Dragablz.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\NETworkManager\Licenses\Heijden.DNS.htm">
+    <Content Update="..\NETworkManager\Licenses\Heijden.DNS.htm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\NETworkManager\Licenses\IPNetwork.txt">
+    <Content Update="..\NETworkManager\Licenses\IPNetwork.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\NETworkManager\Licenses\MahApps.Metro.txt">
+    <Content Update="..\NETworkManager\Licenses\MahApps.Metro.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\NETworkManager\Licenses\MahApps.Metro.IconPack.txt">
+    <Content Update="..\NETworkManager\Licenses\MahApps.Metro.IconPack.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\NETworkManager\Licenses\NETworkManager.txt">
+    <Content Update="..\NETworkManager\Licenses\NETworkManager.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\NETworkManager\Licenses\Octokit.txt">
+    <Content Update="..\NETworkManager\Licenses\Octokit.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\NETworkManager\Licenses\SharpSnmpLib.txt">
+    <Content Update="..\NETworkManager\Licenses\SharpSnmpLib.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\NETworkManager\Themes\Black.Accent.xaml">
@@ -133,6 +151,10 @@
     <Page Update="..\NETworkManager\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+
+    <!-- Pages that are referenced as resources need to be linked to the right
+         relative path. This explicit linking won't be necessary in the future
+         https://github.com/dotnet/sdk/issues/2697 -->
     <Page Update="..\NETworkManager\Resources\ContextMenu\ContextMenu.xaml">
       <Link>Resources/ContextMenu/ContextMenu.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
