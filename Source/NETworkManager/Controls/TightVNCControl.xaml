@@ -18,6 +18,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid SizeChanged="TightVNCGrid_SizeChanged">
+        <!-- WindowsFormsHost is qualified with a namespace to work around https://github.com/dotnet/core/issues/2085 -->
         <wfi:WindowsFormsHost Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">  
             <windowsForms:Panel x:Name="TightVNCHost" />
         </wfi:WindowsFormsHost>

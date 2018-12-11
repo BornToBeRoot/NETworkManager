@@ -17,6 +17,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid x:Name="RdpGrid" SizeChanged="RdpGrid_SizeChanged">
+        <!-- WindowsFormsHost is qualified with a namespace to work around https://github.com/dotnet/core/issues/2085 -->
         <wfi:WindowsFormsHost MaxWidth="{Binding RdpClientWidth, Mode=OneWay}" MaxHeight="{Binding RdpClientHeight, Mode=OneWay}" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
             <mstsc:AxMsRdpClient9NotSafeForScripting x:Name="RdpClient" />
         </wfi:WindowsFormsHost>
