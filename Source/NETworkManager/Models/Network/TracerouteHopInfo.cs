@@ -7,9 +7,9 @@ namespace NETworkManager.Models.Network
     public class TracerouteHopInfo
     {
         public int Hop { get; set; }
-        public double Time1 { get; set; }
-        public double Time2 { get; set; }
-        public double Time3 { get; set; }
+        public long Time1 { get; set; }
+        public long Time2 { get; set; }
+        public long Time3 { get; set; }
         public IPAddress IPAddress { get; set; }
         public string Hostname { get; set; }
         public IPStatus Status1 { get; set; }
@@ -36,7 +36,7 @@ namespace NETworkManager.Models.Network
 
         public static TracerouteHopInfo Parse(TracerouteHopReceivedArgs e)
         {
-            return new TracerouteHopInfo(e.Hop, e.Time1, e.Time2, e.Time3, e.IPAddress, e.Hostname, e.Status1,e.Status2,e.Status3);
+            return new TracerouteHopInfo(e.Hop, e.Time1, e.Time2, e.Time3, e.IPAddress, e.Hostname, e.Status1, e.Status2, e.Status3);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace NETworkManager.ViewModels
         public ICommand CancelCommand { get; }
 
         private string _ipAddress;
-        public string IpAddress
+        public string IPAddress
         {
             get => _ipAddress;
             set
@@ -25,7 +25,7 @@ namespace NETworkManager.ViewModels
         }
 
         private string _macAddress;
-        public string MacAddress
+        public string MACAddress
         {
             get => _macAddress;
             set

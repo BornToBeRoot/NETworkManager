@@ -30,9 +30,9 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.IPAddress}" />
-            <TextBox x:Name="TextBoxIpAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Address}">
+            <TextBox x:Name="TextBoxIPAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Address}">
                 <TextBox.Text>
-                    <Binding Path="IpAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="IPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                             <validators:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
@@ -41,9 +41,9 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.MACAddress}" />
-            <TextBox x:Name="TextBoxMacAddress" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleMACAddress}">
+            <TextBox x:Name="TextBoxMACAddress" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMACAddress}">
                 <TextBox.Text>
-                    <Binding Path="MacAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="MACAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                             <validators:MACAddressValidator ValidatesOnTargetUpdated="True" />
@@ -61,8 +61,8 @@
                         <Style.Triggers>                            
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxIpAddress}" Value="False" />
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxMacAddress}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxIPAddress}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxMACAddress}" Value="False" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="True" />

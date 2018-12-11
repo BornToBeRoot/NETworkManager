@@ -25,7 +25,7 @@
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveHostname}"   IsChecked="{Binding ResolveHostname}" Margin="0,0,0,10"/>
         <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCustomDNSServer}"   IsChecked="{Binding UseCustomDNSServer}" Margin="0,0,0,10"/>
         <TextBlock Text="{x:Static localization:Strings.DNSServers}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4DNSServers}" Style="{StaticResource DefaultTextBox}">
+        <TextBox Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4DNSServers}" Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>
                 <Binding Path="CustomDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -36,7 +36,7 @@
             </TextBox.Text>
         </TextBox>
         <TextBlock Text="{x:Static localization:Strings.Port}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePort53}" Style="{StaticResource DefaultTextBox}">
+        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort53}" Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>
                 <Binding Path="DNSPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>

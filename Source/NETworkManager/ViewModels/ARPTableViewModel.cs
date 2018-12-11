@@ -1,5 +1,6 @@
 ﻿using NETworkManager.Models.Network;
 using System;
+using System.Collections;
 using System.Windows.Input;
 using System.ComponentModel;
 using System.Windows.Data;
@@ -10,6 +11,7 @@ using NETworkManager.Utilities;
 using NETworkManager.Models.Settings;
 using System.Windows.Threading;
 using System.Linq;
+using NETworkManager.Models.Export;
 
 namespace NETworkManager.ViewModels
 {
@@ -32,42 +34,56 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                ARPTableView.Refresh();
+                ARPInfoResultsView.Refresh();
 
                 OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<ARPTableInfo> _arpTable = new ObservableCollection<ARPTableInfo>();
-        public ObservableCollection<ARPTableInfo> ARPTable
+        private ObservableCollection<ARPInfo> _arpInfoResults = new ObservableCollection<ARPInfo>();
+        public ObservableCollection<ARPInfo> ARPInfoResults
         {
-            get => _arpTable;
+            get => _arpInfoResults;
             set
             {
-                if (value == _arpTable)
+                if (value == _arpInfoResults)
                     return;
 
-                _arpTable = value;
+                _arpInfoResults = value;
                 OnPropertyChanged();
             }
         }
 
-        public ICollectionView ARPTableView { get; }
+        public ICollectionView ARPInfoResultsView { get; }
 
-        private ARPTableInfo _selectedARPTableInfo;
-        public ARPTableInfo SelectedARPTableInfo
+        private ARPInfo _selectedARPInfo;
+        public ARPInfo SelectedARPInfo
         {
-            get => _selectedARPTableInfo;
+            get => _selectedARPInfo;
             set
             {
-                if (value == _selectedARPTableInfo)
+                if (value == _selectedARPInfo)
                     return;
 
-                _selectedARPTableInfo = value;
+                _selectedARPInfo = value;
                 OnPropertyChanged();
             }
         }
 
+        private IList _selectedARPInfos = new ArrayList();
+        public IList SelectedARPInfos
+        {
+            get => _selectedARPInfos;
+            set
+            {
+                if (Equals(value, _selectedARPInfos))
+                    return;
+
+                _selectedARPInfos = value;
+                OnPropertyChanged();
+            }
+        }
+        
         private bool _autoRefresh;
         public bool AutoRefresh
         {
@@ -167,11 +183,11 @@ namespace NETworkManager.ViewModels
             _isLoading = true;
             _dialogCoordinator = instance;
 
-            ARPTableView = CollectionViewSource.GetDefaultView(ARPTable);
-            ARPTableView.SortDescriptions.Add(new SortDescription(nameof(ARPTableInfo.IPAddressInt32), ListSortDirection.Ascending));
-            ARPTableView.Filter = o =>
+            ARPInfoResultsView = CollectionViewSource.GetDefaultView(ARPInfoResults);
+            ARPInfoResultsView.SortDescriptions.Add(new SortDescription(nameof(ARPInfo.IPAddressInt32), ListSortDirection.Ascending));
+            ARPInfoResultsView.Filter = o =>
             {
-                if (!(o is ARPTableInfo info))
+                if (!(o is ARPInfo info))
                     return false;
 
                 if (string.IsNullOrEmpty(Search))
@@ -228,7 +244,7 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                var arpTable = new ARPTable();
+                var arpTable = new ARP();
 
                 arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
 
@@ -254,11 +270,11 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                var arpTable = new ARPTable();
+                var arpTable = new ARP();
 
                 arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
 
-                await arpTable.DeleteEntryAsync(SelectedARPTableInfo.IPAddress.ToString());
+                await arpTable.DeleteEntryAsync(SelectedARPInfo.IPAddress.ToString());
 
                 Refresh();
             }
@@ -289,11 +305,11 @@ namespace NETworkManager.ViewModels
 
                 try
                 {
-                    var arpTable = new ARPTable();
+                    var arpTable = new ARP();
 
                     arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
 
-                    await arpTable.AddEntryAsync(instance.IpAddress, MACAddressHelper.Format(instance.MacAddress, "-"));
+                    await arpTable.AddEntryAsync(instance.IPAddress, MACAddressHelper.Format(instance.MACAddress, "-"));
 
                     Refresh();
                 }
@@ -322,7 +338,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedARPTableInfo.IPAddress.ToString());
+            CommonMethods.SetClipboard(SelectedARPInfo.IPAddress.ToString());
         }
 
         public ICommand CopySelectedMACAddressCommand
@@ -332,7 +348,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedMACAddressAction()
         {
-            CommonMethods.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedARPTableInfo.MACAddress.ToString()));
+            CommonMethods.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedARPInfo.MACAddress.ToString()));
         }
 
         public ICommand CopySelectedMulticastCommand
@@ -342,7 +358,47 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedMulticastAction()
         {
-            CommonMethods.SetClipboard(SelectedARPTableInfo.IsMulticast ? Resources.Localization.Strings.Yes : Resources.Localization.Strings.No);
+            CommonMethods.SetClipboard(SelectedARPInfo.IsMulticast ? Resources.Localization.Strings.Yes : Resources.Localization.Strings.No);
+        }
+
+        public ICommand ExportCommand
+        {
+            get { return new RelayCommand(p => ExportAction()); }
+        }
+
+        private async void ExportAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? ARPInfoResults : new ObservableCollection<ARPInfo>(SelectedARPInfos.Cast<ARPInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.ARPTable_ExportFileType = instance.FileType;
+                SettingsManager.Current.ARPTable_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.ARPTable_ExportFileType, SettingsManager.Current.ARPTable_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
         #endregion
 
@@ -351,9 +407,9 @@ namespace NETworkManager.ViewModels
         {
             IsRefreshing = true;
 
-            ARPTable.Clear();
+            ARPInfoResults.Clear();
 
-            (await Models.Network.ARPTable.GetTableAsync()).ForEach(x => ARPTable.Add(x));
+            (await ARP.GetTableAsync()).ForEach(x => ARPInfoResults.Add(x));
 
             IsRefreshing = false;
         }

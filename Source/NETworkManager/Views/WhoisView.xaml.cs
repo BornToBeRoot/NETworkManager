@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
@@ -11,7 +12,7 @@ namespace NETworkManager.Views
         {
             InitializeComponent();
 
-            _viewModel = new WhoisViewModel(tabId, domain);
+            _viewModel = new WhoisViewModel(DialogCoordinator.Instance, tabId, domain);
 
             DataContext = _viewModel;
         }

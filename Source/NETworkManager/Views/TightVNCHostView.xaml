@@ -11,9 +11,8 @@
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
-        xmlns:controls="clr-namespace:NETworkManager.Controls"
-             xmlns:wpfHelper="clr-namespace:NETworkManager.WpfHelper"
-             dialogs:DialogParticipation.Register="{Binding}"
+        xmlns:networkManager="clr-namespace:NETworkManager"
+        dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:TightVNCHostViewModel}">
     <UserControl.Resources>
@@ -41,13 +40,10 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition MinWidth="40" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="350" />
+                <ColumnDefinition MinWidth="{x:Static networkManager:GlobalStaticConfiguration.ProfileWidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static networkManager:GlobalStaticConfiguration.ProfileMaxWidthExpanded}" />
             </Grid.ColumnDefinitions>
             <airspaceFixer:AirspacePanel Grid.Column="0" Grid.Row="0" FixAirspace="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsDialogOpen}">
                 <dragablz:TabablzControl ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsDialogOpen, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
-                    <dragablz:TabablzControl.Resources>
-                        <wpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
-                    </dragablz:TabablzControl.Resources>
                     <dragablz:TabablzControl.InterTabController>
                         <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" MoveWindowWithSolitaryTabs="False" x:Name="InterTabController" />
                     </dragablz:TabablzControl.InterTabController>
@@ -85,26 +81,42 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
-                <StackPanel>
-                    <Button HorizontalAlignment="Center" Focusable="False" Command="{Binding ConnectCommand}" ToolTip="{x:Static localization:Strings.NewConnectionDots}" Style="{StaticResource CleanButton}" Margin="0,0,0,10">
-                        <Rectangle Width="20" Height="20">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
-                            </Rectangle.OpacityMask>
-                            <Rectangle.Style>
-                                <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Rectangle.Style>
-                        </Rectangle>
-                    </Button>
-                    <TextBlock Text="{x:Static localization:Strings.AddATabToOpenANewConnection}" Style="{StaticResource MessageTextBlock}" />
-                </StackPanel>
+                <Button HorizontalAlignment="Center" Command="{Binding ConnectCommand}" Style="{StaticResource CleanButton}">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Width="20" Height="20">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
+                                </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddATabToOpenANewConnection}">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </Button.Content>
+                </Button>
             </Grid>
             <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
             <Expander Grid.Column="2" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
@@ -232,21 +244,25 @@
                                 </Style.Triggers>
                             </Style>
                         </Grid.Style>
-                        <StackPanel>
-                            <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
-                                <Button.Style>
-                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
-                                        <Setter Property="Command" Value="{Binding AddProfileCommand}" />
-                                        <Setter Property="ToolTip" Value="{x:Static localization:Strings.AddProfileDots}" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
-                                                <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
-                                                <Setter Property="ToolTip" Value="{x:Static localization:Strings.ClearFilter}" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
-                                <Rectangle Width="20" Height="20">
+                        <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
+                                    <Setter Property="Command" Value="{Binding AddProfileCommand}" />
+                                    <Setter Property="ToolTip" Value="{x:Static localization:Strings.AddProfileDots}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                            <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
+                                            <Setter Property="ToolTip" Value="{x:Static localization:Strings.ClearFilter}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Grid.Column="0" Width="20" Height="20">
                                     <Rectangle.Resources>
                                         <VisualBrush x:Key="VisualPlus" Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}"/>
                                         <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
@@ -266,20 +282,23 @@
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
-                            </Button>
-                            <TextBlock>
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
-                                        <Setter Property="Text" Value="{x:Static localization:Strings.NoProfilesFoundCreateOne}" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
-                                                <Setter Property="Text" Value="{x:Static localization:Strings.NothingFound}" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </StackPanel>
+                                <TextBlock Grid.Column="1">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+                                            <Setter Property="Text" Value="{x:Static localization:Strings.NoProfilesFoundCreateOne}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                    <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                                    <Setter Property="Text" Value="{x:Static localization:Strings.NothingFound}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Button>
                     </Grid>
                     <Button Grid.Row="4" Command="{Binding AddProfileCommand}" Style="{StaticResource ImageWithTextButton}">
                         <Button.Content>

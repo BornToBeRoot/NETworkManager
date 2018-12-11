@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
 using System.Windows;
 using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using NETworkManager.Models.Settings;
 using System.Collections.Generic;
@@ -15,13 +16,18 @@ using System.Windows.Data;
 using System.Linq;
 using NETworkManager.Utilities;
 using Dragablz;
+using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
+using NETworkManager.Models.Export;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
     public class PortScannerViewModel : ViewModelBase
     {
         #region Variables
+        private readonly IDialogCoordinator _dialogCoordinator;
+
         private CancellationTokenSource _cancellationTokenSource;
 
         private readonly int _tabId;
@@ -93,31 +99,45 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<PortInfo> _portScanResult = new ObservableCollection<PortInfo>();
+        private ObservableCollection<PortInfo> _portScanResults = new ObservableCollection<PortInfo>();
         public ObservableCollection<PortInfo> PortScanResult
         {
-            get => _portScanResult;
+            get => _portScanResults;
             set
             {
-                if (_portScanResult != null && value == _portScanResult)
+                if (_portScanResults != null && value == _portScanResults)
                     return;
 
-                _portScanResult = value;
+                _portScanResults = value;
             }
         }
 
-        public ICollectionView PortScanResultView { get; }
+        public ICollectionView PortScanResultsView { get; }
 
-        private PortInfo _selectedScanResult;
-        public PortInfo SelectedScanResult
+        private PortInfo _selectedPortScanResult;
+        public PortInfo SelectedPortScanResult
         {
-            get => _selectedScanResult;
+            get => _selectedPortScanResult;
             set
             {
-                if (value == _selectedScanResult)
+                if (value == _selectedPortScanResult)
                     return;
 
-                _selectedScanResult = value;
+                _selectedPortScanResult = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IList _selectedPortScanResults = new ArrayList();
+        public IList SelectedPortScanResults
+        {
+            get => _selectedPortScanResults;
+            set
+            {
+                if (Equals(value, _selectedPortScanResults))
+                    return;
+
+                _selectedPortScanResults = value;
                 OnPropertyChanged();
             }
         }
@@ -270,9 +290,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings, shutdown
-        public PortScannerViewModel(int tabId, string host, string port)
+        public PortScannerViewModel(IDialogCoordinator instance, int tabId, string host, string port)
         {
             _isLoading = true;
+
+            _dialogCoordinator = instance;
 
             _tabId = tabId;
             Host = host;
@@ -283,8 +305,8 @@ namespace NETworkManager.ViewModels
             PortHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortHistory);
 
             // Result view
-            PortScanResultView = CollectionViewSource.GetDefaultView(PortScanResult);
-            PortScanResultView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortInfo.Host)));
+            PortScanResultsView = CollectionViewSource.GetDefaultView(PortScanResult);
+            PortScanResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortInfo.IPAddress)));
 
             LoadSettings();
 
@@ -339,7 +361,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedScanResult.Host.Item1.ToString());
+            CommonMethods.SetClipboard(SelectedPortScanResult.IPAddress.ToString());
         }
 
         public ICommand CopySelectedHostnameCommand
@@ -349,7 +371,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedHostnameAction()
         {
-            CommonMethods.SetClipboard(SelectedScanResult.Host.Item2);
+            CommonMethods.SetClipboard(SelectedPortScanResult.Hostname);
         }
 
         public ICommand CopySelectedPortCommand
@@ -359,7 +381,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedPortAction()
         {
-            CommonMethods.SetClipboard(SelectedScanResult.Port.ToString());
+            CommonMethods.SetClipboard(SelectedPortScanResult.Port.ToString());
         }
 
         public ICommand CopySelectedStatusCommand
@@ -369,7 +391,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {
-            CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString(SelectedScanResult.Status.ToString()));
+            CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString(SelectedPortScanResult.Status.ToString(), LocalizationManager.Culture));
         }
 
         public ICommand CopySelectedProtocolCommand
@@ -379,7 +401,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedProtocolAction()
         {
-            CommonMethods.SetClipboard(SelectedScanResult.LookupInfo.Protocol.ToString());
+            CommonMethods.SetClipboard(SelectedPortScanResult.LookupInfo.Protocol.ToString());
         }
 
         public ICommand CopySelectedServiceCommand
@@ -389,7 +411,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedServiceAction()
         {
-            CommonMethods.SetClipboard(SelectedScanResult.LookupInfo.Service);
+            CommonMethods.SetClipboard(SelectedPortScanResult.LookupInfo.Service);
         }
 
         public ICommand CopySelectedDescriptionCommand
@@ -399,7 +421,50 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedDescriptionAction()
         {
-            CommonMethods.SetClipboard(SelectedScanResult.LookupInfo.Description);
+            CommonMethods.SetClipboard(SelectedPortScanResult.LookupInfo.Description);
+        }
+
+        public ICommand ExportCommand
+        {
+            get { return new RelayCommand(p => ExportAction()); }
+        }
+
+        private async void ExportAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType,
+                        instance.ExportAll
+                            ? PortScanResult
+                            : new ObservableCollection<PortInfo>(SelectedPortScanResults.Cast<PortInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.PortScanner_ExportFileType = instance.FileType;
+                SettingsManager.Current.PortScanner_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.PortScanner_ExportFileType, SettingsManager.Current.PortScanner_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
         #endregion
 

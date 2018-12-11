@@ -78,6 +78,9 @@
                                                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                                                         <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
                                                                         <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsMouseOver}" Value="True">
+                                                                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                                                            </DataTrigger>
                                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
                                                                                 <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
                                                                             </DataTrigger>

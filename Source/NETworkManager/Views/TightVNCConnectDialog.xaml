@@ -33,7 +33,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Host}" />
-            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="0" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostname}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="0" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -44,7 +44,7 @@
                 </ComboBox.Text>
             </ComboBox>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Port}" />
-            <ComboBox x:Name="ComboBoxPort" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding PortHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePort5900}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxPort" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding PortHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort5900}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

@@ -12,6 +12,7 @@
         xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:networkManager="clr-namespace:NETworkManager"
         dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:NetworkInterfaceViewModel}">
     <UserControl.InputBindings>
@@ -308,7 +309,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition MinWidth="40" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="350" />
+                    <ColumnDefinition MinWidth="{x:Static networkManager:GlobalStaticConfiguration.ProfileWidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static networkManager:GlobalStaticConfiguration.ProfileMaxWidthExpanded}" />
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0" Margin="10">
                     <Grid.RowDefinitions>
@@ -446,7 +447,7 @@
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.IPv4Address}" />
-                                        <TextBox x:Name="TextBoxConfigIPAddress" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Address}">
+                                        <TextBox x:Name="TextBoxConfigIPAddress" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Address}">
                                             <TextBox.Text>
                                                 <Binding Path="ConfigIPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
@@ -457,7 +458,7 @@
                                             </TextBox.Text>
                                         </TextBox>
                                         <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.SubnetmaskOrCIDR}" />
-                                        <ComboBox x:Name="ComboBoxConfigSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4SubnetmaskIPv4CIDR}" ItemsSource="{x:Static network:Subnetmask.List}">
+                                        <ComboBox x:Name="ComboBoxConfigSubnetmaskOrCidr" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4SubnetmaskIPv4CIDR}" ItemsSource="{x:Static network:Subnetmask.List}">
                                             <ComboBox.Text>
                                                 <Binding Path="ConfigSubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
@@ -483,7 +484,7 @@
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
                                         <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource CenterTextBlock}"  Text="{x:Static localization:Strings.DefaultGateway}"  />
-                                        <TextBox x:Name="TextBoxConfigGateway" Grid.Column="1" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Gateway}">
+                                        <TextBox x:Name="TextBoxConfigGateway" Grid.Column="1" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Gateway}">
                                             <TextBox.Text>
                                                 <Binding Path="ConfigGateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
@@ -518,7 +519,7 @@
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}"  Text="{x:Static localization:Strings.PrimaryDNSServer}"  />
-                                        <TextBox x:Name="TextBoxConfigPrimaryDNSServer" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4Gateway}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                        <TextBox x:Name="TextBoxConfigPrimaryDNSServer" Grid.Column="1" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Gateway}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                             <TextBox.Text>
                                                 <Binding Path="ConfigPrimaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
@@ -528,7 +529,7 @@
                                             </TextBox.Text>
                                         </TextBox>
                                         <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}"  Text="{x:Static localization:Strings.SecondaryDNSServer}"  />
-                                        <TextBox x:Name="TextBoxConfigSecondaryDNSServer" Grid.Column="1" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4DNSServer}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
+                                        <TextBox x:Name="TextBoxConfigSecondaryDNSServer" Grid.Column="1" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4DNSServer}" Validation.ErrorTemplate="{StaticResource DefaultErrorTemplate}">
                                             <TextBox.Text>
                                                 <Binding Path="ConfigSecondaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
@@ -561,7 +562,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Orientation="Horizontal">
-                            <Button HorizontalAlignment="Left" Command="{Binding FlushDNSCacheCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}">
+                            <Button HorizontalAlignment="Left" Command="{Binding FlushDNSCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}">
                                 <Button.Content>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -574,6 +575,22 @@
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                         <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.FlushDNSCache}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                                    </Grid>
+                                </Button.Content>
+                            </Button> 
+                            <Button HorizontalAlignment="Left" Command="{Binding AddIPv4AddressCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
+                                <Button.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ListAddBelow}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddIPv4AddressDots}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
                                     </Grid>
                                 </Button.Content>
                             </Button>
@@ -593,7 +610,7 @@
                                     </Grid>
                                 </mah:DropDownButton.Content>
                                 <mah:DropDownButton.Items>
-                                    <MenuItem Header="{x:Static localization:Strings.ReleaseRenew}" Command="{Binding IPConfigReleaseRenewCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
+                                    <MenuItem Header="{x:Static localization:Strings.ReleaseRenew}" Command="{Binding ReleaseRenewCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
                                                 <Rectangle.OpacityMask>
@@ -603,7 +620,7 @@
                                         </MenuItem.Icon>
                                     </MenuItem>
                                     <Separator />
-                                    <MenuItem Header="{x:Static localization:Strings.Release}" Command="{Binding IPConfigReleaseCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
+                                    <MenuItem Header="{x:Static localization:Strings.Release}" Command="{Binding ReleaseCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
                                                 <Rectangle.OpacityMask>
@@ -612,7 +629,7 @@
                                             </Rectangle>
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="{x:Static localization:Strings.Renew}" Command="{Binding IPConfigRenewCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
+                                    <MenuItem Header="{x:Static localization:Strings.Renew}" Command="{Binding RenewCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
                                                 <Rectangle.OpacityMask>
@@ -682,7 +699,7 @@
                         <ListBox Grid.Column="0" Grid.Row="2" x:Name="ListBoxProfiles" ItemsSource="{Binding Profiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                             <ListBox.Resources>
                                 <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                                    <MenuItem Header="{x:Static localization:Strings.Apply}" Command="{Binding ApplyProfileCommand}">
+                                    <MenuItem Header="{x:Static localization:Strings.Apply}" Command="{Binding ApplyProfileConfigCommand}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                                 <Rectangle.OpacityMask>
@@ -784,19 +801,25 @@
                                     </Style.Triggers>
                                 </Style>
                             </Grid.Style>
-                            <StackPanel>
-                                <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
-                                    <Button.Style>
-                                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
-                                            <Setter Property="Command" Value="{Binding AddProfileCommand}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
-                                                    <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                    <Rectangle Width="20" Height="20">
+                            <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
+                                        <Setter Property="Command" Value="{Binding AddProfileCommand}" />
+                                        <Setter Property="ToolTip" Value="{x:Static localization:Strings.AddProfileDots}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                                <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
+                                                <Setter Property="ToolTip" Value="{x:Static localization:Strings.ClearFilter}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Grid.Column="0" Width="20" Height="20">
                                         <Rectangle.Resources>
                                             <VisualBrush x:Key="VisualPlus" Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}"/>
                                             <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
@@ -816,20 +839,23 @@
                                             </Style>
                                         </Rectangle.Style>
                                     </Rectangle>
-                                </Button>
-                                <TextBlock>
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
-                                            <Setter Property="Text" Value="{x:Static localization:Strings.NoProfilesFoundCreateOne}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
-                                                    <Setter Property="Text" Value="{x:Static localization:Strings.NothingFound}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </StackPanel>
+                                    <TextBlock Grid.Column="1">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+                                                <Setter Property="Text" Value="{x:Static localization:Strings.NoProfilesFoundCreateOne}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                                        <Setter Property="Text" Value="{x:Static localization:Strings.NothingFound}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Button>
                         </Grid>
                         <Button x:Name="ButtonAddProfile" Grid.Column="0" Grid.Row="4" Command="{Binding AddProfileCommand}" Style="{StaticResource ImageWithTextButton}">
                             <Button.Content>

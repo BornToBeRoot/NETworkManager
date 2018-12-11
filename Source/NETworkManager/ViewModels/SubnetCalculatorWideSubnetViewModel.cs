@@ -1,5 +1,4 @@
-﻿using System;
-using NETworkManager.Models.Settings;
+﻿using NETworkManager.Models.Settings;
 using System.Windows.Input;
 using NETworkManager.Utilities;
 using System.Windows.Data;
@@ -11,7 +10,7 @@ using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.ViewModels
 {
-    public class SubnetCalculatorSupernettingViewModel : ViewModelBase
+    public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
@@ -191,13 +190,13 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings
-        public SubnetCalculatorSupernettingViewModel(IDialogCoordinator instance)
+        public SubnetCalculatorWideSubnetViewModel(IDialogCoordinator instance)
         {
             _dialogCoordinator = instance;
 
             // Set collection view
-            Subnet1HistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Supernetting_Subnet1);
-            Subnet2HistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Supernetting_Subnet2);
+            Subnet1HistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet1);
+            Subnet2HistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet2);
         }
         #endregion
 
@@ -214,73 +213,56 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private async void Calculate()
+        private void Calculate()
         {
-            try
-            {
-                IsCalculationRunning = true;
+            IsCalculationRunning = true;
 
-                var subnet1 = IPNetwork.Parse(Subnet1);
-                var subnet2 = IPNetwork.Parse(Subnet2);
+            var subnet1 = IPNetwork.Parse(Subnet1);
+            var subnet2 = IPNetwork.Parse(Subnet2);
 
-                var subnet = subnet1.Supernet(subnet2);
+            var subnet = IPNetwork.WideSubnet(new [] {subnet1, subnet2}); //IPNetwork.WideSubnet(new[] { subnet1, subnet2 });
 
-                NetworkAddress = subnet.Network;
-                Broadcast = subnet.Broadcast;
-                Subnetmask = subnet.Netmask;
-                CIDR = subnet.Cidr;
-                IPAddresses = subnet.Total;
-                FirstIPAddress = subnet.FirstUsable;
-                LastIPAddress = subnet.LastUsable;
-                Hosts = subnet.Usable;
+            NetworkAddress = subnet.Network;
+            Broadcast = subnet.Broadcast;
+            Subnetmask = subnet.Netmask;
+            CIDR = subnet.Cidr;
+            IPAddresses = subnet.Total;
+            FirstIPAddress = subnet.FirstUsable;
+            LastIPAddress = subnet.LastUsable;
+            Hosts = subnet.Usable;
 
-                IsResultVisible = true;
+            IsResultVisible = true;
 
-                AddSubnet1ToHistory(Subnet1);
-                AddSubnet2ToHistory(Subnet2);
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+            AddSubnet1ToHistory(Subnet1);
+            AddSubnet2ToHistory(Subnet2);
 
-                ConfigurationManager.Current.IsDialogOpen = true;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, "This is a known error, see:\n\nhttps://github.com/BornToBeRoot/NETworkManager/issues/151\n\n\n--- Error message ---\n" + 
-                    ex.Message, MessageDialogStyle.Affirmative, settings);
-
-                ConfigurationManager.Current.IsDialogOpen = false;
-            }
-            finally
-            {
-                IsCalculationRunning = false;
-            }
+            IsCalculationRunning = false;
         }
 
         private void AddSubnet1ToHistory(string subnet)
         {
             // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Supernetting_Subnet1.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet1.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
-            SettingsManager.Current.SubnetCalculator_Supernetting_Subnet1.Clear();
+            SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet1.Clear();
             OnPropertyChanged(nameof(Subnet1)); // Raise property changed again, after the collection has been cleared
 
             // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.SubnetCalculator_Supernetting_Subnet1.Add(x));
+            list.ForEach(x => SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet1.Add(x));
         }
 
         private void AddSubnet2ToHistory(string subnet)
         {
             // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Supernetting_Subnet2.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet2.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
-            SettingsManager.Current.SubnetCalculator_Supernetting_Subnet2.Clear();
+            SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet2.Clear();
             OnPropertyChanged(nameof(Subnet2)); // Raise property changed again, after the collection has been cleared
 
             // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.SubnetCalculator_Supernetting_Subnet2.Add(x));
+            list.ForEach(x => SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet2.Add(x));
         }
 
         public void OnShutdown()

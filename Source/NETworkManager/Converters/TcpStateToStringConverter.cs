@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Net.NetworkInformation;
 using System.Windows.Data;
+using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Converters
 {
@@ -12,7 +13,7 @@ namespace NETworkManager.Converters
             if (!(value is TcpState tcpState))
                 return "-/-";
 
-            var status = Resources.Localization.Strings.ResourceManager.GetString("TcpState_" + tcpState);
+            var status = Resources.Localization.Strings.ResourceManager.GetString("TcpState_" + tcpState, LocalizationManager.Culture);
 
             return string.IsNullOrEmpty(status) ? tcpState.ToString() : status;
         }

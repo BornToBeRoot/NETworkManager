@@ -4,7 +4,7 @@ namespace NETworkManager.Utilities
 {
     public static class PowerShellHelper
     {
-        public static void RunPSCommand(string command, bool asAdmin = false, ProcessWindowStyle windowStyle = ProcessWindowStyle.Hidden)
+        public static void ExecuteCommand(string command, bool asAdmin = false, ProcessWindowStyle windowStyle = ProcessWindowStyle.Hidden)
         {
             var info = new ProcessStartInfo()
             {

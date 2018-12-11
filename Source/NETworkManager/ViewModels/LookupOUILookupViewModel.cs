@@ -1,20 +1,26 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Collections;
+using System.Windows.Input;
 using System.Collections.ObjectModel;
 using NETworkManager.Models.Settings;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.ComponentModel;
 using System.Windows.Data;
-using System.Windows;
 using NETworkManager.Models.Lookup;
 using System.Linq;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Export;
 using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
     public class LookupOUILookupViewModel : ViewModelBase
     {
         #region Variables
+        private readonly IDialogCoordinator _dialogCoordinator;
+        
         private string _macOrVendorAddress;
         public string MACAddressOrVendor
         {
@@ -59,31 +65,45 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<OUIInfo> _ouiLookupResult = new ObservableCollection<OUIInfo>();
-        public ObservableCollection<OUIInfo> OUILookupResult
+        private ObservableCollection<OUIInfo> _ouiLookupResults = new ObservableCollection<OUIInfo>();
+        public ObservableCollection<OUIInfo> OUILookupResults
         {
-            get => _ouiLookupResult;
+            get => _ouiLookupResults;
             set
             {
-                if (value != null && value == _ouiLookupResult)
+                if (value != null && value == _ouiLookupResults)
                     return;
 
-                _ouiLookupResult = value;
+                _ouiLookupResults = value;
             }
         }
 
-        public ICollectionView OUILookupResultView { get; }
+        public ICollectionView OUILookupResultsView { get; }
 
-        private OUIInfo _selectedOUILookup;
-        public OUIInfo SelectedOUILookup
+        private OUIInfo _selectedOUILookupResult;
+        public OUIInfo SelectedOUILookupResult
         {
-            get => _selectedOUILookup;
+            get => _selectedOUILookupResult;
             set
             {
-                if (value == _selectedOUILookup)
+                if (value == _selectedOUILookupResult)
                     return;
 
-                _selectedOUILookup = value;
+                _selectedOUILookupResult = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IList _selectedOUILookupResults = new ArrayList();
+        public IList SelectedOUILookupResults
+        {
+            get => _selectedOUILookupResults;
+            set
+            {
+                if (Equals(value, _selectedOUILookupResults))
+                    return;
+
+                _selectedOUILookupResults = value;
                 OnPropertyChanged();
             }
         }
@@ -104,11 +124,13 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, Load settings
-        public LookupOUILookupViewModel()
+        public LookupOUILookupViewModel(IDialogCoordinator instance)
         {
+            _dialogCoordinator = instance;
+
             // Set collection view
             MACAddressOrVendorHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory);
-            OUILookupResultView = CollectionViewSource.GetDefaultView(OUILookupResult);
+            OUILookupResultsView = CollectionViewSource.GetDefaultView(OUILookupResults);
         }
         #endregion
 
@@ -127,7 +149,7 @@ namespace NETworkManager.ViewModels
         {
             IsLookupRunning = true;
 
-            OUILookupResult.Clear();
+            OUILookupResults.Clear();
 
             var vendors = new List<string>();
 
@@ -139,7 +161,7 @@ namespace NETworkManager.ViewModels
                 {
                     foreach (var info in await OUILookup.LookupAsync(macAddressOrVendor1))
                     {
-                        OUILookupResult.Add(info);
+                        OUILookupResults.Add(info);
                     }
                 }
                 else
@@ -150,10 +172,10 @@ namespace NETworkManager.ViewModels
 
             foreach (var info in await OUILookup.LookupByVendorAsync(vendors))
             {
-                OUILookupResult.Add(info);
+                OUILookupResults.Add(info);
             }
 
-            if (OUILookupResult.Count == 0)
+            if (OUILookupResults.Count == 0)
             {
                 NoVendorFound = true;
             }
@@ -173,7 +195,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedMACAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedOUILookup.MACAddress);
+            CommonMethods.SetClipboard(SelectedOUILookupResult.MACAddress);
         }
 
         public ICommand CopySelectedVendorCommand
@@ -183,7 +205,47 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedVendorAction()
         {
-            CommonMethods.SetClipboard(SelectedOUILookup.Vendor);
+            CommonMethods.SetClipboard(SelectedOUILookupResult.Vendor);
+        }
+
+        public ICommand ExportCommand
+        {
+            get { return new RelayCommand(p => ExportAction()); }
+        }
+
+        private async void ExportAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? OUILookupResults : new ObservableCollection<OUIInfo>(SelectedOUILookupResults.Cast<OUIInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.Lookup_OUI_ExportFileType = instance.FileType;
+                SettingsManager.Current.Lookup_OUI_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.Lookup_OUI_ExportFileType, SettingsManager.Current.Lookup_OUI_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
         #endregion
 

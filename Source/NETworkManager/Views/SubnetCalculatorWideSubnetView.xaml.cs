@@ -3,11 +3,11 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
 {
-    public partial class SubnetCalculatorSupernettingView
+    public partial class SubnetCalculatorWideSubnetView
     {
-        private readonly SubnetCalculatorSupernettingViewModel _viewModel = new SubnetCalculatorSupernettingViewModel(DialogCoordinator.Instance);
+        private readonly SubnetCalculatorWideSubnetViewModel _viewModel = new SubnetCalculatorWideSubnetViewModel(DialogCoordinator.Instance);
 
-        public SubnetCalculatorSupernettingView()
+        public SubnetCalculatorWideSubnetView()
         {
             InitializeComponent();
             DataContext = _viewModel;

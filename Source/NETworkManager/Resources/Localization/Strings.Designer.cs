@@ -223,6 +223,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add IPv4 address.
+        /// </summary>
+        public static string AddIPv4Address {
+            get {
+                return ResourceManager.GetString("AddIPv4Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add IPv4 address....
+        /// </summary>
+        public static string AddIPv4AddressDots {
+            get {
+                return ResourceManager.GetString("AddIPv4AddressDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Additional command line.
         /// </summary>
         public static string AdditionalCommandLine {
@@ -259,6 +277,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add tab....
+        /// </summary>
+        public static string AddTabDots {
+            get {
+                return ResourceManager.GetString("AddTabDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adjust screen automatically.
         /// </summary>
         public static string AdjustScreenAutomatically {
@@ -277,6 +304,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string All {
+            get {
+                return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Always show icon in tray.
         /// </summary>
         public static string AlwaysShowIconInTray {
@@ -291,6 +327,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Amber {
             get {
                 return ResourceManager.GetString("Amber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred while exporting the data. See error message for details:.
+        /// </summary>
+        public static string AnErrorOccurredWhileExportingTheData {
+            get {
+                return ResourceManager.GetString("AnErrorOccurredWhileExportingTheData", resourceCulture);
             }
         }
         
@@ -1249,6 +1294,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Design.
+        /// </summary>
+        public static string Design {
+            get {
+                return ResourceManager.GetString("Design", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Destination.
         /// </summary>
         public static string Destination {
@@ -1627,11 +1681,11 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter subnets to create a supernet....
+        ///   Looks up a localized string similar to Enter subnets to create a wide subnet....
         /// </summary>
-        public static string EnterSubnetsToCreateASupernet {
+        public static string EnterSubnetsToCreateAWideSubnet {
             get {
-                return ResourceManager.GetString("EnterSubnetsToCreateASupernet", resourceCulture);
+                return ResourceManager.GetString("EnterSubnetsToCreateAWideSubnet", resourceCulture);
             }
         }
         
@@ -1650,6 +1704,15 @@ namespace NETworkManager.Resources.Localization {
         public static string EnterValidDomain {
             get {
                 return ResourceManager.GetString("EnterValidDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter valid file path!.
+        /// </summary>
+        public static string EnterValidFilePath {
+            get {
+                return ResourceManager.GetString("EnterValidFilePath", resourceCulture);
             }
         }
         
@@ -1825,393 +1888,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 9600.
-        /// </summary>
-        public static string ExampleBaud9600 {
-            get {
-                return ResourceManager.GetString("ExampleBaud9600", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Windows-Testuser.
-        /// </summary>
-        public static string ExampleCredentialName {
-            get {
-                return ResourceManager.GetString("ExampleCredentialName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to example.com.
-        /// </summary>
-        public static string ExampleDomain {
-            get {
-                return ResourceManager.GetString("ExampleDomain", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Servers.
-        /// </summary>
-        public static string ExampleGroupServers {
-            get {
-                return ResourceManager.GetString("ExampleGroupServers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Switche.
-        /// </summary>
-        public static string ExampleGroupSwitche {
-            get {
-                return ResourceManager.GetString("ExampleGroupSwitche", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SERVER-01.
-        /// </summary>
-        public static string ExampleHostname {
-            get {
-                return ResourceManager.GetString("ExampleHostname", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 192.168.178.1; fritz.box.
-        /// </summary>
-        public static string ExampleHostnameAndOrIPAddress {
-            get {
-                return ResourceManager.GetString("ExampleHostnameAndOrIPAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SERVER-01 or 172.16.0.100.
-        /// </summary>
-        public static string ExampleHostnameOrIPAddress {
-            get {
-                return ResourceManager.GetString("ExampleHostnameOrIPAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150; server-01/24.
-        /// </summary>
-        public static string ExampleIPScanRange {
-            get {
-                return ResourceManager.GetString("ExampleIPScanRange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 192.168.178.55.
-        /// </summary>
-        public static string ExampleIPv4Address {
-            get {
-                return ResourceManager.GetString("ExampleIPv4Address", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 192.168.178.255.
-        /// </summary>
-        public static string ExampleIPv4Broadcast {
-            get {
-                return ResourceManager.GetString("ExampleIPv4Broadcast", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 8.8.8.8.
-        /// </summary>
-        public static string ExampleIPv4DNSServer {
-            get {
-                return ResourceManager.GetString("ExampleIPv4DNSServer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 192.168.178.1; 8.8.8.8; 8.8.4.4.
-        /// </summary>
-        public static string ExampleIPv4DNSServers {
-            get {
-                return ResourceManager.GetString("ExampleIPv4DNSServers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 192.168.178.1.
-        /// </summary>
-        public static string ExampleIPv4Gateway {
-            get {
-                return ResourceManager.GetString("ExampleIPv4Gateway", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 192.168.178.133/255.255.255.0 or 2001:0db8::/64.
-        /// </summary>
-        public static string ExampleIPv4IPv6Subnet {
-            get {
-                return ResourceManager.GetString("ExampleIPv4IPv6Subnet", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 192.168.178.134/255.255.255.0 or 2001:0db9::/64.
-        /// </summary>
-        public static string ExampleIPv4IPv6Subnet2 {
-            get {
-                return ResourceManager.GetString("ExampleIPv4IPv6Subnet2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 192.168.178.133/22 or 192.168.178.133/255.255.252.0.
-        /// </summary>
-        public static string ExampleIPv4Subnet {
-            get {
-                return ResourceManager.GetString("ExampleIPv4Subnet", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 255.255.255.0.
-        /// </summary>
-        public static string ExampleIPv4Subnetmask {
-            get {
-                return ResourceManager.GetString("ExampleIPv4Subnetmask", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to /24 or 255.255.255.0.
-        /// </summary>
-        public static string ExampleIPv4SubnetmaskIPv4CIDR {
-            get {
-                return ResourceManager.GetString("ExampleIPv4SubnetmaskIPv4CIDR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 255.255.255.0 or /64.
-        /// </summary>
-        public static string ExampleIPv4SubnetmaskIPv6CIDR {
-            get {
-                return ResourceManager.GetString("ExampleIPv4SubnetmaskIPv6CIDR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 192.168.100.0/24.
-        /// </summary>
-        public static string ExampleIPv4SubnetWithCIDR {
-            get {
-                return ResourceManager.GetString("ExampleIPv4SubnetWithCIDR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 00:F1:21:AB:0B:35.
-        /// </summary>
-        public static string ExampleMACAddress {
-            get {
-                return ResourceManager.GetString("ExampleMACAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5; Intel Corp; Asus.
-        /// </summary>
-        public static string ExampleMACAddressesOrVendor {
-            get {
-                return ResourceManager.GetString("ExampleMACAddressesOrVendor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 161.
-        /// </summary>
-        public static string ExamplePort161 {
-            get {
-                return ResourceManager.GetString("ExamplePort161", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 22.
-        /// </summary>
-        public static string ExamplePort22 {
-            get {
-                return ResourceManager.GetString("ExamplePort22", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 23.
-        /// </summary>
-        public static string ExamplePort23 {
-            get {
-                return ResourceManager.GetString("ExamplePort23", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 3389.
-        /// </summary>
-        public static string ExamplePort3389 {
-            get {
-                return ResourceManager.GetString("ExamplePort3389", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 513.
-        /// </summary>
-        public static string ExamplePort513 {
-            get {
-                return ResourceManager.GetString("ExamplePort513", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 53.
-        /// </summary>
-        public static string ExamplePort53 {
-            get {
-                return ResourceManager.GetString("ExamplePort53", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 5900.
-        /// </summary>
-        public static string ExamplePort5900 {
-            get {
-                return ResourceManager.GetString("ExamplePort5900", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 7.
-        /// </summary>
-        public static string ExamplePort7 {
-            get {
-                return ResourceManager.GetString("ExamplePort7", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 22; 80; https; ldaps; 777 - 999; 8080.
-        /// </summary>
-        public static string ExamplePortPortRangeOrService {
-            get {
-                return ResourceManager.GetString("ExamplePortPortRangeOrService", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 22; 80; 443; 500 - 999; 8080.
-        /// </summary>
-        public static string ExamplePortScanRange {
-            get {
-                return ResourceManager.GetString("ExamplePortScanRange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Webserver.
-        /// </summary>
-        public static string ExampleRemoteDesktopProfileName {
-            get {
-                return ResourceManager.GetString("ExampleRemoteDesktopProfileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to COM5.
-        /// </summary>
-        public static string ExampleSerialLine {
-            get {
-                return ResourceManager.GetString("ExampleSerialLine", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to public.
-        /// </summary>
-        public static string ExampleSNMPCommunity {
-            get {
-                return ResourceManager.GetString("ExampleSNMPCommunity", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 1.3.6.1.2.1.1.
-        /// </summary>
-        public static string ExampleSNMPOID {
-            get {
-                return ResourceManager.GetString("ExampleSNMPOID", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to snmp-user.
-        /// </summary>
-        public static string ExampleSNMPUsername {
-            get {
-                return ResourceManager.GetString("ExampleSNMPUsername", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to fritz.box.
-        /// </summary>
-        public static string ExampleSuffix {
-            get {
-                return ResourceManager.GetString("ExampleSuffix", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to server; dmz.
-        /// </summary>
-        public static string ExampleTags {
-            get {
-                return ResourceManager.GetString("ExampleTags", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Admin.
-        /// </summary>
-        public static string ExampleUsername {
-            get {
-                return ResourceManager.GetString("ExampleUsername", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 80; 443; 8080; 8443.
-        /// </summary>
-        public static string ExampleWebserverPorts {
-            get {
-                return ResourceManager.GetString("ExampleWebserverPorts", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to http(s)://example.com/index.html.
-        /// </summary>
-        public static string ExampleWebsiteUri {
-            get {
-                return ResourceManager.GetString("ExampleWebsiteUri", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Expand.
         /// </summary>
         public static string Expand {
@@ -2230,11 +1906,47 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export all.
+        /// </summary>
+        public static string ExportAll {
+            get {
+                return ResourceManager.GetString("ExportAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export....
+        /// </summary>
+        public static string ExportDots {
+            get {
+                return ResourceManager.GetString("ExportDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export selected.
+        /// </summary>
+        public static string ExportSelected {
+            get {
+                return ResourceManager.GetString("ExportSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Field cannot be empty!.
         /// </summary>
         public static string FieldCannotBeEmpty {
             get {
                 return ResourceManager.GetString("FieldCannotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        public static string File {
+            get {
+                return ResourceManager.GetString("File", resourceCulture);
             }
         }
         
@@ -2307,6 +2019,15 @@ namespace NETworkManager.Resources.Localization {
         public static string ForkMeOnGitHub {
             get {
                 return ResourceManager.GetString("ForkMeOnGitHub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format.
+        /// </summary>
+        public static string Format {
+            get {
+                return ResourceManager.GetString("Format", resourceCulture);
             }
         }
         
@@ -2424,6 +2145,15 @@ namespace NETworkManager.Resources.Localization {
         public static string HiddenApplications {
             get {
                 return ResourceManager.GetString("HiddenApplications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Highlight timeouts.
+        /// </summary>
+        public static string HighlightTimeouts {
+            get {
+                return ResourceManager.GetString("HighlightTimeouts", resourceCulture);
             }
         }
         
@@ -2842,6 +2572,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Location....
+        /// </summary>
+        public static string LocationDots {
+            get {
+                return ResourceManager.GetString("LocationDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Location of the import file....
         /// </summary>
         public static string LocationOfTheImport {
@@ -3139,7 +2878,8 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No profiles found! Create one....
+        ///   Looks up a localized string similar to No profiles found!
+        ///Create one....
         /// </summary>
         public static string NoProfilesFoundCreateOne {
             get {
@@ -3153,6 +2893,15 @@ namespace NETworkManager.Resources.Localization {
         public static string NotChanged {
             get {
                 return ResourceManager.GetString("NotChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Note.
+        /// </summary>
+        public static string Note {
+            get {
+                return ResourceManager.GetString("Note", resourceCulture);
             }
         }
         
@@ -4320,6 +4069,16 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to If you have forgotten your password and want to start over, delete the following file and restart the application.
+        ///Path: &quot;{0}&quot;.
+        /// </summary>
+        public static string ResetCredentialsMessage {
+            get {
+                return ResourceManager.GetString("ResetCredentialsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resolve CNAME on ANY requests.
         /// </summary>
         public static string ResolveCNAMEOnANYRequests {
@@ -4568,6 +4327,15 @@ namespace NETworkManager.Resources.Localization {
         public static string SelectAScreenResolution {
             get {
                 return ResourceManager.GetString("SelectAScreenResolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected.
+        /// </summary>
+        public static string Selected {
+            get {
+                return ResourceManager.GetString("Selected", resourceCulture);
             }
         }
         
@@ -4941,15 +4709,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Subnet.
         /// </summary>
         public static string Subnet {
@@ -5018,15 +4777,6 @@ namespace NETworkManager.Resources.Localization {
         public static string Success {
             get {
                 return ResourceManager.GetString("Success", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Supernetting.
-        /// </summary>
-        public static string Supernetting {
-            get {
-                return ResourceManager.GetString("Supernetting", resourceCulture);
             }
         }
         
@@ -5729,6 +5479,15 @@ namespace NETworkManager.Resources.Localization {
         public static string WhoisServerNotFoundForTheDomain {
             get {
                 return ResourceManager.GetString("WhoisServerNotFoundForTheDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wide Subnet.
+        /// </summary>
+        public static string WideSubnet {
+            get {
+                return ResourceManager.GetString("WideSubnet", resourceCulture);
             }
         }
         

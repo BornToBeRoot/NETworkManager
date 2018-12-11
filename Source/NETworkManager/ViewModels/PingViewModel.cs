@@ -1,6 +1,7 @@
 ﻿using NETworkManager.Models.Network;
 using NETworkManager.Models.Settings;
 using System;
+using System.Collections;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -16,12 +17,17 @@ using NETworkManager.Controls;
 using NETworkManager.Utilities;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Export;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
     public class PingViewModel : ViewModelBase
     {
         #region Variables
+        private readonly IDialogCoordinator _dialogCoordinator;
+
         private CancellationTokenSource _cancellationTokenSource;
 
         private readonly int _tabId;
@@ -76,20 +82,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<PingInfo> _pingResult = new ObservableCollection<PingInfo>();
-        public ObservableCollection<PingInfo> PingResult
+        private ObservableCollection<PingInfo> _pingResults = new ObservableCollection<PingInfo>();
+        public ObservableCollection<PingInfo> PingResults
         {
-            get => _pingResult;
+            get => _pingResults;
             set
             {
-                if (value != null && value == _pingResult)
+                if (value != null && value == _pingResults)
                     return;
 
-                _pingResult = value;
+                _pingResults = value;
             }
         }
 
-        public ICollectionView PingResultView { get; }
+        public ICollectionView PingResultsView { get; }
 
         private PingInfo _selectedPingResult;
         public PingInfo SelectedPingResult
@@ -101,6 +107,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _selectedPingResult = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IList _selectedPingResults = new ArrayList();
+        public IList SelectedPingResults
+        {
+            get => _selectedPingResults;
+            set
+            {
+                if (Equals(value, _selectedPingResults))
+                    return;
+
+                _selectedPingResults = value;
                 OnPropertyChanged();
             }
         }
@@ -278,12 +298,15 @@ namespace NETworkManager.ViewModels
 
         public bool ShowStatistics => SettingsManager.Current.Ping_ShowStatistics;
 
+        public bool HighlightTimeouts => SettingsManager.Current.Ping_HighlightTimeouts;
         #endregion
 
         #region Contructor, load settings    
-        public PingViewModel(int tabId, string host)
+        public PingViewModel(IDialogCoordinator instance, int tabId, string host)
         {
             _isLoading = true;
+
+            _dialogCoordinator = instance;
 
             _tabId = tabId;
             Host = host;
@@ -292,7 +315,7 @@ namespace NETworkManager.ViewModels
             HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Ping_HostHistory);
 
             // Result view
-            PingResultView = CollectionViewSource.GetDefaultView(PingResult);
+            PingResultsView = CollectionViewSource.GetDefaultView(PingResults);
 
             LoadSettings();
 
@@ -400,7 +423,47 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {
-            CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + SelectedPingResult.Status));
+            CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + SelectedPingResult.Status, LocalizationManager.Culture));
+        }
+
+        public ICommand ExportCommand
+        {
+            get { return new RelayCommand(p => ExportAction()); }
+        }
+
+        private async void ExportAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? PingResults : new ObservableCollection<PingInfo>(SelectedPingResults.Cast<PingInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.Ping_ExportFileType = instance.FileType;
+                SettingsManager.Current.Ping_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.Ping_ExportFileType, SettingsManager.Current.Ping_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
         #endregion
 
@@ -419,7 +482,7 @@ namespace NETworkManager.ViewModels
             EndTime = null;
 
             // Reset the latest results
-            PingResult.Clear();
+            PingResults.Clear();
             PingsTransmitted = 0;
             PingsReceived = 0;
             PingsLost = 0;
@@ -441,13 +504,14 @@ namespace NETworkManager.ViewModels
             // Try to parse the string into an IP-Address
             var hostIsIP = IPAddress.TryParse(Host, out var ipAddress);
 
-            try
+            if (!hostIsIP)
             {
-                // Try to resolve the hostname
-                var ipHostEntrys = await Dns.GetHostEntryAsync(Host);
-
-                if (!hostIsIP)
+                try
                 {
+                    // Try to resolve the hostname
+                    var ipHostEntrys = await Dns.GetHostEntryAsync(Host);
+
+
                     foreach (var ip in ipHostEntrys.AddressList)
                     {
                         switch (ip.AddressFamily)
@@ -468,26 +532,26 @@ namespace NETworkManager.ViewModels
                         break;
                     }
                 }
+                catch (SocketException) // This will catch DNS resolve errors
+                {
+                    if (CancelPing)
+                        UserHasCanceled();
+                    else
+                        PingFinished();
+
+                    StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, Host);
+                    DisplayStatusMessage = true;
+
+                    return;
+                }
             }
-            catch (SocketException) // This will catch DNS resolve errors
-            {
-                if (CancelPing)
-                    UserHasCanceled();
-                else
-                    PingFinished();
-
-                StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, Host);
-                DisplayStatusMessage = true;
-
-                return;
-            }                                            
 
             // Add the hostname or ip address to the history
             AddHostToHistory(Host);
 
             _cancellationTokenSource = new CancellationTokenSource();
 
-            var pingOptions = new PingOptions()
+            var pingOptions = new PingOptions
             {
                 Attempts = SettingsManager.Current.Ping_Attempts,
                 Timeout = SettingsManager.Current.Ping_Timeout,
@@ -566,8 +630,8 @@ namespace NETworkManager.ViewModels
             // Add the result to the collection
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                lock (PingResult)
-                    PingResult.Add(pingInfo);
+                lock (PingResults)
+                    PingResults.Add(pingInfo);
             }));
 
             // Calculate statistics
@@ -592,8 +656,8 @@ namespace NETworkManager.ViewModels
 
                     // lock, because the collection is changed from another thread...
                     // I hope this won't slow the application or causes a hight cpu load
-                    lock (PingResult)
-                        AverageTime = (int)PingResult.Average(s => s.Time);
+                    lock (PingResults)
+                        AverageTime = (int)PingResults.Average(s => s.Time);
                 }
             }
             else
@@ -646,6 +710,9 @@ namespace NETworkManager.ViewModels
         {
             if (e.PropertyName == nameof(SettingsInfo.Ping_ShowStatistics))
                 OnPropertyChanged(nameof(ShowStatistics));
+
+            if (e.PropertyName == nameof(SettingsInfo.Ping_HighlightTimeouts))
+                OnPropertyChanged(nameof(HighlightTimeouts));
         }
         #endregion
     }

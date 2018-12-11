@@ -9,6 +9,8 @@ using NETworkManager.Utilities;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
+using System.Diagnostics;
+using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels
 {
@@ -16,7 +18,8 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
-        
+        private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
+
         public ICollectionView Profiles { get; }
 
         private ProfileInfo _selectedProfile = new ProfileInfo();
@@ -58,7 +61,7 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                Profiles.Refresh();
+                _searchDispatcherTimer.Start();
 
                 OnPropertyChanged();
             }
@@ -94,6 +97,9 @@ namespace NETworkManager.ViewModels
 
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+
+            _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
+            _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
         }
         #endregion
 
@@ -110,7 +116,12 @@ namespace NETworkManager.ViewModels
 
         public ICommand EditProfileCommand
         {
-            get { return new RelayCommand(p => EditProfileAction()); }
+            get { return new RelayCommand(p => EditProfileAction(), EditProfile_CanExecute); }
+        }
+
+        private bool EditProfile_CanExecute(object paramter)
+        {
+            return SelectedProfiles.Count == 1;
         }
 
         private void EditProfileAction()
@@ -282,6 +293,15 @@ namespace NETworkManager.ViewModels
         public void Refresh()
         {
             // Refresh profiles
+            Profiles.Refresh();
+        }
+        #endregion
+
+        #region Event
+        private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            _searchDispatcherTimer.Stop();
+
             Profiles.Refresh();
         }
         #endregion

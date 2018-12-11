@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace NETworkManager.Models.Network
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public class ARPTable
+    public class ARP
     {
         #region Variables
         // The max number of physical addresses.
@@ -77,14 +77,14 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Methods
-        public static Task<List<ARPTableInfo>> GetTableAsync()
+        public static Task<List<ARPInfo>> GetTableAsync()
         {
             return Task.Run(() => GetTable());
         }
 
-        public static List<ARPTableInfo> GetTable()
+        public static List<ARPInfo> GetTable()
         {
-            var list = new List<ARPTableInfo>();
+            var list = new List<ARPInfo>();
 
             // The number of bytes needed.
             var bytesNeeded = 0;
@@ -151,7 +151,7 @@ namespace NETworkManager.Models.Network
 
                     // Filter 0.0.0.0.0.0, 255.255.255.255.255.255
                     if (!macAddress.Equals(virtualMAC) && !macAddress.Equals(broadcastMAC))
-                        list.Add(new ARPTableInfo(ipAddress, macAddress, (ipAddress.IsIPv6Multicast || IPv4AddressHelper.IsMulticast(ipAddress))));
+                        list.Add(new ARPInfo(ipAddress, macAddress, (ipAddress.IsIPv6Multicast || IPv4AddressHelper.IsMulticast(ipAddress))));
                 }
 
                 return list;
@@ -167,7 +167,7 @@ namespace NETworkManager.Models.Network
         {
             try
             {
-                PowerShellHelper.RunPSCommand(command, true);
+                PowerShellHelper.ExecuteCommand(command, true);
             }
             catch (Win32Exception win32Ex)
             {

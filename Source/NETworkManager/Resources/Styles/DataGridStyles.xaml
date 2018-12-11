@@ -12,7 +12,7 @@
     </Style>
 
     <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource DefaultDataGrid}" />
-    <Style TargetType="{x:Type networkManagerControls:ScrollingDataGrid}" BasedOn="{StaticResource DefaultDataGrid}" />
+    <Style TargetType="{x:Type networkManagerControls:MultiSelectScrollingDataGrid}" BasedOn="{StaticResource DefaultDataGrid}" />
 
     <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MetroDataGridColumnHeader}" >
         <Setter Property="mahAppsControls:ControlsHelper.ContentCharacterCasing" Value="Normal" />

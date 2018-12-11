@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.NetworkInformation;
 
 namespace NETworkManager.Models.Settings
 {
@@ -49,6 +50,17 @@ namespace NETworkManager.Models.Settings
 
             // Set the culture code
             Culture = new CultureInfo(info.Code);
+        }
+
+
+        public static string TranslateIPStatus(object value)
+        {
+            if (!(value is IPStatus ipStatus))
+                return "-/-";
+
+            var status = Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + ipStatus, Culture);
+
+            return string.IsNullOrEmpty(status) ? ipStatus.ToString() : status;
         }
     }
 }

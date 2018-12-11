@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
@@ -12,7 +13,7 @@ namespace NETworkManager.Views
         {
             InitializeComponent();
 
-            _viewModel = new IPScannerViewModel(tabId, ipRange);
+            _viewModel = new IPScannerViewModel(DialogCoordinator.Instance, tabId, ipRange);
 
             DataContext = _viewModel;
 

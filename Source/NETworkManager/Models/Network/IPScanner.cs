@@ -14,9 +14,9 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Events
-        public event EventHandler<IPScannerHostFoundArgs> HostFound;
+        public event EventHandler<HostFoundArgs> HostFound;
 
-        protected virtual void OnHostFound(IPScannerHostFoundArgs e)
+        protected virtual void OnHostFound(HostFoundArgs e)
         {
             HostFound?.Invoke(this, e);
         }
@@ -128,7 +128,7 @@ namespace NETworkManager.Models.Network
                             if (ipScannerOptions.ResolveMACAddress)
                             {
                                 // Get info from arp table
-                                var arpTableInfo = ARPTable.GetTable().FirstOrDefault(p => p.IPAddress.ToString() == ipAddress.ToString());
+                                var arpTableInfo = ARP.GetTable().FirstOrDefault(p => p.IPAddress.ToString() == ipAddress.ToString());
 
                                 if (arpTableInfo != null)
                                     macAddress = arpTableInfo.MACAddress;
@@ -152,7 +152,7 @@ namespace NETworkManager.Models.Network
                                 }
                             }
 
-                            OnHostFound(new IPScannerHostFoundArgs(pingInfo, hostname, macAddress, vendor));
+                            OnHostFound(new HostFoundArgs(pingInfo, hostname, macAddress, vendor));
                         }
 
                         IncreaseProcess();

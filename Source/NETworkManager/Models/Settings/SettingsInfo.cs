@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using Heijden.DNS;
 using Lextm.SharpSnmpLib.Messaging;
+using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
 using static NETworkManager.Models.Network.SNMP;
@@ -371,7 +372,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _networkInterface_ProfileWidth = 250;
+        private double _networkInterface_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double NetworkInterface_ProfileWidth
         {
             get => _networkInterface_ProfileWidth;
@@ -645,7 +646,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _ipScanner_ProfileWidth = 250;
+        private double _ipScanner_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double IPScanner_ProfileWidth
         {
             get => _ipScanner_ProfileWidth;
@@ -672,6 +673,34 @@ namespace NETworkManager.Models.Settings
 
                 OnPropertyChanged();
 
+                SettingsChanged = true;
+            }
+        }
+
+        private string _ipScanner_ExportFilePath;
+        public string IPScanner_ExportFilePath
+        {
+            get => _ipScanner_ExportFilePath;
+            set
+            {
+                if (value == _ipScanner_ExportFilePath)
+                    return;
+
+                _ipScanner_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _ipScanner_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType IPScanner_ExportFileType
+        {
+            get => _ipScanner_ExportFileType;
+            set
+            {
+                if(value == _ipScanner_ExportFileType)
+                    return;
+
+                _ipScanner_ExportFileType = value;
                 SettingsChanged = true;
             }
         }
@@ -790,7 +819,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _portScanner_ProfileWidth = 250;
+        private double _portScanner_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double PortScanner_ProfileWidth
         {
             get => _portScanner_ProfileWidth;
@@ -817,6 +846,34 @@ namespace NETworkManager.Models.Settings
 
                 OnPropertyChanged();
 
+                SettingsChanged = true;
+            }
+        }
+
+        private string _portScanner_ExportFilePath;
+        public string PortScanner_ExportFilePath
+        {
+            get => _portScanner_ExportFilePath;
+            set
+            {
+                if (value == _portScanner_ExportFilePath)
+                    return;
+
+                _portScanner_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _portScanner_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType PortScanner_ExportFileType
+        {
+            get => _portScanner_ExportFileType;
+            set
+            {
+                if (value == _portScanner_ExportFileType)
+                    return;
+
+                _portScanner_ExportFileType = value;
                 SettingsChanged = true;
             }
         }
@@ -977,7 +1034,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _ping_ProfileWidth = 250;
+        private double _ping_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double Ping_ProfileWidth
         {
             get => _ping_ProfileWidth;
@@ -1002,6 +1059,51 @@ namespace NETworkManager.Models.Settings
 
                 _ping_ShowStatistics = value;
 
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
+
+        private string _ping_ExportFilePath;
+        public string Ping_ExportFilePath
+        {
+            get => _ping_ExportFilePath;
+            set
+            {
+                if (value == _ping_ExportFilePath)
+                    return;
+
+                _ping_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _ping_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType Ping_ExportFileType
+        {
+            get => _ping_ExportFileType;
+            set
+            {
+                if (value == _ping_ExportFileType)
+                    return;
+
+                _ping_ExportFileType = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _ping_HighlightTimeouts = true;
+        public bool Ping_HighlightTimeouts
+        {
+            get => _ping_HighlightTimeouts;
+            set
+            {
+                if(value == _ping_HighlightTimeouts)
+                    return;
+
+                _ping_HighlightTimeouts = value;
+                
                 OnPropertyChanged();
 
                 SettingsChanged = true;
@@ -1125,7 +1227,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _traceroute_ProfileWidth = 250;
+        private double _traceroute_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double Traceroute_ProfileWidth
         {
             get => _traceroute_ProfileWidth;
@@ -1152,6 +1254,34 @@ namespace NETworkManager.Models.Settings
 
                 OnPropertyChanged();
 
+                SettingsChanged = true;
+            }
+        }
+
+        private string _traceroute_ExportFilePath;
+        public string Traceroute_ExportFilePath
+        {
+            get => _traceroute_ExportFilePath;
+            set
+            {
+                if (value == _traceroute_ExportFilePath)
+                    return;
+
+                _traceroute_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _traceroute_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType Traceroute_ExportFileType
+        {
+            get => _traceroute_ExportFileType;
+            set
+            {
+                if (value == _traceroute_ExportFileType)
+                    return;
+
+                _traceroute_ExportFileType = value;
                 SettingsChanged = true;
             }
         }
@@ -1399,7 +1529,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _dnsLookup_ProfileWidth = 250;
+        private double _dnsLookup_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double DNSLookup_ProfileWidth
         {
             get => _dnsLookup_ProfileWidth;
@@ -1426,6 +1556,34 @@ namespace NETworkManager.Models.Settings
 
                 OnPropertyChanged();
 
+                SettingsChanged = true;
+            }
+        }
+
+        private string _dnsLookup_ExportFilePath;
+        public string DNSLookup_ExportFilePath
+        {
+            get => _dnsLookup_ExportFilePath;
+            set
+            {
+                if (value == _dnsLookup_ExportFilePath)
+                    return;
+
+                _dnsLookup_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _dnsLookup_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType DNSLookup_ExportFileType
+        {
+            get => _dnsLookup_ExportFileType;
+            set
+            {
+                if (value == _dnsLookup_ExportFileType)
+                    return;
+
+                _dnsLookup_ExportFileType = value;
                 SettingsChanged = true;
             }
         }
@@ -1726,7 +1884,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _remoteDesktop_ProfileWidth = 250;
+        private double _remoteDesktop_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double RemoteDesktop_ProfileWidth
         {
             get => _remoteDesktop_ProfileWidth;
@@ -1840,7 +1998,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _puTTY_ProfileWidth = 250;
+        private double _puTTY_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double PuTTY_ProfileWidth
         {
             get => _puTTY_ProfileWidth;
@@ -1999,7 +2157,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _tightVNC_ProfileWidth = 250;
+        private double _tightVNC_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double TightVNC_ProfileWidth
         {
             get => _tightVNC_ProfileWidth;
@@ -2230,6 +2388,34 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private string _snmp_ExportFilePath;
+        public string SNMP_ExportFilePath
+        {
+            get => _snmp_ExportFilePath;
+            set
+            {
+                if (value == _snmp_ExportFilePath)
+                    return;
+
+                _snmp_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _snmp_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType SNMP_ExportFileType
+        {
+            get => _snmp_ExportFileType;
+            set
+            {
+                if (value == _snmp_ExportFileType)
+                    return;
+
+                _snmp_ExportFileType = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region WakeOnLAN
@@ -2261,7 +2447,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _wakeOnLAN_ClientWidth = 250;
+        private double _wakeOnLAN_ClientWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double WakeOnLAN_ClientWidth
         {
             get => _wakeOnLAN_ClientWidth;
@@ -2333,7 +2519,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _httpHeaders_ProfileWidth = 250;
+        private double _httpHeaders_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double HTTPHeaders_ProfileWidth
         {
             get => _httpHeaders_ProfileWidth;
@@ -2360,6 +2546,34 @@ namespace NETworkManager.Models.Settings
 
                 OnPropertyChanged();
 
+                SettingsChanged = true;
+            }
+        }
+
+        private string _httpHeaders_ExportFilePath;
+        public string HTTPHeaders_ExportFilePath
+        {
+            get => _httpHeaders_ExportFilePath;
+            set
+            {
+                if (value == _httpHeaders_ExportFilePath)
+                    return;
+
+                _httpHeaders_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _httpHeaders_ExportFileType = ExportManager.ExportFileType.TXT;
+        public ExportManager.ExportFileType HTTPHeaders_ExportFileType
+        {
+            get => _httpHeaders_ExportFileType;
+            set
+            {
+                if (value == _httpHeaders_ExportFileType)
+                    return;
+
+                _httpHeaders_ExportFileType = value;
                 SettingsChanged = true;
             }
         }
@@ -2411,37 +2625,64 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private string _subnetCalculator_Subnetting_ExportFilePath;
+        public string SubnetCalculator_Subnetting_ExportFilePath
+        {
+            get => _subnetCalculator_Subnetting_ExportFilePath;
+            set
+            {
+                if (value == _subnetCalculator_Subnetting_ExportFilePath)
+                    return;
+
+                _subnetCalculator_Subnetting_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _subnetCalculator_Subnetting_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType SubnetCalculator_Subnetting_ExportFileType
+        {
+            get => _subnetCalculator_Subnetting_ExportFileType;
+            set
+            {
+                if (value == _subnetCalculator_Subnetting_ExportFileType)
+                    return;
+
+                _subnetCalculator_Subnetting_ExportFileType = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
-        private ObservableCollection<string> _subnetCalculator_Supernetting_Subnet1 = new ObservableCollection<string>();
-        public ObservableCollection<string> SubnetCalculator_Supernetting_Subnet1
+        #region WideSubnet
+        private ObservableCollection<string> _subnetCalculator_WideSubnet_Subnet1 = new ObservableCollection<string>();
+        public ObservableCollection<string> SubnetCalculator_WideSubnet_Subnet1
         {
-            get => _subnetCalculator_Supernetting_Subnet1;
+            get => _subnetCalculator_WideSubnet_Subnet1;
             set
             {
-                if (value == _subnetCalculator_Supernetting_Subnet1)
+                if (value == _subnetCalculator_WideSubnet_Subnet1)
                     return;
 
-                _subnetCalculator_Supernetting_Subnet1 = value;
+                _subnetCalculator_WideSubnet_Subnet1 = value;
                 SettingsChanged = true;
             }
         }
 
-        private ObservableCollection<string> _subnetCalculator_Supernetting_Subnet2 = new ObservableCollection<string>();
-        public ObservableCollection<string> SubnetCalculator_Supernetting_Subnet2
+        private ObservableCollection<string> _subnetCalculator_WideSubnet_Subnet2 = new ObservableCollection<string>();
+        public ObservableCollection<string> SubnetCalculator_WideSubnet_Subnet2
         {
-            get => _subnetCalculator_Supernetting_Subnet2;
+            get => _subnetCalculator_WideSubnet_Subnet2;
             set
             {
-                if (value == _subnetCalculator_Supernetting_Subnet2)
+                if (value == _subnetCalculator_WideSubnet_Subnet2)
                     return;
 
-                _subnetCalculator_Supernetting_Subnet2 = value;
+                _subnetCalculator_WideSubnet_Subnet2 = value;
                 SettingsChanged = true;
             }
         }
-        #region Supernetting
-
         #endregion
 
         #endregion
@@ -2461,6 +2702,34 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private string _lookup_OUI_ExportFilePath;
+        public string Lookup_OUI_ExportFilePath
+        {
+            get => _lookup_OUI_ExportFilePath;
+            set
+            {
+                if (value == _lookup_OUI_ExportFilePath)
+                    return;
+
+                _lookup_OUI_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _lookup_OUI_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType Lookup_OUI_ExportFileType
+        {
+            get => _lookup_OUI_ExportFileType;
+            set
+            {
+                if (value == _lookup_OUI_ExportFileType)
+                    return;
+
+                _lookup_OUI_ExportFileType = value;
+                SettingsChanged = true;
+            }
+        }
+
         private ObservableCollection<string> _lookup_Port_PortsHistory = new ObservableCollection<string>();
         public ObservableCollection<string> Lookup_Port_PortsHistory
         {
@@ -2471,6 +2740,34 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _lookup_Port_PortsHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private string _lookup_Port_ExportFilePath;
+        public string Lookup_Port_ExportFilePath
+        {
+            get => _lookup_Port_ExportFilePath;
+            set
+            {
+                if (value == _lookup_Port_ExportFilePath)
+                    return;
+
+                _lookup_Port_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _lookup_Port_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType Lookup_Port_ExportFileType
+        {
+            get => _lookup_Port_ExportFileType;
+            set
+            {
+                if (value == _lookup_Port_ExportFileType)
+                    return;
+
+                _lookup_Port_ExportFileType = value;
                 SettingsChanged = true;
             }
         }
@@ -2519,7 +2816,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _whois_ProfileWidth = 250;
+        private double _whois_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
         public double Whois_ProfileWidth
         {
             get => _whois_ProfileWidth;
@@ -2546,6 +2843,34 @@ namespace NETworkManager.Models.Settings
 
                 OnPropertyChanged();
 
+                SettingsChanged = true;
+            }
+        }
+
+        private string _whois_ExportFilePath;
+        public string Whois_ExportFilePath
+        {
+            get => _whois_ExportFilePath;
+            set
+            {
+                if (value == _whois_ExportFilePath)
+                    return;
+
+                _whois_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _whois_ExportFileType = ExportManager.ExportFileType.TXT;
+        public ExportManager.ExportFileType Whois_ExportFileType
+        {
+            get => _whois_ExportFileType;
+            set
+            {
+                if (value == _whois_ExportFileType)
+                    return;
+
+                _whois_ExportFileType = value;
                 SettingsChanged = true;
             }
         }
@@ -2579,6 +2904,34 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+    
+        private string _connections_ExportFilePath;
+        public string Connections_ExportFilePath
+        {
+            get => _connections_ExportFilePath;
+            set
+            {
+                if (value == _connections_ExportFilePath)
+                    return;
+
+                _connections_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _connections_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType Connections_ExportFileType
+        {
+            get => _connections_ExportFileType;
+            set
+            {
+                if (value == _connections_ExportFileType)
+                    return;
+
+                _connections_ExportFileType = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Listeners
@@ -2609,6 +2962,34 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private string _listeners_ExportFilePath;
+        public string Listeners_ExportFilePath
+        {
+            get => _listeners_ExportFilePath;
+            set
+            {
+                if (value == _listeners_ExportFilePath)
+                    return;
+
+                _listeners_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _listeners_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType Listeners_ExportFileType
+        {
+            get => _listeners_ExportFileType;
+            set
+            {
+                if (value == _listeners_ExportFileType)
+                    return;
+
+                _listeners_ExportFileType = value;
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region ARPTable
@@ -2636,6 +3017,34 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _arpTable_AutoRefreshTime = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private string _arpTable_ExportFilePath;
+        public string ARPTable_ExportFilePath
+        {
+            get => _arpTable_ExportFilePath;
+            set
+            {
+                if (value == _arpTable_ExportFilePath)
+                    return;
+
+                _arpTable_ExportFilePath = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _arpTable_ExportFileType = ExportManager.ExportFileType.CSV;
+        public ExportManager.ExportFileType ARPTable_ExportFileType
+        {
+            get => _arpTable_ExportFileType;
+            set
+            {
+                if (value == _arpTable_ExportFileType)
+                    return;
+
+                _arpTable_ExportFileType = value;
                 SettingsChanged = true;
             }
         }
@@ -2678,7 +3087,7 @@ namespace NETworkManager.Models.Settings
             PuTTY_ProfileHistory.CollectionChanged += CollectionChanged;
 
             // TightVNC
-            TightVNC_HostHistory.CollectionChanged += CollectionChanged; 
+            TightVNC_HostHistory.CollectionChanged += CollectionChanged;
 
             // SNMP
             SNMP_HostHistory.CollectionChanged += CollectionChanged;
@@ -2695,8 +3104,8 @@ namespace NETworkManager.Models.Settings
             SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory.CollectionChanged += CollectionChanged;
 
             // Subnet Calculator / Supernetting
-            SubnetCalculator_Supernetting_Subnet1.CollectionChanged += CollectionChanged;
-            SubnetCalculator_Supernetting_Subnet2.CollectionChanged += CollectionChanged;
+            SubnetCalculator_WideSubnet_Subnet1.CollectionChanged += CollectionChanged;
+            SubnetCalculator_WideSubnet_Subnet2.CollectionChanged += CollectionChanged;
 
             // Lookup / OUI
             Lookup_OUI_MACAddressOrVendorHistory.CollectionChanged += CollectionChanged;

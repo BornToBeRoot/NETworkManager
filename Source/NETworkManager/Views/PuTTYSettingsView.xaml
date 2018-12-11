@@ -26,7 +26,7 @@
         <TextBlock Text="{x:Static localization:Strings.PuTTYProfile}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <TextBox Width="250" Text="{Binding PuTTYProfile}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.DefaultSSHPort}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePort22}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
+        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort22}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="SSHPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -37,7 +37,7 @@
             </TextBox.Text>
         </TextBox>
         <TextBlock Text="{x:Static localization:Strings.DefaultTelnetPort}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePort23}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
+        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort23}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="TelnetPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -48,7 +48,7 @@
             </TextBox.Text>
         </TextBox> 
         <TextBlock Text="{x:Static localization:Strings.DefaultRloginPort}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePort513}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
+        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort513}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="RloginPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -59,9 +59,9 @@
             </TextBox.Text>
         </TextBox>
         <TextBlock Text="{x:Static localization:Strings.SerialLine}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <TextBox Width="250" Text="{Binding SerialLine}" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleSerialLine}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
+        <TextBox Width="250" Text="{Binding SerialLine}" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSerialLine}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.DefaultBaudRate}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleBaud9600}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
+        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleBaud9600}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="BaudRate" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
