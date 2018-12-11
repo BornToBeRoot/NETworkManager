@@ -53,7 +53,7 @@
                                 <Setter Property="HeaderItemTemplate">
                                     <Setter.Value>
                                         <DataTemplate DataType="controls:DragablzTabItem">
-                                            <Border BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1,1,1,0" Margin="-1,0,0,0" CornerRadius="15,15,0,0">
+                                            <Border BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,1,0">
                                                 <Grid>
                                                     <Grid.ContextMenu>
                                                         <ContextMenu>
