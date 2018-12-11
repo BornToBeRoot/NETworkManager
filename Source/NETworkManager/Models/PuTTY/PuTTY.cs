@@ -2,12 +2,12 @@
 {
     public class PuTTY
     {
-        public static string BuildCommandLine(PuTTYSessionInfo ProfileInfo)
+        public static string BuildCommandLine(PuTTYSessionInfo profileInfo)
         {
             var command = string.Empty;
 
             // Protocol
-            switch (ProfileInfo.Mode)
+            switch (profileInfo.Mode)
             {
                 case ConnectionMode.SSH:
                     command += "-ssh";
@@ -27,24 +27,24 @@
             }
 
             // Profile
-            if (!string.IsNullOrEmpty(ProfileInfo.Profile))
-                command += $" -load {'"'}{ProfileInfo.Profile}{'"'}";
+            if (!string.IsNullOrEmpty(profileInfo.Profile))
+                command += $" -load {'"'}{profileInfo.Profile}{'"'}";
 
             // Username
-            if (!string.IsNullOrEmpty(ProfileInfo.Username))
-                command += $" -l {ProfileInfo.Username}";
+            if (!string.IsNullOrEmpty(profileInfo.Username))
+                command += $" -l {profileInfo.Username}";
 
             // Additional commands
-            if (!string.IsNullOrEmpty(ProfileInfo.AdditionalCommandLine))
-                command += $" {ProfileInfo.AdditionalCommandLine}";
+            if (!string.IsNullOrEmpty(profileInfo.AdditionalCommandLine))
+                command += $" {profileInfo.AdditionalCommandLine}";
 
             // SerialLine, Baud
-            if (ProfileInfo.Mode == ConnectionMode.Serial)
-                command += $" {ProfileInfo.HostOrSerialLine} -sercfg {ProfileInfo.PortOrBaud}";
+            if (profileInfo.Mode == ConnectionMode.Serial)
+                command += $" {profileInfo.HostOrSerialLine} -sercfg {profileInfo.PortOrBaud}";
 
             // Port, Host
-            if (ProfileInfo.Mode != ConnectionMode.Serial)
-                command += $" -P {ProfileInfo.PortOrBaud} {ProfileInfo.HostOrSerialLine}";
+            if (profileInfo.Mode != ConnectionMode.Serial)
+                command += $" -P {profileInfo.PortOrBaud} {profileInfo.HostOrSerialLine}";
 
             return command;
         }

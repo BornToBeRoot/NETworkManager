@@ -166,7 +166,7 @@
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddEntry}" TextAlignment="Center" Margin="10,5" />
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddEntryDots}" TextAlignment="Center" Margin="10,5" />
                         </Grid>
                     </Button.Content>
                 </Button>
