@@ -978,7 +978,7 @@
     <Compile Include="Utilities\HotKeys.cs" />
     <Compile Include="Models\Network\ARP.cs" />
     <Compile Include="Utilities\PortRangeHelper.cs" />
-    <Compile Include="Utilities\HostsHelper.cs" />
+    <Compile Include="Utilities\HostRangeHelper.cs" />
     <Compile Include="Utilities\IPv4AddressHelper.cs" />
     <Compile Include="Utilities\MACAddressHelper.cs" />
     <Compile Include="Utilities\RegexHelper.cs" />

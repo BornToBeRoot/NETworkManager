@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.Utilities
 {
-    public static class HostsHelper
+    public static class HostRangeHelper
     {
         public static Task<IPAddress[]> CreateIPAddressesFromIPRangesAsync(string[] ipRanges, CancellationToken cancellationToken)
         {

@@ -529,7 +529,8 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                ipRanges = await HostsHelper.ResolveHostnamesInIPRangesAsync(Host.Replace(" ", "").Split(';'), _cancellationTokenSource.Token);
+                
+                ipRanges = await HostRangeHelper.ResolveHostnamesInIPRangesAsync(Host.Replace(" ", "").Split(';'), _cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
             {
@@ -548,7 +549,7 @@ namespace NETworkManager.ViewModels
             try
             {
                 // Create a list of all ip addresses
-                ipAddresses = await HostsHelper.CreateIPAddressesFromIPRangesAsync(ipRanges.ToArray(), _cancellationTokenSource.Token);
+                ipAddresses = await HostRangeHelper.CreateIPAddressesFromIPRangesAsync(ipRanges.ToArray(), _cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
             {
