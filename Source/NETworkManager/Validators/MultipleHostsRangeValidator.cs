@@ -6,7 +6,7 @@ using System.Net;
 
 namespace NETworkManager.Validators
 {
-    public class IPScanRangeValidator : ValidationRule
+    public class MultipleHostsRangeValidator : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {

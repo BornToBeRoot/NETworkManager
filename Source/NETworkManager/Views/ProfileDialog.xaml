@@ -302,7 +302,7 @@
                                                             <Binding Path="IPScanner_IPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                 <Binding.ValidationRules>
                                                                     <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                                    <validators:IPScanRangeValidator ValidatesOnTargetUpdated="True" />
+                                                                    <validators:MultipleHostsRangeValidator ValidatesOnTargetUpdated="True" />
                                                                 </Binding.ValidationRules>
                                                             </Binding>
                                                         </Setter.Value>
