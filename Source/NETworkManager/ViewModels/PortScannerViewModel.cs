@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using NETworkManager.Models.Network;
 using System.Threading;
 using System.Net;
-using System.Net.Sockets;
 using System.Windows.Threading;
 using System.Diagnostics;
 using System.ComponentModel;
@@ -141,6 +140,8 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public bool ResolveHostname => SettingsManager.Current.PortScanner_ResolveHostname;
 
         private int _portsToScan;
         public int PortsToScan
@@ -442,10 +443,7 @@ namespace NETworkManager.ViewModels
 
                 try
                 {
-                    ExportManager.Export(instance.FilePath, instance.FileType,
-                        instance.ExportAll
-                            ? PortScanResult
-                            : new ObservableCollection<PortInfo>(SelectedPortScanResults.Cast<PortInfo>().ToArray()));
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? PortScanResult : new ObservableCollection<PortInfo>(SelectedPortScanResults.Cast<PortInfo>().ToArray()));
                 }
                 catch (Exception ex)
                 {
@@ -503,124 +501,64 @@ namespace NETworkManager.ViewModels
 
             _cancellationTokenSource = new CancellationTokenSource();
 
-            var hosts = Host.Split(';');
+            // Resolve hostnames
+            List<string> ipRanges;
 
-            var hostData = new List<Tuple<IPAddress, string>>();
-
-            var hostname = string.Empty;
-
-            foreach (var host in hosts)
+            try
             {
-                var host1 = host.Trim();
-
-                IPAddress.TryParse(host1, out var ipAddress);
-
-                try
-                {
-                    // Resolve DNS
-                    // Try to resolve the hostname
-                    if (ipAddress == null)
-                    {
-                        var ipHostEntry = await Dns.GetHostEntryAsync(host1);
-
-                        foreach (var ip in ipHostEntry.AddressList)
-                        {
-                            switch (ip.AddressFamily)
-                            {
-                                case AddressFamily.InterNetwork when SettingsManager.Current.PortScanner_ResolveHostnamePreferIPv4:
-                                    ipAddress = ip;
-                                    break;
-                                case AddressFamily.InterNetworkV6 when !SettingsManager.Current.PortScanner_ResolveHostnamePreferIPv4:
-                                    ipAddress = ip;
-                                    break;
-                            }
-                        }
-
-                        // Fallback --> If we could not resolve our prefered ip protocol
-                        if (ipAddress == null)
-                        {
-                            foreach (var ip in ipHostEntry.AddressList)
-                            {
-                                ipAddress = ip;
-                                break;
-                            }
-                        }
-
-                        hostname = host1;
-                    }
-                    else
-                    {
-                        try
-                        {
-                            var ipHostEntry = await Dns.GetHostEntryAsync(ipAddress);
-
-                            hostname = ipHostEntry.HostName;
-                        }
-                        catch
-                        {
-                            // ignored
-                        }
-                    }
-                }
-                catch (SocketException) // This will catch DNS resolve errors
-                {
-                    if (!string.IsNullOrEmpty(StatusMessage))
-                        StatusMessage += Environment.NewLine;
-
-                    StatusMessage += string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, host1);
-                    DisplayStatusMessage = true;
-
-                    continue;
-                }
-
-                hostData.Add(Tuple.Create(ipAddress, hostname));
+                ipRanges = await HostRangeHelper.ResolveHostnamesInIPRangesAsync(Host.Replace(" ", "").Split(';'), _cancellationTokenSource.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                UserHasCanceled(this, EventArgs.Empty);
+                return;
+            }
+            catch (AggregateException exceptions) // DNS error (could not resolve hostname...)
+            {
+                DnsResolveFailed(exceptions);
+                return;
             }
 
-            if (hostData.Count == 0)
+            // Create ip addresses 
+            IPAddress[] ipAddresses;
+
+            try
             {
-                StatusMessage += Environment.NewLine + Resources.Localization.Strings.NothingToDoCheckYourInput;
-                DisplayStatusMessage = true;
-
-                ScanFinished();
-
+                // Create a list of all ip addresses
+                ipAddresses = await HostRangeHelper.CreateIPAddressesFromIPRangesAsync(ipRanges.ToArray(), _cancellationTokenSource.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                UserHasCanceled(this, EventArgs.Empty);
                 return;
             }
 
             var ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Port);
 
-            try
+            PortsToScan = ports.Length * ipAddresses.Length;
+            PortsScanned = 0;
+
+            PreparingScan = false;
+
+            // Add host(s) to the history
+            AddHostToHistory(Host);
+            AddPortToHistory(Port);
+
+            var portScanner = new PortScanner
             {
-                PortsToScan = ports.Length * hostData.Count;
-                PortsScanned = 0;
+                ResolveHostname = SettingsManager.Current.PortScanner_ResolveHostname,
+                HostThreads = SettingsManager.Current.PortScanner_HostThreads,
+                PortThreads = SettingsManager.Current.PortScanner_PortThreads,
+                ShowClosed = SettingsManager.Current.PortScanner_ShowClosed,
+                Timeout = SettingsManager.Current.PortScanner_Timeout
+            };
 
-                PreparingScan = false;
+            portScanner.PortScanned += PortScanned;
+            portScanner.ScanComplete += ScanComplete;
+            portScanner.ProgressChanged += ProgressChanged;
+            portScanner.UserHasCanceled += UserHasCanceled;
 
-                AddHostToHistory(Host);
-                AddPortToHistory(Port);
-
-                var portScannerOptions = new PortScannerOptions
-                {
-                    Threads = SettingsManager.Current.PortScanner_Threads,
-                    ShowClosed = SettingsManager.Current.PortScanner_ShowClosed,
-                    Timeout = SettingsManager.Current.PortScanner_Timeout
-                };
-
-                PortScanner portScanner = new PortScanner();
-                portScanner.PortScanned += PortScanner_PortScanned;
-                portScanner.ScanComplete += PortScanner_ScanComplete;
-                portScanner.ProgressChanged += PortScanner_ProgressChanged;
-                portScanner.UserHasCanceled += PortScanner_UserHasCanceled;
-
-                portScanner.ScanAsync(hostData, ports, portScannerOptions, _cancellationTokenSource.Token);
-            }
-
-            catch (Exception ex) // This will catch any exception
-            {
-                StatusMessage = ex.Message;
-                DisplayStatusMessage = true;
-
-                ScanFinished();
-            }
+            portScanner.ScanAsync(ipAddresses, ports, _cancellationTokenSource.Token);
         }
 
         private void StopScan()
@@ -672,7 +610,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Events
-        private void PortScanner_UserHasCanceled(object sender, EventArgs e)
+        private void UserHasCanceled(object sender, EventArgs e)
         {
             StatusMessage = Resources.Localization.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
@@ -680,17 +618,25 @@ namespace NETworkManager.ViewModels
             ScanFinished();
         }
 
-        private void PortScanner_ProgressChanged(object sender, ProgressChangedArgs e)
+        private void ProgressChanged(object sender, ProgressChangedArgs e)
         {
             PortsScanned = e.Value;
         }
 
-        private void PortScanner_ScanComplete(object sender, EventArgs e)
+        private void DnsResolveFailed(AggregateException e)
+        {
+            StatusMessage = $"{Resources.Localization.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
+            DisplayStatusMessage = true;
+
+            ScanFinished();
+        }
+
+        private void ScanComplete(object sender, EventArgs e)
         {
             ScanFinished();
         }
 
-        private void PortScanner_PortScanned(object sender, PortScannedArgs e)
+        private void PortScanned(object sender, PortScannedArgs e)
         {
             var portInfo = PortInfo.Parse(e);
 
@@ -711,8 +657,15 @@ namespace NETworkManager.ViewModels
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.PortScanner_ShowStatistics))
-                OnPropertyChanged(nameof(ShowStatistics));
+            switch (e.PropertyName)
+            {
+                case nameof(SettingsInfo.PortScanner_ShowStatistics):
+                    OnPropertyChanged(nameof(ShowStatistics));
+                    break;
+                case nameof(SettingsInfo.PortScanner_ResolveHostname):
+                    OnPropertyChanged(nameof(ResolveHostname));
+                    break;
+            }
         }
         #endregion
     }

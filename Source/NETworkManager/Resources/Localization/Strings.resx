@@ -1954,4 +1954,10 @@ Path: "{0}"</value>
   <data name="AddIPv4Address" xml:space="preserve">
     <value>Add IPv4 address</value>
   </data>
+  <data name="HostThreads" xml:space="preserve">
+    <value>Host threads</value>
+  </data>
+  <data name="PortThreads" xml:space="preserve">
+    <value>Port threads</value>
+  </data>
 </root>

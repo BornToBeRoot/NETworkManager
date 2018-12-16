@@ -2221,6 +2221,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Host threads.
+        /// </summary>
+        public static string HostThreads {
+            get {
+                return ResourceManager.GetString("HostThreads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to HotKeys.
         /// </summary>
         public static string HotKeys {
@@ -3318,6 +3327,15 @@ namespace NETworkManager.Resources.Localization {
         public static string PortState_Open {
             get {
                 return ResourceManager.GetString("PortState_Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port threads.
+        /// </summary>
+        public static string PortThreads {
+            get {
+                return ResourceManager.GetString("PortThreads", resourceCulture);
             }
         }
         

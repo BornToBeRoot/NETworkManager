@@ -1,6 +1,5 @@
 ﻿using NETworkManager.Models.Lookup;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -13,6 +12,12 @@ namespace NETworkManager.Models.Network
     {
         #region Variables
         private int _progressValue;
+
+        public bool ResolveHostname = true;
+        public int HostThreads = 5;
+        public int PortThreads = 100;
+        public bool ShowClosed = false;
+        public int Timeout = 4000;
         #endregion
 
         #region Events
@@ -46,53 +51,85 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Methods
-        public void ScanAsync(List<Tuple<IPAddress, string>> hostData, int[] ports, PortScannerOptions portScannerOptions, CancellationToken cancellationToken)
+        public void ScanAsync(IPAddress[] ipAddresses, int[] ports, CancellationToken cancellationToken)
         {
             _progressValue = 0;
 
             // Modify the ThreadPool for better performance
             ThreadPool.GetMinThreads(out var workerThreads, out var completionPortThreads);
-            ThreadPool.SetMinThreads(workerThreads + portScannerOptions.Threads, completionPortThreads + portScannerOptions.Threads);
+            ThreadPool.SetMinThreads(workerThreads + HostThreads + PortThreads, completionPortThreads + HostThreads + PortThreads);
 
             Task.Run(() =>
             {
-
                 try
                 {
-                    var parallelOptions = new ParallelOptions()
+                    var hostParallelOptions = new ParallelOptions
                     {
                         CancellationToken = cancellationToken,
-                        MaxDegreeOfParallelism = portScannerOptions.Threads
+                        MaxDegreeOfParallelism = HostThreads
                     };
 
-                    foreach (var host in hostData)
+                    var portParallelOptions = new ParallelOptions
                     {
-                        // foreach ip, Parallel.ForEach port...
-                        Parallel.ForEach(ports, parallelOptions, port =>
+                        CancellationToken = cancellationToken,
+                        MaxDegreeOfParallelism = PortThreads / HostThreads
+                    };
+                    
+                    Parallel.ForEach(ipAddresses, hostParallelOptions, ipAddress =>
+                    {
+                        // Resolve Hostname (PTR)
+                        var hostname = string.Empty;
+
+                        if (ResolveHostname)
+                        {
+                            try
+                            {
+                                Task.Run(() => { hostname = Dns.GetHostEntryAsync(ipAddress).Result.HostName; },
+                                    cancellationToken);
+                            }
+                            catch (SocketException)
+                            {
+
+                            }
+                        }
+
+                        // Check each port
+                        Parallel.ForEach(ports, portParallelOptions, port =>
                         {
                             // Test if port is open
-                            using (var tcpClient = host.Item1.AddressFamily == AddressFamily.InterNetworkV6 ? new TcpClient(AddressFamily.InterNetworkV6) : new TcpClient(AddressFamily.InterNetwork))
+                            using (var tcpClient = ipAddress.AddressFamily == AddressFamily.InterNetworkV6
+                                ? new TcpClient(AddressFamily.InterNetworkV6)
+                                : new TcpClient(AddressFamily.InterNetwork))
                             {
-                                var tcpClientConnection = tcpClient.BeginConnect(host.Item1, port, null, null);
+                                var tcpClientConnection = tcpClient.BeginConnect(ipAddress, port, null, null);
 
-                                if (tcpClientConnection.AsyncWaitHandle.WaitOne(portScannerOptions.Timeout, false))
+                                if (tcpClientConnection.AsyncWaitHandle.WaitOne(Timeout, false))
                                 {
                                     try
                                     {
                                         tcpClient.EndConnect(tcpClientConnection);
 
-                                        OnPortScanned(new PortScannedArgs(host.Item1,host.Item2, port, PortLookup.Lookup(port).FirstOrDefault(x => x.Protocol == PortLookup.Protocol.Tcp), PortInfo.PortStatus.Open));
+                                        OnPortScanned(new PortScannedArgs(ipAddress, hostname, port,
+                                            PortLookup.Lookup(port)
+                                                .FirstOrDefault(x => x.Protocol == PortLookup.Protocol.Tcp),
+                                            PortInfo.PortStatus.Open));
                                     }
                                     catch
                                     {
-                                        if (portScannerOptions.ShowClosed)
-                                            OnPortScanned(new PortScannedArgs(host.Item1, host.Item2, port, PortLookup.Lookup(port).FirstOrDefault(x => x.Protocol == PortLookup.Protocol.Tcp), PortInfo.PortStatus.Closed));
+                                        if (ShowClosed)
+                                            OnPortScanned(new PortScannedArgs(ipAddress, hostname, port,
+                                                PortLookup.Lookup(port).FirstOrDefault(x =>
+                                                    x.Protocol == PortLookup.Protocol.Tcp),
+                                                PortInfo.PortStatus.Closed));
                                     }
                                 }
                                 else
                                 {
-                                    if (portScannerOptions.ShowClosed)
-                                        OnPortScanned(new PortScannedArgs(host.Item1, host.Item2, port, PortLookup.Lookup(port).FirstOrDefault(x => x.Protocol == PortLookup.Protocol.Tcp), PortInfo.PortStatus.Closed));
+                                    if (ShowClosed)
+                                        OnPortScanned(new PortScannedArgs(ipAddress, hostname, port,
+                                            PortLookup.Lookup(port)
+                                                .FirstOrDefault(x => x.Protocol == PortLookup.Protocol.Tcp),
+                                            PortInfo.PortStatus.Closed));
                                 }
                             }
 
@@ -100,14 +137,14 @@ namespace NETworkManager.Models.Network
                             Interlocked.Increment(ref _progressValue);
                             OnProgressChanged();
                         });
-                    }
+                    });
 
                     OnScanComplete();
                 }
                 catch (OperationCanceledException) // If user has canceled
                 {
                     // Check if the scan is already complete...
-                    if ((ports.Length * hostData.Count) == _progressValue)
+                    if (ports.Length * ipAddresses.Length == _progressValue)
                         OnScanComplete();
                     else
                         OnUserHasCanceled();
@@ -116,7 +153,7 @@ namespace NETworkManager.Models.Network
                 {
                     // Reset the ThreadPool to defaul
                     ThreadPool.GetMinThreads(out workerThreads, out completionPortThreads);
-                    ThreadPool.SetMinThreads(workerThreads - portScannerOptions.Threads, completionPortThreads - portScannerOptions.Threads);
+                    ThreadPool.SetMinThreads(workerThreads - HostThreads + PortThreads, completionPortThreads - HostThreads + PortThreads);
                 }
             }, cancellationToken);
         }

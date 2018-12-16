@@ -697,7 +697,7 @@ namespace NETworkManager.Models.Settings
             get => _ipScanner_ExportFileType;
             set
             {
-                if(value == _ipScanner_ExportFileType)
+                if (value == _ipScanner_ExportFileType)
                     return;
 
                 _ipScanner_ExportFileType = value;
@@ -735,16 +735,47 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _portScanner_Threads = 100;
-        public int PortScanner_Threads
+        private bool _portScanner_ResolveHostname = true;
+        public bool PortScanner_ResolveHostname
         {
-            get => _portScanner_Threads;
+            get => _portScanner_ResolveHostname;
             set
             {
-                if (value == _portScanner_Threads)
+                if (value == _portScanner_ResolveHostname)
                     return;
 
-                _portScanner_Threads = value;
+                _portScanner_ResolveHostname = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
+
+        private int _portScanner_HostThreads = 5;
+        public int PortScanner_HostThreads
+        {
+            get => _portScanner_HostThreads;
+            set
+            {
+                if (value == _portScanner_HostThreads)
+                    return;
+
+                _portScanner_HostThreads = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private int _portScanner_PortThreads = 100;
+        public int PortScanner_PortThreads
+        {
+            get => _portScanner_PortThreads;
+            set
+            {
+                if (value == _portScanner_PortThreads)
+                    return;
+
+                _portScanner_PortThreads = value;
                 SettingsChanged = true;
             }
         }
@@ -773,20 +804,6 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_Timeout = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _portScanner_ResolveHostnamePreferIPv4 = true;
-        public bool PortScanner_ResolveHostnamePreferIPv4
-        {
-            get => _portScanner_ResolveHostnamePreferIPv4;
-            set
-            {
-                if (value == _portScanner_ResolveHostnamePreferIPv4)
-                    return;
-
-                _portScanner_ResolveHostnamePreferIPv4 = value;
                 SettingsChanged = true;
             }
         }
@@ -1099,11 +1116,11 @@ namespace NETworkManager.Models.Settings
             get => _ping_HighlightTimeouts;
             set
             {
-                if(value == _ping_HighlightTimeouts)
+                if (value == _ping_HighlightTimeouts)
                     return;
 
                 _ping_HighlightTimeouts = value;
-                
+
                 OnPropertyChanged();
 
                 SettingsChanged = true;
@@ -2904,7 +2921,7 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
-    
+
         private string _connections_ExportFilePath;
         public string Connections_ExportFilePath
         {

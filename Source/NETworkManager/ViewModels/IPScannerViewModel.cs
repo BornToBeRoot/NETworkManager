@@ -529,7 +529,6 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                
                 ipRanges = await HostRangeHelper.ResolveHostnamesInIPRangesAsync(Host.Replace(" ", "").Split(';'), _cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)

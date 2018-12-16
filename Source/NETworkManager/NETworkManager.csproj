@@ -986,7 +986,6 @@
     <Compile Include="Models\Network\PingExceptionArgs.cs" />
     <Compile Include="Models\Network\PortInfo.cs" />
     <Compile Include="Models\Network\PortScannedArgs.cs" />
-    <Compile Include="Models\Network\PortScannerOptions.cs" />
     <Compile Include="Models\Lookup\PortLookupInfo.cs" />
     <Compile Include="Models\Lookup\OUIInfo.cs" />
     <Compile Include="Models\Lookup\PortLookup.cs" />
@@ -1015,7 +1014,6 @@
     <Compile Include="Models\Network\HostFoundArgs.cs" />
     <Compile Include="Models\Network\HostInfo.cs" />
     <Compile Include="Models\Network\IPScanner.cs" />
-    <Compile Include="Models\Network\IPScannerOptions.cs" />
     <Compile Include="Models\Network\MaximumHopsReachedArgs.cs" />
     <Compile Include="Models\Network\NetworkInterface.cs" />
     <Compile Include="Models\Network\NetworkInterfaceConfig.cs" />
