@@ -5,12 +5,12 @@ namespace NETworkManager.Utilities
     public class EventSystemRedirectApplicationArgs : EventArgs
     {
         public ApplicationViewManager.Name Application { get; set; }
-        public string Data { get; set; }
+        public string Args { get; set; }
 
-        public EventSystemRedirectApplicationArgs(ApplicationViewManager.Name application, string data)
+        public EventSystemRedirectApplicationArgs(ApplicationViewManager.Name application, string args)
         {
             Application = application;
-            Data = data;
+            Args = args;
         }
     }
 }

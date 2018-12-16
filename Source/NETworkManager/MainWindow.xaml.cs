@@ -667,31 +667,31 @@ namespace NETworkManager
             switch (args.Application)
             {
                 case ApplicationViewManager.Name.IPScanner:
-                    _ipScannerHostView.AddTab(args.Data);
+                    _ipScannerHostView.AddTab(args.Args);
                     break;
                 case ApplicationViewManager.Name.PortScanner:
-                    _portScannerHostView.AddTab(args.Data);
+                    _portScannerHostView.AddTab(args.Args);
                     break;
                 case ApplicationViewManager.Name.Ping:
-                    _pingHostView.AddTab(args.Data);
+                    _pingHostView.AddTab(args.Args);
                     break;
                 case ApplicationViewManager.Name.Traceroute:
-                    _tracerouteHostView.AddTab(args.Data);
+                    _tracerouteHostView.AddTab(args.Args);
                     break;
                 case ApplicationViewManager.Name.DNSLookup:
-                    _dnsLookupHostView.AddTab(args.Data);
+                    _dnsLookupHostView.AddTab(args.Args);
                     break;
                 case ApplicationViewManager.Name.RemoteDesktop:
-                    _remoteDesktopHostView.AddTab(args.Data);
+                    _remoteDesktopHostView.AddTab(args.Args);
                     break;
                 case ApplicationViewManager.Name.PuTTY:
-                    _puttyHostView.AddTab(args.Data);
+                    _puttyHostView.AddTab(args.Args);
                     break;
                 case ApplicationViewManager.Name.TightVNC:
-                    _tightVncHostView.AddTab(args.Data);
+                    _tightVncHostView.AddTab(args.Args);
                     break;
                 case ApplicationViewManager.Name.SNMP:
-                    _snmpHostView.AddTab(args.Data);
+                    _snmpHostView.AddTab(args.Args);
                     break;
                 case ApplicationViewManager.Name.NetworkInterface:
                     break;
