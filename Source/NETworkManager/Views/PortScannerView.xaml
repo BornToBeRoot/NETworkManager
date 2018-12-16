@@ -53,7 +53,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Host}" Style="{StaticResource CenterTextBlock}" />
-                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="ComboBoxHost" Height="{Binding ElementName=ComboBoxPort, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameAndOrIPAddress}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="ComboBoxHost" Height="{Binding ElementName=ComboBoxPort, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>

@@ -124,7 +124,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 192.168.178.1; fritz.box.
+        ///   Looks up a localized string similar to 192.168.178.1; example.com.
         /// </summary>
         public static string ExampleHostnameAndOrIPAddress {
             get {
@@ -142,11 +142,11 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150; server-01/24.
+        ///   Looks up a localized string similar to 192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; example.com/24.
         /// </summary>
-        public static string ExampleIPScanRange {
+        public static string ExampleHostRange {
             get {
-                return ResourceManager.GetString("ExampleIPScanRange", resourceCulture);
+                return ResourceManager.GetString("ExampleHostRange", resourceCulture);
             }
         }
         
@@ -430,7 +430,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to fritz.box.
+        ///   Looks up a localized string similar to example.com.
         /// </summary>
         public static string ExampleSuffix {
             get {
