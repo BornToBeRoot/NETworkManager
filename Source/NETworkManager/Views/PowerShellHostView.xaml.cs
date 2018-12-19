@@ -6,19 +6,19 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class PuTTYHostView
+    public partial class PowerShellHostView
     {
-        private readonly PuTTYHostViewModel _viewModel = new PuTTYHostViewModel(DialogCoordinator.Instance);
+        private readonly PowerShellHostViewModel _viewModel = new PowerShellHostViewModel(DialogCoordinator.Instance);
 
         private bool _loaded;
 
 
-        public PuTTYHostView()
+        public PowerShellHostView()
         {
             InitializeComponent();
             DataContext = _viewModel;
 
-            InterTabController.Partition = ApplicationViewManager.Name.PuTTY.ToString();
+            InterTabController.Partition = ApplicationViewManager.Name.PowerShell.ToString();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

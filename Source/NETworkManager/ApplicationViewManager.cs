@@ -39,6 +39,8 @@ namespace NETworkManager
                     return Resources.Localization.Strings.DNSLookup;
                 case Name.RemoteDesktop:
                     return Resources.Localization.Strings.RemoteDesktop;
+                case Name.PowerShell:
+                    return Resources.Localization.Strings.PowerShell;
                 case Name.PuTTY:
                     return Resources.Localization.Strings.PuTTY;
                 case Name.TightVNC:
@@ -93,6 +95,9 @@ namespace NETworkManager
                 case Name.RemoteDesktop:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.RemoteDesktop });
                     break;
+                case Name.PowerShell:
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.EmoticonExcited });
+                    break;
                 case Name.PuTTY:
                     canvas.Children.Add(new PackIconOcticons { Kind = PackIconOcticonsKind.Terminal });
                     break;
@@ -144,6 +149,7 @@ namespace NETworkManager
             Traceroute,
             DNSLookup,
             RemoteDesktop,
+            PowerShell,
             PuTTY,
             TightVNC,
             SNMP,

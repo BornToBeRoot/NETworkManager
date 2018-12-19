@@ -3340,6 +3340,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PowerShell.
+        /// </summary>
+        public static string PowerShell {
+            get {
+                return ResourceManager.GetString("PowerShell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Preferred protocol when resolving hostname:.
         /// </summary>
         public static string PreferredProtocolWhenResolvingHostname {

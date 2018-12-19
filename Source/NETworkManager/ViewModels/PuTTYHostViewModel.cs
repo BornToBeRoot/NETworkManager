@@ -27,16 +27,16 @@ namespace NETworkManager.ViewModels
 
         private readonly bool _isLoading;
 
-        private bool _isPuTTYConfigured;
-        public bool IsPuTTYConfigured
+        private bool _isConfigured;
+        public bool IsConfigured
         {
-            get => _isPuTTYConfigured;
+            get => _isConfigured;
             set
             {
-                if (value == _isPuTTYConfigured)
+                if (value == _isConfigured)
                     return;
 
-                _isPuTTYConfigured = value;
+                _isConfigured = value;
                 OnPropertyChanged();
             }
         }
@@ -145,7 +145,7 @@ namespace NETworkManager.ViewModels
             _dialogCoordinator = instance;
 
             // Check if putty is available...
-            CheckIfPuTTYConfigured();
+            CheckIfConfigured();
 
             InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.PuTTY);
 
@@ -186,7 +186,7 @@ namespace NETworkManager.ViewModels
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(SettingsInfo.PuTTY_PuTTYLocation))
-                CheckIfPuTTYConfigured();
+                CheckIfConfigured();
         }
 
         private void LoadSettings()
@@ -207,9 +207,9 @@ namespace NETworkManager.ViewModels
             ((args.DragablzItem.Content as DragablzTabItem)?.View as PuTTYControl)?.CloseTab();
         }
 
-        public ICommand RestartPuTTYSessionCommand => new RelayCommand(RestartPuTTYSessionAction);
+        public ICommand RestartSessionCommand => new RelayCommand(RestartSessionAction);
 
-        private void RestartPuTTYSessionAction(object view)
+        private void RestartSessionAction(object view)
         {
             if (view is PuTTYControl puttyControl)
                 puttyControl.RestartPuTTYSession();
@@ -222,7 +222,7 @@ namespace NETworkManager.ViewModels
 
         private bool Connect_CanExecute(object obj)
         {
-            return IsPuTTYConfigured && !ConfigurationManager.Current.IsTransparencyEnabled;
+            return IsConfigured && !ConfigurationManager.Current.IsTransparencyEnabled;
         }
 
         private void ConnectAction()
@@ -438,9 +438,9 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void CheckIfPuTTYConfigured()
+        private void CheckIfConfigured()
         {
-            IsPuTTYConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PuTTY_PuTTYLocation) && File.Exists(SettingsManager.Current.PuTTY_PuTTYLocation);
+            IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PuTTY_PuTTYLocation) && File.Exists(SettingsManager.Current.PuTTY_PuTTYLocation);
         }
 
         private async void Connect(string host = null)
@@ -450,7 +450,7 @@ namespace NETworkManager.ViewModels
                 Title = Resources.Localization.Strings.Connect
             };
 
-            var puTTYConnectViewModel = new PuTTYConnectViewModel(instance =>
+            var connectViewModel = new PuTTYConnectViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
@@ -464,7 +464,7 @@ namespace NETworkManager.ViewModels
                 AddProfileToHistory(instance.Profile);
 
                 // Create Profile info
-                var puTTYProfileInfo = new PuTTYSessionInfo
+                var info = new PuTTYSessionInfo
                 {
                     HostOrSerialLine = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
                     Mode = instance.ConnectionMode,
@@ -475,7 +475,7 @@ namespace NETworkManager.ViewModels
                 };
 
                 // Connect
-                Connect(puTTYProfileInfo);
+                Connect(info);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -487,7 +487,7 @@ namespace NETworkManager.ViewModels
 
             customDialog.Content = new PuTTYConnectDialog
             {
-                DataContext = puTTYConnectViewModel
+                DataContext = connectViewModel
             };
 
             ConfigurationManager.Current.IsDialogOpen = true;

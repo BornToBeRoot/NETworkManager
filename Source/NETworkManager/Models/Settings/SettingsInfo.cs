@@ -1916,6 +1916,36 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
+        #region PowerShell
+        private bool _powerShell_ExpandProfileView = true;
+        public bool PowerShell_ExpandProfileView
+        {
+            get => _powerShell_ExpandProfileView;
+            set
+            {
+                if (value == _powerShell_ExpandProfileView)
+                    return;
+
+                _powerShell_ExpandProfileView = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private double _powerShell_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        public double PowerShell_ProfileWidth
+        {
+            get => _powerShell_ProfileWidth;
+            set
+            {
+                if (value == _powerShell_ProfileWidth)
+                    return;
+
+                _powerShell_ProfileWidth = value;
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
         #region PuTTY
         private ObservableCollection<string> _puTTY_HostHistory = new ObservableCollection<string>();
         public ObservableCollection<string> PuTTY_HostHistory

@@ -28,7 +28,7 @@
             <Grid.Style>
                 <Style TargetType="{x:Type Grid}">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsTightVNCConfigured}" Value="False">
+                        <DataTrigger Binding="{Binding IsConfigured}" Value="False">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled}" Value="True">
@@ -323,7 +323,7 @@
             <StackPanel.Style>
                 <Style TargetType="{x:Type StackPanel}">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsTightVNCConfigured}" Value="True">
+                        <DataTrigger Binding="{Binding IsConfigured}" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled}" Value="True">

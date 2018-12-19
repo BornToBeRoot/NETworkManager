@@ -45,7 +45,7 @@ namespace NETworkManager.Views
             while (!_loaded)
                 await Task.Delay(100);
 
-            if (_viewModel.IsTightVNCConfigured)
+            if (_viewModel.IsConfigured)
                 _viewModel.AddTab(host);
         }
 

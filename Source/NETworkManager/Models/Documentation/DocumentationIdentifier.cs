@@ -10,6 +10,7 @@
         ApplicationTraceroute,
         ApplicationDnsLookup,
         ApplicationRemoteDesktop,
+        ApplicationPowerShell,
         ApplicationPutty,
         ApplicationTightVNC,
         ApplicationSnmp,

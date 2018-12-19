@@ -325,6 +325,7 @@
     <Compile Include="ViewModels\DNSServerViewModel.cs" />
     <Compile Include="ViewModels\SubnetCalculatorWideSubnetViewModel.cs" />
     <Compile Include="ViewModels\TightVNCConnectViewModel.cs" />
+    <Compile Include="ViewModels\PowerShellHostViewModel.cs" />
     <Compile Include="ViewModels\TightVNCSettingsViewModel.cs" />
     <Compile Include="ViewModels\TightVNCHostViewModel.cs" />
     <Compile Include="ViewModels\WhoisSettingsViewModel.cs" />
@@ -395,6 +396,9 @@
     </Compile>
     <Compile Include="Views\TightVNCConnectDialog.xaml.cs">
       <DependentUpon>TightVNCConnectDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PowerShellHostView.xaml.cs">
+      <DependentUpon>PowerShellHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TightVNCSettingsView.xaml.cs">
       <DependentUpon>TightVNCSettingsView.xaml</DependentUpon>
@@ -696,6 +700,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\TightVNCConnectDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PowerShellHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

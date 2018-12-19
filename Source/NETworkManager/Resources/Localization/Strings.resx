@@ -1960,4 +1960,7 @@ Path: "{0}"</value>
   <data name="PortThreads" xml:space="preserve">
     <value>Port threads</value>
   </data>
+  <data name="PowerShell" xml:space="preserve">
+    <value>PowerShell</value>
+  </data>
 </root>

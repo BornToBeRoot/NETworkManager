@@ -417,6 +417,7 @@ namespace NETworkManager
         private TracerouteHostView _tracerouteHostView;
         private DNSLookupHostView _dnsLookupHostView;
         private RemoteDesktopHostView _remoteDesktopHostView;
+        private PowerShellHostView _powerShellHostView;
         private PuTTYHostView _puttyHostView;
         private TightVNCHostView _tightVncHostView;
         private SNMPHostView _snmpHostView;
@@ -493,6 +494,14 @@ namespace NETworkManager
                         RefreshApplicationView(name);
 
                     ContentControlApplication.Content = _remoteDesktopHostView;
+                    break;
+                case ApplicationViewManager.Name.PowerShell:
+                    if(_powerShellHostView == null)
+                        _powerShellHostView = new PowerShellHostView();
+                    else
+                        RefreshApplicationView(name);
+
+                    ContentControlApplication.Content = _powerShellHostView;
                     break;
                 case ApplicationViewManager.Name.PuTTY:
                     if (_puttyHostView == null)
@@ -601,6 +610,9 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.RemoteDesktop:
                     _remoteDesktopHostView.Refresh();
                     break;
+                case ApplicationViewManager.Name.PowerShell:
+                    _powerShellHostView.Refresh();
+                    break;
                 case ApplicationViewManager.Name.PuTTY:
                     _puttyHostView.Refresh();
                     break;
@@ -657,41 +669,44 @@ namespace NETworkManager
 
         private void EventSystem_RedirectToApplicationEvent(object sender, EventArgs e)
         {
-            if (!(e is EventSystemRedirectApplicationArgs args))
+            if (!(e is EventSystemRedirectApplicationArgs data))
                 return;
 
             // Change view
-            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == args.Application);
+            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == data.Application);
 
             // Crate a new tab / perform action
-            switch (args.Application)
+            switch (data.Application)
             {
                 case ApplicationViewManager.Name.IPScanner:
-                    _ipScannerHostView.AddTab(args.Args);
+                    _ipScannerHostView.AddTab(data.Args);
                     break;
                 case ApplicationViewManager.Name.PortScanner:
-                    _portScannerHostView.AddTab(args.Args);
+                    _portScannerHostView.AddTab(data.Args);
                     break;
                 case ApplicationViewManager.Name.Ping:
-                    _pingHostView.AddTab(args.Args);
+                    _pingHostView.AddTab(data.Args);
                     break;
                 case ApplicationViewManager.Name.Traceroute:
-                    _tracerouteHostView.AddTab(args.Args);
+                    _tracerouteHostView.AddTab(data.Args);
                     break;
                 case ApplicationViewManager.Name.DNSLookup:
-                    _dnsLookupHostView.AddTab(args.Args);
+                    _dnsLookupHostView.AddTab(data.Args);
                     break;
                 case ApplicationViewManager.Name.RemoteDesktop:
-                    _remoteDesktopHostView.AddTab(args.Args);
+                    _remoteDesktopHostView.AddTab(data.Args);
+                    break;
+                case ApplicationViewManager.Name.PowerShell:
+                    _powerShellHostView.AddTab(data.Args);
                     break;
                 case ApplicationViewManager.Name.PuTTY:
-                    _puttyHostView.AddTab(args.Args);
+                    _puttyHostView.AddTab(data.Args);
                     break;
                 case ApplicationViewManager.Name.TightVNC:
-                    _tightVncHostView.AddTab(args.Args);
+                    _tightVncHostView.AddTab(data.Args);
                     break;
                 case ApplicationViewManager.Name.SNMP:
-                    _snmpHostView.AddTab(args.Args);
+                    _snmpHostView.AddTab(data.Args);
                     break;
                 case ApplicationViewManager.Name.NetworkInterface:
                     break;
@@ -1017,6 +1032,9 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.RemoteDesktop:
                     DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationRemoteDesktop);
                     break;
+                case ApplicationViewManager.Name.PowerShell:
+                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationPowerShell);
+                    break;
                 case ApplicationViewManager.Name.PuTTY:
                     DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationPutty);
                     break;
@@ -1149,7 +1167,7 @@ namespace NETworkManager
 
         private void ApplicationListMouseLeaveAction()
         {
-            // Don't minmize the list, if the user has accidently mouved the mouse while searching
+            // Don't minmize the list, if the user has accidently moved the mouse while searching
             if (!IsTextBoxSearchFocused)
                 IsApplicationListOpen = false;
 
