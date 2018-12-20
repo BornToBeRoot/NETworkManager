@@ -13,7 +13,7 @@ using System.Diagnostics;
 using System.IO;
 using NETworkManager.Utilities;
 using System.Windows;
-using NETworkManager.Models.TightVNC;
+using NETworkManager.Models.PowerShell;
 
 namespace NETworkManager.ViewModels
 {
@@ -147,7 +147,7 @@ namespace NETworkManager.ViewModels
             // Check if putty is available...
             CheckIfConfigured();
 
-            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.TightVNC);
+            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.PowerShell);
 
             TabItems = new ObservableCollection<DragablzTabItem>();
 
@@ -185,17 +185,17 @@ namespace NETworkManager.ViewModels
 
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.TightVNC_TightVNCLocation))
+            if (e.PropertyName == nameof(SettingsInfo.PowerShell_ApplicationFilePath))
                 CheckIfConfigured();
         }
 
         private void LoadSettings()
         {
-            ExpandProfileView = SettingsManager.Current.TightVNC_ExpandProfileView;
+            ExpandProfileView = SettingsManager.Current.PowerShell_ExpandProfileView;
 
-            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.TightVNC_ProfileWidth) : new GridLength(GlobalStaticConfiguration.ProfileWidthCollapsed);
+            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.PowerShell_ProfileWidth) : new GridLength(GlobalStaticConfiguration.ProfileWidthCollapsed);
 
-            _tempProfileWidth = SettingsManager.Current.TightVNC_ProfileWidth;
+            _tempProfileWidth = SettingsManager.Current.PowerShell_ProfileWidth;
         }
         #endregion
 
@@ -204,7 +204,7 @@ namespace NETworkManager.ViewModels
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzTabItem)?.View as TightVNCControl)?.CloseTab();
+            ((args.DragablzItem.Content as DragablzTabItem)?.View as PowerShellControl)?.CloseTab();
         }
 
         public ICommand ConnectCommand
@@ -432,7 +432,7 @@ namespace NETworkManager.ViewModels
         #region Methods
         private void CheckIfConfigured()
         {
-            IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.TightVNC_TightVNCLocation) && File.Exists(SettingsManager.Current.TightVNC_TightVNCLocation);
+            IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PowerShell_ApplicationFilePath) && File.Exists(SettingsManager.Current.PowerShell_ApplicationFilePath);
         }
 
         private async void Connect(string host = null)
@@ -442,126 +442,115 @@ namespace NETworkManager.ViewModels
                 Title = Resources.Localization.Strings.Connect
             };
 
-            var connectViewModel = new TightVNCConnectViewModel(instance =>
+            var connectViewModel = new PowerShellConnectViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
 
                 // Add host to history
                 AddHostToHistory(instance.Host);
-                AddPortToHistory(instance.Port);
 
                 // Create Profile info
-                var info = new TightVNCSessionInfo
+                var info = new PowerShellSessionInfo
                 {
+                    EnableRemoteConsole = instance.EnableRemoteConsole,
                     Host = instance.Host,
-                    Port = instance.Port
+                    AdditionalCommandLine = instance.AdditionalCommandLine,
+                    ExecutionPolicy =  instance.ExecutionPolicy
                 };
 
-                    // Connect
-                    Connect(info);
-                }, instance =>
-                {
-                    _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                    ConfigurationManager.Current.IsDialogOpen = false;
-                })
-                {
-                    Host = host
-                };
+                // Connect
+                Connect(info);
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ConfigurationManager.Current.IsDialogOpen = false;
+            })
+            {
+                Host = host
+            };
 
-                customDialog.Content = new TightVNCConnectDialog
-                {
-                    DataContext = connectViewModel
-                };
+            customDialog.Content = new PowerShellConnectDialog
+            {
+                DataContext = connectViewModel
+            };
 
-                ConfigurationManager.Current.IsDialogOpen = true;
-                await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-            }
+            ConfigurationManager.Current.IsDialogOpen = true;
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
 
         private void ConnectProfile()
-            {
-                Connect(TightVNCSessionInfo.Parse(SelectedProfile), SelectedProfile.Name);
-            }
+        {
+            Connect(PowerShellSessionInfo.Parse(SelectedProfile), SelectedProfile.Name);
+        }
 
-            private void ConnectProfileExternal()
+        private void ConnectProfileExternal()
+        {
+            var info = new ProcessStartInfo
             {
-                var info = new ProcessStartInfo
+                FileName = SettingsManager.Current.PowerShell_ApplicationFilePath,
+                // Arguments = TightVNC.BuildCommandLine(TightVNCSessionInfo.Parse(SelectedProfile))
+            };
+
+            Process.Start(info);
+        }
+
+        private void Connect(PowerShellSessionInfo sessionInfo, string header = null)
+        {
+            sessionInfo.ApplicationFilePath = SettingsManager.Current.PowerShell_ApplicationFilePath;
+
+            TabItems.Add(new DragablzTabItem(header ?? (sessionInfo.EnableRemoteConsole ? sessionInfo.Host : Resources.Localization.Strings.PowerShell), new PowerShellControl(sessionInfo)));
+
+            SelectedTabIndex = TabItems.Count - 1;
+        }
+
+        public void AddTab(string host)
+        {
+            Connect(host);
+        }
+
+        // Modify history list
+        private static void AddHostToHistory(string host)
+        {
+            // Create the new list
+            var list = ListHelper.Modify(SettingsManager.Current.PowerShell_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.PowerShell_HostHistory.Clear();
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.PowerShell_HostHistory.Add(x));
+        }
+
+        private void ResizeProfile(bool dueToChangedSize)
+        {
+            _canProfileWidthChange = false;
+
+            if (dueToChangedSize)
+            {
+                ExpandProfileView = ProfileWidth.Value != GlobalStaticConfiguration.ProfileWidthCollapsed;
+            }
+            else
+            {
+                if (ExpandProfileView)
                 {
-                    FileName = SettingsManager.Current.TightVNC_TightVNCLocation,
-                    Arguments = TightVNC.BuildCommandLine(TightVNCSessionInfo.Parse(SelectedProfile))
-                };
-
-                Process.Start(info);
-            }
-
-            private void Connect(TightVNCSessionInfo sessionInfo, string header = null)
-            {
-                sessionInfo.TightVNCLocation = SettingsManager.Current.TightVNC_TightVNCLocation;
-
-                TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host, new TightVNCControl(sessionInfo)));
-
-                SelectedTabIndex = TabItems.Count - 1;
-            }
-
-            public void AddTab(string host)
-            {
-                Connect(host);
-            }
-
-            // Modify history list
-            private static void AddHostToHistory(string host)
-            {
-                // Create the new list
-                var list = ListHelper.Modify(SettingsManager.Current.TightVNC_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
-
-                // Clear the old items
-                SettingsManager.Current.TightVNC_HostHistory.Clear();
-
-                // Fill with the new items
-                list.ForEach(x => SettingsManager.Current.TightVNC_HostHistory.Add(x));
-            }
-
-            private static void AddPortToHistory(int port)
-            {
-                // Create the new list
-                var list = ListHelper.Modify(SettingsManager.Current.TightVNC_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
-
-                // Clear the old items
-                SettingsManager.Current.TightVNC_PortHistory.Clear();
-
-                // Fill with the new items
-                list.ForEach(x => SettingsManager.Current.TightVNC_PortHistory.Add(x));
-            }
-
-            private void ResizeProfile(bool dueToChangedSize)
-            {
-                _canProfileWidthChange = false;
-
-                if (dueToChangedSize)
-                {
-                    ExpandProfileView = ProfileWidth.Value != GlobalStaticConfiguration.ProfileWidthCollapsed;
+                    ProfileWidth = _tempProfileWidth == GlobalStaticConfiguration.ProfileWidthCollapsed ? new GridLength(GlobalStaticConfiguration.ProfileDefaultWidthExpanded) : new GridLength(_tempProfileWidth);
                 }
                 else
                 {
-                    if (ExpandProfileView)
-                    {
-                        ProfileWidth = _tempProfileWidth == GlobalStaticConfiguration.ProfileWidthCollapsed ? new GridLength(GlobalStaticConfiguration.ProfileDefaultWidthExpanded) : new GridLength(_tempProfileWidth);
-                    }
-                    else
-                    {
-                        _tempProfileWidth = ProfileWidth.Value;
-                        ProfileWidth = new GridLength(GlobalStaticConfiguration.ProfileWidthCollapsed);
-                    }
+                    _tempProfileWidth = ProfileWidth.Value;
+                    ProfileWidth = new GridLength(GlobalStaticConfiguration.ProfileWidthCollapsed);
                 }
-
-                _canProfileWidthChange = true;
             }
 
-            public void Refresh()
-            {
-                // Refresh profiles
-                Profiles.Refresh();
-            }
-            #endregion
+            _canProfileWidthChange = true;
         }
+
+        public void Refresh()
+        {
+            // Refresh profiles
+            Profiles.Refresh();
+        }
+        #endregion
     }
+}

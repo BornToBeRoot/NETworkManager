@@ -1917,6 +1917,37 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region PowerShell
+        private ObservableCollection<string> _powerShell_HostHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PowerShell_HostHistory
+        {
+            get => _powerShell_HostHistory;
+            set
+            {
+                if (value == _powerShell_HostHistory)
+                    return;
+
+                _powerShell_HostHistory = value;
+                SettingsChanged = true;
+            }
+        }
+
+        private string _powerShell_ApplicationFilePath = GlobalStaticConfiguration.DefaultApplicationFileLocationPowerShell;
+        public string PowerShell_ApplicationFilePath
+        {
+            get => _powerShell_ApplicationFilePath;
+            set
+            {
+                if (value == _powerShell_ApplicationFilePath)
+                    return;
+
+                _powerShell_ApplicationFilePath = value;
+
+                OnPropertyChanged();
+
+                SettingsChanged = true;
+            }
+        }
+
         private bool _powerShell_ExpandProfileView = true;
         public bool PowerShell_ExpandProfileView
         {
@@ -2059,16 +2090,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private string _puTTY_PuTTYLocation;
-        public string PuTTY_PuTTYLocation
+        private string _puTTY_ApplicationFilePath;
+        public string PuTTY_ApplicationFilePath
         {
-            get => _puTTY_PuTTYLocation;
+            get => _puTTY_ApplicationFilePath;
             set
             {
-                if (value == _puTTY_PuTTYLocation)
+                if (value == _puTTY_ApplicationFilePath)
                     return;
 
-                _puTTY_PuTTYLocation = value;
+                _puTTY_ApplicationFilePath = value;
 
                 OnPropertyChanged();
 
@@ -2218,16 +2249,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private string _tightVNC_TightVNCLocation;
-        public string TightVNC_TightVNCLocation
+        private string _tightVNC_ApplicationFilePath;
+        public string TightVNC_ApplicationFilePath
         {
-            get => _tightVNC_TightVNCLocation;
+            get => _tightVNC_ApplicationFilePath;
             set
             {
-                if (value == _tightVNC_TightVNCLocation)
+                if (value == _tightVNC_ApplicationFilePath)
                     return;
 
-                _tightVNC_TightVNCLocation = value;
+                _tightVNC_ApplicationFilePath = value;
 
                 OnPropertyChanged();
 
@@ -2235,7 +2266,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _tightVNC_VNCPort = 5900;
+        private int _tightVNC_VNCPort = GlobalStaticConfiguration.TightVNCDefaultPort;
         public int TightVNC_VNCPort
         {
             get => _tightVNC_VNCPort;

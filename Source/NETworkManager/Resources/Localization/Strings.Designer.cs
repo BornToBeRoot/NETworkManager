@@ -799,6 +799,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Configure the path to PowerShell in the settings....
+        /// </summary>
+        public static string ConfigureThePathToPowerShellInTheSettingsDots {
+            get {
+                return ResourceManager.GetString("ConfigureThePathToPowerShellInTheSettingsDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configure the path to PuTTY in the settings....
         /// </summary>
         public static string ConfigureThePathToPuTTYInTheSettingsDots {
@@ -1357,6 +1366,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PowerShell..
+        /// </summary>
+        public static string DisableTransparencyInTheSettingsToUsePowerShell {
+            get {
+                return ResourceManager.GetString("DisableTransparencyInTheSettingsToUsePowerShell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PuTTY..
         /// </summary>
         public static string DisableTransparencyInTheSettingsToUsePuTTY {
@@ -1884,6 +1902,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Everything {
             get {
                 return ResourceManager.GetString("Everything", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Execution Policy.
+        /// </summary>
+        public static string ExecutionPolicy {
+            get {
+                return ResourceManager.GetString("ExecutionPolicy", resourceCulture);
             }
         }
         
@@ -3349,6 +3376,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PowerShell process has ended!.
+        /// </summary>
+        public static string PowerShellProcessHasEnded {
+            get {
+                return ResourceManager.GetString("PowerShellProcessHasEnded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Preferred protocol when resolving hostname:.
         /// </summary>
         public static string PreferredProtocolWhenResolvingHostname {
@@ -3615,6 +3651,15 @@ namespace NETworkManager.Resources.Localization {
         public static string RemainingTime {
             get {
                 return ResourceManager.GetString("RemainingTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote console.
+        /// </summary>
+        public static string RemoteConsole {
+            get {
+                return ResourceManager.GetString("RemoteConsole", resourceCulture);
             }
         }
         

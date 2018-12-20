@@ -5,7 +5,7 @@ namespace NETworkManager.Models.PuTTY
 {
     public class PuTTYSessionInfo
     {
-        public string PuTTYLocation { get; set; }
+        public string ApplicationFilePath { get; set; }
         public string HostOrSerialLine { get; set; }
         public ConnectionMode Mode { get; set; }
         public int PortOrBaud { get; set; }

@@ -151,7 +151,7 @@ namespace NETworkManager.Controls
         private void RestartPuTTYSessionAction(object view)
         {
             if (view is PuTTYControl puttyControl)
-                puttyControl.RestartPuTTYSession();
+                puttyControl.RestartSession();
         }
         #endregion
         #endregion

@@ -1963,4 +1963,19 @@ Path: "{0}"</value>
   <data name="PowerShell" xml:space="preserve">
     <value>PowerShell</value>
   </data>
+  <data name="ConfigureThePathToPowerShellInTheSettingsDots" xml:space="preserve">
+    <value>Configure the path to PowerShell in the settings...</value>
+  </data>
+  <data name="DisableTransparencyInTheSettingsToUsePowerShell" xml:space="preserve">
+    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PowerShell.</value>
+  </data>
+  <data name="PowerShellProcessHasEnded" xml:space="preserve">
+    <value>PowerShell process has ended!</value>
+  </data>
+  <data name="ExecutionPolicy" xml:space="preserve">
+    <value>Execution Policy</value>
+  </data>
+  <data name="RemoteConsole" xml:space="preserve">
+    <value>Remote console</value>
+  </data>
 </root>

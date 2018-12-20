@@ -26,7 +26,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.TightVNC_TightVNCLocation = value;
+                    SettingsManager.Current.TightVNC_ApplicationFilePath = value;
 
                 // Path to tightvnc is configured....
                 IsTightVNCConfigured = !string.IsNullOrEmpty(value);
@@ -82,7 +82,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            TightVNCLocation = SettingsManager.Current.TightVNC_TightVNCLocation;
+            TightVNCLocation = SettingsManager.Current.TightVNC_ApplicationFilePath;
             IsTightVNCConfigured = File.Exists(TightVNCLocation);
             VNCPort = SettingsManager.Current.TightVNC_VNCPort;
         }
@@ -121,7 +121,7 @@ namespace NETworkManager.ViewModels
         {
             try
             {
-                Process.Start(SettingsManager.Current.TightVNC_TightVNCLocation);
+                Process.Start(SettingsManager.Current.TightVNC_ApplicationFilePath);
             }
             catch (Exception ex)
             {

@@ -26,7 +26,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PuTTY_PuTTYLocation = value;
+                    SettingsManager.Current.PuTTY_ApplicationFilePath = value;
 
                 // Path to putty is configured....
                 IsPuTTYConfigured = !string.IsNullOrEmpty(value);
@@ -167,7 +167,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
+            PuTTYLocation = SettingsManager.Current.PuTTY_ApplicationFilePath;
             IsPuTTYConfigured = File.Exists(PuTTYLocation);
             SerialLine = SettingsManager.Current.PuTTY_SerialLine;
             PuTTYProfile = SettingsManager.Current.PuTTY_Profile;
@@ -211,7 +211,7 @@ namespace NETworkManager.ViewModels
         {
             try
             {
-                Process.Start(SettingsManager.Current.PuTTY_PuTTYLocation);
+                Process.Start(SettingsManager.Current.PuTTY_ApplicationFilePath);
             }
             catch (Exception ex)
             {

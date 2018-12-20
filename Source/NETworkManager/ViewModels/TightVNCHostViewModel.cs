@@ -185,7 +185,7 @@ namespace NETworkManager.ViewModels
 
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.TightVNC_TightVNCLocation))
+            if (e.PropertyName == nameof(SettingsInfo.TightVNC_ApplicationFilePath))
                 CheckIfConfigured();
         }
 
@@ -432,7 +432,7 @@ namespace NETworkManager.ViewModels
         #region Methods
         private void CheckIfConfigured()
         {
-            IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.TightVNC_TightVNCLocation) && File.Exists(SettingsManager.Current.TightVNC_TightVNCLocation);
+            IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.TightVNC_ApplicationFilePath) && File.Exists(SettingsManager.Current.TightVNC_ApplicationFilePath);
         }
 
         private async void Connect(string host = null)
@@ -487,7 +487,7 @@ namespace NETworkManager.ViewModels
         {
             var info = new ProcessStartInfo
             {
-                FileName = SettingsManager.Current.TightVNC_TightVNCLocation,
+                FileName = SettingsManager.Current.TightVNC_ApplicationFilePath,
                 Arguments = TightVNC.BuildCommandLine(TightVNCSessionInfo.Parse(SelectedProfile))
             };
 
@@ -496,7 +496,7 @@ namespace NETworkManager.ViewModels
 
         private void Connect(TightVNCSessionInfo sessionInfo, string header = null)
         {
-            sessionInfo.TightVNCLocation = SettingsManager.Current.TightVNC_TightVNCLocation;
+            sessionInfo.ApplicationFilePath = SettingsManager.Current.TightVNC_ApplicationFilePath;
 
             TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host, new TightVNCControl(sessionInfo)));
 

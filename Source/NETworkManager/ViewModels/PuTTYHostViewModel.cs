@@ -185,7 +185,7 @@ namespace NETworkManager.ViewModels
 
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.PuTTY_PuTTYLocation))
+            if (e.PropertyName == nameof(SettingsInfo.PuTTY_ApplicationFilePath))
                 CheckIfConfigured();
         }
 
@@ -212,7 +212,7 @@ namespace NETworkManager.ViewModels
         private void RestartSessionAction(object view)
         {
             if (view is PuTTYControl puttyControl)
-                puttyControl.RestartPuTTYSession();
+                puttyControl.RestartSession();
         }
 
         public ICommand ConnectCommand
@@ -440,7 +440,7 @@ namespace NETworkManager.ViewModels
         #region Methods
         private void CheckIfConfigured()
         {
-            IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PuTTY_PuTTYLocation) && File.Exists(SettingsManager.Current.PuTTY_PuTTYLocation);
+            IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PuTTY_ApplicationFilePath) && File.Exists(SettingsManager.Current.PuTTY_ApplicationFilePath);
         }
 
         private async void Connect(string host = null)
@@ -503,7 +503,7 @@ namespace NETworkManager.ViewModels
         {
             var info = new ProcessStartInfo
             {
-                FileName = SettingsManager.Current.PuTTY_PuTTYLocation,
+                FileName = SettingsManager.Current.PuTTY_ApplicationFilePath,
                 Arguments = PuTTY.BuildCommandLine(PuTTYSessionInfo.Parse(SelectedProfile))
             };
 
@@ -513,7 +513,7 @@ namespace NETworkManager.ViewModels
         private void Connect(PuTTYSessionInfo profileInfo, string header = null)
         {
             // Add PuTTY path here...
-            profileInfo.PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
+            profileInfo.ApplicationFilePath = SettingsManager.Current.PuTTY_ApplicationFilePath;
 
            TabItems.Add(new DragablzTabItem(header ?? profileInfo.HostOrSerialLine, new PuTTYControl(profileInfo)));
 

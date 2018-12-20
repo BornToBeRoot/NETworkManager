@@ -222,6 +222,9 @@
       <DependentUpon>DragablzTabHostWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DragablzTabItem.cs" />
+    <Compile Include="Controls\PowerShellControl.xaml.cs">
+      <DependentUpon>PowerShellControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TightVNCControl.xaml.cs">
       <DependentUpon>TightVNCControl.xaml</DependentUpon>
     </Compile>
@@ -263,6 +266,8 @@
     <Compile Include="Models\PuTTY\PuTTY.cs" />
     <Compile Include="Models\Settings\ProfileInfo.cs" />
     <Compile Include="Models\Settings\ProfileManager.cs" />
+    <Compile Include="Models\PowerShell\PowerShell.cs" />
+    <Compile Include="Models\PowerShell\PowerShellSessionInfo.cs" />
     <Compile Include="Models\TightVNC\TightVNC.cs" />
     <Compile Include="Models\TightVNC\TightVNCSessionInfo.cs" />
     <Compile Include="Resources\Localization\StaticStrings.Designer.cs">
@@ -324,6 +329,7 @@
     <Compile Include="ViewModels\ExportViewModel.cs" />
     <Compile Include="ViewModels\DNSServerViewModel.cs" />
     <Compile Include="ViewModels\SubnetCalculatorWideSubnetViewModel.cs" />
+    <Compile Include="ViewModels\PowerShellConnectViewModel.cs" />
     <Compile Include="ViewModels\TightVNCConnectViewModel.cs" />
     <Compile Include="ViewModels\PowerShellHostViewModel.cs" />
     <Compile Include="ViewModels\TightVNCSettingsViewModel.cs" />
@@ -393,6 +399,9 @@
     </Compile>
     <Compile Include="Views\SubnetCalculatorWideSubnetView.xaml.cs">
       <DependentUpon>SubnetCalculatorWideSubnetView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PowerShellConnectDialog.xaml.cs">
+      <DependentUpon>PowerShellConnectDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TightVNCConnectDialog.xaml.cs">
       <DependentUpon>TightVNCConnectDialog.xaml</DependentUpon>
@@ -532,6 +541,10 @@
     <Compile Include="WpfHelper\PasswordBoxBindingBehavior.cs" />
     <Compile Include="WpfHelper\ProtocolSettingsLayout.cs" />
     <Page Include="Controls\DragablzTabHostWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\PowerShellControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -696,6 +709,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SubnetCalculatorWideSubnetView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PowerShellConnectDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

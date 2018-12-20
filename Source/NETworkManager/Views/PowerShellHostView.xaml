@@ -332,7 +332,7 @@
                     </Style.Triggers>
                 </Style>
             </StackPanel.Style>
-            <TextBlock Text="{x:Static localization:Strings.ConfigureThePathToTightVNCInTheSettingsDots}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+            <TextBlock Text="{x:Static localization:Strings.ConfigureThePathToPowerShellInTheSettingsDots}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
             <Button HorizontalAlignment="Center" Command="{Binding OpenSettingsCommand}" Style="{StaticResource ImageWithTextButton}">
                 <Button.Content>
                     <Grid>
@@ -351,7 +351,7 @@
             </Button>
         </StackPanel>
         <StackPanel VerticalAlignment="Center" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="10">
-            <TextBlock Text="{x:Static localization:Strings.DisableTransparencyInTheSettingsToUseTightVNC}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+            <TextBlock Text="{x:Static localization:Strings.DisableTransparencyInTheSettingsToUsePowerShell}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
             <Button HorizontalAlignment="Center" Command="{Binding OpenSettingsCommand}" Style="{StaticResource ImageWithTextButton}">
                 <Button.Content>
                     <Grid>

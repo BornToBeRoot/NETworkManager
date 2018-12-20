@@ -8,14 +8,14 @@ using System.Windows.Threading;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using NETworkManager.Utilities;
-using NETworkManager.Models.TightVNC;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Settings;
+using NETworkManager.Models.PowerShell;
 
 namespace NETworkManager.Controls
 {
-    public partial class TightVNCControl : INotifyPropertyChanged
+    public partial class PowerShellControl : INotifyPropertyChanged
     {
         #region PropertyChangedEventHandler
         public event PropertyChangedEventHandler PropertyChanged;
@@ -32,7 +32,7 @@ namespace NETworkManager.Controls
 
         private readonly IDialogCoordinator _dialogCoordinator;
 
-        private readonly TightVNCSessionInfo _sessionInfo;
+        private readonly PowerShellSessionInfo _sessionInfo;
 
         private Process _process;
         private IntPtr _appWin;
@@ -69,7 +69,7 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Constructor, load
-        public TightVNCControl(TightVNCSessionInfo info)
+        public PowerShellControl(PowerShellSessionInfo info)
         {
             InitializeComponent();
             DataContext = this;
@@ -124,7 +124,7 @@ namespace NETworkManager.Controls
             var info = new ProcessStartInfo
             {
                 FileName = _sessionInfo.ApplicationFilePath,
-                Arguments = TightVNC.BuildCommandLine(_sessionInfo)
+                Arguments = PowerShell.BuildCommandLine(_sessionInfo)
             };
 
             try
@@ -136,8 +136,8 @@ namespace NETworkManager.Controls
                     _process.EnableRaisingEvents = true;
                     _process.Exited += Process_Exited;
 
-                    // Embed tightvnc window into panel, remove border etc.
-                    _process.WaitForInputIdle();
+                    // Embed window into panel, remove border etc.
+                    //  _process.WaitForInputIdle();
                     _appWin = _process.MainWindowHandle;
 
                     if (_appWin == IntPtr.Zero)
@@ -225,7 +225,7 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Events
-        private void TightVNCGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void WindowGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (_process != null)
                 ResizeEmbeddedWindow();

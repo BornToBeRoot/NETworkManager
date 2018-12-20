@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NETworkManager.Controls.PuTTYControl"
+﻿<UserControl x:Class="NETworkManager.Controls.PowerShellControl"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,7 +9,7 @@
         xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mah:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:PuTTYControl}">
+        mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:TightVNCControl}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
@@ -28,7 +28,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.Disconnected}" Style="{StaticResource HeaderTextBlock}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}" />
-            <TextBlock Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{x:Static localization:Strings.PuTTYProcessHasEnded}" Style="{DynamicResource DefaultTextBlock}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}" />
+            <TextBlock Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{x:Static localization:Strings.PowerShellProcessHasEnded}" Style="{DynamicResource DefaultTextBlock}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}" />
             <mah:ProgressRing Grid.Row="0" Grid.RowSpan="2" Height="50" Width="50" IsActive="{Binding IsConnecting}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"/>
             <Button Grid.Row="3" Content="{x:Static localization:Strings.Reconnect}" Command="{Binding ReconnectCommand}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" IsDefault="True" IsEnabled="{Binding IsConnecting, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultButton}"/>
             <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.ConnectingDots}" Style="{StaticResource MessageTextBlock}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />

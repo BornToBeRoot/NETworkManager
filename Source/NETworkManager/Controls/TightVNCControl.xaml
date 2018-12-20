@@ -18,7 +18,7 @@
     </UserControl.Resources>
     <Grid SizeChanged="TightVNCGrid_SizeChanged">
         <WindowsFormsHost Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">  
-            <windowsForms:Panel x:Name="TightVNCHost" />
+            <windowsForms:Panel x:Name="WindowHost" />
         </WindowsFormsHost>
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding IsConnected, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
             <Grid.RowDefinitions>

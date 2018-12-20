@@ -4,7 +4,7 @@ namespace NETworkManager.Models.TightVNC
 {
     public class TightVNCSessionInfo
     {
-        public string TightVNCLocation { get; set; }
+        public string ApplicationFilePath { get; set; }
         public string Host { get; set; }
         public int Port { get; set; }
         
