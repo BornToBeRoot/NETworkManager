@@ -12,9 +12,10 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PowerShellSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.PowerShell}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.FilePath}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox x:Name="TextBoxApplicationFilePath" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.PowerShellLocationDots}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" AllowDrop="True" Drop="TextBoxApplicationFilePath_Drop" PreviewDragOver="TextBoxApplicationFilePath_PreviewDragOver" Margin="0,0,0,10">
             <TextBox.Text>
-                <Binding Path="TightVNCLocation" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="ApplicationFilePath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                         <validators:FileExistsValidator ValidatesOnTargetUpdated="True" />
@@ -22,6 +23,10 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button Content="{x:Static localization:Strings.Configure}" Command="{Binding ConfigureTightVNCCommand}" IsEnabled="{Binding IsTightVNCConfigured}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" Margin="0,0,0,10" />
+        <Button Content="{x:Static localization:Strings.Configure}" Command="{Binding ConfigureCommand}" IsEnabled="{Binding IsConfigured}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.DefaultAdditionalCommandLine}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBox Width="250" Text="{Binding DefaultAdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.DefaultExecutionPolicy}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <ComboBox Width="250" ItemsSource="{Binding ExecutionPolicies}" SelectedItem="{Binding ExecutionPolicy}" HorizontalAlignment="Left" />
     </StackPanel>
 </UserControl>

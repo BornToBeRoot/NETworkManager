@@ -12,6 +12,7 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PuTTYSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.PuTTY}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.FilePath}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox x:Name="TextBoxApplicationFilePath" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.PuTTYLocationDots}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" AllowDrop="True" Drop="TextBoxApplicationFilePath_Drop" PreviewDragOver="TextBoxApplicationFilePath_PreviewDragOver" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="ApplicationFilePath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -23,9 +24,9 @@
             </TextBox.Text>
         </TextBox>
         <Button Content="{x:Static localization:Strings.Configure}" Command="{Binding ConfigureCommand}" IsEnabled="{Binding IsConfigured}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" Margin="0,0,0,10" />
-        <TextBlock Text="{x:Static localization:Strings.PuTTYProfile}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <TextBox Width="250" Text="{Binding PuTTYProfile}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
-        <TextBlock Text="{x:Static localization:Strings.DefaultSSHPort}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.PuTTYProfile}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBox Width="250" Text="{Binding PuTTYProfile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.DefaultSSHPort}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort22}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="SSHPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -36,7 +37,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBlock Text="{x:Static localization:Strings.DefaultTelnetPort}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.DefaultTelnetPort}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort23}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="TelnetPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -47,7 +48,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox> 
-        <TextBlock Text="{x:Static localization:Strings.DefaultRloginPort}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.DefaultRloginPort}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort513}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="RloginPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -58,9 +59,9 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBlock Text="{x:Static localization:Strings.SerialLine}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <TextBox Width="250" Text="{Binding SerialLine}" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSerialLine}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
-        <TextBlock Text="{x:Static localization:Strings.DefaultBaudRate}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.SerialLine}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBox Width="250" Text="{Binding SerialLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSerialLine}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.DefaultBaudRate}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleBaud9600}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="BaudRate" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">

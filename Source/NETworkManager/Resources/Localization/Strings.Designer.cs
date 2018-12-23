@@ -1114,6 +1114,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default additional command line.
+        /// </summary>
+        public static string DefaultAdditionalCommandLine {
+            get {
+                return ResourceManager.GetString("DefaultAdditionalCommandLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default application.
         /// </summary>
         public static string DefaultApplication {
@@ -1128,6 +1137,15 @@ namespace NETworkManager.Resources.Localization {
         public static string DefaultBaudRate {
             get {
                 return ResourceManager.GetString("DefaultBaudRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Execution Policy.
+        /// </summary>
+        public static string DefaultExecutionPolicy {
+            get {
+                return ResourceManager.GetString("DefaultExecutionPolicy", resourceCulture);
             }
         }
         
@@ -1965,6 +1983,15 @@ namespace NETworkManager.Resources.Localization {
         public static string FileDoesNotExist {
             get {
                 return ResourceManager.GetString("FileDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File path.
+        /// </summary>
+        public static string FilePath {
+            get {
+                return ResourceManager.GetString("FilePath", resourceCulture);
             }
         }
         

@@ -27,7 +27,6 @@ namespace NETworkManager.ViewModels
                 if (!_isLoading)
                     SettingsManager.Current.TightVNC_ApplicationFilePath = value;
 
-                // Path to tightvnc is configured....
                 IsConfigured = !string.IsNullOrEmpty(value);
 
                 _applicationFilePath = value;                               

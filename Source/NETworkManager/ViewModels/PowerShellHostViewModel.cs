@@ -467,7 +467,9 @@ namespace NETworkManager.ViewModels
                 ConfigurationManager.Current.IsDialogOpen = false;
             })
             {
-                Host = host
+                Host = host,
+                AdditionalCommandLine = SettingsManager.Current.PowerShell_DefaultAdditionalCommandLine,
+                ExecutionPolicy = SettingsManager.Current.PowerShell_DefaultExecutionPolicy
             };
 
             customDialog.Content = new PowerShellConnectDialog

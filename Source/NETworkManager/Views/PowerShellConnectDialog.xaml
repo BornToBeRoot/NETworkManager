@@ -51,7 +51,6 @@
             <TextBox x:Name="TextBoxAdditionalCommandLine" Grid.Column="2" Grid.Row="4" Text="{Binding AdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
             <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.ExecutionPolicy}" />
             <ComboBox x:Name="ComboBoxTypes" Grid.Column="2" Grid.Row="6" ItemsSource="{Binding ExecutionPolicies}" SelectedItem="{Binding ExecutionPolicy}" />
-
         </Grid>
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />

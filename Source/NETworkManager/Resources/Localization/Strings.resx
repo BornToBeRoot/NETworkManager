@@ -1975,4 +1975,13 @@ Path: "{0}"</value>
   <data name="PowerShellLocationDots" xml:space="preserve">
     <value>PowerShell location...</value>
   </data>
+  <data name="DefaultAdditionalCommandLine" xml:space="preserve">
+    <value>Default additional command line</value>
+  </data>
+  <data name="FilePath" xml:space="preserve">
+    <value>File path</value>
+  </data>
+  <data name="DefaultExecutionPolicy" xml:space="preserve">
+    <value>Default Execution Policy</value>
+  </data>
 </root>

@@ -56,6 +56,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _general_DefaultApplicationViewName = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -70,6 +71,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _general_HistoryListEntries = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -84,9 +86,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _general_ApplicationList = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -102,6 +102,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _window_ConfirmClose = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -116,6 +117,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _window_MinimizeInsteadOfTerminating = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -130,6 +132,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _window_MultipleInstances = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -144,6 +147,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _window_MinimizeToTrayInsteadOfTaskbar = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -158,9 +162,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _window_ShowCurrentApplicationTitle = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -176,6 +178,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _trayIcon_AlwaysShowIcon = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -191,6 +194,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _appearance_AppTheme = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -205,6 +209,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _appearance_Accent = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -219,6 +224,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _appearance_EnableTransparency = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -233,6 +239,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _appearance_Opacity = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -248,6 +255,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _localization_CultureCode = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -263,6 +271,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _autostart_StartMinimizedInTray = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -278,6 +287,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _hotKey_ShowWindowEnabled = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -292,6 +302,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _hotKey_ShowWindowKey = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -306,6 +317,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _hotKey_ShowWindowModifier = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -321,6 +333,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _update_CheckForUpdatesAtStartup = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -338,6 +351,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _expandApplicationView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -354,6 +368,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _networkInterface_SelectedInterfaceId = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -368,6 +383,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _networkInterface_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -382,6 +398,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _networkInterface_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -398,6 +415,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ShowScanResultForAllIPAddresses = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -412,6 +430,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_Threads = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -426,6 +445,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ICMPAttempts = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -440,6 +460,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ICMPBuffer = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -454,6 +475,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_HostHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -468,9 +490,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ResolveHostname = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -485,6 +505,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_UseCustomDNSServer = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -499,6 +520,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_CustomDNSServer = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -513,6 +535,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_DNSPort = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -527,6 +550,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_DNSRecursion = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -541,6 +565,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_DNSUseResolverCache = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -555,6 +580,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_DNSTransportType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -569,6 +595,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_DNSAttempts = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -583,6 +610,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_DNSTimeout = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -597,9 +625,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ResolveMACAddress = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -614,6 +640,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ICMPTimeout = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -628,6 +655,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ExpandStatistics = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -642,6 +670,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -656,6 +685,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -670,9 +700,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ShowStatistics = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -687,6 +715,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -701,6 +730,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -717,6 +747,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_HostHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -731,6 +762,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_PortHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -745,9 +777,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_ResolveHostname = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -762,6 +792,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_HostThreads = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -790,6 +821,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_ShowClosed = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -804,6 +836,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_Timeout = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -818,6 +851,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_ExpandStatistics = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -832,6 +866,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -846,6 +881,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -860,9 +896,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_ShowStatistics = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -877,6 +911,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -891,6 +926,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -907,6 +943,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_Attempts = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -921,6 +958,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_Buffer = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -935,6 +973,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_DontFragement = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -949,6 +988,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_HostHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -963,6 +1003,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_ResolveHostnamePreferIPv4 = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -977,6 +1018,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_Timeout = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -991,6 +1033,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_TTL = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1005,6 +1048,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_WaitTime = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1019,6 +1063,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_ExceptionCancelCount = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1033,6 +1078,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_ExpandStatistics = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1047,6 +1093,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1061,6 +1108,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1075,9 +1123,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_ShowStatistics = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -1092,6 +1138,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1106,6 +1153,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1120,9 +1168,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_HighlightTimeouts = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -1139,6 +1185,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_HostHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1153,6 +1200,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_MaximumHops = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1167,6 +1215,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_Timeout = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1181,6 +1230,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_Buffer = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1195,9 +1245,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ResolveHostname = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -1212,6 +1260,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ResolveHostnamePreferIPv4 = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1226,6 +1275,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ExpandStatistics = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1240,6 +1290,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1254,6 +1305,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1268,9 +1320,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ShowStatistics = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -1285,6 +1335,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1299,6 +1350,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1315,6 +1367,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_HostHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1329,6 +1382,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_DNSServers = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1343,6 +1397,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_SelectedDNSServer = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1357,6 +1412,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_Class = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1371,9 +1427,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_ShowMostCommonQueryTypes = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -1388,6 +1442,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_Type = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1402,6 +1457,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_AddDNSSuffix = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1416,6 +1472,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_UseCustomDNSSuffix = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1430,6 +1487,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_CustomDNSSuffix = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1444,6 +1502,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_ResolveCNAME = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1458,6 +1517,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_Recursion = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1472,6 +1532,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_UseResolverCache = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1486,6 +1547,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_TransportType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1500,6 +1562,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_Attempts = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1514,6 +1577,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_Timeout = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1528,6 +1592,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_ExpandStatistics = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1542,6 +1607,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1556,6 +1622,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1570,9 +1637,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_ShowStatistics = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -1587,6 +1652,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1601,6 +1667,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1617,6 +1684,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_HostHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1631,6 +1699,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_AdjustScreenAutomatically = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1645,6 +1714,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_UseCurrentViewSize = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1659,6 +1729,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_UseFixedScreenSize = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1673,6 +1744,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_ScreenWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1687,6 +1759,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_ScreenHeight = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1701,6 +1774,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_UseCustomScreenSize = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1715,6 +1789,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_CustomScreenWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1729,6 +1804,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_CustomScreenHeight = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1743,6 +1819,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_ColorDepth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1757,6 +1834,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_Port = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1771,6 +1849,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_EnableCredSspSupport = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1785,6 +1864,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_AuthenticationLevel = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1799,6 +1879,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_KeyboardHookMode = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1813,6 +1894,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_RedirectClipboard = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1827,6 +1909,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_RedirectDevices = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1841,6 +1924,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_RedirectDrives = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1855,6 +1939,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_RedirectPorts = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1869,6 +1954,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_RedirectSmartCards = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1883,6 +1969,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_RedirectPrinters = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1897,6 +1984,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1911,6 +1999,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1927,6 +2016,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _powerShell_HostHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1941,9 +2031,37 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _powerShell_ApplicationFilePath = value;
-
                 OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
 
+        private string _powerShell_DefaultAdditionalCommandLine;
+        public string PowerShell_DefaultAdditionalCommandLine
+        {
+            get => _powerShell_DefaultAdditionalCommandLine;
+            set
+            {
+                if(value == _powerShell_DefaultAdditionalCommandLine)
+                    return;
+
+                _powerShell_DefaultAdditionalCommandLine = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private PowerShell.PowerShell.ExecutionPolicy _powerShell_DefaultExecutionPolicy = PowerShell.PowerShell.ExecutionPolicy.RemoteSigned;
+        public PowerShell.PowerShell.ExecutionPolicy PowerShell_DefaultExecutionPolicy
+        {
+            get => _powerShell_DefaultExecutionPolicy;
+            set
+            {
+                if (value == _powerShell_DefaultExecutionPolicy)
+                    return;
+
+                _powerShell_DefaultExecutionPolicy = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1958,6 +2076,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _powerShell_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1972,6 +2091,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _powerShell_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1988,6 +2108,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_HostHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2002,6 +2123,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_SerialLineHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2016,6 +2138,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_PortHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2030,6 +2153,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_BaudHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2044,6 +2168,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_UsernameHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2058,6 +2183,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_ProfileHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2072,6 +2198,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2086,6 +2213,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2100,9 +2228,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_ApplicationFilePath = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -2117,6 +2243,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_Profile = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2131,6 +2258,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_SerialLine = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2145,6 +2273,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_SSHPort = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2159,6 +2288,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_TelnetPort = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2173,6 +2303,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_RloginPort = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2187,6 +2318,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_BaudRate = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2203,6 +2335,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _tightVNC_HostHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2217,6 +2350,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _tightVNC_PortHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2231,6 +2365,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _tightVNC_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2245,6 +2380,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _tightVNC_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2259,9 +2395,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _tightVNC_ApplicationFilePath = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -2276,6 +2410,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _tightVNC_VNCPort = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2292,6 +2427,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_WalkMode = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2306,6 +2442,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_Timeout = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2320,6 +2457,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_port = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2334,6 +2472,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_ResolveHostnamePreferIPv4 = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2348,6 +2487,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_HostHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2362,6 +2502,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_OIDHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2376,6 +2517,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_Mode = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2390,6 +2532,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_Version = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2404,6 +2547,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_ExpandStatistics = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2418,6 +2562,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_Security = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2432,6 +2577,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_AuthenticationProvider = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2446,6 +2592,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_PrivacyProvider = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2460,9 +2607,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_ShowStatistics = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -2477,6 +2622,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2491,6 +2637,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2507,6 +2654,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _wakeOnLAN_Port = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2521,6 +2669,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _wakeOnLAN_ExpandClientView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2535,6 +2684,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _wakeOnLAN_ClientWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2551,6 +2701,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_WebsiteUriHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2565,6 +2716,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_Timeout = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2579,6 +2731,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_ExpandStatistics = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2593,6 +2746,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2607,6 +2761,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2621,9 +2776,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_ShowStatistics = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -2638,6 +2791,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2652,6 +2806,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2670,6 +2825,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _subnetCalculator_Calculator_SubnetHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2686,6 +2842,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _subnetCalculator_Subnetting_SubnetHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2700,6 +2857,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _subnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2714,6 +2872,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _subnetCalculator_Subnetting_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2728,6 +2887,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _subnetCalculator_Subnetting_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2744,6 +2904,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _subnetCalculator_WideSubnet_Subnet1 = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2758,6 +2919,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _subnetCalculator_WideSubnet_Subnet2 = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2776,6 +2938,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _lookup_OUI_MACAddressOrVendorHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2790,6 +2953,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _lookup_OUI_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2804,6 +2968,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _lookup_OUI_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2818,6 +2983,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _lookup_Port_PortsHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2832,6 +2998,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _lookup_Port_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2846,6 +3013,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _lookup_Port_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2862,6 +3030,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _whois_DomainHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2876,6 +3045,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _whois_ExpandStatistics = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2890,6 +3060,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _whois_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2904,6 +3075,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _whois_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2918,9 +3090,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _whois_ShowStatistics = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -2935,6 +3105,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _whois_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2949,6 +3120,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _whois_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2965,6 +3137,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _connections_AutoRefresh = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2979,6 +3152,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _connections_AutoRefreshTime = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2993,6 +3167,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _connections_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -3007,6 +3182,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _connections_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -3023,6 +3199,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _listeners_AutoRefresh = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -3037,6 +3214,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _listeners_AutoRefreshTime = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -3051,6 +3229,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _listeners_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -3065,6 +3244,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _listeners_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -3081,6 +3261,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _arpTable_AutoRefresh = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -3095,6 +3276,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _arpTable_AutoRefreshTime = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -3109,6 +3291,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _arpTable_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -3123,6 +3306,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _arpTable_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -3156,6 +3340,9 @@ namespace NETworkManager.Models.Settings
             // Remote Desktop
             RemoteDesktop_HostHistory.CollectionChanged += CollectionChanged;
 
+            // PowerShell
+            PowerShell_HostHistory.CollectionChanged += CollectionChanged;
+
             // PuTTY
             PuTTY_HostHistory.CollectionChanged += CollectionChanged;
             PuTTY_SerialLineHistory.CollectionChanged += CollectionChanged;
@@ -3166,6 +3353,7 @@ namespace NETworkManager.Models.Settings
 
             // TightVNC
             TightVNC_HostHistory.CollectionChanged += CollectionChanged;
+            TightVNC_PortHistory.CollectionChanged += CollectionChanged;
 
             // SNMP
             SNMP_HostHistory.CollectionChanged += CollectionChanged;
@@ -3190,6 +3378,9 @@ namespace NETworkManager.Models.Settings
 
             // Lookup / Port
             Lookup_Port_PortsHistory.CollectionChanged += CollectionChanged;
+
+            // Whois
+            Whois_DomainHistory.CollectionChanged += CollectionChanged;
         }
 
         private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

@@ -96,7 +96,7 @@
                     </Style>
                 </Rectangle.Style>
             </Rectangle>
-            <TextBlock Text="{x:Static localization:Strings.DocumentationTitle_00002}" VerticalAlignment="Center" FontSize="14" Margin="10,0,0,0" />
+            <TextBlock Text="{x:Static localization:Strings.DocumentationTitle_00002}" FontSize="14" Margin="10,0,0,0" />
         </StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -117,7 +117,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Slider Grid.Column="0" Minimum="25" MaxHeight="100" Value="{Binding Opacity}" IsEnabled="{Binding EnableTransparency}" Style="{DynamicResource FlatSlider}" VerticalAlignment="Center" ToolTip="{Binding Value, RelativeSource={RelativeSource Self}}" TickFrequency="1" IsSnapToTickEnabled="True" />
+            <Slider Grid.Column="0" Minimum="25" MaxHeight="100" Value="{Binding Opacity}" IsEnabled="{Binding EnableTransparency}" Style="{DynamicResource FlatSlider}" ToolTip="{Binding Value, RelativeSource={RelativeSource Self}}" TickFrequency="1" IsSnapToTickEnabled="True" />
             <TextBox Grid.Column="1" Width="80" IsEnabled="{Binding EnableTransparency}" Style="{StaticResource DefaultTextBox}" TextAlignment="Center" Margin="10,0,0,0">
                 <TextBox.Text>
                     <Binding Path="Opacity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">

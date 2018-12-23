@@ -27,7 +27,6 @@ namespace NETworkManager.ViewModels
                 if (!_isLoading)
                     SettingsManager.Current.PuTTY_ApplicationFilePath = value;
 
-                // Path to putty is configured....
                 IsConfigured = !string.IsNullOrEmpty(value);
 
                 _applicationFilePath = value;                               
