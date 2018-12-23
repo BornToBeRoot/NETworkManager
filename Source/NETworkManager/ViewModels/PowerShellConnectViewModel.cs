@@ -3,10 +3,10 @@ using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
-using Heijden.DNS;
 using NETworkManager.Models.PowerShell;
 
 namespace NETworkManager.ViewModels
@@ -88,10 +88,17 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public PowerShellConnectViewModel(Action<PowerShellConnectViewModel> connectCommand, Action<PowerShellConnectViewModel> cancelHandler)
+        public PowerShellConnectViewModel(Action<PowerShellConnectViewModel> connectCommand, Action<PowerShellConnectViewModel> cancelHandler, string host = null)
         {
             ConnectCommand = new RelayCommand(p => connectCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
+
+            if (!string.IsNullOrEmpty(host))
+            {
+                Host = host;
+                EnableRemoteConsole = true;
+            }
+
 
             HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PowerShell_HostHistory);
 
@@ -100,13 +107,15 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
+            AdditionalCommandLine = SettingsManager.Current.PowerShell_DefaultAdditionalCommandLine;
+            
             LoadExecutionPolicies();
         }
 
         private void LoadExecutionPolicies()
         {
             ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
-            ExecutionPolicy = ExecutionPolicies.FirstOrDefault(x => x == PowerShell.ExecutionPolicy.RemoteSigned);
+            ExecutionPolicy = ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_DefaultExecutionPolicy);
         }
     }
 }

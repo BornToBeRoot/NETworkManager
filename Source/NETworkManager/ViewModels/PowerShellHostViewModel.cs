@@ -456,7 +456,7 @@ namespace NETworkManager.ViewModels
                     EnableRemoteConsole = instance.EnableRemoteConsole,
                     Host = instance.Host,
                     AdditionalCommandLine = instance.AdditionalCommandLine,
-                    ExecutionPolicy =  instance.ExecutionPolicy
+                    ExecutionPolicy = instance.ExecutionPolicy
                 };
 
                 // Connect
@@ -465,12 +465,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
-            })
-            {
-                Host = host,
-                AdditionalCommandLine = SettingsManager.Current.PowerShell_DefaultAdditionalCommandLine,
-                ExecutionPolicy = SettingsManager.Current.PowerShell_DefaultExecutionPolicy
-            };
+            }, host);
 
             customDialog.Content = new PowerShellConnectDialog
             {
@@ -491,7 +486,7 @@ namespace NETworkManager.ViewModels
             var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.PowerShell_ApplicationFilePath,
-                // Arguments = TightVNC.BuildCommandLine(TightVNCSessionInfo.Parse(SelectedProfile))
+                Arguments = PowerShell.BuildCommandLine(PowerShellSessionInfo.Parse(SelectedProfile))
             };
 
             Process.Start(info);

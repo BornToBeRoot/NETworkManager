@@ -96,7 +96,7 @@ namespace NETworkManager
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.RemoteDesktop });
                     break;
                 case Name.PowerShell:
-                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.EmoticonExcited });
+                    canvas.Children.Add(new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.TerminalSolid });
                     break;
                 case Name.PuTTY:
                     canvas.Children.Add(new PackIconOcticons { Kind = PackIconOcticonsKind.Terminal });

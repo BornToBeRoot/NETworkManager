@@ -464,10 +464,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
-            })
-            {
-                Host = host
-            };
+            }, host);
 
             customDialog.Content = new TightVNCConnectDialog
             {

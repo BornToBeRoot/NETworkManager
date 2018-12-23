@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Input;
+using Newtonsoft.Json.Linq;
 using static NETworkManager.Models.PuTTY.PuTTY;
 
 namespace NETworkManager.ViewModels
@@ -232,11 +233,26 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView ProfileHistoryView { get; }
 
-        public PuTTYConnectViewModel(Action<PuTTYConnectViewModel> connectCommand,
-            Action<PuTTYConnectViewModel> cancelHandler)
+        public PuTTYConnectViewModel(Action<PuTTYConnectViewModel> connectCommand, Action<PuTTYConnectViewModel> cancelHandler, string host = null)
         {
             ConnectCommand = new RelayCommand(p => connectCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
+
+            if (!string.IsNullOrEmpty(host))
+                Host = host;
+
+            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_HostHistory);
+            SerialLineHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_SerialLineHistory);
+            PortHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_PortHistory);
+            BaudHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_BaudHistory);
+            UsernameHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_UsernameHistory);
+            ProfileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_ProfileHistory);
+
+            LoadSettings();
+        }
+
+        private void LoadSettings()
+        {
 
             ConnectionMode = SettingsManager.Current.PuTTY_DefaultConnectionMode;
 
@@ -263,12 +279,6 @@ namespace NETworkManager.ViewModels
             Profile = SettingsManager.Current.PuTTY_Profile;
             SerialLine = SettingsManager.Current.PuTTY_DefaultSerialLine;
             AdditionalCommandLine = SettingsManager.Current.PuTTY_DefaultAdditionalCommandLine;
-            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_HostHistory);
-            SerialLineHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_SerialLineHistory);
-            PortHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_PortHistory);
-            BaudHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_BaudHistory);
-            UsernameHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_UsernameHistory);
-            ProfileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_ProfileHistory);
         }
     }
 }

@@ -44,11 +44,13 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView PortHistoryView { get; }
         
-        public TightVNCConnectViewModel(Action<TightVNCConnectViewModel> connectCommand, Action<TightVNCConnectViewModel> cancelHandler)
+        public TightVNCConnectViewModel(Action<TightVNCConnectViewModel> connectCommand, Action<TightVNCConnectViewModel> cancelHandler, string host = null)
         {
             ConnectCommand = new RelayCommand(p => connectCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
+            if (!string.IsNullOrEmpty(host))
+                Host = host;
             
             HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.TightVNC_HostHistory);
             PortHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.TightVNC_PortHistory);
