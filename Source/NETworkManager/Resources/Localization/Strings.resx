@@ -1984,4 +1984,7 @@ Path: "{0}"</value>
   <data name="DefaultExecutionPolicy" xml:space="preserve">
     <value>Default Execution Policy</value>
   </data>
+  <data name="DefaultUsername" xml:space="preserve">
+    <value>Default username</value>
+  </data>
 </root>

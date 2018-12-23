@@ -48,6 +48,40 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private string _defaultUsername;
+        public string DefaultUsername
+        {
+            get => _defaultUsername;
+            set
+            {
+                if (value == _defaultUsername)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.PuTTY_DefaultUsername = value;
+
+                _defaultUsername = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _defaultAdditionalCommandLine;
+        public string DefaultAdditionalCommandLine
+        {
+            get => _defaultAdditionalCommandLine;
+            set
+            {
+                if (value == _defaultAdditionalCommandLine)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.PuTTY_DefaultAdditionalCommandLine = value;
+
+                _defaultAdditionalCommandLine = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _puTTYProfile;
         public string PuTTYProfile
         {
@@ -75,7 +109,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PuTTY_SerialLine = value;
+                    SettingsManager.Current.PuTTY_DefaultSerialLine = value;
 
                 _serialLine = value;
                 OnPropertyChanged();
@@ -92,7 +126,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PuTTY_SSHPort = value;
+                    SettingsManager.Current.PuTTY_DefaultSSHPort = value;
 
                 _sshPort = value;
                 OnPropertyChanged();
@@ -109,7 +143,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PuTTY_TelnetPort = value;
+                    SettingsManager.Current.PuTTY_DefaultTelnetPort = value;
 
                 _telnetPort = value;
                 OnPropertyChanged();
@@ -126,7 +160,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PuTTY_BaudRate = value;
+                    SettingsManager.Current.PuTTY_DefaultBaudRate = value;
 
                 _baudRate = value;
                 OnPropertyChanged();
@@ -143,7 +177,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PuTTY_RloginPort = value;
+                    SettingsManager.Current.PuTTY_DefaultRloginPort = value;
 
                 _rloginPort = value;
                 OnPropertyChanged();
@@ -167,12 +201,14 @@ namespace NETworkManager.ViewModels
         {
             ApplicationFilePath = SettingsManager.Current.PuTTY_ApplicationFilePath;
             IsConfigured = File.Exists(ApplicationFilePath);
-            SerialLine = SettingsManager.Current.PuTTY_SerialLine;
+            DefaultUsername = SettingsManager.Current.PuTTY_DefaultUsername;
             PuTTYProfile = SettingsManager.Current.PuTTY_Profile;
-            SSHPort = SettingsManager.Current.PuTTY_SSHPort;
-            TelnetPort = SettingsManager.Current.PuTTY_TelnetPort;
-            BaudRate = SettingsManager.Current.PuTTY_BaudRate;
-            RloginPort = SettingsManager.Current.PuTTY_RloginPort;
+            DefaultAdditionalCommandLine = SettingsManager.Current.PuTTY_DefaultAdditionalCommandLine;
+            SerialLine = SettingsManager.Current.PuTTY_DefaultSerialLine;
+            SSHPort = SettingsManager.Current.PuTTY_DefaultSSHPort;
+            TelnetPort = SettingsManager.Current.PuTTY_DefaultTelnetPort;
+            BaudRate = SettingsManager.Current.PuTTY_DefaultBaudRate;
+            RloginPort = SettingsManager.Current.PuTTY_DefaultRloginPort;
         }
         #endregion
 

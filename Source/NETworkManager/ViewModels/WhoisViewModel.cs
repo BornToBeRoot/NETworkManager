@@ -1,6 +1,5 @@
 ﻿using NETworkManager.Models.Network;
 using System;
-using System.Collections.ObjectModel;
 using System.Windows.Input;
 using NETworkManager.Models.Settings;
 using System.Windows.Threading;

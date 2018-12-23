@@ -482,7 +482,16 @@ namespace NETworkManager.ViewModels
                 ConfigurationManager.Current.IsDialogOpen = false;
             })
             {
-                Host = host
+                Host = host,
+                DefaultSSHPort = SettingsManager.Current.PuTTY_DefaultSSHPort,
+                DefaultTelnetPort = SettingsManager.Current.PuTTY_DefaultTelnetPort,
+                DefaultRloginPort = SettingsManager.Current.PuTTY_DefaultRloginPort,
+                DefaultBaudRate = SettingsManager.Current.PuTTY_DefaultBaudRate,
+                DefaultRaw = SettingsManager.Current.PuTTY_DefaultRaw,
+                Username = SettingsManager.Current.PuTTY_DefaultUsername,
+                Profile = SettingsManager.Current.PuTTY_Profile,
+                SerialLine = SettingsManager.Current.PuTTY_DefaultSerialLine,
+                AdditionalCommandLine = SettingsManager.Current.PuTTY_DefaultAdditionalCommandLine
             };
 
             customDialog.Content = new PuTTYConnectDialog

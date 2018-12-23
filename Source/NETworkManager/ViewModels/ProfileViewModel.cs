@@ -748,7 +748,7 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    PuTTY_Port = SettingsManager.Current.PuTTY_SSHPort;
+                    PuTTY_Port = SettingsManager.Current.PuTTY_DefaultSSHPort;
                     PuTTY_ConnectionMode = ConnectionMode.SSH;
                 }
 
@@ -768,7 +768,7 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    PuTTY_Port = SettingsManager.Current.PuTTY_TelnetPort;
+                    PuTTY_Port = SettingsManager.Current.PuTTY_DefaultTelnetPort;
                     PuTTY_ConnectionMode = ConnectionMode.Telnet;
                 }
 
@@ -788,7 +788,7 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    PuTTY_Baud = SettingsManager.Current.PuTTY_BaudRate;
+                    PuTTY_Baud = SettingsManager.Current.PuTTY_DefaultBaudRate;
                     PuTTY_ConnectionMode = ConnectionMode.Serial;
                 }
 
@@ -808,7 +808,7 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    PuTTY_Port = SettingsManager.Current.PuTTY_RloginPort;
+                    PuTTY_Port = SettingsManager.Current.PuTTY_DefaultRloginPort;
                     PuTTY_ConnectionMode = ConnectionMode.Rlogin;
                 }
 
@@ -1332,7 +1332,7 @@ namespace NETworkManager.ViewModels
             else
             {
                 PuTTY_Host = profileInfo2.PuTTY_HostOrSerialLine;
-                PuTTY_Port = profileInfo2.PuTTY_PortOrBaud == 0 ? SettingsManager.Current.PuTTY_SSHPort : profileInfo2.PuTTY_PortOrBaud; // Default SSH port
+                PuTTY_Port = profileInfo2.PuTTY_PortOrBaud == 0 ? SettingsManager.Current.PuTTY_DefaultSSHPort : profileInfo2.PuTTY_PortOrBaud; // Default SSH port
             }
 
             PuTTY_Username = profileInfo2.PuTTY_Username;

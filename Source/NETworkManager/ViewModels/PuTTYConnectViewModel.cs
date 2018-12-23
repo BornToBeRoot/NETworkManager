@@ -14,6 +14,12 @@ namespace NETworkManager.ViewModels
 
         public ICommand CancelCommand { get; }
 
+        public int DefaultSSHPort { get; set; }
+        public int DefaultTelnetPort { get; set; }
+        public int DefaultBaudRate { get; set; }
+        public int DefaultRloginPort { get; set; }
+        public int DefaultRaw { get; set; }
+
         private bool _useSSH; // Default is SSH
         public bool UseSSH
         {
@@ -25,7 +31,7 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    Port = SettingsManager.Current.PuTTY_SSHPort;
+                    Port = DefaultSSHPort;
                     ConnectionMode = ConnectionMode.SSH;
                 }
 
@@ -45,7 +51,7 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    Port = SettingsManager.Current.PuTTY_TelnetPort;
+                    Port = DefaultTelnetPort;
                     ConnectionMode = ConnectionMode.Telnet;
                 }
 
@@ -65,7 +71,7 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {                    
-                    Baud = SettingsManager.Current.PuTTY_BaudRate;
+                    Baud = DefaultBaudRate;
                     ConnectionMode = ConnectionMode.Serial;
                 }
 
@@ -85,7 +91,7 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    Port = SettingsManager.Current.PuTTY_RloginPort;
+                    Port = DefaultRloginPort;
                     ConnectionMode = ConnectionMode.Rlogin;
                 }
 
@@ -105,7 +111,7 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    Port = 0;
+                    Port = DefaultRaw;
                     ConnectionMode = ConnectionMode.RAW;
                 }
 
@@ -237,9 +243,6 @@ namespace NETworkManager.ViewModels
             BaudHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_BaudHistory);
             UsernameHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_UsernameHistory);
             ProfileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_ProfileHistory);
-
-            SerialLine = SettingsManager.Current.PuTTY_SerialLine;
-            Profile = SettingsManager.Current.PuTTY_Profile;
 
             // SSH is default...
             UseSSH = true;

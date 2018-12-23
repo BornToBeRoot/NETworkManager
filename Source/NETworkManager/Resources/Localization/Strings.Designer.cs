@@ -1195,6 +1195,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default username.
+        /// </summary>
+        public static string DefaultUsername {
+            get {
+                return ResourceManager.GetString("DefaultUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default VNC port.
         /// </summary>
         public static string DefaultVNCPort {
