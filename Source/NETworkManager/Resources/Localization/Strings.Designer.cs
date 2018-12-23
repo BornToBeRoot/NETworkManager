@@ -1159,6 +1159,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default mode.
+        /// </summary>
+        public static string DefaultMode {
+            get {
+                return ResourceManager.GetString("DefaultMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default port:.
         /// </summary>
         public static string DefaultPort {

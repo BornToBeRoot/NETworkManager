@@ -8,11 +8,12 @@ namespace NETworkManager
         // Type to search (verage type speed --> 187 chars/min)
         public static TimeSpan SearchDispatcherTimerTimeSpan => new TimeSpan(0, 0, 0, 0, 750);
         public static TimeSpan CredentialsUILockTime => new TimeSpan(0, 0, 120);
-
+        
         // Profile
         public static double ProfileWidthCollapsed => 40;
         public static double ProfileDefaultWidthExpanded => 250;
         public static double ProfileMaxWidthExpanded => 350;
+        public static double FloatPointFix => 1.0;
 
         // Application: PuTTY
         public static int PuTTYDefaultSSHPort => 22;

@@ -2113,6 +2113,21 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private PuTTY.PuTTY.ConnectionMode _puTTY_DefaultConnectionMode = PuTTY.PuTTY.ConnectionMode.SSH;
+        public PuTTY.PuTTY.ConnectionMode PuTTY_DefaultConnectionMode
+        {
+            get => _puTTY_DefaultConnectionMode;
+            set
+            {
+                if(value == _puTTY_DefaultConnectionMode)
+                    return;
+
+                _puTTY_DefaultConnectionMode = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         private string _puTTY_DefaultUsername;
         public string PuTTY_DefaultUsername
         {

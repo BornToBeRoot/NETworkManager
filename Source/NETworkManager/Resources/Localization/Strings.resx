@@ -1987,4 +1987,7 @@ Path: "{0}"</value>
   <data name="DefaultUsername" xml:space="preserve">
     <value>Default username</value>
   </data>
+  <data name="DefaultMode" xml:space="preserve">
+    <value>Default mode</value>
+  </data>
 </root>

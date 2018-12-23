@@ -14,13 +14,15 @@ namespace NETworkManager.ViewModels
 
         public ICommand CancelCommand { get; }
 
-        public int DefaultSSHPort { get; set; }
-        public int DefaultTelnetPort { get; set; }
-        public int DefaultBaudRate { get; set; }
-        public int DefaultRloginPort { get; set; }
-        public int DefaultRaw { get; set; }
+        public int DefaultSSHPort => SettingsManager.Current.PuTTY_DefaultSSHPort;
+        public int DefaultTelnetPort => SettingsManager.Current.PuTTY_DefaultTelnetPort;
+        public int DefaultBaudRate => SettingsManager.Current.PuTTY_DefaultBaudRate;
+        public int DefaultRloginPort => SettingsManager.Current.PuTTY_DefaultRloginPort;
+        public int DefaultRaw => SettingsManager.Current.PuTTY_DefaultRaw;
 
-        private bool _useSSH; // Default is SSH
+        public ConnectionMode ConnectionMode { get; set; }
+
+        private bool _useSSH;
         public bool UseSSH
         {
             get => _useSSH;
@@ -70,7 +72,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (value)
-                {                    
+                {
                     Baud = DefaultBaudRate;
                     ConnectionMode = ConnectionMode.Serial;
                 }
@@ -218,8 +220,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ConnectionMode ConnectionMode { get; set; }
-
         public ICollectionView HostHistoryView { get; }
 
         public ICollectionView SerialLineHistoryView { get; }
@@ -232,20 +232,43 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView ProfileHistoryView { get; }
 
-        public PuTTYConnectViewModel(Action<PuTTYConnectViewModel> connectCommand, Action<PuTTYConnectViewModel> cancelHandler)
+        public PuTTYConnectViewModel(Action<PuTTYConnectViewModel> connectCommand,
+            Action<PuTTYConnectViewModel> cancelHandler)
         {
             ConnectCommand = new RelayCommand(p => connectCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
+            ConnectionMode = SettingsManager.Current.PuTTY_DefaultConnectionMode;
+
+            switch (ConnectionMode)
+            {
+                case ConnectionMode.SSH:
+                    UseSSH = true;
+                    break;
+                case ConnectionMode.Telnet:
+                    UseTelnet = true;
+                    break;
+                case ConnectionMode.Serial:
+                    UseSerial = true;
+                    break;
+                case ConnectionMode.Rlogin:
+                    UseRlogin = true;
+                    break;
+                case ConnectionMode.RAW:
+                    UseRAW = true;
+                    break;
+            }
+
+            Username = SettingsManager.Current.PuTTY_DefaultUsername;
+            Profile = SettingsManager.Current.PuTTY_Profile;
+            SerialLine = SettingsManager.Current.PuTTY_DefaultSerialLine;
+            AdditionalCommandLine = SettingsManager.Current.PuTTY_DefaultAdditionalCommandLine;
             HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_HostHistory);
             SerialLineHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_SerialLineHistory);
             PortHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_PortHistory);
             BaudHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_BaudHistory);
             UsernameHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_UsernameHistory);
             ProfileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_ProfileHistory);
-
-            // SSH is default...
-            UseSSH = true;
-        }        
+        }
     }
 }

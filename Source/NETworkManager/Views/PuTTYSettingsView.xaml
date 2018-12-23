@@ -24,6 +24,19 @@
             </TextBox.Text>
         </TextBox>
         <Button Content="{x:Static localization:Strings.Configure}" Command="{Binding ConfigureCommand}" IsEnabled="{Binding IsConfigured}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.DefaultMode}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
+            <WrapPanel.Resources>
+                <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource DefaultRadioButton}">
+                    <Setter Property="Margin" Value="0,5,10,5" />
+                </Style>
+            </WrapPanel.Resources>
+            <RadioButton Content="{x:Static localization:Strings.SSH}" IsChecked="{Binding UseSSH}" />
+            <RadioButton Content="{x:Static localization:Strings.Telnet}" IsChecked="{Binding UseTelnet}" />
+            <RadioButton Content="{x:Static localization:Strings.Serial}" IsChecked="{Binding UseSerial}" />
+            <RadioButton Content="{x:Static localization:Strings.Rlogin}" IsChecked="{Binding UseRlogin}" />
+            <RadioButton Content="{x:Static localization:Strings.RAW}" IsChecked="{Binding UseRAW}" />
+        </WrapPanel>
         <TextBlock Text="{x:Static localization:Strings.DefaultUsername}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" Text="{Binding DefaultUsername, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.PuTTYProfile}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />

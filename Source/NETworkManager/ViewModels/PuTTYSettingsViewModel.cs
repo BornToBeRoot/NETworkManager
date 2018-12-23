@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Input;
+using NETworkManager.Models.PuTTY;
 
 namespace NETworkManager.ViewModels
 {
@@ -12,7 +13,7 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
-        
+
         private readonly bool _isLoading;
 
         private string _applicationFilePath;
@@ -29,7 +30,7 @@ namespace NETworkManager.ViewModels
 
                 IsConfigured = !string.IsNullOrEmpty(value);
 
-                _applicationFilePath = value;                               
+                _applicationFilePath = value;
                 OnPropertyChanged();
             }
         }
@@ -44,6 +45,91 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _isConfigured = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _useSSH;
+        public bool UseSSH
+        {
+            get => _useSSH;
+            set
+            {
+                if (value == _useSSH)
+                    return;
+
+                if (value)
+                    SettingsManager.Current.PuTTY_DefaultConnectionMode = PuTTY.ConnectionMode.SSH;
+
+                _useSSH = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _useTelnet;
+        public bool UseTelnet
+        {
+            get => _useTelnet;
+            set
+            {
+                if (value == _useTelnet)
+                    return;
+
+                if (value)
+                    SettingsManager.Current.PuTTY_DefaultConnectionMode = PuTTY.ConnectionMode.Telnet;
+
+                _useTelnet = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _useSerial;
+        public bool UseSerial
+        {
+            get => _useSerial;
+            set
+            {
+                if (value == _useSerial)
+                    return;
+
+                if (value)
+                    SettingsManager.Current.PuTTY_DefaultConnectionMode = PuTTY.ConnectionMode.Serial;
+
+                _useSerial = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _useRlogin;
+        public bool UseRlogin
+        {
+            get => _useRlogin;
+            set
+            {
+                if (value == _useRlogin)
+                    return;
+
+                if (value)
+                    SettingsManager.Current.PuTTY_DefaultConnectionMode = PuTTY.ConnectionMode.Rlogin;
+
+                _useRlogin = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _useRAW;
+        public bool UseRAW
+        {
+            get => _useRAW;
+            set
+            {
+                if (value == _useRAW)
+                    return;
+
+                if (value)
+                    SettingsManager.Current.PuTTY_DefaultConnectionMode = PuTTY.ConnectionMode.RAW;
+
+                _useRAW = value;
                 OnPropertyChanged();
             }
         }
@@ -200,6 +286,26 @@ namespace NETworkManager.ViewModels
         private void LoadSettings()
         {
             ApplicationFilePath = SettingsManager.Current.PuTTY_ApplicationFilePath;
+
+            switch (SettingsManager.Current.PuTTY_DefaultConnectionMode)
+            {
+                case PuTTY.ConnectionMode.SSH:
+                    UseSSH = true;
+                    break;
+                case PuTTY.ConnectionMode.Telnet:
+                    UseTelnet = true;
+                    break;
+                case PuTTY.ConnectionMode.Serial:
+                    UseSerial = true;
+                    break;
+                case PuTTY.ConnectionMode.Rlogin:
+                    UseRlogin = true;
+                    break;
+                case PuTTY.ConnectionMode.RAW:
+                    UseRAW = true;
+                    break;
+            }
+
             IsConfigured = File.Exists(ApplicationFilePath);
             DefaultUsername = SettingsManager.Current.PuTTY_DefaultUsername;
             PuTTYProfile = SettingsManager.Current.PuTTY_Profile;

@@ -107,7 +107,7 @@ namespace NETworkManager.ViewModels
                 if (value == _profileWidth)
                     return;
 
-                if (!_isLoading && value.Value != GlobalStaticConfiguration.ProfileWidthCollapsed) // Do not save the size when collapsed
+                if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.ProfileWidthCollapsed) > GlobalStaticConfiguration.FloatPointFix) // Do not save the size when collapsed
                     SettingsManager.Current.Whois_ProfileWidth = value.Value;
 
                 _profileWidth = value;
@@ -373,13 +373,13 @@ namespace NETworkManager.ViewModels
 
             if (dueToChangedSize)
             {
-                ExpandProfileView = ProfileWidth.Value != GlobalStaticConfiguration.ProfileWidthCollapsed;
+                ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.ProfileWidthCollapsed) > GlobalStaticConfiguration.FloatPointFix;
             }
             else
             {
                 if (ExpandProfileView)
                 {
-                    ProfileWidth = _tempProfileWidth == GlobalStaticConfiguration.ProfileWidthCollapsed ? new GridLength(GlobalStaticConfiguration.ProfileDefaultWidthExpanded) : new GridLength(_tempProfileWidth);
+                    ProfileWidth = Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.ProfileWidthCollapsed) < GlobalStaticConfiguration.FloatPointFix ? new GridLength(GlobalStaticConfiguration.ProfileDefaultWidthExpanded) : new GridLength(_tempProfileWidth);
                 }
                 else
                 {
