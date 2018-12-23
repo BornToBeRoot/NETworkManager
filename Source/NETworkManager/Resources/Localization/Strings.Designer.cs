@@ -790,15 +790,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configure PuTTY.
-        /// </summary>
-        public static string ConfigurePuTTY {
-            get {
-                return ResourceManager.GetString("ConfigurePuTTY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Configure the path to PowerShell in the settings....
         /// </summary>
         public static string ConfigureThePathToPowerShellInTheSettingsDots {
@@ -822,15 +813,6 @@ namespace NETworkManager.Resources.Localization {
         public static string ConfigureThePathToTightVNCInTheSettingsDots {
             get {
                 return ResourceManager.GetString("ConfigureThePathToTightVNCInTheSettingsDots", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Configure TightVNC.
-        /// </summary>
-        public static string ConfigureTightVNC {
-            get {
-                return ResourceManager.GetString("ConfigureTightVNC", resourceCulture);
             }
         }
         
@@ -3372,6 +3354,15 @@ namespace NETworkManager.Resources.Localization {
         public static string PowerShell {
             get {
                 return ResourceManager.GetString("PowerShell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PowerShell location....
+        /// </summary>
+        public static string PowerShellLocationDots {
+            get {
+                return ResourceManager.GetString("PowerShellLocationDots", resourceCulture);
             }
         }
         

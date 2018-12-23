@@ -4,11 +4,11 @@ using System.Windows;
 
 namespace NETworkManager.Views
 {
-    public partial class TightVNCSettingsView
+    public partial class PowerShellSettingsView
     {
-        private readonly TightVNCSettingsViewModel _viewModel = new TightVNCSettingsViewModel(DialogCoordinator.Instance);
+        private readonly PowerShellSettingsViewModel _viewModel = new PowerShellSettingsViewModel(DialogCoordinator.Instance);
 
-        public TightVNCSettingsView()
+        public PowerShellSettingsView()
         {
             InitializeComponent();
             DataContext = _viewModel;

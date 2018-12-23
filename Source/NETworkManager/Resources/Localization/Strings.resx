@@ -1305,9 +1305,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="Closed" xml:space="preserve">
     <value>Closed</value>
   </data>
-  <data name="ConfigurePuTTY" xml:space="preserve">
-    <value>Configure PuTTY</value>
-  </data>
   <data name="Continue" xml:space="preserve">
     <value>Continue</value>
   </data>
@@ -1875,9 +1872,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="ConfigureThePathToTightVNCInTheSettingsDots" xml:space="preserve">
     <value>Configure the path to TightVNC in the settings...</value>
   </data>
-  <data name="ConfigureTightVNC" xml:space="preserve">
-    <value>Configure TightVNC</value>
-  </data>
   <data name="DefaultVNCPort" xml:space="preserve">
     <value>Default VNC port</value>
   </data>
@@ -1977,5 +1971,8 @@ Path: "{0}"</value>
   </data>
   <data name="RemoteConsole" xml:space="preserve">
     <value>Remote console</value>
+  </data>
+  <data name="PowerShellLocationDots" xml:space="preserve">
+    <value>PowerShell location...</value>
   </data>
 </root>

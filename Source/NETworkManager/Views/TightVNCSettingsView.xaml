@@ -12,9 +12,9 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:TightVNCSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.TightVNC}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBox x:Name="TextBoxTightVNCLocation" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.TightVNCLocationDots}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" AllowDrop="True" Drop="TextBoxTightVNCLocation_Drop" PreviewDragOver="TextBoxTightVNCLocation_PreviewDragOver" Margin="0,0,0,10">
+        <TextBox x:Name="TextBoxApplicationFilePath" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.TightVNCLocationDots}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" AllowDrop="True" Drop="TextBoxApplicationFilePath_Drop" PreviewDragOver="TextBoxApplicationFilePath_PreviewDragOver" Margin="0,0,0,10">
             <TextBox.Text>
-                <Binding Path="TightVNCLocation" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="ApplicationFilePath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                         <validators:FileExistsValidator ValidatesOnTargetUpdated="True" />
@@ -22,7 +22,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button Content="{x:Static localization:Strings.ConfigureTightVNC}" Command="{Binding ConfigureTightVNCCommand}" IsEnabled="{Binding IsTightVNCConfigured}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" Margin="0,0,0,10" />
+        <Button Content="{x:Static localization:Strings.Configure}" Command="{Binding ConfigureCommand}" IsEnabled="{Binding IsConfigured}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.DefaultVNCPort}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort5900}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>

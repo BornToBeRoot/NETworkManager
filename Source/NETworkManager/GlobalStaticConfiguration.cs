@@ -19,5 +19,9 @@ namespace NETworkManager
 
         // Application: PowerShell
         public static string DefaultApplicationFileLocationPowerShell => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\WindowsPowerShell\v1.0\powershell.exe");
+
+        // Search
+        public static string ApplicationFileExtensionFilter => "Application (*.exe)|*.exe";
+
     }
 }

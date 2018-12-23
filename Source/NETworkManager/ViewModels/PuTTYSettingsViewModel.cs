@@ -11,41 +11,40 @@ namespace NETworkManager.ViewModels
     public class PuTTYSettingsViewModel : ViewModelBase
     {
         #region Variables
-        private const string ApplicationFileExtensionFilter = "Application (*.exe)|*.exe";
         private readonly IDialogCoordinator _dialogCoordinator;
         
         private readonly bool _isLoading;
 
-        private string _puTTYLocation;
-        public string PuTTYLocation
+        private string _applicationFilePath;
+        public string ApplicationFilePath
         {
-            get => _puTTYLocation;
+            get => _applicationFilePath;
             set
             {
-                if (value == _puTTYLocation)
+                if (value == _applicationFilePath)
                     return;
 
                 if (!_isLoading)
                     SettingsManager.Current.PuTTY_ApplicationFilePath = value;
 
                 // Path to putty is configured....
-                IsPuTTYConfigured = !string.IsNullOrEmpty(value);
+                IsConfigured = !string.IsNullOrEmpty(value);
 
-                _puTTYLocation = value;                               
+                _applicationFilePath = value;                               
                 OnPropertyChanged();
             }
         }
 
-        private bool _isPuTTYConfigured;
-        public bool IsPuTTYConfigured
+        private bool _isConfigured;
+        public bool IsConfigured
         {
-            get => _isPuTTYConfigured;
+            get => _isConfigured;
             set
             {
-                if (value == _isPuTTYConfigured)
+                if (value == _isConfigured)
                     return;
 
-                _isPuTTYConfigured = value;
+                _isConfigured = value;
                 OnPropertyChanged();
             }
         }
@@ -167,8 +166,8 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            PuTTYLocation = SettingsManager.Current.PuTTY_ApplicationFilePath;
-            IsPuTTYConfigured = File.Exists(PuTTYLocation);
+            ApplicationFilePath = SettingsManager.Current.PuTTY_ApplicationFilePath;
+            IsConfigured = File.Exists(ApplicationFilePath);
             SerialLine = SettingsManager.Current.PuTTY_SerialLine;
             PuTTYProfile = SettingsManager.Current.PuTTY_Profile;
             SSHPort = SettingsManager.Current.PuTTY_SSHPort;
@@ -188,26 +187,26 @@ namespace NETworkManager.ViewModels
         {
             var openFileDialog = new System.Windows.Forms.OpenFileDialog
             {
-                Filter = ApplicationFileExtensionFilter
+                Filter = GlobalStaticConfiguration.ApplicationFileExtensionFilter
             };
 
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                PuTTYLocation = openFileDialog.FileName;
+                ApplicationFilePath = openFileDialog.FileName;
         }
 
-        public ICommand ConfigurePuTTYCommand
+        public ICommand ConfigureCommand
         {
-            get { return new RelayCommand(p => ConfigurePuTTYAction()); }
+            get { return new RelayCommand(p => ConfigureAction()); }
         }
 
-        private void ConfigurePuTTYAction()
+        private void ConfigureAction()
         {
-            ConfigurePuTTY();
+            Configure();
         }
         #endregion
 
         #region Methods
-        private async void ConfigurePuTTY()
+        private async void Configure()
         {
             try
             {
@@ -225,9 +224,9 @@ namespace NETworkManager.ViewModels
 
         public void SetFilePathFromDragDrop(string filePath)
         {
-            PuTTYLocation = filePath;
+            ApplicationFilePath = filePath;
 
-            OnPropertyChanged(nameof(PuTTYLocation));
+            OnPropertyChanged(nameof(ApplicationFilePath));
         }
         #endregion
     }

@@ -12,9 +12,9 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PuTTYSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.PuTTY}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBox x:Name="TextBoxPuTTYLocation" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.PuTTYLocationDots}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" AllowDrop="True" Drop="TextBoxPuTTYLocation_Drop" PreviewDragOver="TextBoxPuTTYLocation_PreviewDragOver" Margin="0,0,0,10">
+        <TextBox x:Name="TextBoxApplicationFilePath" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.PuTTYLocationDots}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" AllowDrop="True" Drop="TextBoxApplicationFilePath_Drop" PreviewDragOver="TextBoxApplicationFilePath_PreviewDragOver" Margin="0,0,0,10">
             <TextBox.Text>
-                <Binding Path="PuTTYLocation" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="ApplicationFilePath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                         <validators:FileExistsValidator ValidatesOnTargetUpdated="True" />
@@ -22,7 +22,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button Content="{x:Static localization:Strings.ConfigurePuTTY}" Command="{Binding ConfigurePuTTYCommand}" IsEnabled="{Binding IsPuTTYConfigured}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" Margin="0,0,0,10" />
+        <Button Content="{x:Static localization:Strings.Configure}" Command="{Binding ConfigureCommand}" IsEnabled="{Binding IsConfigured}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.PuTTYProfile}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
         <TextBox Width="250" Text="{Binding PuTTYProfile}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.DefaultSSHPort}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />

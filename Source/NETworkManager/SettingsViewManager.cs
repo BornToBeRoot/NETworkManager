@@ -26,6 +26,7 @@ namespace NETworkManager
             new SettingsViewInfo(Name.Traceroute, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Traceroute), Group.Applications),
             new SettingsViewInfo(Name.DNSLookup, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.DNSLookup), Group.Applications ),
             new SettingsViewInfo(Name.RemoteDesktop, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.RemoteDesktop), Group.Applications),
+            new SettingsViewInfo(Name.PowerShell, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PowerShell), Group.Applications),
             new SettingsViewInfo(Name.PuTTY, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PuTTY), Group.Applications),
             new SettingsViewInfo(Name.TightVNC, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.TightVNC), Group.Applications),
             new SettingsViewInfo(Name.SNMP, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.SNMP), Group.Applications),
@@ -68,6 +69,8 @@ namespace NETworkManager
                     return Resources.Localization.Strings.DNSLookup;
                 case Name.RemoteDesktop:
                     return Resources.Localization.Strings.RemoteDesktop;
+                case Name.PowerShell:
+                    return Resources.Localization.Strings.PowerShell;
                 case Name.PuTTY:
                     return Resources.Localization.Strings.PuTTY;
                 case Name.TightVNC:
@@ -115,6 +118,7 @@ namespace NETworkManager
             Traceroute,
             DNSLookup,
             RemoteDesktop,
+            PowerShell,
             PuTTY,
             TightVNC,
             SNMP,

@@ -8,43 +8,43 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
-    public class TightVNCSettingsViewModel : ViewModelBase
+    public class PowerShellSettingsViewModel : ViewModelBase
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
         
         private readonly bool _isLoading;
 
-        private string _applicationFilePath;
-        public string ApplicationFilePath
+        private string _tightVNCLocation;
+        public string TightVNCLocation
         {
-            get => _applicationFilePath;
+            get => _tightVNCLocation;
             set
             {
-                if (value == _applicationFilePath)
+                if (value == _tightVNCLocation)
                     return;
 
                 if (!_isLoading)
                     SettingsManager.Current.TightVNC_ApplicationFilePath = value;
 
                 // Path to tightvnc is configured....
-                IsConfigured = !string.IsNullOrEmpty(value);
+                IsTightVNCConfigured = !string.IsNullOrEmpty(value);
 
-                _applicationFilePath = value;                               
+                _tightVNCLocation = value;                               
                 OnPropertyChanged();
             }
         }
 
-        private bool _isConfigured;
-        public bool IsConfigured
+        private bool _isTightVNCConfigured;
+        public bool IsTightVNCConfigured
         {
-            get => _isConfigured;
+            get => _isTightVNCConfigured;
             set
             {
-                if (value == _isConfigured)
+                if (value == _isTightVNCConfigured)
                     return;
 
-                _isConfigured = value;
+                _isTightVNCConfigured = value;
                 OnPropertyChanged();
             }
         }
@@ -68,7 +68,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public TightVNCSettingsViewModel(IDialogCoordinator instance)
+        public PowerShellSettingsViewModel(IDialogCoordinator instance)
         {
             _isLoading = true;
 
@@ -81,8 +81,8 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            ApplicationFilePath = SettingsManager.Current.TightVNC_ApplicationFilePath;
-            IsConfigured = File.Exists(ApplicationFilePath);
+            TightVNCLocation = SettingsManager.Current.TightVNC_ApplicationFilePath;
+            IsTightVNCConfigured = File.Exists(TightVNCLocation);
             VNCPort = SettingsManager.Current.TightVNC_VNCPort;
         }
         #endregion
@@ -101,22 +101,22 @@ namespace NETworkManager.ViewModels
             };
 
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                ApplicationFilePath = openFileDialog.FileName;
+                TightVNCLocation = openFileDialog.FileName;
         }
 
-        public ICommand ConfigureCommand
+        public ICommand ConfigureTightVNCCommand
         {
-            get { return new RelayCommand(p => ConfigureAction()); }
+            get { return new RelayCommand(p => ConfigurePuTTYAction()); }
         }
 
-        private void ConfigureAction()
+        private void ConfigurePuTTYAction()
         {
-            Configure();
+            ConfigureTightVNC();
         }
         #endregion
 
         #region Methods
-        private async void Configure()
+        private async void ConfigureTightVNC()
         {
             try
             {
@@ -134,9 +134,9 @@ namespace NETworkManager.ViewModels
 
         public void SetFilePathFromDragDrop(string filePath)
         {
-            ApplicationFilePath = filePath;
+            TightVNCLocation = filePath;
 
-            OnPropertyChanged(nameof(ApplicationFilePath));
+            OnPropertyChanged(nameof(TightVNCLocation));
         }
         #endregion
     }

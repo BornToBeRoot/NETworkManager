@@ -95,6 +95,7 @@ namespace NETworkManager.ViewModels
         private TracerouteSettingsView _tracerouteSettingsView;
         private DNSLookupSettingsView _dnsLookupSettingsViewModel;
         private RemoteDesktopSettingsView _remoteDesktopSettingsView;
+        private PowerShellSettingsView _powerShellSettingsView;
         private PuTTYSettingsView _puTTYSettingsView;
         private TightVNCSettingsView _tightVNCSettingsView;
         private SNMPSettingsView _snmpSettingsView;
@@ -115,8 +116,8 @@ namespace NETworkManager.ViewModels
         {
             // General
             SettingsViews =  new CollectionViewSource { Source = SettingsViewManager.List }.View;
-            SettingsViews.GroupDescriptions.Add(new PropertyGroupDescription("TranslatedGroup"));
-            SettingsViews.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            SettingsViews.GroupDescriptions.Add(new PropertyGroupDescription(nameof(SettingsViewInfo.TranslatedGroup)));
+            SettingsViews.SortDescriptions.Add(new SortDescription(nameof(SettingsViewInfo.Name), ListSortDirection.Ascending));
             SettingsViews.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
@@ -260,6 +261,12 @@ namespace NETworkManager.ViewModels
                         _remoteDesktopSettingsView = new RemoteDesktopSettingsView();
 
                     SettingsContent = _remoteDesktopSettingsView;
+                    break;
+                case SettingsViewManager.Name.PowerShell:
+                    if(_powerShellSettingsView == null)
+                        _powerShellSettingsView = new PowerShellSettingsView();
+
+                    SettingsContent = _powerShellSettingsView;
                     break;
                 case SettingsViewManager.Name.PuTTY:
                     if (_puTTYSettingsView == null)
