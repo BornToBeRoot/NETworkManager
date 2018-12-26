@@ -566,11 +566,6 @@
             "AssemblyAsmDisplayName" = "8:MSTSCLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_6A57510865BA59B777DFC86A45E2DDDB"
-                    {
-                    "Name" = "8:MSTSCLib.DLL"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:MSTSCLib.DLL"
             "TargetName" = "8:"
@@ -721,11 +716,6 @@
             "AssemblyAsmDisplayName" = "8:AxMSTSCLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_DF7090C238243AA0348DC046E88FDD49"
-                    {
-                    "Name" = "8:AxMSTSCLib.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:AxMSTSCLib.dll"
             "TargetName" = "8:"
@@ -894,15 +884,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:NETworkManager"
-        "ProductCode" = "8:{5D08A258-722A-4C0D-9301-CDD6F6AFFC5A}"
-        "PackageCode" = "8:{116047AA-0304-4120-B077-9C80876D2134}"
+        "ProductCode" = "8:{5866945F-3FE3-478B-81EE-EDCD259FBA30}"
+        "PackageCode" = "8:{36EE4084-35CD-40E5-8CB0-C1B7388732DA}"
         "UpgradeCode" = "8:{FBE04B49-929D-4FB1-9A85-4F83A13E2E10}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.8.2"
+        "ProductVersion" = "8:1.8.3"
         "Manufacturer" = "8:BornToBeRoot"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
