@@ -85,11 +85,9 @@
                     <TextBlock Text="{x:Static localization:Strings.ForkMeOnGitHub}" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
-           
-        </mahAppsControls:WindowCommands>
+           </mahAppsControls:WindowCommands>
     </mahAppsControls:MetroWindow.RightWindowCommands>
- 
-    <Grid>
+ <Grid>
         <Grid>
             <Grid.Style>
                 <Style TargetType="{x:Type Grid}">

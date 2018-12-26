@@ -7,7 +7,7 @@ namespace NETworkManager.Models.Settings
     public static class ConfigurationManager
     {
         public static ConfigurationInfo Current { get; set; }
-
+        
         public static void Detect()
         {
             var applicationLocation = Assembly.GetExecutingAssembly().Location;
@@ -17,7 +17,8 @@ namespace NETworkManager.Models.Settings
                 IsAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator),
                 ExecutionPath = Path.GetDirectoryName(applicationLocation),
                 ApplicationFullName = applicationLocation,
-                ApplicationName = Path.GetFileNameWithoutExtension(Path.GetFileName(applicationLocation))
+                ApplicationName = Path.GetFileNameWithoutExtension(Path.GetFileName(applicationLocation)),
+                OSVersion = System.Environment.OSVersion.Version
             };
         }
     }

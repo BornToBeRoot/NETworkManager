@@ -1990,4 +1990,7 @@ Path: "{0}"</value>
   <data name="DefaultMode" xml:space="preserve">
     <value>Default mode</value>
   </data>
+  <data name="ThisFeatureIsOnlyAvailableInWindows10Server2016OrLater" xml:space="preserve">
+    <value>This feature is only available in Windows 10 / Server 2016 or later!</value>
+  </data>
 </root>

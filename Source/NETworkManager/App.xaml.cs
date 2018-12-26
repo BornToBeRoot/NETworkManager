@@ -9,12 +9,9 @@ using NETworkManager.Properties;
 
 namespace NETworkManager
 {
-    /// <summary>
-    /// Interaktionslogik für "App.xaml"
-    /// </summary>
     public partial class App
     {
-        // Single instance unique identifier
+        // Single instance identifier
         private const string Guid = "6A3F34B2-161F-4F70-A8BC-A19C40F79CFB";
         private Mutex _mutex;
 

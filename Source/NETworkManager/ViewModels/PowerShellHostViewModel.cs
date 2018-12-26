@@ -55,6 +55,14 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        public bool IsNewPowerShellWindowAvailable
+        {
+            get
+            {
+                Debug.WriteLine(ConfigurationManager.Current.OSVersion.Major);
+                return ConfigurationManager.Current.OSVersion.Major >= 10;
+            }
+        } 
         #region Profiles
 
         public ICollectionView Profiles { get; }
