@@ -31,8 +31,8 @@
 <div align="center"> 
   <p>      
     :package: Download:
-      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.8.2.0/NETworkManager_v1.8.2.0_Portable.zip">Portable</a>, 
-      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.8.2.0/NETworkManager_v1.8.2.0_Setup.msi">MSI</a> or
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.9.0.0/NETworkManager_v1.9.0.0_Portable.zip">Portable</a>, 
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.9.0.0/NETworkManager_v1.9.0.0_Setup.msi">MSI</a> or
       <a href="https://chocolatey.org/packages/networkmanager">Chocolatey</a>
   </p>
   <p>
@@ -52,6 +52,7 @@
 - Traceroute
 - DNS Lookup
 - Remote Desktop
+- PowerShell (requires Windows 10)
 - PuTTY ([requires PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html))
 - TightVNC ([requires TightVNC](https://www.tightvnc.com/download.php))
 - SNMP - Get, Walk, Set (v1, v2c, v3)
