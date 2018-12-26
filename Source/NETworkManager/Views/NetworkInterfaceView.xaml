@@ -641,7 +641,7 @@
                                 </mah:DropDownButton.Items>
                             </mah:DropDownButton>
                         </StackPanel>
-                        <Button Grid.Column="1" Command="{Binding ApplyNetworkInterfaceConfigCommand}">
+                        <Button Grid.Column="1" Command="{Binding ApplyConfigCommand}">
                             <Button.Content>
                                 <Grid>
                                     <Grid.ColumnDefinitions>

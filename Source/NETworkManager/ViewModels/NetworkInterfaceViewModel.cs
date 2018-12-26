@@ -790,19 +790,14 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ICommand ApplyNetworkInterfaceConfigCommand
+        public ICommand ApplyConfigCommand
         {
-            get { return new RelayCommand(p => ApplyNetworkInterfaceConfigAction()); }
+            get { return new RelayCommand(p => ApplyConfigAction()); }
         }
 
-        public void ApplyNetworkInterfaceConfigAction()
+        public void ApplyConfigAction()
         {
-            ApplyNetworkInterfaceConfig();
-        }
-
-        private void ApplyNetworkInterfaceConfig()
-        {
-            throw new NotImplementedException();
+            ApplyConfig();
         }
 
         public ICommand ApplyProfileConfigCommand
