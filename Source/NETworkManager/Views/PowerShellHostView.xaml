@@ -107,7 +107,7 @@
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddATabToOpenANewConnection}">
+                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.NewConnectionDots055}">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
                                             <Style.Triggers>
