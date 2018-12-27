@@ -148,6 +148,13 @@ namespace NETworkManager.Models.Settings
                 RemoteDesktop_InheritHost = instance.RemoteDesktop_InheritHost,
                 RemoteDesktop_Host = instance.RemoteDesktop_InheritHost ? instance.Host?.Trim() : instance.RemoteDesktop_Host?.Trim(),
 
+                PowerShell_Enabled = instance.PowerShell_Enabled,
+                PowerShell_EnableRemoteConsole = instance.PowerShell_EnableRemoteConsole,
+                PowerShell_InheritHost = instance.PowerShell_InheritHost,
+                PowerShell_Host = instance.PowerShell_InheritHost ? instance.Host?.Trim() : instance.PowerShell_Host?.Trim(),
+                PowerShell_AdditionalCommandLine = instance.PowerShell_AdditionalCommandLine,
+                PowerShell_ExecutionPolicy = instance.PowerShell_ExecutionPolicy,
+
                 PuTTY_Enabled = instance.PuTTY_Enabled,
                 PuTTY_ConnectionMode = instance.PuTTY_ConnectionMode,
                 PuTTY_InheritHost = instance.PuTTY_InheritHost,

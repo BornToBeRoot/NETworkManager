@@ -7,6 +7,8 @@ namespace NETworkManager.Models.Settings
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class ProfileInfo
     {
+
+
         public string Name { get; set; }
         public string Host { get; set; }
         public Guid CredentialID { get; set; } = Guid.Empty;
@@ -46,6 +48,13 @@ namespace NETworkManager.Models.Settings
         public bool RemoteDesktop_Enabled { get; set; }
         public bool RemoteDesktop_InheritHost { get; set; } = true;
         public string RemoteDesktop_Host { get; set; }
+
+        public bool PowerShell_Enabled { get; set; }
+        public bool PowerShell_EnableRemoteConsole { get; set; } = true;
+        public bool PowerShell_InheritHost { get; set; } = true;
+        public string PowerShell_Host { get; set; }
+        public string PowerShell_AdditionalCommandLine { get; set; }
+        public PowerShell.PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy { get; set; }
 
         public bool PuTTY_Enabled { get; set; }
         public ConnectionMode PuTTY_ConnectionMode { get; set; }

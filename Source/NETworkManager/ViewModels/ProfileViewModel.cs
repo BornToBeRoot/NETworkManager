@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
+using NETworkManager.Models.PowerShell;
 using static NETworkManager.Models.PuTTY.PuTTY;
 // ReSharper disable InconsistentNaming
 
@@ -700,6 +701,122 @@ namespace NETworkManager.ViewModels
 
         #endregion
 
+        #region PowerShell
+        private bool _powerShell_Enabled;
+        public bool PowerShell_Enabled
+        {
+            get => _powerShell_Enabled;
+            set
+            {
+                if (value == _powerShell_Enabled)
+                    return;
+
+                _powerShell_Enabled = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _powerShell_EnableRemoteConsole;
+        public bool PowerShell_EnableRemoteConsole
+        {
+            get => _powerShell_EnableRemoteConsole;
+            set
+            {
+                if (value == _powerShell_EnableRemoteConsole)
+                    return;
+
+                _powerShell_EnableRemoteConsole = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _powerShell_InheritHost;
+        public bool PowerShell_InheritHost
+        {
+            get => _powerShell_InheritHost;
+            set
+            {
+                if (value == _powerShell_InheritHost)
+                    return;
+
+                _powerShell_InheritHost = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _powerShell_Host;
+        public string PowerShell_Host
+        {
+            get => _powerShell_Host;
+            set
+            {
+                if (value == _powerShell_Host)
+                    return;
+
+                _powerShell_Host = value;
+
+                if (!_isLoading)
+                    Validate();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string _powerShell_AdditionalCommandLine;
+        public string PowerShell_AdditionalCommandLine
+        {
+            get => _powerShell_AdditionalCommandLine;
+            set
+            {
+                if (value == _powerShell_AdditionalCommandLine)
+                    return;
+
+                _powerShell_AdditionalCommandLine = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private List<PowerShell.ExecutionPolicy> _powerShell_ExecutionPolicies = new List<PowerShell.ExecutionPolicy>();
+        public List<PowerShell.ExecutionPolicy> PowerShell_ExecutionPolicies
+        {
+            get => _powerShell_ExecutionPolicies;
+            set
+            {
+                if (value == _powerShell_ExecutionPolicies)
+                    return;
+
+                _powerShell_ExecutionPolicies = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private PowerShell.ExecutionPolicy _powerShell_ExecutionPolicy;
+        public PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy
+        {
+            get => _powerShell_ExecutionPolicy;
+            set
+            {
+                if (value == _powerShell_ExecutionPolicy)
+                    return;
+
+                _powerShell_ExecutionPolicy = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         #region PuTTY 
         private bool _puTTY_Enabled;
         public bool PuTTY_Enabled
@@ -1245,7 +1362,7 @@ namespace NETworkManager.ViewModels
             {
                 ShowUnlockCredentialsHint = true;
 
-                Credentials = profileInfo2.CredentialID == Guid.Empty ? new CollectionViewSource { Source = new List<CredentialInfo>() }.View : new CollectionViewSource { Source = new List<CredentialInfo>() { new CredentialInfo(profileInfo2.CredentialID) } }.View;
+                Credentials = profileInfo2.CredentialID == Guid.Empty ? new CollectionViewSource { Source = new List<CredentialInfo>() }.View : new CollectionViewSource { Source = new List<CredentialInfo> { new CredentialInfo(profileInfo2.CredentialID) } }.View;
             }
 
             CredentialID = profileInfo2.CredentialID;
@@ -1298,6 +1415,15 @@ namespace NETworkManager.ViewModels
             RemoteDesktop_Enabled = profileInfo2.RemoteDesktop_Enabled;
             RemoteDesktop_InheritHost = profileInfo2.RemoteDesktop_InheritHost;
             RemoteDesktop_Host = profileInfo2.RemoteDesktop_Host;
+
+            // PowerShell
+            PowerShell_Enabled = profileInfo2.PowerShell_Enabled;
+            PowerShell_EnableRemoteConsole = profileInfo2.PowerShell_EnableRemoteConsole;
+            PowerShell_InheritHost = profileInfo2.PowerShell_InheritHost;
+            PowerShell_Host = profileInfo2.PowerShell_Host;
+            PowerShell_AdditionalCommandLine = profileInfo2.PowerShell_AdditionalCommandLine;
+            PowerShell_ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
+            PowerShell_ExecutionPolicy = IsEdited ? profileInfo2.PowerShell_ExecutionPolicy : PowerShell_ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_DefaultExecutionPolicy); ;
 
             // PuTTY
             PuTTY_Enabled = profileInfo2.PuTTY_Enabled;
@@ -1368,7 +1494,7 @@ namespace NETworkManager.ViewModels
         private void Validate()
         {
             // Note
-            IsTabEnabled = NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || DNSLookup_Enabled || RemoteDesktop_Enabled || PuTTY_Enabled || TightVNC_Enabled || WakeOnLAN_Enabled || HTTPHeaders_Enabled || Whois_Enabled;
+            IsTabEnabled = NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || DNSLookup_Enabled || RemoteDesktop_Enabled || PowerShell_Enabled || PuTTY_Enabled || TightVNC_Enabled || WakeOnLAN_Enabled || HTTPHeaders_Enabled || Whois_Enabled;
         }
 
         #region ICommands & Actions

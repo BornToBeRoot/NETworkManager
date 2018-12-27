@@ -20,7 +20,10 @@ namespace NETworkManager.Models.PowerShell
         {
             var info = new PowerShellSessionInfo
             {
-                //Host = profileInfo.Host
+                EnableRemoteConsole = profileInfo.PowerShell_EnableRemoteConsole,
+                Host = profileInfo.Host,
+                AdditionalCommandLine = profileInfo.PowerShell_AdditionalCommandLine,
+                ExecutionPolicy = profileInfo.PowerShell_ExecutionPolicy
             };
 
             return info;
