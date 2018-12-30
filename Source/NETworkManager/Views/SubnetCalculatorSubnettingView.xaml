@@ -10,9 +10,9 @@
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-        xmlns:net="clr-namespace:System.Net;assembly=System.Net.IPNetwork"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         xmlns:controls="clr-namespace:NETworkManager.Controls"
+        xmlns:network="clr-namespace:NETworkManager.Models.Network"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SubnetCalculatorSubnettingViewModel}">
     <UserControl.Resources>
@@ -253,14 +253,14 @@
                 </Style>
             </controls:MultiSelectDataGrid.RowStyle>
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.NetworkAddress}" Binding="{Binding (net:IPNetwork.Network), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Broadcast}" Binding="{Binding (net:IPNetwork.Broadcast), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddresses}" Binding="{Binding (net:IPNetwork.Total), Converter={StaticResource BigIntegerToStringConverter}}" MinWidth="150"  Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Subnetmask}" Binding="{Binding (net:IPNetwork.Netmask), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150"  Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.CIDR}" Binding="{Binding (net:IPNetwork.Cidr)}" MinWidth="80" Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.FirstUsableIPAddress}" Binding="{Binding (net:IPNetwork.FirstUsable), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.LastUsableIPAddress}" Binding="{Binding (net:IPNetwork.LastUsable), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Hosts}" Binding="{Binding (net:IPNetwork.Usable), Converter={StaticResource BigIntegerToStringConverter}}" MinWidth="80" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.NetworkAddress}" Binding="{Binding (network:IPNetworkInfo.Network), Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="NetworkInt32" MinWidth="150" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Broadcast}" Binding="{Binding (network:IPNetworkInfo.Broadcast), Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="BroadcastInt32" MinWidth="150" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddresses}" Binding="{Binding (network:IPNetworkInfo.Total), Converter={StaticResource BigIntegerToStringConverter}}" SortMemberPath="Total" MinWidth="150" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Subnetmask}" Binding="{Binding (network:IPNetworkInfo.Netmask), Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="NetmaskInt32" MinWidth="150" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.CIDR}" Binding="{Binding (network:IPNetworkInfo.Cidr)}" SortMemberPath="Cidr" MinWidth="80" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.FirstUsableIPAddress}" Binding="{Binding (network:IPNetworkInfo.FirstUsable), Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="FirstUsableInt32" MinWidth="150" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.LastUsableIPAddress}" Binding="{Binding (network:IPNetworkInfo.LastUsable), Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="LastUsableInt32" MinWidth="150" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Hosts}" Binding="{Binding (network:IPNetworkInfo.Usable), Converter={StaticResource BigIntegerToStringConverter}}" SortMemberPath="Usable" MinWidth="80" Width="*" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
         <TextBlock Grid.Row="3" Foreground="{DynamicResource GrayBrush3}" Text="{x:Static localization:Strings.EnterSubnetAndANewSubnetmaskToCreateSubnets}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />

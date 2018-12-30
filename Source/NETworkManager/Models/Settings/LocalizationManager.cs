@@ -8,7 +8,8 @@ namespace NETworkManager.Models.Settings
 {
     public static class LocalizationManager
     {
-        public static List<LocalizationInfo> List => new List<LocalizationInfo> {
+        public static List<LocalizationInfo> List => new List<LocalizationInfo>
+        {
             new LocalizationInfo("English", "English", new Uri("/Resources/Localization/Flags/en-US.png", UriKind.Relative), "BornToBeRoot", "en-US"),
             new LocalizationInfo("German", "Deutsch", new Uri("/Resources/Localization/Flags/de-DE.png", UriKind.Relative), "BornToBeRoot", "de-DE"),
             new LocalizationInfo("Russian", "Русский", new Uri("/Resources/Localization/Flags/ru-RU.png", UriKind.Relative), "LaXe", "ru-RU"),
@@ -51,7 +52,6 @@ namespace NETworkManager.Models.Settings
             // Set the culture code
             Culture = new CultureInfo(info.Code);
         }
-
 
         public static string TranslateIPStatus(object value)
         {

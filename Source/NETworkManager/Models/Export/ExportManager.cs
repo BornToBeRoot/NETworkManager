@@ -128,7 +128,7 @@ namespace NETworkManager.Models.Export
             }
         }
 
-        public static void Export(string filePath, ExportFileType fileType, ObservableCollection<IPNetwork> collection)
+        public static void Export(string filePath, ExportFileType fileType, ObservableCollection<IPNetworkInfo> collection)
         {
             switch (fileType)
             {
@@ -315,11 +315,11 @@ namespace NETworkManager.Models.Export
             System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
         }
 
-        private static void CreateCSV(IEnumerable<IPNetwork> collection, string filePath)
+        private static void CreateCSV(IEnumerable<IPNetworkInfo> collection, string filePath)
         {
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendLine($"{nameof(IPNetwork.Network)},{nameof(IPNetwork.Broadcast)},{nameof(IPNetwork.Total)},{nameof(IPNetwork.Netmask)},{nameof(IPNetwork.Cidr)},{nameof(IPNetwork.FirstUsable)},{nameof(IPNetwork.LastUsable)},{nameof(IPNetwork.Usable)}");
+            stringBuilder.AppendLine($"{nameof(IPNetworkInfo.Network)},{nameof(IPNetworkInfo.Broadcast)},{nameof(IPNetworkInfo.Total)},{nameof(IPNetworkInfo.Netmask)},{nameof(IPNetworkInfo.Cidr)},{nameof(IPNetworkInfo.FirstUsable)},{nameof(IPNetworkInfo.LastUsable)},{nameof(IPNetworkInfo.Usable)}");
 
             foreach (var info in collection)
                 stringBuilder.AppendLine($"{info.Network},{info.Broadcast},{info.Total},{info.Netmask},{info.Cidr},{info.FirstUsable},{info.LastUsable},{info.Usable}");
@@ -513,24 +513,24 @@ namespace NETworkManager.Models.Export
             document.Save(filePath);
         }
 
-        public static void CreateXML(IEnumerable<IPNetwork> collection, string filePath)
+        public static void CreateXML(IEnumerable<IPNetworkInfo> collection, string filePath)
         {
             var document = new XDocument(DefaultXDeclaration,
 
                 new XElement(ApplicationViewManager.Name.SNMP.ToString(),
-                    new XElement(nameof(IPNetwork) + "s",
+                    new XElement(nameof(IPNetworkInfo) + "s",
 
                         from info in collection
                         select
-                            new XElement(nameof(IPNetwork),
-                                new XElement(nameof(IPNetwork.Network), info.Network),
-                                new XElement(nameof(IPNetwork.Broadcast), info.Broadcast),
-                                new XElement(nameof(IPNetwork.Total), info.Total),
-                                new XElement(nameof(IPNetwork.Netmask), info.Netmask),
-                                new XElement(nameof(IPNetwork.Cidr), info.Cidr),
-                                new XElement(nameof(IPNetwork.FirstUsable), info.FirstUsable),
-                                new XElement(nameof(IPNetwork.LastUsable), info.LastUsable),
-                                new XElement(nameof(IPNetwork.Usable), info.Usable)))));
+                            new XElement(nameof(IPNetworkInfo),
+                                new XElement(nameof(IPNetworkInfo.Network), info.Network),
+                                new XElement(nameof(IPNetworkInfo.Broadcast), info.Broadcast),
+                                new XElement(nameof(IPNetworkInfo.Total), info.Total),
+                                new XElement(nameof(IPNetworkInfo.Netmask), info.Netmask),
+                                new XElement(nameof(IPNetworkInfo.Cidr), info.Cidr),
+                                new XElement(nameof(IPNetworkInfo.FirstUsable), info.FirstUsable),
+                                new XElement(nameof(IPNetworkInfo.LastUsable), info.LastUsable),
+                                new XElement(nameof(IPNetworkInfo.Usable), info.Usable)))));
 
             document.Save(filePath);
         }
@@ -750,7 +750,7 @@ namespace NETworkManager.Models.Export
             System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
         }
 
-        public static void CreateJSON(ObservableCollection<IPNetwork> collection, string filePath)
+        public static void CreateJSON(ObservableCollection<IPNetworkInfo> collection, string filePath)
         {
             var jsonData = new object[collection.Count];
 
