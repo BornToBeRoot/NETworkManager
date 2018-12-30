@@ -62,5 +62,15 @@ namespace NETworkManager.Models.Settings
 
             return string.IsNullOrEmpty(status) ? ipStatus.ToString() : status;
         }
+
+        public static string TranslateTcpState(object value)
+        {
+            if (!(value is TcpState tcpState))
+                return "-/-";
+
+            var status = Resources.Localization.Strings.ResourceManager.GetString("TcpState_" + tcpState, Culture);
+
+            return string.IsNullOrEmpty(status) ? tcpState.ToString() : status;
+        }
     }
 }

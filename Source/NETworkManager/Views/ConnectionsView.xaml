@@ -130,12 +130,12 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}" Binding="{Binding (network:ConnectionInfo.Protocol)}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}" Binding="{Binding (network:ConnectionInfo.Protocol)}" SortMemberPath="Protocol" MinWidth="100" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.LocalIPAddress}" Binding="{Binding (network:ConnectionInfo.LocalIPAddress)}" SortMemberPath="LocalIPAddressInt32" MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.LocalPort}" Binding="{Binding (network:ConnectionInfo.LocalPort)}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.LocalPort}" Binding="{Binding (network:ConnectionInfo.LocalPort)}" SortMemberPath="LocalPort" MinWidth="100" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.RemoteIPAddress}" Binding="{Binding (network:ConnectionInfo.RemoteIPAddress)}" SortMemberPath="RemoteIPAddressInt32" MinWidth="150"/>
-                <DataGridTextColumn Header="{x:Static localization:Strings.RemotePort}" Binding="{Binding (network:ConnectionInfo.RemotePort)}" MinWidth="100" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.State}" Binding="{Binding (network:ConnectionInfo.TcpState), Converter={StaticResource TcpStateToStringConverter}}" MinWidth="150" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.RemotePort}" Binding="{Binding (network:ConnectionInfo.RemotePort)}" SortMemberPath="RemotePort" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.State}" Binding="{Binding (network:ConnectionInfo.TcpState), Converter={StaticResource TcpStateToStringConverter}}" SortMemberPath="TcpStateTranslated" MinWidth="150" Width="*" />
             </DataGrid.Columns>
         </controls:MultiSelectDataGrid>
         <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />

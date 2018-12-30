@@ -114,8 +114,8 @@
             </controls:MultiSelectDataGrid.RowStyle>
             <controls:MultiSelectDataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" Binding="{Binding (network:ARPInfo.IPAddress)}" SortMemberPath="IPAddressInt32" MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" Binding="{Binding (network:ARPInfo.MACAddress), Converter={StaticResource PhysicalAddressToStringConverter}}" MinWidth="200" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Multicast}" Binding="{Binding (network:ARPInfo.IsMulticast), Converter={StaticResource BooleanToStringConverter}}" MinWidth="100" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" Binding="{Binding (network:ARPInfo.MACAddress), Converter={StaticResource PhysicalAddressToStringConverter}}" SortMemberPath="MACAddressString" MinWidth="200" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Multicast}" Binding="{Binding (network:ARPInfo.IsMulticast), Converter={StaticResource BooleanToStringConverter}}" SortMemberPath="IsMulticast" MinWidth="100" Width="*" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
         <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
