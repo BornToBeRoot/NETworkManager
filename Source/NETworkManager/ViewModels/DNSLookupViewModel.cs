@@ -32,6 +32,8 @@ namespace NETworkManager.ViewModels
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
+        private string _lastSortDescriptionAscending = string.Empty;
+        
         private readonly bool _isLoading;
 
         private string _host;
@@ -269,6 +271,7 @@ namespace NETworkManager.ViewModels
 
             LookupResultsView = CollectionViewSource.GetDefaultView(LookupResults);
             LookupResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.DNSServer)));
+            LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.DNSServer), ListSortDirection.Descending));
 
             LoadSettings();
 
@@ -509,6 +512,23 @@ namespace NETworkManager.ViewModels
 
             // Fill with the new items
             list.ForEach(x => SettingsManager.Current.DNSLookup_HostHistory.Add(x));
+        }
+
+        public void SortResultByPropertyName(string sortDescription)
+        {
+            LookupResultsView.SortDescriptions.Clear();
+            LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.DNSServer), ListSortDirection.Descending));
+
+            if (_lastSortDescriptionAscending.Equals(sortDescription))
+            {
+                LookupResultsView.SortDescriptions.Add(new SortDescription(sortDescription, ListSortDirection.Descending));
+                _lastSortDescriptionAscending = string.Empty;
+            }
+            else
+            {
+                LookupResultsView.SortDescriptions.Add(new SortDescription(sortDescription, ListSortDirection.Ascending));
+                _lastSortDescriptionAscending = sortDescription;
+            }
         }
         #endregion
 
