@@ -180,7 +180,11 @@
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" />
-        <controls:MultiSelectDataGrid Grid.Row="3" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding PortScanResultsView}" SelectedItem="{Binding SelectedPortScanResult}" SelectedItemsList="{Binding SelectedPortScanResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <!-- 
+        The sort function is in the code behind -> when you click on the header of the column, the SortMemberPath is passed to the viewmodel
+        CanUserSortColumns="False" -> Default sort won't work with grouped
+        -->
+        <controls:MultiSelectDataGrid CanUserSortColumns="False" Grid.Row="3" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding PortScanResultsView}" SelectedItem="{Binding SelectedPortScanResult}" SelectedItemsList="{Binding SelectedPortScanResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:MultiSelectDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <wpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
@@ -278,6 +282,9 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
+                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource DefaultDataGridColumnHeader}">
+                    <EventSetter Event="Click" Handler="ColumnHeader_Click" />
+                </Style>
             </controls:MultiSelectDataGrid.Resources>
             <controls:MultiSelectDataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
@@ -290,13 +297,13 @@
                 </Style>
             </controls:MultiSelectDataGrid.RowStyle>
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" Binding="{Binding (network:PortInfo.IPAddress)}" MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" Binding="{Binding (network:PortInfo.Hostname), Converter={StaticResource NullOrEmptyToStringConverter}}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Port}" Binding="{Binding (network:PortInfo.Port)}" MinWidth="80" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Status}" Binding="{Binding (network:PortInfo.Status), Converter={StaticResource PortStatusToStringConverter}}" MinWidth="100" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}" Binding="{Binding (network:PortInfo.LookupInfo).Protocol}" MinWidth="100" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Service}" Binding="{Binding (network:PortInfo.LookupInfo).Service}" MinWidth="100" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Description}" Binding="{Binding (network:PortInfo.LookupInfo).Description}" MinWidth="200" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" Binding="{Binding (network:PortInfo.IPAddress)}" SortMemberPath="IPAddressInt32" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" Binding="{Binding (network:PortInfo.Hostname), Converter={StaticResource NullOrEmptyToStringConverter}}" SortMemberPath="Hostname" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Port}" Binding="{Binding (network:PortInfo.Port)}" SortMemberPath="Port" MinWidth="80" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Status}" Binding="{Binding (network:PortInfo.Status), Converter={StaticResource PortStatusToStringConverter}}" SortMemberPath="Status" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}" Binding="{Binding (network:PortInfo.LookupInfo).Protocol}" SortMemberPath="LookupInfo.Protocol" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Service}" Binding="{Binding (network:PortInfo.LookupInfo).Service}" SortMemberPath="LookupInfo.Service" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Description}" Binding="{Binding (network:PortInfo.LookupInfo).Description}" SortMemberPath="LookupInfo.Description" MinWidth="200" Width="*" />
             </controls:MultiSelectDataGrid.Columns>
             <controls:MultiSelectDataGrid.GroupStyle>
                 <GroupStyle>

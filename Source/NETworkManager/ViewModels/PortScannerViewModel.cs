@@ -35,6 +35,8 @@ namespace NETworkManager.ViewModels
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
+        private string _lastSortDescriptionAscending = string.Empty;
+
         private bool _isLoading;
 
         private string _host;
@@ -308,6 +310,7 @@ namespace NETworkManager.ViewModels
             // Result view
             PortScanResultsView = CollectionViewSource.GetDefaultView(PortScanResult);
             PortScanResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortInfo.IPAddress)));
+            PortScanResultsView.SortDescriptions.Add(new SortDescription(nameof(PortInfo.IPAddressInt32), ListSortDirection.Descending));
 
             LoadSettings();
 
@@ -606,6 +609,23 @@ namespace NETworkManager.ViewModels
 
             // Fill with the new items
             list.ForEach(x => SettingsManager.Current.PortScanner_PortHistory.Add(x));
+        }
+
+        public void SortResultByPropertyName(string sortDescription)
+        {
+            PortScanResultsView.SortDescriptions.Clear();
+            PortScanResultsView.SortDescriptions.Add(new SortDescription(nameof(PortInfo.IPAddressInt32), ListSortDirection.Descending));
+
+            if (_lastSortDescriptionAscending.Equals(sortDescription))
+            {
+                PortScanResultsView.SortDescriptions.Add(new SortDescription(sortDescription, ListSortDirection.Descending));
+                _lastSortDescriptionAscending = string.Empty;
+            }
+            else
+            {
+                PortScanResultsView.SortDescriptions.Add(new SortDescription(sortDescription, ListSortDirection.Ascending));
+                _lastSortDescriptionAscending = sortDescription;
+            }
         }
         #endregion
 
