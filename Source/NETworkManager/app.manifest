@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
+
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3">
   <assemblyIdentity version="1.0.0.0" name="MyApplication.app"/>
   <trustInfo xmlns="urn:schemas-microsoft-com:asm.v2">
     <security>
@@ -25,4 +26,12 @@
 
     </application>
   </compatibility>
+
+  // https://stackoverflow.com/questions/13858665/disable-dpi-awareness-for-wpf-application
+  // FIX DPI issues with WindowsFormsHost (RDP, PuTTY, etc.)
+  <asmv3:application>
+    <asmv3:windowsSettings xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">
+      <dpiAware>false</dpiAware>
+    </asmv3:windowsSettings>
+  </asmv3:application>
 </assembly>
