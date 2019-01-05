@@ -559,10 +559,11 @@
                     <Grid Grid.Row="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Orientation="Horizontal">
-                            <Button HorizontalAlignment="Left" Command="{Binding FlushDNSCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}">
+                        <WrapPanel Grid.Column="0" Orientation="Horizontal" >
+                            <Button HorizontalAlignment="Left" Command="{Binding FlushDNSCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}" Margin="0,0,10,0">
                                 <Button.Content>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -578,7 +579,7 @@
                                     </Grid>
                                 </Button.Content>
                             </Button> 
-                            <Button HorizontalAlignment="Left" Command="{Binding AddIPv4AddressCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
+                            <Button HorizontalAlignment="Left" Command="{Binding AddIPv4AddressCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}" Margin="0,0,10,0">
                                 <Button.Content>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -594,7 +595,7 @@
                                     </Grid>
                                 </Button.Content>
                             </Button>
-                            <mah:DropDownButton Margin="10,0,0,0" Style="{StaticResource ImageDropDrownButton}">
+                            <mah:DropDownButton Style="{StaticResource ImageDropDrownButton}">
                                 <mah:DropDownButton.Content>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -640,8 +641,8 @@
                                     </MenuItem>
                                 </mah:DropDownButton.Items>
                             </mah:DropDownButton>
-                        </StackPanel>
-                        <Button Grid.Column="1" Command="{Binding ApplyConfigCommand}">
+                        </WrapPanel>
+                        <Button Grid.Column="2" Command="{Binding ApplyConfigCommand}" VerticalAlignment="Bottom">
                             <Button.Content>
                                 <Grid>
                                     <Grid.ColumnDefinitions>

@@ -136,9 +136,9 @@
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Bottom">
-                <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" />
-                <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150" Margin="10,0,0,0">
+            <WrapPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0" />
+                <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150" Margin="0,0,10,0">
                     <ComboBox.ItemTemplate>
                         <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
                             <TextBlock>
@@ -152,9 +152,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-            </StackPanel>
-            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Command="{Binding AddEntryCommand}" Style="{StaticResource ImageWithTextButton}">
+                <Button Command="{Binding AddEntryCommand}" Style="{StaticResource ImageWithTextButton}" Margin="0,0,10,0">
                     <Button.Content>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -170,7 +168,7 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Button Command="{Binding DeleteEntryCommand}" Margin="10,0,0,0">
+                <Button Command="{Binding DeleteEntryCommand}" Margin="0,0,10,0">
                     <Button.Content>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -196,7 +194,7 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <Button Command="{Binding DeleteTableCommand}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
+                <Button Command="{Binding DeleteTableCommand}" Style="{StaticResource ImageWithTextButton}">
                     <Button.Content>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -212,35 +210,35 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Button Command="{Binding RefreshCommand}" Margin="10,0,0,0">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsRefreshing}" Value="True">
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding AutoRefresh}" Value="True">
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}" TextAlignment="Center" Margin="10,5" />
-                        </Grid>
-                    </Button.Content>
-                </Button>
-            </StackPanel>
+            </WrapPanel>
+            <Button Grid.Column="2" Command="{Binding RefreshCommand}" VerticalAlignment="Bottom"> 
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsRefreshing}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding AutoRefresh}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}" TextAlignment="Center" Margin="10,5" />
+                    </Grid>
+                </Button.Content>
+            </Button>
         </Grid>
     </Grid>
 </UserControl>
