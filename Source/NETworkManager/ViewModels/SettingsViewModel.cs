@@ -114,7 +114,6 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            // General
             SettingsViews =  new CollectionViewSource { Source = SettingsViewManager.List }.View;
             SettingsViews.GroupDescriptions.Add(new PropertyGroupDescription(nameof(SettingsViewInfo.TranslatedGroup)));
             SettingsViews.SortDescriptions.Add(new SortDescription(nameof(SettingsViewInfo.Name), ListSortDirection.Ascending));

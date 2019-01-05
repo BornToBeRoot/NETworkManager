@@ -17,6 +17,8 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly bool _isLoading;
 
+        public ICollectionView ProfileViews { get; private set; }
+        
         #region General
         private string _name;
         public string Name
@@ -1343,7 +1345,11 @@ namespace NETworkManager.ViewModels
         public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, bool isEdited = false, ProfileInfo profileInfo = null)
         {
             _isLoading = true;
-
+            
+            // Load the view
+            ProfileViews = new CollectionViewSource { Source = ProfileViewManager.List }.View;
+            ProfileViews.SortDescriptions.Add(new SortDescription(nameof(ProfileViewInfo.Name), ListSortDirection.Ascending));
+            
             SaveCommand = new RelayCommand(p => saveCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
@@ -1487,7 +1493,7 @@ namespace NETworkManager.ViewModels
             Whois_Domain = profileInfo2.Whois_Domain;
 
             Validate();
-
+            
             _isLoading = false;
         }
 

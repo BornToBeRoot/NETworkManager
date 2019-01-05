@@ -35,7 +35,7 @@ namespace NETworkManager
             new SettingsViewInfo(Name.Whois, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Whois), Group.Applications)
         };
 
-        public static string TranslateName(Name name, Group group)
+        public static string TranslateName(Name name)
         {
             switch (name)
             {

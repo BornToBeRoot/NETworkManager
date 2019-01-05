@@ -60,6 +60,11 @@
     </Style>
 
     <Style x:Key="ProfileTabItem" TargetType="{x:Type TabItem}">
+        <Setter Property="Visibility" Value="Collapsed"></Setter>
+
+    </Style>
+
+    <!--<Style x:Key="ProfileTabItem" TargetType="{x:Type TabItem}">
         <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Height" Value="32"></Setter>
@@ -87,5 +92,5 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
 </ResourceDictionary>
