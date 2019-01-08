@@ -17,7 +17,7 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly bool _isLoading;
 
-        public ICollectionView ProfileViews { get; private set; }
+        public ICollectionView ProfileViews { get; }
         
         #region General
         private string _name;
