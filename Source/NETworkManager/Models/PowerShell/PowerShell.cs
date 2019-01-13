@@ -1,4 +1,6 @@
-﻿namespace NETworkManager.Models.PowerShell
+﻿using NETworkManager.Models.Settings;
+
+namespace NETworkManager.Models.PowerShell
 {
     public class PowerShell
     {
@@ -10,6 +12,19 @@
                 command += $" -NoExit -Command \"Enter-PSSession -ComputerName {sessionInfo.Host}\"";
 
             return command;
+        }
+
+        public static PowerShellSessionInfo CreateSessionInfo(ProfileInfo profileInfo)
+        {
+            var info = new PowerShellSessionInfo
+            {
+                EnableRemoteConsole = profileInfo.PowerShell_EnableRemoteConsole,
+                Host = profileInfo.Host,
+                AdditionalCommandLine = profileInfo.PowerShell_OverrideDefaultSettings ? profileInfo.PowerShell_AdditionalCommandLine : SettingsManager.Current.PowerShell_DefaultAdditionalCommandLine,
+                ExecutionPolicy = profileInfo.PowerShell_OverrideDefaultSettings ? profileInfo.PowerShell_ExecutionPolicy : SettingsManager.Current.PowerShell_DefaultExecutionPolicy
+            };
+
+            return info;
         }
 
         public enum ExecutionPolicy

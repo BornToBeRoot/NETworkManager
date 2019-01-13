@@ -53,6 +53,7 @@ namespace NETworkManager.Models.Settings
         public bool PowerShell_EnableRemoteConsole { get; set; } = true;
         public bool PowerShell_InheritHost { get; set; } = true;
         public string PowerShell_Host { get; set; }
+        public bool PowerShell_OverrideDefaultSettings { get; set; }
         public string PowerShell_AdditionalCommandLine { get; set; }
         public PowerShell.PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy { get; set; }
 
@@ -68,11 +69,13 @@ namespace NETworkManager.Models.Settings
         public bool TightVNC_Enabled { get; set; }
         public bool TightVNC_InheritHost { get; set; } = true;
         public string TightVNC_Host { get; set; }
+        public bool TightVNC_OverrideDefaultSettings { get; set; }
         public int TightVNC_Port { get; set; }
 
         public bool WakeOnLAN_Enabled { get; set; }
         public string WakeOnLAN_MACAddress { get; set; }
         public string WakeOnLAN_Broadcast { get; set; }
+        public bool WakeOnLAN_OverrideDefaultSettings { get; set; }
         public int WakeOnLAN_Port { get; set; }
 
         public bool HTTPHeaders_Enabled { get; set; }

@@ -158,14 +158,7 @@ namespace NETworkManager.ViewModels
             {
                 if (value == _selectedProfile)
                     return;
-
-                if (value != null && !IsSending)
-                {
-                    MACAddress = value.WakeOnLAN_MACAddress;
-                    Broadcast = value.WakeOnLAN_Broadcast;
-                    Port = value.WakeOnLAN_Port;
-                }
-
+                
                 _selectedProfile = value;
                 OnPropertyChanged();
             }
@@ -275,7 +268,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            Port = SettingsManager.Current.WakeOnLAN_Port;
+            Port = SettingsManager.Current.DefaultWakeOnLAN_Port;
             ExpandProfileView = SettingsManager.Current.WakeOnLAN_ExpandClientView;
 
             ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.WakeOnLAN_ClientWidth) : new GridLength(GlobalStaticConfiguration.ProfileWidthCollapsed);
@@ -314,14 +307,7 @@ namespace NETworkManager.ViewModels
 
         private void WakeUpProfileAction()
         {
-            var info = new WakeOnLANInfo
-            {
-                MagicPacket = WakeOnLAN.CreateMagicPacket(SelectedProfile.WakeOnLAN_MACAddress),
-                Broadcast = IPAddress.Parse(SelectedProfile.WakeOnLAN_Broadcast),
-                Port = SelectedProfile.WakeOnLAN_Port
-            };
-
-            WakeUp(info);
+            WakeUp(WakeOnLAN.CreateWakeOnLANInfo(SelectedProfile));
         }
 
         public ICommand AddProfileCommand

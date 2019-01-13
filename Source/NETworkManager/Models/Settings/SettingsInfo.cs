@@ -2460,16 +2460,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _tightVNC_VNCPort = GlobalStaticConfiguration.TightVNCDefaultVNCPort;
-        public int TightVNC_VNCPort
+        private int _tightVNC_DefaultVNCPort = GlobalStaticConfiguration.TightVNCDefaultVNCPort;
+        public int TightVNC_DefaultVNCPort
         {
-            get => _tightVNC_VNCPort;
+            get => _tightVNC_DefaultVNCPort;
             set
             {
-                if (value == _tightVNC_VNCPort)
+                if (value == _tightVNC_DefaultVNCPort)
                     return;
 
-                _tightVNC_VNCPort = value;
+                _tightVNC_DefaultVNCPort = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -2704,16 +2704,16 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region WakeOnLAN
-        private int _wakeOnLAN_Port = 7;
-        public int WakeOnLAN_Port
+        private int _defaultWakeOnLAN_Port = 7;
+        public int DefaultWakeOnLAN_Port
         {
-            get => _wakeOnLAN_Port;
+            get => _defaultWakeOnLAN_Port;
             set
             {
-                if (value == _wakeOnLAN_Port)
+                if (value == _defaultWakeOnLAN_Port)
                     return;
 
-                _wakeOnLAN_Port = value;
+                _defaultWakeOnLAN_Port = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }

@@ -477,7 +477,7 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfile()
         {
-            Connect(TightVNCSessionInfo.Parse(SelectedProfile), SelectedProfile.Name);
+            Connect(TightVNC.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
         }
 
         private void ConnectProfileExternal()
@@ -485,7 +485,7 @@ namespace NETworkManager.ViewModels
             var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.TightVNC_ApplicationFilePath,
-                Arguments = TightVNC.BuildCommandLine(TightVNCSessionInfo.Parse(SelectedProfile))
+                Arguments = TightVNC.BuildCommandLine(TightVNC.CreateSessionInfo(SelectedProfile))
             };
 
             Process.Start(info);

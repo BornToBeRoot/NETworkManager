@@ -30,10 +30,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _name = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -48,10 +44,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _host = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -66,10 +58,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _credentialID = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -86,10 +74,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _group = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -106,10 +90,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _tags = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -186,10 +166,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_EnableDynamicIPAddress = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -207,10 +183,6 @@ namespace NETworkManager.ViewModels
                     NetworkInterface_EnableStaticDNS = true;
 
                 _networkInterface_EnableStaticIPAddress = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -225,10 +197,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_IPAddress = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -243,10 +211,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_SubnetmaskOrCidr = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -261,10 +225,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_Gateway = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -279,10 +239,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_EnableDynamicDNS = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -297,10 +253,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_EnableStaticDNS = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -315,10 +267,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_PrimaryDNSServer = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -333,10 +281,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_SecondaryDNSServer = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -372,10 +316,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _ipScanner_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -390,10 +330,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _ipScanner_IPRange = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -430,10 +366,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _portScanner_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -448,10 +380,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _portScanner_Host = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -466,10 +394,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _portScanner_Ports = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -505,10 +429,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _ping_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -523,10 +443,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _ping_Host = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -562,10 +478,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _traceroute_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -580,10 +492,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _traceroute_Host = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -619,10 +527,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _dnsLookup_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -637,10 +541,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _dnsLookup_Host = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -675,10 +575,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _remoteDesktop_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -693,10 +589,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _remoteDesktop_Host = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -732,10 +624,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _powerShell_EnableRemoteConsole = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -750,10 +638,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _powerShell_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -768,10 +652,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _powerShell_Host = value;
+                OnPropertyChanged();
+            }
+        }
 
-                if (!_isLoading)
-                    Validate();
+        private bool _powerShell_OverrideDefaultSettings;
+        public bool PowerShell_OverrideDefaultSettings
+        {
+            get => _powerShell_OverrideDefaultSettings;
+            set
+            {
+                if(value == _powerShell_OverrideDefaultSettings)
+                    return;
 
+                _powerShell_OverrideDefaultSettings = value;
                 OnPropertyChanged();
             }
         }
@@ -848,10 +742,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _puTTY_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -966,10 +856,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _puTTY_Host = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -984,10 +870,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _puTTY_SerialLine = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1002,10 +884,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _puTTY_Port = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1020,10 +898,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _puTTY_Baud = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1038,10 +912,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _puTTY__Username = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1056,10 +926,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _puTTY_Profile = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1074,10 +940,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _puTTY_AdditionalCommandLine = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1092,9 +954,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _puTTY_ConnectionMode = value;
-
-                if (!_isLoading)
-                    Validate();
             }
         }
         #endregion
@@ -1128,10 +987,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _tightVNC_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1146,10 +1001,21 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _tightVNC_Host = value;
+                OnPropertyChanged();
+            }
+        }
 
-                if (!_isLoading)
-                    Validate();
 
+        private bool _tightVNC_OverrideDefaultSettings;
+        public bool TightVNC_OverrideDefaultSettings
+        {
+            get => _tightVNC_OverrideDefaultSettings;
+            set
+            {
+                if (value == _tightVNC_OverrideDefaultSettings)
+                    return;
+
+                _tightVNC_OverrideDefaultSettings = value;
                 OnPropertyChanged();
             }
         }
@@ -1164,10 +1030,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _tightVNC_Port = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1202,10 +1064,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _wakeOnLAN_MACAddress = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1220,10 +1078,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _wakeOnLAN_Broadcast = value;
+                OnPropertyChanged();
+            }
+        }
 
-                if (!_isLoading)
-                    Validate();
+        private bool _wakeOnLAN_OverrideDefaultSettings;
+        public bool WakeOnLAN_OverrideDefaultSettings
+        {
+            get => _wakeOnLAN_OverrideDefaultSettings;
+            set
+            {
+                if(value == _wakeOnLAN_OverrideDefaultSettings)
+                    return;
 
+                _wakeOnLAN_OverrideDefaultSettings = value;
                 OnPropertyChanged();
             }
         }
@@ -1238,10 +1106,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _wakeOnLAN_Port = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1276,10 +1140,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _httpHeaders_Website = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1314,10 +1174,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _whois_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1332,10 +1188,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _whois_Domain = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1427,6 +1279,7 @@ namespace NETworkManager.ViewModels
             PowerShell_EnableRemoteConsole = profileInfo2.PowerShell_EnableRemoteConsole;
             PowerShell_InheritHost = profileInfo2.PowerShell_InheritHost;
             PowerShell_Host = profileInfo2.PowerShell_Host;
+            PowerShell_OverrideDefaultSettings = profileInfo2.PowerShell_OverrideDefaultSettings;
             PowerShell_AdditionalCommandLine = profileInfo2.PowerShell_AdditionalCommandLine;
             PowerShell_ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
             PowerShell_ExecutionPolicy = IsEdited ? profileInfo2.PowerShell_ExecutionPolicy : PowerShell_ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_DefaultExecutionPolicy); ;
@@ -1475,13 +1328,15 @@ namespace NETworkManager.ViewModels
             TightVNC_Enabled = profileInfo2.TightVNC_Enabled;
             TightVNC_InheritHost = profileInfo2.TightVNC_InheritHost;
             TightVNC_Host = profileInfo2.TightVNC_Host;
-            TightVNC_Port = profileInfo2.TightVNC_Port == 0 ? SettingsManager.Current.TightVNC_VNCPort : profileInfo2.TightVNC_Port;
+            TightVNC_OverrideDefaultSettings = profileInfo2.TightVNC_OverrideDefaultSettings;
+            TightVNC_Port = profileInfo2.TightVNC_Port == 0 ? SettingsManager.Current.TightVNC_DefaultVNCPort : profileInfo2.TightVNC_Port;
 
             // Wake on LAN
             WakeOnLAN_Enabled = profileInfo2.WakeOnLAN_Enabled;
             WakeOnLAN_MACAddress = profileInfo2.WakeOnLAN_MACAddress;
             WakeOnLAN_Broadcast = profileInfo2.WakeOnLAN_Broadcast;
-            WakeOnLAN_Port = profileInfo2.WakeOnLAN_Port == 0 ? SettingsManager.Current.WakeOnLAN_Port : profileInfo2.WakeOnLAN_Port;
+            WakeOnLAN_OverrideDefaultSettings = profileInfo2.WakeOnLAN_OverrideDefaultSettings;
+            WakeOnLAN_Port = profileInfo2.WakeOnLAN_Port == 0 ? SettingsManager.Current.DefaultWakeOnLAN_Port : profileInfo2.WakeOnLAN_Port;
 
             // HTTP Headers
             HTTPHeaders_Enabled = profileInfo2.HTTPHeaders_Enabled;

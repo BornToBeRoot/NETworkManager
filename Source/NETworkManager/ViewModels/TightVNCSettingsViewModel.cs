@@ -48,19 +48,19 @@ namespace NETworkManager.ViewModels
             }
         }
         
-        private int _vncPort;
-        public int VNCPort
+        private int _defaultVNCPort;
+        public int DefaultVNCPort
         {
-            get => _vncPort;
+            get => _defaultVNCPort;
             set
             {
-                if (value == _vncPort)
+                if (value == _defaultVNCPort)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.TightVNC_VNCPort = value;
+                    SettingsManager.Current.TightVNC_DefaultVNCPort = value;
 
-                _vncPort = value;
+                _defaultVNCPort = value;
                 OnPropertyChanged();
             }
         }
@@ -82,7 +82,7 @@ namespace NETworkManager.ViewModels
         {
             ApplicationFilePath = SettingsManager.Current.TightVNC_ApplicationFilePath;
             IsConfigured = File.Exists(ApplicationFilePath);
-            VNCPort = SettingsManager.Current.TightVNC_VNCPort;
+            DefaultVNCPort = SettingsManager.Current.TightVNC_DefaultVNCPort;
         }
         #endregion
 

@@ -12,16 +12,5 @@ namespace NETworkManager.Models.TightVNC
         {
 
         }
-
-        public static TightVNCSessionInfo Parse(ProfileInfo profileInfo)
-        {
-            var info = new TightVNCSessionInfo
-            {
-                Host = profileInfo.TightVNC_Host,
-                Port = profileInfo.TightVNC_Port
-            };
-
-            return info;
-        }
     }
 }

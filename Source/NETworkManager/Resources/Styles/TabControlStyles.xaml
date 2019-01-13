@@ -63,34 +63,4 @@
         <Setter Property="Visibility" Value="Collapsed"></Setter>
 
     </Style>
-
-    <!--<Style x:Key="ProfileTabItem" TargetType="{x:Type TabItem}">
-        <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Height" Value="32"></Setter>
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TabItem}">
-                    <Grid x:Name="PART_Grid" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" Margin="0">
-                        <ContentPresenter x:Name="PART_HeaderContent" Margin="{TemplateBinding Padding}" ContentSource="Header" VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.FontSize="18" TextBlock.FontFamily="{StaticResource HeaderFontFamily}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Rectangle x:Name="PART_Selector" VerticalAlignment="Bottom" Height="2" Visibility="Collapsed" Fill="{DynamicResource AccentColorBrush}" />
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger SourceName="PART_Grid" Property="IsMouseOver" Value="True">
-                            <Trigger.Setters>
-                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
-                            </Trigger.Setters>
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Trigger.Setters>
-                                <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
-                                <Setter TargetName="PART_Selector" Property="Visibility" Value="Visible" />
-                            </Trigger.Setters>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>-->
 </ResourceDictionary>

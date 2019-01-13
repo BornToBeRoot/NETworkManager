@@ -1,5 +1,4 @@
-﻿using NETworkManager.Models.Settings;
-using static NETworkManager.Models.PowerShell.PowerShell;
+﻿using static NETworkManager.Models.PowerShell.PowerShell;
 
 namespace NETworkManager.Models.PowerShell
 {
@@ -14,19 +13,6 @@ namespace NETworkManager.Models.PowerShell
         public PowerShellSessionInfo()
         {
 
-        }
-
-        public static PowerShellSessionInfo Parse(ProfileInfo profileInfo)
-        {
-            var info = new PowerShellSessionInfo
-            {
-                EnableRemoteConsole = profileInfo.PowerShell_EnableRemoteConsole,
-                Host = profileInfo.Host,
-                AdditionalCommandLine = profileInfo.PowerShell_AdditionalCommandLine,
-                ExecutionPolicy = profileInfo.PowerShell_ExecutionPolicy
-            };
-
-            return info;
         }
     }
 }

@@ -60,7 +60,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            Port = SettingsManager.Current.TightVNC_VNCPort;
+            Port = SettingsManager.Current.TightVNC_DefaultVNCPort;
         }
     }
 }

@@ -27,7 +27,7 @@
         <TextBlock Text="{x:Static localization:Strings.DefaultVNCPort}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort5900}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
-                <Binding Path="VNCPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="DefaultVNCPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                         <validators:PortValidator ValidatesOnTargetUpdated="True" />

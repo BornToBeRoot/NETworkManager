@@ -479,7 +479,7 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfile()
         {
-            Connect(PowerShellSessionInfo.Parse(SelectedProfile), SelectedProfile.Name);
+            Connect(PowerShell.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
         }
 
         private void ConnectProfileExternal()
@@ -487,7 +487,7 @@ namespace NETworkManager.ViewModels
             var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.PowerShell_ApplicationFilePath,
-                Arguments = PowerShell.BuildCommandLine(PowerShellSessionInfo.Parse(SelectedProfile))
+                Arguments = PowerShell.BuildCommandLine(PowerShell.CreateSessionInfo(SelectedProfile))
             };
 
             Process.Start(info);
