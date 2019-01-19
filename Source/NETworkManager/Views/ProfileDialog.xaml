@@ -36,6 +36,8 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <Rectangle Grid.Column="0" Width="20" Height="20" Margin="10,0">
                                         <Rectangle.OpacityMask>
@@ -56,7 +58,7 @@
                                             </Style>
                                         </Rectangle.Style>
                                     </Rectangle>
-                                    <TextBlock Grid.Column="1" Text="{Binding (networkManager:SettingsViewInfo.TranslatedName)}" >
+                                    <TextBlock Grid.Column="1" Text="{Binding (networkManager:ProfileViewInfo.TranslatedName)}" >
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
@@ -64,16 +66,66 @@
                                                 <Setter Property="VerticalAlignment" Value="Center" />
                                                 <Setter Property="FontSize" Value="14" />
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Path=IsMouseOver,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="True" >
+                                                    <DataTrigger Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="True" >
                                                         <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Path=IsSelected,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="True" >
+                                                    <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="True" >
                                                         <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </TextBlock.Style>
                                     </TextBlock>
+                                    <CheckBox  Grid.Column="3">
+                                        <CheckBox.Style>
+                                            <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource DefaultCheckBox}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.General}">
+                                                        <Setter Property="Visibility" Value="Hidden" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.NetworkInterface}">
+                                                        <Setter Property="IsChecked" Value="{Binding DataContext.NetworkInterface_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.IPScanner}">
+                                                        <Setter Property="IsChecked" Value="{Binding DataContext.IPScanner_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.PortScanner}">
+                                                        <Setter Property="IsChecked" Value="{Binding DataContext.PortScanner_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.Ping}">
+                                                        <Setter Property="IsChecked" Value="{Binding DataContext.Ping_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.Traceroute}">
+                                                        <Setter Property="IsChecked" Value="{Binding DataContext.Traceroute_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.DNSLookup}">
+                                                        <Setter Property="IsChecked" Value="{Binding DataContext.DNSLookup_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.RemoteDesktop}">
+                                                        <Setter Property="IsChecked" Value="{Binding DataContext.RemoteDesktop_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.PowerShell}">
+                                                        <Setter Property="IsChecked" Value="{Binding DataContext.PowerShell_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.PuTTY}">
+                                                        <Setter Property="IsChecked" Value="{Binding DataContext.PuTTY_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.TightVNC}">
+                                                        <Setter Property="IsChecked" Value="{Binding DataContext.TightVNC_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.WakeOnLAN}">
+                                                        <Setter Property="IsChecked" Value="{Binding DataContext.WakeOnLAN_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.HTTPHeaders}">
+                                                        <Setter Property="IsChecked" Value="{Binding DataContext.HTTPHeaders_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.Whois}">
+                                                        <Setter Property="IsChecked" Value="{Binding DataContext.Whois_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </CheckBox.Style>
+                                    </CheckBox>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -218,24 +270,6 @@
                 <TabItem Header="{x:Static localization:Strings.NetworkInterface}">
                     <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
                         <StackPanel>
-                            <Grid Margin="0,0,0,10">
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                                </Grid.Resources>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="34" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding NetworkInterface_Enabled}" />
-                            </Grid>
-                            <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
                             <StackPanel IsEnabled="{Binding NetworkInterface_Enabled}">
                                 <RadioButton x:Name="RadioButtonEnableDynamicIPAddress" GroupName="NetworkInterface_IPAddressConfig" IsChecked="{Binding NetworkInterface_EnableDynamicIPAddress}" Content="{x:Static localization:Strings.ObtainAnIPAddressAutomatically}" Margin="0,0,0,10"/>
                                 <RadioButton x:Name="RadioButtonEnableStaticIPAddress" GroupName="NetworkInterface_IPAddressConfig" IsChecked="{Binding NetworkInterface_EnableStaticIPAddress}" Content="{x:Static localization:Strings.UseTheFollowingIPAddress}" Margin="0,0,0,10"/>
@@ -336,24 +370,6 @@
                 <TabItem Header="{x:Static localization:Strings.IPScanner}">
                     <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
                         <StackPanel>
-                            <Grid Margin="0,0,0,10">
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                                </Grid.Resources>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="34" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding IPScanner_Enabled}" />
-                            </Grid>
-                            <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
                             <StackPanel IsEnabled="{Binding IPScanner_Enabled}">
                                 <Grid>
                                     <Grid.Resources>
@@ -409,24 +425,6 @@
                 <TabItem Header="{x:Static localization:Strings.PortScanner}">
                     <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
                         <StackPanel>
-                            <Grid Margin="0,0,0,10">
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                                </Grid.Resources>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="34" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding PortScanner_Enabled}" />
-                            </Grid>
-                            <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
                             <StackPanel IsEnabled="{Binding PortScanner_Enabled}">
                                 <Grid>
                                     <Grid.Resources>
@@ -494,24 +492,6 @@
                 <TabItem Header="{x:Static localization:Strings.Ping}">
                     <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
                         <StackPanel>
-                            <Grid Margin="0,0,0,10">
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                                </Grid.Resources>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="34" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Ping_Enabled}" />
-                            </Grid>
-                            <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
                             <StackPanel IsEnabled="{Binding Ping_Enabled}">
                                 <Grid>
                                     <Grid.Resources>
@@ -566,24 +546,6 @@
                 <TabItem Header="{x:Static localization:Strings.Traceroute}">
                     <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
                         <StackPanel>
-                            <Grid Margin="0,0,0,10">
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                                </Grid.Resources>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="34" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Traceroute_Enabled}" />
-                            </Grid>
-                            <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
                             <StackPanel IsEnabled="{Binding Traceroute_Enabled}">
                                 <Grid>
                                     <Grid.Resources>
@@ -638,24 +600,6 @@
                 <TabItem Header="{x:Static localization:Strings.DNSLookup}">
                     <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
                         <StackPanel>
-                            <Grid Margin="0,0,0,10">
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                                </Grid.Resources>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="34" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding DNSLookup_Enabled}" />
-                            </Grid>
-                            <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
                             <StackPanel IsEnabled="{Binding DNSLookup_Enabled}">
                                 <Grid>
                                     <Grid.Resources>
@@ -710,24 +654,6 @@
                 <TabItem Header="{x:Static localization:Strings.RemoteDesktop}">
                     <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
                         <StackPanel>
-                            <Grid Margin="0,0,0,10">
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                                </Grid.Resources>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="34" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding RemoteDesktop_Enabled}" />
-                            </Grid>
-                            <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
                             <StackPanel IsEnabled="{Binding RemoteDesktop_Enabled}">
                                 <Grid>
                                     <Grid.Resources>
@@ -782,24 +708,6 @@
                 <TabItem Header="{x:Static localization:Strings.PowerShell}">
                     <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
                         <StackPanel>
-                            <Grid Margin="0,0,0,10">
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                                </Grid.Resources>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="34" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding PowerShell_Enabled}" />
-                            </Grid>
-                            <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
                             <StackPanel IsEnabled="{Binding PowerShell_Enabled}" Margin="0,0,0,20">
                                 <Grid>
                                     <Grid.Resources>
@@ -925,24 +833,6 @@
                 <TabItem Header="{x:Static localization:Strings.PuTTY}">
                     <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel>
-                            <Grid Margin="0,0,0,10">
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                                </Grid.Resources>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="34" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding PuTTY_Enabled}" />
-                            </Grid>
-                            <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
                             <StackPanel IsEnabled="{Binding PuTTY_Enabled}">
                                 <Grid>
                                     <Grid.Resources>
@@ -1096,24 +986,6 @@
                 <TabItem Header="{x:Static localization:Strings.TightVNC}">
                     <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
                         <StackPanel>
-                            <Grid Margin="0,0,0,10">
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                                </Grid.Resources>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="34" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding TightVNC_Enabled}" />
-                            </Grid>
-                            <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
                             <StackPanel IsEnabled="{Binding TightVNC_Enabled}" Margin="0,0,0,20">
                                 <Grid>
                                     <Grid.Resources>
@@ -1233,24 +1105,6 @@
                 <TabItem Header="{x:Static localization:Strings.WakeOnLAN}">
                     <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
                         <StackPanel>
-                            <Grid Margin="0,0,0,10">
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                                </Grid.Resources>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="34" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding WakeOnLAN_Enabled}" />
-                            </Grid>
-                            <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
                             <StackPanel IsEnabled="{Binding WakeOnLAN_Enabled}" Margin="0,0,0,20">
                                 <Grid>
                                     <Grid.Resources>
@@ -1361,24 +1215,6 @@
                 <TabItem Header="{x:Static localization:Strings.HTTPHeaders}">
                     <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
                         <StackPanel>
-                            <Grid Margin="0,0,0,10">
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                                </Grid.Resources>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="34" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding HTTPHeaders_Enabled}" />
-                            </Grid>
-                            <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
                             <StackPanel IsEnabled="{Binding HTTPHeaders_Enabled}">
                                 <Grid>
                                     <Grid.Resources>
@@ -1413,24 +1249,6 @@
                 <TabItem Header="{x:Static localization:Strings.Whois}">
                     <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
                         <StackPanel>
-                            <Grid Margin="0,0,0,10">
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                                </Grid.Resources>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="34" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Enable}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Whois_Enabled}" />
-                            </Grid>
-                            <Separator Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
                             <StackPanel IsEnabled="{Binding Whois_Enabled}">
                                 <Grid>
                                     <Grid.Resources>
@@ -1484,7 +1302,6 @@
                 </TabItem>
             </TabControl>
         </Grid>
-
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
             <Button Content="{x:Static localization:Strings.Save}" Command="{Binding SaveCommand}" IsDefault="True" Margin="10,0,0,0">
