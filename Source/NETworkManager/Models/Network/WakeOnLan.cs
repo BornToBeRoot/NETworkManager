@@ -48,7 +48,7 @@ namespace NETworkManager.Models.Network
             {
                 MagicPacket = CreateMagicPacket(profileInfo.WakeOnLAN_MACAddress),
                 Broadcast = IPAddress.Parse(profileInfo.WakeOnLAN_Broadcast),
-                Port = profileInfo.WakeOnLAN_OverrideDefaultSettings ? profileInfo.WakeOnLAN_Port : SettingsManager.Current.DefaultWakeOnLAN_Port
+                Port = profileInfo.WakeOnLAN_OverridePort ? profileInfo.WakeOnLAN_Port : SettingsManager.Current.DefaultWakeOnLAN_Port
             };
 
             return info;

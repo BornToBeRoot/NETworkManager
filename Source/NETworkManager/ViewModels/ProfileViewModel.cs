@@ -1096,16 +1096,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _wakeOnLAN_OverrideDefaultSettings;
-        public bool WakeOnLAN_OverrideDefaultSettings
+        private bool _wakeOnLAN_OverridePort;
+        public bool WakeOnLAN_OverridePort
         {
-            get => _wakeOnLAN_OverrideDefaultSettings;
+            get => _wakeOnLAN_OverridePort;
             set
             {
-                if(value == _wakeOnLAN_OverrideDefaultSettings)
+                if(value == _wakeOnLAN_OverridePort)
                     return;
 
-                _wakeOnLAN_OverrideDefaultSettings = value;
+                _wakeOnLAN_OverridePort = value;
                 OnPropertyChanged();
             }
         }
@@ -1350,8 +1350,8 @@ namespace NETworkManager.ViewModels
             WakeOnLAN_Enabled = profileInfo2.WakeOnLAN_Enabled;
             WakeOnLAN_MACAddress = profileInfo2.WakeOnLAN_MACAddress;
             WakeOnLAN_Broadcast = profileInfo2.WakeOnLAN_Broadcast;
-            WakeOnLAN_OverrideDefaultSettings = profileInfo2.WakeOnLAN_OverrideDefaultSettings;
-            WakeOnLAN_Port = profileInfo2.WakeOnLAN_Port == 0 ? SettingsManager.Current.DefaultWakeOnLAN_Port : profileInfo2.WakeOnLAN_Port;
+            WakeOnLAN_OverridePort = profileInfo2.WakeOnLAN_OverridePort;
+            WakeOnLAN_Port = profileInfo2.WakeOnLAN_OverridePort ? profileInfo2.WakeOnLAN_Port : SettingsManager.Current.DefaultWakeOnLAN_Port;
 
             // HTTP Headers
             HTTPHeaders_Enabled = profileInfo2.HTTPHeaders_Enabled;

@@ -76,7 +76,7 @@ namespace NETworkManager.Models.Settings
         public bool WakeOnLAN_Enabled { get; set; }
         public string WakeOnLAN_MACAddress { get; set; }
         public string WakeOnLAN_Broadcast { get; set; }
-        public bool WakeOnLAN_OverrideDefaultSettings { get; set; }
+        public bool WakeOnLAN_OverridePort { get; set; }
         public int WakeOnLAN_Port { get; set; }
 
         public bool HTTPHeaders_Enabled { get; set; }
