@@ -1006,16 +1006,16 @@ namespace NETworkManager.ViewModels
         }
 
 
-        private bool _tightVNC_OverrideDefaultSettings;
-        public bool TightVNC_OverrideDefaultSettings
+        private bool _tightVNC_OverrideSettingsPort;
+        public bool TightVNC_OverrideSettingsPort
         {
-            get => _tightVNC_OverrideDefaultSettings;
+            get => _tightVNC_OverrideSettingsPort;
             set
             {
-                if (value == _tightVNC_OverrideDefaultSettings)
+                if (value == _tightVNC_OverrideSettingsPort)
                     return;
 
-                _tightVNC_OverrideDefaultSettings = value;
+                _tightVNC_OverrideSettingsPort = value;
                 OnPropertyChanged();
             }
         }
@@ -1328,8 +1328,8 @@ namespace NETworkManager.ViewModels
             TightVNC_Enabled = profileInfo2.TightVNC_Enabled;
             TightVNC_InheritHost = profileInfo2.TightVNC_InheritHost;
             TightVNC_Host = profileInfo2.TightVNC_Host;
-            TightVNC_OverrideDefaultSettings = profileInfo2.TightVNC_OverrideDefaultSettings;
-            TightVNC_Port = profileInfo2.TightVNC_Port == 0 ? SettingsManager.Current.TightVNC_DefaultVNCPort : profileInfo2.TightVNC_Port;
+            TightVNC_OverrideSettingsPort = profileInfo2.TightVNC_OverrideSettingsPort;
+            TightVNC_Port = profileInfo2.TightVNC_OverrideSettingsPort ? profileInfo2.TightVNC_Port : SettingsManager.Current.TightVNC_DefaultVNCPort;
 
             // Wake on LAN
             WakeOnLAN_Enabled = profileInfo2.WakeOnLAN_Enabled;

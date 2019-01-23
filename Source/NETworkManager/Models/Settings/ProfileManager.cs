@@ -168,7 +168,7 @@ namespace NETworkManager.Models.Settings
                 TightVNC_Enabled = instance.TightVNC_Enabled,
                 TightVNC_InheritHost =  instance.TightVNC_InheritHost,
                 TightVNC_Host = instance.TightVNC_InheritHost ? instance.Host?.Trim() : instance.TightVNC_Host?.Trim(),
-                TightVNC_OverrideDefaultSettings = instance.TightVNC_OverrideDefaultSettings,
+                TightVNC_OverrideSettingsPort = instance.TightVNC_OverrideSettingsPort,
                 TightVNC_Port = instance.TightVNC_Port,
 
                 WakeOnLAN_Enabled = instance.WakeOnLAN_Enabled,

@@ -69,7 +69,7 @@ namespace NETworkManager.Models.Settings
         public bool TightVNC_Enabled { get; set; }
         public bool TightVNC_InheritHost { get; set; } = true;
         public string TightVNC_Host { get; set; }
-        public bool TightVNC_OverrideDefaultSettings { get; set; }
+        public bool TightVNC_OverrideSettingsPort { get; set; }
         public int TightVNC_Port { get; set; }
 
         public bool WakeOnLAN_Enabled { get; set; }
