@@ -14,7 +14,7 @@ namespace NETworkManager.Models.TightVNC
             var info = new TightVNCSessionInfo
             {
                 Host = profileInfo.TightVNC_Host,
-                Port = profileInfo.TightVNC_OverrideSettingsPort ? profileInfo.TightVNC_Port : SettingsManager.Current.TightVNC_DefaultVNCPort
+                Port = profileInfo.TightVNC_OverridePort ? profileInfo.TightVNC_Port : SettingsManager.Current.TightVNC_DefaultVNCPort
             };
 
             return info;

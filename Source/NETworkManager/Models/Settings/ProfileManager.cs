@@ -152,8 +152,9 @@ namespace NETworkManager.Models.Settings
                 PowerShell_EnableRemoteConsole = instance.PowerShell_EnableRemoteConsole,
                 PowerShell_InheritHost = instance.PowerShell_InheritHost,
                 PowerShell_Host = instance.PowerShell_InheritHost ? instance.Host?.Trim() : instance.PowerShell_Host?.Trim(),
-                PowerShell_OverrideDefaultSettings = instance.PowerShell_OverrideDefaultSettings,
+                PowerShell_OverrideAdditionalCommandLine = instance.PowerShell_OverrideAdditionalCommandLine,
                 PowerShell_AdditionalCommandLine = instance.PowerShell_AdditionalCommandLine,
+                PowerShell_OverrideExecutionPolicy = instance.PowerShell_OverrideExecutionPolicy,
                 PowerShell_ExecutionPolicy = instance.PowerShell_ExecutionPolicy,
 
                 PuTTY_Enabled = instance.PuTTY_Enabled,
@@ -168,7 +169,7 @@ namespace NETworkManager.Models.Settings
                 TightVNC_Enabled = instance.TightVNC_Enabled,
                 TightVNC_InheritHost =  instance.TightVNC_InheritHost,
                 TightVNC_Host = instance.TightVNC_InheritHost ? instance.Host?.Trim() : instance.TightVNC_Host?.Trim(),
-                TightVNC_OverrideSettingsPort = instance.TightVNC_OverrideSettingsPort,
+                TightVNC_OverridePort = instance.TightVNC_OverridePort,
                 TightVNC_Port = instance.TightVNC_Port,
 
                 WakeOnLAN_Enabled = instance.WakeOnLAN_Enabled,

@@ -20,8 +20,8 @@ namespace NETworkManager.Models.PowerShell
             {
                 EnableRemoteConsole = profileInfo.PowerShell_EnableRemoteConsole,
                 Host = profileInfo.Host,
-                AdditionalCommandLine = profileInfo.PowerShell_OverrideDefaultSettings ? profileInfo.PowerShell_AdditionalCommandLine : SettingsManager.Current.PowerShell_DefaultAdditionalCommandLine,
-                ExecutionPolicy = profileInfo.PowerShell_OverrideDefaultSettings ? profileInfo.PowerShell_ExecutionPolicy : SettingsManager.Current.PowerShell_DefaultExecutionPolicy
+                AdditionalCommandLine = profileInfo.PowerShell_OverrideAdditionalCommandLine ? profileInfo.PowerShell_AdditionalCommandLine : SettingsManager.Current.PowerShell_DefaultAdditionalCommandLine,
+                ExecutionPolicy = profileInfo.PowerShell_OverrideExecutionPolicy ? profileInfo.PowerShell_ExecutionPolicy : SettingsManager.Current.PowerShell_DefaultExecutionPolicy
             };
 
             return info;

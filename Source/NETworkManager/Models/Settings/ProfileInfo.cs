@@ -53,8 +53,9 @@ namespace NETworkManager.Models.Settings
         public bool PowerShell_EnableRemoteConsole { get; set; } = true;
         public bool PowerShell_InheritHost { get; set; } = true;
         public string PowerShell_Host { get; set; }
-        public bool PowerShell_OverrideDefaultSettings { get; set; }
+        public bool PowerShell_OverrideAdditionalCommandLine { get; set; }
         public string PowerShell_AdditionalCommandLine { get; set; }
+        public bool PowerShell_OverrideExecutionPolicy { get; set; }
         public PowerShell.PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy { get; set; }
 
         public bool PuTTY_Enabled { get; set; }
@@ -69,7 +70,7 @@ namespace NETworkManager.Models.Settings
         public bool TightVNC_Enabled { get; set; }
         public bool TightVNC_InheritHost { get; set; } = true;
         public string TightVNC_Host { get; set; }
-        public bool TightVNC_OverrideSettingsPort { get; set; }
+        public bool TightVNC_OverridePort { get; set; }
         public int TightVNC_Port { get; set; }
 
         public bool WakeOnLAN_Enabled { get; set; }

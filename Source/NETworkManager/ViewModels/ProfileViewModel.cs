@@ -656,16 +656,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _powerShell_OverrideDefaultSettings;
-        public bool PowerShell_OverrideDefaultSettings
+        private bool _powerShell_OverrideAdditionalCommandLine;
+        public bool PowerShell_OverrideAdditionalCommandLine
         {
-            get => _powerShell_OverrideDefaultSettings;
+            get => _powerShell_OverrideAdditionalCommandLine;
             set
             {
-                if(value == _powerShell_OverrideDefaultSettings)
+                if(value == _powerShell_OverrideAdditionalCommandLine)
                     return;
 
-                _powerShell_OverrideDefaultSettings = value;
+                _powerShell_OverrideAdditionalCommandLine = value;
                 OnPropertyChanged();
             }
         }
@@ -698,6 +698,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _powerShell_OverrideExecutionPolicy;
+        public bool PowerShell_OverrideExecutionPolicy
+        {
+            get => _powerShell_OverrideExecutionPolicy;
+            set
+            {
+                if (value == _powerShell_OverrideExecutionPolicy)
+                    return;
+
+                _powerShell_OverrideExecutionPolicy = value;
+                OnPropertyChanged();
+            }
+        }
+        
         private PowerShell.ExecutionPolicy _powerShell_ExecutionPolicy;
         public PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy
         {
@@ -1006,16 +1020,16 @@ namespace NETworkManager.ViewModels
         }
 
 
-        private bool _tightVNC_OverrideSettingsPort;
-        public bool TightVNC_OverrideSettingsPort
+        private bool _tightVNC_OverridePort;
+        public bool TightVNC_OverridePort
         {
-            get => _tightVNC_OverrideSettingsPort;
+            get => _tightVNC_OverridePort;
             set
             {
-                if (value == _tightVNC_OverrideSettingsPort)
+                if (value == _tightVNC_OverridePort)
                     return;
 
-                _tightVNC_OverrideSettingsPort = value;
+                _tightVNC_OverridePort = value;
                 OnPropertyChanged();
             }
         }
@@ -1279,9 +1293,10 @@ namespace NETworkManager.ViewModels
             PowerShell_EnableRemoteConsole = profileInfo2.PowerShell_EnableRemoteConsole;
             PowerShell_InheritHost = profileInfo2.PowerShell_InheritHost;
             PowerShell_Host = profileInfo2.PowerShell_Host;
-            PowerShell_OverrideDefaultSettings = profileInfo2.PowerShell_OverrideDefaultSettings;
+            PowerShell_OverrideAdditionalCommandLine = profileInfo2.PowerShell_OverrideAdditionalCommandLine;
             PowerShell_AdditionalCommandLine = profileInfo2.PowerShell_AdditionalCommandLine;
             PowerShell_ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
+            PowerShell_OverrideExecutionPolicy = profileInfo2.PowerShell_OverrideExecutionPolicy;
             PowerShell_ExecutionPolicy = IsEdited ? profileInfo2.PowerShell_ExecutionPolicy : PowerShell_ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_DefaultExecutionPolicy); ;
 
             // PuTTY
@@ -1328,8 +1343,8 @@ namespace NETworkManager.ViewModels
             TightVNC_Enabled = profileInfo2.TightVNC_Enabled;
             TightVNC_InheritHost = profileInfo2.TightVNC_InheritHost;
             TightVNC_Host = profileInfo2.TightVNC_Host;
-            TightVNC_OverrideSettingsPort = profileInfo2.TightVNC_OverrideSettingsPort;
-            TightVNC_Port = profileInfo2.TightVNC_OverrideSettingsPort ? profileInfo2.TightVNC_Port : SettingsManager.Current.TightVNC_DefaultVNCPort;
+            TightVNC_OverridePort = profileInfo2.TightVNC_OverridePort;
+            TightVNC_Port = profileInfo2.TightVNC_OverridePort ? profileInfo2.TightVNC_Port : SettingsManager.Current.TightVNC_DefaultVNCPort;
 
             // Wake on LAN
             WakeOnLAN_Enabled = profileInfo2.WakeOnLAN_Enabled;
