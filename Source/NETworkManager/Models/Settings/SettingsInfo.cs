@@ -2143,16 +2143,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private string _puTTY_Profile;
-        public string PuTTY_Profile
+        private string _puTTY_DefaultProfile;
+        public string PuTTY_DefaultProfile
         {
-            get => _puTTY_Profile;
+            get => _puTTY_DefaultProfile;
             set
             {
-                if (value == _puTTY_Profile)
+                if (value == _puTTY_DefaultProfile)
                     return;
 
-                _puTTY_Profile = value;
+                _puTTY_DefaultProfile = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }

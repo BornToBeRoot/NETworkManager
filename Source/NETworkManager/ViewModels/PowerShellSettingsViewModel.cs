@@ -68,19 +68,19 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private PowerShell.ExecutionPolicy _executionPolicy;
-        public PowerShell.ExecutionPolicy ExecutionPolicy
+        private PowerShell.ExecutionPolicy _defaultExecutionPolicy;
+        public PowerShell.ExecutionPolicy DefaultExecutionPolicy
         {
-            get => _executionPolicy;
+            get => _defaultExecutionPolicy;
             set
             {
-                if (value == _executionPolicy)
+                if (value == _defaultExecutionPolicy)
                     return;
 
                 if (!_isLoading)
                     SettingsManager.Current.PowerShell_DefaultExecutionPolicy = value;
 
-                _executionPolicy = value;
+                _defaultExecutionPolicy = value;
                 OnPropertyChanged();
             }
         }
@@ -124,7 +124,7 @@ namespace NETworkManager.ViewModels
         private void LoadExecutionPolicies()
         {
             ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
-            ExecutionPolicy = ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_DefaultExecutionPolicy);
+            DefaultExecutionPolicy = ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_DefaultExecutionPolicy);
         }
         #endregion
 

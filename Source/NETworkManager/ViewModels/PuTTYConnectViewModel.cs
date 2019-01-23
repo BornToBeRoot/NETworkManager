@@ -276,7 +276,7 @@ namespace NETworkManager.ViewModels
             }
 
             Username = SettingsManager.Current.PuTTY_DefaultUsername;
-            Profile = SettingsManager.Current.PuTTY_Profile;
+            Profile = SettingsManager.Current.PuTTY_DefaultProfile;
             SerialLine = SettingsManager.Current.PuTTY_DefaultSerialLine;
             AdditionalCommandLine = SettingsManager.Current.PuTTY_DefaultAdditionalCommandLine;
         }
