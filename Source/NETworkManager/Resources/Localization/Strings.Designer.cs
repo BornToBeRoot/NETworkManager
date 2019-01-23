@@ -1645,15 +1645,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable the profile in at least one tool! Click on a tab and select &quot;Enable&quot;....
-        /// </summary>
-        public static string EnableTheProfileInAtLeastOneTool {
-            get {
-                return ResourceManager.GetString("EnableTheProfileInAtLeastOneTool", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Enable transparency.
         /// </summary>
         public static string EnableTransparency {

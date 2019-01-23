@@ -1122,7 +1122,7 @@
     <Compile Include="Converters\PercentConverter.cs" />
     <Compile Include="Converters\PingTimeToStringConverter.cs" />
     <Compile Include="Converters\IPStatusToStringConverter.cs" />
-    <Compile Include="Converters\BooleanOrConverter.cs" />
+    <Compile Include="Converters\BooleansOrConverter.cs" />
     <Compile Include="Converters\NullOrEmptyToStringConverter.cs" />
     <Compile Include="Converters\SelectedItemsToBoolConverter.cs" />
     <Compile Include="Converters\IntToStringConverter.cs" />

@@ -62,9 +62,13 @@ namespace NETworkManager.Models.Settings
         public ConnectionMode PuTTY_ConnectionMode { get; set; }
         public bool PuTTY_InheritHost { get; set; } = true;
         public string PuTTY_HostOrSerialLine { get; set; }
+        public bool PuTTY_OverridePortOrBaud { get; set; }
         public int PuTTY_PortOrBaud { get; set; }
+        public bool PuTTY_OverrideUsername { get; set; }
         public string PuTTY_Username { get; set; }
+        public bool PuTTY_OverrideProfile { get; set; }
         public string PuTTY_Profile { get; set; }
+        public bool PuTTY_OverrideAdditionalCommandLine { get; set; }
         public string PuTTY_AdditionalCommandLine { get; set; }
 
         public bool TightVNC_Enabled { get; set; }

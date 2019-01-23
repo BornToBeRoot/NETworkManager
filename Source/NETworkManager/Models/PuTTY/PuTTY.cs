@@ -1,4 +1,6 @@
-﻿namespace NETworkManager.Models.PuTTY
+﻿using NETworkManager.Models.Settings;
+
+namespace NETworkManager.Models.PuTTY
 {
     public class PuTTY
     {
@@ -47,6 +49,32 @@
                 command += $" -P {profileInfo.PortOrBaud} {profileInfo.HostOrSerialLine}";
 
             return command;
+        }
+
+        public static int GetPortOrBaudByConnectionMode(ConnectionMode mode)
+        {
+            var portOrBaud = 0;
+
+            switch (mode)
+            {
+                case ConnectionMode.SSH:
+                    portOrBaud = SettingsManager.Current.PuTTY_DefaultSSHPort;
+                    break;
+                case ConnectionMode.Telnet:
+                    portOrBaud = SettingsManager.Current.PuTTY_DefaultTelnetPort;
+                    break;
+                case ConnectionMode.Rlogin:
+                    portOrBaud = SettingsManager.Current.PuTTY_DefaultRloginPort;
+                    break;
+                case ConnectionMode.RAW:
+                    portOrBaud = SettingsManager.Current.PuTTY_DefaultRaw;
+                    break;
+                case ConnectionMode.Serial:
+                    portOrBaud = SettingsManager.Current.PuTTY_DefaultBaudRate;
+                    break;
+            }
+
+            return portOrBaud;
         }
 
         #region enum

@@ -18,7 +18,7 @@ namespace NETworkManager.ViewModels
         private readonly bool _isLoading;
 
         public ICollectionView ProfileViews { get; }
-        
+
         #region General
         private string _name;
         public string Name
@@ -94,20 +94,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _isTabEnabled;
-        public bool IsTabEnabled
-        {
-            get => _isTabEnabled;
-            set
-            {
-                if (value == _isTabEnabled)
-                    return;
-
-                _isTabEnabled = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _showUnlockCredentialsHint;
         public bool ShowUnlockCredentialsHint
         {
@@ -148,9 +134,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_Enabled = value;
-
-                if (!_isLoading)
-                    Validate();
 
                 OnPropertyChanged();
             }
@@ -299,9 +282,6 @@ namespace NETworkManager.ViewModels
 
                 _ipScanner_Enabled = value;
 
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -348,9 +328,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _portScanner_Enabled = value;
-
-                if (!_isLoading)
-                    Validate();
 
                 OnPropertyChanged();
             }
@@ -412,9 +389,6 @@ namespace NETworkManager.ViewModels
 
                 _ping_Enabled = value;
 
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -460,9 +434,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _traceroute_Enabled = value;
-
-                if (!_isLoading)
-                    Validate();
 
                 OnPropertyChanged();
             }
@@ -510,9 +481,6 @@ namespace NETworkManager.ViewModels
 
                 _dnsLookup_Enabled = value;
 
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -557,9 +525,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _remoteDesktop_Enabled = value;
-
-                if (!_isLoading)
-                    Validate();
 
                 OnPropertyChanged();
             }
@@ -606,9 +571,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _powerShell_Enabled = value;
-
-                if (!_isLoading)
-                    Validate();
 
                 OnPropertyChanged();
             }
@@ -662,7 +624,7 @@ namespace NETworkManager.ViewModels
             get => _powerShell_OverrideAdditionalCommandLine;
             set
             {
-                if(value == _powerShell_OverrideAdditionalCommandLine)
+                if (value == _powerShell_OverrideAdditionalCommandLine)
                     return;
 
                 _powerShell_OverrideAdditionalCommandLine = value;
@@ -711,7 +673,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         private PowerShell.ExecutionPolicy _powerShell_ExecutionPolicy;
         public PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy
         {
@@ -738,9 +700,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _puTTY_Enabled = value;
-
-                if (!_isLoading)
-                    Validate();
 
                 OnPropertyChanged();
             }
@@ -771,7 +730,10 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    PuTTY_Port = SettingsManager.Current.PuTTY_DefaultSSHPort;
+                    if (PuTTY_ConnectionMode == ConnectionMode.Serial)
+                        PuTTY_HostOrSerialLine = Host;
+
+                    PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_DefaultSSHPort;
                     PuTTY_ConnectionMode = ConnectionMode.SSH;
                 }
 
@@ -791,7 +753,10 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    PuTTY_Port = SettingsManager.Current.PuTTY_DefaultTelnetPort;
+                    if (PuTTY_ConnectionMode == ConnectionMode.Serial)
+                        PuTTY_HostOrSerialLine = Host;
+                    
+                    PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_DefaultTelnetPort;
                     PuTTY_ConnectionMode = ConnectionMode.Telnet;
                 }
 
@@ -811,7 +776,10 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    PuTTY_Baud = SettingsManager.Current.PuTTY_DefaultBaudRate;
+                    if (PuTTY_ConnectionMode != ConnectionMode.Serial)
+                        PuTTY_HostOrSerialLine = SettingsManager.Current.PuTTY_DefaultSerialLine;
+                    
+                    PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_DefaultBaudRate;
                     PuTTY_ConnectionMode = ConnectionMode.Serial;
                 }
 
@@ -831,7 +799,10 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    PuTTY_Port = SettingsManager.Current.PuTTY_DefaultRloginPort;
+                    if (PuTTY_ConnectionMode == ConnectionMode.Serial)
+                        PuTTY_HostOrSerialLine = Host;
+
+                    PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_DefaultRloginPort;
                     PuTTY_ConnectionMode = ConnectionMode.Rlogin;
                 }
 
@@ -851,7 +822,10 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    PuTTY_Port = 0;
+                    if (PuTTY_ConnectionMode == ConnectionMode.Serial)
+                        PuTTY_HostOrSerialLine = Host;
+
+                    PuTTY_PortOrBaud = 0;
                     PuTTY_ConnectionMode = ConnectionMode.RAW;
                 }
 
@@ -860,58 +834,58 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _puTTY_Host;
-        public string PuTTY_Host
+        private string _puTTY_HostOrSerialLine;
+        public string PuTTY_HostOrSerialLine
         {
-            get => _puTTY_Host;
+            get => _puTTY_HostOrSerialLine;
             set
             {
-                if (value == _puTTY_Host)
+                if (value == _puTTY_HostOrSerialLine)
                     return;
 
-                _puTTY_Host = value;
+                _puTTY_HostOrSerialLine = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _puTTY_SerialLine;
-        public string PuTTY_SerialLine
+        private bool _puTTY_OverridePortOrBaud;
+        public bool PuTTY_OverridePortOrBaud
         {
-            get => _puTTY_SerialLine;
+            get => _puTTY_OverridePortOrBaud;
             set
             {
-                if (value == _puTTY_SerialLine)
+                if (value == _puTTY_OverridePortOrBaud)
                     return;
 
-                _puTTY_SerialLine = value;
+                _puTTY_OverridePortOrBaud = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _puTTY_Port;
-        public int PuTTY_Port
+        private int _puTTY_PortOrBaud;
+        public int PuTTY_PortOrBaud
         {
-            get => _puTTY_Port;
+            get => _puTTY_PortOrBaud;
             set
             {
-                if (value == _puTTY_Port)
+                if (value == _puTTY_PortOrBaud)
                     return;
 
-                _puTTY_Port = value;
+                _puTTY_PortOrBaud = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _puTTY_Baud;
-        public int PuTTY_Baud
+        private bool _puTTY_OverrideUsername;
+        public bool PuTTY_OverrideUsername
         {
-            get => _puTTY_Baud;
+            get => _puTTY_OverrideUsername;
             set
             {
-                if (value == _puTTY_Baud)
+                if (value == _puTTY_OverrideUsername)
                     return;
 
-                _puTTY_Baud = value;
+                _puTTY_OverrideUsername = value;
                 OnPropertyChanged();
             }
         }
@@ -930,6 +904,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _puTTY_OverrideProfile;
+        public bool PuTTY_OverrideProfile
+        {
+            get => _puTTY_OverrideProfile;
+            set
+            {
+                if (value == _puTTY_OverrideProfile)
+                    return;
+
+                _puTTY_OverrideProfile = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _puTTY_Profile;
         public string PuTTY_Profile
         {
@@ -940,6 +928,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _puTTY_Profile = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _puTTY_OverrideAdditionalCommandLine;
+        public bool PuTTY_OverrideAdditionalCommandLine
+        {
+            get => _puTTY_OverrideAdditionalCommandLine;
+            set
+            {
+                if (value == _puTTY_OverrideAdditionalCommandLine)
+                    return;
+
+                _puTTY_OverrideAdditionalCommandLine = value;
                 OnPropertyChanged();
             }
         }
@@ -983,9 +985,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _tightVNC_Enabled = value;
-
-                if (!_isLoading)
-                    Validate();
 
                 OnPropertyChanged();
             }
@@ -1061,9 +1060,6 @@ namespace NETworkManager.ViewModels
 
                 _wakeOnLAN_Enabled = value;
 
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1102,7 +1098,7 @@ namespace NETworkManager.ViewModels
             get => _wakeOnLAN_OverridePort;
             set
             {
-                if(value == _wakeOnLAN_OverridePort)
+                if (value == _wakeOnLAN_OverridePort)
                     return;
 
                 _wakeOnLAN_OverridePort = value;
@@ -1137,9 +1133,6 @@ namespace NETworkManager.ViewModels
 
                 _httpHeaders_Enabled = value;
 
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1170,9 +1163,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _whois_Enabled = value;
-
-                if (!_isLoading)
-                    Validate();
 
                 OnPropertyChanged();
             }
@@ -1211,11 +1201,11 @@ namespace NETworkManager.ViewModels
         public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, bool isEdited = false, ProfileInfo profileInfo = null)
         {
             _isLoading = true;
-            
+
             // Load the view
             ProfileViews = new CollectionViewSource { Source = ProfileViewManager.List }.View;
             ProfileViews.SortDescriptions.Add(new SortDescription(nameof(ProfileViewInfo.Name), ListSortDirection.Ascending));
-            
+
             SaveCommand = new RelayCommand(p => saveCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
@@ -1323,20 +1313,14 @@ namespace NETworkManager.ViewModels
             }
 
             PuTTY_InheritHost = profileInfo2.PuTTY_InheritHost;
-
-            if (profileInfo2.PuTTY_ConnectionMode == ConnectionMode.Serial)
-            {
-                PuTTY_SerialLine = profileInfo2.PuTTY_HostOrSerialLine;
-                PuTTY_Baud = profileInfo2.PuTTY_PortOrBaud;
-            }
-            else
-            {
-                PuTTY_Host = profileInfo2.PuTTY_HostOrSerialLine;
-                PuTTY_Port = profileInfo2.PuTTY_PortOrBaud == 0 ? SettingsManager.Current.PuTTY_DefaultSSHPort : profileInfo2.PuTTY_PortOrBaud; // Default SSH port
-            }
-
+            PuTTY_HostOrSerialLine = profileInfo2.PuTTY_HostOrSerialLine;
+            PuTTY_OverridePortOrBaud = profileInfo2.PuTTY_OverridePortOrBaud;
+            PuTTY_PortOrBaud = profileInfo2.PuTTY_OverridePortOrBaud ? profileInfo2.PuTTY_PortOrBaud : GetPortOrBaudByConnectionMode(PuTTY_ConnectionMode);
+            PuTTY_OverrideUsername = profileInfo2.PuTTY_OverrideUsername;
             PuTTY_Username = profileInfo2.PuTTY_Username;
+            PuTTY_OverrideProfile = profileInfo2.PuTTY_OverrideProfile;
             PuTTY_Profile = profileInfo2.PuTTY_Profile;
+            PuTTY_OverrideAdditionalCommandLine = profileInfo2.PuTTY_OverrideAdditionalCommandLine;
             PuTTY_AdditionalCommandLine = profileInfo2.PuTTY_AdditionalCommandLine;
 
             // TightVNC
@@ -1362,15 +1346,7 @@ namespace NETworkManager.ViewModels
             Whois_InheritHost = profileInfo2.Whois_InheritHost;
             Whois_Domain = profileInfo2.Whois_Domain;
 
-            Validate();
-            
             _isLoading = false;
-        }
-
-        private void Validate()
-        {
-            // Note
-            IsTabEnabled = NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || DNSLookup_Enabled || RemoteDesktop_Enabled || PowerShell_Enabled || PuTTY_Enabled || TightVNC_Enabled || WakeOnLAN_Enabled || HTTPHeaders_Enabled || Whois_Enabled;
         }
 
         #region ICommands & Actions

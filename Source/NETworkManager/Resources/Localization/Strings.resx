@@ -852,9 +852,6 @@
   <data name="EnableCredentialSecuritySupportProvider" xml:space="preserve">
     <value>Enable Credential Security Support Provider</value>
   </data>
-  <data name="EnableTheProfileInAtLeastOneTool" xml:space="preserve">
-    <value>Enable the profile in at least one tool! Click on a tab and select "Enable"...</value>
-  </data>
   <data name="EnableTransparency" xml:space="preserve">
     <value>Enable transparency</value>
   </data>

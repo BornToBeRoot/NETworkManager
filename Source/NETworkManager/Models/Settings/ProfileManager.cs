@@ -140,7 +140,7 @@ namespace NETworkManager.Models.Settings
                 Traceroute_InheritHost = instance.Traceroute_InheritHost,
                 Traceroute_Host = instance.Traceroute_InheritHost ? instance.Host?.Trim() : instance.Traceroute_Host?.Trim(),
 
-                DNSLookup_Enabled =  instance.DNSLookup_Enabled,
+                DNSLookup_Enabled = instance.DNSLookup_Enabled,
                 DNSLookup_InheritHost = instance.Traceroute_InheritHost,
                 DNSLookup_Host = instance.DNSLookup_InheritHost ? instance.Host?.Trim() : instance.DNSLookup_Host?.Trim(),
 
@@ -160,14 +160,18 @@ namespace NETworkManager.Models.Settings
                 PuTTY_Enabled = instance.PuTTY_Enabled,
                 PuTTY_ConnectionMode = instance.PuTTY_ConnectionMode,
                 PuTTY_InheritHost = instance.PuTTY_InheritHost,
-                PuTTY_HostOrSerialLine = instance.PuTTY_ConnectionMode == PuTTY.PuTTY.ConnectionMode.Serial ? instance.PuTTY_SerialLine?.Trim() : (instance.PuTTY_InheritHost ? instance.Host?.Trim() : instance.PuTTY_Host?.Trim()),
-                PuTTY_PortOrBaud = instance.PuTTY_ConnectionMode == PuTTY.PuTTY.ConnectionMode.Serial ? instance.PuTTY_Baud : instance.PuTTY_Port,
+                PuTTY_HostOrSerialLine = instance.PuTTY_ConnectionMode == PuTTY.PuTTY.ConnectionMode.Serial ? instance.PuTTY_HostOrSerialLine?.Trim() : (instance.PuTTY_InheritHost ? instance.Host?.Trim() : instance.PuTTY_HostOrSerialLine?.Trim()),
+                PuTTY_OverridePortOrBaud = instance.PuTTY_OverridePortOrBaud,
+                PuTTY_PortOrBaud = instance.PuTTY_PortOrBaud,
+                PuTTY_OverrideUsername = instance.PuTTY_OverrideUsername,
                 PuTTY_Username = instance.PuTTY_Username?.Trim(),
+                PuTTY_OverrideProfile = instance.PuTTY_OverrideProfile,
                 PuTTY_Profile = instance.PuTTY_Profile?.Trim(),
+                PuTTY_OverrideAdditionalCommandLine = instance.PuTTY_OverrideAdditionalCommandLine,
                 PuTTY_AdditionalCommandLine = instance.PuTTY_AdditionalCommandLine?.Trim(),
 
                 TightVNC_Enabled = instance.TightVNC_Enabled,
-                TightVNC_InheritHost =  instance.TightVNC_InheritHost,
+                TightVNC_InheritHost = instance.TightVNC_InheritHost,
                 TightVNC_Host = instance.TightVNC_InheritHost ? instance.Host?.Trim() : instance.TightVNC_Host?.Trim(),
                 TightVNC_OverridePort = instance.TightVNC_OverridePort,
                 TightVNC_Port = instance.TightVNC_Port,
@@ -182,7 +186,7 @@ namespace NETworkManager.Models.Settings
                 HTTPHeaders_Website = instance.HTTPHeaders_Website,
 
                 Whois_Enabled = instance.Whois_Enabled,
-                Whois_InheritHost =  instance.Whois_InheritHost,
+                Whois_InheritHost = instance.Whois_InheritHost,
                 Whois_Domain = instance.Whois_InheritHost ? instance.Host?.Trim() : instance.Whois_Domain?.Trim()
             });
         }
