@@ -4,7 +4,6 @@ using System;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Input;
-using Newtonsoft.Json.Linq;
 using static NETworkManager.Models.PuTTY.PuTTY;
 
 namespace NETworkManager.ViewModels

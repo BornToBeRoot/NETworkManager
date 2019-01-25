@@ -4196,6 +4196,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resolve IPv4 address for this host.
+        /// </summary>
+        public static string ResolveIPv4AddressForThisHost {
+            get {
+                return ResourceManager.GetString("ResolveIPv4AddressForThisHost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resolve MAC address and vendor.
         /// </summary>
         public static string ResolveMACAddressAndVendor {

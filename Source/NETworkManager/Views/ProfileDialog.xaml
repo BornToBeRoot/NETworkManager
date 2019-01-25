@@ -10,12 +10,13 @@
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
              xmlns:networkManager="clr-namespace:NETworkManager"
-             xmlns:putty="clr-namespace:NETworkManager.Models.PuTTY"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:ProfileViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter x:Key="StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter" />
     </UserControl.Resources>
     <Grid Margin="0,20">
         <Grid.RowDefinitions>
@@ -25,7 +26,7 @@
         </Grid.RowDefinitions>
         <Grid Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Border BorderThickness="0,0,1,0" BorderBrush="{DynamicResource GrayBrush8}">
@@ -235,6 +236,23 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
+                                <Button Grid.Column="3" Grid.Row="2" Command="{Binding ResolveHostCommand}" ToolTip="{x:Static localization:Strings.ResolveIPv4AddressForThisHost}" IsEnabled="{Binding Host, Converter={StaticResource StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter}}" Style="{StaticResource CleanButton}" Margin="10,0,0,0">
+                                    <Rectangle Width="24" Height="24">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
+                                        </Rectangle.OpacityMask>
+                                        <Rectangle.Style>
+                                            <Style TargetType="{x:Type Rectangle}">
+                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                    </Rectangle>
+                                </Button>
                                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Credential}" />
                                 <ComboBox x:Name="ComboBoxCredential" Grid.Column="2" Grid.Row="4" SelectedValue="{Binding CredentialID}" DisplayMemberPath="Name" SelectedValuePath="ID" Style="{StaticResource DefaultComboBox}" ItemsSource="{Binding Credentials}">
                                     <ComboBox.InputBindings>
@@ -1177,10 +1195,6 @@
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding ElementName=ComboBoxGroup,Path=(Validation.HasError)}" Value="True">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                            <!-- No tab enabled -->
-                            <DataTrigger Binding="{Binding IsTabEnabled}" Value="False">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
                             <!-- Network Interface -->

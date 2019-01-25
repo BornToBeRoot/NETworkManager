@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Windows.Data;
 using System.Windows.Input;
 using NETworkManager.Models.PowerShell;
@@ -15,8 +17,6 @@ namespace NETworkManager.ViewModels
     public class ProfileViewModel : ViewModelBase
     {
         #region Variables
-        private readonly bool _isLoading;
-
         public ICollectionView ProfileViews { get; }
 
         #region General
@@ -1200,8 +1200,6 @@ namespace NETworkManager.ViewModels
 
         public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, bool isEdited = false, ProfileInfo profileInfo = null)
         {
-            _isLoading = true;
-
             // Load the view
             ProfileViews = new CollectionViewSource { Source = ProfileViewManager.List }.View;
             ProfileViews.SortDescriptions.Add(new SortDescription(nameof(ProfileViewInfo.Name), ListSortDirection.Ascending));
@@ -1345,14 +1343,35 @@ namespace NETworkManager.ViewModels
             Whois_Enabled = profileInfo2.Whois_Enabled;
             Whois_InheritHost = profileInfo2.Whois_InheritHost;
             Whois_Domain = profileInfo2.Whois_Domain;
-
-            _isLoading = false;
         }
 
         #region ICommands & Actions
         public ICommand SaveCommand { get; }
 
         public ICommand CancelCommand { get; }
+
+        public ICommand ResolveHostCommand
+        {
+            get { return new RelayCommand(async p => await ResolveHostActionAsync());}
+        }
+
+        private async System.Threading.Tasks.Task ResolveHostActionAsync()
+        {
+            try
+            {
+                foreach(var ipAddr in (await Dns.GetHostEntryAsync(Host)).AddressList)
+                {
+                    if (ipAddr.AddressFamily != AddressFamily.InterNetwork)
+                        continue;
+
+                    Host = ipAddr.ToString();
+                    break;
+                }
+                
+            }
+            catch(SocketException) // DNS Error
+            { }
+        }
 
         public ICommand UnselectCredentialCommand
         {

@@ -21,7 +21,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:IntToStringConverter x:Key="IntToStringConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
-        <converters:PingStatusToBoolConverter x:Key="PingStatusToBoolConverter" />
+        <converters:PingStatusToBooleanConverter x:Key="PingStatusToBoolConverter" />
         <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
         <converters:PercentConverter x:Key="PercentConverter" />
         <converters:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />

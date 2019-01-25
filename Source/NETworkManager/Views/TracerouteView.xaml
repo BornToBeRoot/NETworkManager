@@ -23,7 +23,7 @@
         <converters:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
         <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
         <converters:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
-        <converters:StringIsNotNullOrEmptyToBoolConverter x:Key="StringIsNotNullOrEmptyToBoolConverter" />
+        <converters:StringIsNotNullOrEmptyToBooleanConverter x:Key="StringIsNotNullOrEmptyToBooleanConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -165,7 +165,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Hostname}" Command="{Binding PerformDNSLookupHostnameCommand}" IsEnabled="{Binding SelectedTraceResult.Hostname, Converter={StaticResource StringIsNotNullOrEmptyToBoolConverter}}">
+                        <MenuItem Header="{x:Static localization:Strings.Hostname}" Command="{Binding PerformDNSLookupHostnameCommand}" IsEnabled="{Binding SelectedTraceResult.Hostname, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>

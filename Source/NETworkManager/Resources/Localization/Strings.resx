@@ -1990,4 +1990,7 @@ Path: "{0}"</value>
   <data name="OverrideDefaultSettings" xml:space="preserve">
     <value>Override default settings</value>
   </data>
+  <data name="ResolveIPv4AddressForThisHost" xml:space="preserve">
+    <value>Resolve IPv4 address for this host</value>
+  </data>
 </root>
