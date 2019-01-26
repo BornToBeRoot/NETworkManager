@@ -1870,7 +1870,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error checking &apos;api.github.com&apos;, check your network connection!.
+        ///   Looks up a localized string similar to Couldn&apos;t connect to &apos;api.github.com&apos;, check your network connection!.
         /// </summary>
         public static string ErrorCheckingApiGithubComVerifyYourNetworkConnection {
             get {

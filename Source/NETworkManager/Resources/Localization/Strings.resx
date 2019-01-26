@@ -865,7 +865,7 @@
     <value>Enter subnet and a new subnet mask to create subnets...</value>
   </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
-    <value>Error checking 'api.github.com', check your network connection!</value>
+    <value>Couldn't connect to 'api.github.com', check your network connection!</value>
   </data>
   <data name="ErrorInResponse" xml:space="preserve">
     <value>Error in response!</value>
