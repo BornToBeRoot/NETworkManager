@@ -9,7 +9,6 @@ using NETworkManager.Utilities;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
-using System.Diagnostics;
 using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels

@@ -151,22 +151,7 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
-
-        private bool _window_ShowCurrentApplicationTitle;
-        public bool Window_ShowCurrentApplicationTitle
-        {
-            get => _window_ShowCurrentApplicationTitle;
-            set
-            {
-                if (value == _window_ShowCurrentApplicationTitle)
-                    return;
-
-                _window_ShowCurrentApplicationTitle = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
+        
         // TrayIcon
         private bool _trayIcon_AlwaysShowIcon;
         public bool TrayIcon_AlwaysShowIcon

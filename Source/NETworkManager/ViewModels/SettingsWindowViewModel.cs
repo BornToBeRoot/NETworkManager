@@ -76,23 +76,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _showCurrentApplicationTitle;
-        public bool ShowCurrentApplicationTitle
-        {
-            get => _showCurrentApplicationTitle;
-            set
-            {
-                if (value == _showCurrentApplicationTitle)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Window_ShowCurrentApplicationTitle = value;
-
-                OnPropertyChanged();
-                _showCurrentApplicationTitle = value;
-            }
-        }
-
         private bool _alwaysShowIconInTray;
         public bool AlwaysShowIconInTray
         {
@@ -127,7 +110,6 @@ namespace NETworkManager.ViewModels
             MinimizeInsteadOfTerminating = SettingsManager.Current.Window_MinimizeInsteadOfTerminating;
             ConfirmClose = SettingsManager.Current.Window_ConfirmClose;
             MultipleInstances = SettingsManager.Current.Window_MultipleInstances;
-            ShowCurrentApplicationTitle = SettingsManager.Current.Window_ShowCurrentApplicationTitle;
             MinimizeToTrayInsteadOfTaskbar = SettingsManager.Current.Window_MinimizeToTrayInsteadOfTaskbar;
         }
         #endregion

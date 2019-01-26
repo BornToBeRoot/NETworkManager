@@ -94,8 +94,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public bool ShowCurrentApplicationTitle => SettingsManager.Current.Window_ShowCurrentApplicationTitle;
-
         #region NetworkInterfaces, SelectedNetworkInterface
         private List<NetworkInterfaceInfo> _networkInterfaces;
         public List<NetworkInterfaceInfo> NetworkInterfaces
@@ -1251,8 +1249,6 @@ namespace NETworkManager.ViewModels
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.Window_ShowCurrentApplicationTitle))
-                OnPropertyChanged(nameof(ShowCurrentApplicationTitle));
         }
         #endregion
     }

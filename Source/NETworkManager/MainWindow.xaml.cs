@@ -118,7 +118,7 @@ namespace NETworkManager
         }
 
         public ICollectionView Applications { get; private set; }
-        
+
 
         private ApplicationViewInfo _selectedApplication;
         public ApplicationViewInfo SelectedApplication
@@ -208,16 +208,16 @@ namespace NETworkManager
             }
         }
 
-        private bool _updateAvailable;
-        public bool UpdateAvailable
+        private bool _isUpdateAvailable;
+        public bool IsUpdateAvailable
         {
-            get => _updateAvailable;
+            get => _isUpdateAvailable;
             set
             {
-                if (value == _updateAvailable)
+                if (value == _isUpdateAvailable)
                     return;
 
-                _updateAvailable = value;
+                _isUpdateAvailable = value;
                 OnPropertyChanged();
             }
         }
@@ -235,9 +235,6 @@ namespace NETworkManager
                 OnPropertyChanged();
             }
         }
-
-        public bool ShowCurrentApplicationTitle => SettingsManager.Current.Window_ShowCurrentApplicationTitle;
-
         #endregion
 
         #region Constructor, window load and close events
@@ -496,7 +493,7 @@ namespace NETworkManager
                     ContentControlApplication.Content = _remoteDesktopHostView;
                     break;
                 case ApplicationViewManager.Name.PowerShell:
-                    if(_powerShellHostView == null)
+                    if (_powerShellHostView == null)
                         _powerShellHostView = new PowerShellHostView();
                     else
                         RefreshApplicationView(name);
@@ -877,7 +874,7 @@ namespace NETworkManager
         private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
         {
             UpdateText = string.Format(NETworkManager.Resources.Localization.Strings.VersionxxIsAvailable, e.Version);
-            UpdateAvailable = true;
+            IsUpdateAvailable = true;
         }
         #endregion
 
@@ -1085,6 +1082,7 @@ namespace NETworkManager
         private void OpenApplicationListAction()
         {
             IsApplicationListOpen = true;
+            TextBoxSearch.Focus();
         }
 
         public ICommand OpenSettingsCommand
@@ -1211,8 +1209,7 @@ namespace NETworkManager
         #region Events
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.Window_ShowCurrentApplicationTitle))
-                OnPropertyChanged(nameof(ShowCurrentApplicationTitle));
+
         }
         #endregion
 

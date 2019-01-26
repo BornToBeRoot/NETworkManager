@@ -51,8 +51,6 @@ namespace NETworkManager.Controls
                 OnPropertyChanged();
             }
         }
-
-        public bool ShowCurrentApplicationTitle => SettingsManager.Current.Window_ShowCurrentApplicationTitle;
         #endregion
 
         #region Constructor
@@ -159,8 +157,6 @@ namespace NETworkManager.Controls
         #region Events
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.Window_ShowCurrentApplicationTitle))
-                OnPropertyChanged(nameof(ShowCurrentApplicationTitle));
         }
         #endregion
 

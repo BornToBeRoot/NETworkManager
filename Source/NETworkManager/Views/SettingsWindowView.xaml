@@ -13,7 +13,6 @@
         <controls:ToggleSwitch Header="{x:Static localization:Strings.MinimizeToTrayInsteadOfTaskbar}" IsChecked="{Binding MinimizeToTrayInsteadOfTaskbar}" Margin="0,0,0,10" />
         <controls:ToggleSwitch Header="{x:Static localization:Strings.ConfirmClose}" IsChecked="{Binding ConfirmClose}" Margin="0,0,0,10"/>
         <controls:ToggleSwitch Header="{x:Static localization:Strings.MultipleInstances}" IsChecked="{Binding MultipleInstances}" Margin="0,0,0,10"/>
-        <controls:ToggleSwitch Header="{x:Static localization:Strings.ShowCurrentApplicationTitle}" IsChecked="{Binding ShowCurrentApplicationTitle}" Margin="0,0,0,20"/>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Tray}" />
         <controls:ToggleSwitch Header="{x:Static localization:Strings.AlwaysShowIconInTray}" IsChecked="{Binding AlwaysShowIconInTray}" />
     </StackPanel>

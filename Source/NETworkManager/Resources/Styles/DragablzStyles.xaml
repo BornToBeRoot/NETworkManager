@@ -58,7 +58,7 @@
         <Setter Property="HeaderItemTemplate">
             <Setter.Value>
                 <DataTemplate DataType="networkManagerControls:DragablzTabItem">
-                    <Border BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,1,0">
+                    <Border BorderBrush="{DynamicResource GrayBrush8}" Height="44" BorderThickness="0,0,1,0">
                         <Grid>
                             <Grid.InputBindings>
                                 <MouseBinding Command="dragablz:TabablzControl.CloseItemCommand" Gesture="MiddleClick" />
