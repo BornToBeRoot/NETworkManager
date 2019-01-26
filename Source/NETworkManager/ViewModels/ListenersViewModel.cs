@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using NETworkManager.Utilities;
 using NETworkManager.Models.Settings;
 using System.Windows.Threading;
@@ -22,6 +23,7 @@ namespace NETworkManager.ViewModels
 
         private readonly bool _isLoading;
         private readonly DispatcherTimer _autoRefreshTimer = new DispatcherTimer();
+        private bool _isTimerPaused;
 
         private string _search;
         public string Search
@@ -222,6 +224,70 @@ namespace NETworkManager.ViewModels
             AutoRefresh = SettingsManager.Current.Listeners_AutoRefresh;
         }
         #endregion
+        
+        #region Methods
+        private async void Refresh()
+        {
+            IsRefreshing = true;
+
+            ListenerResults.Clear();
+
+            (await Listener.GetAllActiveListenersAsync()).ForEach(x => ListenerResults.Add(x));
+
+            Debug.WriteLine("Refresh Listeners...");
+
+            IsRefreshing = false;
+        }
+
+        private void AutoRefreshTimer_Tick(object sender, EventArgs e)
+        {
+            Refresh();
+        }
+
+        private void ChangeAutoRefreshTimerInterval(TimeSpan timeSpan)
+        {
+            _autoRefreshTimer.Interval = timeSpan;
+        }
+
+        private void StartAutoRefreshTimer()
+        {
+            ChangeAutoRefreshTimerInterval(AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime));
+
+            _autoRefreshTimer.Start();
+        }
+
+        private void StopAutoRefreshTimer()
+        {
+            _autoRefreshTimer.Stop();
+        }
+
+        private void PauseRefresh()
+        {
+            if (!_autoRefreshTimer.IsEnabled)
+                return;
+
+            _autoRefreshTimer.Stop();
+            _isTimerPaused = true;
+        }
+
+        private void ResumeRefresh()
+        {
+            if (!_isTimerPaused)
+                return;
+
+                _autoRefreshTimer.Start();
+            _isTimerPaused = false;
+        }
+        public void OnViewHide()
+        {
+            PauseRefresh();
+        }
+
+        public void OnViewVisible()
+        {
+            ResumeRefresh();
+        }
+        #endregion
 
         #region ICommands & Actions
         public ICommand RefreshCommand
@@ -245,7 +311,7 @@ namespace NETworkManager.ViewModels
         {
             CommonMethods.SetClipboard(SelectedListenerInfo.Protocol.ToString());
         }
-        
+
         public ICommand CopySelectedIPAddressCommand
         {
             get { return new RelayCommand(p => CopySelectedIPAddressAction()); }
@@ -304,41 +370,6 @@ namespace NETworkManager.ViewModels
             };
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-        #endregion
-
-        #region Methods
-        private async void Refresh()
-        {
-            IsRefreshing = true;
-
-            ListenerResults.Clear();
-
-            (await Listener.GetAllActiveListenersAsync()).ForEach(x => ListenerResults.Add(x));
-
-            IsRefreshing = false;
-        }
-
-        private void AutoRefreshTimer_Tick(object sender, EventArgs e)
-        {
-            Refresh();
-        }
-
-        private void ChangeAutoRefreshTimerInterval(TimeSpan timeSpan)
-        {
-            _autoRefreshTimer.Interval = timeSpan;
-        }
-
-        private void StartAutoRefreshTimer()
-        {
-            ChangeAutoRefreshTimerInterval(AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime));
-
-            _autoRefreshTimer.Start();
-        }
-
-        private void StopAutoRefreshTimer()
-        {
-            _autoRefreshTimer.Stop();
         }
         #endregion
     }

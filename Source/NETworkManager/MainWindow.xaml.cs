@@ -434,6 +434,21 @@ namespace NETworkManager
             if (_currentApplicationViewName == name)
                 return;
 
+            // Stop some functions on the old view
+            switch (_currentApplicationViewName)
+            {
+                case ApplicationViewManager.Name.Connections:
+                    _connectionsView?.OnViewHide();
+                    break;
+                case ApplicationViewManager.Name.Listeners:
+                    _listenersView?.OnViewHide();
+                    break;
+                case ApplicationViewManager.Name.ARPTable:
+                    _arpTableView?.OnViewHide();
+                    break;
+            }
+
+            // Create new view / start some functions
             switch (name)
             {
                 case ApplicationViewManager.Name.NetworkInterface:
@@ -561,18 +576,24 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.Connections:
                     if (_connectionsView == null)
                         _connectionsView = new ConnectionsView();
+                    else
+                        _connectionsView.OnViewVisible();
 
                     ContentControlApplication.Content = _connectionsView;
                     break;
                 case ApplicationViewManager.Name.Listeners:
                     if (_listenersView == null)
                         _listenersView = new ListenersView();
+                    else
+                        _listenersView.OnViewVisible();
 
                     ContentControlApplication.Content = _listenersView;
                     break;
                 case ApplicationViewManager.Name.ARPTable:
                     if (_arpTableView == null)
                         _arpTableView = new ARPTableView();
+                    else
+                        _arpTableView.OnViewVisible();
 
                     ContentControlApplication.Content = _arpTableView;
                     break;

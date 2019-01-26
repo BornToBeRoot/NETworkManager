@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
@@ -22,6 +23,7 @@ namespace NETworkManager.ViewModels
 
         private readonly bool _isLoading;
         private readonly DispatcherTimer _autoRefreshTimer = new DispatcherTimer();
+        private bool _isTimerPaused;
 
         private string _search;
         public string Search
@@ -411,6 +413,8 @@ namespace NETworkManager.ViewModels
 
             (await ARP.GetTableAsync()).ForEach(x => ARPInfoResults.Add(x));
 
+            Debug.WriteLine("Refresh ARP...");
+
             IsRefreshing = false;
         }
 
@@ -429,6 +433,33 @@ namespace NETworkManager.ViewModels
         private void StopAutoRefreshTimer()
         {
             _autoRefreshTimer.Stop();
+        }
+
+        private void PauseRefresh()
+        {
+            if (!_autoRefreshTimer.IsEnabled)
+                return;
+
+            _autoRefreshTimer.Stop();
+            _isTimerPaused = true;
+        }
+
+        private void ResumeRefresh()
+        {
+            if (!_isTimerPaused)
+                return;
+
+            _autoRefreshTimer.Start();
+            _isTimerPaused = false;
+        }
+        public void OnViewHide()
+        {
+            PauseRefresh();
+        }
+
+        public void OnViewVisible()
+        {
+            ResumeRefresh();
         }
         #endregion
 
