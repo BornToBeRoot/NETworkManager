@@ -34,9 +34,14 @@ namespace NETworkManager.Views
             _viewModel.AddTab(host);
         }
 
-        public void Refresh()
+        public void OnViewHide()
         {
-            _viewModel.Refresh();
+            _viewModel.OnViewHide();
+        }
+
+        public void OnViewVisible()
+        {
+            _viewModel.OnViewVisible();
         }
     }
 }

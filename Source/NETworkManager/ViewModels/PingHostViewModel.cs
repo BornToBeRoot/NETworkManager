@@ -7,6 +7,7 @@ using NETworkManager.Utilities;
 using NETworkManager.Models.Settings;
 using System.ComponentModel;
 using System;
+using System.Diagnostics;
 using System.Windows.Data;
 using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
@@ -400,10 +401,15 @@ namespace NETworkManager.ViewModels
             SelectedTabIndex = TabItems.Count - 1;
         }
 
-        public void Refresh()
+        public void OnViewVisible()
         {
             // Refresh profiles
             Profiles.Refresh();
+        }
+
+        public void OnViewHide()
+        {
+
         }
         #endregion
     }

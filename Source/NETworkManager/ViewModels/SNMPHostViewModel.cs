@@ -70,6 +70,16 @@ namespace NETworkManager.ViewModels
 
             SelectedTabIndex = TabItems.Count - 1;
         }
+
+        public void OnViewVisible()
+        {
+            
+        }
+
+        public void OnViewHide()
+        {
+
+        }
         #endregion
     }
 }

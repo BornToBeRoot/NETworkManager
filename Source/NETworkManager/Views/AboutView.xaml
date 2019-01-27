@@ -44,7 +44,7 @@
                             <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_LicenseUrl}" MouseAction="LeftClick" />
                         </TextBlock.InputBindings>
                     </TextBlock>
-                    <TextBlock Text="Maintained by GitHub.com/BornToBeRoot" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
+                    <TextBlock Text="Developed and maintained by GitHub.com/BornToBeRoot" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
                         <Button ToolTip="{x:Static localization:StaticStrings.GitHub}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static documentation:CommunityManager.GithubUrl}" Cursor="Hand" Style="{StaticResource CleanButton}">
                             <Rectangle Width="24" Height="24">

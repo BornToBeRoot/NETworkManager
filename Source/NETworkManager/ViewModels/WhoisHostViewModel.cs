@@ -334,7 +334,7 @@ namespace NETworkManager.ViewModels
 
                 ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
 
-                Refresh();
+                Profiles.Refresh();
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -400,10 +400,15 @@ namespace NETworkManager.ViewModels
             SelectedTabIndex = TabItems.Count - 1;
         }
 
-        public void Refresh()
+        public void OnViewVisible()
         {
             // Refresh profiles
             Profiles.Refresh();
+        }
+
+        public void OnViewHide()
+        {
+
         }
         #endregion
     }
