@@ -49,16 +49,7 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <TabControl>
-        <TabControl.Style>
-            <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource DefaultTabControl}">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding ShowCurrentApplicationTitle}" Value="False">
-                        <Setter Property="Margin" Value="0,-2,0,0" />
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </TabControl.Style>
+    <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.Information}">
             <ScrollViewer Margin="10" Style="{StaticResource DefaultScrollViewer}">
                 <Grid>

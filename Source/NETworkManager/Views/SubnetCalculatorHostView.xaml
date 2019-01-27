@@ -7,16 +7,7 @@
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SubnetCalculatorHostViewModel}">
-    <TabControl>
-        <TabControl.Style>
-            <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource DefaultTabControl}">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding ShowCurrentApplicationTitle}" Value="False">
-                        <Setter Property="Margin" Value="0,-2,0,0" />
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </TabControl.Style>
+    <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.Calculator}">
             <views:SubnetCalculatorCalculatorView Margin="10" />
         </TabItem>
