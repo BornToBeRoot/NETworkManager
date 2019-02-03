@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Net;
+using System.Windows;
 using System.Windows.Data;
 
 namespace NETworkManager.Converters
@@ -9,6 +11,9 @@ namespace NETworkManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+                return "-/-";
+
             if (!(value is IPAddress[] ipAddresses))
                 return "-/-";
 

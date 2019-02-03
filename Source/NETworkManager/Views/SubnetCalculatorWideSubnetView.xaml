@@ -11,7 +11,7 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         dialogs:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SubnetCalculatorSupernettingViewModel}">
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SubnetCalculatorWideSubnetViewModel}">
     <UserControl.Resources>
         <converters:BigIntegerToStringConverter x:Key="BigIntegerToStringConverter" />
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
