@@ -94,8 +94,8 @@ namespace NETworkManager.ViewModels
                 return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
-            // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+            SelectedProfiles = new List<ProfileInfo> { SelectedProfile }; // Fix --> Count need to be 1 for EditProfile_CanExecute
 
             _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
             _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
@@ -304,5 +304,7 @@ namespace NETworkManager.ViewModels
             Profiles.Refresh();
         }
         #endregion
+
+       
     }
 }
