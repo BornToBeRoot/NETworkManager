@@ -45,6 +45,7 @@
                 <ResourceDictionary Source="/Resources/Styles/RectangleStyles.xaml" /> <!-- Requires tooltip styles -->
                 <ResourceDictionary Source="/Resources/Styles/PasswordBoxStyles.xaml" /> <!-- Requires tooltip styles -->
                 <ResourceDictionary Source="/Resources/Styles/ListBoxStyle.xaml" /> <!-- Requires scrollviewer/scrollbar styles -->
+                <ResourceDictionary Source="/Resources/Styles/MetroHeaderStyles.xaml" /> <!-- Requires TextBox styles -->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

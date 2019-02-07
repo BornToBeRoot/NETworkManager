@@ -20,84 +20,88 @@
         <converters:AccentToStringConverter x:Key="AccentToStringConverter" />
     </UserControl.Resources>
     <StackPanel>
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Theme}"  />
-        <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{x:Static metro:ThemeManager.AppThemes}" VerticalAlignment="Top" BorderThickness="0" Margin="0,0,0,20" SelectionMode="Single" >
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Rectangle Width="48" Height="48" Margin="-1,2" Fill="{Binding Converter={StaticResource AppThemeToBrushConverter}, ConverterParameter='Name'}" ToolTip="{Binding Converter={StaticResource AppThemeToStringConverter}, ConverterParameter='Name'}"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel />
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <!-- BUGFIX This has to be set, to enable mouse wheel scrolling -->
-            <ListBox.Template>
-                <ControlTemplate>
-                    <ItemsPresenter />
-                </ControlTemplate>
-            </ListBox.Template>
-            <!-- /BUGFIX-->
-            <ListView.SelectedItem>
-                <Binding Path="AppThemeSelectedItem" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
-            </ListView.SelectedItem>
-        </ListView>
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Accent}" />
-        <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{x:Static metro:ThemeManager.Accents}" BorderThickness="0" SelectionMode="Single" Margin="0,0,0,10">
-            <ListView.ItemTemplate>
-                <DataTemplate >
-                    <Rectangle Width="48" Height="48" Margin="-1,2" Fill="{Binding Converter={StaticResource AccentToBrushConverter}, ConverterParameter='Name'}" ToolTip="{Binding Converter={StaticResource AccentToStringConverter}, ConverterParameter='Name'}"  />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel />
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <!-- BUGFIX This has to be set, to enable mouse wheel scrolling -->
-            <ListBox.Template>
-                <ControlTemplate>
-                    <ItemsPresenter />
-                </ControlTemplate>
-            </ListBox.Template>
-            <!-- /BUGFIX-->
-            <ListView.SelectedItem>
-                <Binding Path="AccentSelectedItem" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
-            </ListView.SelectedItem>
-        </ListView>
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
-            <StackPanel.InputBindings>
-                <MouseBinding Gesture="LeftClick" Command="{x:Static documentation:DocumentationManager.OpenDocumentationCommand}" CommandParameter="{x:Static documentation:DocumentationIdentifier.HowToCreateCustomThemeAndAccent}" />
-            </StackPanel.InputBindings>
-            <StackPanel.Style>
-                <Style TargetType="{x:Type StackPanel}">
-                    <Setter Property="TextBlock.Foreground" Value="{DynamicResource AccentColorBrush}" />
-                    <Setter Property="Cursor" Value="Hand" />
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="TextBlock.Foreground" Value="{DynamicResource BlackColorBrush}" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </StackPanel.Style>
-            <Rectangle Width="16" Height="20">
-                <Rectangle.OpacityMask>
-                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}"/>
-                </Rectangle.OpacityMask>
-                <Rectangle.Style>
-                    <Style TargetType="{x:Type Rectangle}">
-                        <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type StackPanel}}, Path=IsMouseOver}" Value="True">
-                                <Setter Property="Fill" Value="{DynamicResource BlackColorBrush}" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Rectangle.Style>
-            </Rectangle>
-            <TextBlock Text="{x:Static localization:Strings.DocumentationTitle_00002}" FontSize="14" Margin="10,0,0,0" />
-        </StackPanel>
+        <mah:MetroHeader Header="{x:Static localization:Strings.Theme}" Margin="0,0,0,20">
+            <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{x:Static metro:ThemeManager.AppThemes}" VerticalAlignment="Top" BorderThickness="0" SelectionMode="Single" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Rectangle Width="48" Height="48" Margin="-1,2" Fill="{Binding Converter={StaticResource AppThemeToBrushConverter}, ConverterParameter='Name'}" ToolTip="{Binding Converter={StaticResource AppThemeToStringConverter}, ConverterParameter='Name'}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <!-- BUGFIX This has to be set, to enable mouse wheel scrolling -->
+                <ListBox.Template>
+                    <ControlTemplate>
+                        <ItemsPresenter />
+                    </ControlTemplate>
+                </ListBox.Template>
+                <!-- /BUGFIX-->
+                <ListView.SelectedItem>
+                    <Binding Path="AppThemeSelectedItem" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
+                </ListView.SelectedItem>
+            </ListView>
+        </mah:MetroHeader>
+        <mah:MetroHeader Header="{x:Static localization:Strings.Accent}" Margin="0,0,0,20">
+            <StackPanel>
+                <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{x:Static metro:ThemeManager.Accents}" BorderThickness="0" SelectionMode="Single" Margin="0,0,0,10">
+                    <ListView.ItemTemplate>
+                        <DataTemplate >
+                            <Rectangle Width="48" Height="48" Margin="-1,2" Fill="{Binding Converter={StaticResource AccentToBrushConverter}, ConverterParameter='Name'}" ToolTip="{Binding Converter={StaticResource AccentToStringConverter}, ConverterParameter='Name'}"  />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <!-- BUGFIX This has to be set, to enable mouse wheel scrolling -->
+                    <ListBox.Template>
+                        <ControlTemplate>
+                            <ItemsPresenter />
+                        </ControlTemplate>
+                    </ListBox.Template>
+                    <!-- /BUGFIX-->
+                    <ListView.SelectedItem>
+                        <Binding Path="AccentSelectedItem" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
+                    </ListView.SelectedItem>
+                </ListView>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel.InputBindings>
+                        <MouseBinding Gesture="LeftClick" Command="{x:Static documentation:DocumentationManager.OpenDocumentationCommand}" CommandParameter="{x:Static documentation:DocumentationIdentifier.HowToCreateCustomThemeAndAccent}" />
+                    </StackPanel.InputBindings>
+                    <StackPanel.Style>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="TextBlock.Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="TextBlock.Foreground" Value="{DynamicResource BlackColorBrush}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <Rectangle Width="16" Height="20">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}"/>
+                        </Rectangle.OpacityMask>
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type StackPanel}}, Path=IsMouseOver}" Value="True">
+                                        <Setter Property="Fill" Value="{DynamicResource BlackColorBrush}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                    <TextBlock Text="{x:Static localization:Strings.DocumentationTitle_00002}" FontSize="14" Margin="10,0,0,0" />
+                </StackPanel>
+            </StackPanel>
+        </mah:MetroHeader>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
