@@ -497,7 +497,7 @@ namespace NETworkManager.ViewModels
                     }
                 }
 
-                var tracerouteOptions = new TracerouteOptions
+                var traceroute = new Traceroute
                 {
                     Timeout = SettingsManager.Current.Traceroute_Timeout,
                     Buffer = SettingsManager.Current.Traceroute_Buffer,
@@ -506,14 +506,12 @@ namespace NETworkManager.ViewModels
                     ResolveHostname = SettingsManager.Current.Traceroute_ResolveHostname
                 };
 
-                var traceroute = new Traceroute();
-
                 traceroute.HopReceived += Traceroute_HopReceived;
                 traceroute.TraceComplete += Traceroute_TraceComplete;
                 traceroute.MaximumHopsReached += Traceroute_MaximumHopsReached;
                 traceroute.UserHasCanceled += Traceroute_UserHasCanceled;
 
-                traceroute.TraceAsync(ipAddress, tracerouteOptions, _cancellationTokenSource.Token);
+                traceroute.TraceAsync(ipAddress, _cancellationTokenSource.Token);
 
                 // Add the host to history
                 AddHostToHistory(Host);

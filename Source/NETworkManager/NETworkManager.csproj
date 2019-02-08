@@ -1070,7 +1070,6 @@
     <Compile Include="Models\Network\Subnetmask.cs" />
     <Compile Include="Models\Network\SubnetmaskInfo.cs" />
     <Compile Include="Models\Network\Traceroute.cs" />
-    <Compile Include="Models\Network\TracerouteOptions.cs" />
     <Compile Include="Models\Network\WakeOnLAN.cs" />
     <Compile Include="Models\Network\WakeOnLANInfo.cs" />
     <Compile Include="Models\Settings\AppearanceManager.cs" />

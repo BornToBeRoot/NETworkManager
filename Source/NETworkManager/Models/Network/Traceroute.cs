@@ -12,6 +12,14 @@ namespace NETworkManager.Models.Network
 {
     public class Traceroute
     {
+        #region Variables
+        public int Timeout = 4000;
+        public int Buffer = 32;
+        public int MaximumHops = 30;
+        public bool DontFragement = true;
+        public bool ResolveHostname = true;
+        #endregion
+
         #region Events
         public event EventHandler<TracerouteHopReceivedArgs> HopReceived;
         protected virtual void OnHopReceived(TracerouteHopReceivedArgs e)
@@ -39,13 +47,13 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Methods
-        public void TraceAsync(IPAddress ipAddress, TracerouteOptions traceOptions, CancellationToken cancellationToken)
+        public void TraceAsync(IPAddress ipAddress, CancellationToken cancellationToken)
         {
             Task.Run(() =>
             {
-                var buffer = new byte[traceOptions.Buffer];
+                var buffer = new byte[Buffer];
 
-                for (var i = 1; i < traceOptions.MaximumHops + 1; i++)
+                for (var i = 1; i < MaximumHops + 1; i++)
                 {
                     var tasks = new List<Task<Tuple<PingReply, long>>>();
 
@@ -63,7 +71,7 @@ namespace NETworkManager.Models.Network
                             {
                                 stopwatch.Start();
 
-                                pingReply = ping.Send(ipAddress, traceOptions.Timeout, buffer, new System.Net.NetworkInformation.PingOptions { Ttl = i1, DontFragment = traceOptions.DontFragement });
+                                pingReply = ping.Send(ipAddress, Timeout, buffer, new System.Net.NetworkInformation.PingOptions { Ttl = i1, DontFragment = DontFragement });
 
                                 stopwatch.Stop();
                             }
@@ -81,7 +89,7 @@ namespace NETworkManager.Models.Network
 
                     try
                     {
-                        if (traceOptions.ResolveHostname && ipAddressHop != null)
+                        if (ResolveHostname && ipAddressHop != null)
                             hostname = Dns.GetHostEntry(ipAddressHop).HostName;
                     }
                     catch (SocketException) { } // Couldn't resolve hostname
@@ -96,15 +104,16 @@ namespace NETworkManager.Models.Network
                     }
 
                     // Check for cancel
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        OnUserHasCanceled();
-                        return;
-                    }
+                    if (!cancellationToken.IsCancellationRequested)
+                        continue;
+
+                    OnUserHasCanceled();
+
+                    return;
                 }
 
                 // Max hops reached...
-                OnMaximumHopsReached(new MaximumHopsReachedArgs(traceOptions.MaximumHops));
+                OnMaximumHopsReached(new MaximumHopsReachedArgs(MaximumHops));
 
             }, cancellationToken);
         }
