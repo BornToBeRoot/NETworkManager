@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -220,7 +221,7 @@ namespace NETworkManager.Models.Settings
             get => _appearance_Opacity;
             set
             {
-                if (value == _appearance_Opacity)
+                if (Math.Abs(value - _appearance_Opacity) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _appearance_Opacity = value;
@@ -379,7 +380,7 @@ namespace NETworkManager.Models.Settings
             get => _networkInterface_ProfileWidth;
             set
             {
-                if (value == _networkInterface_ProfileWidth)
+                if (Math.Abs(value - _networkInterface_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _networkInterface_ProfileWidth = value;
@@ -666,7 +667,7 @@ namespace NETworkManager.Models.Settings
             get => _ipScanner_ProfileWidth;
             set
             {
-                if (value == _ipScanner_ProfileWidth)
+                if (Math.Abs(value - _ipScanner_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _ipScanner_ProfileWidth = value;
@@ -862,7 +863,7 @@ namespace NETworkManager.Models.Settings
             get => _portScanner_ProfileWidth;
             set
             {
-                if (value == _portScanner_ProfileWidth)
+                if (Math.Abs(value - _portScanner_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _portScanner_ProfileWidth = value;
@@ -1089,7 +1090,7 @@ namespace NETworkManager.Models.Settings
             get => _ping_ProfileWidth;
             set
             {
-                if (value == _ping_ProfileWidth)
+                if (Math.Abs(value - _ping_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _ping_ProfileWidth = value;
@@ -1286,7 +1287,7 @@ namespace NETworkManager.Models.Settings
             get => _traceroute_ProfileWidth;
             set
             {
-                if (value == _traceroute_ProfileWidth)
+                if (Math.Abs(value - _traceroute_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _traceroute_ProfileWidth = value;
@@ -1603,7 +1604,7 @@ namespace NETworkManager.Models.Settings
             get => _dnsLookup_ProfileWidth;
             set
             {
-                if (value == _dnsLookup_ProfileWidth)
+                if (Math.Abs(value - _dnsLookup_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _dnsLookup_ProfileWidth = value;
@@ -1980,7 +1981,7 @@ namespace NETworkManager.Models.Settings
             get => _remoteDesktop_ProfileWidth;
             set
             {
-                if (value == _remoteDesktop_ProfileWidth)
+                if (Math.Abs(value - _remoteDesktop_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _remoteDesktop_ProfileWidth = value;
@@ -2072,7 +2073,7 @@ namespace NETworkManager.Models.Settings
             get => _powerShell_ProfileWidth;
             set
             {
-                if (value == _powerShell_ProfileWidth)
+                if (Math.Abs(value - _powerShell_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _powerShell_ProfileWidth = value;
@@ -2254,7 +2255,7 @@ namespace NETworkManager.Models.Settings
             get => _puTTY_ProfileWidth;
             set
             {
-                if (value == _puTTY_ProfileWidth)
+                if (Math.Abs(value - _puTTY_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _puTTY_ProfileWidth = value;
@@ -2421,7 +2422,7 @@ namespace NETworkManager.Models.Settings
             get => _tightVNC_ProfileWidth;
             set
             {
-                if (value == _tightVNC_ProfileWidth)
+                if (Math.Abs(value - _tightVNC_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _tightVNC_ProfileWidth = value;
@@ -2725,7 +2726,7 @@ namespace NETworkManager.Models.Settings
             get => _wakeOnLAN_ClientWidth;
             set
             {
-                if (value == _wakeOnLAN_ClientWidth)
+                if (Math.Abs(value - _wakeOnLAN_ClientWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _wakeOnLAN_ClientWidth = value;
@@ -2802,7 +2803,7 @@ namespace NETworkManager.Models.Settings
             get => _httpHeaders_ProfileWidth;
             set
             {
-                if (value == _httpHeaders_ProfileWidth)
+                if (Math.Abs(value - _httpHeaders_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _httpHeaders_ProfileWidth = value;
@@ -3116,7 +3117,7 @@ namespace NETworkManager.Models.Settings
             get => _whois_ProfileWidth;
             set
             {
-                if (value == _whois_ProfileWidth)
+                if (Math.Abs(value - _whois_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _whois_ProfileWidth = value;
