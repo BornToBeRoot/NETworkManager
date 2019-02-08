@@ -954,7 +954,7 @@ namespace NETworkManager.Models.Settings
             get => _ping_DontFragement;
             set
             {
-                if (value = _ping_DontFragement)
+                if (value == _ping_DontFragement)
                     return;
 
                 _ping_DontFragement = value;
