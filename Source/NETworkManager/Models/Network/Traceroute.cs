@@ -14,7 +14,7 @@ namespace NETworkManager.Models.Network
     {
         #region Variables
         public int Timeout = 4000;
-        public int Buffer = 32;
+        public byte[] Buffer = new byte[32];
         public int MaximumHops = 30;
         public bool DontFragement = true;
         public bool ResolveHostname = true;
@@ -51,8 +51,6 @@ namespace NETworkManager.Models.Network
         {
             Task.Run(() =>
             {
-                var buffer = new byte[Buffer];
-
                 for (var i = 1; i < MaximumHops + 1; i++)
                 {
                     var tasks = new List<Task<Tuple<PingReply, long>>>();
@@ -71,7 +69,7 @@ namespace NETworkManager.Models.Network
                             {
                                 stopwatch.Start();
 
-                                pingReply = ping.Send(ipAddress, Timeout, buffer, new System.Net.NetworkInformation.PingOptions { Ttl = i1, DontFragment = DontFragement });
+                                pingReply = ping.Send(ipAddress, Timeout, Buffer, new System.Net.NetworkInformation.PingOptions { Ttl = i1, DontFragment = DontFragement });
 
                                 stopwatch.Stop();
                             }

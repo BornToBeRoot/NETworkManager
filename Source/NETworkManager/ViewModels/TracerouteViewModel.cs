@@ -500,7 +500,7 @@ namespace NETworkManager.ViewModels
                 var traceroute = new Traceroute
                 {
                     Timeout = SettingsManager.Current.Traceroute_Timeout,
-                    Buffer = SettingsManager.Current.Traceroute_Buffer,
+                    Buffer = new byte[SettingsManager.Current.Traceroute_Buffer],
                     MaximumHops = SettingsManager.Current.Traceroute_MaximumHops,
                     DontFragement = true,
                     ResolveHostname = SettingsManager.Current.Traceroute_ResolveHostname
