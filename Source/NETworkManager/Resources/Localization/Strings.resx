@@ -1996,4 +1996,19 @@ Path: "{0}"</value>
   <data name="Hide" xml:space="preserve">
     <value>Hide</value>
   </data>
+  <data name="TotalBytesReceived" xml:space="preserve">
+    <value>Total bytes received</value>
+  </data>
+  <data name="TotalBytesSent" xml:space="preserve">
+    <value>Total bytes sent</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="Bandwidth" xml:space="preserve">
+    <value>Bandwidth</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
 </root>

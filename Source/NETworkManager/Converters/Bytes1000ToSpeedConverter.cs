@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace NETworkManager.Converters
 {
-    public sealed class BitsToHumanReadableSizeConverter : IValueConverter
+    public sealed class Bytes1000ToSpeedConverter : IValueConverter
     {
         private readonly string[] _sizes = { "Bit/s", "KBit/s", "MBit/s", "GBit/s", "Tbit/s" };
 

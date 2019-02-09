@@ -21,6 +21,7 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
+        private BandwidthMeter _bandwidthMeter;
 
         private readonly bool _isLoading;
 
@@ -144,6 +145,13 @@ namespace NETworkManager.ViewModels
                     DetailsDNSSuffix = value.DNSSuffix;
                     DetailsDNSServer = value.DNSServer;
 
+                    // Throughput
+                    _bandwidthMeter?.Stop();
+
+                    _bandwidthMeter = new BandwidthMeter(value.Id);
+                    _bandwidthMeter.UpdateSpeed += BandwidthMeter_UpdateSpeed;
+                    _bandwidthMeter.Start();
+
                     // Configuration
                     if (value.DhcpEnabled)
                     {
@@ -176,6 +184,14 @@ namespace NETworkManager.ViewModels
                 _selectedNetworkInterface = value;
                 OnPropertyChanged();
             }
+        }
+
+        private void BandwidthMeter_UpdateSpeed(object sender, BandwidthMeterSpeedArgs e)
+        {
+            ThroughputTotalBytesReceived = e.TotalBytesReceived;
+            ThroughputTotalBytesSent = e.TotalBytesSent;
+            BytesReceivedSpeed = e.ByteReceivedSpeed;
+            BytesSentSpeed = e.ByteSentSpeed;
         }
         #endregion
 
@@ -443,6 +459,64 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _detailsDNSServer = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Throughput
+        private long _throughputTotalBytesSent;
+        public long ThroughputTotalBytesSent
+        {
+            get => _throughputTotalBytesSent;
+            set
+            {
+                if(value == _throughputTotalBytesSent)
+                    return;
+
+                _throughputTotalBytesSent = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private long _throughputTotalBytesReceived;
+        public long ThroughputTotalBytesReceived
+        {
+            get => _throughputTotalBytesReceived;
+            set
+            {
+                if (value == _throughputTotalBytesReceived)
+                    return;
+
+                _throughputTotalBytesReceived = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private long _bytesReceivedSpeed;
+        public long BytesReceivedSpeed
+        {
+            get => _bytesReceivedSpeed;
+            set
+            {
+                if(value == _bytesReceivedSpeed)
+                    return;
+
+                _bytesReceivedSpeed = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private long _bytesSentSpeed;
+        public long BytesSentSpeed
+        {
+            get => _bytesSentSpeed;
+            set
+            {
+                if (value == _bytesSentSpeed)
+                    return;
+
+                _bytesSentSpeed = value;
                 OnPropertyChanged();
             }
         }
@@ -1237,11 +1311,13 @@ namespace NETworkManager.ViewModels
         {
             // Refresh profiles
             Profiles.Refresh();
+
+            _bandwidthMeter?.Start();
         }
 
         public void OnViewHide()
         {
-
+            _bandwidthMeter?.Stop();
         }
         #endregion
 

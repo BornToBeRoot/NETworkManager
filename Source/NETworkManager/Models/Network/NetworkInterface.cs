@@ -204,7 +204,6 @@ namespace NETworkManager.Models.Network
 
             PowerShellHelper.ExecuteCommand(command, true);
         }
-
         #endregion
 
         #region Enum
@@ -215,7 +214,5 @@ namespace NETworkManager.Models.Network
             Renew
         }
         #endregion
-
-
     }
 }

@@ -437,6 +437,9 @@ namespace NETworkManager
             // Stop some functions on the old view
             switch (_currentApplicationViewName)
             {
+                case ApplicationViewManager.Name.NetworkInterface:
+                    _networkInterfaceView?.OnViewHide();
+                    break;
                 case ApplicationViewManager.Name.Connections:
                     _connectionsView?.OnViewHide();
                     break;

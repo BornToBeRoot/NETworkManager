@@ -511,6 +511,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bandwidth.
+        /// </summary>
+        public static string Bandwidth {
+            get {
+                return ResourceManager.GetString("Bandwidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dark.
         /// </summary>
         public static string BaseDark {
@@ -1542,6 +1551,15 @@ namespace NETworkManager.Resources.Localization {
         public static string DontFragment {
             get {
                 return ResourceManager.GetString("DontFragment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        public static string Download {
+            get {
+                return ResourceManager.GetString("Download", resourceCulture);
             }
         }
         
@@ -5276,6 +5294,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total bytes received.
+        /// </summary>
+        public static string TotalBytesReceived {
+            get {
+                return ResourceManager.GetString("TotalBytesReceived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total bytes sent.
+        /// </summary>
+        public static string TotalBytesSent {
+            get {
+                return ResourceManager.GetString("TotalBytesSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trace.
         /// </summary>
         public static string Trace {
@@ -5353,6 +5389,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Update {
             get {
                 return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        public static string Upload {
+            get {
+                return ResourceManager.GetString("Upload", resourceCulture);
             }
         }
         

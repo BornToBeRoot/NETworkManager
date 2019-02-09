@@ -11,8 +11,8 @@ namespace NETworkManager.Models.Network
     public class SNMP
     {
         #region Variables
-        public int Port { get; set; }
-        public int Timeout { get; set; }
+        public int Port = 161;
+        public int Timeout = 10000;
         #endregion
 
         #region Events
