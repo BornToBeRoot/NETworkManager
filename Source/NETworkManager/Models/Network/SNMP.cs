@@ -11,7 +11,8 @@ namespace NETworkManager.Models.Network
     public class SNMP
     {
         #region Variables
-
+        public int Port { get; set; }
+        public int Timeout { get; set; }
         #endregion
 
         #region Events
@@ -22,11 +23,11 @@ namespace NETworkManager.Models.Network
             Received?.Invoke(this, e);
         }
 
-        public event EventHandler Timeout;
+        public event EventHandler TimeoutReached;
 
-        protected virtual void OnTimeout()
+        protected virtual void OnTimeoutReached()
         {
-            Timeout?.Invoke(this, EventArgs.Empty);
+            TimeoutReached?.Invoke(this, EventArgs.Empty);
         }
 
         public event EventHandler Error;
@@ -52,20 +53,20 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Methods
-        public void GetV1V2CAsync(SNMPVersion version, IPAddress ipAddress, string community, string oid, SNMPOptions options)
+        public void GetV1V2CAsync(SNMPVersion version, IPAddress ipAddress, string community, string oid)
         {
             Task.Run(() =>
             {
                 try
                 {
-                    foreach (var result in Messenger.Get(version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(community), new List<Variable> { new Variable(new ObjectIdentifier(oid)) }, options.Timeout))
+                    foreach (var result in Messenger.Get(version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, Port), new OctetString(community), new List<Variable> { new Variable(new ObjectIdentifier(oid)) }, Timeout))
                         OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
 
                     OnComplete();
                 }
                 catch (Lextm.SharpSnmpLib.Messaging.TimeoutException)
                 {
-                    OnTimeout();
+                    OnTimeoutReached();
                 }
                 catch (ErrorException)
                 {
@@ -74,7 +75,7 @@ namespace NETworkManager.Models.Network
             });
         }
 
-        public void WalkV1V2CAsync(SNMPVersion version, IPAddress ipAddress, string community, string oid, WalkMode walkMode, SNMPOptions options)
+        public void WalkV1V2CAsync(SNMPVersion version, IPAddress ipAddress, string community, string oid, WalkMode walkMode)
         {
             Task.Run(() =>
             {
@@ -82,7 +83,7 @@ namespace NETworkManager.Models.Network
                 {
                     IList<Variable> results = new List<Variable>();
 
-                    Messenger.Walk(version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(community), new ObjectIdentifier(oid), results, options.Timeout, walkMode);
+                    Messenger.Walk(version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, Port), new OctetString(community), new ObjectIdentifier(oid), results, Timeout, walkMode);
 
                     foreach (var result in results)
                         OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
@@ -91,7 +92,7 @@ namespace NETworkManager.Models.Network
                 }
                 catch (Lextm.SharpSnmpLib.Messaging.TimeoutException)
                 {
-                    OnTimeout();
+                    OnTimeoutReached();
                 }
                 catch (ErrorException)
                 {
@@ -100,19 +101,19 @@ namespace NETworkManager.Models.Network
             });
         }
 
-        public void SetV1V2CAsync(SNMPVersion version, IPAddress ipAddress, string communtiy, string oid, string data, SNMPOptions options)
+        public void SetV1V2CAsync(SNMPVersion version, IPAddress ipAddress, string communtiy, string oid, string data)
         {
             Task.Run(() =>
             {
                 try
                 {
-                    Messenger.Set(version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, options.Port), new OctetString(communtiy), new List<Variable> { new Variable(new ObjectIdentifier(oid), new OctetString(data)) }, options.Timeout);
+                    Messenger.Set(version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, Port), new OctetString(communtiy), new List<Variable> { new Variable(new ObjectIdentifier(oid), new OctetString(data)) }, Timeout);
 
                     OnComplete();
                 }
                 catch (Lextm.SharpSnmpLib.Messaging.TimeoutException)
                 {
-                    OnTimeout();
+                    OnTimeoutReached();
                 }
                 catch (ErrorException)
                 {
@@ -121,17 +122,17 @@ namespace NETworkManager.Models.Network
             });
         }
 
-        public void Getv3Async(IPAddress ipAddress, string oid, SNMPV3Security security, string username, SNMPV3AuthenticationProvider authProvider, string auth, SNMPV3PrivacyProvider privProvider, string priv, SNMPOptions options)
+        public void Getv3Async(IPAddress ipAddress, string oid, SNMPV3Security security, string username, SNMPV3AuthenticationProvider authProvider, string auth, SNMPV3PrivacyProvider privProvider, string priv)
         {
             Task.Run(() =>
             {
                 try
                 {
-                    var ipEndpoint = new IPEndPoint(ipAddress, options.Port);
+                    var ipEndpoint = new IPEndPoint(ipAddress, Port);
 
                     // Discovery
                     var discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
-                    var report = discovery.GetResponse(options.Timeout, ipEndpoint);
+                    var report = discovery.GetResponse(Timeout, ipEndpoint);
 
                     IPrivacyProvider privacy;
 
@@ -150,7 +151,7 @@ namespace NETworkManager.Models.Network
                     }
 
                     var request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(username), new List<Variable> { new Variable(new ObjectIdentifier(oid)) }, privacy, Messenger.MaxMessageSize, report);
-                    var reply = request.GetResponse(options.Timeout, ipEndpoint);
+                    var reply = request.GetResponse(Timeout, ipEndpoint);
 
                     var result = reply.Pdu().Variables[0];
 
@@ -160,7 +161,7 @@ namespace NETworkManager.Models.Network
                 }
                 catch (Lextm.SharpSnmpLib.Messaging.TimeoutException)
                 {
-                    OnTimeout();
+                    OnTimeoutReached();
                 }
                 catch (ErrorException)
                 {
@@ -169,17 +170,17 @@ namespace NETworkManager.Models.Network
             });
         }
 
-        public void WalkV3Async(IPAddress ipAddress, string oid, SNMPV3Security security, string username, SNMPV3AuthenticationProvider authProvider, string auth, SNMPV3PrivacyProvider privProvider, string priv, WalkMode walkMode, SNMPOptions options)
+        public void WalkV3Async(IPAddress ipAddress, string oid, SNMPV3Security security, string username, SNMPV3AuthenticationProvider authProvider, string auth, SNMPV3PrivacyProvider privProvider, string priv, WalkMode walkMode)
         {
             Task.Run(() =>
             {
                 try
                 {
-                    var ipEndpoint = new IPEndPoint(ipAddress, options.Port);
+                    var ipEndpoint = new IPEndPoint(ipAddress, Port);
 
                     // Discovery
                     var discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
-                    var report = discovery.GetResponse(options.Timeout, ipEndpoint);
+                    var report = discovery.GetResponse(Timeout, ipEndpoint);
 
                     IPrivacyProvider privacy;
 
@@ -199,7 +200,7 @@ namespace NETworkManager.Models.Network
 
                     var results = new List<Variable>();
 
-                    Messenger.BulkWalk(VersionCode.V3, ipEndpoint, new OctetString(username), OctetString.Empty, new ObjectIdentifier(oid), results, options.Timeout, 10, walkMode, privacy, report);
+                    Messenger.BulkWalk(VersionCode.V3, ipEndpoint, new OctetString(username), OctetString.Empty, new ObjectIdentifier(oid), results, Timeout, 10, walkMode, privacy, report);
 
                     foreach (var result in results)
                         OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
@@ -208,7 +209,7 @@ namespace NETworkManager.Models.Network
                 }
                 catch (Lextm.SharpSnmpLib.Messaging.TimeoutException)
                 {
-                    OnTimeout();
+                    OnTimeoutReached();
                 }
                 catch (ErrorException)
                 {
@@ -217,17 +218,17 @@ namespace NETworkManager.Models.Network
             });
         }
 
-        public void SetV3Async(IPAddress ipAddress, string oid, SNMPV3Security security, string username, SNMPV3AuthenticationProvider authProvider, string auth, SNMPV3PrivacyProvider privProvider, string priv, string data, SNMPOptions options)
+        public void SetV3Async(IPAddress ipAddress, string oid, SNMPV3Security security, string username, SNMPV3AuthenticationProvider authProvider, string auth, SNMPV3PrivacyProvider privProvider, string priv, string data)
         {
             Task.Run(() =>
             {
                 try
                 {
-                    var ipEndpoint = new IPEndPoint(ipAddress, options.Port);
+                    var ipEndpoint = new IPEndPoint(ipAddress, Port);
 
                     // Discovery
                     var discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
-                    var report = discovery.GetResponse(options.Timeout, ipEndpoint);
+                    var report = discovery.GetResponse(Timeout, ipEndpoint);
 
                     IPrivacyProvider privacy;
 
@@ -246,13 +247,13 @@ namespace NETworkManager.Models.Network
                     }
 
                     var request = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(username), OctetString.Empty, new List<Variable> { new Variable(new ObjectIdentifier(oid), new OctetString(data)) }, privacy, Messenger.MaxMessageSize, report);
-                    var reply = request.GetResponse(options.Timeout, ipEndpoint);
+                    var reply = request.GetResponse(Timeout, ipEndpoint);
 
                     OnComplete();
                 }
                 catch (Lextm.SharpSnmpLib.Messaging.TimeoutException)
                 {
-                    OnTimeout();
+                    OnTimeoutReached();
                 }
                 catch (ErrorException)
                 {
@@ -262,13 +263,13 @@ namespace NETworkManager.Models.Network
         }
 
         // noAuthNoPriv
-        private IPrivacyProvider GetPrivacy()
+        private static IPrivacyProvider GetPrivacy()
         {
             return new DefaultPrivacyProvider(DefaultAuthenticationProvider.Instance);
         }
 
         // authNoPriv
-        private IPrivacyProvider GetPrivacy(SNMPV3AuthenticationProvider authProvider, string auth)
+        private static IPrivacyProvider GetPrivacy(SNMPV3AuthenticationProvider authProvider, string auth)
         {
             IAuthenticationProvider authenticationProvider;
 
@@ -281,7 +282,7 @@ namespace NETworkManager.Models.Network
         }
 
         // authPriv
-        private IPrivacyProvider GetPrivacy(SNMPV3AuthenticationProvider authProvider, string auth, SNMPV3PrivacyProvider privProvider, string priv)
+        private static IPrivacyProvider GetPrivacy(SNMPV3AuthenticationProvider authProvider, string auth, SNMPV3PrivacyProvider privProvider, string priv)
         {
             IAuthenticationProvider authenticationProvider;
 

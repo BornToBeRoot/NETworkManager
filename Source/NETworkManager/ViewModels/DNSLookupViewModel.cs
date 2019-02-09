@@ -25,7 +25,7 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
-        
+
         private readonly int _tabId;
         private bool _firstLoad = true;
 
@@ -33,7 +33,7 @@ namespace NETworkManager.ViewModels
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
         private string _lastSortDescriptionAscending = string.Empty;
-        
+
         private readonly bool _isLoading;
 
         private string _host;
@@ -122,8 +122,8 @@ namespace NETworkManager.ViewModels
             get => _lookupResults;
             set
             {
-               if(Equals(value, _lookupResults))
-                   return;
+                if (Equals(value, _lookupResults))
+                    return;
 
                 _lookupResults = value;
             }
@@ -446,7 +446,7 @@ namespace NETworkManager.ViewModels
 
             AddHostToHistory(Host);
 
-            var dnsLookupOptions = new DNSLookupOptions
+            var dnsLookup = new DNSLookup
             {
                 AddDNSSuffix = SettingsManager.Current.DNSLookup_AddDNSSuffix,
                 Class = SettingsManager.Current.DNSLookup_Class,
@@ -456,29 +456,27 @@ namespace NETworkManager.ViewModels
                 TransportType = SettingsManager.Current.DNSLookup_TransportType,
                 Attempts = SettingsManager.Current.DNSLookup_Attempts,
                 Timeout = SettingsManager.Current.DNSLookup_Timeout,
-                ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME
+                ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME,
             };
 
             if (!DNSServer.UseWindowsDNSServer)
             {
-                dnsLookupOptions.UseCustomDNSServer = true;
-                dnsLookupOptions.CustomDNSServers = DNSServer.Server;
-                dnsLookupOptions.Port = DNSServer.Port;
+                dnsLookup.UseCustomDNSServer = true;
+                dnsLookup.CustomDNSServers = DNSServer.Server;
+                dnsLookup.Port = DNSServer.Port;
             }
 
             if (SettingsManager.Current.DNSLookup_UseCustomDNSSuffix)
             {
-                dnsLookupOptions.UseCustomDNSSuffix = true;
-                dnsLookupOptions.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix.TrimStart('.');
+                dnsLookup.UseCustomDNSSuffix = true;
+                dnsLookup.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix.TrimStart('.');
             }
-            
-            var dnsLookup = new DNSLookup();
 
             dnsLookup.RecordReceived += DNSLookup_RecordReceived;
             dnsLookup.LookupError += DNSLookup_LookupError;
             dnsLookup.LookupComplete += DNSLookup_LookupComplete;
 
-            dnsLookup.ResolveAsync(Host.Split(';').Select(x => x.Trim()).ToList(), dnsLookupOptions);
+            dnsLookup.ResolveAsync(Host.Split(';').Select(x => x.Trim()).ToList());
         }
 
         private void LookupFinished()

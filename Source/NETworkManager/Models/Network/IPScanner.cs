@@ -125,7 +125,7 @@ namespace NETworkManager.Models.Network
 
                             if (ResolveHostname)
                             {
-                                var options = new DNSLookupOptions
+                                var dnsLookup = new DNSLookup
                                 {
                                     UseCustomDNSServer = UseCustomDNSServer,
                                     CustomDNSServers = CustomDNSServer,
@@ -134,10 +134,10 @@ namespace NETworkManager.Models.Network
                                     Timeout = DNSTimeout,
                                     TransportType = DNSTransportType,
                                     UseResolverCache = DNSUseResolverCache,
-                                    Recursion = DNSRecursion,
+                                    Recursion = DNSRecursion
                                 };
-
-                                hostname = DNSLookup.ResolvePTR(ipAddress, options).Item2.FirstOrDefault();
+                                
+                                hostname = dnsLookup.ResolvePTR(ipAddress).Item2.FirstOrDefault();
                             }
 
                             // ARP

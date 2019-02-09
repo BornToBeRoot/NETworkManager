@@ -307,7 +307,6 @@
     <Compile Include="Models\Network\HTTPHeadersOptions.cs" />
     <Compile Include="Models\Network\HTTPHeaders.cs" />
     <Compile Include="Models\Network\ARPInfo.cs" />
-    <Compile Include="Models\Network\SNMPOptions.cs" />
     <Compile Include="Models\Network\SNMPReceivedInfo.cs" />
     <Compile Include="Models\Network\SNMPReceivedArgs.cs" />
     <Compile Include="Models\Network\SNMP.cs" />
@@ -372,7 +371,6 @@
     <Compile Include="ViewModels\RemoteDesktopConnectViewModel.cs" />
     <Compile Include="Models\Network\DNSLookup.cs" />
     <Compile Include="Models\Network\DNSLookupCompleteArgs.cs" />
-    <Compile Include="Models\Network\DNSLookupOptions.cs" />
     <Compile Include="Models\Network\DNSLookupErrorArgs.cs" />
     <Compile Include="Models\Network\DNSLookupRecordInfo.cs" />
     <Compile Include="Models\Network\DNSLookupRecordArgs.cs" />
