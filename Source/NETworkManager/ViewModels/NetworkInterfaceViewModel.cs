@@ -151,6 +151,8 @@ namespace NETworkManager.ViewModels
                     // Bandwidth
                     _bandwidthMeter?.Stop();
 
+                    ResetBandwidthChart();
+
                     _bandwidthMeter = new BandwidthMeter(value.Id);
                     _bandwidthMeter.UpdateSpeed += BandwidthMeter_UpdateSpeed;
                     _bandwidthMeter.Start();
@@ -1340,6 +1342,16 @@ namespace NETworkManager.ViewModels
 
             Series[0].Values.Clear();
             Series[1].Values.Clear();
+
+            var currentDateTime = DateTime.Now;
+
+            for (var i = 60; i > 0; i--)
+            {
+                var bandwidthInfo =  new BandwidthInfo(currentDateTime.AddSeconds(-i), 0);
+
+                Series[0].Values.Add(bandwidthInfo);
+                Series[1].Values.Add(bandwidthInfo);
+            }
         }
 
         public void OnViewVisible()
