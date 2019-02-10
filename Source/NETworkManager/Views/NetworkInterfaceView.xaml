@@ -13,6 +13,7 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         xmlns:networkManager="clr-namespace:NETworkManager"
+        xmlns:liveChart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:NetworkInterfaceViewModel}">
     <UserControl.InputBindings>
@@ -415,6 +416,22 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
+                        <liveChart:CartesianChart Grid.Row="2" Series="{Binding Series}" Margin="0,0,0,20">
+                            <liveChart:CartesianChart.AxisX>
+                                <liveChart:Axis LabelFormatter="{Binding FormatterDate}">
+                                    <liveChart:Axis.Separator>
+                                        <liveChart:Separator StrokeThickness="0" />
+                                    </liveChart:Axis.Separator>
+                                </liveChart:Axis>
+                            </liveChart:CartesianChart.AxisX>
+                            <liveChart:CartesianChart.AxisY>
+                                <liveChart:Axis MinValue="0" LabelFormatter="{Binding FormatterSpeed}">
+                                    <liveChart:Axis.Separator>
+                                        <liveChart:Separator StrokeThickness="1" Stroke="{DynamicResource GrayBrush8}" StrokeDashArray="10" />
+                                    </liveChart:Axis.Separator>
+                                </liveChart:Axis>
+                            </liveChart:CartesianChart.AxisY>
+                        </liveChart:CartesianChart>
                         <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.Details}">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
@@ -448,13 +465,13 @@
                             </Grid.RowDefinitions>
                             <GridSplitter Grid.Column="1" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
                             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.TotalBytesReceived}" />
-                            <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding ThroughputTotalBytesReceived}" />
+                            <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding BandwidthTotalBytesReceived}" />
                             <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.TotalBytesSent}" />
-                            <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding ThroughputTotalBytesSent}" />
+                            <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding BandwidthTotalBytesSent}" />
                             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Download}" />
-                            <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding BytesReceivedSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
+                            <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding BandwidthBytesReceivedSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
                             <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Upload}" />
-                            <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding BytesSentSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
+                            <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding BandwidthBytesSentSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
                         </Grid>
                     </Grid>
                 </Grid>

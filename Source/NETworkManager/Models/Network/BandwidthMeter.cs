@@ -33,8 +33,6 @@ namespace NETworkManager.Models.Network
         }
         #endregion
 
-        private Stopwatch watch = new Stopwatch();
-
         #region Methods
         public void Start()
         {
@@ -46,7 +44,6 @@ namespace NETworkManager.Models.Network
             _timer.Tick += Timer_Tick;
 
             _timer.Start();
-            watch.Start();
         }
 
         public void Stop()
@@ -59,8 +56,6 @@ namespace NETworkManager.Models.Network
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            Debug.WriteLine(watch.Elapsed);
-
             Update();
         }
 
@@ -85,8 +80,7 @@ namespace NETworkManager.Models.Network
                 return;
             }
 
-            OnUpdateSpeed(new BandwidthMeterSpeedArgs(totalBytesReceived, totalBytesSent, byteReceivedSpeed,
-                byteSentSpeed));
+            OnUpdateSpeed(new BandwidthMeterSpeedArgs(DateTime.Now, totalBytesReceived, totalBytesSent, byteReceivedSpeed, byteSentSpeed));
         }
         #endregion
     }
