@@ -2176,7 +2176,10 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [0] If server authentication fails, connect to the computer without warning.\n[1] If server authentication fails, do not establish a connection.\n[2] If server authentication fails, show a warning and allow me to connect or refuse the connection.\n[3] No authentication requirement is specified..
+        ///   Looks up a localized string similar to [0] If server authentication fails, connect to the computer without warning.
+        ///[1] If server authentication fails, do not establish a connection.
+        ///[2] If server authentication fails, show a warning and allow me to connect or refuse the connection.
+        ///[3] No authentication requirement is specified..
         /// </summary>
         public static string HelpMessage_RDPAuthenticationLevel {
             get {

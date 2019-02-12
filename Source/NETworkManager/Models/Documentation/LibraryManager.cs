@@ -24,7 +24,9 @@ namespace NETworkManager.Models.Documentation
             new LibraryInfo("Dragablz", "https://github.com/ButchersBoy/Dragablz", "Dragable and tearable tab control for WPF", "MIT License","https://github.com/ButchersBoy/Dragablz/blob/master/LICENSE"),
             new LibraryInfo("IPNetwork", "https://github.com/lduchosal/ipnetwork", "C# library take care of complex network, IP, IPv4, IPv6, netmask, CIDR, subnet, subnetting, supernet, and supernetting calculation for .NET developers.", "BSD-2-Clause", "https://github.com/lduchosal/ipnetwork/blob/master/LICENSE"),
             new LibraryInfo("AirspaceFixer" ,"https://github.com/chris84948/AirspaceFixer", "AirspacePanel fixes all Airspace issues with WPF-hosted Winforms.", "MIT License", "https://github.com/chris84948/AirspaceFixer/blob/master/LICENSE"),
-            new LibraryInfo("Newtonsoft.Json", "https://github.com/JamesNK/Newtonsoft.Json", "Json.NET is a popular high-performance JSON framework for .NET", "MIT License","https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md")
+            new LibraryInfo("Newtonsoft.Json", "https://github.com/JamesNK/Newtonsoft.Json", "Json.NET is a popular high-performance JSON framework for .NET", "MIT License","https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md"),
+            new LibraryInfo("LiveCharts", "https://github.com/Live-Charts/Live-Charts", "Simple, flexible, interactive & powerful charts, maps and gauges for .Net", "MIT License","https://github.com/Live-Charts/Live-Charts/blob/master/LICENSE.TXT"),
+            new LibraryInfo("LiveCharts.Wpf", "https://github.com/Live-Charts/Live-Charts", "Simple, flexible, interactive & powerful charts, maps and gauges for .Net", "MIT License","https://github.com/Live-Charts/Live-Charts/blob/master/LICENSE.TXT")
         };
     }
 }
