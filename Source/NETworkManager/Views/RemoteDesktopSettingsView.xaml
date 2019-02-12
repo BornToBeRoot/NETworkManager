@@ -60,7 +60,7 @@
         <ComboBox ItemsSource="{Binding ColorDepths}" SelectedItem="{Binding SelectedColorDepth}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.Network}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{x:Static localization:Strings.Port}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort3389 }" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,20">
+        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort3389}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,20">
             <TextBox.Text>
                 <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
