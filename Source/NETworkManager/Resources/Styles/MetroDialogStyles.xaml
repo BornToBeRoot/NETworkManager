@@ -30,28 +30,11 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock x:Name="PART_Title"
-                               Grid.Row="0"
-                               AutomationProperties.Name="Dialog title"
-                               FontSize="{TemplateBinding DialogTitleFontSize}"
-                               Foreground="{TemplateBinding Foreground}"
-                               Text="{TemplateBinding Title}"
-                               TextWrapping="Wrap" />
-                                <ContentPresenter Grid.Row="1"
-                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                      AutomationProperties.Name="Dialog content"
-                                      Content="{TemplateBinding Content}"
-                                      ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                                      ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <TextBlock x:Name="PART_Title" Grid.Row="0" AutomationProperties.Name="Dialog title" FontSize="{TemplateBinding DialogTitleFontSize}" Foreground="{TemplateBinding Foreground}" Text="{TemplateBinding Title}" TextWrapping="Wrap" />
+                                <ContentPresenter Grid.Row="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" AutomationProperties.Name="Dialog content" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Grid>
                         </Grid>
-                        <ContentPresenter Grid.Row="2"
-                              AutomationProperties.Name="Dialog bottom"
-                              Content="{TemplateBinding DialogBottom}"
-                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <ContentPresenter Grid.Row="2" AutomationProperties.Name="Dialog bottom" Content="{TemplateBinding DialogBottom}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Title" Value="{x:Null}">
@@ -69,7 +52,6 @@
     </Style>
 
     <Style TargetType="{x:Type dialog:CustomDialog}" BasedOn="{StaticResource ProfileMetroDialog}" />
-
 
     <!-- Override the buttons in MahApps.Metro Dialogs -->
     <Style BasedOn="{StaticResource DefaultButton}" TargetType="{x:Type Button}" />
