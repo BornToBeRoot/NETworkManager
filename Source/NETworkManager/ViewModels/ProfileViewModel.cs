@@ -733,7 +733,7 @@ namespace NETworkManager.ViewModels
                     if (PuTTY_ConnectionMode == ConnectionMode.Serial)
                         PuTTY_HostOrSerialLine = Host;
 
-                    PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_DefaultSSHPort;
+                    PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_SSHPort;
                     PuTTY_ConnectionMode = ConnectionMode.SSH;
                 }
 
@@ -756,7 +756,7 @@ namespace NETworkManager.ViewModels
                     if (PuTTY_ConnectionMode == ConnectionMode.Serial)
                         PuTTY_HostOrSerialLine = Host;
                     
-                    PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_DefaultTelnetPort;
+                    PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_TelnetPort;
                     PuTTY_ConnectionMode = ConnectionMode.Telnet;
                 }
 
@@ -777,9 +777,9 @@ namespace NETworkManager.ViewModels
                 if (value)
                 {
                     if (PuTTY_ConnectionMode != ConnectionMode.Serial)
-                        PuTTY_HostOrSerialLine = SettingsManager.Current.PuTTY_DefaultSerialLine;
+                        PuTTY_HostOrSerialLine = SettingsManager.Current.PuTTY_SerialLine;
                     
-                    PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_DefaultBaudRate;
+                    PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_BaudRate;
                     PuTTY_ConnectionMode = ConnectionMode.Serial;
                 }
 
@@ -802,7 +802,7 @@ namespace NETworkManager.ViewModels
                     if (PuTTY_ConnectionMode == ConnectionMode.Serial)
                         PuTTY_HostOrSerialLine = Host;
 
-                    PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_DefaultRloginPort;
+                    PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_RloginPort;
                     PuTTY_ConnectionMode = ConnectionMode.Rlogin;
                 }
 
@@ -1285,7 +1285,7 @@ namespace NETworkManager.ViewModels
             PowerShell_AdditionalCommandLine = profileInfo2.PowerShell_AdditionalCommandLine;
             PowerShell_ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
             PowerShell_OverrideExecutionPolicy = profileInfo2.PowerShell_OverrideExecutionPolicy;
-            PowerShell_ExecutionPolicy = IsEdited ? profileInfo2.PowerShell_ExecutionPolicy : PowerShell_ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_DefaultExecutionPolicy); ;
+            PowerShell_ExecutionPolicy = IsEdited ? profileInfo2.PowerShell_ExecutionPolicy : PowerShell_ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy); ;
 
             // PuTTY
             PuTTY_Enabled = profileInfo2.PuTTY_Enabled;
@@ -1326,7 +1326,7 @@ namespace NETworkManager.ViewModels
             TightVNC_InheritHost = profileInfo2.TightVNC_InheritHost;
             TightVNC_Host = profileInfo2.TightVNC_Host;
             TightVNC_OverridePort = profileInfo2.TightVNC_OverridePort;
-            TightVNC_Port = profileInfo2.TightVNC_OverridePort ? profileInfo2.TightVNC_Port : SettingsManager.Current.TightVNC_DefaultVNCPort;
+            TightVNC_Port = profileInfo2.TightVNC_OverridePort ? profileInfo2.TightVNC_Port : SettingsManager.Current.TightVNC_Port;
 
             // Wake on LAN
             WakeOnLAN_Enabled = profileInfo2.WakeOnLAN_Enabled;

@@ -24,7 +24,7 @@
             </TextBox.Text>
         </TextBox>
         <Button Content="{x:Static localization:Strings.Configure}" Command="{Binding ConfigureCommand}" IsEnabled="{Binding IsConfigured}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" Margin="0,0,0,10" />
-        <TextBlock Text="{x:Static localization:Strings.DefaultMode}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Mode}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
             <WrapPanel.Resources>
                 <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource DefaultRadioButton}">
@@ -37,16 +37,16 @@
             <RadioButton Content="{x:Static localization:Strings.Rlogin}" IsChecked="{Binding UseRlogin}" />
             <RadioButton Content="{x:Static localization:Strings.RAW}" IsChecked="{Binding UseRAW}" />
         </WrapPanel>
-        <TextBlock Text="{x:Static localization:Strings.DefaultUsername}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox Width="250" Text="{Binding DefaultUsername, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Username}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBox Width="250" Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.PuTTYProfile}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox Width="250" Text="{Binding DefaultProfile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
-        <TextBlock Text="{x:Static localization:Strings.DefaultAdditionalCommandLine}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox Width="250" Text="{Binding DefaultAdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
-        <TextBlock Text="{x:Static localization:Strings.DefaultSSHPort}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBox Width="250" Text="{Binding Profile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.AdditionalCommandLine}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBox Width="250" Text="{Binding AdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.SSHPort}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort22}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
-                <Binding Path="DefaultSSHPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="SSHPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                         <validators:PortValidator ValidatesOnTargetUpdated="True" />
@@ -54,10 +54,10 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBlock Text="{x:Static localization:Strings.DefaultTelnetPort}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.TelnetPort}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort23}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
-                <Binding Path="DefaultTelnetPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="TelnetPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                         <validators:PortValidator ValidatesOnTargetUpdated="True" />
@@ -65,10 +65,10 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBlock Text="{x:Static localization:Strings.DefaultRloginPort}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.RloginPort}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort513}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
-                <Binding Path="DefaultRloginPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="RloginPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                         <validators:PortValidator ValidatesOnTargetUpdated="True" />
@@ -79,7 +79,7 @@
         <TextBlock Text="{x:Static localization:Strings.SerialLine}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSerialLine}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
-                <Binding Path="DefaultSerialLine" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="SerialLine" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                         <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
@@ -87,10 +87,10 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBlock Text="{x:Static localization:Strings.DefaultBaudRate}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.BaudRate}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleBaud9600}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
-                <Binding Path="DefaultBaudRate" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="BaudRate" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>

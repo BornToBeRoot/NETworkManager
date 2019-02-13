@@ -2022,31 +2022,31 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private string _powerShell_DefaultAdditionalCommandLine;
-        public string PowerShell_DefaultAdditionalCommandLine
+        private string _powerShell_AdditionalCommandLine;
+        public string PowerShell_AdditionalCommandLine
         {
-            get => _powerShell_DefaultAdditionalCommandLine;
+            get => _powerShell_AdditionalCommandLine;
             set
             {
-                if (value == _powerShell_DefaultAdditionalCommandLine)
+                if (value == _powerShell_AdditionalCommandLine)
                     return;
 
-                _powerShell_DefaultAdditionalCommandLine = value;
+                _powerShell_AdditionalCommandLine = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private PowerShell.PowerShell.ExecutionPolicy _powerShell_DefaultExecutionPolicy = PowerShell.PowerShell.ExecutionPolicy.RemoteSigned;
-        public PowerShell.PowerShell.ExecutionPolicy PowerShell_DefaultExecutionPolicy
+        private PowerShell.PowerShell.ExecutionPolicy _powerShell_ExecutionPolicy = PowerShell.PowerShell.ExecutionPolicy.RemoteSigned;
+        public PowerShell.PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy
         {
-            get => _powerShell_DefaultExecutionPolicy;
+            get => _powerShell_ExecutionPolicy;
             set
             {
-                if (value == _powerShell_DefaultExecutionPolicy)
+                if (value == _powerShell_ExecutionPolicy)
                     return;
 
-                _powerShell_DefaultExecutionPolicy = value;
+                _powerShell_ExecutionPolicy = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -2114,46 +2114,46 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private string _puTTY_DefaultUsername;
-        public string PuTTY_DefaultUsername
+        private string _puTTY_Username;
+        public string PuTTY_Username
         {
-            get => _puTTY_DefaultUsername;
+            get => _puTTY_Username;
             set
             {
-                if (value == _puTTY_DefaultUsername)
+                if (value == _puTTY_Username)
                     return;
 
-                _puTTY_DefaultUsername = value;
+                _puTTY_Username = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private string _puTTY_DefaultProfile;
-        public string PuTTY_DefaultProfile
+        private string _puTTY_Profile;
+        public string PuTTY_Profile
         {
-            get => _puTTY_DefaultProfile;
+            get => _puTTY_Profile;
             set
             {
-                if (value == _puTTY_DefaultProfile)
+                if (value == _puTTY_Profile)
                     return;
 
-                _puTTY_DefaultProfile = value;
+                _puTTY_Profile = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private string _puTTY_DefaultAdditionalCommandLine;
-        public string PuTTY_DefaultAdditionalCommandLine
+        private string _puTTY_AdditionalCommandLine;
+        public string PuTTY_AdditionalCommandLine
         {
-            get => _puTTY_DefaultAdditionalCommandLine;
+            get => _puTTY_AdditionalCommandLine;
             set
             {
-                if (value == _puTTY_DefaultAdditionalCommandLine)
+                if (value == _puTTY_AdditionalCommandLine)
                     return;
 
-                _puTTY_DefaultAdditionalCommandLine = value;
+                _puTTY_AdditionalCommandLine = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -2279,76 +2279,76 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private string _puTTY_DefaultSerialLine = GlobalStaticConfiguration.PuTTYDefaultSerialLine;
-        public string PuTTY_DefaultSerialLine
+        private string _puTTY_SerialLine = GlobalStaticConfiguration.PuTTYDefaultSerialLine;
+        public string PuTTY_SerialLine
         {
-            get => _puTTY_DefaultSerialLine;
+            get => _puTTY_SerialLine;
             set
             {
-                if (value == _puTTY_DefaultSerialLine)
+                if (value == _puTTY_SerialLine)
                     return;
 
-                _puTTY_DefaultSerialLine = value;
+                _puTTY_SerialLine = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _puTTY_DefaultSSHPort = GlobalStaticConfiguration.PuTTYDefaultSSHPort;
-        public int PuTTY_DefaultSSHPort
+        private int _puTTY_SSHPort = GlobalStaticConfiguration.PuTTYDefaultSSHPort;
+        public int PuTTY_SSHPort
         {
-            get => _puTTY_DefaultSSHPort;
+            get => _puTTY_SSHPort;
             set
             {
-                if (value == _puTTY_DefaultSSHPort)
+                if (value == _puTTY_SSHPort)
                     return;
 
-                _puTTY_DefaultSSHPort = value;
+                _puTTY_SSHPort = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _puTTY_DefaultTelnetPort = GlobalStaticConfiguration.PuTTYDefaultTelnetPort;
-        public int PuTTY_DefaultTelnetPort
+        private int _puTTY_TelnetPort = GlobalStaticConfiguration.PuTTYDefaultTelnetPort;
+        public int PuTTY_TelnetPort
         {
-            get => _puTTY_DefaultTelnetPort;
+            get => _puTTY_TelnetPort;
             set
             {
-                if (value == _puTTY_DefaultTelnetPort)
+                if (value == _puTTY_TelnetPort)
                     return;
 
-                _puTTY_DefaultTelnetPort = value;
+                _puTTY_TelnetPort = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _puTTY_DefaultRloginPort = GlobalStaticConfiguration.PuTTYDefaultRloginPort;
-        public int PuTTY_DefaultRloginPort
+        private int _puTTY_RloginPort = GlobalStaticConfiguration.PuTTYDefaultRloginPort;
+        public int PuTTY_RloginPort
         {
-            get => _puTTY_DefaultRloginPort;
+            get => _puTTY_RloginPort;
             set
             {
-                if (value == _puTTY_DefaultRloginPort)
+                if (value == _puTTY_RloginPort)
                     return;
 
-                _puTTY_DefaultRloginPort = value;
+                _puTTY_RloginPort = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _puTTY_DefaultBaudRate = GlobalStaticConfiguration.PuTTYDefaultBaudRate;
-        public int PuTTY_DefaultBaudRate
+        private int _puTTY_BaudRate = GlobalStaticConfiguration.PuTTYDefaultBaudRate;
+        public int PuTTY_BaudRate
         {
-            get => _puTTY_DefaultBaudRate;
+            get => _puTTY_BaudRate;
             set
             {
-                if (value == _puTTY_DefaultBaudRate)
+                if (value == _puTTY_BaudRate)
                     return;
 
-                _puTTY_DefaultBaudRate = value;
+                _puTTY_BaudRate = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -2446,16 +2446,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _tightVNC_DefaultVNCPort = GlobalStaticConfiguration.TightVNCDefaultVNCPort;
-        public int TightVNC_DefaultVNCPort
+        private int _tightVNC_Port = GlobalStaticConfiguration.TightVNCDefaultVNCPort;
+        public int TightVNC_Port
         {
-            get => _tightVNC_DefaultVNCPort;
+            get => _tightVNC_Port;
             set
             {
-                if (value == _tightVNC_DefaultVNCPort)
+                if (value == _tightVNC_Port)
                     return;
 
-                _tightVNC_DefaultVNCPort = value;
+                _tightVNC_Port = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }

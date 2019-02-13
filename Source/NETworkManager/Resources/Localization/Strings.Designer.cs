@@ -547,6 +547,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Baud rate.
+        /// </summary>
+        public static string BaudRate {
+            get {
+                return ResourceManager.GetString("BaudRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Black.
         /// </summary>
         public static string Black {
@@ -1114,38 +1123,11 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default additional command line.
-        /// </summary>
-        public static string DefaultAdditionalCommandLine {
-            get {
-                return ResourceManager.GetString("DefaultAdditionalCommandLine", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Default application.
         /// </summary>
         public static string DefaultApplication {
             get {
                 return ResourceManager.GetString("DefaultApplication", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Default baud rate.
-        /// </summary>
-        public static string DefaultBaudRate {
-            get {
-                return ResourceManager.GetString("DefaultBaudRate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Default Execution Policy.
-        /// </summary>
-        public static string DefaultExecutionPolicy {
-            get {
-                return ResourceManager.GetString("DefaultExecutionPolicy", resourceCulture);
             }
         }
         
@@ -1159,65 +1141,11 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default mode.
-        /// </summary>
-        public static string DefaultMode {
-            get {
-                return ResourceManager.GetString("DefaultMode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Default port:.
         /// </summary>
         public static string DefaultPort {
             get {
                 return ResourceManager.GetString("DefaultPort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Default Rlogin port.
-        /// </summary>
-        public static string DefaultRloginPort {
-            get {
-                return ResourceManager.GetString("DefaultRloginPort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Default SSH port.
-        /// </summary>
-        public static string DefaultSSHPort {
-            get {
-                return ResourceManager.GetString("DefaultSSHPort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Default Telnet port.
-        /// </summary>
-        public static string DefaultTelnetPort {
-            get {
-                return ResourceManager.GetString("DefaultTelnetPort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Default username.
-        /// </summary>
-        public static string DefaultUsername {
-            get {
-                return ResourceManager.GetString("DefaultUsername", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Default VNC port.
-        /// </summary>
-        public static string DefaultVNCPort {
-            get {
-                return ResourceManager.GetString("DefaultVNCPort", resourceCulture);
             }
         }
         
@@ -4334,6 +4262,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rlogin port.
+        /// </summary>
+        public static string RloginPort {
+            get {
+                return ResourceManager.GetString("RloginPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Route.
         /// </summary>
         public static string Route {
@@ -4766,6 +4703,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SSH port.
+        /// </summary>
+        public static string SSHPort {
+            get {
+                return ResourceManager.GetString("SSHPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start minimized in tray.
         /// </summary>
         public static string StartMinimizedInTray {
@@ -5068,6 +5014,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Telnet {
             get {
                 return ResourceManager.GetString("Telnet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Telnet port.
+        /// </summary>
+        public static string TelnetPort {
+            get {
+                return ResourceManager.GetString("TelnetPort", resourceCulture);
             }
         }
         

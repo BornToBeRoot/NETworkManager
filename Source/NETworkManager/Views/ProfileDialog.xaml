@@ -794,6 +794,7 @@
                                             </Binding>
                                         </TextBox.Text>
                                     </TextBox>
+
                                 </Grid>
                             </StackPanel>
                         </StackPanel>

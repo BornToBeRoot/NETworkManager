@@ -58,19 +58,19 @@ namespace NETworkManager.Models.PuTTY
             switch (mode)
             {
                 case ConnectionMode.SSH:
-                    portOrBaud = SettingsManager.Current.PuTTY_DefaultSSHPort;
+                    portOrBaud = SettingsManager.Current.PuTTY_SSHPort;
                     break;
                 case ConnectionMode.Telnet:
-                    portOrBaud = SettingsManager.Current.PuTTY_DefaultTelnetPort;
+                    portOrBaud = SettingsManager.Current.PuTTY_TelnetPort;
                     break;
                 case ConnectionMode.Rlogin:
-                    portOrBaud = SettingsManager.Current.PuTTY_DefaultRloginPort;
+                    portOrBaud = SettingsManager.Current.PuTTY_RloginPort;
                     break;
                 case ConnectionMode.RAW:
                     portOrBaud = SettingsManager.Current.PuTTY_DefaultRaw;
                     break;
                 case ConnectionMode.Serial:
-                    portOrBaud = SettingsManager.Current.PuTTY_DefaultBaudRate;
+                    portOrBaud = SettingsManager.Current.PuTTY_BaudRate;
                     break;
             }
 
