@@ -570,6 +570,114 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _remoteDesktop_AdjustScreenAutomatically;
+        public bool RemoteDesktop_AdjustScreenAutomatically
+        {
+            get => _remoteDesktop_AdjustScreenAutomatically;
+            set
+            {
+                if (value == _remoteDesktop_AdjustScreenAutomatically)
+                    return;
+
+                _remoteDesktop_AdjustScreenAutomatically = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_UseCurrentViewSize;
+        public bool RemoteDesktop_UseCurrentViewSize
+        {
+            get => _remoteDesktop_UseCurrentViewSize;
+            set
+            {
+                if (value == _remoteDesktop_UseCurrentViewSize)
+                    return;
+
+                _remoteDesktop_UseCurrentViewSize = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_UseFixedScreenSize;
+        public bool RemoteDesktop_UseFixedScreenSize
+        {
+            get => _remoteDesktop_UseFixedScreenSize;
+            set
+            {
+                if (value == _remoteDesktop_UseFixedScreenSize)
+                    return;
+
+                _remoteDesktop_UseFixedScreenSize = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<string> RemoteDesktop_ScreenResolutions => GlobalStaticConfiguration.RemoteDesktop_ScreenResolutions;
+
+        public int RemoteDesktop_ScreenWidth;
+        public int RemoteDesktop_ScreenHeight;
+
+        private string _remoteDesktop_SelectedScreenResolution;
+        public string RemoteDesktop_SelectedScreenResolution
+        {
+            get => _remoteDesktop_SelectedScreenResolution;
+            set
+            {
+                if (value == _remoteDesktop_SelectedScreenResolution)
+                    return;
+
+                var resolution = value.Split('x');
+
+                RemoteDesktop_ScreenWidth = int.Parse(resolution[0]);
+                RemoteDesktop_ScreenHeight = int.Parse(resolution[1]);
+
+                _remoteDesktop_SelectedScreenResolution = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_UseCustomScreenSize;
+        public bool RemoteDesktop_UseCustomScreenSize
+        {
+            get => _remoteDesktop_UseCustomScreenSize;
+            set
+            {
+                if (value == _remoteDesktop_UseCustomScreenSize)
+                    return;
+
+                _remoteDesktop_UseCustomScreenSize = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _remoteDesktop_CustomScreenWidth;
+        public string RemoteDesktop_CustomScreenWidth
+        {
+            get => _remoteDesktop_CustomScreenWidth;
+            set
+            {
+                if (value == _remoteDesktop_CustomScreenWidth)
+                    return;
+
+                _remoteDesktop_CustomScreenWidth = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _remoteDesktop_CustomScreenHeight;
+        public string RemoteDesktop_CustomScreenHeight
+        {
+            get => _remoteDesktop_CustomScreenHeight;
+            set
+            {
+                if (value == _remoteDesktop_CustomScreenHeight)
+                    return;
+
+                _remoteDesktop_CustomScreenHeight = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _remoteDesktop_OverrideColorDepth;
         public bool RemoteDesktop_OverrideColorDepth
         {
@@ -580,6 +688,22 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _remoteDesktop_OverrideColorDepth = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<int> RemoteDesktop_ColorDepths => GlobalStaticConfiguration.RemoteDesktop_ColorDepths;
+
+        private int _remoteDesktop_SelectedColorDepth;
+        public int RemoteDesktop_SelectedColorDepth
+        {
+            get => _remoteDesktop_SelectedColorDepth;
+            set
+            {
+                if (value == _remoteDesktop_SelectedColorDepth)
+                    return;
+
+                _remoteDesktop_SelectedColorDepth = value;
                 OnPropertyChanged();
             }
         }
@@ -598,6 +722,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private int _remoteDesktop_Port;
+        public int RemoteDesktop_Port
+        {
+            get => _remoteDesktop_Port;
+            set
+            {
+                if (value == _remoteDesktop_Port)
+                    return;
+
+                _remoteDesktop_Port = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _remoteDesktop_OverrideCredSspSupport;
         public bool RemoteDesktop_OverrideCredSspSupport
         {
@@ -608,6 +746,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _remoteDesktop_OverrideCredSspSupport = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_EnableCredSspSupport;
+        public bool RemoteDesktop_EnableCredSspSupport
+        {
+            get => _remoteDesktop_EnableCredSspSupport;
+            set
+            {
+                if (value == _remoteDesktop_EnableCredSspSupport)
+                    return;
+
+                _remoteDesktop_EnableCredSspSupport = value;
                 OnPropertyChanged();
             }
         }
@@ -626,6 +778,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private uint _remoteDesktop_AuthenticationLevel;
+        public uint RemoteDesktop_AuthenticationLevel
+        {
+            get => _remoteDesktop_AuthenticationLevel;
+            set
+            {
+                if (value == _remoteDesktop_AuthenticationLevel)
+                    return;
+
+                _remoteDesktop_AuthenticationLevel = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _remoteDesktop_OverrideApplyWindowsKeyCombinations;
         public bool RemoteDesktop_OverrideApplyWindowsKeyCombinations
         {
@@ -636,6 +802,22 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _remoteDesktop_OverrideApplyWindowsKeyCombinations = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<Tuple<int, string>> RemoteDesktop_KeyboardHookModes => GlobalStaticConfiguration.RemoteDesktop_KeyboardHookModes;
+
+        private Tuple<int, string> _remoteDesktop_KeyboardHookMode;
+        public Tuple<int, string> RemoteDesktop_KeyboardHookMode
+        {
+            get => _remoteDesktop_KeyboardHookMode;
+            set
+            {
+                if (Equals(value, _remoteDesktop_KeyboardHookMode))
+                    return;
+
+                _remoteDesktop_KeyboardHookMode = value;
                 OnPropertyChanged();
             }
         }
@@ -654,6 +836,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _remoteDesktop_RedirectClipboard;
+        public bool RemoteDesktop_RedirectClipboard
+        {
+            get => _remoteDesktop_RedirectClipboard;
+            set
+            {
+                if (value == _remoteDesktop_RedirectClipboard)
+                    return;
+
+                _remoteDesktop_RedirectClipboard = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _remoteDesktop_OverrideRedirectDevices;
         public bool RemoteDesktop_OverrideRedirectDevices
         {
@@ -664,6 +860,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _remoteDesktop_OverrideRedirectDevices = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_RedirectDevices;
+        public bool RemoteDesktop_RedirectDevices
+        {
+            get => _remoteDesktop_RedirectDevices;
+            set
+            {
+                if (value == _remoteDesktop_RedirectDevices)
+                    return;
+
+                _remoteDesktop_RedirectDevices = value;
                 OnPropertyChanged();
             }
         }
@@ -682,6 +892,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _remoteDesktop_RedirectDrives;
+        public bool RemoteDesktop_RedirectDrives
+        {
+            get => _remoteDesktop_RedirectDrives;
+            set
+            {
+                if (value == _remoteDesktop_RedirectDrives)
+                    return;
+
+                _remoteDesktop_RedirectDrives = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _remoteDesktop_OverrideRedirectPorts;
         public bool RemoteDesktop_OverrideRedirectPorts
         {
@@ -692,6 +916,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _remoteDesktop_OverrideRedirectPorts = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_RedirectPorts;
+        public bool RemoteDesktop_RedirectPorts
+        {
+            get => _remoteDesktop_RedirectPorts;
+            set
+            {
+                if (value == _remoteDesktop_RedirectPorts)
+                    return;
+
+                _remoteDesktop_RedirectPorts = value;
                 OnPropertyChanged();
             }
         }
@@ -710,6 +948,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _remoteDesktop_RedirectSmartCards;
+        public bool RemoteDesktop_RedirectSmartCards
+        {
+            get => _remoteDesktop_RedirectSmartCards;
+            set
+            {
+                if (value == _remoteDesktop_RedirectSmartCards)
+                    return;
+
+                _remoteDesktop_RedirectSmartCards = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _remoteDesktop_OverrideRedirectPrinters;
         public bool RemoteDesktop_OverrideRedirectPrinters
         {
@@ -720,6 +972,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _remoteDesktop_OverrideRedirectPrinters = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_RedirectPrinters;
+        public bool RemoteDesktop_RedirectPrinters
+        {
+            get => _remoteDesktop_RedirectPrinters;
+            set
+            {
+                if (value == _remoteDesktop_RedirectPrinters)
+                    return;
+
+                _remoteDesktop_RedirectPrinters = value;
                 OnPropertyChanged();
             }
         }
@@ -920,7 +1186,7 @@ namespace NETworkManager.ViewModels
                 {
                     if (PuTTY_ConnectionMode == ConnectionMode.Serial)
                         PuTTY_HostOrSerialLine = Host;
-                    
+
                     PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_TelnetPort;
                     PuTTY_ConnectionMode = ConnectionMode.Telnet;
                 }
@@ -943,7 +1209,7 @@ namespace NETworkManager.ViewModels
                 {
                     if (PuTTY_ConnectionMode != ConnectionMode.Serial)
                         PuTTY_HostOrSerialLine = SettingsManager.Current.PuTTY_SerialLine;
-                    
+
                     PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_BaudRate;
                     PuTTY_ConnectionMode = ConnectionMode.Serial;
                 }
@@ -1440,6 +1706,36 @@ namespace NETworkManager.ViewModels
             RemoteDesktop_Enabled = profileInfo2.RemoteDesktop_Enabled;
             RemoteDesktop_InheritHost = profileInfo2.RemoteDesktop_InheritHost;
             RemoteDesktop_Host = profileInfo2.RemoteDesktop_Host;
+            RemoteDesktop_OverrideDisplay = profileInfo2.RemoteDesktop_OverrideDisplay;
+            RemoteDesktop_AdjustScreenAutomatically = profileInfo2.RemoteDesktop_AdjustScreenAutomatically;
+            RemoteDesktop_UseCurrentViewSize = profileInfo2.RemoteDesktop_UseCurrentViewSize;
+            RemoteDesktop_UseFixedScreenSize = profileInfo2.RemoteDesktop_UseFixedScreenSize;
+            RemoteDesktop_SelectedScreenResolution = RemoteDesktop_ScreenResolutions.FirstOrDefault(x => x == $"{profileInfo2.RemoteDesktop_ScreenWidth}x{profileInfo2.RemoteDesktop_ScreenHeight}");
+            RemoteDesktop_UseCustomScreenSize = profileInfo2.RemoteDesktop_UseCustomScreenSize;
+            RemoteDesktop_CustomScreenWidth = profileInfo2.RemoteDesktop_CustomScreenWidth.ToString();
+            RemoteDesktop_CustomScreenHeight = profileInfo2.RemoteDesktop_CustomScreenHeight.ToString();
+            RemoteDesktop_OverrideColorDepth = profileInfo2.RemoteDesktop_OverrideColorDepth;
+            RemoteDesktop_SelectedColorDepth = RemoteDesktop_ColorDepths.FirstOrDefault(x => x == profileInfo2.RemoteDesktop_ColorDepth);
+            RemoteDesktop_OverridePort = profileInfo2.RemoteDesktop_OverridePort;
+            RemoteDesktop_Port = profileInfo2.RemoteDesktop_Port;
+            RemoteDesktop_OverrideCredSspSupport = profileInfo2.RemoteDesktop_OverrideCredSspSupport;
+            RemoteDesktop_EnableCredSspSupport = profileInfo2.RemoteDesktop_EnableCredSspSupport;
+            RemoteDesktop_OverrideAuthenticationLevel = profileInfo2.RemoteDesktop_OverrideAuthenticationLevel;
+            //RemoteDesktop_AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;
+            RemoteDesktop_OverrideApplyWindowsKeyCombinations = profileInfo2.RemoteDesktop_OverrideApplyWindowsKeyCombinations;
+            //RemoteDesktop_KeyboardHookMode = RemoteDesktop_KeyboardHookModes.FirstOrDefault(x => x.Item1 == SettingsManager.Current.RemoteDesktop_KeyboardHookMode);
+            RemoteDesktop_OverrideRedirectClipboard = profileInfo2.RemoteDesktop_OverrideRedirectClipboard;
+            //RemoteDesktop_RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;
+            RemoteDesktop_OverrideRedirectDevices = profileInfo2.RemoteDesktop_OverrideRedirectDevices;
+            //RemoteDesktop_RedirectDevices = SettingsManager.Current.RemoteDesktop_RedirectDevices;
+            RemoteDesktop_OverrideRedirectDrives = profileInfo2.RemoteDesktop_OverrideRedirectDrives;
+            //RemoteDesktop_RedirectDrives = SettingsManager.Current.RemoteDesktop_RedirectDrives;
+            RemoteDesktop_OverrideRedirectPorts = profileInfo2.RemoteDesktop_OverrideRedirectPorts;
+            //RemoteDesktop_RedirectPorts = SettingsManager.Current.RemoteDesktop_RedirectPorts;
+            RemoteDesktop_OverrideRedirectSmartcards = profileInfo2.RemoteDesktop_OverrideRedirectSmartcards;
+            //RemoteDesktop_RedirectSmartCards = SettingsManager.Current.RemoteDesktop_RedirectSmartCards;
+            RemoteDesktop_OverrideRedirectPrinters = profileInfo2.RemoteDesktop_OverrideRedirectPrinters;
+            //RemoteDesktop_RedirectPrinters = SettingsManager.Current.RemoteDesktop_RedirectPrinters;
 
             // PowerShell
             PowerShell_Enabled = profileInfo2.PowerShell_Enabled;
@@ -1517,14 +1813,14 @@ namespace NETworkManager.ViewModels
 
         public ICommand ResolveHostCommand
         {
-            get { return new RelayCommand(async p => await ResolveHostActionAsync());}
+            get { return new RelayCommand(async p => await ResolveHostActionAsync()); }
         }
 
         private async System.Threading.Tasks.Task ResolveHostActionAsync()
         {
             try
             {
-                foreach(var ipAddr in (await Dns.GetHostEntryAsync(Host)).AddressList)
+                foreach (var ipAddr in (await Dns.GetHostEntryAsync(Host)).AddressList)
                 {
                     if (ipAddr.AddressFamily != AddressFamily.InterNetwork)
                         continue;
@@ -1532,9 +1828,9 @@ namespace NETworkManager.ViewModels
                     Host = ipAddr.ToString();
                     break;
                 }
-                
+
             }
-            catch(SocketException) // DNS Error
+            catch (SocketException) // DNS Error
             { }
         }
 

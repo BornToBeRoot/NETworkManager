@@ -374,7 +374,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _networkInterface_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _networkInterface_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double NetworkInterface_ProfileWidth
         {
             get => _networkInterface_ProfileWidth;
@@ -661,7 +661,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _ipScanner_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _ipScanner_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double IPScanner_ProfileWidth
         {
             get => _ipScanner_ProfileWidth;
@@ -857,7 +857,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _portScanner_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _portScanner_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double PortScanner_ProfileWidth
         {
             get => _portScanner_ProfileWidth;
@@ -1084,7 +1084,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _ping_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _ping_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double Ping_ProfileWidth
         {
             get => _ping_ProfileWidth;
@@ -1281,7 +1281,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _traceroute_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _traceroute_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double Traceroute_ProfileWidth
         {
             get => _traceroute_ProfileWidth;
@@ -1598,7 +1598,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _dnsLookup_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _dnsLookup_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double DNSLookup_ProfileWidth
         {
             get => _dnsLookup_ProfileWidth;
@@ -1720,7 +1720,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _remoteDesktop_ScreenWidth = 1280;
+        private int _remoteDesktop_ScreenWidth = GlobalStaticConfiguration.RemoteDesktop_ScreenWidth;
         public int RemoteDesktop_ScreenWidth
         {
             get => _remoteDesktop_ScreenWidth;
@@ -1735,7 +1735,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _remoteDesktop_ScreenHeight = 768;
+        private int _remoteDesktop_ScreenHeight = GlobalStaticConfiguration.RemoteDesktop_ScreenHeight;
         public int RemoteDesktop_ScreenHeight
         {
             get => _remoteDesktop_ScreenHeight;
@@ -1795,7 +1795,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _remoteDesktop_ColorDepth = 32;
+        private int _remoteDesktop_ColorDepth = GlobalStaticConfiguration.RemoteDesktop_ColorDepth;
         public int RemoteDesktop_ColorDepth
         {
             get => _remoteDesktop_ColorDepth;
@@ -1810,7 +1810,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _remoteDesktop_Port = 3389;
+        private int _remoteDesktop_Port = GlobalStaticConfiguration.RemoteDesktop_Port;
         public int RemoteDesktop_Port
         {
             get => _remoteDesktop_Port;
@@ -1975,7 +1975,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _remoteDesktop_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _remoteDesktop_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double RemoteDesktop_ProfileWidth
         {
             get => _remoteDesktop_ProfileWidth;
@@ -2007,7 +2007,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private string _powerShell_ApplicationFilePath = GlobalStaticConfiguration.DefaultApplicationFileLocationPowerShell;
+        private string _powerShell_ApplicationFilePath = GlobalStaticConfiguration.PowerShell_ApplicationFileLocationPowerShell;
         public string PowerShell_ApplicationFilePath
         {
             get => _powerShell_ApplicationFilePath;
@@ -2067,7 +2067,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _powerShell_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _powerShell_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double PowerShell_ProfileWidth
         {
             get => _powerShell_ProfileWidth;
@@ -2249,7 +2249,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _puTTY_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _puTTY_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double PuTTY_ProfileWidth
         {
             get => _puTTY_ProfileWidth;
@@ -2279,7 +2279,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private string _puTTY_SerialLine = GlobalStaticConfiguration.PuTTYDefaultSerialLine;
+        private string _puTTY_SerialLine = GlobalStaticConfiguration.PuTTY_DefaultSerialLine;
         public string PuTTY_SerialLine
         {
             get => _puTTY_SerialLine;
@@ -2294,7 +2294,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _puTTY_SSHPort = GlobalStaticConfiguration.PuTTYDefaultSSHPort;
+        private int _puTTY_SSHPort = GlobalStaticConfiguration.PuTTY_DefaultSSHPort;
         public int PuTTY_SSHPort
         {
             get => _puTTY_SSHPort;
@@ -2309,7 +2309,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _puTTY_TelnetPort = GlobalStaticConfiguration.PuTTYDefaultTelnetPort;
+        private int _puTTY_TelnetPort = GlobalStaticConfiguration.PuTTY_DefaultTelnetPort;
         public int PuTTY_TelnetPort
         {
             get => _puTTY_TelnetPort;
@@ -2324,7 +2324,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _puTTY_RloginPort = GlobalStaticConfiguration.PuTTYDefaultRloginPort;
+        private int _puTTY_RloginPort = GlobalStaticConfiguration.PuTTY_DefaultRloginPort;
         public int PuTTY_RloginPort
         {
             get => _puTTY_RloginPort;
@@ -2339,7 +2339,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _puTTY_BaudRate = GlobalStaticConfiguration.PuTTYDefaultBaudRate;
+        private int _puTTY_BaudRate = GlobalStaticConfiguration.PuTTY_DefaultBaudRate;
         public int PuTTY_BaudRate
         {
             get => _puTTY_BaudRate;
@@ -2354,7 +2354,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _puTTY_DefaultRaw = GlobalStaticConfiguration.PuTTYDefaultRaw;
+        private int _puTTY_DefaultRaw = GlobalStaticConfiguration.PuTTY_DefaultRaw;
         public int PuTTY_DefaultRaw
         {
             get => _puTTY_DefaultRaw;
@@ -2416,7 +2416,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _tightVNC_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _tightVNC_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double TightVNC_ProfileWidth
         {
             get => _tightVNC_ProfileWidth;
@@ -2446,7 +2446,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _tightVNC_Port = GlobalStaticConfiguration.TightVNCDefaultVNCPort;
+        private int _tightVNC_Port = GlobalStaticConfiguration.TightVNC_DefaultVNCPort;
         public int TightVNC_Port
         {
             get => _tightVNC_Port;
@@ -2720,7 +2720,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _wakeOnLAN_ClientWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _wakeOnLAN_ClientWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double WakeOnLAN_ClientWidth
         {
             get => _wakeOnLAN_ClientWidth;
@@ -2797,7 +2797,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _httpHeaders_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _httpHeaders_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double HTTPHeaders_ProfileWidth
         {
             get => _httpHeaders_ProfileWidth;
@@ -3111,7 +3111,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _whois_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _whois_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double Whois_ProfileWidth
         {
             get => _whois_ProfileWidth;

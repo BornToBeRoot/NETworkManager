@@ -729,7 +729,7 @@ namespace NETworkManager.ViewModels
                 if (value == _profileWidth)
                     return;
 
-                if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.ProfileWidthCollapsed) > GlobalStaticConfiguration.FloatPointFix) // Do not save the size when collapsed
+                if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.FloatPointFix) // Do not save the size when collapsed
                     SettingsManager.Current.NetworkInterface_ProfileWidth = value.Value;
 
                 _profileWidth = value;
@@ -837,7 +837,7 @@ namespace NETworkManager.ViewModels
         {
             ExpandProfileView = SettingsManager.Current.NetworkInterface_ExpandProfileView;
 
-            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.NetworkInterface_ProfileWidth) : new GridLength(GlobalStaticConfiguration.ProfileWidthCollapsed);
+            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.NetworkInterface_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
             _tempProfileWidth = SettingsManager.Current.NetworkInterface_ProfileWidth;
         }
@@ -1317,18 +1317,18 @@ namespace NETworkManager.ViewModels
 
             if (dueToChangedSize)
             {
-                ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.ProfileWidthCollapsed) > GlobalStaticConfiguration.FloatPointFix;
+                ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.FloatPointFix;
             }
             else
             {
                 if (ExpandProfileView)
                 {
-                    ProfileWidth = Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.ProfileWidthCollapsed) < GlobalStaticConfiguration.FloatPointFix ? new GridLength(GlobalStaticConfiguration.ProfileDefaultWidthExpanded) : new GridLength(_tempProfileWidth);
+                    ProfileWidth = Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) < GlobalStaticConfiguration.FloatPointFix ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded) : new GridLength(_tempProfileWidth);
                 }
                 else
                 {
                     _tempProfileWidth = ProfileWidth.Value;
-                    ProfileWidth = new GridLength(GlobalStaticConfiguration.ProfileWidthCollapsed);
+                    ProfileWidth = new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
                 }
             }
 
