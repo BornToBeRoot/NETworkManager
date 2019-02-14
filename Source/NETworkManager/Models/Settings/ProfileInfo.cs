@@ -7,8 +7,6 @@ namespace NETworkManager.Models.Settings
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class ProfileInfo
     {
-
-
         public string Name { get; set; }
         public string Host { get; set; }
         public Guid CredentialID { get; set; } = Guid.Empty;
@@ -64,21 +62,21 @@ namespace NETworkManager.Models.Settings
         public bool RemoteDesktop_OverrideCredSspSupport { get; set; }
         public bool RemoteDesktop_EnableCredSspSupport { get; set; }
         public bool RemoteDesktop_OverrideAuthenticationLevel { get; set; }
-
+        public uint RemoteDesktop_AuthenticationLevel { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AuthenticationLevel;
         public bool RemoteDesktop_OverrideApplyWindowsKeyCombinations { get; set; }
-
+        public int RemoteDesktop_KeyboardHookMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
         public bool RemoteDesktop_OverrideRedirectClipboard { get; set; }
-
+        public bool RemoteDesktop_RedirectClipboard { get; set; } = true;
         public bool RemoteDesktop_OverrideRedirectDevices { get; set; }
-
+        public bool RemoteDesktop_RedirectDevices { get; set; }
         public bool RemoteDesktop_OverrideRedirectDrives { get; set; }
-
+        public bool RemoteDesktop_RedirectDrives { get; set; }
         public bool RemoteDesktop_OverrideRedirectPorts { get; set; }
-
+        public bool RemoteDesktop_RedirectPorts { get; set; }
         public bool RemoteDesktop_OverrideRedirectSmartcards { get; set; }
-
+        public bool RemoteDesktop_RedirectSmartCards { get; set; }
         public bool RemoteDesktop_OverrideRedirectPrinters { get; set; }
-
+        public bool RemoteDesktop_RedirectPrinters { get; set; }
 
         public bool PowerShell_Enabled { get; set; }
         public bool PowerShell_EnableRemoteConsole { get; set; } = true;

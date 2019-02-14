@@ -55,6 +55,8 @@ namespace NETworkManager
             Tuple.Create(1, Resources.Localization.Strings.OnTheRemoteComputer)/*,
             Tuple.Create(2, Resources.Localization.Strings.OnlyWhenUsingTheFullScreen),*/
         };
+        public static uint RemoteDesktop_AuthenticationLevel = 2;
+        public static int RemoteDesktop_KeyboardHookMode = 1;
 
         // Application: PuTTY
         public static int PuTTY_DefaultSSHPort => 22;

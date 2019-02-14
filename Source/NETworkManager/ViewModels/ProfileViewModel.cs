@@ -1629,7 +1629,7 @@ namespace NETworkManager.ViewModels
         #endregion
         #endregion
 
-        public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, bool isEdited = false, ProfileInfo profileInfo = null)
+        public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, bool isEdited = false, ProfileInfo profile = null)
         {
             // Load the view
             ProfileViews = new CollectionViewSource { Source = ProfileViewManager.List }.View;
@@ -1640,10 +1640,10 @@ namespace NETworkManager.ViewModels
 
             IsEdited = isEdited;
 
-            var profileInfo2 = profileInfo ?? new ProfileInfo();
+            var profileInfo = profile ?? new ProfileInfo();
 
-            Name = profileInfo2.Name;
-            Host = profileInfo2.Host;
+            Name = profileInfo.Name;
+            Host = profileInfo.Host;
 
             if (CredentialManager.IsLoaded)
             {
@@ -1653,105 +1653,105 @@ namespace NETworkManager.ViewModels
             {
                 ShowUnlockCredentialsHint = true;
 
-                Credentials = profileInfo2.CredentialID == Guid.Empty ? new CollectionViewSource { Source = new List<CredentialInfo>() }.View : new CollectionViewSource { Source = new List<CredentialInfo> { new CredentialInfo(profileInfo2.CredentialID) } }.View;
+                Credentials = profileInfo.CredentialID == Guid.Empty ? new CollectionViewSource { Source = new List<CredentialInfo>() }.View : new CollectionViewSource { Source = new List<CredentialInfo> { new CredentialInfo(profileInfo.CredentialID) } }.View;
             }
 
-            CredentialID = profileInfo2.CredentialID;
+            CredentialID = profileInfo.CredentialID;
 
-            Group = string.IsNullOrEmpty(profileInfo2.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Resources.Localization.Strings.Default) : profileInfo2.Group;
-            Tags = profileInfo2.Tags;
+            Group = string.IsNullOrEmpty(profileInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Resources.Localization.Strings.Default) : profileInfo.Group;
+            Tags = profileInfo.Tags;
 
             Groups = CollectionViewSource.GetDefaultView(groups);
             Groups.SortDescriptions.Add(new SortDescription());
 
             // Network Interface
-            NetworkInterface_Enabled = profileInfo2.NetworkInterface_Enabled;
-            NetworkInterface_EnableDynamicIPAddress = !profileInfo2.NetworkInterface_EnableStaticIPAddress;
-            NetworkInterface_EnableStaticIPAddress = profileInfo2.NetworkInterface_EnableStaticIPAddress;
-            NetworkInterface_IPAddress = profileInfo2.NetworkInterface_IPAddress;
-            NetworkInterface_Gateway = profileInfo2.NetworkInterface_Gateway;
-            NetworkInterface_SubnetmaskOrCidr = profileInfo2.NetworkInterface_SubnetmaskOrCidr;
-            NetworkInterface_EnableDynamicDNS = !profileInfo2.NetworkInterface_EnableStaticDNS;
-            NetworkInterface_EnableStaticDNS = profileInfo2.NetworkInterface_EnableStaticDNS;
-            NetworkInterface_PrimaryDNSServer = profileInfo2.NetworkInterface_PrimaryDNSServer;
-            NetworkInterface_SecondaryDNSServer = profileInfo2.NetworkInterface_SecondaryDNSServer;
+            NetworkInterface_Enabled = profileInfo.NetworkInterface_Enabled;
+            NetworkInterface_EnableDynamicIPAddress = !profileInfo.NetworkInterface_EnableStaticIPAddress;
+            NetworkInterface_EnableStaticIPAddress = profileInfo.NetworkInterface_EnableStaticIPAddress;
+            NetworkInterface_IPAddress = profileInfo.NetworkInterface_IPAddress;
+            NetworkInterface_Gateway = profileInfo.NetworkInterface_Gateway;
+            NetworkInterface_SubnetmaskOrCidr = profileInfo.NetworkInterface_SubnetmaskOrCidr;
+            NetworkInterface_EnableDynamicDNS = !profileInfo.NetworkInterface_EnableStaticDNS;
+            NetworkInterface_EnableStaticDNS = profileInfo.NetworkInterface_EnableStaticDNS;
+            NetworkInterface_PrimaryDNSServer = profileInfo.NetworkInterface_PrimaryDNSServer;
+            NetworkInterface_SecondaryDNSServer = profileInfo.NetworkInterface_SecondaryDNSServer;
 
             // IP Scanner
-            IPScanner_Enabled = profileInfo2.IPScanner_Enabled;
-            IPScanner_InheritHost = profileInfo2.IPScanner_InheritHost;
-            IPScanner_IPRange = profileInfo2.IPScanner_IPRange;
+            IPScanner_Enabled = profileInfo.IPScanner_Enabled;
+            IPScanner_InheritHost = profileInfo.IPScanner_InheritHost;
+            IPScanner_IPRange = profileInfo.IPScanner_IPRange;
 
             // Port Scanner
-            PortScanner_Enabled = profileInfo2.PortScanner_Enabled;
-            PortScanner_InheritHost = profileInfo2.PortScanner_InheritHost;
-            PortScanner_Host = profileInfo2.PortScanner_Host;
-            PortScanner_Ports = profileInfo2.PortScanner_Ports;
+            PortScanner_Enabled = profileInfo.PortScanner_Enabled;
+            PortScanner_InheritHost = profileInfo.PortScanner_InheritHost;
+            PortScanner_Host = profileInfo.PortScanner_Host;
+            PortScanner_Ports = profileInfo.PortScanner_Ports;
 
             // Ping
-            Ping_Enabled = profileInfo2.Ping_Enabled;
-            Ping_InheritHost = profileInfo2.Ping_InheritHost;
-            Ping_Host = profileInfo2.Ping_Host;
+            Ping_Enabled = profileInfo.Ping_Enabled;
+            Ping_InheritHost = profileInfo.Ping_InheritHost;
+            Ping_Host = profileInfo.Ping_Host;
 
             // Traceroute
-            Traceroute_Enabled = profileInfo2.Traceroute_Enabled;
-            Traceroute_InheritHost = profileInfo2.Traceroute_InheritHost;
-            Traceroute_Host = profileInfo2.Traceroute_Host;
+            Traceroute_Enabled = profileInfo.Traceroute_Enabled;
+            Traceroute_InheritHost = profileInfo.Traceroute_InheritHost;
+            Traceroute_Host = profileInfo.Traceroute_Host;
 
             // DNS Lookup
-            DNSLookup_Enabled = profileInfo2.DNSLookup_Enabled;
-            DNSLookup_InheritHost = profileInfo2.DNSLookup_InheritHost;
-            DNSLookup_Host = profileInfo2.DNSLookup_Host;
+            DNSLookup_Enabled = profileInfo.DNSLookup_Enabled;
+            DNSLookup_InheritHost = profileInfo.DNSLookup_InheritHost;
+            DNSLookup_Host = profileInfo.DNSLookup_Host;
 
             // Remote Desktop
-            RemoteDesktop_Enabled = profileInfo2.RemoteDesktop_Enabled;
-            RemoteDesktop_InheritHost = profileInfo2.RemoteDesktop_InheritHost;
-            RemoteDesktop_Host = profileInfo2.RemoteDesktop_Host;
-            RemoteDesktop_OverrideDisplay = profileInfo2.RemoteDesktop_OverrideDisplay;
-            RemoteDesktop_AdjustScreenAutomatically = profileInfo2.RemoteDesktop_AdjustScreenAutomatically;
-            RemoteDesktop_UseCurrentViewSize = profileInfo2.RemoteDesktop_UseCurrentViewSize;
-            RemoteDesktop_UseFixedScreenSize = profileInfo2.RemoteDesktop_UseFixedScreenSize;
-            RemoteDesktop_SelectedScreenResolution = RemoteDesktop_ScreenResolutions.FirstOrDefault(x => x == $"{profileInfo2.RemoteDesktop_ScreenWidth}x{profileInfo2.RemoteDesktop_ScreenHeight}");
-            RemoteDesktop_UseCustomScreenSize = profileInfo2.RemoteDesktop_UseCustomScreenSize;
-            RemoteDesktop_CustomScreenWidth = profileInfo2.RemoteDesktop_CustomScreenWidth.ToString();
-            RemoteDesktop_CustomScreenHeight = profileInfo2.RemoteDesktop_CustomScreenHeight.ToString();
-            RemoteDesktop_OverrideColorDepth = profileInfo2.RemoteDesktop_OverrideColorDepth;
-            RemoteDesktop_SelectedColorDepth = RemoteDesktop_ColorDepths.FirstOrDefault(x => x == profileInfo2.RemoteDesktop_ColorDepth);
-            RemoteDesktop_OverridePort = profileInfo2.RemoteDesktop_OverridePort;
-            RemoteDesktop_Port = profileInfo2.RemoteDesktop_Port;
-            RemoteDesktop_OverrideCredSspSupport = profileInfo2.RemoteDesktop_OverrideCredSspSupport;
-            RemoteDesktop_EnableCredSspSupport = profileInfo2.RemoteDesktop_EnableCredSspSupport;
-            RemoteDesktop_OverrideAuthenticationLevel = profileInfo2.RemoteDesktop_OverrideAuthenticationLevel;
-            //RemoteDesktop_AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;
-            RemoteDesktop_OverrideApplyWindowsKeyCombinations = profileInfo2.RemoteDesktop_OverrideApplyWindowsKeyCombinations;
-            //RemoteDesktop_KeyboardHookMode = RemoteDesktop_KeyboardHookModes.FirstOrDefault(x => x.Item1 == SettingsManager.Current.RemoteDesktop_KeyboardHookMode);
-            RemoteDesktop_OverrideRedirectClipboard = profileInfo2.RemoteDesktop_OverrideRedirectClipboard;
-            //RemoteDesktop_RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;
-            RemoteDesktop_OverrideRedirectDevices = profileInfo2.RemoteDesktop_OverrideRedirectDevices;
-            //RemoteDesktop_RedirectDevices = SettingsManager.Current.RemoteDesktop_RedirectDevices;
-            RemoteDesktop_OverrideRedirectDrives = profileInfo2.RemoteDesktop_OverrideRedirectDrives;
-            //RemoteDesktop_RedirectDrives = SettingsManager.Current.RemoteDesktop_RedirectDrives;
-            RemoteDesktop_OverrideRedirectPorts = profileInfo2.RemoteDesktop_OverrideRedirectPorts;
-            //RemoteDesktop_RedirectPorts = SettingsManager.Current.RemoteDesktop_RedirectPorts;
-            RemoteDesktop_OverrideRedirectSmartcards = profileInfo2.RemoteDesktop_OverrideRedirectSmartcards;
-            //RemoteDesktop_RedirectSmartCards = SettingsManager.Current.RemoteDesktop_RedirectSmartCards;
-            RemoteDesktop_OverrideRedirectPrinters = profileInfo2.RemoteDesktop_OverrideRedirectPrinters;
-            //RemoteDesktop_RedirectPrinters = SettingsManager.Current.RemoteDesktop_RedirectPrinters;
+            RemoteDesktop_Enabled = profileInfo.RemoteDesktop_Enabled;
+            RemoteDesktop_InheritHost = profileInfo.RemoteDesktop_InheritHost;
+            RemoteDesktop_Host = profileInfo.RemoteDesktop_Host;
+            RemoteDesktop_OverrideDisplay = profileInfo.RemoteDesktop_OverrideDisplay;
+            RemoteDesktop_AdjustScreenAutomatically = profileInfo.RemoteDesktop_AdjustScreenAutomatically;
+            RemoteDesktop_UseCurrentViewSize = profileInfo.RemoteDesktop_UseCurrentViewSize;
+            RemoteDesktop_UseFixedScreenSize = profileInfo.RemoteDesktop_UseFixedScreenSize;
+            RemoteDesktop_SelectedScreenResolution = RemoteDesktop_ScreenResolutions.FirstOrDefault(x => x == $"{profileInfo.RemoteDesktop_ScreenWidth}x{profileInfo.RemoteDesktop_ScreenHeight}");
+            RemoteDesktop_UseCustomScreenSize = profileInfo.RemoteDesktop_UseCustomScreenSize;
+            RemoteDesktop_CustomScreenWidth = profileInfo.RemoteDesktop_CustomScreenWidth.ToString();
+            RemoteDesktop_CustomScreenHeight = profileInfo.RemoteDesktop_CustomScreenHeight.ToString();
+            RemoteDesktop_OverrideColorDepth = profileInfo.RemoteDesktop_OverrideColorDepth;
+            RemoteDesktop_SelectedColorDepth = RemoteDesktop_ColorDepths.FirstOrDefault(x => x == profileInfo.RemoteDesktop_ColorDepth);
+            RemoteDesktop_OverridePort = profileInfo.RemoteDesktop_OverridePort;
+            RemoteDesktop_Port = profileInfo.RemoteDesktop_Port;
+            RemoteDesktop_OverrideCredSspSupport = profileInfo.RemoteDesktop_OverrideCredSspSupport;
+            RemoteDesktop_EnableCredSspSupport = profileInfo.RemoteDesktop_EnableCredSspSupport;
+            RemoteDesktop_OverrideAuthenticationLevel = profileInfo.RemoteDesktop_OverrideAuthenticationLevel;
+            RemoteDesktop_AuthenticationLevel = profileInfo.RemoteDesktop_AuthenticationLevel;
+            RemoteDesktop_OverrideApplyWindowsKeyCombinations = profileInfo.RemoteDesktop_OverrideApplyWindowsKeyCombinations;
+            RemoteDesktop_KeyboardHookMode = RemoteDesktop_KeyboardHookModes.FirstOrDefault(x => x.Item1 == profileInfo.RemoteDesktop_KeyboardHookMode);
+            RemoteDesktop_OverrideRedirectClipboard = profileInfo.RemoteDesktop_OverrideRedirectClipboard;
+            RemoteDesktop_RedirectClipboard = profileInfo.RemoteDesktop_RedirectClipboard;
+            RemoteDesktop_OverrideRedirectDevices = profileInfo.RemoteDesktop_OverrideRedirectDevices;
+            RemoteDesktop_RedirectDevices = profileInfo.RemoteDesktop_RedirectDevices;
+            RemoteDesktop_OverrideRedirectDrives = profileInfo.RemoteDesktop_OverrideRedirectDrives;
+            RemoteDesktop_RedirectDrives = profileInfo.RemoteDesktop_RedirectDrives;
+            RemoteDesktop_OverrideRedirectPorts = profileInfo.RemoteDesktop_OverrideRedirectPorts;
+            RemoteDesktop_RedirectPorts = profileInfo.RemoteDesktop_RedirectPorts;
+            RemoteDesktop_OverrideRedirectSmartcards = profileInfo.RemoteDesktop_OverrideRedirectSmartcards;
+            RemoteDesktop_RedirectSmartCards = profileInfo.RemoteDesktop_RedirectSmartCards;
+            RemoteDesktop_OverrideRedirectPrinters = profileInfo.RemoteDesktop_OverrideRedirectPrinters;
+            RemoteDesktop_RedirectPrinters = profileInfo.RemoteDesktop_RedirectPrinters;
 
             // PowerShell
-            PowerShell_Enabled = profileInfo2.PowerShell_Enabled;
-            PowerShell_EnableRemoteConsole = profileInfo2.PowerShell_EnableRemoteConsole;
-            PowerShell_InheritHost = profileInfo2.PowerShell_InheritHost;
-            PowerShell_Host = profileInfo2.PowerShell_Host;
-            PowerShell_OverrideAdditionalCommandLine = profileInfo2.PowerShell_OverrideAdditionalCommandLine;
-            PowerShell_AdditionalCommandLine = profileInfo2.PowerShell_AdditionalCommandLine;
+            PowerShell_Enabled = profileInfo.PowerShell_Enabled;
+            PowerShell_EnableRemoteConsole = profileInfo.PowerShell_EnableRemoteConsole;
+            PowerShell_InheritHost = profileInfo.PowerShell_InheritHost;
+            PowerShell_Host = profileInfo.PowerShell_Host;
+            PowerShell_OverrideAdditionalCommandLine = profileInfo.PowerShell_OverrideAdditionalCommandLine;
+            PowerShell_AdditionalCommandLine = profileInfo.PowerShell_AdditionalCommandLine;
             PowerShell_ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
-            PowerShell_OverrideExecutionPolicy = profileInfo2.PowerShell_OverrideExecutionPolicy;
-            PowerShell_ExecutionPolicy = IsEdited ? profileInfo2.PowerShell_ExecutionPolicy : PowerShell_ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy); ;
+            PowerShell_OverrideExecutionPolicy = profileInfo.PowerShell_OverrideExecutionPolicy;
+            PowerShell_ExecutionPolicy = IsEdited ? profileInfo.PowerShell_ExecutionPolicy : PowerShell_ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy); ;
 
             // PuTTY
-            PuTTY_Enabled = profileInfo2.PuTTY_Enabled;
+            PuTTY_Enabled = profileInfo.PuTTY_Enabled;
 
-            switch (profileInfo2.PuTTY_ConnectionMode)
+            switch (profileInfo.PuTTY_ConnectionMode)
             {
                 // SSH is default
                 case ConnectionMode.SSH:
@@ -1771,39 +1771,39 @@ namespace NETworkManager.ViewModels
                     break;
             }
 
-            PuTTY_InheritHost = profileInfo2.PuTTY_InheritHost;
-            PuTTY_HostOrSerialLine = profileInfo2.PuTTY_HostOrSerialLine;
-            PuTTY_OverridePortOrBaud = profileInfo2.PuTTY_OverridePortOrBaud;
-            PuTTY_PortOrBaud = profileInfo2.PuTTY_OverridePortOrBaud ? profileInfo2.PuTTY_PortOrBaud : GetPortOrBaudByConnectionMode(PuTTY_ConnectionMode);
-            PuTTY_OverrideUsername = profileInfo2.PuTTY_OverrideUsername;
-            PuTTY_Username = profileInfo2.PuTTY_Username;
-            PuTTY_OverrideProfile = profileInfo2.PuTTY_OverrideProfile;
-            PuTTY_Profile = profileInfo2.PuTTY_Profile;
-            PuTTY_OverrideAdditionalCommandLine = profileInfo2.PuTTY_OverrideAdditionalCommandLine;
-            PuTTY_AdditionalCommandLine = profileInfo2.PuTTY_AdditionalCommandLine;
+            PuTTY_InheritHost = profileInfo.PuTTY_InheritHost;
+            PuTTY_HostOrSerialLine = profileInfo.PuTTY_HostOrSerialLine;
+            PuTTY_OverridePortOrBaud = profileInfo.PuTTY_OverridePortOrBaud;
+            PuTTY_PortOrBaud = profileInfo.PuTTY_OverridePortOrBaud ? profileInfo.PuTTY_PortOrBaud : GetPortOrBaudByConnectionMode(PuTTY_ConnectionMode);
+            PuTTY_OverrideUsername = profileInfo.PuTTY_OverrideUsername;
+            PuTTY_Username = profileInfo.PuTTY_Username;
+            PuTTY_OverrideProfile = profileInfo.PuTTY_OverrideProfile;
+            PuTTY_Profile = profileInfo.PuTTY_Profile;
+            PuTTY_OverrideAdditionalCommandLine = profileInfo.PuTTY_OverrideAdditionalCommandLine;
+            PuTTY_AdditionalCommandLine = profileInfo.PuTTY_AdditionalCommandLine;
 
             // TightVNC
-            TightVNC_Enabled = profileInfo2.TightVNC_Enabled;
-            TightVNC_InheritHost = profileInfo2.TightVNC_InheritHost;
-            TightVNC_Host = profileInfo2.TightVNC_Host;
-            TightVNC_OverridePort = profileInfo2.TightVNC_OverridePort;
-            TightVNC_Port = profileInfo2.TightVNC_OverridePort ? profileInfo2.TightVNC_Port : SettingsManager.Current.TightVNC_Port;
+            TightVNC_Enabled = profileInfo.TightVNC_Enabled;
+            TightVNC_InheritHost = profileInfo.TightVNC_InheritHost;
+            TightVNC_Host = profileInfo.TightVNC_Host;
+            TightVNC_OverridePort = profileInfo.TightVNC_OverridePort;
+            TightVNC_Port = profileInfo.TightVNC_OverridePort ? profileInfo.TightVNC_Port : SettingsManager.Current.TightVNC_Port;
 
             // Wake on LAN
-            WakeOnLAN_Enabled = profileInfo2.WakeOnLAN_Enabled;
-            WakeOnLAN_MACAddress = profileInfo2.WakeOnLAN_MACAddress;
-            WakeOnLAN_Broadcast = profileInfo2.WakeOnLAN_Broadcast;
-            WakeOnLAN_OverridePort = profileInfo2.WakeOnLAN_OverridePort;
-            WakeOnLAN_Port = profileInfo2.WakeOnLAN_OverridePort ? profileInfo2.WakeOnLAN_Port : SettingsManager.Current.DefaultWakeOnLAN_Port;
+            WakeOnLAN_Enabled = profileInfo.WakeOnLAN_Enabled;
+            WakeOnLAN_MACAddress = profileInfo.WakeOnLAN_MACAddress;
+            WakeOnLAN_Broadcast = profileInfo.WakeOnLAN_Broadcast;
+            WakeOnLAN_OverridePort = profileInfo.WakeOnLAN_OverridePort;
+            WakeOnLAN_Port = profileInfo.WakeOnLAN_OverridePort ? profileInfo.WakeOnLAN_Port : SettingsManager.Current.DefaultWakeOnLAN_Port;
 
             // HTTP Headers
-            HTTPHeaders_Enabled = profileInfo2.HTTPHeaders_Enabled;
-            HTTPHeaders_Website = profileInfo2.HTTPHeaders_Website;
+            HTTPHeaders_Enabled = profileInfo.HTTPHeaders_Enabled;
+            HTTPHeaders_Website = profileInfo.HTTPHeaders_Website;
 
             // Whois
-            Whois_Enabled = profileInfo2.Whois_Enabled;
-            Whois_InheritHost = profileInfo2.Whois_InheritHost;
-            Whois_Domain = profileInfo2.Whois_Domain;
+            Whois_Enabled = profileInfo.Whois_Enabled;
+            Whois_InheritHost = profileInfo.Whois_InheritHost;
+            Whois_Domain = profileInfo.Whois_Domain;
         }
 
         #region ICommands & Actions

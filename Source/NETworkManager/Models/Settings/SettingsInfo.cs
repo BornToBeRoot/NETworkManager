@@ -1840,7 +1840,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private uint _remoteDesktop_AuthenticationLevel = 2;
+        private uint _remoteDesktop_AuthenticationLevel = GlobalStaticConfiguration.RemoteDesktop_AuthenticationLevel;
         public uint RemoteDesktop_AuthenticationLevel
         {
             get => _remoteDesktop_AuthenticationLevel;
@@ -1855,7 +1855,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _remoteDesktop_KeyboardHookMode = 1;
+        private int _remoteDesktop_KeyboardHookMode = GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
         public int RemoteDesktop_KeyboardHookMode
         {
             get => _remoteDesktop_KeyboardHookMode;
