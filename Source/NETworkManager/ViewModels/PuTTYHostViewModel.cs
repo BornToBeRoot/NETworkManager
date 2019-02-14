@@ -483,7 +483,7 @@ namespace NETworkManager.ViewModels
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
             }, host);
-            
+
             customDialog.Content = new PuTTYConnectDialog
             {
                 DataContext = connectViewModel
@@ -514,7 +514,7 @@ namespace NETworkManager.ViewModels
             // Add PuTTY path here...
             profileInfo.ApplicationFilePath = SettingsManager.Current.PuTTY_ApplicationFilePath;
 
-           TabItems.Add(new DragablzTabItem(header ?? profileInfo.HostOrSerialLine, new PuTTYControl(profileInfo)));
+            TabItems.Add(new DragablzTabItem(header ?? profileInfo.HostOrSerialLine, new PuTTYControl(profileInfo)));
 
             SelectedTabIndex = TabItems.Count - 1;
         }
