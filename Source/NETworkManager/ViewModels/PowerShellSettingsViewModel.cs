@@ -37,19 +37,19 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _defaultAdditionalCommandLine;
-        public string DefaultAdditionalCommandLine
+        private string _additionalCommandLine;
+        public string AdditionalCommandLine
         {
-            get => _defaultAdditionalCommandLine;
+            get => _additionalCommandLine;
             set
             {
-                if(value == _defaultAdditionalCommandLine)
+                if(value == _additionalCommandLine)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PowerShell_DefaultAdditionalCommandLine = value;
+                    SettingsManager.Current.PowerShell_AdditionalCommandLine = value;
 
-                _defaultAdditionalCommandLine = value;
+                _additionalCommandLine = value;
                 OnPropertyChanged();
             }
         }
@@ -68,19 +68,19 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private PowerShell.ExecutionPolicy _defaultExecutionPolicy;
-        public PowerShell.ExecutionPolicy DefaultExecutionPolicy
+        private PowerShell.ExecutionPolicy _executionPolicy;
+        public PowerShell.ExecutionPolicy ExecutionPolicy
         {
-            get => _defaultExecutionPolicy;
+            get => _executionPolicy;
             set
             {
-                if (value == _defaultExecutionPolicy)
+                if (value == _executionPolicy)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PowerShell_DefaultExecutionPolicy = value;
+                    SettingsManager.Current.PowerShell_ExecutionPolicy = value;
 
-                _defaultExecutionPolicy = value;
+                _executionPolicy = value;
                 OnPropertyChanged();
             }
         }
@@ -116,7 +116,7 @@ namespace NETworkManager.ViewModels
         {
             ApplicationFilePath = SettingsManager.Current.PowerShell_ApplicationFilePath;
             IsConfigured = File.Exists(ApplicationFilePath);
-            DefaultAdditionalCommandLine = SettingsManager.Current.PowerShell_DefaultAdditionalCommandLine;
+            AdditionalCommandLine = SettingsManager.Current.PowerShell_AdditionalCommandLine;
 
             LoadExecutionPolicies();
         }
@@ -124,7 +124,7 @@ namespace NETworkManager.ViewModels
         private void LoadExecutionPolicies()
         {
             ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
-            DefaultExecutionPolicy = ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_DefaultExecutionPolicy);
+            ExecutionPolicy = ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy);
         }
         #endregion
 

@@ -60,7 +60,7 @@
         <ComboBox ItemsSource="{Binding ColorDepths}" SelectedItem="{Binding SelectedColorDepth}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.Network}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{x:Static localization:Strings.Port}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort3389 }" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,20">
+        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort3389}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,20">
             <TextBox.Text>
                 <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -75,7 +75,7 @@
         <TextBlock Text="{x:Static localization:Strings.AuthenticationLevel}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
             <mah:NumericUpDown Value="{Binding AuthenticationLevel}" Maximum="3" Minimum="0" Interval="1" />
-            <Rectangle Width="24" Height="24" ToolTip="{Binding RDPAuthenticationLevelHelpMessage}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+            <Rectangle Width="24" Height="24" ToolTip="{x:Static localization:Strings.HelpMessage_RDPAuthenticationLevel}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                 </Rectangle.Resources>
@@ -85,11 +85,11 @@
         <TextBlock Text="{x:Static localization:Strings.ApplyWindowsKeyCombinationsLikeAltTab}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding KeyboardHookModes}" DisplayMemberPath="Item2" SelectedItem="{Binding KeyboardHookMode}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.LocalDevicesAndResources}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectClipboard}"   IsChecked="{Binding RedirectClipboard}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectDevices}"   IsChecked="{Binding RedirectDevices}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectDrives}"   IsChecked="{Binding RedirectDrives}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectPorts}"   IsChecked="{Binding RedirectPorts}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectSmartcards}"   IsChecked="{Binding RedirectSmartCards}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectPrinters}"   IsChecked="{Binding RedirectPrinters}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectClipboard}" IsChecked="{Binding RedirectClipboard}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectDevices}" IsChecked="{Binding RedirectDevices}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectDrives}" IsChecked="{Binding RedirectDrives}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectPorts}" IsChecked="{Binding RedirectPorts}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectSmartcards}" IsChecked="{Binding RedirectSmartCards}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectPrinters}" IsChecked="{Binding RedirectPrinters}" />
     </StackPanel>
 </UserControl>

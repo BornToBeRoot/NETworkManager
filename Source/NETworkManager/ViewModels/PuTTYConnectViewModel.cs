@@ -14,10 +14,10 @@ namespace NETworkManager.ViewModels
 
         public ICommand CancelCommand { get; }
 
-        public int DefaultSSHPort => SettingsManager.Current.PuTTY_DefaultSSHPort;
-        public int DefaultTelnetPort => SettingsManager.Current.PuTTY_DefaultTelnetPort;
-        public int DefaultBaudRate => SettingsManager.Current.PuTTY_DefaultBaudRate;
-        public int DefaultRloginPort => SettingsManager.Current.PuTTY_DefaultRloginPort;
+        public int DefaultSSHPort => SettingsManager.Current.PuTTY_SSHPort;
+        public int DefaultTelnetPort => SettingsManager.Current.PuTTY_TelnetPort;
+        public int DefaultBaudRate => SettingsManager.Current.PuTTY_BaudRate;
+        public int DefaultRloginPort => SettingsManager.Current.PuTTY_RloginPort;
         public int DefaultRaw => SettingsManager.Current.PuTTY_DefaultRaw;
 
         public ConnectionMode ConnectionMode { get; set; }
@@ -274,10 +274,10 @@ namespace NETworkManager.ViewModels
                     break;
             }
 
-            Username = SettingsManager.Current.PuTTY_DefaultUsername;
-            Profile = SettingsManager.Current.PuTTY_DefaultProfile;
-            SerialLine = SettingsManager.Current.PuTTY_DefaultSerialLine;
-            AdditionalCommandLine = SettingsManager.Current.PuTTY_DefaultAdditionalCommandLine;
+            Username = SettingsManager.Current.PuTTY_Username;
+            Profile = SettingsManager.Current.PuTTY_Profile;
+            SerialLine = SettingsManager.Current.PuTTY_SerialLine;
+            AdditionalCommandLine = SettingsManager.Current.PuTTY_AdditionalCommandLine;
         }
     }
 }

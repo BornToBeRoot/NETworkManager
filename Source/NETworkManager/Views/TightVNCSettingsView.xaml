@@ -24,10 +24,10 @@
             </TextBox.Text>
         </TextBox>
         <Button Content="{x:Static localization:Strings.Configure}" Command="{Binding ConfigureCommand}" IsEnabled="{Binding IsConfigured}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" Margin="0,0,0,10" />
-        <TextBlock Text="{x:Static localization:Strings.DefaultVNCPort}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Port}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort5900}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
-                <Binding Path="DefaultVNCPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                         <validators:PortValidator ValidatesOnTargetUpdated="True" />

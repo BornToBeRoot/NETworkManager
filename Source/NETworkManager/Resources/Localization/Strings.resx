@@ -795,20 +795,20 @@
   <data name="Default" xml:space="preserve">
     <value>Default</value>
   </data>
-  <data name="DefaultBaudRate" xml:space="preserve">
-    <value>Default baud rate</value>
+  <data name="BaudRate" xml:space="preserve">
+    <value>Baud rate</value>
   </data>
   <data name="DefaultPort" xml:space="preserve">
     <value>Default port:</value>
   </data>
-  <data name="DefaultRloginPort" xml:space="preserve">
-    <value>Default Rlogin port</value>
+  <data name="RloginPort" xml:space="preserve">
+    <value>Rlogin port</value>
   </data>
-  <data name="DefaultSSHPort" xml:space="preserve">
-    <value>Default SSH port</value>
+  <data name="SSHPort" xml:space="preserve">
+    <value>SSH port</value>
   </data>
-  <data name="DefaultTelnetPort" xml:space="preserve">
-    <value>Default Telnet port</value>
+  <data name="TelnetPort" xml:space="preserve">
+    <value>Telnet port</value>
   </data>
   <data name="DeleteCredentialMessage" xml:space="preserve">
     <value>The selected credential will be deleted permanently.</value>
@@ -1869,9 +1869,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="ConfigureThePathToTightVNCInTheSettingsDots" xml:space="preserve">
     <value>Configure the path to TightVNC in the settings...</value>
   </data>
-  <data name="DefaultVNCPort" xml:space="preserve">
-    <value>Default VNC port</value>
-  </data>
   <data name="DisableTransparencyInTheSettingsToUseTightVNC" xml:space="preserve">
     <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TightVNC.</value>
   </data>
@@ -1972,20 +1969,8 @@ Path: "{0}"</value>
   <data name="PowerShellLocationDots" xml:space="preserve">
     <value>PowerShell location...</value>
   </data>
-  <data name="DefaultAdditionalCommandLine" xml:space="preserve">
-    <value>Default additional command line</value>
-  </data>
   <data name="FilePath" xml:space="preserve">
     <value>File path</value>
-  </data>
-  <data name="DefaultExecutionPolicy" xml:space="preserve">
-    <value>Default Execution Policy</value>
-  </data>
-  <data name="DefaultUsername" xml:space="preserve">
-    <value>Default username</value>
-  </data>
-  <data name="DefaultMode" xml:space="preserve">
-    <value>Default mode</value>
   </data>
   <data name="ThisFeatureIsOnlyAvailableInWindows10Server2016OrLater" xml:space="preserve">
     <value>This feature is only available in Windows 10 / Server 2016 or later!</value>
@@ -2013,5 +1998,11 @@ Path: "{0}"</value>
   </data>
   <data name="Upload" xml:space="preserve">
     <value>Upload</value>
+  </data>
+  <data name="ApplyWindowsKeyCombinations" xml:space="preserve">
+    <value>Apply Windows key combinations</value>
+  </data>
+  <data name="CredentialSecuritySupportProvider" xml:space="preserve">
+    <value>Credential Security Support Provider</value>
   </data>
 </root>

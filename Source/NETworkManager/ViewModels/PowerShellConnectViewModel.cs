@@ -106,7 +106,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            AdditionalCommandLine = SettingsManager.Current.PowerShell_DefaultAdditionalCommandLine;
+            AdditionalCommandLine = SettingsManager.Current.PowerShell_AdditionalCommandLine;
             
             LoadExecutionPolicies();
         }
@@ -114,7 +114,7 @@ namespace NETworkManager.ViewModels
         private void LoadExecutionPolicies()
         {
             ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
-            ExecutionPolicy = ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_DefaultExecutionPolicy);
+            ExecutionPolicy = ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy);
         }
     }
 }

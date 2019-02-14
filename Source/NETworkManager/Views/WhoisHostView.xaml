@@ -23,7 +23,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition MinWidth="{x:Static networkManager:GlobalStaticConfiguration.ProfileWidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static networkManager:GlobalStaticConfiguration.ProfileMaxWidthExpanded}" />
+            <ColumnDefinition MinWidth="{x:Static networkManager:GlobalStaticConfiguration.Profile_WidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static networkManager:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
         </Grid.ColumnDefinitions>
         <dragablz:TabablzControl Grid.Column="0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
             <dragablz:TabablzControl.InterTabController>
