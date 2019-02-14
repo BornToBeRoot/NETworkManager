@@ -376,6 +376,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply Windows key combinations.
+        /// </summary>
+        public static string ApplyWindowsKeyCombinations {
+            get {
+                return ResourceManager.GetString("ApplyWindowsKeyCombinations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apply Windows key combinations (e.g. ALT+TAB):.
         /// </summary>
         public static string ApplyWindowsKeyCombinationsLikeAltTab {
@@ -1002,6 +1011,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Credentials {
             get {
                 return ResourceManager.GetString("Credentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credential Security Support Provider.
+        /// </summary>
+        public static string CredentialSecuritySupportProvider {
+            get {
+                return ResourceManager.GetString("CredentialSecuritySupportProvider", resourceCulture);
             }
         }
         

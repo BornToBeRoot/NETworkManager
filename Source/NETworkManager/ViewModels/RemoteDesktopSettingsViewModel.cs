@@ -251,9 +251,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        // String must be formatted ...
-        public string RDPAuthenticationLevelHelpMessage => Resources.Localization.Strings.HelpMessage_RDPAuthenticationLevel;
-
         private bool _redirectClipboard;
         public bool RedirectClipboard
         {

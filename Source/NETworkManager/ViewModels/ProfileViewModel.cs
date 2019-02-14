@@ -270,7 +270,6 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region IP Scanner
-
         private bool _ipScanner_Enabled;
         public bool IPScanner_Enabled
         {
@@ -317,7 +316,6 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Port Scanner
-
         private bool _portScanner_Enabled;
         public bool PortScanner_Enabled
         {
@@ -558,6 +556,173 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _remoteDesktop_OverrideDisplay;
+        public bool RemoteDesktop_OverrideDisplay
+        {
+            get => _remoteDesktop_OverrideDisplay;
+            set
+            {
+                if (value == _remoteDesktop_OverrideDisplay)
+                    return;
+
+                _remoteDesktop_OverrideDisplay = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideColorDepth;
+        public bool RemoteDesktop_OverrideColorDepth
+        {
+            get => _remoteDesktop_OverrideColorDepth;
+            set
+            {
+                if (value == _remoteDesktop_OverrideColorDepth)
+                    return;
+
+                _remoteDesktop_OverrideColorDepth = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverridePort;
+        public bool RemoteDesktop_OverridePort
+        {
+            get => _remoteDesktop_OverridePort;
+            set
+            {
+                if (value == _remoteDesktop_OverridePort)
+                    return;
+
+                _remoteDesktop_OverridePort = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideCredSspSupport;
+        public bool RemoteDesktop_OverrideCredSspSupport
+        {
+            get => _remoteDesktop_OverrideCredSspSupport;
+            set
+            {
+                if (value == _remoteDesktop_OverrideCredSspSupport)
+                    return;
+
+                _remoteDesktop_OverrideCredSspSupport = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideAuthenticationLevel;
+        public bool RemoteDesktop_OverrideAuthenticationLevel
+        {
+            get => _remoteDesktop_OverrideAuthenticationLevel;
+            set
+            {
+                if (value == _remoteDesktop_OverrideAuthenticationLevel)
+                    return;
+
+                _remoteDesktop_OverrideAuthenticationLevel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideApplyWindowsKeyCombinations;
+        public bool RemoteDesktop_OverrideApplyWindowsKeyCombinations
+        {
+            get => _remoteDesktop_OverrideApplyWindowsKeyCombinations;
+            set
+            {
+                if (value == _remoteDesktop_OverrideApplyWindowsKeyCombinations)
+                    return;
+
+                _remoteDesktop_OverrideApplyWindowsKeyCombinations = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideRedirectClipboard;
+        public bool RemoteDesktop_OverrideRedirectClipboard
+        {
+            get => _remoteDesktop_OverrideRedirectClipboard;
+            set
+            {
+                if (value == _remoteDesktop_OverrideRedirectClipboard)
+                    return;
+
+                _remoteDesktop_OverrideRedirectClipboard = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideRedirectDevices;
+        public bool RemoteDesktop_OverrideRedirectDevices
+        {
+            get => _remoteDesktop_OverrideRedirectDevices;
+            set
+            {
+                if (value == _remoteDesktop_OverrideRedirectDevices)
+                    return;
+
+                _remoteDesktop_OverrideRedirectDevices = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideRedirectDrives;
+        public bool RemoteDesktop_OverrideRedirectDrives
+        {
+            get => _remoteDesktop_OverrideRedirectDrives;
+            set
+            {
+                if (value == _remoteDesktop_OverrideRedirectDrives)
+                    return;
+
+                _remoteDesktop_OverrideRedirectDrives = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideRedirectPorts;
+        public bool RemoteDesktop_OverrideRedirectPorts
+        {
+            get => _remoteDesktop_OverrideRedirectPorts;
+            set
+            {
+                if (value == _remoteDesktop_OverrideRedirectPorts)
+                    return;
+
+                _remoteDesktop_OverrideRedirectPorts = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideRedirectSmartcards;
+        public bool RemoteDesktop_OverrideRedirectSmartcards
+        {
+            get => _remoteDesktop_OverrideRedirectSmartcards;
+            set
+            {
+                if (value == _remoteDesktop_OverrideRedirectSmartcards)
+                    return;
+
+                _remoteDesktop_OverrideRedirectSmartcards = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideRedirectPrinters;
+        public bool RemoteDesktop_OverrideRedirectPrinters
+        {
+            get => _remoteDesktop_OverrideRedirectPrinters;
+            set
+            {
+                if (value == _remoteDesktop_OverrideRedirectPrinters)
+                    return;
+
+                _remoteDesktop_OverrideRedirectPrinters = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region PowerShell

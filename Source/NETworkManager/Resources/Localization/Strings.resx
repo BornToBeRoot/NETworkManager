@@ -1999,4 +1999,10 @@ Path: "{0}"</value>
   <data name="Upload" xml:space="preserve">
     <value>Upload</value>
   </data>
+  <data name="ApplyWindowsKeyCombinations" xml:space="preserve">
+    <value>Apply Windows key combinations</value>
+  </data>
+  <data name="CredentialSecuritySupportProvider" xml:space="preserve">
+    <value>Credential Security Support Provider</value>
+  </data>
 </root>
