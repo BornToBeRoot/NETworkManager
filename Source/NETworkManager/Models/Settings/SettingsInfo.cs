@@ -47,7 +47,7 @@ namespace NETworkManager.Models.Settings
 
         #region General 
         // General        
-        private ApplicationViewManager.Name _general_DefaultApplicationViewName = ApplicationViewManager.Name.NetworkInterface;
+        private ApplicationViewManager.Name _general_DefaultApplicationViewName = GlobalStaticConfiguration.General_DefaultApplicationViewName;
         public ApplicationViewManager.Name General_DefaultApplicationViewName
         {
             get => _general_DefaultApplicationViewName;
@@ -62,7 +62,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _general_HistoryListEntries = 5;
+        private int _general_HistoryListEntries = GlobalStaticConfiguration.General_HistoryListEntries;
         public int General_HistoryListEntries
         {
             get => _general_HistoryListEntries;
@@ -152,7 +152,7 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
-        
+
         // TrayIcon
         private bool _trayIcon_AlwaysShowIcon;
         public bool TrayIcon_AlwaysShowIcon
@@ -215,7 +215,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private double _appearance_Opacity = 0.85;
+        private double _appearance_Opacity = GlobalStaticConfiguration.Appearance_Opacity;
         public double Appearance_Opacity
         {
             get => _appearance_Opacity;
@@ -278,7 +278,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _hotKey_ShowWindowKey = 79;
+        private int _hotKey_ShowWindowKey = GlobalStaticConfiguration.HotKey_ShowWindowKey;
         public int HotKey_ShowWindowKey
         {
             get => _hotKey_ShowWindowKey;
@@ -293,7 +293,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _hotKey_ShowWindowModifier = 3;
+        private int _hotKey_ShowWindowModifier = GlobalStaticConfiguration.HotKey_ShowWindowModifier;
         public int HotKey_ShowWindowModifier
         {
             get => _hotKey_ShowWindowModifier;
@@ -406,7 +406,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _ipScanner_Threads = 256;
+        private int _ipScanner_Threads = GlobalStaticConfiguration.IPScanner_Threads;
         public int IPScanner_Threads
         {
             get => _ipScanner_Threads;
@@ -421,7 +421,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _ipScanner_ICMPAttempts = 2;
+        private int _ipScanner_ICMPAttempts = GlobalStaticConfiguration.IPScanner_ICMPAttempts;
         public int IPScanner_ICMPAttempts
         {
             get => _ipScanner_ICMPAttempts;
@@ -436,7 +436,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _ipScanner_ICMPBuffer = 32;
+        private int _ipScanner_ICMPBuffer = GlobalStaticConfiguration.IPScanner_ICMPBuffer;
         public int IPScanner_ICMPBuffer
         {
             get => _ipScanner_ICMPBuffer;
@@ -511,7 +511,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _ipScanner_DNSPort = 53;
+        private int _ipScanner_DNSPort = GlobalStaticConfiguration.IPScanner_DNSPort;
         public int IPScanner_DNSPort
         {
             get => _ipScanner_DNSPort;
@@ -556,7 +556,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private TransportType _ipScanner_DNSTransportType = TransportType.Udp;
+        private TransportType _ipScanner_DNSTransportType = GlobalStaticConfiguration.IPScanner_DNSTransportType;
         public TransportType IPScanner_DNSTransportType
         {
             get => _ipScanner_DNSTransportType;
@@ -571,7 +571,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _ipScanner_DNSAttempts = 2;
+        private int _ipScanner_DNSAttempts = GlobalStaticConfiguration.IPScanner_DNSAttempts;
         public int IPScanner_DNSAttempts
         {
             get => _ipScanner_DNSAttempts;
@@ -586,7 +586,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _ipScanner_DNSTimeout = 2000;
+        private int _ipScanner_DNSTimeout = GlobalStaticConfiguration.IPScanner_DNSTimeout;
         public int IPScanner_DNSTimeout
         {
             get => _ipScanner_DNSTimeout;
@@ -616,7 +616,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _ipScanner_ICMPTimeout = 4000;
+        private int _ipScanner_ICMPTimeout = GlobalStaticConfiguration.IPScanner_ICMPTimeout;
         public int IPScanner_ICMPTimeout
         {
             get => _ipScanner_ICMPTimeout;
@@ -706,7 +706,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private ExportManager.ExportFileType _ipScanner_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _ipScanner_ExportFileType = GlobalStaticConfiguration.IPScanner_ExportFileType;
         public ExportManager.ExportFileType IPScanner_ExportFileType
         {
             get => _ipScanner_ExportFileType;
@@ -768,7 +768,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _portScanner_HostThreads = 5;
+        private int _portScanner_HostThreads = GlobalStaticConfiguration.PortScanner_HostThreads;
         public int PortScanner_HostThreads
         {
             get => _portScanner_HostThreads;
@@ -783,7 +783,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _portScanner_PortThreads = 100;
+        private int _portScanner_PortThreads = GlobalStaticConfiguration.PortScanner_PortThreds;
         public int PortScanner_PortThreads
         {
             get => _portScanner_PortThreads;
@@ -812,7 +812,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _portScanner_Timeout = 4000;
+        private int _portScanner_Timeout = GlobalStaticConfiguration.PortScanner_Timeout;
         public int PortScanner_Timeout
         {
             get => _portScanner_Timeout;
@@ -902,7 +902,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private ExportManager.ExportFileType _portScanner_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _portScanner_ExportFileType = GlobalStaticConfiguration.PortScanner_ExportFileType;
         public ExportManager.ExportFileType PortScanner_ExportFileType
         {
             get => _portScanner_ExportFileType;
@@ -934,7 +934,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _ping_Buffer = 32;
+        private int _ping_Buffer = GlobalStaticConfiguration.Ping_Buffer;
         public int Ping_Buffer
         {
             get => _ping_Buffer;
@@ -994,7 +994,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _ping_Timeout = 4000;
+        private int _ping_Timeout = GlobalStaticConfiguration.Ping_Timeout;
         public int Ping_Timeout
         {
             get => _ping_Timeout;
@@ -1009,7 +1009,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _ping_TTL = 64;
+        private int _ping_TTL = GlobalStaticConfiguration.Ping_TTL;
         public int Ping_TTL
         {
             get => _ping_TTL;
@@ -1024,7 +1024,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _ping_WaitTime = 1000;
+        private int _ping_WaitTime = GlobalStaticConfiguration.Ping_WaitTime;
         public int Ping_WaitTime
         {
             get => _ping_WaitTime;
@@ -1039,7 +1039,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _ping_ExceptionCancelCount = 3;
+        private int _ping_ExceptionCancelCount = GlobalStaticConfiguration.Ping_ExceptionCancelCount;
         public int Ping_ExceptionCancelCount
         {
             get => _ping_ExceptionCancelCount;
@@ -1129,7 +1129,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private ExportManager.ExportFileType _ping_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _ping_ExportFileType = GlobalStaticConfiguration.Ping_ExportFileType;
         public ExportManager.ExportFileType Ping_ExportFileType
         {
             get => _ping_ExportFileType;
@@ -1176,7 +1176,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _traceroute_MaximumHops = 30;
+        private int _traceroute_MaximumHops = GlobalStaticConfiguration.Traceroute_MaximumHops;
         public int Traceroute_MaximumHops
         {
             get => _traceroute_MaximumHops;
@@ -1191,7 +1191,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _traceroute_Timeout = 4000;
+        private int _traceroute_Timeout = GlobalStaticConfiguration.Traceroute_Timeout;
         public int Traceroute_Timeout
         {
             get => _traceroute_Timeout;
@@ -1206,7 +1206,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _traceroute_Buffer = 32;
+        private int _traceroute_Buffer = GlobalStaticConfiguration.Traceroute_Buffer;
         public int Traceroute_Buffer
         {
             get => _traceroute_Buffer;
@@ -1326,7 +1326,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private ExportManager.ExportFileType _traceroute_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _traceroute_ExportFileType = GlobalStaticConfiguration.Traceroute_ExportFileType;
         public ExportManager.ExportFileType Traceroute_ExportFileType
         {
             get => _traceroute_ExportFileType;
@@ -1388,7 +1388,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private QClass _dnsLookup_Class = QClass.IN;
+        private QClass _dnsLookup_Class = GlobalStaticConfiguration.DNSLookup_Class;
         public QClass DNSLookup_Class
         {
             get => _dnsLookup_Class;
@@ -1418,7 +1418,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private QType _dnsLookup_Type = QType.ANY;
+        private QType _dnsLookup_Type = GlobalStaticConfiguration.DNSLookup_Type;
         public QType DNSLookup_Type
         {
             get => _dnsLookup_Type;
@@ -1523,7 +1523,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private TransportType _dnsLookup_TransportType = TransportType.Udp;
+        private TransportType _dnsLookup_TransportType = GlobalStaticConfiguration.DNSLookup_TransportType;
         public TransportType DNSLookup_TransportType
         {
             get => _dnsLookup_TransportType;
@@ -1538,7 +1538,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _dnsLookup_Attempts = 3;
+        private int _dnsLookup_Attempts = GlobalStaticConfiguration.DNSLookup_Attempts;
         public int DNSLookup_Attempts
         {
             get => _dnsLookup_Attempts;
@@ -1553,7 +1553,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _dnsLookup_Timeout = 2000;
+        private int _dnsLookup_Timeout = GlobalStaticConfiguration.DNSLookup_Timeout;
         public int DNSLookup_Timeout
         {
             get => _dnsLookup_Timeout;
@@ -1643,7 +1643,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private ExportManager.ExportFileType _dnsLookup_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _dnsLookup_ExportFileType = GlobalStaticConfiguration.DNSLookup_ExportFileType;
         public ExportManager.ExportFileType DNSLookup_ExportFileType
         {
             get => _dnsLookup_ExportFileType;
@@ -2037,7 +2037,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private PowerShell.PowerShell.ExecutionPolicy _powerShell_ExecutionPolicy = PowerShell.PowerShell.ExecutionPolicy.RemoteSigned;
+        private PowerShell.PowerShell.ExecutionPolicy _powerShell_ExecutionPolicy = GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
         public PowerShell.PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy
         {
             get => _powerShell_ExecutionPolicy;
@@ -2099,13 +2099,13 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private PuTTY.PuTTY.ConnectionMode _puTTY_DefaultConnectionMode = PuTTY.PuTTY.ConnectionMode.SSH;
+        private PuTTY.PuTTY.ConnectionMode _puTTY_DefaultConnectionMode = GlobalStaticConfiguration.PuTTY_DefaultConnectionMode;
         public PuTTY.PuTTY.ConnectionMode PuTTY_DefaultConnectionMode
         {
             get => _puTTY_DefaultConnectionMode;
             set
             {
-                if(value == _puTTY_DefaultConnectionMode)
+                if (value == _puTTY_DefaultConnectionMode)
                     return;
 
                 _puTTY_DefaultConnectionMode = value;
@@ -2279,7 +2279,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private string _puTTY_SerialLine = GlobalStaticConfiguration.PuTTY_DefaultSerialLine;
+        private string _puTTY_SerialLine = GlobalStaticConfiguration.PuTTY_SerialLine;
         public string PuTTY_SerialLine
         {
             get => _puTTY_SerialLine;
@@ -2294,7 +2294,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _puTTY_SSHPort = GlobalStaticConfiguration.PuTTY_DefaultSSHPort;
+        private int _puTTY_SSHPort = GlobalStaticConfiguration.PuTTY_SSHPort;
         public int PuTTY_SSHPort
         {
             get => _puTTY_SSHPort;
@@ -2309,7 +2309,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _puTTY_TelnetPort = GlobalStaticConfiguration.PuTTY_DefaultTelnetPort;
+        private int _puTTY_TelnetPort = GlobalStaticConfiguration.PuTTY_TelnetPort;
         public int PuTTY_TelnetPort
         {
             get => _puTTY_TelnetPort;
@@ -2324,7 +2324,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _puTTY_RloginPort = GlobalStaticConfiguration.PuTTY_DefaultRloginPort;
+        private int _puTTY_RloginPort = GlobalStaticConfiguration.PuTTY_RloginPort;
         public int PuTTY_RloginPort
         {
             get => _puTTY_RloginPort;
@@ -2339,7 +2339,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _puTTY_BaudRate = GlobalStaticConfiguration.PuTTY_DefaultBaudRate;
+        private int _puTTY_BaudRate = GlobalStaticConfiguration.PuTTY_BaudRate;
         public int PuTTY_BaudRate
         {
             get => _puTTY_BaudRate;
@@ -2354,7 +2354,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _puTTY_DefaultRaw = GlobalStaticConfiguration.PuTTY_DefaultRaw;
+        private int _puTTY_DefaultRaw = GlobalStaticConfiguration.PuTTY_Raw;
         public int PuTTY_DefaultRaw
         {
             get => _puTTY_DefaultRaw;
@@ -2463,7 +2463,7 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region SNMP
-        private WalkMode _snmp_WalkMode = WalkMode.WithinSubtree;
+        private WalkMode _snmp_WalkMode = GlobalStaticConfiguration.SNMP_WalkMode;
         public WalkMode SNMP_WalkMode
         {
             get => _snmp_WalkMode;
@@ -2478,7 +2478,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _snmp_Timeout = 60000;
+        private int _snmp_Timeout = GlobalStaticConfiguration.SNMP_Timeout;
         public int SNMP_Timeout
         {
             get => _snmp_Timeout;
@@ -2553,7 +2553,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private SNMPMode _snmp_Mode = SNMPMode.Walk;
+        private SNMPMode _snmp_Mode = GlobalStaticConfiguration.SNMP_Mode;
         public SNMPMode SNMP_Mode
         {
             get => _snmp_Mode;
@@ -2568,7 +2568,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private SNMPVersion _snmp_Version = SNMPVersion.V2C;
+        private SNMPVersion _snmp_Version = GlobalStaticConfiguration.SNMP_Version;
         public SNMPVersion SNMP_Version
         {
             get => _snmp_Version;
@@ -2598,7 +2598,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private SNMPV3Security _snmp_Security = SNMPV3Security.AuthPriv;
+        private SNMPV3Security _snmp_Security = GlobalStaticConfiguration.SNMP_Security;
         public SNMPV3Security SNMP_Security
         {
             get => _snmp_Security;
@@ -2613,7 +2613,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private SNMPV3AuthenticationProvider _snmp_AuthenticationProvider = SNMPV3AuthenticationProvider.SHA1;
+        private SNMPV3AuthenticationProvider _snmp_AuthenticationProvider = GlobalStaticConfiguration.SNMP_AuthenticationProvider;
         public SNMPV3AuthenticationProvider SNMP_AuthenticationProvider
         {
             get => _snmp_AuthenticationProvider;
@@ -2628,7 +2628,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private SNMPV3PrivacyProvider _snmp_PrivacyProvider = SNMPV3PrivacyProvider.AES;
+        private SNMPV3PrivacyProvider _snmp_PrivacyProvider = GlobalStaticConfiguration.SNMP_PrivacyProvider;
         public SNMPV3PrivacyProvider SNMP_PrivacyProvider
         {
             get => _snmp_PrivacyProvider;
@@ -2673,7 +2673,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private ExportManager.ExportFileType _snmp_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _snmp_ExportFileType = GlobalStaticConfiguration.SNMP_ExportFileType;
         public ExportManager.ExportFileType SNMP_ExportFileType
         {
             get => _snmp_ExportFileType;
@@ -2690,16 +2690,16 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region WakeOnLAN
-        private int _defaultWakeOnLAN_Port = 7;
-        public int DefaultWakeOnLAN_Port
+        private int _wakeOnLAN_Port = GlobalStaticConfiguration.WakeOnLAN_Port;
+        public int WakeOnLAN_Port
         {
-            get => _defaultWakeOnLAN_Port;
+            get => _wakeOnLAN_Port;
             set
             {
-                if (value == _defaultWakeOnLAN_Port)
+                if (value == _wakeOnLAN_Port)
                     return;
 
-                _defaultWakeOnLAN_Port = value;
+                _wakeOnLAN_Port = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -2752,7 +2752,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _httpHeaders_Timeout = 10000;
+        private int _httpHeaders_Timeout = GlobalStaticConfiguration.HTTPHeaders_Timeout;
         public int HTTPHeaders_Timeout
         {
             get => _httpHeaders_Timeout;
@@ -2842,7 +2842,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private ExportManager.ExportFileType _httpHeaders_ExportFileType = ExportManager.ExportFileType.TXT;
+        private ExportManager.ExportFileType _httpHeaders_ExportFileType = GlobalStaticConfiguration.HTTPHeaders_ExportFileType;
         public ExportManager.ExportFileType HTTPHeaders_ExportFileType
         {
             get => _httpHeaders_ExportFileType;
@@ -2923,7 +2923,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private ExportManager.ExportFileType _subnetCalculator_Subnetting_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _subnetCalculator_Subnetting_ExportFileType = GlobalStaticConfiguration.SubnetCalculator_Subnetting_ExportFileType;
         public ExportManager.ExportFileType SubnetCalculator_Subnetting_ExportFileType
         {
             get => _subnetCalculator_Subnetting_ExportFileType;
@@ -3004,7 +3004,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private ExportManager.ExportFileType _lookup_OUI_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _lookup_OUI_ExportFileType = GlobalStaticConfiguration.Lookup_OUI_ExportFileType;
         public ExportManager.ExportFileType Lookup_OUI_ExportFileType
         {
             get => _lookup_OUI_ExportFileType;
@@ -3049,7 +3049,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private ExportManager.ExportFileType _lookup_Port_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _lookup_Port_ExportFileType = GlobalStaticConfiguration.Lookup_Port_ExportFileType;
         public ExportManager.ExportFileType Lookup_Port_ExportFileType
         {
             get => _lookup_Port_ExportFileType;
@@ -3156,7 +3156,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private ExportManager.ExportFileType _whois_ExportFileType = ExportManager.ExportFileType.TXT;
+        private ExportManager.ExportFileType _whois_ExportFileType = GlobalStaticConfiguration.Whois_ExportFileType;
         public ExportManager.ExportFileType Whois_ExportFileType
         {
             get => _whois_ExportFileType;
@@ -3188,7 +3188,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private AutoRefreshTimeInfo _connections_AutoRefreshTime = AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second);
+        private AutoRefreshTimeInfo _connections_AutoRefreshTime = GlobalStaticConfiguration.Connections_AutoRefreshTime;
         public AutoRefreshTimeInfo Connections_AutoRefreshTime
         {
             get => _connections_AutoRefreshTime;
@@ -3218,7 +3218,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private ExportManager.ExportFileType _connections_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _connections_ExportFileType = GlobalStaticConfiguration.Connections_ExportFileType;
         public ExportManager.ExportFileType Connections_ExportFileType
         {
             get => _connections_ExportFileType;
@@ -3250,7 +3250,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private AutoRefreshTimeInfo _listeners_AutoRefreshTime = AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second);
+        private AutoRefreshTimeInfo _listeners_AutoRefreshTime = GlobalStaticConfiguration.Listeners_AutoRefreshTime;
         public AutoRefreshTimeInfo Listeners_AutoRefreshTime
         {
             get => _listeners_AutoRefreshTime;
@@ -3280,7 +3280,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private ExportManager.ExportFileType _listeners_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _listeners_ExportFileType = GlobalStaticConfiguration.Listeners_ExportFileType;
         public ExportManager.ExportFileType Listeners_ExportFileType
         {
             get => _listeners_ExportFileType;
@@ -3312,7 +3312,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private AutoRefreshTimeInfo _arpTable_AutoRefreshTime = AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second);
+        private AutoRefreshTimeInfo _arpTable_AutoRefreshTime = GlobalStaticConfiguration.ARPTable_AutoRefreshTime;
         public AutoRefreshTimeInfo ARPTable_AutoRefreshTime
         {
             get => _arpTable_AutoRefreshTime;
@@ -3342,7 +3342,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private ExportManager.ExportFileType _arpTable_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _arpTable_ExportFileType = GlobalStaticConfiguration.ARPTable_ExportFileType;
         public ExportManager.ExportFileType ARPTable_ExportFileType
         {
             get => _arpTable_ExportFileType;

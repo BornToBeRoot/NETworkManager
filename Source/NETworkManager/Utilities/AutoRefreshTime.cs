@@ -5,7 +5,7 @@ namespace NETworkManager.Utilities
 {
     public class AutoRefreshTime
     {
-        public static List<AutoRefreshTimeInfo> Defaults => new List<AutoRefreshTimeInfo>()
+        public static List<AutoRefreshTimeInfo> Defaults => new List<AutoRefreshTimeInfo>
         {
             new AutoRefreshTimeInfo(5, TimeUnit.Second),
             new AutoRefreshTimeInfo(15, TimeUnit.Second),

@@ -268,7 +268,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            Port = SettingsManager.Current.DefaultWakeOnLAN_Port;
+            Port = SettingsManager.Current.WakeOnLAN_Port;
             ExpandProfileView = SettingsManager.Current.WakeOnLAN_ExpandClientView;
 
             ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.WakeOnLAN_ClientWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);

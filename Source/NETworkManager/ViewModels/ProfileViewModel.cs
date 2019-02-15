@@ -1794,7 +1794,7 @@ namespace NETworkManager.ViewModels
             WakeOnLAN_MACAddress = profileInfo.WakeOnLAN_MACAddress;
             WakeOnLAN_Broadcast = profileInfo.WakeOnLAN_Broadcast;
             WakeOnLAN_OverridePort = profileInfo.WakeOnLAN_OverridePort;
-            WakeOnLAN_Port = profileInfo.WakeOnLAN_OverridePort ? profileInfo.WakeOnLAN_Port : SettingsManager.Current.DefaultWakeOnLAN_Port;
+            WakeOnLAN_Port = profileInfo.WakeOnLAN_OverridePort ? profileInfo.WakeOnLAN_Port : SettingsManager.Current.WakeOnLAN_Port;
 
             // HTTP Headers
             HTTPHeaders_Enabled = profileInfo.HTTPHeaders_Enabled;

@@ -10,7 +10,7 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WakeOnLANSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.WakeOnLAN}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Text="{x:Static localization:Strings.DefaultPort}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Port}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="80" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort7}">
             <TextBox.Text>
                 <Binding Path="DefaultPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
