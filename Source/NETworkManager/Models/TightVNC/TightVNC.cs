@@ -6,7 +6,7 @@ namespace NETworkManager.Models.TightVNC
     {
         public static string BuildCommandLine(TightVNCSessionInfo sessionInfo)
         {
-            return $"-host={sessionInfo.Host} -port={sessionInfo.Port}";
+            return $"{sessionInfo.Host}::{sessionInfo.Port}";
         }
 
         public static TightVNCSessionInfo CreateSessionInfo(ProfileInfo profileInfo)

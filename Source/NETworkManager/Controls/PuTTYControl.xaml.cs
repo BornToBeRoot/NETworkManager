@@ -147,6 +147,10 @@ namespace NETworkManager.Controls
                         while ((DateTime.Now - startTime).TotalSeconds < 10)
                         {
                             _process.Refresh();
+
+                            if (_process.HasExited)
+                                break;
+
                             _appWin = _process.MainWindowHandle;
 
                             if (IntPtr.Zero != _appWin)

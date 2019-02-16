@@ -4,8 +4,10 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System;
+using System.Collections.Generic;
 using System.Windows.Threading;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using NETworkManager.Utilities;
 using NETworkManager.Models.TightVNC;
@@ -136,7 +138,7 @@ namespace NETworkManager.Controls
                     _process.EnableRaisingEvents = true;
                     _process.Exited += Process_Exited;
 
-                    // Embed tightvnc window into panel, remove border etc.
+                    // Embed TigerVNC window into panel, remove border etc.
                     _process.WaitForInputIdle();
                     _appWin = _process.MainWindowHandle;
 
@@ -147,6 +149,10 @@ namespace NETworkManager.Controls
                         while ((DateTime.Now - startTime).TotalSeconds < 10)
                         {
                             _process.Refresh();
+
+                            if (_process.HasExited)
+                                break;
+
                             _appWin = _process.MainWindowHandle;
 
                             if (IntPtr.Zero != _appWin)
@@ -158,6 +164,15 @@ namespace NETworkManager.Controls
 
                     if (_appWin != IntPtr.Zero)
                     {
+                        while (_process.MainWindowTitle.IndexOf(_sessionInfo.Host.Split('.')[0], StringComparison.CurrentCultureIgnoreCase) == -1)
+                        {
+                            await Task.Delay(50);
+
+                            _process.Refresh();
+                        }
+
+                        _appWin = _process.MainWindowHandle;
+
                         NativeMethods.SetParent(_appWin, WindowHost.Handle);
 
                         // Show window before set style and resize
@@ -165,9 +180,11 @@ namespace NETworkManager.Controls
 
                         // Remove border etc.
                         long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
+                        // style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME); // Overflow? 
                         style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME);
                         NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
-                        
+
+
                         IsConnected = true;
 
                         // Resize embedded application & refresh       
@@ -185,7 +202,6 @@ namespace NETworkManager.Controls
                 {
                     var settings = AppearanceManager.MetroDialog;
                     settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
-
                     ConfigurationManager.Current.IsDialogOpen = true;
 
                     await _dialogCoordinator.ShowMessageAsync(this, NETworkManager.Resources.Localization.Strings.Error,
