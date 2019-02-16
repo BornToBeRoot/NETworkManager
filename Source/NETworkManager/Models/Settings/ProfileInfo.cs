@@ -100,11 +100,11 @@ namespace NETworkManager.Models.Settings
         public bool PuTTY_OverrideAdditionalCommandLine { get; set; }
         public string PuTTY_AdditionalCommandLine { get; set; }
 
-        public bool TightVNC_Enabled { get; set; }
-        public bool TightVNC_InheritHost { get; set; } = true;
-        public string TightVNC_Host { get; set; }
-        public bool TightVNC_OverridePort { get; set; }
-        public int TightVNC_Port { get; set; }
+        public bool TigerVNC_Enabled { get; set; }
+        public bool TigerVNC_InheritHost { get; set; } = true;
+        public string TigerVNC_Host { get; set; }
+        public bool TigerVNC_OverridePort { get; set; }
+        public int TigerVNC_Port { get; set; }
 
         public bool WakeOnLAN_Enabled { get; set; }
         public string WakeOnLAN_MACAddress { get; set; }

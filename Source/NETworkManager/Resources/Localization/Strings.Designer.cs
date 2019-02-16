@@ -835,11 +835,11 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configure the path to TightVNC in the settings....
+        ///   Looks up a localized string similar to Configure the path to TigerVNC in the settings....
         /// </summary>
-        public static string ConfigureThePathToTightVNCInTheSettingsDots {
+        public static string ConfigureThePathToTigerVNCInTheSettingsDots {
             get {
-                return ResourceManager.GetString("ConfigureThePathToTightVNCInTheSettingsDots", resourceCulture);
+                return ResourceManager.GetString("ConfigureThePathToTigerVNCInTheSettingsDots", resourceCulture);
             }
         }
         
@@ -1366,11 +1366,11 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TightVNC..
+        ///   Looks up a localized string similar to Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TigerVNC..
         /// </summary>
-        public static string DisableTransparencyInTheSettingsToUseTightVNC {
+        public static string DisableTransparencyInTheSettingsToUseTigerVNC {
             get {
-                return ResourceManager.GetString("DisableTransparencyInTheSettingsToUseTightVNC", resourceCulture);
+                return ResourceManager.GetString("DisableTransparencyInTheSettingsToUseTigerVNC", resourceCulture);
             }
         }
         
@@ -5157,29 +5157,29 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TightVNC.
+        ///   Looks up a localized string similar to TigerVNC.
         /// </summary>
-        public static string TightVNC {
+        public static string TigerVNC {
             get {
-                return ResourceManager.GetString("TightVNC", resourceCulture);
+                return ResourceManager.GetString("TigerVNC", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TightVNC location....
+        ///   Looks up a localized string similar to TigerVNC location....
         /// </summary>
-        public static string TightVNCLocationDots {
+        public static string TigerVNCLocationDots {
             get {
-                return ResourceManager.GetString("TightVNCLocationDots", resourceCulture);
+                return ResourceManager.GetString("TigerVNCLocationDots", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TightVNC process has ended!.
+        ///   Looks up a localized string similar to TigerVNC process has ended!.
         /// </summary>
-        public static string TightVNCProcessHasEnded {
+        public static string TigerVNCProcessHasEnded {
             get {
-                return ResourceManager.GetString("TightVNCProcessHasEnded", resourceCulture);
+                return ResourceManager.GetString("TigerVNCProcessHasEnded", resourceCulture);
             }
         }
         

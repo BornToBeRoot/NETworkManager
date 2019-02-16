@@ -21,7 +21,7 @@ namespace NETworkManager
             new ProfileViewInfo(Name.RemoteDesktop, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.RemoteDesktop)),
             new ProfileViewInfo(Name.PowerShell, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PowerShell)),
             new ProfileViewInfo(Name.PuTTY, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PuTTY)),
-            new ProfileViewInfo(Name.TightVNC, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.TightVNC)),
+            new ProfileViewInfo(Name.TigerVNC, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.TigerVNC)),
             new ProfileViewInfo(Name.WakeOnLAN, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.WakeOnLAN)),
             new ProfileViewInfo(Name.HTTPHeaders, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.HTTPHeaders)),
             new ProfileViewInfo(Name.Whois, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Whois))
@@ -51,8 +51,8 @@ namespace NETworkManager
                     return Resources.Localization.Strings.PowerShell;
                 case Name.PuTTY:
                     return Resources.Localization.Strings.PuTTY;
-                case Name.TightVNC:
-                    return Resources.Localization.Strings.TightVNC;
+                case Name.TigerVNC:
+                    return Resources.Localization.Strings.TigerVNC;
                 case Name.WakeOnLAN:
                     return Resources.Localization.Strings.WakeOnLAN;
                 case Name.HTTPHeaders:
@@ -76,7 +76,7 @@ namespace NETworkManager
             RemoteDesktop,
             PowerShell,
             PuTTY,
-            TightVNC,
+            TigerVNC,
             WakeOnLAN,
             HTTPHeaders,
             Whois

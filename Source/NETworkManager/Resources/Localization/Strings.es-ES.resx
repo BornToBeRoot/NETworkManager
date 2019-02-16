@@ -1869,26 +1869,26 @@ Crear uno...</value>
   <data name="RestartSession" xml:space="preserve">
     <value>Reiniciar sesión</value>
   </data>
-  <data name="TightVNC" xml:space="preserve">
-    <value>TightVNC</value>
+  <data name="TigerVNC" xml:space="preserve">
+    <value>TigerVNC</value>
   </data>
-  <data name="ConfigureThePathToTightVNCInTheSettingsDots" xml:space="preserve">
-    <value>Configure la ruta de TightVNC en la configuración...</value>
+  <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
+    <value>Configure la ruta de TigerVNC en la configuración...</value>
   </data>
-  <data name="ConfigureTightVNC" xml:space="preserve">
-    <value>Configurar TightVNC</value>
+  <data name="ConfigureTigerVNC" xml:space="preserve">
+    <value>Configurar TigerVNC</value>
   </data>
   <data name="DefaultVNCPort" xml:space="preserve">
     <value>Puerto VNC predeterminado</value>
   </data>
-  <data name="DisableTransparencyInTheSettingsToUseTightVNC" xml:space="preserve">
-    <value>Desactive la transparencia en la configuración (General/Apariencia) y luego reinicie la aplicación para usar TightVNC.</value>
+  <data name="DisableTransparencyInTheSettingsToUseTigerVNC" xml:space="preserve">
+    <value>Desactive la transparencia en la configuración (General/Apariencia) y luego reinicie la aplicación para usar TigerVNC.</value>
   </data>
-  <data name="TightVNCLocationDots" xml:space="preserve">
-    <value>Ubicación de TightVNC...</value>
+  <data name="TigerVNCLocationDots" xml:space="preserve">
+    <value>Ubicación de TigerVNC...</value>
   </data>
-  <data name="TightVNCProcessHasEnded" xml:space="preserve">
-    <value>¡El proceso de TightVNC ha finalizado!</value>
+  <data name="TigerVNCProcessHasEnded" xml:space="preserve">
+    <value>¡El proceso de TigerVNC ha finalizado!</value>
   </data>
   <data name="ConnectingDots" xml:space="preserve">
     <value>Conectando...</value>

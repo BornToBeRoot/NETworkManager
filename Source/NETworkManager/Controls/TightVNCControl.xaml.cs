@@ -4,20 +4,18 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System;
-using System.Collections.Generic;
 using System.Windows.Threading;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using NETworkManager.Utilities;
-using NETworkManager.Models.TightVNC;
+using NETworkManager.Models.TigerVNC;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Controls
 {
-    public partial class TightVNCControl : INotifyPropertyChanged
+    public partial class TigerVNCControl : INotifyPropertyChanged
     {
         #region PropertyChangedEventHandler
         public event PropertyChangedEventHandler PropertyChanged;
@@ -34,7 +32,7 @@ namespace NETworkManager.Controls
 
         private readonly IDialogCoordinator _dialogCoordinator;
 
-        private readonly TightVNCSessionInfo _sessionInfo;
+        private readonly TigerVNCSessionInfo _sessionInfo;
 
         private Process _process;
         private IntPtr _appWin;
@@ -71,7 +69,7 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Constructor, load
-        public TightVNCControl(TightVNCSessionInfo info)
+        public TigerVNCControl(TigerVNCSessionInfo info)
         {
             InitializeComponent();
             DataContext = this;
@@ -126,7 +124,7 @@ namespace NETworkManager.Controls
             var info = new ProcessStartInfo
             {
                 FileName = _sessionInfo.ApplicationFilePath,
-                Arguments = TightVNC.BuildCommandLine(_sessionInfo)
+                Arguments = TigerVNC.BuildCommandLine(_sessionInfo)
             };
 
             try
@@ -241,7 +239,7 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Events
-        private void TightVNCGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void TigerVNCGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (_process != null)
                 ResizeEmbeddedWindow();

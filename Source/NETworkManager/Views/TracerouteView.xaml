@@ -202,7 +202,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.TightVNC}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="TightVNC">
+                    <MenuItem Header="{x:Static localization:Strings.TigerVNC}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="TigerVNC">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>

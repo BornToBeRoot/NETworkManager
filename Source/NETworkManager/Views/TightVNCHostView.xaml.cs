@@ -6,19 +6,19 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class TightVNCHostView
+    public partial class TigerVNCHostView
     {
-        private readonly TightVNCHostViewModel _viewModel = new TightVNCHostViewModel(DialogCoordinator.Instance);
+        private readonly TigerVNCHostViewModel _viewModel = new TigerVNCHostViewModel(DialogCoordinator.Instance);
 
         private bool _loaded;
 
 
-        public TightVNCHostView()
+        public TigerVNCHostView()
         {
             InitializeComponent();
             DataContext = _viewModel;
 
-            InterTabController.Partition = ApplicationViewManager.Name.TightVNC.ToString();
+            InterTabController.Partition = ApplicationViewManager.Name.TigerVNC.ToString();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

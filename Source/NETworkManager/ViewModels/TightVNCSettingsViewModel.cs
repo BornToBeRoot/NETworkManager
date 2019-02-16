@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
-    public class TightVNCSettingsViewModel : ViewModelBase
+    public class TigerVNCSettingsViewModel : ViewModelBase
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
@@ -25,7 +25,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.TightVNC_ApplicationFilePath = value;
+                    SettingsManager.Current.TigerVNC_ApplicationFilePath = value;
 
                 IsConfigured = !string.IsNullOrEmpty(value);
 
@@ -58,7 +58,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.TightVNC_Port = value;
+                    SettingsManager.Current.TigerVNC_Port = value;
 
                 _port = value;
                 OnPropertyChanged();
@@ -67,7 +67,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public TightVNCSettingsViewModel(IDialogCoordinator instance)
+        public TigerVNCSettingsViewModel(IDialogCoordinator instance)
         {
             _isLoading = true;
 
@@ -80,9 +80,9 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            ApplicationFilePath = SettingsManager.Current.TightVNC_ApplicationFilePath;
+            ApplicationFilePath = SettingsManager.Current.TigerVNC_ApplicationFilePath;
             IsConfigured = File.Exists(ApplicationFilePath);
-            Port = SettingsManager.Current.TightVNC_Port;
+            Port = SettingsManager.Current.TigerVNC_Port;
         }
         #endregion
 
@@ -119,7 +119,7 @@ namespace NETworkManager.ViewModels
         {
             try
             {
-                Process.Start(SettingsManager.Current.TightVNC_ApplicationFilePath);
+                Process.Start(SettingsManager.Current.TigerVNC_ApplicationFilePath);
             }
             catch (Exception ex)
             {

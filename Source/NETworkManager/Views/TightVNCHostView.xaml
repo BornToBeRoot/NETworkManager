@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NETworkManager.Views.TightVNCHostView"
+﻿<UserControl x:Class="NETworkManager.Views.TigerVNCHostView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -14,7 +14,7 @@
         xmlns:networkManager="clr-namespace:NETworkManager"
         dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
-        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:TightVNCHostViewModel}">
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:TigerVNCHostViewModel}">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
@@ -369,7 +369,7 @@
                     </Style.Triggers>
                 </Style>
             </StackPanel.Style>
-            <TextBlock Text="{x:Static localization:Strings.ConfigureThePathToTightVNCInTheSettingsDots}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+            <TextBlock Text="{x:Static localization:Strings.ConfigureThePathToTigerVNCInTheSettingsDots}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
             <Button HorizontalAlignment="Center" Command="{Binding OpenSettingsCommand}" Style="{StaticResource ImageWithTextButton}">
                 <Button.Content>
                     <Grid>
@@ -388,7 +388,7 @@
             </Button>
         </StackPanel>
         <StackPanel VerticalAlignment="Center" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="10">
-            <TextBlock Text="{x:Static localization:Strings.DisableTransparencyInTheSettingsToUseTightVNC}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+            <TextBlock Text="{x:Static localization:Strings.DisableTransparencyInTheSettingsToUseTigerVNC}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
             <Button HorizontalAlignment="Center" Command="{Binding OpenSettingsCommand}" Style="{StaticResource ImageWithTextButton}">
                 <Button.Content>
                     <Grid>

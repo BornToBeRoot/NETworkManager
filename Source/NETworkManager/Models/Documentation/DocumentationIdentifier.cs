@@ -12,7 +12,7 @@
         ApplicationRemoteDesktop,
         ApplicationPowerShell,
         ApplicationPutty,
-        ApplicationTightVNC,
+        ApplicationTigerVNC,
         ApplicationSnmp,
         ApplicationWakeOnLan,
         ApplicationHttpHeaders,

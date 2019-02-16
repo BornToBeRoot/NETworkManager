@@ -1,14 +1,14 @@
 ﻿using NETworkManager.Models.Settings;
 
-namespace NETworkManager.Models.TightVNC
+namespace NETworkManager.Models.TigerVNC
 {
-    public class TightVNCSessionInfo
+    public class TigerVNCSessionInfo
     {
         public string ApplicationFilePath { get; set; }
         public string Host { get; set; }
         public int Port { get; set; }
         
-        public TightVNCSessionInfo()
+        public TigerVNCSessionInfo()
         {
 
         }

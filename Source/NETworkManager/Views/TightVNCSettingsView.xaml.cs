@@ -4,11 +4,11 @@ using System.Windows;
 
 namespace NETworkManager.Views
 {
-    public partial class TightVNCSettingsView
+    public partial class TigerVNCSettingsView
     {
-        private readonly TightVNCSettingsViewModel _viewModel = new TightVNCSettingsViewModel(DialogCoordinator.Instance);
+        private readonly TigerVNCSettingsViewModel _viewModel = new TigerVNCSettingsViewModel(DialogCoordinator.Instance);
 
-        public TightVNCSettingsView()
+        public TigerVNCSettingsView()
         {
             InitializeComponent();
             DataContext = _viewModel;

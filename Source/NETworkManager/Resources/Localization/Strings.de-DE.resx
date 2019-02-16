@@ -1869,26 +1869,26 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
   <data name="RestartSession" xml:space="preserve">
     <value>Session neu starten</value>
   </data>
-  <data name="TightVNC" xml:space="preserve">
-    <value>TightVNC</value>
+  <data name="TigerVNC" xml:space="preserve">
+    <value>TigerVNC</value>
   </data>
-  <data name="ConfigureThePathToTightVNCInTheSettingsDots" xml:space="preserve">
-    <value>Konfiguriere den Pfad zu TightVNC in den Einstellungen...</value>
+  <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
+    <value>Konfiguriere den Pfad zu TigerVNC in den Einstellungen...</value>
   </data>
-  <data name="ConfigureTightVNC" xml:space="preserve">
-    <value>TightVNC konfigurieren</value>
+  <data name="ConfigureTigerVNC" xml:space="preserve">
+    <value>TigerVNC konfigurieren</value>
   </data>
   <data name="DefaultVNCPort" xml:space="preserve">
     <value>Standard VNC Port</value>
   </data>
-  <data name="DisableTransparencyInTheSettingsToUseTightVNC" xml:space="preserve">
-    <value>Deaktivieren Sie die Transparenz in den Einstellungen (Allgemein/Aussehen) und starten Sie anschließend die Anwendung neu, um TightVNC zu verwenden.</value>
+  <data name="DisableTransparencyInTheSettingsToUseTigerVNC" xml:space="preserve">
+    <value>Deaktivieren Sie die Transparenz in den Einstellungen (Allgemein/Aussehen) und starten Sie anschließend die Anwendung neu, um TigerVNC zu verwenden.</value>
   </data>
-  <data name="TightVNCLocationDots" xml:space="preserve">
-    <value>TightVNC-Speicherort...</value>
+  <data name="TigerVNCLocationDots" xml:space="preserve">
+    <value>TigerVNC-Speicherort...</value>
   </data>
-  <data name="TightVNCProcessHasEnded" xml:space="preserve">
-    <value>TightVNC-Prozess wurde beendet!</value>
+  <data name="TigerVNCProcessHasEnded" xml:space="preserve">
+    <value>TigerVNC-Prozess wurde beendet!</value>
   </data>
   <data name="ConnectingDots" xml:space="preserve">
     <value>Verbinde...</value>

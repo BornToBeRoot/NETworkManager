@@ -416,7 +416,7 @@ namespace NETworkManager
         private RemoteDesktopHostView _remoteDesktopHostView;
         private PowerShellHostView _powerShellHostView;
         private PuTTYHostView _puttyHostView;
-        private TightVNCHostView _tightVncHostView;
+        private TigerVNCHostView _tigerVNCHostView;
         private SNMPHostView _snmpHostView;
         private WakeOnLANView _wakeOnLanView;
         private SubnetCalculatorHostView _subnetCalculatorHostView;
@@ -526,13 +526,13 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _puttyHostView;
                     break;
-                case ApplicationViewManager.Name.TightVNC:
-                    if (_tightVncHostView == null)
-                        _tightVncHostView = new TightVNCHostView();
+                case ApplicationViewManager.Name.TigerVNC:
+                    if (_tigerVNCHostView == null)
+                        _tigerVNCHostView = new TigerVNCHostView();
                     else
-                        _tightVncHostView.OnViewVisible();
+                        _tigerVNCHostView.OnViewVisible();
 
-                    ContentControlApplication.Content = _tightVncHostView;
+                    ContentControlApplication.Content = _tigerVNCHostView;
                     break;
                 case ApplicationViewManager.Name.SNMP:
                     if (_snmpHostView == null)
@@ -665,8 +665,8 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.PuTTY:
                     _puttyHostView.AddTab(data.Args);
                     break;
-                case ApplicationViewManager.Name.TightVNC:
-                    _tightVncHostView.AddTab(data.Args);
+                case ApplicationViewManager.Name.TigerVNC:
+                    _tigerVNCHostView.AddTab(data.Args);
                     break;
                 case ApplicationViewManager.Name.SNMP:
                     _snmpHostView.AddTab(data.Args);
@@ -1001,8 +1001,8 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.PuTTY:
                     DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationPutty);
                     break;
-                case ApplicationViewManager.Name.TightVNC:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationTightVNC);
+                case ApplicationViewManager.Name.TigerVNC:
+                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationTigerVNC);
                     break;
                 case ApplicationViewManager.Name.SNMP:
                     DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationSnmp);

@@ -170,7 +170,7 @@ namespace NETworkManager.ViewModels
                 if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
                     return !string.IsNullOrEmpty(info.Tags) && info.PowerShell_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
 
-                // Search by: Name, TightVNC_Host
+                // Search by: Name, TigerVNC_Host
                 return info.PowerShell_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PowerShell_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
