@@ -135,10 +135,8 @@ namespace NETworkManager.Controls
                 {
                     _process.EnableRaisingEvents = true;
                     _process.Exited += Process_Exited;
-
-                    // Embed TigerVNC window into panel, remove border etc.
-                    _process.WaitForInputIdle();
-                    _appWin = _process.MainWindowHandle;
+                    
+                   _appWin = _process.MainWindowHandle;
 
                     if (_appWin == IntPtr.Zero)
                     {

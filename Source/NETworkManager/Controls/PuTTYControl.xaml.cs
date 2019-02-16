@@ -136,8 +136,6 @@ namespace NETworkManager.Controls
                     _process.EnableRaisingEvents = true;
                     _process.Exited += Process_Exited;
 
-                    // Embed putty window into panel, remove border etc.
-                    _process.WaitForInputIdle();
                     _appWin = _process.MainWindowHandle;
 
                     if (_appWin == IntPtr.Zero)
@@ -162,20 +160,30 @@ namespace NETworkManager.Controls
 
                     if (_appWin != IntPtr.Zero)
                     {
-                        NativeMethods.SetParent(_appWin, WindowHost.Handle);
+                        while (!_process.HasExited && _process.MainWindowTitle.IndexOf(_sessionInfo.HostOrSerialLine, StringComparison.CurrentCultureIgnoreCase) == -1)
+                        {
+                            await Task.Delay(50);
 
-                        // Show window before set style and resize
-                        NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
+                            _process.Refresh();
+                        }
 
-                        // Remove border etc.
-                        long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
-                        style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME);
-                        NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
+                        if (!_process.HasExited)
+                        {
+                            NativeMethods.SetParent(_appWin, WindowHost.Handle);
 
-                        IsConnected = true;
+                            // Show window before set style and resize
+                            NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
 
-                        // Resize embedded application & refresh       
-                        ResizeEmbeddedWindow();
+                            // Remove border etc.
+                            long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
+                            style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME); // NativeMethods.WS_POPUP --> Overflow? (https://github.com/BornToBeRoot/NETworkManager/issues/167)
+                            NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
+
+                            IsConnected = true;
+
+                            // Resize embedded application & refresh       
+                            ResizeEmbeddedWindow();
+                        }
                     }
                 }
                 else
