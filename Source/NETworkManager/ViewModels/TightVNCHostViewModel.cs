@@ -13,11 +13,11 @@ using System.Diagnostics;
 using System.IO;
 using NETworkManager.Utilities;
 using System.Windows;
-using NETworkManager.Models.TightVNC;
+using NETworkManager.Models.TigerVNC;
 
 namespace NETworkManager.ViewModels
 {
-    public class TightVNCHostViewModel : ViewModelBase
+    public class TigerVNCHostViewModel : ViewModelBase
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
@@ -27,16 +27,16 @@ namespace NETworkManager.ViewModels
 
         private readonly bool _isLoading;
 
-        private bool _isTightVNCConfigured;
-        public bool IsTightVNCConfigured
+        private bool _isConfigured;
+        public bool IsConfigured
         {
-            get => _isTightVNCConfigured;
+            get => _isConfigured;
             set
             {
-                if (value == _isTightVNCConfigured)
+                if (value == _isConfigured)
                     return;
 
-                _isTightVNCConfigured = value;
+                _isConfigured = value;
                 OnPropertyChanged();
             }
         }
@@ -103,7 +103,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.TightVNC_ExpandProfileView = value;
+                    SettingsManager.Current.TigerVNC_ExpandProfileView = value;
 
                 _expandProfileView = value;
 
@@ -123,8 +123,8 @@ namespace NETworkManager.ViewModels
                 if (value == _profileWidth)
                     return;
 
-                if (!_isLoading && value.Value != GlobalStaticConfiguration.ProfileWidthCollapsed) // Do not save the size when collapsed
-                    SettingsManager.Current.TightVNC_ProfileWidth = value.Value;
+                if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.FloatPointFix) // Do not save the size when collapsed
+                    SettingsManager.Current.TigerVNC_ProfileWidth = value.Value;
 
                 _profileWidth = value;
 
@@ -138,16 +138,16 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings
-        public TightVNCHostViewModel(IDialogCoordinator instance)
+        public TigerVNCHostViewModel(IDialogCoordinator instance)
         {
             _isLoading = true;
 
             _dialogCoordinator = instance;
 
             // Check if putty is available...
-            CheckIfTightVNCConfigured();
+            CheckIfConfigured();
 
-            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.TightVNC);
+            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.TigerVNC);
 
             TabItems = new ObservableCollection<DragablzTabItem>();
 
@@ -161,20 +161,20 @@ namespace NETworkManager.ViewModels
                     return false;
 
                 if (string.IsNullOrEmpty(Search))
-                    return info.TightVNC_Enabled;
+                    return info.TigerVNC_Enabled;
 
                 var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
                 if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                    return !string.IsNullOrEmpty(info.Tags) && info.TightVNC_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+                    return !string.IsNullOrEmpty(info.Tags) && info.TigerVNC_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
 
-                // Search by: Name, TightVNC_Host
-                return info.TightVNC_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.TightVNC_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+                // Search by: Name, TigerVNC_Host
+                return info.TigerVNC_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.TigerVNC_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
             // This will select the first entry as selected item...
-            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.TightVNC_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.TigerVNC_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
 
             LoadSettings();
 
@@ -185,17 +185,17 @@ namespace NETworkManager.ViewModels
 
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.TightVNC_TightVNCLocation))
-                CheckIfTightVNCConfigured();
+            if (e.PropertyName == nameof(SettingsInfo.TigerVNC_ApplicationFilePath))
+                CheckIfConfigured();
         }
 
         private void LoadSettings()
         {
-            ExpandProfileView = SettingsManager.Current.TightVNC_ExpandProfileView;
+            ExpandProfileView = SettingsManager.Current.TigerVNC_ExpandProfileView;
 
-            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.TightVNC_ProfileWidth) : new GridLength(GlobalStaticConfiguration.ProfileWidthCollapsed);
+            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.TigerVNC_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
-            _tempProfileWidth = SettingsManager.Current.TightVNC_ProfileWidth;
+            _tempProfileWidth = SettingsManager.Current.TigerVNC_ProfileWidth;
         }
         #endregion
 
@@ -204,7 +204,7 @@ namespace NETworkManager.ViewModels
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzTabItem)?.View as TightVNCControl)?.CloseTab();
+            ((args.DragablzItem.Content as DragablzTabItem)?.View as TigerVNCControl)?.CloseTab();
         }
 
         public ICommand ConnectCommand
@@ -214,7 +214,7 @@ namespace NETworkManager.ViewModels
 
         private bool Connect_CanExecute(object obj)
         {
-            return IsTightVNCConfigured && !ConfigurationManager.Current.IsTransparencyEnabled;
+            return IsConfigured && !ConfigurationManager.Current.IsTransparencyEnabled;
         }
 
         private void ConnectAction()
@@ -392,7 +392,7 @@ namespace NETworkManager.ViewModels
 
                 ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
 
-                Refresh();
+                Profiles.Refresh();
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -430,9 +430,9 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void CheckIfTightVNCConfigured()
+        private void CheckIfConfigured()
         {
-            IsTightVNCConfigured = !string.IsNullOrEmpty(SettingsManager.Current.TightVNC_TightVNCLocation) && File.Exists(SettingsManager.Current.TightVNC_TightVNCLocation);
+            IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.TigerVNC_ApplicationFilePath) && File.Exists(SettingsManager.Current.TigerVNC_ApplicationFilePath);
         }
 
         private async void Connect(string host = null)
@@ -442,7 +442,7 @@ namespace NETworkManager.ViewModels
                 Title = Resources.Localization.Strings.Connect
             };
 
-            var tightVNCConnectViewModel = new TightVNCConnectViewModel(instance =>
+            var connectViewModel = new TigerVNCConnectViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.IsDialogOpen = false;
@@ -452,116 +452,118 @@ namespace NETworkManager.ViewModels
                 AddPortToHistory(instance.Port);
 
                 // Create Profile info
-                var tightVNCSessionInfo = new TightVNCSessionInfo
+                var info = new TigerVNCSessionInfo
                 {
                     Host = instance.Host,
                     Port = instance.Port
                 };
 
-                    // Connect
-                    Connect(tightVNCSessionInfo);
-                }, instance =>
-                {
-                    _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                    ConfigurationManager.Current.IsDialogOpen = false;
-                })
-                {
-                    Host = host
-                };
+                // Connect
+                Connect(info);
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ConfigurationManager.Current.IsDialogOpen = false;
+            }, host);
 
-                customDialog.Content = new TightVNCConnectDialog
-                {
-                    DataContext = tightVNCConnectViewModel
-                };
+            customDialog.Content = new TigerVNCConnectDialog
+            {
+                DataContext = connectViewModel
+            };
 
-                ConfigurationManager.Current.IsDialogOpen = true;
-                await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-            }
+            ConfigurationManager.Current.IsDialogOpen = true;
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
 
         private void ConnectProfile()
-            {
-                Connect(TightVNCSessionInfo.Parse(SelectedProfile), SelectedProfile.Name);
-            }
+        {
+            Connect(TigerVNC.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
+        }
 
-            private void ConnectProfileExternal()
+        private void ConnectProfileExternal()
+        {
+            var info = new ProcessStartInfo
             {
-                var info = new ProcessStartInfo
+                FileName = SettingsManager.Current.TigerVNC_ApplicationFilePath,
+                Arguments = TigerVNC.BuildCommandLine(TigerVNC.CreateSessionInfo(SelectedProfile))
+            };
+
+            Process.Start(info);
+        }
+
+        private void Connect(TigerVNCSessionInfo sessionInfo, string header = null)
+        {
+            sessionInfo.ApplicationFilePath = SettingsManager.Current.TigerVNC_ApplicationFilePath;
+
+            TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host, new TigerVNCControl(sessionInfo)));
+
+            SelectedTabIndex = TabItems.Count - 1;
+        }
+
+        public void AddTab(string host)
+        {
+            Connect(host);
+        }
+
+        // Modify history list
+        private static void AddHostToHistory(string host)
+        {
+            // Create the new list
+            var list = ListHelper.Modify(SettingsManager.Current.TigerVNC_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.TigerVNC_HostHistory.Clear();
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.TigerVNC_HostHistory.Add(x));
+        }
+
+        private static void AddPortToHistory(int port)
+        {
+            // Create the new list
+            var list = ListHelper.Modify(SettingsManager.Current.TigerVNC_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.TigerVNC_PortHistory.Clear();
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.TigerVNC_PortHistory.Add(x));
+        }
+
+        private void ResizeProfile(bool dueToChangedSize)
+        {
+            _canProfileWidthChange = false;
+
+            if (dueToChangedSize)
+            {
+                ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.FloatPointFix;
+            }
+            else
+            {
+                if (ExpandProfileView)
                 {
-                    FileName = SettingsManager.Current.TightVNC_TightVNCLocation,
-                    Arguments = TightVNC.BuildCommandLine(TightVNCSessionInfo.Parse(SelectedProfile))
-                };
-
-                Process.Start(info);
-            }
-
-            private void Connect(TightVNCSessionInfo sessionInfo, string header = null)
-            {
-                sessionInfo.TightVNCLocation = SettingsManager.Current.TightVNC_TightVNCLocation;
-
-                TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host, new TightVNCControl(sessionInfo)));
-
-                SelectedTabIndex = TabItems.Count - 1;
-            }
-
-            public void AddTab(string host)
-            {
-                Connect(host);
-            }
-
-            // Modify history list
-            private static void AddHostToHistory(string host)
-            {
-                // Create the new list
-                var list = ListHelper.Modify(SettingsManager.Current.TightVNC_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
-
-                // Clear the old items
-                SettingsManager.Current.TightVNC_HostHistory.Clear();
-
-                // Fill with the new items
-                list.ForEach(x => SettingsManager.Current.TightVNC_HostHistory.Add(x));
-            }
-
-            private static void AddPortToHistory(int port)
-            {
-                // Create the new list
-                var list = ListHelper.Modify(SettingsManager.Current.TightVNC_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
-
-                // Clear the old items
-                SettingsManager.Current.TightVNC_PortHistory.Clear();
-
-                // Fill with the new items
-                list.ForEach(x => SettingsManager.Current.TightVNC_PortHistory.Add(x));
-            }
-
-            private void ResizeProfile(bool dueToChangedSize)
-            {
-                _canProfileWidthChange = false;
-
-                if (dueToChangedSize)
-                {
-                    ExpandProfileView = ProfileWidth.Value != GlobalStaticConfiguration.ProfileWidthCollapsed;
+                    ProfileWidth = Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) < GlobalStaticConfiguration.FloatPointFix ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded) : new GridLength(_tempProfileWidth);
                 }
                 else
                 {
-                    if (ExpandProfileView)
-                    {
-                        ProfileWidth = _tempProfileWidth == GlobalStaticConfiguration.ProfileWidthCollapsed ? new GridLength(GlobalStaticConfiguration.ProfileDefaultWidthExpanded) : new GridLength(_tempProfileWidth);
-                    }
-                    else
-                    {
-                        _tempProfileWidth = ProfileWidth.Value;
-                        ProfileWidth = new GridLength(GlobalStaticConfiguration.ProfileWidthCollapsed);
-                    }
+                    _tempProfileWidth = ProfileWidth.Value;
+                    ProfileWidth = new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
                 }
-
-                _canProfileWidthChange = true;
             }
 
-            public void Refresh()
-            {
-                // Refresh profiles
-                Profiles.Refresh();
-            }
-            #endregion
+            _canProfileWidthChange = true;
         }
+
+        public void OnViewVisible()
+        {
+            // Refresh profiles
+            Profiles.Refresh();
+        }
+
+        public void OnViewHide()
+        {
+
+        }
+        #endregion
     }
+}

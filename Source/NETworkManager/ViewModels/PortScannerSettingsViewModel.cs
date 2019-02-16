@@ -8,19 +8,36 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly bool _isLoading;
 
-        private int _threads;
-        public int Threads
+        private int _hostThreads;
+        public int HostThreads
         {
-            get => _threads;
+            get => _hostThreads;
             set
             {
-                if (value == _threads)
+                if (value == _hostThreads)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PortScanner_Threads = value;
+                    SettingsManager.Current.PortScanner_HostThreads = value;
 
-                _threads = value;
+                _hostThreads = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _portThreads;
+        public int PortThreads
+        {
+            get => _portThreads;
+            set
+            {
+                if (value == _portThreads)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.PortScanner_PortThreads = value;
+
+                _portThreads = value;
                 OnPropertyChanged();
             }
         }
@@ -59,33 +76,19 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _resolveHostnamePreferIPv4;
-        public bool ResolveHostnamePreferIPv4
+        private bool _resolveHostname;
+        public bool ResolveHostname
         {
-            get => _resolveHostnamePreferIPv4;
+            get => _resolveHostname;
             set
             {
-                if (value == _resolveHostnamePreferIPv4)
+                if (value == _resolveHostname)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PortScanner_ResolveHostnamePreferIPv4 = value;
+                    SettingsManager.Current.PortScanner_ResolveHostname = value;
 
-                _resolveHostnamePreferIPv4 = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resolveHostnamePreferIPv6;
-        public bool ResolveHostnamePreferIPv6
-        {
-            get => _resolveHostnamePreferIPv6;
-            set
-            {
-                if (value == _resolveHostnamePreferIPv6)
-                    return;
-
-                _resolveHostnamePreferIPv6 = value;
+                _resolveHostname = value;
                 OnPropertyChanged();
             }
         }
@@ -120,15 +123,11 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            Threads = SettingsManager.Current.PortScanner_Threads;
+            HostThreads = SettingsManager.Current.PortScanner_HostThreads;
+            PortThreads = SettingsManager.Current.PortScanner_PortThreads;
             ShowClosed = SettingsManager.Current.PortScanner_ShowClosed;
             Timeout = SettingsManager.Current.PortScanner_Timeout;
-
-            if (SettingsManager.Current.PortScanner_ResolveHostnamePreferIPv4)
-                ResolveHostnamePreferIPv4 = true;
-            else
-                ResolveHostnamePreferIPv6 = true;
-
+            ResolveHostname = SettingsManager.Current.PortScanner_ResolveHostname;
             ShowStatistics = SettingsManager.Current.PortScanner_ShowStatistics;
         }
         #endregion

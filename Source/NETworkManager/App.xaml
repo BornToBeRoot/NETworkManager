@@ -28,6 +28,7 @@
                 <ResourceDictionary Source="/Resources/Styles/DropDownButtonStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/GridSplitterStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/GroupBoxStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/MetroDialogStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/NumericUpDownStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/RadioButtonStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ScrollBarStyles.xaml" />
@@ -45,6 +46,7 @@
                 <ResourceDictionary Source="/Resources/Styles/RectangleStyles.xaml" /> <!-- Requires tooltip styles -->
                 <ResourceDictionary Source="/Resources/Styles/PasswordBoxStyles.xaml" /> <!-- Requires tooltip styles -->
                 <ResourceDictionary Source="/Resources/Styles/ListBoxStyle.xaml" /> <!-- Requires scrollviewer/scrollbar styles -->
+                <ResourceDictionary Source="/Resources/Styles/MetroHeaderStyles.xaml" /> <!-- Requires TextBox styles -->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -14,6 +14,9 @@ using System.Diagnostics;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
 using System.Windows;
+using LiveCharts;
+using LiveCharts.Configurations;
+using LiveCharts.Wpf;
 
 namespace NETworkManager.ViewModels
 {
@@ -21,6 +24,7 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
+        private BandwidthMeter _bandwidthMeter;
 
         private readonly bool _isLoading;
 
@@ -94,8 +98,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public bool ShowCurrentApplicationTitle => SettingsManager.Current.Window_ShowCurrentApplicationTitle;
-
         #region NetworkInterfaces, SelectedNetworkInterface
         private List<NetworkInterfaceInfo> _networkInterfaces;
         public List<NetworkInterfaceInfo> NetworkInterfaces
@@ -146,6 +148,15 @@ namespace NETworkManager.ViewModels
                     DetailsDNSSuffix = value.DNSSuffix;
                     DetailsDNSServer = value.DNSServer;
 
+                    // Bandwidth
+                    _bandwidthMeter?.Stop();
+
+                    ResetBandwidthChart();
+
+                    _bandwidthMeter = new BandwidthMeter(value.Id);
+                    _bandwidthMeter.UpdateSpeed += BandwidthMeter_UpdateSpeed;
+                    _bandwidthMeter.Start();
+
                     // Configuration
                     if (value.DhcpEnabled)
                     {
@@ -155,8 +166,8 @@ namespace NETworkManager.ViewModels
                     {
                         ConfigEnableStaticIPAddress = true;
                         ConfigIPAddress = value.IPv4Address.FirstOrDefault()?.ToString();
-                        ConfigSubnetmaskOrCidr = (value.Subnetmask != null) ? value.Subnetmask.FirstOrDefault()?.ToString() : string.Empty;
-                        ConfigGateway = (value.IPv4Gateway?.Any() == true) ? value.IPv4Gateway.FirstOrDefault()?.ToString() : string.Empty;
+                        ConfigSubnetmaskOrCidr = value.Subnetmask != null ? value.Subnetmask.FirstOrDefault()?.ToString() : string.Empty;
+                        ConfigGateway = value.IPv4Gateway?.Any() == true ? value.IPv4Gateway.FirstOrDefault()?.ToString() : string.Empty;
                     }
 
                     if (value.DNSAutoconfigurationEnabled)
@@ -450,6 +461,64 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
+        #region Bandwidth
+        private long _bandwidthTotalBytesSent;
+        public long BandwidthTotalBytesSent
+        {
+            get => _bandwidthTotalBytesSent;
+            set
+            {
+                if (value == _bandwidthTotalBytesSent)
+                    return;
+
+                _bandwidthTotalBytesSent = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private long _bandwidthTotalBytesReceived;
+        public long BandwidthTotalBytesReceived
+        {
+            get => _bandwidthTotalBytesReceived;
+            set
+            {
+                if (value == _bandwidthTotalBytesReceived)
+                    return;
+
+                _bandwidthTotalBytesReceived = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private long _bandwithBytesReceivedSpeed;
+        public long BandwidthBytesReceivedSpeed
+        {
+            get => _bandwithBytesReceivedSpeed;
+            set
+            {
+                if (value == _bandwithBytesReceivedSpeed)
+                    return;
+
+                _bandwithBytesReceivedSpeed = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private long _bandwidthBytesSentSpeed;
+        public long BandwidthBytesSentSpeed
+        {
+            get => _bandwidthBytesSentSpeed;
+            set
+            {
+                if (value == _bandwidthBytesSentSpeed)
+                    return;
+
+                _bandwidthBytesSentSpeed = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         #region Config
         private bool _configEnableDynamicIPAddress = true;
         public bool ConfigEnableDynamicIPAddress
@@ -660,7 +729,7 @@ namespace NETworkManager.ViewModels
                 if (value == _profileWidth)
                     return;
 
-                if (!_isLoading && value.Value != GlobalStaticConfiguration.ProfileWidthCollapsed) // Do not save the size when collapsed
+                if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.FloatPointFix) // Do not save the size when collapsed
                     SettingsManager.Current.NetworkInterface_ProfileWidth = value.Value;
 
                 _profileWidth = value;
@@ -681,8 +750,9 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
-            // Load network interfaces
             LoadNetworkInterfaces();
+
+            InitialBandwidthChart();
 
             Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
             Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
@@ -716,6 +786,36 @@ namespace NETworkManager.ViewModels
             _isLoading = false;
         }
 
+        private void InitialBandwidthChart()
+        {
+            var dayConfig = Mappers.Xy<BandwidthInfo>()
+                .X(dayModel => (double)dayModel.DateTime.Ticks / TimeSpan.FromHours(1).Ticks)
+                .Y(dayModel => dayModel.Value);
+
+            Series = new SeriesCollection(dayConfig)
+            {
+                new LineSeries
+                {
+                    Title = "Download",
+                    Values = new ChartValues<BandwidthInfo>(),
+                    PointGeometry = null
+                },
+                new LineSeries
+                {
+                    Title = "Upload",
+                    Values = new ChartValues<BandwidthInfo>(),
+                    PointGeometry = null
+                }
+            };
+
+            FormatterDate = value => new DateTime((long)(value * TimeSpan.FromHours(1).Ticks)).ToString("hh:mm:ss");
+            FormatterSpeed = value => $"{FileSizeConverter.GetBytesReadable((long)value * 8)}it/s";
+        }
+
+        public Func<double, string> FormatterDate { get; set; }
+        public Func<double, string> FormatterSpeed { get; set; }
+        public SeriesCollection Series { get; set; }
+
         private async void LoadNetworkInterfaces()
         {
             IsNetworkInterfaceLoading = true;
@@ -737,7 +837,7 @@ namespace NETworkManager.ViewModels
         {
             ExpandProfileView = SettingsManager.Current.NetworkInterface_ExpandProfileView;
 
-            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.NetworkInterface_ProfileWidth) : new GridLength(GlobalStaticConfiguration.ProfileWidthCollapsed);
+            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.NetworkInterface_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
             _tempProfileWidth = SettingsManager.Current.NetworkInterface_ProfileWidth;
         }
@@ -947,7 +1047,7 @@ namespace NETworkManager.ViewModels
 
                 ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
 
-                Refresh();
+                Profiles.Refresh();
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -972,7 +1072,7 @@ namespace NETworkManager.ViewModels
             DisplayStatusMessage = false;
 
             await Models.Network.NetworkInterface.FlushDnsAsync();
-            
+
             IsConfigurationRunning = false;
         }
 
@@ -1027,10 +1127,10 @@ namespace NETworkManager.ViewModels
 
             IsConfigurationRunning = false;
         }
-        
+
         public ICommand AddIPv4AddressCommand
         {
-            get { return new RelayCommand(p => AddIPv4AddressAction());}
+            get { return new RelayCommand(p => AddIPv4AddressAction()); }
         }
 
         private async void AddIPv4AddressAction()
@@ -1043,11 +1143,11 @@ namespace NETworkManager.ViewModels
             var networkInterfaceAddIPAddressViewModel = new NetworkInterfaceAddIPAddressViewModel(async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                
+
                 AddIPv4Address(instance.IPAddress, instance.SubnetmaskOrCidr);
             }, instance =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog); 
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             });
 
             customDialog.Content = new NetworkInterfaceAddIPAddressDialog
@@ -1133,7 +1233,7 @@ namespace NETworkManager.ViewModels
                 IPAddress = ipAddress,
                 Subnetmask = subnetmask
             };
-            
+
             try
             {
                 await Models.Network.NetworkInterface.AddIPAddressToNetworkInterfaceAsync(config);
@@ -1210,39 +1310,84 @@ namespace NETworkManager.ViewModels
                 IsConfigurationRunning = false;
             }
         }
-        
+
         private void ResizeProfile(bool dueToChangedSize)
         {
             _canProfileWidthChange = false;
 
             if (dueToChangedSize)
             {
-                ExpandProfileView = ProfileWidth.Value != GlobalStaticConfiguration.ProfileWidthCollapsed;
+                ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.FloatPointFix;
             }
             else
             {
                 if (ExpandProfileView)
                 {
-                    ProfileWidth = _tempProfileWidth == GlobalStaticConfiguration.ProfileWidthCollapsed ? new GridLength(GlobalStaticConfiguration.ProfileDefaultWidthExpanded) : new GridLength(_tempProfileWidth);
+                    ProfileWidth = Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) < GlobalStaticConfiguration.FloatPointFix ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded) : new GridLength(_tempProfileWidth);
                 }
                 else
                 {
                     _tempProfileWidth = ProfileWidth.Value;
-                    ProfileWidth = new GridLength(GlobalStaticConfiguration.ProfileWidthCollapsed);
+                    ProfileWidth = new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
                 }
             }
 
             _canProfileWidthChange = true;
         }
 
-        public void Refresh()
+        public void ResetBandwidthChart()
+        {
+            if (Series == null)
+                return;
+
+            Series[0].Values.Clear();
+            Series[1].Values.Clear();
+
+            var currentDateTime = DateTime.Now;
+
+            for (var i = 60; i > 0; i--)
+            {
+                var bandwidthInfo =  new BandwidthInfo(currentDateTime.AddSeconds(-i), 0);
+
+                Series[0].Values.Add(bandwidthInfo);
+                Series[1].Values.Add(bandwidthInfo);
+            }
+        }
+
+        public void OnViewVisible()
         {
             // Refresh profiles
             Profiles.Refresh();
+
+            _bandwidthMeter?.Start();
+            ResetBandwidthChart();
+        }
+
+        public void OnViewHide()
+        {
+            _bandwidthMeter?.Stop();
         }
         #endregion
 
         #region Events
+        private void BandwidthMeter_UpdateSpeed(object sender, BandwidthMeterSpeedArgs e)
+        {
+            BandwidthTotalBytesReceived = e.TotalBytesReceived;
+            BandwidthTotalBytesSent = e.TotalBytesSent;
+            BandwidthBytesReceivedSpeed = e.ByteReceivedSpeed;
+            BandwidthBytesSentSpeed = e.ByteSentSpeed;
+
+            Series[0].Values.Add(new BandwidthInfo(e.DateTime, e.ByteReceivedSpeed));
+            Series[1].Values.Add(new BandwidthInfo(e.DateTime, e.ByteSentSpeed));
+
+            // Remove data older than 60 seconds
+            if (Series[0].Values.Count >= 60)
+                Series[0].Values.RemoveAt(0);
+
+            if (Series[1].Values.Count >= 60)
+                Series[1].Values.RemoveAt(0);
+        }
+
         private void NetworkInterface_UserHasCanceled(object sender, EventArgs e)
         {
             StatusMessage = Resources.Localization.Strings.CanceledByUserMessage;
@@ -1251,8 +1396,6 @@ namespace NETworkManager.ViewModels
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.Window_ShowCurrentApplicationTitle))
-                OnPropertyChanged(nameof(ShowCurrentApplicationTitle));
         }
         #endregion
     }

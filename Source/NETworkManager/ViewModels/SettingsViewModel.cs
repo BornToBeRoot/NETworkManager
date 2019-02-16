@@ -95,8 +95,9 @@ namespace NETworkManager.ViewModels
         private TracerouteSettingsView _tracerouteSettingsView;
         private DNSLookupSettingsView _dnsLookupSettingsViewModel;
         private RemoteDesktopSettingsView _remoteDesktopSettingsView;
+        private PowerShellSettingsView _powerShellSettingsView;
         private PuTTYSettingsView _puTTYSettingsView;
-        private TightVNCSettingsView _tightVNCSettingsView;
+        private TigerVNCSettingsView _tigerVNCSettingsView;
         private SNMPSettingsView _snmpSettingsView;
         private WakeOnLANSettingsView _wakeOnLANSettingsView;
         private HTTPHeadersSettingsView _httpHeadersSettingsView;
@@ -113,10 +114,9 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            // General
             SettingsViews =  new CollectionViewSource { Source = SettingsViewManager.List }.View;
-            SettingsViews.GroupDescriptions.Add(new PropertyGroupDescription("TranslatedGroup"));
-            SettingsViews.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            SettingsViews.GroupDescriptions.Add(new PropertyGroupDescription(nameof(SettingsViewInfo.TranslatedGroup)));
+            SettingsViews.SortDescriptions.Add(new SortDescription(nameof(SettingsViewInfo.Name), ListSortDirection.Ascending));
             SettingsViews.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
@@ -261,17 +261,23 @@ namespace NETworkManager.ViewModels
 
                     SettingsContent = _remoteDesktopSettingsView;
                     break;
+                case SettingsViewManager.Name.PowerShell:
+                    if(_powerShellSettingsView == null)
+                        _powerShellSettingsView = new PowerShellSettingsView();
+
+                    SettingsContent = _powerShellSettingsView;
+                    break;
                 case SettingsViewManager.Name.PuTTY:
                     if (_puTTYSettingsView == null)
                         _puTTYSettingsView = new PuTTYSettingsView();
 
                     SettingsContent = _puTTYSettingsView;
                     break;
-                case SettingsViewManager.Name.TightVNC:
-                    if(_tightVNCSettingsView == null)
-                        _tightVNCSettingsView = new TightVNCSettingsView();
+                case SettingsViewManager.Name.TigerVNC:
+                    if(_tigerVNCSettingsView == null)
+                        _tigerVNCSettingsView = new TigerVNCSettingsView();
 
-                    SettingsContent = _tightVNCSettingsView;
+                    SettingsContent = _tigerVNCSettingsView;
                     break;
                 case SettingsViewManager.Name.SNMP:
                     if (_snmpSettingsView == null)

@@ -25,12 +25,14 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
-        
+
         private readonly int _tabId;
         private bool _firstLoad = true;
 
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
         private readonly Stopwatch _stopwatch = new Stopwatch();
+
+        private string _lastSortDescriptionAscending = string.Empty;
 
         private readonly bool _isLoading;
 
@@ -120,8 +122,8 @@ namespace NETworkManager.ViewModels
             get => _lookupResults;
             set
             {
-               if(Equals(value, _lookupResults))
-                   return;
+                if (Equals(value, _lookupResults))
+                    return;
 
                 _lookupResults = value;
             }
@@ -269,6 +271,7 @@ namespace NETworkManager.ViewModels
 
             LookupResultsView = CollectionViewSource.GetDefaultView(LookupResults);
             LookupResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.DNSServer)));
+            LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.DNSServer), ListSortDirection.Descending));
 
             LoadSettings();
 
@@ -443,7 +446,7 @@ namespace NETworkManager.ViewModels
 
             AddHostToHistory(Host);
 
-            var dnsLookupOptions = new DNSLookupOptions
+            var dnsLookup = new DNSLookup
             {
                 AddDNSSuffix = SettingsManager.Current.DNSLookup_AddDNSSuffix,
                 Class = SettingsManager.Current.DNSLookup_Class,
@@ -453,29 +456,27 @@ namespace NETworkManager.ViewModels
                 TransportType = SettingsManager.Current.DNSLookup_TransportType,
                 Attempts = SettingsManager.Current.DNSLookup_Attempts,
                 Timeout = SettingsManager.Current.DNSLookup_Timeout,
-                ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME
+                ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME,
             };
 
             if (!DNSServer.UseWindowsDNSServer)
             {
-                dnsLookupOptions.UseCustomDNSServer = true;
-                dnsLookupOptions.CustomDNSServers = DNSServer.Server;
-                dnsLookupOptions.Port = DNSServer.Port;
+                dnsLookup.UseCustomDNSServer = true;
+                dnsLookup.CustomDNSServers = DNSServer.Server;
+                dnsLookup.Port = DNSServer.Port;
             }
 
             if (SettingsManager.Current.DNSLookup_UseCustomDNSSuffix)
             {
-                dnsLookupOptions.UseCustomDNSSuffix = true;
-                dnsLookupOptions.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix.TrimStart('.');
+                dnsLookup.UseCustomDNSSuffix = true;
+                dnsLookup.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix.TrimStart('.');
             }
-            
-            var dnsLookup = new DNSLookup();
 
             dnsLookup.RecordReceived += DNSLookup_RecordReceived;
             dnsLookup.LookupError += DNSLookup_LookupError;
             dnsLookup.LookupComplete += DNSLookup_LookupComplete;
 
-            dnsLookup.ResolveAsync(Host.Split(';').Select(x => x.Trim()).ToList(), dnsLookupOptions);
+            dnsLookup.ResolveAsync(Host.Split(';').Select(x => x.Trim()).ToList());
         }
 
         private void LookupFinished()
@@ -509,6 +510,23 @@ namespace NETworkManager.ViewModels
 
             // Fill with the new items
             list.ForEach(x => SettingsManager.Current.DNSLookup_HostHistory.Add(x));
+        }
+
+        public void SortResultByPropertyName(string sortDescription)
+        {
+            LookupResultsView.SortDescriptions.Clear();
+            LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.DNSServer), ListSortDirection.Descending));
+
+            if (_lastSortDescriptionAscending.Equals(sortDescription))
+            {
+                LookupResultsView.SortDescriptions.Add(new SortDescription(sortDescription, ListSortDirection.Descending));
+                _lastSortDescriptionAscending = string.Empty;
+            }
+            else
+            {
+                LookupResultsView.SortDescriptions.Add(new SortDescription(sortDescription, ListSortDirection.Ascending));
+                _lastSortDescriptionAscending = sortDescription;
+            }
         }
         #endregion
 

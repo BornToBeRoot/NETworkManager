@@ -590,16 +590,14 @@ namespace NETworkManager.ViewModels
             }
 
             // SNMP...
-            var snmpOptions = new SNMPOptions()
+            var snmp = new SNMP
             {
                 Port = SettingsManager.Current.SNMP_Port,
                 Timeout = SettingsManager.Current.SNMP_Timeout
             };
 
-            var snmp = new SNMP();
-
             snmp.Received += Snmp_Received;
-            snmp.Timeout += Snmp_Timeout;
+            snmp.TimeoutReached += Snmp_TimeoutReached;
             snmp.Error += Snmp_Error;
             snmp.UserHasCanceled += Snmp_UserHasCanceled;
             snmp.Complete += Snmp_Complete;
@@ -608,21 +606,21 @@ namespace NETworkManager.ViewModels
             {
                 case SNMPMode.Get:
                     if (Version != SNMPVersion.V3)
-                        snmp.GetV1V2CAsync(Version, ipAddress, Community, OID, snmpOptions);
+                        snmp.GetV1V2CAsync(Version, ipAddress, Community, OID);
                     else
-                        snmp.Getv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, snmpOptions);
+                        snmp.Getv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv);
                     break;
                 case SNMPMode.Walk:
                     if (Version != SNMPVersion.V3)
-                        snmp.WalkV1V2CAsync(Version, ipAddress, Community, OID, SettingsManager.Current.SNMP_WalkMode, snmpOptions);
+                        snmp.WalkV1V2CAsync(Version, ipAddress, Community, OID, SettingsManager.Current.SNMP_WalkMode);
                     else
-                        snmp.WalkV3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, SettingsManager.Current.SNMP_WalkMode, snmpOptions);
+                        snmp.WalkV3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, SettingsManager.Current.SNMP_WalkMode);
                     break;
                 case SNMPMode.Set:
                     if (Version != SNMPVersion.V3)
-                        snmp.SetV1V2CAsync(Version, ipAddress, Community, OID, Data, snmpOptions);
+                        snmp.SetV1V2CAsync(Version, ipAddress, Community, OID, Data);
                     else
-                        snmp.SetV3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, Data, snmpOptions);
+                        snmp.SetV3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, Data);
                     break;
             }
 
@@ -691,7 +689,7 @@ namespace NETworkManager.ViewModels
             Responses++;
         }
 
-        private void Snmp_Timeout(object sender, EventArgs e)
+        private void Snmp_TimeoutReached(object sender, EventArgs e)
         {
             StatusMessage = Resources.Localization.Strings.TimeoutOnSNMPQuery;
             DisplayStatusMessage = true;

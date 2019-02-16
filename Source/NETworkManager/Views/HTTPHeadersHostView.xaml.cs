@@ -28,10 +28,15 @@ namespace NETworkManager.Views
             if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
                 _viewModel.CheckProfileCommand.Execute(null);
         }
-        
-        public void Refresh()
+
+        public void OnViewHide()
         {
-            _viewModel.Refresh();
+            _viewModel.OnViewHide();
+        }
+
+        public void OnViewVisible()
+        {
+            _viewModel.OnViewVisible();
         }
     }
 }

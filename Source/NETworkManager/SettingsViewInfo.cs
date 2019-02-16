@@ -2,7 +2,6 @@
 using System.Windows.Controls;
 
 namespace NETworkManager
-
 {
     public class SettingsViewInfo
     {
@@ -19,7 +18,7 @@ namespace NETworkManager
         public SettingsViewInfo(SettingsViewManager.Name name, Canvas icon, SettingsViewManager.Group group)
         {
             Name = name;
-            TranslatedName = SettingsViewManager.TranslateName(name, group);
+            TranslatedName = SettingsViewManager.TranslateName(name);
             Icon = icon;
             Group = group;
             TranslatedGroup = SettingsViewManager.TranslateGroup(group);
@@ -28,7 +27,7 @@ namespace NETworkManager
         public SettingsViewInfo(SettingsViewManager.Name name, UIElement uiElement, SettingsViewManager.Group group)
         {
             Name = name;
-            TranslatedName = SettingsViewManager.TranslateName(name, group);
+            TranslatedName = SettingsViewManager.TranslateName(name);
             var canvas = new Canvas();
             canvas.Children.Add(uiElement);
             Icon = canvas;

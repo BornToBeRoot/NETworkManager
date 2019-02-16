@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace NETworkManager.Models.Settings
@@ -16,6 +17,7 @@ namespace NETworkManager.Models.Settings
         public string ExecutionPath { get; set; }
         public string ApplicationFullName { get; set; }
         public string ApplicationName { get; set; }
+        public Version OSVersion { get; set; }
         public bool IsTransparencyEnabled { get; set; }
         public bool ShowSettingsResetNoteOnStartup { get; set; }
 

@@ -16,9 +16,9 @@
         <converters:BooleanReverseToVisibilityHiddenConverter x:Key="BooleanReverseToVisibilityHiddenConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
-    <Grid SizeChanged="PuTTYGrid_SizeChanged">
+    <Grid SizeChanged="WindowGrid_SizeChanged">
         <WindowsFormsHost Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">  
-            <windowsForms:Panel x:Name="PuTTYHost" />
+            <windowsForms:Panel x:Name="WindowHost" />
         </WindowsFormsHost>
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding IsConnected, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
             <Grid.RowDefinitions>

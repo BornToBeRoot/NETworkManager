@@ -17,8 +17,8 @@
         <!-- Converter -->
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:IsDefaultSettingsLocationToBoolConverter x:Key="IsDefaultSettingsLocationToBoolConverter" />
-        <converters:IsSettingsLocationToBoolConverter x:Key="IsSettingsLocationToBoolConverter" />
+        <converters:IsDefaultSettingsLocationToBooleanConverter x:Key="IsDefaultSettingsLocationToBoolConverter" />
+        <converters:IsSettingsLocationToBooleanConverter x:Key="IsSettingsLocationToBoolConverter" />
         <converters:ValidateSettingsResetConverter x:Key="ValidateSettingsResetConverter" />
     </UserControl.Resources>
     <StackPanel >

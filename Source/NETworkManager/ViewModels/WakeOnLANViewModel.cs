@@ -163,7 +163,7 @@ namespace NETworkManager.ViewModels
                 {
                     MACAddress = value.WakeOnLAN_MACAddress;
                     Broadcast = value.WakeOnLAN_Broadcast;
-                    Port = value.WakeOnLAN_Port;
+                    Port = value.WakeOnLAN_OverridePort ? value.WakeOnLAN_Port : SettingsManager.Current.WakeOnLAN_Port;
                 }
 
                 _selectedProfile = value;
@@ -221,7 +221,7 @@ namespace NETworkManager.ViewModels
                 if (value == _profileWidth)
                     return;
 
-                if (!_isLoading && value.Value != GlobalStaticConfiguration.ProfileWidthCollapsed) // Do not save the size when collapsed
+                if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.FloatPointFix) // Do not save the size when collapsed
                     SettingsManager.Current.WakeOnLAN_ClientWidth = value.Value;
 
                 _profileWidth = value;
@@ -278,7 +278,7 @@ namespace NETworkManager.ViewModels
             Port = SettingsManager.Current.WakeOnLAN_Port;
             ExpandProfileView = SettingsManager.Current.WakeOnLAN_ExpandClientView;
 
-            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.WakeOnLAN_ClientWidth) : new GridLength(GlobalStaticConfiguration.ProfileWidthCollapsed);
+            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.WakeOnLAN_ClientWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
             _tempProfileWidth = SettingsManager.Current.WakeOnLAN_ClientWidth;
         }
@@ -314,14 +314,7 @@ namespace NETworkManager.ViewModels
 
         private void WakeUpProfileAction()
         {
-            var info = new WakeOnLANInfo
-            {
-                MagicPacket = WakeOnLAN.CreateMagicPacket(SelectedProfile.WakeOnLAN_MACAddress),
-                Broadcast = IPAddress.Parse(SelectedProfile.WakeOnLAN_Broadcast),
-                Port = SelectedProfile.WakeOnLAN_Port
-            };
-
-            WakeUp(info);
+            WakeUp(WakeOnLAN.CreateWakeOnLANInfo(SelectedProfile));
         }
 
         public ICommand AddProfileCommand
@@ -461,7 +454,7 @@ namespace NETworkManager.ViewModels
 
                 ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
 
-                Refresh();
+                Profiles.Refresh();
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -518,28 +511,33 @@ namespace NETworkManager.ViewModels
 
             if (dueToChangedSize)
             {
-                ExpandProfileView = ProfileWidth.Value != GlobalStaticConfiguration.ProfileWidthCollapsed;
+                ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.FloatPointFix;
             }
             else
             {
                 if (ExpandProfileView)
                 {
-                    ProfileWidth = _tempProfileWidth == GlobalStaticConfiguration.ProfileWidthCollapsed ? new GridLength(GlobalStaticConfiguration.ProfileDefaultWidthExpanded) : new GridLength(_tempProfileWidth);
+                    ProfileWidth = Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) < GlobalStaticConfiguration.FloatPointFix ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded) : new GridLength(_tempProfileWidth);
                 }
                 else
                 {
                     _tempProfileWidth = ProfileWidth.Value;
-                    ProfileWidth = new GridLength(GlobalStaticConfiguration.ProfileWidthCollapsed);
+                    ProfileWidth = new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
                 }
             }
 
             _canProfileWidthChange = true;
         }
 
-        public void Refresh()
+        public void OnViewVisible()
         {
             // Refresh profiles
             Profiles.Refresh();
+        }
+
+        public void OnViewHide()
+        {
+
         }
         #endregion
     }

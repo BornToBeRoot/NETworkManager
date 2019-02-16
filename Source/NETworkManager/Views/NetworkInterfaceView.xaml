@@ -13,22 +13,24 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         xmlns:networkManager="clr-namespace:NETworkManager"
+        xmlns:liveChart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:NetworkInterfaceViewModel}">
     <UserControl.InputBindings>
         <KeyBinding Key="F5" Command="{Binding ReloadNetworkInterfacesCommand}" />
     </UserControl.InputBindings>
     <UserControl.Resources>
-        <converters:BitsToHumanReadableSizeConverter x:Key="BitsToHumanReadableSizeConverter" />
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
+        <converters:Bytes1000ToSpeedConverter x:Key="Bytes1000ToSpeedConverter" />
+        <converters:BandwidthBytesToSpeedConverter x:Key="BandwidthBytesToSpeedConverter" />
         <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />
         <converters:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
         <converters:OperationalStatusToStringConverter x:Key="OperationalStatusToStringConverter" />
         <converters:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
         <converters:ValidateNetworkInterfaceConfigConverter x:Key="ValidateNetworkInterfaceConfigConverter" />
-        <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <Style x:Key="ReloadAnimation" TargetType="Rectangle">
             <Setter Property="Height" Value="24" />
             <Setter Property="RenderTransform">
@@ -49,16 +51,7 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <TabControl>
-        <TabControl.Style>
-            <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource DefaultTabControl}">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding ShowCurrentApplicationTitle}" Value="False">
-                        <Setter Property="Margin" Value="0,-2,0,0" />
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </TabControl.Style>
+    <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.Information}">
             <ScrollViewer Margin="10" Style="{StaticResource DefaultScrollViewer}">
                 <Grid>
@@ -74,7 +67,6 @@
                             </Style>
                         </Grid.Style>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
@@ -166,7 +158,7 @@
                                 </Button>
                             </Grid>
                         </StackPanel>
-                        <TextBlock Grid.Row="2" Text="{x:Static localization:Strings.Details}">
+                        <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Details}">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                     <Setter Property="Visibility" Value="Visible" />
@@ -178,7 +170,7 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <Grid Grid.Row="3">
+                        <Grid Grid.Row="2">
                             <Grid.Resources>
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
@@ -224,7 +216,7 @@
                             <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Status}" />
                             <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding DetailsStatus, Converter={StaticResource OperationalStatusToStringConverter}}" />
                             <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.Speed}" />
-                            <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding DetailsSpeed, Converter={StaticResource BitsToHumanReadableSizeConverter}}" />
+                            <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding DetailsSpeed, Converter={StaticResource Bytes1000ToSpeedConverter}}" />
                             <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.IPv4Address}" />
                             <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding DetailsIPv4Address, Converter={StaticResource IPAddressArrayToStringConverter}}" />
                             <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.Subnetmask}"  />
@@ -304,12 +296,193 @@
                 </Grid>
             </ScrollViewer>
         </TabItem>
+        <TabItem Header="{x:Static localization:Strings.Bandwidth}">
+            <ScrollViewer Margin="10" Style="{StaticResource DefaultScrollViewer}">
+                <Grid>
+                    <Grid>
+                        <Grid.Style>
+                            <Style TargetType="{x:Type Grid}" >
+                                <Setter Property="Visibility" Value="Visible" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Interface}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Rectangle Width="24" Height="24">
+                                                    <Rectangle.Resources>
+                                                        <VisualBrush x:Key="VisualUp" Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}"/>
+                                                        <VisualBrush x:Key="VisualDown" Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkDisconnect}" />
+                                                    </Rectangle.Resources>
+                                                    <Rectangle.Style>
+                                                        <Style TargetType="{x:Type Rectangle}">
+                                                            <Setter Property="OpacityMask" Value="{StaticResource VisualDown}" />
+                                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsOperational}" Value="True">
+                                                                    <Setter Property="OpacityMask" Value="{StaticResource VisualUp}" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Rectangle.Style>
+                                                </Rectangle>
+                                                <StackPanel Margin="10,0,0,0">
+                                                    <TextBlock Text="{Binding Path=Name}" />
+                                                    <TextBlock Text="{Binding Path=Description}" Foreground="{DynamicResource GrayBrush3}"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                    <ComboBox.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MetroComboBoxItem}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ComboBoxItem">
+                                                        <Grid Background="{TemplateBinding Background}" RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
+                                                            <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                            <Grid Margin="{TemplateBinding BorderThickness}">
+                                                                <ContentPresenter x:Name="contentPresenter" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                            </Grid>
+                                                        </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsSelected" Value="True">
+                                                                <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+                                                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush9}" />
+                                                            </Trigger>
+                                                            <MultiTrigger>
+                                                                <MultiTrigger.Conditions>
+                                                                    <Condition Property="IsSelected" Value="False" />
+                                                                    <Condition Property="IsMouseOver" Value="True" />
+                                                                </MultiTrigger.Conditions>
+                                                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush10}" />
+                                                            </MultiTrigger>
+                                                            <Trigger Property="IsEnabled" Value="False">
+                                                                <Setter TargetName="contentPresenter" Property="Opacity" Value=".55" />
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ComboBox.ItemContainerStyle>
+                                </ComboBox>
+                                <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=ComboBoxNetworkInterfaceProfiles, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
+                                    <Rectangle Width="24" Height="24">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                        </Rectangle.OpacityMask>
+                                        <Rectangle.Style>
+                                            <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ReloadAnimation}">
+                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                    </Rectangle>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Bandwidth}">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <liveChart:CartesianChart Grid.Row="2" Series="{Binding Series}" Margin="0,0,0,20">
+                            <liveChart:CartesianChart.AxisX>
+                                <liveChart:Axis LabelFormatter="{Binding FormatterDate}">
+                                    <liveChart:Axis.Separator>
+                                        <liveChart:Separator StrokeThickness="0" />
+                                    </liveChart:Axis.Separator>
+                                </liveChart:Axis>
+                            </liveChart:CartesianChart.AxisX>
+                            <liveChart:CartesianChart.AxisY>
+                                <liveChart:Axis MinValue="0" LabelFormatter="{Binding FormatterSpeed}">
+                                    <liveChart:Axis.Separator>
+                                        <liveChart:Separator StrokeThickness="1" Stroke="{DynamicResource GrayBrush8}" StrokeDashArray="10" />
+                                    </liveChart:Axis.Separator>
+                                </liveChart:Axis>
+                            </liveChart:CartesianChart.AxisY>
+                        </liveChart:CartesianChart>
+                        <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.Details}">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <Grid Grid.Row="4">
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
+                                    <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
+                                    <Setter Property="TextWrapping" Value="NoWrap" />
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <GridSplitter Grid.Column="1" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.TotalBytesReceived}" />
+                            <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding BandwidthTotalBytesReceived}" />
+                            <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.TotalBytesSent}" />
+                            <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding BandwidthTotalBytesSent}" />
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Download}" />
+                            <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding BandwidthBytesReceivedSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
+                            <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Upload}" />
+                            <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding BandwidthBytesSentSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+        </TabItem>
         <TabItem Header="{x:Static localization:Strings.Configure}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition MinWidth="{x:Static networkManager:GlobalStaticConfiguration.ProfileWidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static networkManager:GlobalStaticConfiguration.ProfileMaxWidthExpanded}" />
+                    <ColumnDefinition MinWidth="{x:Static networkManager:GlobalStaticConfiguration.Profile_WidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static networkManager:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0" Margin="10">
                     <Grid.RowDefinitions>
@@ -559,10 +732,11 @@
                     <Grid Grid.Row="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Orientation="Horizontal">
-                            <Button HorizontalAlignment="Left" Command="{Binding FlushDNSCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}">
+                        <WrapPanel Grid.Column="0" Orientation="Horizontal" >
+                            <Button HorizontalAlignment="Left" Command="{Binding FlushDNSCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}" Margin="0,0,10,0">
                                 <Button.Content>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -577,8 +751,8 @@
                                         <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.FlushDNSCache}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
                                     </Grid>
                                 </Button.Content>
-                            </Button> 
-                            <Button HorizontalAlignment="Left" Command="{Binding AddIPv4AddressCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
+                            </Button>
+                            <Button HorizontalAlignment="Left" Command="{Binding AddIPv4AddressCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}" Margin="0,0,10,0">
                                 <Button.Content>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -594,7 +768,7 @@
                                     </Grid>
                                 </Button.Content>
                             </Button>
-                            <mah:DropDownButton Margin="10,0,0,0" Style="{StaticResource ImageDropDrownButton}">
+                            <mah:DropDownButton Style="{StaticResource ImageDropDrownButton}">
                                 <mah:DropDownButton.Content>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -640,8 +814,8 @@
                                     </MenuItem>
                                 </mah:DropDownButton.Items>
                             </mah:DropDownButton>
-                        </StackPanel>
-                        <Button Grid.Column="1" Command="{Binding ApplyConfigCommand}">
+                        </WrapPanel>
+                        <Button Grid.Column="2" Command="{Binding ApplyConfigCommand}" VerticalAlignment="Bottom">
                             <Button.Content>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -805,7 +979,7 @@
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                         <Setter Property="Command" Value="{Binding AddProfileCommand}" />
-                                        <Setter Property="ToolTip" Value="{x:Static localization:Strings.AddProfileDots}" />
+
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
                                                 <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
@@ -857,22 +1031,59 @@
                                 </Grid>
                             </Button>
                         </Grid>
-                        <Button x:Name="ButtonAddProfile" Grid.Column="0" Grid.Row="4" Command="{Binding AddProfileCommand}" Style="{StaticResource ImageWithTextButton}">
-                            <Button.Content>
+                        <Border Grid.Column="0" Grid.Row="4" BorderBrush="{DynamicResource GrayBrush8}" Margin="-10" BorderThickness="0,1,0,0" Background="Transparent">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Profiles.Count}" Value="0">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Button Height="48" Margin="10,0" Focusable="False">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
+                                        <Setter Property="Command" Value="{Binding AddProfileCommand}" />
+
+                                    </Style>
+                                </Button.Style>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
-                                        </Rectangle.OpacityMask>
+                                    <Rectangle Grid.Column="0" Width="20" Height="20">
+                                        <Rectangle.Resources>
+                                            <VisualBrush x:Key="VisualPlus" Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}"/>
+                                        </Rectangle.Resources>
+                                        <Rectangle.Style>
+                                            <Style TargetType="{x:Type Rectangle}">
+                                                <Setter Property="OpacityMask" Value="{StaticResource VisualPlus}" />
+                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
                                     </Rectangle>
-                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                                    <TextBlock Grid.Column="1" TextWrapping="NoWrap" TextTrimming="WordEllipsis">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+                                                <Setter Property="Text" Value="{x:Static localization:Strings.AddProfileDots}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
                                 </Grid>
-                            </Button.Content>
-                        </Button>
+                            </Button>
+                        </Border>
                     </Grid>
                 </Expander>
             </Grid>

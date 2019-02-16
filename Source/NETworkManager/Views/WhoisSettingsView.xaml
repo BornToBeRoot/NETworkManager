@@ -9,6 +9,6 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:HTTPHeadersSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowStatistics}"   IsChecked="{Binding ShowStatistics}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowStatistics}" IsChecked="{Binding ShowStatistics}" />
     </StackPanel>
 </UserControl>

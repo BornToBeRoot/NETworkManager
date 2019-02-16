@@ -551,7 +551,8 @@ namespace NETworkManager.ViewModels
 
             _cancellationTokenSource = new CancellationTokenSource();
 
-            var pingOptions = new PingOptions
+
+            var ping = new Ping
             {
                 Attempts = SettingsManager.Current.Ping_Attempts,
                 Timeout = SettingsManager.Current.Ping_Timeout,
@@ -563,14 +564,12 @@ namespace NETworkManager.ViewModels
                 Hostname = hostIsIP ? string.Empty : Host
             };
 
-            var ping = new Ping();
-
             ping.PingReceived += Ping_PingReceived;
             ping.PingCompleted += Ping_PingCompleted;
             ping.PingException += Ping_PingException;
             ping.UserHasCanceled += Ping_UserHasCanceled;
 
-            ping.SendAsync(ipAddress, pingOptions, _cancellationTokenSource.Token);
+            ping.SendAsync(ipAddress, _cancellationTokenSource.Token);
         }
 
         private void StopPing()

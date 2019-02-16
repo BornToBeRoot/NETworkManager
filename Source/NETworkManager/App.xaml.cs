@@ -5,18 +5,17 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Windows;
+using System.Windows.Threading;
 using NETworkManager.Properties;
 
 namespace NETworkManager
 {
-    /// <summary>
-    /// Interaktionslogik für "App.xaml"
-    /// </summary>
     public partial class App
     {
-        // Single instance unique identifier
-        private const string Guid = "6A3F34B2-161F-4F70-A8BC-A19C40F79CFB";
+        // Single instance identifier
+        private const string GUID = "6A3F34B2-161F-4F70-A8BC-A19C40F79CFB";
         private Mutex _mutex;
+        private DispatcherTimer _dispatcherTimer;
 
         private bool _singleInstanceClose;
 
@@ -55,7 +54,7 @@ namespace NETworkManager
                     Settings.Default.Upgrade();
                     Settings.Default.UpgradeRequired = false;
                 }
-                
+
                 SettingsManager.Load();
 
                 // Update settings (Default --> %AppData%\NETworkManager\Settings)
@@ -80,7 +79,7 @@ namespace NETworkManager
             }
 
             // Create mutex
-            _mutex = new Mutex(true, "{" + Guid + "}");
+            _mutex = new Mutex(true, "{" + GUID + "}");
             var mutexIsAcquired = _mutex.WaitOne(TimeSpan.Zero, true);
 
             // Release mutex
@@ -89,6 +88,18 @@ namespace NETworkManager
 
             if (SettingsManager.Current.Window_MultipleInstances || mutexIsAcquired)
             {
+                if (SettingsManager.Current.General_BackgroundJobInterval != 0)
+                {
+                    _dispatcherTimer = new DispatcherTimer
+                    {
+                        Interval = TimeSpan.FromMinutes(SettingsManager.Current.General_BackgroundJobInterval)
+                    };
+
+                    _dispatcherTimer.Tick += DispatcherTimer_Tick;
+
+                    _dispatcherTimer.Start();
+                }
+                
                 StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
             }
             else
@@ -99,6 +110,12 @@ namespace NETworkManager
                 _singleInstanceClose = true;
                 Shutdown();
             }
+        }
+
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            Debug.WriteLine("Auto save settings...");
+            Save();
         }
 
         protected override void OnSessionEnding(SessionEndingCancelEventArgs e)
@@ -116,6 +133,13 @@ namespace NETworkManager
             if (_singleInstanceClose || ImportExportManager.ForceRestart || CommandLineManager.Current.Help)
                 return;
 
+            _dispatcherTimer?.Stop();
+
+            Save();
+        }
+
+        private void Save()
+        {
             // Save local settings (custom settings path in AppData/Local)
             Settings.Default.Save();
 

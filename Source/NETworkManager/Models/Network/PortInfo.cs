@@ -1,5 +1,6 @@
 ﻿using NETworkManager.Models.Lookup;
 using System.Net;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network
 {
@@ -10,6 +11,8 @@ namespace NETworkManager.Models.Network
         public int Port { get; set; }
         public PortLookupInfo LookupInfo { get; set; }
         public PortStatus Status { get; set; }
+
+        public int IPAddressInt32 => IPAddress != null && IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(IPAddress) : 0;
 
         public PortInfo()
         {

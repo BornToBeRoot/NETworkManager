@@ -145,8 +145,8 @@
                 </Style>
             </controls:MultiSelectDataGrid.RowStyle>
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" Binding="{Binding (lookup:OUIInfo.MACAddress)}" MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Vendor}" Binding="{Binding (lookup:OUIInfo.Vendor), Converter={StaticResource NullOrEmptyToStringConverter}}" MinWidth="200" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" Binding="{Binding (lookup:OUIInfo.MACAddress)}" SortMemberPath="MACAddressString" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Vendor}" Binding="{Binding (lookup:OUIInfo.Vendor), Converter={StaticResource NullOrEmptyToStringConverter}}" SortMemberPath="Vendor" MinWidth="200" Width="*" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
     </Grid>

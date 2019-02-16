@@ -11,18 +11,18 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.Utilities
 {
-    public static class IPScanRangeHelper
+    public static class HostRangeHelper
     {
-        public static Task<IPAddress[]> ConvertIPRangeToIPAddressesAsync(string[] ipRanges, CancellationToken cancellationToken)
+        public static Task<IPAddress[]> CreateIPAddressesFromIPRangesAsync(string[] ipRanges, CancellationToken cancellationToken)
         {
-            return Task.Run(() => ConvertIPRangeToIPAddresses(ipRanges, cancellationToken), cancellationToken);
+            return Task.Run(() => CreateIPAddressesFromIPRanges(ipRanges, cancellationToken), cancellationToken);
         }
 
-        public static IPAddress[] ConvertIPRangeToIPAddresses(string[] ipRanges, CancellationToken cancellationToken)
+        public static IPAddress[] CreateIPAddressesFromIPRanges(string[] ipRanges, CancellationToken cancellationToken)
         {
             var bag = new ConcurrentBag<IPAddress>();
 
-            var parallelOptions = new ParallelOptions()
+            var parallelOptions = new ParallelOptions
             {
                 CancellationToken = cancellationToken
             };
@@ -127,29 +127,24 @@ namespace NETworkManager.Utilities
             return bag.ToArray();
         }
 
-        public static Task<List<string>> ResolveHostnamesInIPRangeAsync(string[] ipHostOrRanges, CancellationToken cancellationToken)
+        public static Task<List<string>> ResolveHostnamesInIPRangesAsync(string[] ipRanges, CancellationToken cancellationToken)
         {
-            return Task.Run(() => ResolveHostnamesInIPRange(ipHostOrRanges, cancellationToken), cancellationToken);
+            return Task.Run(() => ResolveHostnamesInIPRanges(ipRanges, cancellationToken), cancellationToken);
         }
 
-        public static List<string> ResolveHostnamesInIPRange(string[] ipHostOrRanges, CancellationToken cancellationToken)
+        public static List<string> ResolveHostnamesInIPRanges(string[] ipRanges, CancellationToken cancellationToken)
         {
             var bag = new ConcurrentBag<string>();
 
-            var parallelOptions = new ParallelOptions()
-            {
-                CancellationToken = cancellationToken
-            };
-
             var exceptions = new ConcurrentQueue<HostNotFoundException>();
 
-            Parallel.ForEach(ipHostOrRanges, new ParallelOptions { CancellationToken = cancellationToken }, ipHostOrRange =>
+            Parallel.ForEach(ipRanges, new ParallelOptions { CancellationToken = cancellationToken }, ipHostOrRange =>
             {
                 // like 192.168.0.1, 192.168.0.0/24, 192.168.0.0/255.255.255.0, 192.168.0.0 - 192.168.0.100, 192.168.[50-100].1
                 if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressCidrRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSubnetmaskRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRangeRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSpecialRangeRegex))
                 {
                     bag.Add(ipHostOrRange);
-                } // like fritz.box, fritz.box/24 or fritz.box/255.255.255.128
+                } // like example.com, example.com/24 or example.com/255.255.255.128
                 else if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameCidrRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameSubnetmaskRegex))
                 {
                     IPHostEntry ipHostEntrys;

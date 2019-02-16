@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Windows.Data;
-using NETworkManager.Models.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Converters
 {
-    public sealed class IsDefaultSettingsLocationToBoolConverter : IValueConverter
+    public sealed class StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value as string == SettingsManager.GetDefaultSettingsLocation();
+            return !string.IsNullOrEmpty(value as string) && !Regex.IsMatch((string) value, RegexHelper.IPv4AddressRegex);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

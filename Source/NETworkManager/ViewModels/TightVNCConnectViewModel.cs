@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
-    public class TightVNCConnectViewModel : ViewModelBase
+    public class TigerVNCConnectViewModel : ViewModelBase
     {
         public ICommand ConnectCommand { get; }
         public ICommand CancelCommand { get; }
@@ -44,21 +44,23 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView PortHistoryView { get; }
         
-        public TightVNCConnectViewModel(Action<TightVNCConnectViewModel> connectCommand, Action<TightVNCConnectViewModel> cancelHandler)
+        public TigerVNCConnectViewModel(Action<TigerVNCConnectViewModel> connectCommand, Action<TigerVNCConnectViewModel> cancelHandler, string host = null)
         {
             ConnectCommand = new RelayCommand(p => connectCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
+            if (!string.IsNullOrEmpty(host))
+                Host = host;
             
-            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.TightVNC_HostHistory);
-            PortHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.TightVNC_PortHistory);
+            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.TigerVNC_HostHistory);
+            PortHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.TigerVNC_PortHistory);
 
             LoadSettings();
         }
 
         private void LoadSettings()
         {
-            Port = SettingsManager.Current.TightVNC_VNCPort;
+            Port = SettingsManager.Current.TigerVNC_Port;
         }
     }
 }

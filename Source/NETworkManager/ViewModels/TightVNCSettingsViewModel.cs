@@ -8,68 +8,66 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
-    public class TightVNCSettingsViewModel : ViewModelBase
+    public class TigerVNCSettingsViewModel : ViewModelBase
     {
         #region Variables
-        private const string ApplicationFileExtensionFilter = "Application (*.exe)|*.exe";
         private readonly IDialogCoordinator _dialogCoordinator;
         
         private readonly bool _isLoading;
 
-        private string _tightVNCLocation;
-        public string TightVNCLocation
+        private string _applicationFilePath;
+        public string ApplicationFilePath
         {
-            get => _tightVNCLocation;
+            get => _applicationFilePath;
             set
             {
-                if (value == _tightVNCLocation)
+                if (value == _applicationFilePath)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.TightVNC_TightVNCLocation = value;
+                    SettingsManager.Current.TigerVNC_ApplicationFilePath = value;
 
-                // Path to tightvnc is configured....
-                IsTightVNCConfigured = !string.IsNullOrEmpty(value);
+                IsConfigured = !string.IsNullOrEmpty(value);
 
-                _tightVNCLocation = value;                               
+                _applicationFilePath = value;                               
                 OnPropertyChanged();
             }
         }
 
-        private bool _isTightVNCConfigured;
-        public bool IsTightVNCConfigured
+        private bool _isConfigured;
+        public bool IsConfigured
         {
-            get => _isTightVNCConfigured;
+            get => _isConfigured;
             set
             {
-                if (value == _isTightVNCConfigured)
+                if (value == _isConfigured)
                     return;
 
-                _isTightVNCConfigured = value;
+                _isConfigured = value;
                 OnPropertyChanged();
             }
         }
         
-        private int _vncPort;
-        public int VNCPort
+        private int _port;
+        public int Port
         {
-            get => _vncPort;
+            get => _port;
             set
             {
-                if (value == _vncPort)
+                if (value == _port)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.TightVNC_VNCPort = value;
+                    SettingsManager.Current.TigerVNC_Port = value;
 
-                _vncPort = value;
+                _port = value;
                 OnPropertyChanged();
             }
         }
         #endregion
 
         #region Contructor, load settings
-        public TightVNCSettingsViewModel(IDialogCoordinator instance)
+        public TigerVNCSettingsViewModel(IDialogCoordinator instance)
         {
             _isLoading = true;
 
@@ -82,9 +80,9 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            TightVNCLocation = SettingsManager.Current.TightVNC_TightVNCLocation;
-            IsTightVNCConfigured = File.Exists(TightVNCLocation);
-            VNCPort = SettingsManager.Current.TightVNC_VNCPort;
+            ApplicationFilePath = SettingsManager.Current.TigerVNC_ApplicationFilePath;
+            IsConfigured = File.Exists(ApplicationFilePath);
+            Port = SettingsManager.Current.TigerVNC_Port;
         }
         #endregion
 
@@ -98,30 +96,30 @@ namespace NETworkManager.ViewModels
         {
             var openFileDialog = new System.Windows.Forms.OpenFileDialog
             {
-                Filter = ApplicationFileExtensionFilter
+                Filter = GlobalStaticConfiguration.ApplicationFileExtensionFilter
             };
 
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                TightVNCLocation = openFileDialog.FileName;
+                ApplicationFilePath = openFileDialog.FileName;
         }
 
-        public ICommand ConfigureTightVNCCommand
+        public ICommand ConfigureCommand
         {
-            get { return new RelayCommand(p => ConfigurePuTTYAction()); }
+            get { return new RelayCommand(p => ConfigureAction()); }
         }
 
-        private void ConfigurePuTTYAction()
+        private void ConfigureAction()
         {
-            ConfigureTightVNC();
+            Configure();
         }
         #endregion
 
         #region Methods
-        private async void ConfigureTightVNC()
+        private async void Configure()
         {
             try
             {
-                Process.Start(SettingsManager.Current.TightVNC_TightVNCLocation);
+                Process.Start(SettingsManager.Current.TigerVNC_ApplicationFilePath);
             }
             catch (Exception ex)
             {
@@ -135,9 +133,9 @@ namespace NETworkManager.ViewModels
 
         public void SetFilePathFromDragDrop(string filePath)
         {
-            TightVNCLocation = filePath;
+            ApplicationFilePath = filePath;
 
-            OnPropertyChanged(nameof(TightVNCLocation));
+            OnPropertyChanged(nameof(ApplicationFilePath));
         }
         #endregion
     }

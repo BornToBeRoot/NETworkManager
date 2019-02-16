@@ -140,7 +140,7 @@
                 </ComboBox.Text>
             </ComboBox>
             <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.AdditionalCommandLine}" />
-            <TextBox x:Name="TextBoxAdditionalCommandLine" Grid.Column="2" Grid.Row="10" Text="{Binding AdditionalCommandLine}" Style="{StaticResource DefaultTextBox}" />
+            <TextBox x:Name="TextBoxAdditionalCommandLine" Grid.Column="2" Grid.Row="10" Text="{Binding AdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
         </Grid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />

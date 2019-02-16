@@ -651,9 +651,6 @@
   <data name="Add" xml:space="preserve">
     <value>Hinzufügen</value>
   </data>
-  <data name="AddATabToOpenANewConnection" xml:space="preserve">
-    <value>Füge eine Registerkarte hinzu, um eine neue Verbindung herzustellen...</value>
-  </data>
   <data name="AddATabToPerformADNSLookup" xml:space="preserve">
     <value>Füge eine Registerkarte hinzu, um eine DNS-Suche durchzuführen...</value>
   </data>
@@ -798,20 +795,20 @@
   <data name="Default" xml:space="preserve">
     <value>Standard</value>
   </data>
-  <data name="DefaultBaudRate" xml:space="preserve">
-    <value>Standard Baudrate</value>
+  <data name="BaudRate" xml:space="preserve">
+    <value>Baudrate</value>
   </data>
   <data name="DefaultPort" xml:space="preserve">
     <value>Standard-Port:</value>
   </data>
-  <data name="DefaultRloginPort" xml:space="preserve">
-    <value>Standard Rlogin Port</value>
+  <data name="RloginPort" xml:space="preserve">
+    <value>Rlogin Port</value>
   </data>
-  <data name="DefaultSSHPort" xml:space="preserve">
-    <value>Standard SSH Port</value>
+  <data name="SSHPort" xml:space="preserve">
+    <value>SSH Port</value>
   </data>
-  <data name="DefaultTelnetPort" xml:space="preserve">
-    <value>Standard Telnet Port</value>
+  <data name="TelnetPort" xml:space="preserve">
+    <value>Telnet Port</value>
   </data>
   <data name="DeleteCredentialMessage" xml:space="preserve">
     <value>Die ausgewählte Anmeldeinformation wird unwiderruflich gelöscht.</value>
@@ -855,9 +852,6 @@
   <data name="EnableCredentialSecuritySupportProvider" xml:space="preserve">
     <value>Aktiviere Credential Security Support Provider</value>
   </data>
-  <data name="EnableTheProfileInAtLeastOneTool" xml:space="preserve">
-    <value>Aktivieren Sie das Profil in mindestens einem Tool! Klicken Sie auf eine Registerkarte und wählen Sie "Aktivieren"...</value>
-  </data>
   <data name="EnableTransparency" xml:space="preserve">
     <value>Transparenz aktivieren</value>
   </data>
@@ -871,7 +865,7 @@
     <value>Geben Sie das Subnetz und eine neue Subnetzmaske ein, um Subnetze zu erstellen...</value>
   </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
-    <value>Fehler beim Überprüfen von 'api.github.com', überprüfen Sie Ihre Netzwerkverbindung!</value>
+    <value>Verbindung zu 'api.github.com' kann nicht hergestellt werden, überprüfen Sie Ihre Netzwerkverbindung.</value>
   </data>
   <data name="ErrorInResponse" xml:space="preserve">
     <value>Fehler in Antwort!</value>
@@ -1305,9 +1299,6 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
   <data name="Closed" xml:space="preserve">
     <value>Geschlossen</value>
   </data>
-  <data name="ConfigurePuTTY" xml:space="preserve">
-    <value>PuTTY konfigurieren</value>
-  </data>
   <data name="Continue" xml:space="preserve">
     <value>Weiter</value>
   </data>
@@ -1357,7 +1348,10 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
     <value>Das Passwort wird bei der Bearbeitung nicht angezeigt, kann jedoch überschrieben werden.</value>
   </data>
   <data name="HelpMessage_RDPAuthenticationLevel" xml:space="preserve">
-    <value>[0] Wenn die Serverauthentifizierung fehlschlägt, wird ohne Warnung eine Verbindung zum Computer hergestellt.\n[1] Wenn die Serverauthentifizierung fehlschlägt, wird keine Verbindung hergestellt.\n[2] Wenn die Server-Authentifizierung fehlschlägt, wird eine Warnung und ein Dialog angezeigt, um die Verbindung herzustellen oder abzulehnen.\n[3] Es ist keine Authentifizierungsanforderung angegeben.</value>
+    <value>[0] Wenn die Serverauthentifizierung fehlschlägt, wird ohne Warnung eine Verbindung zum Computer hergestellt.
+[1] Wenn die Serverauthentifizierung fehlschlägt, wird keine Verbindung hergestellt.
+[2] Wenn die Server-Authentifizierung fehlschlägt, wird eine Warnung und ein Dialog angezeigt, um die Verbindung herzustellen oder abzulehnen.
+[3] Es ist keine Authentifizierungsanforderung angegeben.</value>
   </data>
   <data name="HelpMessage_Tags" xml:space="preserve">
     <value>Mit Tags können Sie Profile/Sitzungen nach Themen/Projekten organisieren. Mehrere Tags können mit ";" getrennt sein. Suche nach Tags mit "tag=xxx".</value>
@@ -1869,26 +1863,20 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
   <data name="RestartSession" xml:space="preserve">
     <value>Session neu starten</value>
   </data>
-  <data name="TightVNC" xml:space="preserve">
-    <value>TightVNC</value>
+  <data name="TigerVNC" xml:space="preserve">
+    <value>TigerVNC</value>
   </data>
-  <data name="ConfigureThePathToTightVNCInTheSettingsDots" xml:space="preserve">
-    <value>Konfiguriere den Pfad zu TightVNC in den Einstellungen...</value>
+  <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
+    <value>Konfiguriere den Pfad zu TigerVNC in den Einstellungen...</value>
   </data>
-  <data name="ConfigureTightVNC" xml:space="preserve">
-    <value>TightVNC konfigurieren</value>
+  <data name="DisableTransparencyInTheSettingsToUseTigerVNC" xml:space="preserve">
+    <value>Deaktivieren Sie die Transparenz in den Einstellungen (Allgemein/Aussehen) und starten Sie anschließend die Anwendung neu, um TigerVNC zu verwenden.</value>
   </data>
-  <data name="DefaultVNCPort" xml:space="preserve">
-    <value>Standard VNC Port</value>
+  <data name="TigerVNCLocationDots" xml:space="preserve">
+    <value>TigerVNC-Speicherort...</value>
   </data>
-  <data name="DisableTransparencyInTheSettingsToUseTightVNC" xml:space="preserve">
-    <value>Deaktivieren Sie die Transparenz in den Einstellungen (Allgemein/Aussehen) und starten Sie anschließend die Anwendung neu, um TightVNC zu verwenden.</value>
-  </data>
-  <data name="TightVNCLocationDots" xml:space="preserve">
-    <value>TightVNC-Speicherort...</value>
-  </data>
-  <data name="TightVNCProcessHasEnded" xml:space="preserve">
-    <value>TightVNC-Prozess wurde beendet!</value>
+  <data name="TigerVNCProcessHasEnded" xml:space="preserve">
+    <value>TigerVNC-Prozess wurde beendet!</value>
   </data>
   <data name="ConnectingDots" xml:space="preserve">
     <value>Verbinde...</value>
@@ -1953,5 +1941,81 @@ Pfad: "{0}"</value>
   </data>
   <data name="AddIPv4Address" xml:space="preserve">
     <value>IPv4-Adresse hinzufügen</value>
+  </data>
+  <data name="HostThreads" xml:space="preserve">
+    <value>Host Threads</value>
+  </data>
+  <data name="PortThreads" xml:space="preserve">
+    <value>Port Threads</value>
+  </data>
+  <data name="PowerShell" xml:space="preserve">
+    <value>PowerShell</value>
+  </data>
+  <data name="ConfigureThePathToPowerShellInTheSettingsDots" xml:space="preserve">
+    <value>Konfiguriere den Pfad zu PowerShell in den Einstellungen...</value>
+  </data>
+  <data name="DisableTransparencyInTheSettingsToUsePowerShell" xml:space="preserve">
+    <value>Deaktivieren Sie die Transparenz in den Einstellungen (Allgemein/Aussehen) und starten Sie anschließend die Anwendung neu, um PowerShell zu verwenden.</value>
+  </data>
+  <data name="PowerShellProcessHasEnded" xml:space="preserve">
+    <value>PowerShell-Prozess wurde beendet!</value>
+  </data>
+  <data name="ExecutionPolicy" xml:space="preserve">
+    <value>Execution Policy</value>
+  </data>
+  <data name="RemoteConsole" xml:space="preserve">
+    <value>Remote-Konsole</value>
+  </data>
+  <data name="PowerShellLocationDots" xml:space="preserve">
+    <value>PowerShell-Speicherort...</value>
+  </data>
+  <data name="FilePath" xml:space="preserve">
+    <value>Dateipfad</value>
+  </data>
+  <data name="ThisFeatureIsOnlyAvailableInWindows10Server2016OrLater" xml:space="preserve">
+    <value>Dieses Feature ist nur in Windows  10 / Server 2016 oder später verfügbar!</value>
+  </data>
+  <data name="OverrideDefaultSettings" xml:space="preserve">
+    <value>Überschreibe Standard-Einstellungen</value>
+  </data>
+  <data name="ResolveIPv4AddressForThisHost" xml:space="preserve">
+    <value>IPv4-Adresse für diesen Host auflösen</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Verbergen</value>
+  </data>
+  <data name="TotalBytesReceived" xml:space="preserve">
+    <value>Anzahl der empfangenen Bytes</value>
+  </data>
+  <data name="TotalBytesSent" xml:space="preserve">
+    <value>Anzahl der gesendeten Bytes</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="Bandwidth" xml:space="preserve">
+    <value>Bandbreite</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="ApplyWindowsKeyCombinations" xml:space="preserve">
+    <value>Windows Tastenkombinationen anwenden</value>
+  </data>
+  <data name="CredentialSecuritySupportProvider" xml:space="preserve">
+    <value>Credential Security Support Provider</value>
+  </data>
+  <data name="BackgroundJob" xml:space="preserve">
+    <value>Hintergrundjob</value>
+  </data>
+  <data name="HelpMessage_BackgroundJob" xml:space="preserve">
+    <value>Der Hintergrundjob speichert alle x-Minuten die Einstellungen, Profile und Anmeldeinformationen.
+
+Wert 0 deaktiviert dieses Feature.
+
+Wenn der Wert geändert wird, muss die Anwendung muss neu gestartet werden, damit dieser angewandt werden.</value>
+  </data>
+  <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
+    <value>Hintergrundjob alle x-Minuten ausführen</value>
   </data>
 </root>

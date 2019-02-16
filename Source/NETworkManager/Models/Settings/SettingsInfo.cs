@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using Heijden.DNS;
@@ -46,7 +46,7 @@ namespace NETworkManager.Models.Settings
 
         #region General 
         // General        
-        private ApplicationViewManager.Name _general_DefaultApplicationViewName = ApplicationViewManager.Name.NetworkInterface;
+        private ApplicationViewManager.Name _general_DefaultApplicationViewName = GlobalStaticConfiguration.General_DefaultApplicationViewName;
         public ApplicationViewManager.Name General_DefaultApplicationViewName
         {
             get => _general_DefaultApplicationViewName;
@@ -56,11 +56,27 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _general_DefaultApplicationViewName = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _general_HistoryListEntries = 5;
+        private int _general_BackgroundJobInterval = GlobalStaticConfiguration.General_BackgroundJobInterval;
+        public int General_BackgroundJobInterval
+        {
+            get => _general_BackgroundJobInterval;
+            set
+            {
+                if (value == _general_BackgroundJobInterval)
+                    return;
+
+                _general_BackgroundJobInterval = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private int _general_HistoryListEntries = GlobalStaticConfiguration.General_HistoryListEntries;
         public int General_HistoryListEntries
         {
             get => _general_HistoryListEntries;
@@ -70,6 +86,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _general_HistoryListEntries = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -84,9 +101,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _general_ApplicationList = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -102,6 +117,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _window_ConfirmClose = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -116,6 +132,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _window_MinimizeInsteadOfTerminating = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -130,6 +147,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _window_MultipleInstances = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -144,23 +162,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _window_MinimizeToTrayInsteadOfTaskbar = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _window_ShowCurrentApplicationTitle;
-        public bool Window_ShowCurrentApplicationTitle
-        {
-            get => _window_ShowCurrentApplicationTitle;
-            set
-            {
-                if (value == _window_ShowCurrentApplicationTitle)
-                    return;
-
-                _window_ShowCurrentApplicationTitle = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -176,6 +178,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _trayIcon_AlwaysShowIcon = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -191,6 +194,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _appearance_AppTheme = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -205,6 +209,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _appearance_Accent = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -219,20 +224,22 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _appearance_EnableTransparency = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private double _appearance_Opacity = 0.85;
+        private double _appearance_Opacity = GlobalStaticConfiguration.Appearance_Opacity;
         public double Appearance_Opacity
         {
             get => _appearance_Opacity;
             set
             {
-                if (value == _appearance_Opacity)
+                if (Math.Abs(value - _appearance_Opacity) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _appearance_Opacity = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -248,6 +255,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _localization_CultureCode = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -263,6 +271,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _autostart_StartMinimizedInTray = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -278,11 +287,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _hotKey_ShowWindowEnabled = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _hotKey_ShowWindowKey = 79;
+        private int _hotKey_ShowWindowKey = GlobalStaticConfiguration.HotKey_ShowWindowKey;
         public int HotKey_ShowWindowKey
         {
             get => _hotKey_ShowWindowKey;
@@ -292,11 +302,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _hotKey_ShowWindowKey = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _hotKey_ShowWindowModifier = 3;
+        private int _hotKey_ShowWindowModifier = GlobalStaticConfiguration.HotKey_ShowWindowModifier;
         public int HotKey_ShowWindowModifier
         {
             get => _hotKey_ShowWindowModifier;
@@ -306,6 +317,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _hotKey_ShowWindowModifier = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -321,6 +333,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _update_CheckForUpdatesAtStartup = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -338,6 +351,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _expandApplicationView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -354,6 +368,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _networkInterface_SelectedInterfaceId = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -368,20 +383,22 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _networkInterface_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private double _networkInterface_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _networkInterface_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double NetworkInterface_ProfileWidth
         {
             get => _networkInterface_ProfileWidth;
             set
             {
-                if (value == _networkInterface_ProfileWidth)
+                if (Math.Abs(value - _networkInterface_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _networkInterface_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -398,11 +415,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ShowScanResultForAllIPAddresses = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _ipScanner_Threads = 256;
+        private int _ipScanner_Threads = GlobalStaticConfiguration.IPScanner_Threads;
         public int IPScanner_Threads
         {
             get => _ipScanner_Threads;
@@ -412,11 +430,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_Threads = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _ipScanner_ICMPAttempts = 2;
+        private int _ipScanner_ICMPAttempts = GlobalStaticConfiguration.IPScanner_ICMPAttempts;
         public int IPScanner_ICMPAttempts
         {
             get => _ipScanner_ICMPAttempts;
@@ -426,11 +445,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ICMPAttempts = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _ipScanner_ICMPBuffer = 32;
+        private int _ipScanner_ICMPBuffer = GlobalStaticConfiguration.IPScanner_ICMPBuffer;
         public int IPScanner_ICMPBuffer
         {
             get => _ipScanner_ICMPBuffer;
@@ -440,20 +460,22 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ICMPBuffer = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private ObservableCollection<string> _ipScanner_IPRangeHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> IPScanner_IPRangeHistory
+        private ObservableCollection<string> _ipScanner_HostHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> IPScanner_HostHistory
         {
-            get => _ipScanner_IPRangeHistory;
+            get => _ipScanner_HostHistory;
             set
             {
-                if (value == _ipScanner_IPRangeHistory)
+                if (value == _ipScanner_HostHistory)
                     return;
 
-                _ipScanner_IPRangeHistory = value;
+                _ipScanner_HostHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -468,9 +490,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ResolveHostname = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -485,6 +505,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_UseCustomDNSServer = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -499,11 +520,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_CustomDNSServer = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _ipScanner_DNSPort = 53;
+        private int _ipScanner_DNSPort = GlobalStaticConfiguration.IPScanner_DNSPort;
         public int IPScanner_DNSPort
         {
             get => _ipScanner_DNSPort;
@@ -513,6 +535,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_DNSPort = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -527,6 +550,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_DNSRecursion = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -541,11 +565,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_DNSUseResolverCache = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private TransportType _ipScanner_DNSTransportType = TransportType.Udp;
+        private TransportType _ipScanner_DNSTransportType = GlobalStaticConfiguration.IPScanner_DNSTransportType;
         public TransportType IPScanner_DNSTransportType
         {
             get => _ipScanner_DNSTransportType;
@@ -555,11 +580,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_DNSTransportType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _ipScanner_DNSAttempts = 2;
+        private int _ipScanner_DNSAttempts = GlobalStaticConfiguration.IPScanner_DNSAttempts;
         public int IPScanner_DNSAttempts
         {
             get => _ipScanner_DNSAttempts;
@@ -569,11 +595,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_DNSAttempts = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _ipScanner_DNSTimeout = 2000;
+        private int _ipScanner_DNSTimeout = GlobalStaticConfiguration.IPScanner_DNSTimeout;
         public int IPScanner_DNSTimeout
         {
             get => _ipScanner_DNSTimeout;
@@ -583,6 +610,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_DNSTimeout = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -597,14 +625,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ResolveMACAddress = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
 
-        private int _ipScanner_ICMPTimeout = 4000;
+        private int _ipScanner_ICMPTimeout = GlobalStaticConfiguration.IPScanner_ICMPTimeout;
         public int IPScanner_ICMPTimeout
         {
             get => _ipScanner_ICMPTimeout;
@@ -614,6 +640,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ICMPTimeout = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -628,6 +655,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ExpandStatistics = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -642,20 +670,22 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private double _ipScanner_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _ipScanner_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double IPScanner_ProfileWidth
         {
             get => _ipScanner_ProfileWidth;
             set
             {
-                if (value == _ipScanner_ProfileWidth)
+                if (Math.Abs(value - _ipScanner_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _ipScanner_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -670,9 +700,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ShowStatistics = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -687,20 +715,22 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private ExportManager.ExportFileType _ipScanner_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _ipScanner_ExportFileType = GlobalStaticConfiguration.IPScanner_ExportFileType;
         public ExportManager.ExportFileType IPScanner_ExportFileType
         {
             get => _ipScanner_ExportFileType;
             set
             {
-                if(value == _ipScanner_ExportFileType)
+                if (value == _ipScanner_ExportFileType)
                     return;
 
                 _ipScanner_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -717,6 +747,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_HostHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -731,20 +762,51 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_PortHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _portScanner_Threads = 100;
-        public int PortScanner_Threads
+        private bool _portScanner_ResolveHostname = true;
+        public bool PortScanner_ResolveHostname
         {
-            get => _portScanner_Threads;
+            get => _portScanner_ResolveHostname;
             set
             {
-                if (value == _portScanner_Threads)
+                if (value == _portScanner_ResolveHostname)
                     return;
 
-                _portScanner_Threads = value;
+                _portScanner_ResolveHostname = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private int _portScanner_HostThreads = GlobalStaticConfiguration.PortScanner_HostThreads;
+        public int PortScanner_HostThreads
+        {
+            get => _portScanner_HostThreads;
+            set
+            {
+                if (value == _portScanner_HostThreads)
+                    return;
+
+                _portScanner_HostThreads = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private int _portScanner_PortThreads = GlobalStaticConfiguration.PortScanner_PortThreds;
+        public int PortScanner_PortThreads
+        {
+            get => _portScanner_PortThreads;
+            set
+            {
+                if (value == _portScanner_PortThreads)
+                    return;
+
+                _portScanner_PortThreads = value;
                 SettingsChanged = true;
             }
         }
@@ -759,11 +821,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_ShowClosed = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _portScanner_Timeout = 4000;
+        private int _portScanner_Timeout = GlobalStaticConfiguration.PortScanner_Timeout;
         public int PortScanner_Timeout
         {
             get => _portScanner_Timeout;
@@ -773,20 +836,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_Timeout = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _portScanner_ResolveHostnamePreferIPv4 = true;
-        public bool PortScanner_ResolveHostnamePreferIPv4
-        {
-            get => _portScanner_ResolveHostnamePreferIPv4;
-            set
-            {
-                if (value == _portScanner_ResolveHostnamePreferIPv4)
-                    return;
-
-                _portScanner_ResolveHostnamePreferIPv4 = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -801,6 +851,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_ExpandStatistics = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -815,20 +866,22 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private double _portScanner_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _portScanner_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double PortScanner_ProfileWidth
         {
             get => _portScanner_ProfileWidth;
             set
             {
-                if (value == _portScanner_ProfileWidth)
+                if (Math.Abs(value - _portScanner_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _portScanner_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -843,9 +896,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_ShowStatistics = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -860,11 +911,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private ExportManager.ExportFileType _portScanner_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _portScanner_ExportFileType = GlobalStaticConfiguration.PortScanner_ExportFileType;
         public ExportManager.ExportFileType PortScanner_ExportFileType
         {
             get => _portScanner_ExportFileType;
@@ -874,6 +926,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _portScanner_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -890,11 +943,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_Attempts = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _ping_Buffer = 32;
+        private int _ping_Buffer = GlobalStaticConfiguration.Ping_Buffer;
         public int Ping_Buffer
         {
             get => _ping_Buffer;
@@ -904,6 +958,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_Buffer = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -914,10 +969,11 @@ namespace NETworkManager.Models.Settings
             get => _ping_DontFragement;
             set
             {
-                if (value = _ping_DontFragement)
+                if (value == _ping_DontFragement)
                     return;
 
                 _ping_DontFragement = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -932,6 +988,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_HostHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -946,11 +1003,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_ResolveHostnamePreferIPv4 = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _ping_Timeout = 4000;
+        private int _ping_Timeout = GlobalStaticConfiguration.Ping_Timeout;
         public int Ping_Timeout
         {
             get => _ping_Timeout;
@@ -960,11 +1018,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_Timeout = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _ping_TTL = 64;
+        private int _ping_TTL = GlobalStaticConfiguration.Ping_TTL;
         public int Ping_TTL
         {
             get => _ping_TTL;
@@ -974,11 +1033,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_TTL = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _ping_WaitTime = 1000;
+        private int _ping_WaitTime = GlobalStaticConfiguration.Ping_WaitTime;
         public int Ping_WaitTime
         {
             get => _ping_WaitTime;
@@ -988,11 +1048,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_WaitTime = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _ping_ExceptionCancelCount = 3;
+        private int _ping_ExceptionCancelCount = GlobalStaticConfiguration.Ping_ExceptionCancelCount;
         public int Ping_ExceptionCancelCount
         {
             get => _ping_ExceptionCancelCount;
@@ -1002,6 +1063,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_ExceptionCancelCount = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1016,6 +1078,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_ExpandStatistics = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1030,20 +1093,22 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private double _ping_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _ping_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double Ping_ProfileWidth
         {
             get => _ping_ProfileWidth;
             set
             {
-                if (value == _ping_ProfileWidth)
+                if (Math.Abs(value - _ping_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _ping_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1058,9 +1123,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_ShowStatistics = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -1075,11 +1138,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private ExportManager.ExportFileType _ping_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _ping_ExportFileType = GlobalStaticConfiguration.Ping_ExportFileType;
         public ExportManager.ExportFileType Ping_ExportFileType
         {
             get => _ping_ExportFileType;
@@ -1089,6 +1153,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ping_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1099,13 +1164,11 @@ namespace NETworkManager.Models.Settings
             get => _ping_HighlightTimeouts;
             set
             {
-                if(value == _ping_HighlightTimeouts)
+                if (value == _ping_HighlightTimeouts)
                     return;
 
                 _ping_HighlightTimeouts = value;
-                
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -1122,11 +1185,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_HostHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _traceroute_MaximumHops = 30;
+        private int _traceroute_MaximumHops = GlobalStaticConfiguration.Traceroute_MaximumHops;
         public int Traceroute_MaximumHops
         {
             get => _traceroute_MaximumHops;
@@ -1136,11 +1200,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_MaximumHops = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _traceroute_Timeout = 4000;
+        private int _traceroute_Timeout = GlobalStaticConfiguration.Traceroute_Timeout;
         public int Traceroute_Timeout
         {
             get => _traceroute_Timeout;
@@ -1150,11 +1215,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_Timeout = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _traceroute_Buffer = 32;
+        private int _traceroute_Buffer = GlobalStaticConfiguration.Traceroute_Buffer;
         public int Traceroute_Buffer
         {
             get => _traceroute_Buffer;
@@ -1164,6 +1230,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_Buffer = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1178,9 +1245,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ResolveHostname = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -1195,6 +1260,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ResolveHostnamePreferIPv4 = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1209,6 +1275,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ExpandStatistics = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1223,20 +1290,22 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private double _traceroute_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _traceroute_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double Traceroute_ProfileWidth
         {
             get => _traceroute_ProfileWidth;
             set
             {
-                if (value == _traceroute_ProfileWidth)
+                if (Math.Abs(value - _traceroute_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _traceroute_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1251,9 +1320,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ShowStatistics = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -1268,11 +1335,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private ExportManager.ExportFileType _traceroute_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _traceroute_ExportFileType = GlobalStaticConfiguration.Traceroute_ExportFileType;
         public ExportManager.ExportFileType Traceroute_ExportFileType
         {
             get => _traceroute_ExportFileType;
@@ -1282,6 +1350,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _traceroute_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1298,6 +1367,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_HostHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1312,6 +1382,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_DNSServers = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1326,11 +1397,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_SelectedDNSServer = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private QClass _dnsLookup_Class = QClass.IN;
+        private QClass _dnsLookup_Class = GlobalStaticConfiguration.DNSLookup_Class;
         public QClass DNSLookup_Class
         {
             get => _dnsLookup_Class;
@@ -1340,6 +1412,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_Class = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1354,14 +1427,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_ShowMostCommonQueryTypes = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
 
-        private QType _dnsLookup_Type = QType.ANY;
+        private QType _dnsLookup_Type = GlobalStaticConfiguration.DNSLookup_Type;
         public QType DNSLookup_Type
         {
             get => _dnsLookup_Type;
@@ -1371,6 +1442,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_Type = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1385,6 +1457,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_AddDNSSuffix = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1399,6 +1472,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_UseCustomDNSSuffix = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1413,6 +1487,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_CustomDNSSuffix = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1427,6 +1502,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_ResolveCNAME = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1441,6 +1517,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_Recursion = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1455,11 +1532,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_UseResolverCache = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private TransportType _dnsLookup_TransportType = TransportType.Udp;
+        private TransportType _dnsLookup_TransportType = GlobalStaticConfiguration.DNSLookup_TransportType;
         public TransportType DNSLookup_TransportType
         {
             get => _dnsLookup_TransportType;
@@ -1469,11 +1547,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_TransportType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _dnsLookup_Attempts = 3;
+        private int _dnsLookup_Attempts = GlobalStaticConfiguration.DNSLookup_Attempts;
         public int DNSLookup_Attempts
         {
             get => _dnsLookup_Attempts;
@@ -1483,11 +1562,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_Attempts = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _dnsLookup_Timeout = 2000;
+        private int _dnsLookup_Timeout = GlobalStaticConfiguration.DNSLookup_Timeout;
         public int DNSLookup_Timeout
         {
             get => _dnsLookup_Timeout;
@@ -1497,6 +1577,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_Timeout = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1511,6 +1592,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_ExpandStatistics = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1525,20 +1607,22 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private double _dnsLookup_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _dnsLookup_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double DNSLookup_ProfileWidth
         {
             get => _dnsLookup_ProfileWidth;
             set
             {
-                if (value == _dnsLookup_ProfileWidth)
+                if (Math.Abs(value - _dnsLookup_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _dnsLookup_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1553,9 +1637,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_ShowStatistics = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -1570,11 +1652,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private ExportManager.ExportFileType _dnsLookup_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _dnsLookup_ExportFileType = GlobalStaticConfiguration.DNSLookup_ExportFileType;
         public ExportManager.ExportFileType DNSLookup_ExportFileType
         {
             get => _dnsLookup_ExportFileType;
@@ -1584,6 +1667,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _dnsLookup_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1600,6 +1684,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_HostHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1614,6 +1699,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_AdjustScreenAutomatically = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1628,6 +1714,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_UseCurrentViewSize = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1642,11 +1729,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_UseFixedScreenSize = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _remoteDesktop_ScreenWidth = 1280;
+        private int _remoteDesktop_ScreenWidth = GlobalStaticConfiguration.RemoteDesktop_ScreenWidth;
         public int RemoteDesktop_ScreenWidth
         {
             get => _remoteDesktop_ScreenWidth;
@@ -1656,11 +1744,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_ScreenWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _remoteDesktop_ScreenHeight = 768;
+        private int _remoteDesktop_ScreenHeight = GlobalStaticConfiguration.RemoteDesktop_ScreenHeight;
         public int RemoteDesktop_ScreenHeight
         {
             get => _remoteDesktop_ScreenHeight;
@@ -1670,6 +1759,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_ScreenHeight = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1684,6 +1774,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_UseCustomScreenSize = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1698,6 +1789,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_CustomScreenWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1712,11 +1804,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_CustomScreenHeight = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _remoteDesktop_ColorDepth = 32;
+        private int _remoteDesktop_ColorDepth = GlobalStaticConfiguration.RemoteDesktop_ColorDepth;
         public int RemoteDesktop_ColorDepth
         {
             get => _remoteDesktop_ColorDepth;
@@ -1726,11 +1819,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_ColorDepth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _remoteDesktop_Port = 3389;
+        private int _remoteDesktop_Port = GlobalStaticConfiguration.RemoteDesktop_Port;
         public int RemoteDesktop_Port
         {
             get => _remoteDesktop_Port;
@@ -1740,6 +1834,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_Port = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1754,11 +1849,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_EnableCredSspSupport = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private uint _remoteDesktop_AuthenticationLevel = 2;
+        private uint _remoteDesktop_AuthenticationLevel = GlobalStaticConfiguration.RemoteDesktop_AuthenticationLevel;
         public uint RemoteDesktop_AuthenticationLevel
         {
             get => _remoteDesktop_AuthenticationLevel;
@@ -1768,11 +1864,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_AuthenticationLevel = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _remoteDesktop_KeyboardHookMode = 1;
+        private int _remoteDesktop_KeyboardHookMode = GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
         public int RemoteDesktop_KeyboardHookMode
         {
             get => _remoteDesktop_KeyboardHookMode;
@@ -1782,6 +1879,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_KeyboardHookMode = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1796,6 +1894,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_RedirectClipboard = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1810,6 +1909,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_RedirectDevices = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1824,6 +1924,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_RedirectDrives = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1838,6 +1939,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_RedirectPorts = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1852,6 +1954,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_RedirectSmartCards = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1866,6 +1969,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_RedirectPrinters = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1880,20 +1984,114 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private double _remoteDesktop_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _remoteDesktop_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double RemoteDesktop_ProfileWidth
         {
             get => _remoteDesktop_ProfileWidth;
             set
             {
-                if (value == _remoteDesktop_ProfileWidth)
+                if (Math.Abs(value - _remoteDesktop_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _remoteDesktop_ProfileWidth = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
+        #region PowerShell
+        private ObservableCollection<string> _powerShell_HostHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PowerShell_HostHistory
+        {
+            get => _powerShell_HostHistory;
+            set
+            {
+                if (value == _powerShell_HostHistory)
+                    return;
+
+                _powerShell_HostHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _powerShell_ApplicationFilePath = GlobalStaticConfiguration.PowerShell_ApplicationFileLocationPowerShell;
+        public string PowerShell_ApplicationFilePath
+        {
+            get => _powerShell_ApplicationFilePath;
+            set
+            {
+                if (value == _powerShell_ApplicationFilePath)
+                    return;
+
+                _powerShell_ApplicationFilePath = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _powerShell_AdditionalCommandLine;
+        public string PowerShell_AdditionalCommandLine
+        {
+            get => _powerShell_AdditionalCommandLine;
+            set
+            {
+                if (value == _powerShell_AdditionalCommandLine)
+                    return;
+
+                _powerShell_AdditionalCommandLine = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private PowerShell.PowerShell.ExecutionPolicy _powerShell_ExecutionPolicy = GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
+        public PowerShell.PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy
+        {
+            get => _powerShell_ExecutionPolicy;
+            set
+            {
+                if (value == _powerShell_ExecutionPolicy)
+                    return;
+
+                _powerShell_ExecutionPolicy = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _powerShell_ExpandProfileView = true;
+        public bool PowerShell_ExpandProfileView
+        {
+            get => _powerShell_ExpandProfileView;
+            set
+            {
+                if (value == _powerShell_ExpandProfileView)
+                    return;
+
+                _powerShell_ExpandProfileView = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private double _powerShell_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+        public double PowerShell_ProfileWidth
+        {
+            get => _powerShell_ProfileWidth;
+            set
+            {
+                if (Math.Abs(value - _powerShell_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+                    return;
+
+                _powerShell_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -1910,121 +2108,37 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_HostHistory = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private ObservableCollection<string> _puTTY_SerialLineHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> PuTTY_SerialLineHistory
-        {
-            get => _puTTY_SerialLineHistory;
-            set
-            {
-                if (value == _puTTY_SerialLineHistory)
-                    return;
-
-                _puTTY_SerialLineHistory = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private ObservableCollection<string> _puTTY_PortHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> PuTTY_PortHistory
-        {
-            get => _puTTY_PortHistory;
-            set
-            {
-                if (value == _puTTY_PortHistory)
-                    return;
-
-                _puTTY_PortHistory = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private ObservableCollection<string> _puTTY_BaudHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> PuTTY_BaudHistory
-        {
-            get => _puTTY_BaudHistory;
-            set
-            {
-                if (value == _puTTY_BaudHistory)
-                    return;
-
-                _puTTY_BaudHistory = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private ObservableCollection<string> _puTTY_UsernameHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> PuTTY_UsernameHistory
-        {
-            get => _puTTY_UsernameHistory;
-            set
-            {
-                if (value == _puTTY_UsernameHistory)
-                    return;
-
-                _puTTY_UsernameHistory = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private ObservableCollection<string> _puTTY_ProfileHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> PuTTY_ProfileHistory
-        {
-            get => _puTTY_ProfileHistory;
-            set
-            {
-                if (value == _puTTY_ProfileHistory)
-                    return;
-
-                _puTTY_ProfileHistory = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _puTTY_ExpandProfileView = true;
-        public bool PuTTY_ExpandProfileView
-        {
-            get => _puTTY_ExpandProfileView;
-            set
-            {
-                if (value == _puTTY_ExpandProfileView)
-                    return;
-
-                _puTTY_ExpandProfileView = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private double _puTTY_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
-        public double PuTTY_ProfileWidth
-        {
-            get => _puTTY_ProfileWidth;
-            set
-            {
-                if (value == _puTTY_ProfileWidth)
-                    return;
-
-                _puTTY_ProfileWidth = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private string _puTTY_PuTTYLocation;
-        public string PuTTY_PuTTYLocation
-        {
-            get => _puTTY_PuTTYLocation;
-            set
-            {
-                if (value == _puTTY_PuTTYLocation)
-                    return;
-
-                _puTTY_PuTTYLocation = value;
-
                 OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
 
+        private PuTTY.PuTTY.ConnectionMode _puTTY_DefaultConnectionMode = GlobalStaticConfiguration.PuTTY_DefaultConnectionMode;
+        public PuTTY.PuTTY.ConnectionMode PuTTY_DefaultConnectionMode
+        {
+            get => _puTTY_DefaultConnectionMode;
+            set
+            {
+                if (value == _puTTY_DefaultConnectionMode)
+                    return;
+
+                _puTTY_DefaultConnectionMode = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _puTTY_Username;
+        public string PuTTY_Username
+        {
+            get => _puTTY_Username;
+            set
+            {
+                if (value == _puTTY_Username)
+                    return;
+
+                _puTTY_Username = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2039,11 +2153,147 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_Profile = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private string _puTTY_SerialLine = "COM1";
+        private string _puTTY_AdditionalCommandLine;
+        public string PuTTY_AdditionalCommandLine
+        {
+            get => _puTTY_AdditionalCommandLine;
+            set
+            {
+                if (value == _puTTY_AdditionalCommandLine)
+                    return;
+
+                _puTTY_AdditionalCommandLine = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _puTTY_SerialLineHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PuTTY_SerialLineHistory
+        {
+            get => _puTTY_SerialLineHistory;
+            set
+            {
+                if (value == _puTTY_SerialLineHistory)
+                    return;
+
+                _puTTY_SerialLineHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _puTTY_PortHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PuTTY_PortHistory
+        {
+            get => _puTTY_PortHistory;
+            set
+            {
+                if (value == _puTTY_PortHistory)
+                    return;
+
+                _puTTY_PortHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _puTTY_BaudHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PuTTY_BaudHistory
+        {
+            get => _puTTY_BaudHistory;
+            set
+            {
+                if (value == _puTTY_BaudHistory)
+                    return;
+
+                _puTTY_BaudHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _puTTY_UsernameHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PuTTY_UsernameHistory
+        {
+            get => _puTTY_UsernameHistory;
+            set
+            {
+                if (value == _puTTY_UsernameHistory)
+                    return;
+
+                _puTTY_UsernameHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _puTTY_ProfileHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PuTTY_ProfileHistory
+        {
+            get => _puTTY_ProfileHistory;
+            set
+            {
+                if (value == _puTTY_ProfileHistory)
+                    return;
+
+                _puTTY_ProfileHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _puTTY_ExpandProfileView = true;
+        public bool PuTTY_ExpandProfileView
+        {
+            get => _puTTY_ExpandProfileView;
+            set
+            {
+                if (value == _puTTY_ExpandProfileView)
+                    return;
+
+                _puTTY_ExpandProfileView = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private double _puTTY_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+        public double PuTTY_ProfileWidth
+        {
+            get => _puTTY_ProfileWidth;
+            set
+            {
+                if (Math.Abs(value - _puTTY_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+                    return;
+
+                _puTTY_ProfileWidth = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _puTTY_ApplicationFilePath;
+        public string PuTTY_ApplicationFilePath
+        {
+            get => _puTTY_ApplicationFilePath;
+            set
+            {
+                if (value == _puTTY_ApplicationFilePath)
+                    return;
+
+                _puTTY_ApplicationFilePath = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _puTTY_SerialLine = GlobalStaticConfiguration.PuTTY_SerialLine;
         public string PuTTY_SerialLine
         {
             get => _puTTY_SerialLine;
@@ -2053,11 +2303,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_SerialLine = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _puTTY_SSHPort = 22;
+        private int _puTTY_SSHPort = GlobalStaticConfiguration.PuTTY_SSHPort;
         public int PuTTY_SSHPort
         {
             get => _puTTY_SSHPort;
@@ -2067,11 +2318,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_SSHPort = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _puTTY_TelnetPort = 23;
+        private int _puTTY_TelnetPort = GlobalStaticConfiguration.PuTTY_TelnetPort;
         public int PuTTY_TelnetPort
         {
             get => _puTTY_TelnetPort;
@@ -2081,11 +2333,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_TelnetPort = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _puTTY_RloginPort = 513;
+        private int _puTTY_RloginPort = GlobalStaticConfiguration.PuTTY_RloginPort;
         public int PuTTY_RloginPort
         {
             get => _puTTY_RloginPort;
@@ -2095,11 +2348,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_RloginPort = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _puTTY_BaudRate = 9600;
+        private int _puTTY_BaudRate = GlobalStaticConfiguration.PuTTY_BaudRate;
         public int PuTTY_BaudRate
         {
             get => _puTTY_BaudRate;
@@ -2109,102 +2363,121 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _puTTY_BaudRate = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private int _puTTY_DefaultRaw = GlobalStaticConfiguration.PuTTY_Raw;
+        public int PuTTY_DefaultRaw
+        {
+            get => _puTTY_DefaultRaw;
+            set
+            {
+                if (value == _puTTY_DefaultRaw)
+                    return;
+
+                _puTTY_DefaultRaw = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
         #endregion
 
-        #region TightVNC
-        private ObservableCollection<string> _tightVNC_HostHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> TightVNC_HostHistory
+        #region TigerVNC
+        private ObservableCollection<string> _tigerVNC_HostHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> TigerVNC_HostHistory
         {
-            get => _tightVNC_HostHistory;
+            get => _tigerVNC_HostHistory;
             set
             {
-                if (value == _tightVNC_HostHistory)
+                if (value == _tigerVNC_HostHistory)
                     return;
 
-                _tightVNC_HostHistory = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private ObservableCollection<int> _tightVNC_PortHistory = new ObservableCollection<int>();
-        public ObservableCollection<int> TightVNC_PortHistory
-        {
-            get => _tightVNC_PortHistory;
-            set
-            {
-                if (value == _tightVNC_PortHistory)
-                    return;
-
-                _tightVNC_PortHistory = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _tightVNC_ExpandProfileView = true;
-        public bool TightVNC_ExpandProfileView
-        {
-            get => _tightVNC_ExpandProfileView;
-            set
-            {
-                if (value == _tightVNC_ExpandProfileView)
-                    return;
-
-                _tightVNC_ExpandProfileView = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private double _tightVNC_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
-        public double TightVNC_ProfileWidth
-        {
-            get => _tightVNC_ProfileWidth;
-            set
-            {
-                if (value == _tightVNC_ProfileWidth)
-                    return;
-
-                _tightVNC_ProfileWidth = value;
-                SettingsChanged = true;
-            }
-        }
-
-        private string _tightVNC_TightVNCLocation;
-        public string TightVNC_TightVNCLocation
-        {
-            get => _tightVNC_TightVNCLocation;
-            set
-            {
-                if (value == _tightVNC_TightVNCLocation)
-                    return;
-
-                _tightVNC_TightVNCLocation = value;
-
+                _tigerVNC_HostHistory = value;
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
 
-        private int _tightVNC_VNCPort = 5900;
-        public int TightVNC_VNCPort
+        private ObservableCollection<int> _tigerVNC_PortHistory = new ObservableCollection<int>();
+        public ObservableCollection<int> TigerVNC_PortHistory
         {
-            get => _tightVNC_VNCPort;
+            get => _tigerVNC_PortHistory;
             set
             {
-                if (value == _tightVNC_VNCPort)
+                if (value == _tigerVNC_PortHistory)
                     return;
 
-                _tightVNC_VNCPort = value;
+                _tigerVNC_PortHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _tigerVNC_ExpandProfileView = true;
+        public bool TigerVNC_ExpandProfileView
+        {
+            get => _tigerVNC_ExpandProfileView;
+            set
+            {
+                if (value == _tigerVNC_ExpandProfileView)
+                    return;
+
+                _tigerVNC_ExpandProfileView = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private double _tigerVNC_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+        public double TigerVNC_ProfileWidth
+        {
+            get => _tigerVNC_ProfileWidth;
+            set
+            {
+                if (Math.Abs(value - _tigerVNC_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+                    return;
+
+                _tigerVNC_ProfileWidth = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _tigerVNC_ApplicationFilePath;
+        public string TigerVNC_ApplicationFilePath
+        {
+            get => _tigerVNC_ApplicationFilePath;
+            set
+            {
+                if (value == _tigerVNC_ApplicationFilePath)
+                    return;
+
+                _tigerVNC_ApplicationFilePath = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private int _tigerVNC_Port = GlobalStaticConfiguration.TigerVNC_DefaultVNCPort;
+        public int TigerVNC_Port
+        {
+            get => _tigerVNC_Port;
+            set
+            {
+                if (value == _tigerVNC_Port)
+                    return;
+
+                _tigerVNC_Port = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
         #endregion
 
         #region SNMP
-        private WalkMode _snmp_WalkMode = WalkMode.WithinSubtree;
+        private WalkMode _snmp_WalkMode = GlobalStaticConfiguration.SNMP_WalkMode;
         public WalkMode SNMP_WalkMode
         {
             get => _snmp_WalkMode;
@@ -2214,11 +2487,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_WalkMode = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _snmp_Timeout = 60000;
+        private int _snmp_Timeout = GlobalStaticConfiguration.SNMP_Timeout;
         public int SNMP_Timeout
         {
             get => _snmp_Timeout;
@@ -2228,6 +2502,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_Timeout = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2242,6 +2517,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_port = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2256,6 +2532,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_ResolveHostnamePreferIPv4 = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2270,6 +2547,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_HostHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2284,11 +2562,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_OIDHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private SNMPMode _snmp_Mode = SNMPMode.Walk;
+        private SNMPMode _snmp_Mode = GlobalStaticConfiguration.SNMP_Mode;
         public SNMPMode SNMP_Mode
         {
             get => _snmp_Mode;
@@ -2298,11 +2577,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_Mode = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private SNMPVersion _snmp_Version = SNMPVersion.V2C;
+        private SNMPVersion _snmp_Version = GlobalStaticConfiguration.SNMP_Version;
         public SNMPVersion SNMP_Version
         {
             get => _snmp_Version;
@@ -2312,6 +2592,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_Version = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2326,11 +2607,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_ExpandStatistics = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private SNMPV3Security _snmp_Security = SNMPV3Security.AuthPriv;
+        private SNMPV3Security _snmp_Security = GlobalStaticConfiguration.SNMP_Security;
         public SNMPV3Security SNMP_Security
         {
             get => _snmp_Security;
@@ -2340,11 +2622,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_Security = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private SNMPV3AuthenticationProvider _snmp_AuthenticationProvider = SNMPV3AuthenticationProvider.SHA1;
+        private SNMPV3AuthenticationProvider _snmp_AuthenticationProvider = GlobalStaticConfiguration.SNMP_AuthenticationProvider;
         public SNMPV3AuthenticationProvider SNMP_AuthenticationProvider
         {
             get => _snmp_AuthenticationProvider;
@@ -2354,11 +2637,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_AuthenticationProvider = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private SNMPV3PrivacyProvider _snmp_PrivacyProvider = SNMPV3PrivacyProvider.AES;
+        private SNMPV3PrivacyProvider _snmp_PrivacyProvider = GlobalStaticConfiguration.SNMP_PrivacyProvider;
         public SNMPV3PrivacyProvider SNMP_PrivacyProvider
         {
             get => _snmp_PrivacyProvider;
@@ -2368,6 +2652,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_PrivacyProvider = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2382,9 +2667,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_ShowStatistics = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -2399,11 +2682,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private ExportManager.ExportFileType _snmp_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _snmp_ExportFileType = GlobalStaticConfiguration.SNMP_ExportFileType;
         public ExportManager.ExportFileType SNMP_ExportFileType
         {
             get => _snmp_ExportFileType;
@@ -2413,13 +2697,14 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
         #endregion
 
         #region WakeOnLAN
-        private int _wakeOnLAN_Port = 7;
+        private int _wakeOnLAN_Port = GlobalStaticConfiguration.WakeOnLAN_Port;
         public int WakeOnLAN_Port
         {
             get => _wakeOnLAN_Port;
@@ -2429,6 +2714,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _wakeOnLAN_Port = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2443,20 +2729,22 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _wakeOnLAN_ExpandClientView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private double _wakeOnLAN_ClientWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _wakeOnLAN_ClientWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double WakeOnLAN_ClientWidth
         {
             get => _wakeOnLAN_ClientWidth;
             set
             {
-                if (value == _wakeOnLAN_ClientWidth)
+                if (Math.Abs(value - _wakeOnLAN_ClientWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _wakeOnLAN_ClientWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2473,11 +2761,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_WebsiteUriHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _httpHeaders_Timeout = 10000;
+        private int _httpHeaders_Timeout = GlobalStaticConfiguration.HTTPHeaders_Timeout;
         public int HTTPHeaders_Timeout
         {
             get => _httpHeaders_Timeout;
@@ -2487,6 +2776,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_Timeout = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2501,6 +2791,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_ExpandStatistics = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2515,20 +2806,22 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private double _httpHeaders_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _httpHeaders_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double HTTPHeaders_ProfileWidth
         {
             get => _httpHeaders_ProfileWidth;
             set
             {
-                if (value == _httpHeaders_ProfileWidth)
+                if (Math.Abs(value - _httpHeaders_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _httpHeaders_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2543,9 +2836,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_ShowStatistics = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -2560,11 +2851,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private ExportManager.ExportFileType _httpHeaders_ExportFileType = ExportManager.ExportFileType.TXT;
+        private ExportManager.ExportFileType _httpHeaders_ExportFileType = GlobalStaticConfiguration.HTTPHeaders_ExportFileType;
         public ExportManager.ExportFileType HTTPHeaders_ExportFileType
         {
             get => _httpHeaders_ExportFileType;
@@ -2574,6 +2866,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _httpHeaders_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2592,6 +2885,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _subnetCalculator_Calculator_SubnetHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2608,6 +2902,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _subnetCalculator_Subnetting_SubnetHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2622,6 +2917,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _subnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2636,11 +2932,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _subnetCalculator_Subnetting_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private ExportManager.ExportFileType _subnetCalculator_Subnetting_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _subnetCalculator_Subnetting_ExportFileType = GlobalStaticConfiguration.SubnetCalculator_Subnetting_ExportFileType;
         public ExportManager.ExportFileType SubnetCalculator_Subnetting_ExportFileType
         {
             get => _subnetCalculator_Subnetting_ExportFileType;
@@ -2650,6 +2947,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _subnetCalculator_Subnetting_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2666,6 +2964,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _subnetCalculator_WideSubnet_Subnet1 = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2680,6 +2979,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _subnetCalculator_WideSubnet_Subnet2 = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2698,6 +2998,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _lookup_OUI_MACAddressOrVendorHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2712,11 +3013,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _lookup_OUI_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private ExportManager.ExportFileType _lookup_OUI_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _lookup_OUI_ExportFileType = GlobalStaticConfiguration.Lookup_OUI_ExportFileType;
         public ExportManager.ExportFileType Lookup_OUI_ExportFileType
         {
             get => _lookup_OUI_ExportFileType;
@@ -2726,6 +3028,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _lookup_OUI_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2740,6 +3043,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _lookup_Port_PortsHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2754,11 +3058,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _lookup_Port_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private ExportManager.ExportFileType _lookup_Port_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _lookup_Port_ExportFileType = GlobalStaticConfiguration.Lookup_Port_ExportFileType;
         public ExportManager.ExportFileType Lookup_Port_ExportFileType
         {
             get => _lookup_Port_ExportFileType;
@@ -2768,6 +3073,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _lookup_Port_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2784,6 +3090,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _whois_DomainHistory = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2798,6 +3105,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _whois_ExpandStatistics = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2812,20 +3120,22 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _whois_ExpandProfileView = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private double _whois_ProfileWidth = GlobalStaticConfiguration.ProfileDefaultWidthExpanded;
+        private double _whois_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
         public double Whois_ProfileWidth
         {
             get => _whois_ProfileWidth;
             set
             {
-                if (value == _whois_ProfileWidth)
+                if (Math.Abs(value - _whois_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
                 _whois_ProfileWidth = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2840,9 +3150,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _whois_ShowStatistics = value;
-
                 OnPropertyChanged();
-
                 SettingsChanged = true;
             }
         }
@@ -2857,11 +3165,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _whois_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private ExportManager.ExportFileType _whois_ExportFileType = ExportManager.ExportFileType.TXT;
+        private ExportManager.ExportFileType _whois_ExportFileType = GlobalStaticConfiguration.Whois_ExportFileType;
         public ExportManager.ExportFileType Whois_ExportFileType
         {
             get => _whois_ExportFileType;
@@ -2871,6 +3180,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _whois_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2887,11 +3197,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _connections_AutoRefresh = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private AutoRefreshTimeInfo _connections_AutoRefreshTime = AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second);
+        private AutoRefreshTimeInfo _connections_AutoRefreshTime = GlobalStaticConfiguration.Connections_AutoRefreshTime;
         public AutoRefreshTimeInfo Connections_AutoRefreshTime
         {
             get => _connections_AutoRefreshTime;
@@ -2901,10 +3212,11 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _connections_AutoRefreshTime = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
-    
+
         private string _connections_ExportFilePath;
         public string Connections_ExportFilePath
         {
@@ -2915,11 +3227,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _connections_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private ExportManager.ExportFileType _connections_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _connections_ExportFileType = GlobalStaticConfiguration.Connections_ExportFileType;
         public ExportManager.ExportFileType Connections_ExportFileType
         {
             get => _connections_ExportFileType;
@@ -2929,6 +3242,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _connections_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2945,11 +3259,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _listeners_AutoRefresh = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private AutoRefreshTimeInfo _listeners_AutoRefreshTime = AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second);
+        private AutoRefreshTimeInfo _listeners_AutoRefreshTime = GlobalStaticConfiguration.Listeners_AutoRefreshTime;
         public AutoRefreshTimeInfo Listeners_AutoRefreshTime
         {
             get => _listeners_AutoRefreshTime;
@@ -2959,6 +3274,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _listeners_AutoRefreshTime = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -2973,11 +3289,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _listeners_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private ExportManager.ExportFileType _listeners_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _listeners_ExportFileType = GlobalStaticConfiguration.Listeners_ExportFileType;
         public ExportManager.ExportFileType Listeners_ExportFileType
         {
             get => _listeners_ExportFileType;
@@ -2987,6 +3304,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _listeners_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -3003,11 +3321,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _arpTable_AutoRefresh = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private AutoRefreshTimeInfo _arpTable_AutoRefreshTime = AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second);
+        private AutoRefreshTimeInfo _arpTable_AutoRefreshTime = GlobalStaticConfiguration.ARPTable_AutoRefreshTime;
         public AutoRefreshTimeInfo ARPTable_AutoRefreshTime
         {
             get => _arpTable_AutoRefreshTime;
@@ -3017,6 +3336,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _arpTable_AutoRefreshTime = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -3031,11 +3351,12 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _arpTable_ExportFilePath = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private ExportManager.ExportFileType _arpTable_ExportFileType = ExportManager.ExportFileType.CSV;
+        private ExportManager.ExportFileType _arpTable_ExportFileType = GlobalStaticConfiguration.ARPTable_ExportFileType;
         public ExportManager.ExportFileType ARPTable_ExportFileType
         {
             get => _arpTable_ExportFileType;
@@ -3045,6 +3366,7 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _arpTable_ExportFileType = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -3059,7 +3381,7 @@ namespace NETworkManager.Models.Settings
             General_ApplicationList.CollectionChanged += CollectionChanged;
 
             // IP Scanner
-            IPScanner_IPRangeHistory.CollectionChanged += CollectionChanged;
+            IPScanner_HostHistory.CollectionChanged += CollectionChanged;
 
             // Port Scanner
             PortScanner_HostHistory.CollectionChanged += CollectionChanged;
@@ -3078,6 +3400,9 @@ namespace NETworkManager.Models.Settings
             // Remote Desktop
             RemoteDesktop_HostHistory.CollectionChanged += CollectionChanged;
 
+            // PowerShell
+            PowerShell_HostHistory.CollectionChanged += CollectionChanged;
+
             // PuTTY
             PuTTY_HostHistory.CollectionChanged += CollectionChanged;
             PuTTY_SerialLineHistory.CollectionChanged += CollectionChanged;
@@ -3086,8 +3411,9 @@ namespace NETworkManager.Models.Settings
             PuTTY_UsernameHistory.CollectionChanged += CollectionChanged;
             PuTTY_ProfileHistory.CollectionChanged += CollectionChanged;
 
-            // TightVNC
-            TightVNC_HostHistory.CollectionChanged += CollectionChanged;
+            // TigerVNC
+            TigerVNC_HostHistory.CollectionChanged += CollectionChanged;
+            TigerVNC_PortHistory.CollectionChanged += CollectionChanged;
 
             // SNMP
             SNMP_HostHistory.CollectionChanged += CollectionChanged;
@@ -3112,6 +3438,9 @@ namespace NETworkManager.Models.Settings
 
             // Lookup / Port
             Lookup_Port_PortsHistory.CollectionChanged += CollectionChanged;
+
+            // Whois
+            Whois_DomainHistory.CollectionChanged += CollectionChanged;
         }
 
         private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

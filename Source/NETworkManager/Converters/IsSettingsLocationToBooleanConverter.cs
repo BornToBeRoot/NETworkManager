@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
+using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Converters
 {
-    public sealed class StringIsNotNullOrEmptyToVisibilityConverter : IValueConverter
+    public sealed class IsSettingsLocationToBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return string.IsNullOrEmpty(value as string) ? Visibility.Collapsed : Visibility.Visible;
+            return value as string == SettingsManager.GetSettingsLocation();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

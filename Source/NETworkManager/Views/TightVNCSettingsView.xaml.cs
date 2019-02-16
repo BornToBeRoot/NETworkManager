@@ -4,17 +4,17 @@ using System.Windows;
 
 namespace NETworkManager.Views
 {
-    public partial class TightVNCSettingsView
+    public partial class TigerVNCSettingsView
     {
-        private readonly TightVNCSettingsViewModel _viewModel = new TightVNCSettingsViewModel(DialogCoordinator.Instance);
+        private readonly TigerVNCSettingsViewModel _viewModel = new TigerVNCSettingsViewModel(DialogCoordinator.Instance);
 
-        public TightVNCSettingsView()
+        public TigerVNCSettingsView()
         {
             InitializeComponent();
             DataContext = _viewModel;
         }
 
-        private void TextBoxTightVNCLocation_Drop(object sender, DragEventArgs e)
+        private void TextBoxApplicationFilePath_Drop(object sender, DragEventArgs e)
         {
             if (!e.Data.GetDataPresent(DataFormats.FileDrop))
                 return;
@@ -25,7 +25,7 @@ namespace NETworkManager.Views
                 _viewModel.SetFilePathFromDragDrop(files[0]);
         }
 
-        private void TextBoxTightVNCLocation_PreviewDragOver(object sender, DragEventArgs e)
+        private void TextBoxApplicationFilePath_PreviewDragOver(object sender, DragEventArgs e)
         {
             e.Effects = DragDropEffects.Copy;
             e.Handled = true;

@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using NETworkManager.Utilities;
 using NETworkManager.Models.Settings;
 using System.Windows.Threading;
@@ -22,6 +23,7 @@ namespace NETworkManager.ViewModels
 
         private readonly bool _isLoading;
         private readonly DispatcherTimer _autoRefreshTimer = new DispatcherTimer();
+        private bool _isTimerPaused;
 
         private string _search;
         public string Search
@@ -340,7 +342,7 @@ namespace NETworkManager.ViewModels
             ConnectionResults.Clear();
 
             (await Connection.GetActiveTcpConnectionsAsync()).ForEach(x => ConnectionResults.Add(x));
-
+            Debug.WriteLine("Refresh Connections...");
             IsRefreshing = false;
         }         
 
@@ -359,6 +361,33 @@ namespace NETworkManager.ViewModels
         private void StopAutoRefreshTimer()
         {
             _autoRefreshTimer.Stop();
+        }
+
+        private void PauseRefresh()
+        {
+            if (!_autoRefreshTimer.IsEnabled)
+                return;
+
+            _autoRefreshTimer.Stop();
+            _isTimerPaused = true;
+        }
+
+        private void ResumeRefresh()
+        {
+            if (!_isTimerPaused)
+                return;
+
+            _autoRefreshTimer.Start();
+            _isTimerPaused = false;
+        }
+        public void OnViewHide()
+        {
+            PauseRefresh();
+        }
+
+        public void OnViewVisible()
+        {
+            ResumeRefresh();
         }
         #endregion
 

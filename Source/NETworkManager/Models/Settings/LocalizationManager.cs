@@ -8,11 +8,13 @@ namespace NETworkManager.Models.Settings
 {
     public static class LocalizationManager
     {
-        public static List<LocalizationInfo> List => new List<LocalizationInfo> {
-            new LocalizationInfo("English", "English", new Uri("/Resources/Localization/Flags/en-US.png", UriKind.Relative), "BornToBeRoot", "en-US"),
-            new LocalizationInfo("German", "Deutsch", new Uri("/Resources/Localization/Flags/de-DE.png", UriKind.Relative), "BornToBeRoot", "de-DE"),
-            new LocalizationInfo("Russian", "Русский", new Uri("/Resources/Localization/Flags/ru-RU.png", UriKind.Relative), "LaXe", "ru-RU"),
-            new LocalizationInfo("Spanish", "Español", new Uri("/Resources/Localization/Flags/es-ES.png", UriKind.Relative), "MS-PC", "es-ES"),
+        public static List<LocalizationInfo> List => new List<LocalizationInfo>
+        {
+            new LocalizationInfo("English", "English", new Uri("/Resources/Localization/Flags/en-US.png", UriKind.Relative), "BornToBeRoot", "en-US",100),
+            new LocalizationInfo("German", "Deutsch", new Uri("/Resources/Localization/Flags/de-DE.png", UriKind.Relative), "BornToBeRoot", "de-DE",100),
+            new LocalizationInfo("Russian", "Русский", new Uri("/Resources/Localization/Flags/ru-RU.png", UriKind.Relative), "LaXe", "ru-RU", 94.13),
+            new LocalizationInfo("Spanish", "Español", new Uri("/Resources/Localization/Flags/es-ES.png", UriKind.Relative), "MS-PC", "es-ES", 97.78) /*,
+            new LocalizationInfo("French", "Français", new Uri("/Resources/Localization/Flags/fr-FR.png", UriKind.Relative), "f4alm", "fr-FR", 18.56, false) */
         };
 
         public static LocalizationInfo Current { get; set; } = new LocalizationInfo();
@@ -52,7 +54,6 @@ namespace NETworkManager.Models.Settings
             Culture = new CultureInfo(info.Code);
         }
 
-
         public static string TranslateIPStatus(object value)
         {
             if (!(value is IPStatus ipStatus))
@@ -61,6 +62,16 @@ namespace NETworkManager.Models.Settings
             var status = Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + ipStatus, Culture);
 
             return string.IsNullOrEmpty(status) ? ipStatus.ToString() : status;
+        }
+
+        public static string TranslateTcpState(object value)
+        {
+            if (!(value is TcpState tcpState))
+                return "-/-";
+
+            var status = Resources.Localization.Strings.ResourceManager.GetString("TcpState_" + tcpState, Culture);
+
+            return string.IsNullOrEmpty(status) ? tcpState.ToString() : status;
         }
     }
 }

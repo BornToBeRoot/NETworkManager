@@ -62,21 +62,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public List<string> ScreenResolutions => new List<string>
-        {
-            "640x480",
-            "800x600",
-            "1024x768",
-            "1280x720",
-            "1280x768",
-            "1280x800",
-            "1280x1024",
-            "1366x768",
-            "1440x900",
-            "1400x1050",
-            "1680x1050",
-            "1920x1080"
-        };
+        public List<string> ScreenResolutions => GlobalStaticConfiguration.RemoteDesktop_ScreenResolutions;
 
         private string _selectedScreenResolution;
         public string SelectedScreenResolution
@@ -151,13 +137,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public List<int> ColorDepths => new List<int>
-        {
-            15,
-            16,
-            24,
-            32
-        };
+        public List<int> ColorDepths => GlobalStaticConfiguration.RemoteDesktop_ColorDepths;
 
         private int _selectedColorDepth;
         public int SelectedColorDepth
@@ -216,7 +196,7 @@ namespace NETworkManager.ViewModels
             get => _authenticationLevel;
             set
             {
-                if (value == _selectedColorDepth)
+                if (value == _authenticationLevel)
                     return;
 
                 if (!_isLoading)
@@ -227,12 +207,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public List<Tuple<int, string>> KeyboardHookModes => new List<Tuple<int, string>>
-        {
-            Tuple.Create(0, Resources.Localization.Strings.OnThisComputer),
-            Tuple.Create(1, Resources.Localization.Strings.OnTheRemoteComputer)/*,
-            Tuple.Create(2, Resources.Localization.Strings.OnlyWhenUsingTheFullScreen),*/
-        };
+        public List<Tuple<int, string>> KeyboardHookModes => GlobalStaticConfiguration.RemoteDesktop_KeyboardHookModes;
 
         private Tuple<int, string> _keyboardHookMode;
         public Tuple<int, string> KeyboardHookMode
@@ -240,7 +215,7 @@ namespace NETworkManager.ViewModels
             get => _keyboardHookMode;
             set
             {
-                if (value == _keyboardHookMode)
+                if (Equals(value, _keyboardHookMode))
                     return;
 
                 if (!_isLoading)
@@ -250,9 +225,6 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        // String must be formatted ...
-        public string RDPAuthenticationLevelHelpMessage => Resources.Localization.Strings.HelpMessage_RDPAuthenticationLevel;
 
         private bool _redirectClipboard;
         public bool RedirectClipboard

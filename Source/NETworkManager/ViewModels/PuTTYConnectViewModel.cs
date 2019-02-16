@@ -14,7 +14,15 @@ namespace NETworkManager.ViewModels
 
         public ICommand CancelCommand { get; }
 
-        private bool _useSSH; // Default is SSH
+        public int DefaultSSHPort => SettingsManager.Current.PuTTY_SSHPort;
+        public int DefaultTelnetPort => SettingsManager.Current.PuTTY_TelnetPort;
+        public int DefaultBaudRate => SettingsManager.Current.PuTTY_BaudRate;
+        public int DefaultRloginPort => SettingsManager.Current.PuTTY_RloginPort;
+        public int DefaultRaw => SettingsManager.Current.PuTTY_DefaultRaw;
+
+        public ConnectionMode ConnectionMode { get; set; }
+
+        private bool _useSSH;
         public bool UseSSH
         {
             get => _useSSH;
@@ -25,7 +33,7 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    Port = SettingsManager.Current.PuTTY_SSHPort;
+                    Port = DefaultSSHPort;
                     ConnectionMode = ConnectionMode.SSH;
                 }
 
@@ -45,7 +53,7 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    Port = SettingsManager.Current.PuTTY_TelnetPort;
+                    Port = DefaultTelnetPort;
                     ConnectionMode = ConnectionMode.Telnet;
                 }
 
@@ -64,8 +72,8 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (value)
-                {                    
-                    Baud = SettingsManager.Current.PuTTY_BaudRate;
+                {
+                    Baud = DefaultBaudRate;
                     ConnectionMode = ConnectionMode.Serial;
                 }
 
@@ -85,7 +93,7 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    Port = SettingsManager.Current.PuTTY_RloginPort;
+                    Port = DefaultRloginPort;
                     ConnectionMode = ConnectionMode.Rlogin;
                 }
 
@@ -105,7 +113,7 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    Port = 0;
+                    Port = DefaultRaw;
                     ConnectionMode = ConnectionMode.RAW;
                 }
 
@@ -212,8 +220,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ConnectionMode ConnectionMode { get; set; }
-
         public ICollectionView HostHistoryView { get; }
 
         public ICollectionView SerialLineHistoryView { get; }
@@ -226,10 +232,13 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView ProfileHistoryView { get; }
 
-        public PuTTYConnectViewModel(Action<PuTTYConnectViewModel> connectCommand, Action<PuTTYConnectViewModel> cancelHandler)
+        public PuTTYConnectViewModel(Action<PuTTYConnectViewModel> connectCommand, Action<PuTTYConnectViewModel> cancelHandler, string host = null)
         {
             ConnectCommand = new RelayCommand(p => connectCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
+
+            if (!string.IsNullOrEmpty(host))
+                Host = host;
 
             HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_HostHistory);
             SerialLineHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_SerialLineHistory);
@@ -238,11 +247,37 @@ namespace NETworkManager.ViewModels
             UsernameHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_UsernameHistory);
             ProfileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_ProfileHistory);
 
-            SerialLine = SettingsManager.Current.PuTTY_SerialLine;
-            Profile = SettingsManager.Current.PuTTY_Profile;
+            LoadSettings();
+        }
 
-            // SSH is default...
-            UseSSH = true;
-        }        
+        private void LoadSettings()
+        {
+
+            ConnectionMode = SettingsManager.Current.PuTTY_DefaultConnectionMode;
+
+            switch (ConnectionMode)
+            {
+                case ConnectionMode.SSH:
+                    UseSSH = true;
+                    break;
+                case ConnectionMode.Telnet:
+                    UseTelnet = true;
+                    break;
+                case ConnectionMode.Serial:
+                    UseSerial = true;
+                    break;
+                case ConnectionMode.Rlogin:
+                    UseRlogin = true;
+                    break;
+                case ConnectionMode.RAW:
+                    UseRAW = true;
+                    break;
+            }
+
+            Username = SettingsManager.Current.PuTTY_Username;
+            Profile = SettingsManager.Current.PuTTY_Profile;
+            SerialLine = SettingsManager.Current.PuTTY_SerialLine;
+            AdditionalCommandLine = SettingsManager.Current.PuTTY_AdditionalCommandLine;
+        }
     }
 }

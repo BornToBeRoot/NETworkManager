@@ -12,7 +12,7 @@ namespace NETworkManager.Models.Settings
         public Guid CredentialID { get; set; } = Guid.Empty;
         public string Group { get; set; }
         public string Tags { get; set; }
-        
+
         public bool NetworkInterface_Enabled { get; set; }
         public bool NetworkInterface_EnableStaticIPAddress { get; set; }
         public string NetworkInterface_IPAddress { get; set; }
@@ -46,24 +46,70 @@ namespace NETworkManager.Models.Settings
         public bool RemoteDesktop_Enabled { get; set; }
         public bool RemoteDesktop_InheritHost { get; set; } = true;
         public string RemoteDesktop_Host { get; set; }
+        public bool RemoteDesktop_OverrideDisplay { get; set; }
+        public bool RemoteDesktop_AdjustScreenAutomatically { get; set; }
+        public bool RemoteDesktop_UseCurrentViewSize { get; set; }
+        public bool RemoteDesktop_UseFixedScreenSize { get; set; } = true;
+        public int RemoteDesktop_ScreenWidth { get; set; } = GlobalStaticConfiguration.RemoteDesktop_ScreenWidth;
+        public int RemoteDesktop_ScreenHeight { get; set; } = GlobalStaticConfiguration.RemoteDesktop_ScreenHeight;
+        public bool RemoteDesktop_UseCustomScreenSize { get; set; }
+        public int RemoteDesktop_CustomScreenWidth { get; set; }
+        public int RemoteDesktop_CustomScreenHeight { get; set; }
+        public bool RemoteDesktop_OverrideColorDepth { get; set; }
+        public int RemoteDesktop_ColorDepth { get; set; } = GlobalStaticConfiguration.RemoteDesktop_ColorDepth;
+        public bool RemoteDesktop_OverridePort { get; set; }
+        public int RemoteDesktop_Port { get; set; } = GlobalStaticConfiguration.RemoteDesktop_Port;
+        public bool RemoteDesktop_OverrideCredSspSupport { get; set; }
+        public bool RemoteDesktop_EnableCredSspSupport { get; set; }
+        public bool RemoteDesktop_OverrideAuthenticationLevel { get; set; }
+        public uint RemoteDesktop_AuthenticationLevel { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AuthenticationLevel;
+        public bool RemoteDesktop_OverrideApplyWindowsKeyCombinations { get; set; }
+        public int RemoteDesktop_KeyboardHookMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
+        public bool RemoteDesktop_OverrideRedirectClipboard { get; set; }
+        public bool RemoteDesktop_RedirectClipboard { get; set; } = true;
+        public bool RemoteDesktop_OverrideRedirectDevices { get; set; }
+        public bool RemoteDesktop_RedirectDevices { get; set; }
+        public bool RemoteDesktop_OverrideRedirectDrives { get; set; }
+        public bool RemoteDesktop_RedirectDrives { get; set; }
+        public bool RemoteDesktop_OverrideRedirectPorts { get; set; }
+        public bool RemoteDesktop_RedirectPorts { get; set; }
+        public bool RemoteDesktop_OverrideRedirectSmartcards { get; set; }
+        public bool RemoteDesktop_RedirectSmartCards { get; set; }
+        public bool RemoteDesktop_OverrideRedirectPrinters { get; set; }
+        public bool RemoteDesktop_RedirectPrinters { get; set; }
+
+        public bool PowerShell_Enabled { get; set; }
+        public bool PowerShell_EnableRemoteConsole { get; set; } = true;
+        public bool PowerShell_InheritHost { get; set; } = true;
+        public string PowerShell_Host { get; set; }
+        public bool PowerShell_OverrideAdditionalCommandLine { get; set; }
+        public string PowerShell_AdditionalCommandLine { get; set; }
+        public bool PowerShell_OverrideExecutionPolicy { get; set; }
+        public PowerShell.PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy { get; set; }
 
         public bool PuTTY_Enabled { get; set; }
         public ConnectionMode PuTTY_ConnectionMode { get; set; }
         public bool PuTTY_InheritHost { get; set; } = true;
         public string PuTTY_HostOrSerialLine { get; set; }
+        public bool PuTTY_OverridePortOrBaud { get; set; }
         public int PuTTY_PortOrBaud { get; set; }
+        public bool PuTTY_OverrideUsername { get; set; }
         public string PuTTY_Username { get; set; }
+        public bool PuTTY_OverrideProfile { get; set; }
         public string PuTTY_Profile { get; set; }
+        public bool PuTTY_OverrideAdditionalCommandLine { get; set; }
         public string PuTTY_AdditionalCommandLine { get; set; }
 
-        public bool TightVNC_Enabled { get; set; }
-        public bool TightVNC_InheritHost { get; set; } = true;
-        public string TightVNC_Host { get; set; }
-        public int TightVNC_Port { get; set; }
+        public bool TigerVNC_Enabled { get; set; }
+        public bool TigerVNC_InheritHost { get; set; } = true;
+        public string TigerVNC_Host { get; set; }
+        public bool TigerVNC_OverridePort { get; set; }
+        public int TigerVNC_Port { get; set; }
 
         public bool WakeOnLAN_Enabled { get; set; }
         public string WakeOnLAN_MACAddress { get; set; }
         public string WakeOnLAN_Broadcast { get; set; }
+        public bool WakeOnLAN_OverridePort { get; set; }
         public int WakeOnLAN_Port { get; set; }
 
         public bool HTTPHeaders_Enabled { get; set; }

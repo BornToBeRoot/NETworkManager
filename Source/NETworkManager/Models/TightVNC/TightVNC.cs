@@ -1,10 +1,23 @@
-﻿namespace NETworkManager.Models.TightVNC
+﻿using NETworkManager.Models.Settings;
+
+namespace NETworkManager.Models.TigerVNC
 {
-    public class TightVNC
+    public class TigerVNC
     {
-        public static string BuildCommandLine(TightVNCSessionInfo sessionInfo)
+        public static string BuildCommandLine(TigerVNCSessionInfo sessionInfo)
         {
-            return $"-host={sessionInfo.Host} -port={sessionInfo.Port}";
+            return $"{sessionInfo.Host}::{sessionInfo.Port}";
+        }
+
+        public static TigerVNCSessionInfo CreateSessionInfo(ProfileInfo profileInfo)
+        {
+            var info = new TigerVNCSessionInfo
+            {
+                Host = profileInfo.TigerVNC_Host,
+                Port = profileInfo.TigerVNC_OverridePort ? profileInfo.TigerVNC_Port : SettingsManager.Current.TigerVNC_Port
+            };
+
+            return info;
         }
     }
 }

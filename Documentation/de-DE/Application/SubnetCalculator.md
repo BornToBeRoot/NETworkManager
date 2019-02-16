@@ -8,8 +8,8 @@
 
 ![SubnetCalculator_Subnetting](../../_images/SubnetCalculator_Subnetting.png)
 
-## Subnetting
+## Wide Subnet
 
-![SubnetCalculator_Supernetting](../../_images/SubnetCalculator_Supernetting.png)
+![SubnetCalculator_WideSubnet](../../_images/SubnetCalculator_WideSubnet.png)
 
 [zurück](../README.md)

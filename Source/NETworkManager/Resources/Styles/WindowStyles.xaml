@@ -5,6 +5,5 @@
         <Setter Property="TitleCaps" Value="False" />
         <Setter Property="EnableDWMDropShadow" Value="True" />
         <Setter Property="TitleForeground" Value="{DynamicResource GrayBrush3}" />
-        <Setter Property="TitlebarHeight" Value="35" />
     </Style>
 </ResourceDictionary>

@@ -8,6 +8,7 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:settings="clr-namespace:NETworkManager.Models.Settings"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsLanguageViewModel}">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
@@ -35,10 +36,17 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="48" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Image Grid.Column="0" Width="Auto" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding (settings:LocalizationInfo.Flag)}" />
-                        <StackPanel Grid.Column="1" Margin="10,5,0,5" Orientation="Vertical">
-                            <Grid>
+                        <Grid Grid.Column="1" Margin="10,5,0,5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="5" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Column="0" Grid.Row="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="5" />
@@ -47,11 +55,21 @@
                                 <TextBlock Grid.Column="0" Text="{Binding (settings:LocalizationInfo.Name)}" FontWeight="Bold" Style="{StaticResource DefaultTextBlock}" />
                                 <TextBlock Grid.Column="2" Text="{Binding (settings:LocalizationInfo.NativeName), StringFormat={}({0})}" Style="{StaticResource DefaultTextBlock}" />
                             </Grid>
-                            <TextBlock Text="{Binding (settings:LocalizationInfo.Translator)}" Style="{StaticResource DefaultTextBlock}" />
-                        </StackPanel>
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding (settings:LocalizationInfo.Translator)}" Style="{StaticResource DefaultTextBlock}" />
+                        </Grid>
+                        <TextBlock Grid.Column="3" Grid.Row="0" Text="{Binding (settings:LocalizationInfo.PercentTranslated), StringFormat={}{0} %}" Style="{StaticResource CenterTextBlock}" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MetroListViewItem}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding (settings:LocalizationInfo.IsVisible)}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
         <Grid Grid.Row="2" VerticalAlignment="Center">
             <Grid.Style>
@@ -98,6 +116,6 @@
                 </Rectangle.OpacityMask>
             </Rectangle>
             <TextBlock Grid.Column="2" Text="{x:Static localization:Strings.RestartTheApplicationSoThatAllChangesAreApplied}" VerticalAlignment="Center" Style="{StaticResource AccentTextBlock}" />
-        </Grid>        
+        </Grid>
     </Grid>
 </UserControl>

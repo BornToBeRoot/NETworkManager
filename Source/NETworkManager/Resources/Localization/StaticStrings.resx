@@ -139,13 +139,13 @@
     <value>SERVER-01</value>
   </data>
   <data name="ExampleHostnameAndOrIPAddress" xml:space="preserve">
-    <value>192.168.178.1; fritz.box</value>
+    <value>192.168.178.1; example.com</value>
   </data>
   <data name="ExampleHostnameOrIPAddress" xml:space="preserve">
     <value>SERVER-01 or 172.16.0.100</value>
   </data>
-  <data name="ExampleIPScanRange" xml:space="preserve">
-    <value>192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150; server-01/24</value>
+  <data name="ExampleHostRange" xml:space="preserve">
+    <value>192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; example.com/24</value>
   </data>
   <data name="ExampleIPv4Address" xml:space="preserve">
     <value>192.168.178.55</value>
@@ -241,7 +241,7 @@
     <value>snmp-user</value>
   </data>
   <data name="ExampleSuffix" xml:space="preserve">
-    <value>fritz.box</value>
+    <value>example.com</value>
   </data>
   <data name="ExampleTags" xml:space="preserve">
     <value>server; dmz</value>

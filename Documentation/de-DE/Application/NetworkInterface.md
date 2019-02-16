@@ -6,6 +6,9 @@ Das **Netzwerkinterface** Tool erkennt alle Netzwerkadapter des Computers mit de
 
 ![NetworkInterface_Information](../../_images/NetworkInterface_Information.png)
 
+## Bandbreite
+![NetworkInterface_Bandwidth](../../_images/NetworkInterface_Bandwidth.png)
+
 ## Konfigurieren
 
 ![NetworkInterface_Configure](../../_images/NetworkInterface_Configure.png)

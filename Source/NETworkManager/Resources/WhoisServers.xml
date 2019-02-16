@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Whois servers by domain from IANA
-Generated 09/28/2018 23:24:14-->
+Generated 02/16/2019 21:48:52-->
 <WhoisServers>
   <WhoisServer>
     <TLD>AAA</TLD>
@@ -619,10 +619,6 @@ Generated 09/28/2018 23:24:14-->
   <WhoisServer>
     <TLD>BLACKFRIDAY</TLD>
     <Server>whois.uniregistry.net</Server>
-  </WhoisServer>
-  <WhoisServer>
-    <TLD>BLANCO</TLD>
-    <Server>whois.nic.blanco</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>BLOCKBUSTER</TLD>
@@ -1647,11 +1643,6 @@ Generated 09/28/2018 23:24:14-->
   <WhoisServer>
     <TLD>ENTERPRISES</TLD>
     <Server>whois.nic.enterprises</Server>
-  </WhoisServer>
-  <WhoisServer>
-    <TLD>EPOST</TLD>
-    <Server>
-    </Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>EPSON</TLD>
@@ -3192,7 +3183,7 @@ Generated 09/28/2018 23:24:14-->
   </WhoisServer>
   <WhoisServer>
     <TLD>LS</TLD>
-    <Server>196.11.175.58</Server>
+    <Server>whois.nic.ls</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>LT</TLD>
@@ -3575,8 +3566,7 @@ Generated 09/28/2018 23:24:14-->
   </WhoisServer>
   <WhoisServer>
     <TLD>MW</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.mw</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>MX</TLD>
@@ -4856,10 +4846,6 @@ Generated 09/28/2018 23:24:14-->
     <Server>whois.nic.space</Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>SPIEGEL</TLD>
-    <Server>whois.ksregistry.net</Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>SPORT</TLD>
     <Server>whois.nic.sport</Server>
   </WhoisServer>
@@ -4884,6 +4870,11 @@ Generated 09/28/2018 23:24:14-->
   <WhoisServer>
     <TLD>SRT</TLD>
     <Server>whois.afilias-srs.net</Server>
+  </WhoisServer>
+  <WhoisServer>
+    <TLD>SS</TLD>
+    <Server>
+    </Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>ST</TLD>
@@ -4914,10 +4905,6 @@ Generated 09/28/2018 23:24:14-->
     <TLD>STATEFARM</TLD>
     <Server>
     </Server>
-  </WhoisServer>
-  <WhoisServer>
-    <TLD>STATOIL</TLD>
-    <Server>whois.nic.statoil</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>STC</TLD>
@@ -6122,7 +6109,11 @@ Generated 09/28/2018 23:24:14-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--MGBAB2BD</TLD>
-    <Server>whois.bazaar.coreregistry.net</Server>
+    <Server>whois.nic.xn--mgbab2bd</Server>
+  </WhoisServer>
+  <WhoisServer>
+    <TLD>XN--MGBAH1A3HJKRD</TLD>
+    <Server>whois.nic.mr</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--MGBAI9AZGQP6J</TLD>
@@ -6464,11 +6455,6 @@ Generated 09/28/2018 23:24:14-->
   <WhoisServer>
     <TLD>ZIP</TLD>
     <Server>whois.nic.google</Server>
-  </WhoisServer>
-  <WhoisServer>
-    <TLD>ZIPPO</TLD>
-    <Server>
-    </Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>ZM</TLD>

@@ -84,8 +84,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<IPNetwork> _subnetsResult = new ObservableCollection<IPNetwork>();
-        public ObservableCollection<IPNetwork> SubnetsResult
+        private ObservableCollection<IPNetworkInfo> _subnetsResult = new ObservableCollection<IPNetworkInfo>();
+        public ObservableCollection<IPNetworkInfo> SubnetsResult
         {
             get => _subnetsResult;
             set
@@ -100,8 +100,8 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView SubnetsResultsView { get; }
 
-        private IPNetwork _selectedSubnetResult;
-        public IPNetwork SelectedSubnetResult
+        private IPNetworkInfo _selectedSubnetResult;
+        public IPNetworkInfo SelectedSubnetResult
         {
             get => _selectedSubnetResult;
             set
@@ -282,7 +282,7 @@ namespace NETworkManager.ViewModels
 
                 try
                 {
-                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? SubnetsResult : new ObservableCollection<IPNetwork>(SelectedSubnetResults.Cast<IPNetwork>().ToArray()));
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? SubnetsResult : new ObservableCollection<IPNetworkInfo>(SelectedSubnetResults.Cast<IPNetworkInfo>().ToArray()));
                 }
                 catch (Exception ex)
                 {
@@ -344,7 +344,7 @@ namespace NETworkManager.ViewModels
                     Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
                     {
                         lock (SubnetsResult)
-                            SubnetsResult.Add(network);
+                            SubnetsResult.Add(new IPNetworkInfo(network));
                     }));
                 }
             });

@@ -651,9 +651,6 @@
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
-  <data name="AddATabToOpenANewConnection" xml:space="preserve">
-    <value>Add a tab to open a new connection...</value>
-  </data>
   <data name="AddATabToPerformADNSLookup" xml:space="preserve">
     <value>Add a tab to perform a DNS lookup...</value>
   </data>
@@ -798,20 +795,20 @@
   <data name="Default" xml:space="preserve">
     <value>Default</value>
   </data>
-  <data name="DefaultBaudRate" xml:space="preserve">
-    <value>Default baud rate</value>
+  <data name="BaudRate" xml:space="preserve">
+    <value>Baud rate</value>
   </data>
   <data name="DefaultPort" xml:space="preserve">
     <value>Default port:</value>
   </data>
-  <data name="DefaultRloginPort" xml:space="preserve">
-    <value>Default Rlogin port</value>
+  <data name="RloginPort" xml:space="preserve">
+    <value>Rlogin port</value>
   </data>
-  <data name="DefaultSSHPort" xml:space="preserve">
-    <value>Default SSH port</value>
+  <data name="SSHPort" xml:space="preserve">
+    <value>SSH port</value>
   </data>
-  <data name="DefaultTelnetPort" xml:space="preserve">
-    <value>Default Telnet port</value>
+  <data name="TelnetPort" xml:space="preserve">
+    <value>Telnet port</value>
   </data>
   <data name="DeleteCredentialMessage" xml:space="preserve">
     <value>The selected credential will be deleted permanently.</value>
@@ -855,9 +852,6 @@
   <data name="EnableCredentialSecuritySupportProvider" xml:space="preserve">
     <value>Enable Credential Security Support Provider</value>
   </data>
-  <data name="EnableTheProfileInAtLeastOneTool" xml:space="preserve">
-    <value>Enable the profile in at least one tool! Click on a tab and select "Enable"...</value>
-  </data>
   <data name="EnableTransparency" xml:space="preserve">
     <value>Enable transparency</value>
   </data>
@@ -871,7 +865,7 @@
     <value>Enter subnet and a new subnet mask to create subnets...</value>
   </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
-    <value>Error checking 'api.github.com', check your network connection!</value>
+    <value>Couldn't connect to 'api.github.com', check your network connection!</value>
   </data>
   <data name="ErrorInResponse" xml:space="preserve">
     <value>Error in response!</value>
@@ -1305,9 +1299,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="Closed" xml:space="preserve">
     <value>Closed</value>
   </data>
-  <data name="ConfigurePuTTY" xml:space="preserve">
-    <value>Configure PuTTY</value>
-  </data>
   <data name="Continue" xml:space="preserve">
     <value>Continue</value>
   </data>
@@ -1357,7 +1348,10 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>The password is not displayed when editing, but can be overwritten.</value>
   </data>
   <data name="HelpMessage_RDPAuthenticationLevel" xml:space="preserve">
-    <value>[0] If server authentication fails, connect to the computer without warning.\n[1] If server authentication fails, do not establish a connection.\n[2] If server authentication fails, show a warning and allow me to connect or refuse the connection.\n[3] No authentication requirement is specified.</value>
+    <value>[0] If server authentication fails, connect to the computer without warning.
+[1] If server authentication fails, do not establish a connection.
+[2] If server authentication fails, show a warning and allow me to connect or refuse the connection.
+[3] No authentication requirement is specified.</value>
   </data>
   <data name="HelpMessage_Tags" xml:space="preserve">
     <value>Tags help you organize profiles/Profiles by topics/projects. Multiple tags can be used with ";" be separated. Search by tags with "tag=xxx".</value>
@@ -1869,26 +1863,20 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="RestartSession" xml:space="preserve">
     <value>Restart session</value>
   </data>
-  <data name="TightVNC" xml:space="preserve">
-    <value>TightVNC</value>
+  <data name="TigerVNC" xml:space="preserve">
+    <value>TigerVNC</value>
   </data>
-  <data name="ConfigureThePathToTightVNCInTheSettingsDots" xml:space="preserve">
-    <value>Configure the path to TightVNC in the settings...</value>
+  <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
+    <value>Configure the path to TigerVNC in the settings...</value>
   </data>
-  <data name="ConfigureTightVNC" xml:space="preserve">
-    <value>Configure TightVNC</value>
+  <data name="DisableTransparencyInTheSettingsToUseTigerVNC" xml:space="preserve">
+    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TigerVNC.</value>
   </data>
-  <data name="DefaultVNCPort" xml:space="preserve">
-    <value>Default VNC port</value>
+  <data name="TigerVNCLocationDots" xml:space="preserve">
+    <value>TigerVNC location...</value>
   </data>
-  <data name="DisableTransparencyInTheSettingsToUseTightVNC" xml:space="preserve">
-    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TightVNC.</value>
-  </data>
-  <data name="TightVNCLocationDots" xml:space="preserve">
-    <value>TightVNC location...</value>
-  </data>
-  <data name="TightVNCProcessHasEnded" xml:space="preserve">
-    <value>TightVNC process has ended!</value>
+  <data name="TigerVNCProcessHasEnded" xml:space="preserve">
+    <value>TigerVNC process has ended!</value>
   </data>
   <data name="ConnectingDots" xml:space="preserve">
     <value>Connecting...</value>
@@ -1953,5 +1941,81 @@ Path: "{0}"</value>
   </data>
   <data name="AddIPv4Address" xml:space="preserve">
     <value>Add IPv4 address</value>
+  </data>
+  <data name="HostThreads" xml:space="preserve">
+    <value>Host threads</value>
+  </data>
+  <data name="PortThreads" xml:space="preserve">
+    <value>Port threads</value>
+  </data>
+  <data name="PowerShell" xml:space="preserve">
+    <value>PowerShell</value>
+  </data>
+  <data name="ConfigureThePathToPowerShellInTheSettingsDots" xml:space="preserve">
+    <value>Configure the path to PowerShell in the settings...</value>
+  </data>
+  <data name="DisableTransparencyInTheSettingsToUsePowerShell" xml:space="preserve">
+    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PowerShell.</value>
+  </data>
+  <data name="PowerShellProcessHasEnded" xml:space="preserve">
+    <value>PowerShell process has ended!</value>
+  </data>
+  <data name="ExecutionPolicy" xml:space="preserve">
+    <value>Execution Policy</value>
+  </data>
+  <data name="RemoteConsole" xml:space="preserve">
+    <value>Remote console</value>
+  </data>
+  <data name="PowerShellLocationDots" xml:space="preserve">
+    <value>PowerShell location...</value>
+  </data>
+  <data name="FilePath" xml:space="preserve">
+    <value>File path</value>
+  </data>
+  <data name="ThisFeatureIsOnlyAvailableInWindows10Server2016OrLater" xml:space="preserve">
+    <value>This feature is only available in Windows 10 / Server 2016 or later!</value>
+  </data>
+  <data name="OverrideDefaultSettings" xml:space="preserve">
+    <value>Override default settings</value>
+  </data>
+  <data name="ResolveIPv4AddressForThisHost" xml:space="preserve">
+    <value>Resolve IPv4 address for this host</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="TotalBytesReceived" xml:space="preserve">
+    <value>Total bytes received</value>
+  </data>
+  <data name="TotalBytesSent" xml:space="preserve">
+    <value>Total bytes sent</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="Bandwidth" xml:space="preserve">
+    <value>Bandwidth</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="ApplyWindowsKeyCombinations" xml:space="preserve">
+    <value>Apply Windows key combinations</value>
+  </data>
+  <data name="CredentialSecuritySupportProvider" xml:space="preserve">
+    <value>Credential Security Support Provider</value>
+  </data>
+  <data name="BackgroundJob" xml:space="preserve">
+    <value>Background job</value>
+  </data>
+  <data name="HelpMessage_BackgroundJob" xml:space="preserve">
+    <value>The background job will save settings, profiles and credentials every x-minutes.
+
+Value 0 will disable this feature.
+
+Changing this value requires a restart of the application to take effect.</value>
+  </data>
+  <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
+    <value>Run background job every x-minute</value>
   </data>
 </root>

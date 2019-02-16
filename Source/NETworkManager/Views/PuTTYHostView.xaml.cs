@@ -45,13 +45,18 @@ namespace NETworkManager.Views
             while (!_loaded)
                 await Task.Delay(100);
 
-            if (_viewModel.IsPuTTYConfigured)
+            if (_viewModel.IsConfigured)
                 _viewModel.AddTab(host);
         }
 
-        public void Refresh()
+        public void OnViewHide()
         {
-            _viewModel.Refresh();
+            _viewModel.OnViewHide();
+        }
+
+        public void OnViewVisible()
+        {
+            _viewModel.OnViewVisible();
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace NETworkManager.Views
 {
-    public partial class TightVNCConnectDialog
+    public partial class TigerVNCConnectDialog
     {
-        public TightVNCConnectDialog()
+        public TigerVNCConnectDialog()
         {
             InitializeComponent();
         }

@@ -1,16 +1,35 @@
 ﻿using NETworkManager.Models.Lookup;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
+using TransportType = Heijden.DNS.TransportType;
+
 namespace NETworkManager.Models.Network
 {
     public class IPScanner
     {
         #region Variables
         private int _progressValue;
+
+        public int Threads = 256;
+        public int ICMPTimeout = 4000;
+        public byte[] ICMPBuffer = new byte[32];
+        public int ICMPAttempts = 2;
+        public bool ResolveHostname = true;
+        public bool UseCustomDNSServer = false;
+        public List<string> CustomDNSServer = new List<string>();
+        public int DNSPort = 53;
+        public int DNSAttempts = 2;
+        public int DNSTimeout = 2000;
+        public bool ResolveMACAddress = false;
+        public bool ShowScanResultForAllIPAddresses = false;
+        public TransportType DNSTransportType = TransportType.Udp;
+        public bool DNSUseResolverCache = false;
+        public bool DNSRecursion = false;
         #endregion
 
         #region Events
@@ -44,7 +63,7 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Methods
-        public void ScanAsync(IPAddress[] ipAddresses, IPScannerOptions ipScannerOptions, CancellationToken cancellationToken)
+        public void ScanAsync(IPAddress[] ipAddresses, CancellationToken cancellationToken)
         {
             // Start the scan in a separat task
             Task.Run(() =>
@@ -52,15 +71,15 @@ namespace NETworkManager.Models.Network
                 _progressValue = 0;
 
                 // Modify the ThreadPool for better performance
-                ThreadPool.GetMinThreads(out int workerThreads, out int completionPortThreads);
-                ThreadPool.SetMinThreads(workerThreads + ipScannerOptions.Threads, completionPortThreads + ipScannerOptions.Threads);
+                ThreadPool.GetMinThreads(out var workerThreads, out var completionPortThreads);
+                ThreadPool.SetMinThreads(workerThreads + Threads, completionPortThreads + Threads);
 
                 try
                 {
                     var parallelOptions = new ParallelOptions
                     {
                         CancellationToken = cancellationToken,
-                        MaxDegreeOfParallelism = ipScannerOptions.Threads
+                        MaxDegreeOfParallelism = Threads
                     };
 
                     Parallel.ForEach(ipAddresses, parallelOptions, ipAddress =>
@@ -71,15 +90,15 @@ namespace NETworkManager.Models.Network
                         // PING
                         using (var ping = new System.Net.NetworkInformation.Ping())
                         {
-                            for (int i = 0; i < ipScannerOptions.ICMPAttempts; i++)
+                            for (var i = 0; i < ICMPAttempts; i++)
                             {
                                 try
                                 {
-                                    var pingReply = ping.Send(ipAddress, ipScannerOptions.ICMPTimeout, ipScannerOptions.ICMPBuffer);
+                                    var pingReply = ping.Send(ipAddress, ICMPTimeout, ICMPBuffer);
 
                                     if (pingReply != null && IPStatus.Success == pingReply.Status)
                                     {
-                                        pingInfo = new PingInfo(pingReply.Address, pingReply.Buffer.Count(), pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status);
+                                        pingInfo = new PingInfo(pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status);
 
                                         pingable = true;
                                         break; // Continue with the next checks...
@@ -99,33 +118,33 @@ namespace NETworkManager.Models.Network
                             }
                         }
 
-                        if (pingable || ipScannerOptions.ShowScanResultForAllIPAddresses)
+                        if (pingable || ShowScanResultForAllIPAddresses)
                         {
                             // DNS
                             var hostname = string.Empty;
 
-                            if (ipScannerOptions.ResolveHostname)
+                            if (ResolveHostname)
                             {
-                                var options = new DNSLookupOptions()
+                                var dnsLookup = new DNSLookup
                                 {
-                                    UseCustomDNSServer = ipScannerOptions.UseCustomDNSServer,
-                                    CustomDNSServers = ipScannerOptions.CustomDNSServer,
-                                    Port = ipScannerOptions.DNSPort,
-                                    Attempts = ipScannerOptions.DNSAttempts,
-                                    Timeout = ipScannerOptions.DNSTimeout,
-                                    TransportType = ipScannerOptions.DNSTransportType,
-                                    UseResolverCache = ipScannerOptions.DNSUseResolverCache,
-                                    Recursion = ipScannerOptions.DNSRecursion,
+                                    UseCustomDNSServer = UseCustomDNSServer,
+                                    CustomDNSServers = CustomDNSServer,
+                                    Port = DNSPort,
+                                    Attempts = DNSAttempts,
+                                    Timeout = DNSTimeout,
+                                    TransportType = DNSTransportType,
+                                    UseResolverCache = DNSUseResolverCache,
+                                    Recursion = DNSRecursion
                                 };
-
-                                hostname = DNSLookup.ResolvePTR(ipAddress, options).Item2.FirstOrDefault();
+                                
+                                hostname = dnsLookup.ResolvePTR(ipAddress).Item2.FirstOrDefault();
                             }
 
                             // ARP
                             PhysicalAddress macAddress = null;
                             var vendor = string.Empty;
 
-                            if (ipScannerOptions.ResolveMACAddress)
+                            if (ResolveMACAddress)
                             {
                                 // Get info from arp table
                                 var arpTableInfo = ARP.GetTable().FirstOrDefault(p => p.IPAddress.ToString() == ipAddress.ToString());
@@ -172,7 +191,7 @@ namespace NETworkManager.Models.Network
                 {
                     // Reset the ThreadPool to default
                     ThreadPool.GetMinThreads(out workerThreads, out completionPortThreads);
-                    ThreadPool.SetMinThreads(workerThreads - ipScannerOptions.Threads, completionPortThreads - ipScannerOptions.Threads);
+                    ThreadPool.SetMinThreads(workerThreads - Threads, completionPortThreads - Threads);
                 }
             }, cancellationToken);
         }
