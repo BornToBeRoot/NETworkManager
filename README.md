@@ -54,7 +54,7 @@
 - Remote Desktop
 - PowerShell (requires Windows 10)
 - PuTTY ([requires PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html))
-- TightVNC ([requires TightVNC](https://www.tightvnc.com/download.php))
+- TigerVNC ([requires TigerVNC](https://tigervnc.org/))
 - SNMP - Get, Walk, Set (v1, v2c, v3)
 - Wake on LAN
 - HTTP Headers

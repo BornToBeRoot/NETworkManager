@@ -568,7 +568,7 @@
     <value>Reinicio requerido</value>
   </data>
   <data name="RestartRequiredSettingsChangedMessage" xml:space="preserve">
-    <value>¡Algunas configuraciones se aplican sólo después de reiniciar la aplicación!</value>
+    <value>¡Algunas configuraciones se aplican solo después de reiniciar la aplicación!</value>
   </data>
   <data name="SaveSettingsInApplicationFolder" xml:space="preserve">
     <value>Guardar configuración en la directorio de la aplicación</value>
@@ -650,9 +650,6 @@
   </data>
   <data name="Add" xml:space="preserve">
     <value>Añadir</value>
-  </data>
-  <data name="AddATabToOpenANewConnection" xml:space="preserve">
-    <value>Añadir una pestaña para abrir una nueva conexión...</value>
   </data>
   <data name="AddATabToPerformADNSLookup" xml:space="preserve">
     <value>Añadir una pestaña para realizar una búsqueda de DNS...</value>
@@ -798,20 +795,20 @@
   <data name="Default" xml:space="preserve">
     <value>Predeterminado</value>
   </data>
-  <data name="DefaultBaudRate" xml:space="preserve">
-    <value>Transmisión predeterminada</value>
+  <data name="BaudRate" xml:space="preserve">
+    <value>Baud rate</value>
   </data>
   <data name="DefaultPort" xml:space="preserve">
     <value>Puerto predeterminado:</value>
   </data>
-  <data name="DefaultRloginPort" xml:space="preserve">
-    <value>Puerto Rlogin predeterminado</value>
+  <data name="RloginPort" xml:space="preserve">
+    <value>Rlogin port</value>
   </data>
-  <data name="DefaultSSHPort" xml:space="preserve">
-    <value>Puerto SSH predeterminado</value>
+  <data name="SSHPort" xml:space="preserve">
+    <value>SSH port</value>
   </data>
-  <data name="DefaultTelnetPort" xml:space="preserve">
-    <value>Puerto Telnet predeterminado</value>
+  <data name="TelnetPort" xml:space="preserve">
+    <value>Telnet port</value>
   </data>
   <data name="DeleteCredentialMessage" xml:space="preserve">
     <value>La credencial seleccionada se eliminará permanentemente.</value>
@@ -855,9 +852,6 @@
   <data name="EnableCredentialSecuritySupportProvider" xml:space="preserve">
     <value>Habilitar proveedor de soporte de seguridad de credenciales</value>
   </data>
-  <data name="EnableTheProfileInAtLeastOneTool" xml:space="preserve">
-    <value>¡Habilite el perfil en al menos una herramienta! Haga clic en una pestaña y seleccione "Habilitar"...</value>
-  </data>
   <data name="EnableTransparency" xml:space="preserve">
     <value>Habilitar transparencia</value>
   </data>
@@ -871,7 +865,7 @@
     <value>Ingrese la subred y una nueva máscara de subred para crear subredes...</value>
   </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
-    <value>¡Error al comprobar 'api.github.com', compruebe su conexión de red!</value>
+    <value>No se pudo conectar con 'api.github.com', ¡compruebe su conexión de red!</value>
   </data>
   <data name="ErrorInResponse" xml:space="preserve">
     <value>¡Error en respuesta!</value>
@@ -995,7 +989,7 @@ Crear uno...</value>
     <value>OID</value>
   </data>
   <data name="OnlyWhenUsingTheFullScreen" xml:space="preserve">
-    <value>Sólo cuando se usa la pantalla completa</value>
+    <value>Solo cuando se usa la pantalla completa</value>
   </data>
   <data name="OnTheRemoteComputer" xml:space="preserve">
     <value>En el equipo remoto</value>
@@ -1051,7 +1045,7 @@ Crear uno...</value>
     <value>Protocolo</value>
   </data>
   <data name="PuTTYProcessHasEnded" xml:space="preserve">
-    <value>¡El proceso PuTTY ha terminado!</value>
+    <value>¡El proceso de PuTTY ha finalizado!</value>
   </data>
   <data name="PuTTYProfile" xml:space="preserve">
     <value>Perfil PuTTY</value>
@@ -1168,7 +1162,7 @@ Crear uno...</value>
     <value>Mostrar el título de la aplicación actual</value>
   </data>
   <data name="ShowOnlyMostCommonQueryTypes" xml:space="preserve">
-    <value>Mostrar sólo los tipos de consulta más comunes</value>
+    <value>Mostrar solo los tipos de consulta más comunes</value>
   </data>
   <data name="ShowScanResultForAllIPAddresses" xml:space="preserve">
     <value>Mostrar el resultado del escaneo para todas las direcciones IP</value>
@@ -1305,9 +1299,6 @@ Crear uno...</value>
   <data name="Closed" xml:space="preserve">
     <value>Cerrado</value>
   </data>
-  <data name="ConfigurePuTTY" xml:space="preserve">
-    <value>Configurar PuTTY</value>
-  </data>
   <data name="Continue" xml:space="preserve">
     <value>Continuar</value>
   </data>
@@ -1357,7 +1348,10 @@ Crear uno...</value>
     <value>La contraseña no se muestra durante la edición, pero se puede sobrescribir.</value>
   </data>
   <data name="HelpMessage_RDPAuthenticationLevel" xml:space="preserve">
-    <value>[0] Si falla la autenticación del servidor, conéctese al equipo sin previo aviso.\n[1] Si la autenticación del servidor falla, no establezca una conexión.\n[2] Si la autenticación del servidor falla, muestre una advertencia y permítame conectarme o rechazar la conexión.\n[3] No se especifica ningún requisito de autenticación.</value>
+    <value>[0] Si la autenticación del servidor falla, conéctese al equipo sin previo aviso.
+[1] Si la autenticación del servidor falla, no establecer una conexión.
+[2] Si la autenticación del servidor falla, mostrar una advertencia y permitir conectarme o rechazar la conexión.
+[3] No se ha especificado ningún requisito de autenticación.</value>
   </data>
   <data name="HelpMessage_Tags" xml:space="preserve">
     <value>Las etiquetas le ayudan a organizar perfiles, por temas/proyectos. Se pueden usar múltiples etiquetas con ";" separadas. Buscar por etiquetas con "tag=xxx".</value>
@@ -1579,7 +1573,7 @@ Crear uno...</value>
     <value>Aceituna</value>
   </data>
   <data name="OnlyNumbersCanBeEntered" xml:space="preserve">
-    <value>¡Sólo se pueden ingresar números!</value>
+    <value>¡Solo se pueden ingresar números!</value>
   </data>
   <data name="Orange" xml:space="preserve">
     <value>Naranja</value>
@@ -1873,22 +1867,16 @@ Crear uno...</value>
     <value>TigerVNC</value>
   </data>
   <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
-    <value>Configure la ruta de TigerVNC en la configuración...</value>
-  </data>
-  <data name="ConfigureTigerVNC" xml:space="preserve">
-    <value>Configurar TigerVNC</value>
-  </data>
-  <data name="DefaultVNCPort" xml:space="preserve">
-    <value>Puerto VNC predeterminado</value>
+    <value>Configure the path to TigerVNC in the settings...</value>
   </data>
   <data name="DisableTransparencyInTheSettingsToUseTigerVNC" xml:space="preserve">
-    <value>Desactive la transparencia en la configuración (General/Apariencia) y luego reinicie la aplicación para usar TigerVNC.</value>
+    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TigerVNC.</value>
   </data>
   <data name="TigerVNCLocationDots" xml:space="preserve">
-    <value>Ubicación de TigerVNC...</value>
+    <value>TigerVNC location...</value>
   </data>
   <data name="TigerVNCProcessHasEnded" xml:space="preserve">
-    <value>¡El proceso de TigerVNC ha finalizado!</value>
+    <value>TigerVNC process has ended!</value>
   </data>
   <data name="ConnectingDots" xml:space="preserve">
     <value>Conectando...</value>
@@ -1953,5 +1941,81 @@ Ruta: "{0}"</value>
   </data>
   <data name="AddIPv4Address" xml:space="preserve">
     <value>Añadir dirección IPv4</value>
+  </data>
+  <data name="HostThreads" xml:space="preserve">
+    <value>Hilos de host</value>
+  </data>
+  <data name="PortThreads" xml:space="preserve">
+    <value>Hilos de puerto</value>
+  </data>
+  <data name="PowerShell" xml:space="preserve">
+    <value>PowerShell</value>
+  </data>
+  <data name="ConfigureThePathToPowerShellInTheSettingsDots" xml:space="preserve">
+    <value>Configure la ruta de PowerShell en la configuración...</value>
+  </data>
+  <data name="DisableTransparencyInTheSettingsToUsePowerShell" xml:space="preserve">
+    <value>Desactive la transparencia en la configuración (General/Apariencia) y luego reinicie la aplicación para usar PowerShell.</value>
+  </data>
+  <data name="PowerShellProcessHasEnded" xml:space="preserve">
+    <value>¡El proceso de PowerShell ha finalizado!</value>
+  </data>
+  <data name="ExecutionPolicy" xml:space="preserve">
+    <value>Política de ejecución</value>
+  </data>
+  <data name="RemoteConsole" xml:space="preserve">
+    <value>Consola remota</value>
+  </data>
+  <data name="PowerShellLocationDots" xml:space="preserve">
+    <value>Ubicación de PowerShell...</value>
+  </data>
+  <data name="FilePath" xml:space="preserve">
+    <value>Ruta de archivo</value>
+  </data>
+  <data name="ThisFeatureIsOnlyAvailableInWindows10Server2016OrLater" xml:space="preserve">
+    <value>¡Esta función solo está disponible en Windows 10/Server 2016 o posterior!</value>
+  </data>
+  <data name="OverrideDefaultSettings" xml:space="preserve">
+    <value>Anular la configuración predeterminada</value>
+  </data>
+  <data name="ResolveIPv4AddressForThisHost" xml:space="preserve">
+    <value>Resolver la dirección IPv4 para este host</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Ocultar</value>
+  </data>
+  <data name="TotalBytesReceived" xml:space="preserve">
+    <value>Total de bytes recibidos</value>
+  </data>
+  <data name="TotalBytesSent" xml:space="preserve">
+    <value>Total de bytes enviados</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Descarga</value>
+  </data>
+  <data name="Bandwidth" xml:space="preserve">
+    <value>Ancho de banda</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Subida</value>
+  </data>
+  <data name="ApplyWindowsKeyCombinations" xml:space="preserve">
+    <value>Apply Windows key combinations</value>
+  </data>
+  <data name="CredentialSecuritySupportProvider" xml:space="preserve">
+    <value>Credential Security Support Provider</value>
+  </data>
+  <data name="BackgroundJob" xml:space="preserve">
+    <value>Background job</value>
+  </data>
+  <data name="HelpMessage_BackgroundJob" xml:space="preserve">
+    <value>The background job will save settings, profiles, credentials every x-minutes.
+
+Value 0 will disable this feature.
+
+Changing this value requires a restart of the application to take effect.</value>
+  </data>
+  <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
+    <value>Run background job every x-minute</value>
   </data>
 </root>

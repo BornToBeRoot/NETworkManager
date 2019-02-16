@@ -2095,7 +2095,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The background job will save settings, profiles, credentials every x-minutes.
+        ///   Looks up a localized string similar to The background job will save settings, profiles and credentials every x-minutes.
         ///
         ///Value 0 will disable this feature.
         ///

@@ -651,9 +651,6 @@
   <data name="Add" xml:space="preserve">
     <value>Добавить</value>
   </data>
-  <data name="AddATabToOpenANewConnection" xml:space="preserve">
-    <value>Добавить вкладку, чтобы открыть новое соединение...</value>
-  </data>
   <data name="AddATabToPerformADNSLookup" xml:space="preserve">
     <value>Добавить вкладки для выполнения поиска DNS...</value>
   </data>
@@ -798,20 +795,20 @@
   <data name="Default" xml:space="preserve">
     <value>Стандартный</value>
   </data>
-  <data name="DefaultBaudRate" xml:space="preserve">
-    <value>Скорость передачи данных по умолчанию</value>
+  <data name="BaudRate" xml:space="preserve">
+    <value>Baud rate</value>
   </data>
   <data name="DefaultPort" xml:space="preserve">
     <value>Порт по умолчанию:</value>
   </data>
-  <data name="DefaultRloginPort" xml:space="preserve">
-    <value>Порт Rlogin по умолчанию</value>
+  <data name="RloginPort" xml:space="preserve">
+    <value>Rlogin port</value>
   </data>
-  <data name="DefaultSSHPort" xml:space="preserve">
-    <value>Порт SSH по умолчанию</value>
+  <data name="SSHPort" xml:space="preserve">
+    <value>SSH port</value>
   </data>
-  <data name="DefaultTelnetPort" xml:space="preserve">
-    <value>Порт Telnet по умолчанию</value>
+  <data name="TelnetPort" xml:space="preserve">
+    <value>Telnet port</value>
   </data>
   <data name="DeleteCredentialMessage" xml:space="preserve">
     <value>Выбранные учетные данные будут удалены навсегда.</value>
@@ -855,9 +852,6 @@
   <data name="EnableCredentialSecuritySupportProvider" xml:space="preserve">
     <value>Включить поддержку Security Support Provider</value>
   </data>
-  <data name="EnableTheProfileInAtLeastOneTool" xml:space="preserve">
-    <value>Включите профиль хотя бы в одном инструменте! Нажмите на вкладку и выберите "включить"...</value>
-  </data>
   <data name="EnableTransparency" xml:space="preserve">
     <value>Включить прозрачность</value>
   </data>
@@ -871,7 +865,7 @@
     <value>Введите подсеть и новую маску подсети для создания подсетей...</value>
   </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
-    <value>Проверка ошибок "api.github.com', проверьте подключение к сети!</value>
+    <value>Couldn't connect to 'api.github.com', check your network connection!</value>
   </data>
   <data name="ErrorInResponse" xml:space="preserve">
     <value>Ошибка в ответе!</value>
@@ -1305,9 +1299,6 @@
   <data name="Closed" xml:space="preserve">
     <value>Закрытый</value>
   </data>
-  <data name="ConfigurePuTTY" xml:space="preserve">
-    <value>Настроить PuTTY</value>
-  </data>
   <data name="Continue" xml:space="preserve">
     <value>Продолжить</value>
   </data>
@@ -1357,7 +1348,10 @@
     <value>Пароль не отображается при редактировании, но может быть перезаписан.</value>
   </data>
   <data name="HelpMessage_RDPAuthenticationLevel" xml:space="preserve">
-    <value>[0] При сбое проверки подлинности сервера, подключитесь к компьютеру без предупреждения.\n[1] Если проверка подлинности сервера завершается неудачно, не устанавливайте соединение.\n[2] Если аутентификация сервера не удалась, откроется предупреждение и посволит мне соединиться или отказаться.\n[3] Требование аутентификации не указано.</value>
+    <value>[0] If server authentication fails, connect to the computer without warning.
+[1] If server authentication fails, do not establish a connection.
+[2] If server authentication fails, show a warning and allow me to connect or refuse the connection.
+[3] No authentication requirement is specified.</value>
   </data>
   <data name="HelpMessage_Tags" xml:space="preserve">
     <value>Теги помогают организовать профили/сеансы по темам/проектам. Несколько тегов могут быть использованы с ";" быть разделены. Поиск по тегам с "tag=xxx".</value>
@@ -1873,22 +1867,16 @@
     <value>TigerVNC</value>
   </data>
   <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
-    <value>Настройте путь к TigerVNC в настройках...</value>
-  </data>
-  <data name="ConfigureTigerVNC" xml:space="preserve">
-    <value>Настройка TigerVNC</value>
-  </data>
-  <data name="DefaultVNCPort" xml:space="preserve">
-    <value>Порт VNC по умолчанию</value>
+    <value>Configure the path to TigerVNC in the settings...</value>
   </data>
   <data name="DisableTransparencyInTheSettingsToUseTigerVNC" xml:space="preserve">
-    <value>Чтобы использовать TigerVNC, отключите прозрачность в настройках (общи / внешний вид) и перезапустите приложение. </value>
+    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TigerVNC.</value>
   </data>
   <data name="TigerVNCLocationDots" xml:space="preserve">
-    <value>TigerVNC локация...</value>
+    <value>TigerVNC location...</value>
   </data>
   <data name="TigerVNCProcessHasEnded" xml:space="preserve">
-    <value>TigerVNC процесс закончился!</value>
+    <value>TigerVNC process has ended!</value>
   </data>
   <data name="ConnectingDots" xml:space="preserve">
     <value>Соединение...</value>
@@ -1952,6 +1940,82 @@
     <value>Добавить адрес IPv4...</value>
   </data>
   <data name="AddIPv4Address" xml:space="preserve">
-    <value>Добавить адрес IPv6...</value>
+    <value>Добавить адрес IPv4</value>
+  </data>
+  <data name="HostThreads" xml:space="preserve">
+    <value>Host threads</value>
+  </data>
+  <data name="PortThreads" xml:space="preserve">
+    <value>Port threads</value>
+  </data>
+  <data name="PowerShell" xml:space="preserve">
+    <value>PowerShell</value>
+  </data>
+  <data name="ConfigureThePathToPowerShellInTheSettingsDots" xml:space="preserve">
+    <value>Configure the path to PowerShell in the settings...</value>
+  </data>
+  <data name="DisableTransparencyInTheSettingsToUsePowerShell" xml:space="preserve">
+    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PowerShell.</value>
+  </data>
+  <data name="PowerShellProcessHasEnded" xml:space="preserve">
+    <value>PowerShell process has ended!</value>
+  </data>
+  <data name="ExecutionPolicy" xml:space="preserve">
+    <value>Execution Policy</value>
+  </data>
+  <data name="RemoteConsole" xml:space="preserve">
+    <value>Remote console</value>
+  </data>
+  <data name="PowerShellLocationDots" xml:space="preserve">
+    <value>PowerShell location...</value>
+  </data>
+  <data name="FilePath" xml:space="preserve">
+    <value>File path</value>
+  </data>
+  <data name="ThisFeatureIsOnlyAvailableInWindows10Server2016OrLater" xml:space="preserve">
+    <value>This feature is only available in Windows 10 / Server 2016 or later!</value>
+  </data>
+  <data name="OverrideDefaultSettings" xml:space="preserve">
+    <value>Override default settings</value>
+  </data>
+  <data name="ResolveIPv4AddressForThisHost" xml:space="preserve">
+    <value>Resolve IPv4 address for this host</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="TotalBytesReceived" xml:space="preserve">
+    <value>Total bytes received</value>
+  </data>
+  <data name="TotalBytesSent" xml:space="preserve">
+    <value>Total bytes sent</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="Bandwidth" xml:space="preserve">
+    <value>Bandwidth</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="ApplyWindowsKeyCombinations" xml:space="preserve">
+    <value>Apply Windows key combinations</value>
+  </data>
+  <data name="CredentialSecuritySupportProvider" xml:space="preserve">
+    <value>Credential Security Support Provider</value>
+  </data>
+  <data name="BackgroundJob" xml:space="preserve">
+    <value>Background job</value>
+  </data>
+  <data name="HelpMessage_BackgroundJob" xml:space="preserve">
+    <value>The background job will save settings, profiles, credentials every x-minutes.
+
+Value 0 will disable this feature.
+
+Changing this value requires a restart of the application to take effect.</value>
+  </data>
+  <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
+    <value>Run background job every x-minute</value>
   </data>
 </root>

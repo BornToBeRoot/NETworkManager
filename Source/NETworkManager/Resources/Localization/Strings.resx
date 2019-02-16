@@ -2009,7 +2009,7 @@ Path: "{0}"</value>
     <value>Background job</value>
   </data>
   <data name="HelpMessage_BackgroundJob" xml:space="preserve">
-    <value>The background job will save settings, profiles, credentials every x-minutes.
+    <value>The background job will save settings, profiles and credentials every x-minutes.
 
 Value 0 will disable this feature.
 
