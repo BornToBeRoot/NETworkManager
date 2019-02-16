@@ -135,8 +135,8 @@ namespace NETworkManager.Controls
                 {
                     _process.EnableRaisingEvents = true;
                     _process.Exited += Process_Exited;
-                    
-                   _appWin = _process.MainWindowHandle;
+
+                    _appWin = _process.MainWindowHandle;
 
                     if (_appWin == IntPtr.Zero)
                     {
@@ -160,7 +160,7 @@ namespace NETworkManager.Controls
 
                     if (_appWin != IntPtr.Zero)
                     {
-                        while (!_process.HasExited && _process.MainWindowTitle.IndexOf(_sessionInfo.Host.Split('.')[0], StringComparison.CurrentCultureIgnoreCase) == -1)
+                        while (!_process.HasExited && _process.MainWindowTitle.IndexOf(" - TigerVNC", StringComparison.Ordinal) == -1)
                         {
                             await Task.Delay(50);
 
@@ -169,6 +169,7 @@ namespace NETworkManager.Controls
 
                         if (!_process.HasExited)
                         {
+                            // Update the window handle, it changes when there is an authentication dialog
                             _appWin = _process.MainWindowHandle;
 
                             NativeMethods.SetParent(_appWin, WindowHost.Handle);

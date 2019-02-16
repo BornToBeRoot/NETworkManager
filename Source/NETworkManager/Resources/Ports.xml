@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Service Name and Transport Protocol Port Number Registry
-Generated 08/11/2018 23:39:18-->
+Generated 02/16/2019 21:48:41-->
 <Ports>
   <Port>
     <Number>0</Number>
@@ -8602,20 +8602,20 @@ Generated 08/11/2018 23:39:18-->
   <Port>
     <Number>861</Number>
     <Protocol>udp</Protocol>
-    <Name>owamp-control</Name>
-    <Description>OWAMP-Control</Description>
+    <Name>owamp-test</Name>
+    <Description>OWAMP-Test</Description>
   </Port>
   <Port>
     <Number>862</Number>
     <Protocol>tcp</Protocol>
     <Name>twamp-control</Name>
-    <Description>Two-way Active Measurement Protocol (TWAMP) Control</Description>
+    <Description>TWAMP-Control</Description>
   </Port>
   <Port>
     <Number>862</Number>
     <Protocol>udp</Protocol>
-    <Name>twamp-control</Name>
-    <Description>Two-way Active Measurement Protocol (TWAMP) Control</Description>
+    <Name>twamp-test</Name>
+    <Description>TWAMP-Test Receiver Port</Description>
   </Port>
   <Port>
     <Number>873</Number>
@@ -25495,8 +25495,8 @@ Generated 08/11/2018 23:39:18-->
   <Port>
     <Number>2371</Number>
     <Protocol>tcp</Protocol>
-    <Name>hp-rda</Name>
-    <Description>HP Remote Device Access</Description>
+    <Name>rda</Name>
+    <Description>Remote Device Access</Description>
   </Port>
   <Port>
     <Number>2371</Number>
@@ -29840,7 +29840,7 @@ Generated 08/11/2018 23:39:18-->
     <Number>2731</Number>
     <Protocol>udp</Protocol>
     <Name>fyre-messanger</Name>
-    <Description>Fyre Messagner</Description>
+    <Description>Fyre Messanger</Description>
   </Port>
   <Port>
     <Number>2732</Number>
@@ -41454,7 +41454,7 @@ Generated 08/11/2018 23:39:18-->
     <Number>3697</Number>
     <Protocol>udp</Protocol>
     <Name>nw-license</Name>
-    <Description>NavisWorks Licnese System</Description>
+    <Description>NavisWorks License System</Description>
   </Port>
   <Port>
     <Number>3698</Number>
@@ -41802,7 +41802,7 @@ Generated 08/11/2018 23:39:18-->
     <Number>3726</Number>
     <Protocol>udp</Protocol>
     <Name>array-manager</Name>
-    <Description>Xyartex Array Manager</Description>
+    <Description>Xyratex Array Manager</Description>
   </Port>
   <Port>
     <Number>3727</Number>
@@ -42090,7 +42090,7 @@ Generated 08/11/2018 23:39:18-->
     <Number>3750</Number>
     <Protocol>udp</Protocol>
     <Name>cbos-ip-port</Name>
-    <Description>CBOS/IP ncapsalatoin port</Description>
+    <Description>CBOS/IP ncapsalation port</Description>
   </Port>
   <Port>
     <Number>3751</Number>
@@ -43278,7 +43278,7 @@ Generated 08/11/2018 23:39:18-->
     <Number>3849</Number>
     <Protocol>udp</Protocol>
     <Name>spw-dnspreload</Name>
-    <Description>SPACEWAY DNS Prelaod</Description>
+    <Description>SPACEWAY DNS Preload</Description>
   </Port>
   <Port>
     <Number>3850</Number>
@@ -44136,7 +44136,7 @@ Generated 08/11/2018 23:39:18-->
     <Number>3917</Number>
     <Protocol>udp</Protocol>
     <Name>aftmux</Name>
-    <Description>AFT multiples port</Description>
+    <Description>AFT multiplex port</Description>
   </Port>
   <Port>
     <Number>3918</Number>
@@ -44400,7 +44400,7 @@ Generated 08/11/2018 23:39:18-->
     <Number>3938</Number>
     <Protocol>udp</Protocol>
     <Name>dbcontrol_agent</Name>
-    <Description>Oracel dbControl Agent po</Description>
+    <Description>Oracle dbControl Agent po</Description>
   </Port>
   <Port>
     <Number>3939</Number>
@@ -47957,8 +47957,8 @@ Generated 08/11/2018 23:39:18-->
   <Port>
     <Number>4341</Number>
     <Protocol>tcp</Protocol>
-    <Name>lisp-data</Name>
-    <Description>LISP Data Packets</Description>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>4341</Number>
@@ -47969,8 +47969,8 @@ Generated 08/11/2018 23:39:18-->
   <Port>
     <Number>4342</Number>
     <Protocol>tcp</Protocol>
-    <Name>lisp-cons</Name>
-    <Description>LISP-CONS Control</Description>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>4342</Number>
@@ -61388,7 +61388,7 @@ Generated 08/11/2018 23:39:18-->
     <Number>7227</Number>
     <Protocol>udp</Protocol>
     <Name>ramp</Name>
-    <Description>Registry A $ M Protocol</Description>
+    <Description>Registry A &amp; M Protocol</Description>
   </Port>
   <Port>
     <Number>7228</Number>
@@ -63341,6 +63341,18 @@ Generated 08/11/2018 23:39:18-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>8015</Number>
+    <Protocol>tcp</Protocol>
+    <Name>cfg-cloud</Name>
+    <Description>Configuration Cloud Service</Description>
+  </Port>
+  <Port>
+    <Number>8015</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>8019</Number>
     <Protocol>tcp</Protocol>
     <Name>qbdb</Name>
@@ -64289,6 +64301,18 @@ Generated 08/11/2018 23:39:18-->
     <Description>LM Webwatcher</Description>
   </Port>
   <Port>
+    <Number>8211</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>8211</Number>
+    <Protocol>udp</Protocol>
+    <Name>aruba-papi</Name>
+    <Description>Aruba Networks AP management</Description>
+  </Port>
+  <Port>
     <Number>8230</Number>
     <Protocol>tcp</Protocol>
     <Name>rexecj</Name>
@@ -64335,6 +64359,18 @@ Generated 08/11/2018 23:39:18-->
     <Protocol>udp</Protocol>
     <Name>synapse-nhttps</Name>
     <Description>Synapse Non Blocking HTTPS</Description>
+  </Port>
+  <Port>
+    <Number>8266</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>8266</Number>
+    <Protocol>udp</Protocol>
+    <Name>espeasy-p2p</Name>
+    <Description>ESPeasy peer-2-peer communication</Description>
   </Port>
   <Port>
     <Number>8270</Number>
@@ -65301,6 +65337,18 @@ Generated 08/11/2018 23:39:18-->
     <Protocol>udp</Protocol>
     <Name>pfcp</Name>
     <Description>Destination Port number for PFCP</Description>
+  </Port>
+  <Port>
+    <Number>8807</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>8807</Number>
+    <Protocol>udp</Protocol>
+    <Name>hes-clip</Name>
+    <Description>HES-CLIP Interoperability protocol</Description>
   </Port>
   <Port>
     <Number>8808</Number>
@@ -69182,7 +69230,7 @@ Generated 08/11/2018 23:39:18-->
     <Number>11967</Number>
     <Protocol>udp</Protocol>
     <Name>sysinfo-sp</Name>
-    <Description>SysInfo Sercice Protocol</Description>
+    <Description>SysInfo Service Protocol</Description>
   </Port>
   <Port>
     <Number>11997</Number>
@@ -72121,6 +72169,18 @@ Generated 08/11/2018 23:39:18-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>24323</Number>
+    <Protocol>tcp</Protocol>
+    <Name>vrmg-ip</Name>
+    <Description>Verimag mobile class protocol over TCP</Description>
+  </Port>
+  <Port>
+    <Number>24323</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>24386</Number>
     <Protocol>tcp</Protocol>
     <Name>intel-rci</Name>
@@ -72641,6 +72701,18 @@ Generated 08/11/2018 23:39:18-->
     <Protocol>udp</Protocol>
     <Name>exonet</Name>
     <Description>EXOnet</Description>
+  </Port>
+  <Port>
+    <Number>27010</Number>
+    <Protocol>tcp</Protocol>
+    <Name>flex-lmadmin</Name>
+    <Description>A protocol for managing license services</Description>
+  </Port>
+  <Port>
+    <Number>27010</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>27345</Number>
@@ -73570,7 +73642,7 @@ Generated 08/11/2018 23:39:18-->
     <Number>34980</Number>
     <Protocol>udp</Protocol>
     <Name>ethercat</Name>
-    <Description>EhterCAT Port</Description>
+    <Description>EtherCAT Port</Description>
   </Port>
   <Port>
     <Number>35000</Number>
@@ -74021,6 +74093,24 @@ Generated 08/11/2018 23:39:18-->
     <Protocol>sctp</Protocol>
     <Name>xn-control</Name>
     <Description>Xn Control Plane (3GPP)</Description>
+  </Port>
+  <Port>
+    <Number>38462</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>38462</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>38462</Number>
+    <Protocol>sctp</Protocol>
+    <Name>e1-interface</Name>
+    <Description>E1 signalling transport (3GPP)</Description>
   </Port>
   <Port>
     <Number>38472</Number>

@@ -158,7 +158,14 @@ namespace NETworkManager.ViewModels
             {
                 if (value == _selectedProfile)
                     return;
-                
+
+                if (value != null && !IsSending)
+                {
+                    MACAddress = value.WakeOnLAN_MACAddress;
+                    Broadcast = value.WakeOnLAN_Broadcast;
+                    Port = value.WakeOnLAN_OverridePort ? value.WakeOnLAN_Port : SettingsManager.Current.WakeOnLAN_Port;
+                }
+
                 _selectedProfile = value;
                 OnPropertyChanged();
             }

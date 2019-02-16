@@ -160,7 +160,7 @@ namespace NETworkManager.Controls
 
                     if (_appWin != IntPtr.Zero)
                     {
-                        while (!_process.HasExited && _process.MainWindowTitle.IndexOf(_sessionInfo.HostOrSerialLine, StringComparison.CurrentCultureIgnoreCase) == -1)
+                        while (!_process.HasExited && _process.MainWindowTitle.IndexOf(" - PuTTY", StringComparison.Ordinal) == -1)
                         {
                             await Task.Delay(50);
 

@@ -19,189 +19,193 @@
         <converters:TcpStateToStringConverter x:Key="TcpStateToStringConverter" />
         <converters:AutoRefreshTimeToStringConverter x:Key="AutoRefreshTimeToStringConverter" />
     </UserControl.Resources>
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="10" />
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="10" />
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <TextBox x:Name="TextBoxSearch" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
-        <controls:MultiSelectDataGrid x:Name="DataGridConnection" Grid.Row="2" ItemsSource="{Binding ConnectionResultsView}" SelectedItem="{Binding SelectedConnectionInfo}" SelectedItemsList="{Binding SelectedConnectionInfos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultDataGrid}">
-            <DataGrid.Resources>
-                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
-                <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
-                    <MenuItem Header="{x:Static localization:Strings.CopyDots}">
-                        <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </MenuItem.Icon>
-                        <MenuItem Header="{x:Static localization:Strings.Protocol}" Command="{Binding CopySelectedProtocolCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+    <TabControl Style="{StaticResource DefaultTabControl}">
+        <TabItem Header="{x:Static localization:Strings.Connections}">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBox x:Name="TextBoxSearch" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+                <controls:MultiSelectDataGrid x:Name="DataGridConnection" Grid.Row="2" ItemsSource="{Binding ConnectionResultsView}" SelectedItem="{Binding SelectedConnectionInfo}" SelectedItemsList="{Binding SelectedConnectionInfos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultDataGrid}">
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
+                        <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
+                            <MenuItem Header="{x:Static localization:Strings.CopyDots}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                                <MenuItem Header="{x:Static localization:Strings.Protocol}" Command="{Binding CopySelectedProtocolCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static localization:Strings.LocalIPAddress}" Command="{Binding CopySelectedLocalIpAddressCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static localization:Strings.LocalPort}" Command="{Binding CopySelectedLocalPortCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static localization:Strings.RemoteIPAddress}" Command="{Binding CopySelectedRemoteIpAddressCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static localization:Strings.RemotePort}" Command="{Binding CopySelectedRemotePortCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static localization:Strings.State}" Command="{Binding CopySelectedStateCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </MenuItem>
+                            <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                        <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                            <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </DataGrid.Resources>
+                    <DataGrid.RowStyle>
+                        <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                            <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1" >
+                                    <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}" Binding="{Binding (network:ConnectionInfo.Protocol)}" SortMemberPath="Protocol" MinWidth="100" />
+                        <DataGridTextColumn Header="{x:Static localization:Strings.LocalIPAddress}" Binding="{Binding (network:ConnectionInfo.LocalIPAddress)}" SortMemberPath="LocalIPAddressInt32" MinWidth="150" />
+                        <DataGridTextColumn Header="{x:Static localization:Strings.LocalPort}" Binding="{Binding (network:ConnectionInfo.LocalPort)}" SortMemberPath="LocalPort" MinWidth="100" />
+                        <DataGridTextColumn Header="{x:Static localization:Strings.RemoteIPAddress}" Binding="{Binding (network:ConnectionInfo.RemoteIPAddress)}" SortMemberPath="RemoteIPAddressInt32" MinWidth="150"/>
+                        <DataGridTextColumn Header="{x:Static localization:Strings.RemotePort}" Binding="{Binding (network:ConnectionInfo.RemotePort)}" SortMemberPath="RemotePort" MinWidth="100" />
+                        <DataGridTextColumn Header="{x:Static localization:Strings.State}" Binding="{Binding (network:ConnectionInfo.TcpState), Converter={StaticResource TcpStateToStringConverter}}" SortMemberPath="TcpStateTranslated" MinWidth="150" Width="*" />
+                    </DataGrid.Columns>
+                </controls:MultiSelectDataGrid>
+                <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+                <mahAppsControls:MetroProgressBar Grid.Row="4" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
+                    <mahAppsControls:MetroProgressBar.Style>
+                        <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsRefreshing}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </mahAppsControls:MetroProgressBar.Style>
+                </mahAppsControls:MetroProgressBar>
+                <Grid Grid.Row="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <WrapPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                        <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0"/>
+                        <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Path="Value" />
+                                                <Binding Path="TimeUnit" Converter="{StaticResource AutoRefreshTimeToStringConverter}" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </WrapPanel>
+                    <Button Grid.Column="2" Command="{Binding RefreshCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsRefreshing}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding AutoRefresh}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Button.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.LocalIPAddress}" Command="{Binding CopySelectedLocalIpAddressCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.LocalPort}" Command="{Binding CopySelectedLocalPortCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.RemoteIPAddress}" Command="{Binding CopySelectedRemoteIpAddressCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.RemotePort}" Command="{Binding CopySelectedRemotePortCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.State}" Command="{Binding CopySelectedStateCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                    </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
-                        <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </ContextMenu>
-                <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
-                        <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </ContextMenu>
-            </DataGrid.Resources>
-            <DataGrid.RowStyle>
-                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
-                    <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1" >
-                            <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </DataGrid.RowStyle>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}" Binding="{Binding (network:ConnectionInfo.Protocol)}" SortMemberPath="Protocol" MinWidth="100" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.LocalIPAddress}" Binding="{Binding (network:ConnectionInfo.LocalIPAddress)}" SortMemberPath="LocalIPAddressInt32" MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.LocalPort}" Binding="{Binding (network:ConnectionInfo.LocalPort)}" SortMemberPath="LocalPort" MinWidth="100" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.RemoteIPAddress}" Binding="{Binding (network:ConnectionInfo.RemoteIPAddress)}" SortMemberPath="RemoteIPAddressInt32" MinWidth="150"/>
-                <DataGridTextColumn Header="{x:Static localization:Strings.RemotePort}" Binding="{Binding (network:ConnectionInfo.RemotePort)}" SortMemberPath="RemotePort" MinWidth="100" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.State}" Binding="{Binding (network:ConnectionInfo.TcpState), Converter={StaticResource TcpStateToStringConverter}}" SortMemberPath="TcpStateTranslated" MinWidth="150" Width="*" />
-            </DataGrid.Columns>
-        </controls:MultiSelectDataGrid>
-        <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
-        <mahAppsControls:MetroProgressBar Grid.Row="4" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
-            <mahAppsControls:MetroProgressBar.Style>
-                <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsRefreshing}" Value="False">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </mahAppsControls:MetroProgressBar.Style>
-        </mahAppsControls:MetroProgressBar>
-        <Grid Grid.Row="6">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <WrapPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0"/>
-                <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
-                            <TextBlock>
-                                <TextBlock.Text>
-                                    <MultiBinding StringFormat="{}{0} {1}">
-                                        <Binding Path="Value" />
-                                        <Binding Path="TimeUnit" Converter="{StaticResource AutoRefreshTimeToStringConverter}" />
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </WrapPanel>
-            <Button Grid.Column="2" Command="{Binding RefreshCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsRefreshing}" Value="True">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding AutoRefresh}" Value="True">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}" TextAlignment="Center" Margin="10,5" />
-                    </Grid>
-                </Button.Content>
-            </Button>
-        </Grid>
-    </Grid>
+                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}" TextAlignment="Center" Margin="10,5" />
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+                </Grid>
+            </Grid>
+        </TabItem>
+    </TabControl>
 </UserControl>
 
