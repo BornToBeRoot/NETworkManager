@@ -97,7 +97,7 @@ namespace NETworkManager.ViewModels
         private RemoteDesktopSettingsView _remoteDesktopSettingsView;
         private PowerShellSettingsView _powerShellSettingsView;
         private PuTTYSettingsView _puTTYSettingsView;
-        private TightVNCSettingsView _tightVNCSettingsView;
+        private TigerVNCSettingsView _tigerVNCSettingsView;
         private SNMPSettingsView _snmpSettingsView;
         private WakeOnLANSettingsView _wakeOnLANSettingsView;
         private HTTPHeadersSettingsView _httpHeadersSettingsView;
@@ -273,11 +273,11 @@ namespace NETworkManager.ViewModels
 
                     SettingsContent = _puTTYSettingsView;
                     break;
-                case SettingsViewManager.Name.TightVNC:
-                    if(_tightVNCSettingsView == null)
-                        _tightVNCSettingsView = new TightVNCSettingsView();
+                case SettingsViewManager.Name.TigerVNC:
+                    if(_tigerVNCSettingsView == null)
+                        _tigerVNCSettingsView = new TigerVNCSettingsView();
 
-                    SettingsContent = _tightVNCSettingsView;
+                    SettingsContent = _tigerVNCSettingsView;
                     break;
                 case SettingsViewManager.Name.SNMP:
                     if (_snmpSettingsView == null)

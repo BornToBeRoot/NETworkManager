@@ -201,11 +201,11 @@ namespace NETworkManager.Models.Settings
                 PuTTY_OverrideAdditionalCommandLine = instance.PuTTY_OverrideAdditionalCommandLine,
                 PuTTY_AdditionalCommandLine = instance.PuTTY_AdditionalCommandLine?.Trim(),
 
-                TightVNC_Enabled = instance.TightVNC_Enabled,
-                TightVNC_InheritHost = instance.TightVNC_InheritHost,
-                TightVNC_Host = instance.TightVNC_InheritHost ? instance.Host?.Trim() : instance.TightVNC_Host?.Trim(),
-                TightVNC_OverridePort = instance.TightVNC_OverridePort,
-                TightVNC_Port = instance.TightVNC_Port,
+                TigerVNC_Enabled = instance.TigerVNC_Enabled,
+                TigerVNC_InheritHost = instance.TigerVNC_InheritHost,
+                TigerVNC_Host = instance.TigerVNC_InheritHost ? instance.Host?.Trim() : instance.TigerVNC_Host?.Trim(),
+                TigerVNC_OverridePort = instance.TigerVNC_OverridePort,
+                TigerVNC_Port = instance.TigerVNC_Port,
 
                 WakeOnLAN_Enabled = instance.WakeOnLAN_Enabled,
                 WakeOnLAN_MACAddress = instance.WakeOnLAN_MACAddress?.Trim(),

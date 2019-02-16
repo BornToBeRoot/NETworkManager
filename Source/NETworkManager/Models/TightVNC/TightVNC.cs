@@ -1,20 +1,20 @@
 ﻿using NETworkManager.Models.Settings;
 
-namespace NETworkManager.Models.TightVNC
+namespace NETworkManager.Models.TigerVNC
 {
-    public class TightVNC
+    public class TigerVNC
     {
-        public static string BuildCommandLine(TightVNCSessionInfo sessionInfo)
+        public static string BuildCommandLine(TigerVNCSessionInfo sessionInfo)
         {
-            return $"-host={sessionInfo.Host} -port={sessionInfo.Port}";
+            return $"{sessionInfo.Host}::{sessionInfo.Port}";
         }
 
-        public static TightVNCSessionInfo CreateSessionInfo(ProfileInfo profileInfo)
+        public static TigerVNCSessionInfo CreateSessionInfo(ProfileInfo profileInfo)
         {
-            var info = new TightVNCSessionInfo
+            var info = new TigerVNCSessionInfo
             {
-                Host = profileInfo.TightVNC_Host,
-                Port = profileInfo.TightVNC_OverridePort ? profileInfo.TightVNC_Port : SettingsManager.Current.TightVNC_Port
+                Host = profileInfo.TigerVNC_Host,
+                Port = profileInfo.TigerVNC_OverridePort ? profileInfo.TigerVNC_Port : SettingsManager.Current.TigerVNC_Port
             };
 
             return info;

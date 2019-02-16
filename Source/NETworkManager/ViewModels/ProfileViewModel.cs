@@ -1405,75 +1405,75 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
-        #region TightVNC
-        private bool _tightVNC_Enabled;
-        public bool TightVNC_Enabled
+        #region TigerVNC
+        private bool _tigerVNC_Enabled;
+        public bool TigerVNC_Enabled
         {
-            get => _tightVNC_Enabled;
+            get => _tigerVNC_Enabled;
             set
             {
-                if (value == _tightVNC_Enabled)
+                if (value == _tigerVNC_Enabled)
                     return;
 
-                _tightVNC_Enabled = value;
+                _tigerVNC_Enabled = value;
 
                 OnPropertyChanged();
             }
         }
 
-        private bool _tightVNC_InheritHost;
-        public bool TightVNC_InheritHost
+        private bool _tigerVNC_InheritHost;
+        public bool TigerVNC_InheritHost
         {
-            get => _tightVNC_InheritHost;
+            get => _tigerVNC_InheritHost;
             set
             {
-                if (value == _tightVNC_InheritHost)
+                if (value == _tigerVNC_InheritHost)
                     return;
 
-                _tightVNC_InheritHost = value;
+                _tigerVNC_InheritHost = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _tightVNC_Host;
-        public string TightVNC_Host
+        private string _tigerVNC_Host;
+        public string TigerVNC_Host
         {
-            get => _tightVNC_Host;
+            get => _tigerVNC_Host;
             set
             {
-                if (value == _tightVNC_Host)
+                if (value == _tigerVNC_Host)
                     return;
 
-                _tightVNC_Host = value;
+                _tigerVNC_Host = value;
                 OnPropertyChanged();
             }
         }
 
 
-        private bool _tightVNC_OverridePort;
-        public bool TightVNC_OverridePort
+        private bool _tigerVNC_OverridePort;
+        public bool TigerVNC_OverridePort
         {
-            get => _tightVNC_OverridePort;
+            get => _tigerVNC_OverridePort;
             set
             {
-                if (value == _tightVNC_OverridePort)
+                if (value == _tigerVNC_OverridePort)
                     return;
 
-                _tightVNC_OverridePort = value;
+                _tigerVNC_OverridePort = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _tightVNC_Port;
-        public int TightVNC_Port
+        private int _tigerVNC_Port;
+        public int TigerVNC_Port
         {
-            get => _tightVNC_Port;
+            get => _tigerVNC_Port;
             set
             {
-                if (value == _tightVNC_Port)
+                if (value == _tigerVNC_Port)
                     return;
 
-                _tightVNC_Port = value;
+                _tigerVNC_Port = value;
                 OnPropertyChanged();
             }
         }
@@ -1782,12 +1782,12 @@ namespace NETworkManager.ViewModels
             PuTTY_OverrideAdditionalCommandLine = profileInfo.PuTTY_OverrideAdditionalCommandLine;
             PuTTY_AdditionalCommandLine = profileInfo.PuTTY_AdditionalCommandLine;
 
-            // TightVNC
-            TightVNC_Enabled = profileInfo.TightVNC_Enabled;
-            TightVNC_InheritHost = profileInfo.TightVNC_InheritHost;
-            TightVNC_Host = profileInfo.TightVNC_Host;
-            TightVNC_OverridePort = profileInfo.TightVNC_OverridePort;
-            TightVNC_Port = profileInfo.TightVNC_OverridePort ? profileInfo.TightVNC_Port : SettingsManager.Current.TightVNC_Port;
+            // TigerVNC
+            TigerVNC_Enabled = profileInfo.TigerVNC_Enabled;
+            TigerVNC_InheritHost = profileInfo.TigerVNC_InheritHost;
+            TigerVNC_Host = profileInfo.TigerVNC_Host;
+            TigerVNC_OverridePort = profileInfo.TigerVNC_OverridePort;
+            TigerVNC_Port = profileInfo.TigerVNC_OverridePort ? profileInfo.TigerVNC_Port : SettingsManager.Current.TigerVNC_Port;
 
             // Wake on LAN
             WakeOnLAN_Enabled = profileInfo.WakeOnLAN_Enabled;

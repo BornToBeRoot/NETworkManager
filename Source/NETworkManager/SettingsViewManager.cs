@@ -28,7 +28,7 @@ namespace NETworkManager
             new SettingsViewInfo(Name.RemoteDesktop, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.RemoteDesktop), Group.Applications),
             new SettingsViewInfo(Name.PowerShell, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PowerShell), Group.Applications),
             new SettingsViewInfo(Name.PuTTY, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PuTTY), Group.Applications),
-            new SettingsViewInfo(Name.TightVNC, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.TightVNC), Group.Applications),
+            new SettingsViewInfo(Name.TigerVNC, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.TigerVNC), Group.Applications),
             new SettingsViewInfo(Name.SNMP, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.SNMP), Group.Applications),
             new SettingsViewInfo(Name.WakeOnLAN, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.WakeOnLAN), Group.Applications),
             new SettingsViewInfo(Name.HTTPHeaders, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.HTTPHeaders), Group.Applications),
@@ -73,8 +73,8 @@ namespace NETworkManager
                     return Resources.Localization.Strings.PowerShell;
                 case Name.PuTTY:
                     return Resources.Localization.Strings.PuTTY;
-                case Name.TightVNC:
-                    return Resources.Localization.Strings.TightVNC;
+                case Name.TigerVNC:
+                    return Resources.Localization.Strings.TigerVNC;
                 case Name.SNMP:
                     return Resources.Localization.Strings.SNMP;
                 case Name.WakeOnLAN:
@@ -120,7 +120,7 @@ namespace NETworkManager
             RemoteDesktop,
             PowerShell,
             PuTTY,
-            TightVNC,
+            TigerVNC,
             SNMP,
             WakeOnLAN,
             HTTPHeaders,

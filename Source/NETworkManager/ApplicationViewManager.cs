@@ -43,8 +43,8 @@ namespace NETworkManager
                     return Resources.Localization.Strings.PowerShell;
                 case Name.PuTTY:
                     return Resources.Localization.Strings.PuTTY;
-                case Name.TightVNC:
-                    return Resources.Localization.Strings.TightVNC;
+                case Name.TigerVNC:
+                    return Resources.Localization.Strings.TigerVNC;
                 case Name.SNMP:
                     return Resources.Localization.Strings.SNMP;
                 case Name.WakeOnLAN:
@@ -101,7 +101,7 @@ namespace NETworkManager
                 case Name.PuTTY:
                     canvas.Children.Add(new PackIconOcticons { Kind = PackIconOcticonsKind.Terminal });
                     break;
-                case Name.TightVNC:
+                case Name.TigerVNC:
                     canvas.Children.Add(new PackIconMaterial {Kind = PackIconMaterialKind.EyeOutline});
                     break;
                 case Name.SNMP:
@@ -151,7 +151,7 @@ namespace NETworkManager
             RemoteDesktop,
             PowerShell,
             PuTTY,
-            TightVNC,
+            TigerVNC,
             SNMP,
             WakeOnLAN,
             HTTPHeaders,

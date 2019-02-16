@@ -129,8 +129,8 @@ namespace NETworkManager
         public static int PuTTY_BaudRate => 9600;
         public static int PuTTY_Raw => 0;
 
-        // Application: TightVNC
-        public static int TightVNC_DefaultVNCPort => 5900;
+        // Application: TigerVNC
+        public static int TigerVNC_DefaultVNCPort => 5900;
 
         // Application: SNMP
         public static WalkMode SNMP_WalkMode => WalkMode.WithinSubtree;

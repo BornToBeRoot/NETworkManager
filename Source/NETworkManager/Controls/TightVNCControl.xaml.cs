@@ -8,14 +8,14 @@ using System.Windows.Threading;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using NETworkManager.Utilities;
-using NETworkManager.Models.TightVNC;
+using NETworkManager.Models.TigerVNC;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Controls
 {
-    public partial class TightVNCControl : INotifyPropertyChanged
+    public partial class TigerVNCControl : INotifyPropertyChanged
     {
         #region PropertyChangedEventHandler
         public event PropertyChangedEventHandler PropertyChanged;
@@ -32,7 +32,7 @@ namespace NETworkManager.Controls
 
         private readonly IDialogCoordinator _dialogCoordinator;
 
-        private readonly TightVNCSessionInfo _sessionInfo;
+        private readonly TigerVNCSessionInfo _sessionInfo;
 
         private Process _process;
         private IntPtr _appWin;
@@ -69,7 +69,7 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Constructor, load
-        public TightVNCControl(TightVNCSessionInfo info)
+        public TigerVNCControl(TigerVNCSessionInfo info)
         {
             InitializeComponent();
             DataContext = this;
@@ -124,7 +124,7 @@ namespace NETworkManager.Controls
             var info = new ProcessStartInfo
             {
                 FileName = _sessionInfo.ApplicationFilePath,
-                Arguments = TightVNC.BuildCommandLine(_sessionInfo)
+                Arguments = TigerVNC.BuildCommandLine(_sessionInfo)
             };
 
             try
@@ -135,10 +135,8 @@ namespace NETworkManager.Controls
                 {
                     _process.EnableRaisingEvents = true;
                     _process.Exited += Process_Exited;
-
-                    // Embed tightvnc window into panel, remove border etc.
-                    _process.WaitForInputIdle();
-                    _appWin = _process.MainWindowHandle;
+                    
+                   _appWin = _process.MainWindowHandle;
 
                     if (_appWin == IntPtr.Zero)
                     {
@@ -147,6 +145,10 @@ namespace NETworkManager.Controls
                         while ((DateTime.Now - startTime).TotalSeconds < 10)
                         {
                             _process.Refresh();
+
+                            if (_process.HasExited)
+                                break;
+
                             _appWin = _process.MainWindowHandle;
 
                             if (IntPtr.Zero != _appWin)
@@ -158,20 +160,32 @@ namespace NETworkManager.Controls
 
                     if (_appWin != IntPtr.Zero)
                     {
-                        NativeMethods.SetParent(_appWin, WindowHost.Handle);
+                        while (!_process.HasExited && _process.MainWindowTitle.IndexOf(_sessionInfo.Host.Split('.')[0], StringComparison.CurrentCultureIgnoreCase) == -1)
+                        {
+                            await Task.Delay(50);
 
-                        // Show window before set style and resize
-                        NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
+                            _process.Refresh();
+                        }
 
-                        // Remove border etc.
-                        long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
-                        style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME);
-                        NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
-                        
-                        IsConnected = true;
+                        if (!_process.HasExited)
+                        {
+                            _appWin = _process.MainWindowHandle;
 
-                        // Resize embedded application & refresh       
-                        ResizeEmbeddedWindow();
+                            NativeMethods.SetParent(_appWin, WindowHost.Handle);
+
+                            // Show window before set style and resize
+                            NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
+
+                            // Remove border etc.
+                            long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
+                            style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME); // NativeMethods.WS_POPUP --> Overflow? (https://github.com/BornToBeRoot/NETworkManager/issues/167)
+                            NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
+
+                            IsConnected = true;
+
+                            // Resize embedded application & refresh       
+                            ResizeEmbeddedWindow();
+                        }
                     }
                 }
                 else
@@ -185,7 +199,6 @@ namespace NETworkManager.Controls
                 {
                     var settings = AppearanceManager.MetroDialog;
                     settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
-
                     ConfigurationManager.Current.IsDialogOpen = true;
 
                     await _dialogCoordinator.ShowMessageAsync(this, NETworkManager.Resources.Localization.Strings.Error,
@@ -225,7 +238,7 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Events
-        private void TightVNCGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void TigerVNCGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (_process != null)
                 ResizeEmbeddedWindow();

@@ -2384,92 +2384,92 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
-        #region TightVNC
-        private ObservableCollection<string> _tightVNC_HostHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> TightVNC_HostHistory
+        #region TigerVNC
+        private ObservableCollection<string> _tigerVNC_HostHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> TigerVNC_HostHistory
         {
-            get => _tightVNC_HostHistory;
+            get => _tigerVNC_HostHistory;
             set
             {
-                if (value == _tightVNC_HostHistory)
+                if (value == _tigerVNC_HostHistory)
                     return;
 
-                _tightVNC_HostHistory = value;
+                _tigerVNC_HostHistory = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private ObservableCollection<int> _tightVNC_PortHistory = new ObservableCollection<int>();
-        public ObservableCollection<int> TightVNC_PortHistory
+        private ObservableCollection<int> _tigerVNC_PortHistory = new ObservableCollection<int>();
+        public ObservableCollection<int> TigerVNC_PortHistory
         {
-            get => _tightVNC_PortHistory;
+            get => _tigerVNC_PortHistory;
             set
             {
-                if (value == _tightVNC_PortHistory)
+                if (value == _tigerVNC_PortHistory)
                     return;
 
-                _tightVNC_PortHistory = value;
+                _tigerVNC_PortHistory = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private bool _tightVNC_ExpandProfileView = true;
-        public bool TightVNC_ExpandProfileView
+        private bool _tigerVNC_ExpandProfileView = true;
+        public bool TigerVNC_ExpandProfileView
         {
-            get => _tightVNC_ExpandProfileView;
+            get => _tigerVNC_ExpandProfileView;
             set
             {
-                if (value == _tightVNC_ExpandProfileView)
+                if (value == _tigerVNC_ExpandProfileView)
                     return;
 
-                _tightVNC_ExpandProfileView = value;
+                _tigerVNC_ExpandProfileView = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private double _tightVNC_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
-        public double TightVNC_ProfileWidth
+        private double _tigerVNC_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+        public double TigerVNC_ProfileWidth
         {
-            get => _tightVNC_ProfileWidth;
+            get => _tigerVNC_ProfileWidth;
             set
             {
-                if (Math.Abs(value - _tightVNC_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+                if (Math.Abs(value - _tigerVNC_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
                     return;
 
-                _tightVNC_ProfileWidth = value;
+                _tigerVNC_ProfileWidth = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private string _tightVNC_ApplicationFilePath;
-        public string TightVNC_ApplicationFilePath
+        private string _tigerVNC_ApplicationFilePath;
+        public string TigerVNC_ApplicationFilePath
         {
-            get => _tightVNC_ApplicationFilePath;
+            get => _tigerVNC_ApplicationFilePath;
             set
             {
-                if (value == _tightVNC_ApplicationFilePath)
+                if (value == _tigerVNC_ApplicationFilePath)
                     return;
 
-                _tightVNC_ApplicationFilePath = value;
+                _tigerVNC_ApplicationFilePath = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _tightVNC_Port = GlobalStaticConfiguration.TightVNC_DefaultVNCPort;
-        public int TightVNC_Port
+        private int _tigerVNC_Port = GlobalStaticConfiguration.TigerVNC_DefaultVNCPort;
+        public int TigerVNC_Port
         {
-            get => _tightVNC_Port;
+            get => _tigerVNC_Port;
             set
             {
-                if (value == _tightVNC_Port)
+                if (value == _tigerVNC_Port)
                     return;
 
-                _tightVNC_Port = value;
+                _tigerVNC_Port = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -3411,9 +3411,9 @@ namespace NETworkManager.Models.Settings
             PuTTY_UsernameHistory.CollectionChanged += CollectionChanged;
             PuTTY_ProfileHistory.CollectionChanged += CollectionChanged;
 
-            // TightVNC
-            TightVNC_HostHistory.CollectionChanged += CollectionChanged;
-            TightVNC_PortHistory.CollectionChanged += CollectionChanged;
+            // TigerVNC
+            TigerVNC_HostHistory.CollectionChanged += CollectionChanged;
+            TigerVNC_PortHistory.CollectionChanged += CollectionChanged;
 
             // SNMP
             SNMP_HostHistory.CollectionChanged += CollectionChanged;

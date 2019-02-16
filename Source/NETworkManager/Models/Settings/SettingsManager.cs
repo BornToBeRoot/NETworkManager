@@ -211,7 +211,7 @@ namespace NETworkManager.Models.Settings
                 // Features added in 1.8.0.0
                 if (settingsVersion < new Version("1.8.0.0"))
                 {
-                    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.TightVNC));
+                    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.TigerVNC));
                     Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.Whois));
 
                     reorderApplications = true;

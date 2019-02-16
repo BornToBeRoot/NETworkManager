@@ -112,8 +112,8 @@ namespace NETworkManager.Controls
                 case ApplicationViewManager.Name.PuTTY:
                     ((PuTTYControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case ApplicationViewManager.Name.TightVNC:
-                    ((TightVNCControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
+                case ApplicationViewManager.Name.TigerVNC:
+                    ((TigerVNCControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.SNMP:
                     ((SNMPView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
