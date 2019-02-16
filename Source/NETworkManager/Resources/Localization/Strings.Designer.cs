@@ -511,6 +511,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Background job.
+        /// </summary>
+        public static string BackgroundJob {
+            get {
+                return ResourceManager.GetString("BackgroundJob", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Backup.
         /// </summary>
         public static string Backup {
@@ -2082,6 +2091,19 @@ namespace NETworkManager.Resources.Localization {
         public static string Height {
             get {
                 return ResourceManager.GetString("Height", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The background job will save settings, profiles, credentials every x-minutes.
+        ///
+        ///Value 0 will disable this feature.
+        ///
+        ///Changing this value requires a restart of the application to take effect..
+        /// </summary>
+        public static string HelpMessage_BackgroundJob {
+            get {
+                return ResourceManager.GetString("HelpMessage_BackgroundJob", resourceCulture);
             }
         }
         
@@ -4303,6 +4325,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Routing {
             get {
                 return ResourceManager.GetString("Routing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run background job every x-minute.
+        /// </summary>
+        public static string RunBackgroundJobEveryXMinute {
+            get {
+                return ResourceManager.GetString("RunBackgroundJobEveryXMinute", resourceCulture);
             }
         }
         

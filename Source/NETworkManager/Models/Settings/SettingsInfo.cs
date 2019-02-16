@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using Heijden.DNS;
@@ -57,6 +56,21 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _general_DefaultApplicationViewName = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private int _general_BackgroundJobInterval = GlobalStaticConfiguration.General_BackgroundJobInterval;
+        public int General_BackgroundJobInterval
+        {
+            get => _general_BackgroundJobInterval;
+            set
+            {
+                if (value == _general_BackgroundJobInterval)
+                    return;
+
+                _general_BackgroundJobInterval = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }

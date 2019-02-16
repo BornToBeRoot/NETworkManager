@@ -2005,4 +2005,17 @@ Path: "{0}"</value>
   <data name="CredentialSecuritySupportProvider" xml:space="preserve">
     <value>Credential Security Support Provider</value>
   </data>
+  <data name="BackgroundJob" xml:space="preserve">
+    <value>Background job</value>
+  </data>
+  <data name="HelpMessage_BackgroundJob" xml:space="preserve">
+    <value>The background job will save settings, profiles, credentials every x-minutes.
+
+Value 0 will disable this feature.
+
+Changing this value requires a restart of the application to take effect.</value>
+  </data>
+  <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
+    <value>Run background job every x-minute</value>
+  </data>
 </root>
