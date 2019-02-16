@@ -162,31 +162,32 @@ namespace NETworkManager.Controls
 
                     if (_appWin != IntPtr.Zero)
                     {
-                        while (_process.MainWindowTitle.IndexOf(_sessionInfo.Host.Split('.')[0], StringComparison.CurrentCultureIgnoreCase) == -1)
+                        while (!_process.HasExited && _process.MainWindowTitle.IndexOf(_sessionInfo.Host.Split('.')[0], StringComparison.CurrentCultureIgnoreCase) == -1)
                         {
                             await Task.Delay(50);
 
                             _process.Refresh();
                         }
 
-                        _appWin = _process.MainWindowHandle;
+                        if (!_process.HasExited)
+                        {
+                            _appWin = _process.MainWindowHandle;
 
-                        NativeMethods.SetParent(_appWin, WindowHost.Handle);
+                            NativeMethods.SetParent(_appWin, WindowHost.Handle);
 
-                        // Show window before set style and resize
-                        NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
+                            // Show window before set style and resize
+                            NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
 
-                        // Remove border etc.
-                        long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
-                        // style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME); // Overflow? 
-                        style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME);
-                        NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
+                            // Remove border etc.
+                            long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
+                            style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME); // NativeMethods.WS_POPUP --> Overflow? (https://github.com/BornToBeRoot/NETworkManager/issues/167)
+                            NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
 
+                            IsConnected = true;
 
-                        IsConnected = true;
-
-                        // Resize embedded application & refresh       
-                        ResizeEmbeddedWindow();
+                            // Resize embedded application & refresh       
+                            ResizeEmbeddedWindow();
+                        }
                     }
                 }
                 else
