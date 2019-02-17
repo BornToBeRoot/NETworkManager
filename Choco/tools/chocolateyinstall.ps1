@@ -1,7 +1,7 @@
 ﻿
 $ErrorActionPreference = 'Stop';
 $toolsDir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
-$url        = 'https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.8.3.0/NETworkManager_v1.8.3.0_Setup.msi'  
+$url        = 'https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.9.0.0/NETworkManager_v1.9.0.0_Setup.msi'  
 
 $packageArgs = @{
   packageName   = $env:ChocolateyPackageName
@@ -11,7 +11,7 @@ $packageArgs = @{
 
   softwareName  = 'NETworkManager*'
 
-  checksum      = 'BB9B66D526066FCBBFE15139333C350602D7325C9D58E319E6CC91164ED93D82'
+  checksum      = '2C01DE0C0B0F01D92062AAE9F3F3C9EB46887D5D7A9CC1E9ADBA3512C07D2EF5'
   checksumType  = 'sha256'
 
   silentArgs    = "/qn /norestart /l*v `"$($env:TEMP)\$($packageName).$($env:chocolateyPackageVersion).MsiInstall.log`""

@@ -1,5 +1,5 @@
-# PuTTY
+# PowerShell
 
-![PuTTY](../../_images/PowerShell.png)
+![PowerShell](../../_images/PowerShell.png)
 
 [back](../README.md)
