@@ -88,7 +88,7 @@ namespace NETworkManager.Models.Network
 
                 // Check if autoconfiguration for DNS is enabled (only via registry key)
                 var nameServerKey = Registry.LocalMachine.OpenSubKey($@"SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{networkInterface.Id}");
-                var dnsAutoconfigurationEnabled = nameServerKey != null && string.IsNullOrEmpty(nameServerKey.GetValue("NameServer").ToString());
+                var dnsAutoconfigurationEnabled = nameServerKey?.GetValue("NameServer") != null && string.IsNullOrEmpty(nameServerKey.GetValue("NameServer").ToString());
 
                 var listDNSServer = new List<IPAddress>();
 
