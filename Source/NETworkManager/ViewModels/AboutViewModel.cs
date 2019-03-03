@@ -172,11 +172,12 @@ namespace NETworkManager.ViewModels
 
             updater.UpdateAvailable += Updater_UpdateAvailable;
             updater.NoUpdateAvailable += Updater_NoUpdateAvailable;
+            updater.ClientIncompatibleWithNewVersion += Updater_ClientIncompatibleWithNewVersion; ;
             updater.Error += Updater_Error;
 
             updater.Check();
         }
-
+        
         public void OpenLicenseFolder()
         {
             Process.Start(LibraryManager.GetLicenseLocation());
@@ -195,6 +196,14 @@ namespace NETworkManager.ViewModels
         private void Updater_NoUpdateAvailable(object sender, EventArgs e)
         {
             UpdaterMessage = Strings.NoUpdateAvailable;
+
+            IsUpdateCheckRunning = false;
+            ShowUpdaterMessage = true;
+        }
+
+        private void Updater_ClientIncompatibleWithNewVersion(object sender, EventArgs e)
+        {
+            UpdaterMessage = Strings.YourSystemOSIsIncompatibleWithTheLatestRelease;
 
             IsUpdateCheckRunning = false;
             ShowUpdaterMessage = true;

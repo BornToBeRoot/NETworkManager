@@ -2018,4 +2018,7 @@ Changing this value requires a restart of the application to take effect.</value
   <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
     <value>Run background job every x-minute</value>
   </data>
+  <data name="YourSystemOSIsIncompatibleWithTheLatestRelease" xml:space="preserve">
+    <value>Your system OS is incompatible with the latest release!</value>
+  </data>
 </root>

@@ -5740,5 +5740,14 @@ namespace NETworkManager.Resources.Localization {
                 return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your system OS is incompatible with the latest release!.
+        /// </summary>
+        public static string YourSystemOSIsIncompatibleWithTheLatestRelease {
+            get {
+                return ResourceManager.GetString("YourSystemOSIsIncompatibleWithTheLatestRelease", resourceCulture);
+            }
+        }
     }
 }

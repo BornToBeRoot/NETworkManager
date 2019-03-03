@@ -22,6 +22,13 @@ namespace NETworkManager.Models.Update
             NoUpdateAvailable?.Invoke(this, EventArgs.Empty);
         }
 
+        public event EventHandler ClientIncompatibleWithNewVersion;
+
+        protected virtual void OnClientIncompatibleWithNewVersion()
+        {
+            ClientIncompatibleWithNewVersion?.Invoke(this, EventArgs.Empty);
+        }
+
         public event EventHandler Error;
 
         protected virtual void OnError()
@@ -42,6 +49,13 @@ namespace NETworkManager.Models.Update
                     var latestRelease = client.Repository.Release.GetLatest(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo);
 
                     var latestVersion = new Version(latestRelease.Result.TagName.TrimStart('v'));
+                    
+                    if(ConfigurationManager.Current.OSVersion < new Version(10, 0) && latestVersion >= new Version(2,0))
+                    {
+                        OnClientIncompatibleWithNewVersion();
+
+                        return;
+                    }
 
                     // Compare versions (tag=v1.4.2.0, version=1.4.2.0)
                     if (latestVersion > AssemblyManager.Current.Version)
