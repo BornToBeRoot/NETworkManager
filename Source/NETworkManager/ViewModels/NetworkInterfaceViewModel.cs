@@ -751,9 +751,9 @@ namespace NETworkManager.ViewModels
             _dialogCoordinator = instance;
 
             LoadNetworkInterfaces();
-
+            
             InitialBandwidthChart();
-
+            
             Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
             Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
@@ -778,6 +778,10 @@ namespace NETworkManager.ViewModels
 
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.NetworkInterface_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+
+            // Detect if network address or status changed...
+            NetworkChange.NetworkAvailabilityChanged += (sender, args) => ReloadNetworkInterfacesAction();
+            NetworkChange.NetworkAddressChanged += (sender, args) => ReloadNetworkInterfacesAction();
 
             LoadSettings();
 

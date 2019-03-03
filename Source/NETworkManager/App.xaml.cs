@@ -114,7 +114,6 @@ namespace NETworkManager
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            Debug.WriteLine("Auto save settings...");
             Save();
         }
 
