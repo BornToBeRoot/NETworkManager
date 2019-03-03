@@ -5,7 +5,6 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
@@ -412,9 +411,7 @@ namespace NETworkManager.ViewModels
             ARPInfoResults.Clear();
 
             (await ARP.GetTableAsync()).ForEach(x => ARPInfoResults.Add(x));
-
-            Debug.WriteLine("Refresh ARP...");
-
+            
             IsRefreshing = false;
         }
 

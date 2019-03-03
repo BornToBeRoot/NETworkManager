@@ -5,7 +5,6 @@ using System.Windows.Input;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using NETworkManager.Utilities;
 using NETworkManager.Models.Settings;
 using System.Windows.Threading;
@@ -342,7 +341,7 @@ namespace NETworkManager.ViewModels
             ConnectionResults.Clear();
 
             (await Connection.GetActiveTcpConnectionsAsync()).ForEach(x => ConnectionResults.Add(x));
-            Debug.WriteLine("Refresh Connections...");
+            
             IsRefreshing = false;
         }         
 
