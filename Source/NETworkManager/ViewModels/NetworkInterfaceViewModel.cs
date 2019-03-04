@@ -17,6 +17,7 @@ using System.Windows;
 using LiveCharts;
 using LiveCharts.Configurations;
 using LiveCharts.Wpf;
+using MahApps.Metro.Controls;
 
 namespace NETworkManager.ViewModels
 {
@@ -855,7 +856,7 @@ namespace NETworkManager.ViewModels
 
         private bool ReloadNetworkInterfaces_CanExecute(object obj)
         {
-            return !IsNetworkInterfaceLoading;
+            return !IsNetworkInterfaceLoading && Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         private async void ReloadNetworkInterfacesAction()
@@ -879,7 +880,12 @@ namespace NETworkManager.ViewModels
 
         public ICommand OpenNetworkConnectionsCommand
         {
-            get { return new RelayCommand(p => OpenNetworkConnectionsAction()); }
+            get { return new RelayCommand(p => OpenNetworkConnectionsAction(), OpenNetworkConnections_CanExecute); }
+        }
+
+        private bool OpenNetworkConnections_CanExecute(object paramter)
+        {
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         public async void OpenNetworkConnectionsAction()
@@ -896,7 +902,12 @@ namespace NETworkManager.ViewModels
 
         public ICommand ApplyConfigCommand
         {
-            get { return new RelayCommand(p => ApplyConfigAction()); }
+            get { return new RelayCommand(p => ApplyConfigAction(), ApplyConfig_CanExecute); }
+        }
+
+        private bool ApplyConfig_CanExecute(object paramter)
+        {
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         public void ApplyConfigAction()
@@ -908,7 +919,7 @@ namespace NETworkManager.ViewModels
         {
             get { return new RelayCommand(p => ApplyProfileProfileAction()); }
         }
-
+        
         private void ApplyProfileProfileAction()
         {
             ApplyProfileConfig();
@@ -1067,7 +1078,12 @@ namespace NETworkManager.ViewModels
 
         public ICommand FlushDNSCommand
         {
-            get { return new RelayCommand(p => FlushDNSAction()); }
+            get { return new RelayCommand(p => FlushDNSAction(), FlushDNS_CanExecute); }
+        }
+
+        private bool FlushDNS_CanExecute(object paramter)
+        {
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         private async void FlushDNSAction()
@@ -1092,7 +1108,12 @@ namespace NETworkManager.ViewModels
 
         public ICommand ReleaseRenewCommand
         {
-            get { return new RelayCommand(p => ReleaseRenewAction()); }
+            get { return new RelayCommand(p => ReleaseRenewAction(), ReleaseRenew_CanExecute); }
+        }
+
+        private bool ReleaseRenew_CanExecute(object paramter)
+        {
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         private async void ReleaseRenewAction()
@@ -1106,7 +1127,12 @@ namespace NETworkManager.ViewModels
 
         public ICommand ReleaseCommand
         {
-            get { return new RelayCommand(p => ReleaseAction()); }
+            get { return new RelayCommand(p => ReleaseAction(), Release_CanExecute); }
+        }
+        
+        private bool Release_CanExecute(object paramter)
+        {
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         private async void ReleaseAction()
@@ -1120,7 +1146,12 @@ namespace NETworkManager.ViewModels
 
         public ICommand RenewCommand
         {
-            get { return new RelayCommand(p => RenewAction()); }
+            get { return new RelayCommand(p => RenewAction(), Renew_CanExecute); }
+        }
+
+        private bool Renew_CanExecute(object paramter)
+        {
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         private async void RenewAction()
@@ -1134,7 +1165,12 @@ namespace NETworkManager.ViewModels
 
         public ICommand AddIPv4AddressCommand
         {
-            get { return new RelayCommand(p => AddIPv4AddressAction()); }
+            get { return new RelayCommand(p => AddIPv4AddressAction(), AddIPv4Address_CanExecute); }
+        }
+
+        private bool AddIPv4Address_CanExecute(object paramter)
+        {
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         private async void AddIPv4AddressAction()

@@ -11,6 +11,7 @@ using NETworkManager.Utilities;
 using System.Windows;
 using NETworkManager.Controls;
 using Dragablz;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
 using NETworkManager.Resources.Localization;
@@ -221,7 +222,12 @@ namespace NETworkManager.ViewModels
         #region ICommands & Actions
         public ICommand QueryCommand
         {
-            get { return new RelayCommand(p => QueryAction()); }
+            get { return new RelayCommand(p => QueryAction(), Query_CanExecute); }
+        }
+
+        private bool Query_CanExecute(object paramter)
+        {
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         private void QueryAction()

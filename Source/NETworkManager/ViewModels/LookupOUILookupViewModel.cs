@@ -9,6 +9,8 @@ using System.ComponentModel;
 using System.Windows.Data;
 using NETworkManager.Models.Lookup;
 using System.Linq;
+using System.Windows;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
 using NETworkManager.Utilities;
@@ -142,7 +144,7 @@ namespace NETworkManager.ViewModels
 
         private bool OUILookup_CanExecute(object parameter)
         {
-            return !MACAddressOrVendorHasError;
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && !MACAddressOrVendorHasError;
         }
 
         private async void OUILookupAction()

@@ -22,7 +22,7 @@ namespace NETworkManager.Models.Settings
         public bool ShowSettingsResetNoteOnStartup { get; set; }
 
         private bool _isDialogOpen;
-        public bool IsDialogOpen
+        public bool FixAirspace
         {
             get => _isDialogOpen;
             set

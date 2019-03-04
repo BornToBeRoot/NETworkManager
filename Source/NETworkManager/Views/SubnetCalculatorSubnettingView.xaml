@@ -72,7 +72,7 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <Button Grid.Column="4" Grid.Row="2" Command="{Binding SubnettingCommand}" IsDefault="True" HorizontalAlignment="Right">
+                <Button Grid.Column="4" Grid.Row="2" Command="{Binding CalculateCommand}" IsDefault="True" HorizontalAlignment="Right">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Style.Triggers>

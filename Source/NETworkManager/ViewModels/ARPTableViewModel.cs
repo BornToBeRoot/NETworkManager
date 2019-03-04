@@ -11,6 +11,8 @@ using NETworkManager.Utilities;
 using NETworkManager.Models.Settings;
 using System.Windows.Threading;
 using System.Linq;
+using System.Windows;
+using MahApps.Metro.Controls;
 using NETworkManager.Models.Export;
 
 namespace NETworkManager.ViewModels
@@ -224,7 +226,12 @@ namespace NETworkManager.ViewModels
         #region ICommands & Actions
         public ICommand RefreshCommand
         {
-            get { return new RelayCommand(p => RefreshAction()); }
+            get { return new RelayCommand(p => RefreshAction(), Refresh_CanExecute); }
+        }
+
+        private bool Refresh_CanExecute(object paramter)
+        {
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         private void RefreshAction()
@@ -236,7 +243,12 @@ namespace NETworkManager.ViewModels
 
         public ICommand DeleteTableCommand
         {
-            get { return new RelayCommand(p => DeleteTableAction()); }
+            get { return new RelayCommand(p => DeleteTableAction(), DeleteTable_CanExecute); }
+        }
+
+        private bool DeleteTable_CanExecute(object paramter)
+        {
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         private async void DeleteTableAction()
@@ -262,7 +274,12 @@ namespace NETworkManager.ViewModels
 
         public ICommand DeleteEntryCommand
         {
-            get { return new RelayCommand(p => DeleteEntryAction()); }
+            get { return new RelayCommand(p => DeleteEntryAction(), DeleteEntry_CanExecute); }
+        }
+        
+        private bool DeleteEntry_CanExecute(object paramter)
+        {
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         private async void DeleteEntryAction()
@@ -288,7 +305,12 @@ namespace NETworkManager.ViewModels
 
         public ICommand AddEntryCommand
         {
-            get { return new RelayCommand(p => AddEntryAction()); }
+            get { return new RelayCommand(p => AddEntryAction(), AddEntry_CanExecute); }
+        }
+
+        private bool AddEntry_CanExecute(object paramter)
+        {
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         private async void AddEntryAction()

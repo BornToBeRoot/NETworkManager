@@ -200,12 +200,12 @@ namespace NETworkManager.Controls
                 {
                     var settings = AppearanceManager.MetroDialog;
                     settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
-                    ConfigurationManager.Current.IsDialogOpen = true;
+                    ConfigurationManager.Current.FixAirspace = true;
 
                     await _dialogCoordinator.ShowMessageAsync(this, NETworkManager.Resources.Localization.Strings.Error,
                         ex.Message, MessageDialogStyle.Affirmative, settings);
 
-                    ConfigurationManager.Current.IsDialogOpen = false;
+                    ConfigurationManager.Current.FixAirspace = false;
                 }
             }
 

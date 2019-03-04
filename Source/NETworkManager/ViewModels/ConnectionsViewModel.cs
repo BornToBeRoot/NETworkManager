@@ -9,6 +9,8 @@ using NETworkManager.Utilities;
 using NETworkManager.Models.Settings;
 using System.Windows.Threading;
 using System.Linq;
+using System.Windows;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
@@ -222,7 +224,12 @@ namespace NETworkManager.ViewModels
         #region ICommands & Actions
         public ICommand RefreshCommand
         {
-            get { return new RelayCommand(p => RefreshAction()); }
+            get { return new RelayCommand(p => RefreshAction(), Refresh_CanExecute); }
+        }
+
+        private bool Refresh_CanExecute(object paramter)
+        {
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         private void RefreshAction()

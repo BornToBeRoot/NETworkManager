@@ -295,11 +295,11 @@ namespace NETworkManager
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
 
-                ConfigurationManager.Current.IsDialogOpen = true;
+                ConfigurationManager.Current.FixAirspace = true;
 
                 await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.SettingsHaveBeenReset, NETworkManager.Resources.Localization.Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage, MessageDialogStyle.Affirmative, settings);
 
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.Current.FixAirspace = false;
             }
 
             // Hide to tray...
@@ -382,11 +382,11 @@ namespace NETworkManager
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 // Fix airspace issues
-                ConfigurationManager.Current.IsDialogOpen = true;
+                ConfigurationManager.Current.FixAirspace = true;
 
                 var result = await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.Confirm, NETworkManager.Resources.Localization.Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
 
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.Current.FixAirspace = false;
 
                 if (result != MessageDialogResult.Affirmative)
                     return;
@@ -755,7 +755,7 @@ namespace NETworkManager
                 settings.NegativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-                ConfigurationManager.Current.IsDialogOpen = true;
+                ConfigurationManager.Current.FixAirspace = true;
 
                 if (await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.RestartRequired, NETworkManager.Resources.Localization.Strings.RestartRequiredSettingsChangedMessage, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
                 {
@@ -763,7 +763,7 @@ namespace NETworkManager
                     return;
                 }
 
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.Current.FixAirspace = false;
             }
 
             // Change the transparency

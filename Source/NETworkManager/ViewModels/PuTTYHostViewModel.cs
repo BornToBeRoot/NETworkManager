@@ -265,13 +265,13 @@ namespace NETworkManager.ViewModels
             var profileViewModel = new ProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.Current.FixAirspace = false;
 
                 ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.Current.FixAirspace = false;
             }, ProfileManager.GetGroups());
 
             customDialog.Content = new ProfileDialog
@@ -279,7 +279,7 @@ namespace NETworkManager.ViewModels
                 DataContext = profileViewModel
             };
 
-            ConfigurationManager.Current.IsDialogOpen = true;
+            ConfigurationManager.Current.FixAirspace = true;
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
@@ -298,7 +298,7 @@ namespace NETworkManager.ViewModels
             var profileViewModel = new ProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.Current.FixAirspace = false;
 
                 ProfileManager.RemoveProfile(SelectedProfile);
 
@@ -306,7 +306,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.Current.FixAirspace = false;
             }, ProfileManager.GetGroups(), true, SelectedProfile);
 
             customDialog.Content = new ProfileDialog
@@ -314,7 +314,7 @@ namespace NETworkManager.ViewModels
                 DataContext = profileViewModel
             };
 
-            ConfigurationManager.Current.IsDialogOpen = true;
+            ConfigurationManager.Current.FixAirspace = true;
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
@@ -333,13 +333,13 @@ namespace NETworkManager.ViewModels
             var profileViewModel = new ProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.Current.FixAirspace = false;
 
                 ProfileManager.AddProfile(instance);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.Current.FixAirspace = false;
             }, ProfileManager.GetGroups(), false, SelectedProfile);
 
             customDialog.Content = new ProfileDialog
@@ -347,7 +347,7 @@ namespace NETworkManager.ViewModels
                 DataContext = profileViewModel
             };
 
-            ConfigurationManager.Current.IsDialogOpen = true;
+            ConfigurationManager.Current.FixAirspace = true;
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
@@ -366,13 +366,13 @@ namespace NETworkManager.ViewModels
             var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.Current.FixAirspace = false;
 
                 ProfileManager.RemoveProfile(SelectedProfile);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.Current.FixAirspace = false;
             }, Resources.Localization.Strings.DeleteProfileMessage);
 
             customDialog.Content = new ConfirmRemoveDialog
@@ -380,7 +380,7 @@ namespace NETworkManager.ViewModels
                 DataContext = confirmRemoveViewModel
             };
 
-            ConfigurationManager.Current.IsDialogOpen = true;
+            ConfigurationManager.Current.FixAirspace = true;
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
@@ -396,7 +396,7 @@ namespace NETworkManager.ViewModels
             var editGroupViewModel = new GroupViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.Current.FixAirspace = false;
 
                 ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
 
@@ -404,7 +404,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.Current.FixAirspace = false;
             }, group.ToString(), ProfileManager.GetGroups());
 
             customDialog.Content = new GroupDialog
@@ -412,7 +412,7 @@ namespace NETworkManager.ViewModels
                 DataContext = editGroupViewModel
             };
 
-            ConfigurationManager.Current.IsDialogOpen = true;
+            ConfigurationManager.Current.FixAirspace = true;
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
@@ -453,7 +453,7 @@ namespace NETworkManager.ViewModels
             var connectViewModel = new PuTTYConnectViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.Current.FixAirspace = false;
 
                 // Add host to history
                 AddHostToHistory(instance.Host);
@@ -481,7 +481,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.Current.FixAirspace = false;
             }, host);
 
             customDialog.Content = new PuTTYConnectDialog
@@ -489,7 +489,7 @@ namespace NETworkManager.ViewModels
                 DataContext = connectViewModel
             };
 
-            ConfigurationManager.Current.IsDialogOpen = true;
+            ConfigurationManager.Current.FixAirspace = true;
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 

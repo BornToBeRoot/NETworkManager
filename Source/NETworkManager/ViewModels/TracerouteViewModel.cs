@@ -16,6 +16,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Linq;
 using Dragablz;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.Models.Export;
@@ -276,7 +277,12 @@ namespace NETworkManager.ViewModels
         #region ICommands & Actions
         public ICommand TraceCommand
         {
-            get { return new RelayCommand(p => TraceAction()); }
+            get { return new RelayCommand(p => TraceAction(), Trace_CanExecute); }
+        }
+
+        private bool Trace_CanExecute(object paramter)
+        {
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         private void TraceAction()

@@ -12,6 +12,7 @@ using System;
 using System.Collections;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using MahApps.Metro.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Views;
@@ -174,16 +175,21 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand SubnettingCommand
+        public ICommand CalculateCommand
         {
-            get { return new RelayCommand(p => SubnettingAction()); }
+            get { return new RelayCommand(p => CalculateAction(), Calculate_CanExecute); }
         }
 
-        private void SubnettingAction()
+        private bool Calculate_CanExecute(object paramter)
         {
-            Subnetting();
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
+        private void CalculateAction()
+        {
+            Calculate();
+        }
+        
         public ICommand CopySelectedNetworkAddressCommand
         {
             get { return new RelayCommand(p => CopySelectedNetworkAddressAction()); }
@@ -306,7 +312,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private async void Subnetting()
+        private async void Calculate()
         {
             DisplayStatusMessage = false;
             IsCalculationRunning = true;

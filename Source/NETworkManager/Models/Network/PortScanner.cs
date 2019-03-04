@@ -84,8 +84,7 @@ namespace NETworkManager.Models.Network
                         {
                             try
                             {
-                                Task.Run(() => { hostname = Dns.GetHostEntryAsync(ipAddress).Result.HostName; },
-                                    cancellationToken);
+                                Task.Run(() => { hostname = Dns.GetHostEntryAsync(ipAddress).Result.HostName; }, cancellationToken);
                             }
                             catch (SocketException)
                             {

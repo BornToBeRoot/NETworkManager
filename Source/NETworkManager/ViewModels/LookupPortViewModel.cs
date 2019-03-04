@@ -8,6 +8,8 @@ using System.ComponentModel;
 using System.Windows.Data;
 using NETworkManager.Models.Lookup;
 using System.Linq;
+using System.Windows;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
 using NETworkManager.Utilities;
@@ -140,7 +142,7 @@ namespace NETworkManager.ViewModels
 
         private bool PortLookup_CanExecute(object parameter)
         {
-            return !PortOrServiceHasError;
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && !PortOrServiceHasError;
         }
 
         private async void PortLookupAction()

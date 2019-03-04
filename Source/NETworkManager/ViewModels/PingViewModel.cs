@@ -17,6 +17,7 @@ using NETworkManager.Controls;
 using NETworkManager.Utilities;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
@@ -345,7 +346,12 @@ namespace NETworkManager.ViewModels
         #region ICommands & Actions
         public ICommand PingCommand
         {
-            get { return new RelayCommand(p => PingAction()); }
+            get { return new RelayCommand(p => PingAction(), Ping_CanExecute); }
+        }
+
+        private bool Ping_CanExecute(object paramter)
+        {
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         private void PingAction()

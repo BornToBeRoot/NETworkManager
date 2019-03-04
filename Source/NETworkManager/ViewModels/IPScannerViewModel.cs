@@ -15,6 +15,7 @@ using System.Windows.Data;
 using System.Linq;
 using NETworkManager.Utilities;
 using Dragablz;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.Models.Export;
@@ -322,7 +323,12 @@ namespace NETworkManager.ViewModels
 
         public ICommand ScanCommand
         {
-            get { return new RelayCommand(p => ScanAction()); }
+            get { return new RelayCommand(p => ScanAction(), Scan_CanExecute); }
+        }
+
+        private bool Scan_CanExecute(object paramter)
+        {
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         private void ScanAction()

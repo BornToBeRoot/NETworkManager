@@ -11,6 +11,7 @@ using NETworkManager.Views;
 using NETworkManager.Utilities;
 using System.Threading.Tasks;
 using System.Linq;
+using MahApps.Metro.Controls;
 
 namespace NETworkManager.ViewModels
 {
@@ -292,7 +293,7 @@ namespace NETworkManager.ViewModels
 
         private bool WakeUpAction_CanExecute(object parameter)
         {
-            return !MACAddressHasError && !BroadcastHasError && !PortHasError;
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && !MACAddressHasError && !BroadcastHasError && !PortHasError;
         }
 
         private void WakeUpAction()

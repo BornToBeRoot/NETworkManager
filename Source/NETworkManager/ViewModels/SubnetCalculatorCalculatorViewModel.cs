@@ -1,5 +1,4 @@
 ﻿using NETworkManager.Models.Settings;
-using System.Collections.Generic;
 using System.Net;
 using System.Windows.Input;
 using System.ComponentModel;
@@ -7,6 +6,8 @@ using System.Windows.Data;
 using System.Linq;
 using NETworkManager.Utilities;
 using System.Numerics;
+using System.Windows;
+using MahApps.Metro.Controls;
 
 namespace NETworkManager.ViewModels
 {
@@ -168,7 +169,12 @@ namespace NETworkManager.ViewModels
         #region ICommands
         public ICommand CalculateCommand
         {
-            get { return new RelayCommand(p => CalcualateAction()); }
+            get { return new RelayCommand(p => CalcualateAction(), Calculate_CanExecute); }
+        }
+
+        private bool Calculate_CanExecute(object paramter)
+        {
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         private void CalcualateAction()

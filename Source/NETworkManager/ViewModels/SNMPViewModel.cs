@@ -17,6 +17,7 @@ using System.Windows.Threading;
 using static NETworkManager.Models.Network.SNMP;
 using NETworkManager.Controls;
 using Dragablz;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
@@ -448,7 +449,12 @@ namespace NETworkManager.ViewModels
         #region ICommands & Actions
         public ICommand WorkCommand
         {
-            get { return new RelayCommand(p => WorkAction()); }
+            get { return new RelayCommand(p => WorkAction(), Work_CanExecute); }
+        }
+
+        private bool Work_CanExecute(object paramter)
+        {
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         private void WorkAction()
