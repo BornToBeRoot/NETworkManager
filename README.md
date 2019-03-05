@@ -80,7 +80,7 @@
 
 <h2>Found an issue or have a feature request?</h2>
 
-Check the [Issues](https://github.com/BornToBeRoot/NETworkManager/issues) if the issue/feature request has already been reported. If not, submit a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new). Provide as many informations as you can.
+Check the [Issues](https://github.com/BornToBeRoot/NETworkManager/issues) if the issue/feature request has already been reported. If not, submit a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new) and provide as many informations as you can.
 
 <h2>Want to help?</h2>
 
