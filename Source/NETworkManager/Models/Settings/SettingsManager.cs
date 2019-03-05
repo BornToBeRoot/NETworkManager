@@ -225,6 +225,14 @@ namespace NETworkManager.Models.Settings
                     reorderApplications = true;
                 }
 
+                // Features added in 1.9.0.0
+                if (settingsVersion < new Version("1.9.1.0"))
+                {
+                    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.Overview));
+
+                    reorderApplications = true;
+                }
+
                 // Reorder application view
                 if (reorderApplications)
                     Current.General_ApplicationList = new ObservableCollection<ApplicationViewInfo>(Current.General_ApplicationList.OrderBy(info => info.Name));

@@ -2021,4 +2021,7 @@ Changing this value requires a restart of the application to take effect.</value
   <data name="YourSystemOSIsIncompatibleWithTheLatestRelease" xml:space="preserve">
     <value>Your system OS is incompatible with the latest release!</value>
   </data>
+  <data name="Overview" xml:space="preserve">
+    <value>Overview</value>
+  </data>
 </root>

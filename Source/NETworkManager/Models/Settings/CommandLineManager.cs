@@ -17,10 +17,6 @@ namespace NETworkManager.Models.Settings
 
         public static CommandLineInfo Current { get; set; }
 
-        /// <summary>
-        /// Get the arguments passed by the command line
-        /// </summary>
-        /// <returns>CommandLineInfo</returns>
         public static void Parse()
         {
             Current = new CommandLineInfo();

@@ -407,6 +407,7 @@ namespace NETworkManager
         #endregion
 
         #region Application Views
+        private OverviewView _overviewView;
         private NetworkInterfaceView _networkInterfaceView;
         private IPScannerHostView _ipScannerHostView;
         private PortScannerHostView _portScannerHostView;
@@ -454,6 +455,14 @@ namespace NETworkManager
             // Create new view / start some functions
             switch (name)
             {
+                case ApplicationViewManager.Name.Overview:
+                    if (_overviewView == null)
+                        _overviewView = new OverviewView();
+                    else
+                        _overviewView.OnViewVisible();
+
+                    ContentControlApplication.Content = _overviewView;
+                    break;
                 case ApplicationViewManager.Name.NetworkInterface:
                     if (_networkInterfaceView == null)
                         _networkInterfaceView = new NetworkInterfaceView();
