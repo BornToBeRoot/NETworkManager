@@ -3,8 +3,10 @@ using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network
@@ -124,6 +126,48 @@ namespace NETworkManager.Models.Network
             }
 
             return listNetworkInterfaceInfo;
+        }
+
+        public static Task<IPAddress> DetectLocalIPAddressBasedOnRoutingAsync(IPAddress remoteIPAddress)
+        {
+            return Task.Run(() => DetectLocalIPAddressBasedOnRouting(remoteIPAddress));
+        }
+
+        public static IPAddress DetectLocalIPAddressBasedOnRouting(IPAddress remoteIPAddress)
+        {
+            using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp))
+            {
+                socket.Bind(new IPEndPoint(IPAddress.Any, 0));
+                socket.Connect(new IPEndPoint(remoteIPAddress, 0));
+
+                if (socket.LocalEndPoint is IPEndPoint ipAddress)
+                    return ipAddress.Address;
+            }
+
+            return null;
+        }
+
+        public static Task<IPAddress> DetectGatewayBasedOnLocalIPAddressAsync(IPAddress localIPAddress)
+        {
+            return Task.Run(() => DetectGatewayBasedOnLocalIPAddress(localIPAddress));
+        }
+
+        public static IPAddress DetectGatewayBasedOnLocalIPAddress(IPAddress localIPAddress)
+        {
+            foreach (var networkInterface in GetNetworkInterfaces())
+            {
+                if (networkInterface.IPv4Address.Contains(localIPAddress))
+                {
+                    return networkInterface.IPv4Gateway.FirstOrDefault();
+                }
+
+                if (networkInterface.IPv6Address.Contains(localIPAddress))
+                {
+                    return networkInterface.IPv4Gateway.FirstOrDefault();
+                }
+            }
+
+            return null;
         }
 
         public Task ConfigureNetworkInterfaceAsync(NetworkInterfaceConfig config)

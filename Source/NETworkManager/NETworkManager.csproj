@@ -352,7 +352,7 @@
     <Compile Include="ViewModels\PowerShellSettingsViewModel.cs" />
     <Compile Include="ViewModels\TightVNCSettingsViewModel.cs" />
     <Compile Include="ViewModels\TightVNCHostViewModel.cs" />
-    <Compile Include="ViewModels\OverviewViewModel.cs" />
+    <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\WhoisSettingsViewModel.cs" />
     <Compile Include="ViewModels\WhoisHostViewModel.cs" />
     <Compile Include="ViewModels\WhoisViewModel.cs" />
@@ -436,8 +436,8 @@
     <Compile Include="Views\TightVNCHostView.xaml.cs">
       <DependentUpon>TightVNCHostView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\OverviewView.xaml.cs">
-      <DependentUpon>OverviewView.xaml</DependentUpon>
+    <Compile Include="Views\DashboardView.xaml.cs">
+      <DependentUpon>DashboardView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WhoisSettingsView.xaml.cs">
       <DependentUpon>WhoisSettingsView.xaml</DependentUpon>
@@ -771,7 +771,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\OverviewView.xaml">
+    <Page Include="Views\DashboardView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

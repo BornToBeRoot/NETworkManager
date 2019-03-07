@@ -25,8 +25,8 @@ namespace NETworkManager
         {
             switch (name)
             {
-                case Name.Overview:
-                    return Resources.Localization.Strings.Overview;
+                case Name.Dashboard:
+                    return Resources.Localization.Strings.Dashboard;
                 case Name.NetworkInterface:
                     return Resources.Localization.Strings.NetworkInterface;
                 case Name.IPScanner:
@@ -76,7 +76,7 @@ namespace NETworkManager
 
             switch (name)
             {
-                case Name.Overview:
+                case Name.Dashboard:
                     canvas.Children.Add(new PackIconOcticons() { Kind = PackIconOcticonsKind.Dashboard });
                     break;
                 case Name.NetworkInterface:
@@ -147,7 +147,7 @@ namespace NETworkManager
         public enum Name
         {
             None,
-            Overview,
+            Dashboard,
             NetworkInterface,
             IPScanner,
             PortScanner,

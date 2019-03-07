@@ -3,16 +3,19 @@ using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Data;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Threading.Tasks;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.ViewModels
 {
-    public class OverviewViewModel : ViewModelBase
+    public class DashboardViewModel : ViewModelBase
     {
         #region  Variables 
         private readonly IDialogCoordinator _dialogCoordinator;
@@ -22,13 +25,13 @@ namespace NETworkManager.ViewModels
         private string _infoHostIPAddress;
         public string InfoHostIPAddress
         {
-            get => _infoPublicIPAddress;
+            get => _infoHostIPAddress;
             set
             {
-                if (value == _infoPublicIPAddress)
+                if (value == _infoHostIPAddress)
                     return;
 
-                _infoPublicIPAddress = value;
+                _infoHostIPAddress = value;
                 OnPropertyChanged();
             }
         }
@@ -53,7 +56,7 @@ namespace NETworkManager.ViewModels
             get => _infoPublicIPAddress;
             set
             {
-                if(value == _infoPublicIPAddress)
+                if (value == _infoPublicIPAddress)
                     return;
 
                 _infoPublicIPAddress = value;
@@ -98,9 +101,9 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings
-        public OverviewViewModel(IDialogCoordinator instance)
+        public DashboardViewModel(IDialogCoordinator instance)
         {
-            _isLoading = true; 
+            _isLoading = true;
 
             _dialogCoordinator = instance;
 
@@ -128,17 +131,17 @@ namespace NETworkManager.ViewModels
 
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
-            
+
             LoadSettings();
 
-            RefreshInfoAsync();
+            CheckConnectionAsync();
 
             _isLoading = false;
         }
 
         private void LoadSettings()
         {
-            
+
         }
         #endregion
 
@@ -195,7 +198,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(),true, SelectedProfile);
+            }, ProfileManager.GetGroups(), true, SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -306,13 +309,27 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        public void RefreshInfoAsync()
+        public void CheckConnectionAsync()
         {
-            Task.Run(() => RefreshInfo());
+            Task.Run(() => CheckConnection());
         }
 
-        public void RefreshInfo()
+        public void CheckConnection()
         {
+            // Test tcp/ip stack --> 127.0.0.1
+
+
+            // Get the local IP address
+            var ipAddressDetected = NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse("1.1.1.1"));
+
+            if (ipAddressDetected != null)
+            {
+                InfoHostIPAddress = ipAddressDetected.ToString();
+
+                InfoGatewayIPAddress = NetworkInterface.DetectGatewayBasedOnLocalIPAddress(ipAddressDetected)?.ToString();
+            }
+            
+            // Get public IP address
             var webClient = new WebClient();
             InfoPublicIPAddress = webClient.DownloadString("https://api.ipify.org");
         }
@@ -320,7 +337,7 @@ namespace NETworkManager.ViewModels
         public void OnViewVisible()
         {
             // Refresh profiles
-           // Profiles.Refresh();
+            // Profiles.Refresh();
         }
 
         public void OnViewHide()

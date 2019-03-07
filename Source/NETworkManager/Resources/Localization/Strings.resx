@@ -1390,7 +1390,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Open settings</value>
   </data>
   <data name="Overwrite" xml:space="preserve">
-    <value>Overwrite</value>
+    <value>Dashboard</value>
   </data>
   <data name="Paste" xml:space="preserve">
     <value>Paste</value>
@@ -2021,7 +2021,7 @@ Changing this value requires a restart of the application to take effect.</value
   <data name="YourSystemOSIsIncompatibleWithTheLatestRelease" xml:space="preserve">
     <value>Your system OS is incompatible with the latest release!</value>
   </data>
-  <data name="Overview" xml:space="preserve">
-    <value>Overview</value>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
   </data>
 </root>

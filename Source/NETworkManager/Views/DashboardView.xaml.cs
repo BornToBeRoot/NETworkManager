@@ -5,11 +5,11 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class OverviewView
+    public partial class DashboardView
     {
-        private readonly OverviewViewModel _viewModel = new OverviewViewModel(DialogCoordinator.Instance);
+        private readonly DashboardViewModel _viewModel = new DashboardViewModel(DialogCoordinator.Instance);
 
-        public OverviewView()
+        public DashboardView()
         {
             InitializeComponent();
             DataContext = _viewModel;
