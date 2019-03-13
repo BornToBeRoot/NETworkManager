@@ -44,6 +44,20 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private bool _firstRun = true;
+        public bool FirstRun
+        {
+            get => _firstRun;
+            set
+            {
+                if (value == _firstRun)
+                    return;
+
+                _firstRun = value;
+                SettingsChanged = true;
+            }
+        }
+
         #region General 
         // General        
         private ApplicationViewManager.Name _general_DefaultApplicationViewName = GlobalStaticConfiguration.General_DefaultApplicationViewName;
@@ -351,6 +365,23 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _expandApplicationView = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
+        #region Dashboard
+        private bool _dashboard_CheckPublicIPAddress = true;
+        public bool Dashboard_CheckPublicIPAddress
+        {
+            get => _dashboard_CheckPublicIPAddress;
+            set
+            {
+                if (value == _dashboard_CheckPublicIPAddress)
+                    return;
+
+                _dashboard_CheckPublicIPAddress = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }

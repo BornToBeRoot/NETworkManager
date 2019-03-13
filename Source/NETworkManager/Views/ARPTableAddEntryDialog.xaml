@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mahAppsControls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:validators="clr-namespace:NETworkManager.Validators"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
@@ -30,7 +30,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.IPAddress}" />
-            <TextBox x:Name="TextBoxIPAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Address}">
+            <TextBox x:Name="TextBoxIPAddress" Grid.Column="2" Grid.Row="0" mahAppsControls:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Address}">
                 <TextBox.Text>
                     <Binding Path="IPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -41,7 +41,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.MACAddress}" />
-            <TextBox x:Name="TextBoxMACAddress" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMACAddress}">
+            <TextBox x:Name="TextBoxMACAddress" Grid.Column="2" Grid.Row="2" mahAppsControls:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMACAddress}">
                 <TextBox.Text>
                     <Binding Path="MACAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

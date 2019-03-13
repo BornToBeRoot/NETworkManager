@@ -342,6 +342,7 @@
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="Validators\IsProfileNameUnique.cs" />
+    <Compile Include="ViewModels\FirstRunViewModel.cs" />
     <Compile Include="ViewModels\NetworkInterfaceAddIPAddressViewModel.cs" />
     <Compile Include="ViewModels\ExportViewModel.cs" />
     <Compile Include="ViewModels\DNSServerViewModel.cs" />
@@ -406,6 +407,9 @@
       <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
+    <Compile Include="Views\FirstRunDialog.xaml.cs">
+      <DependentUpon>FirstRunDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\NetworkInterfaceAddIPAddressDialog.xaml.cs">
       <DependentUpon>NetworkInterfaceAddIPAddressDialog.xaml</DependentUpon>
     </Compile>
@@ -731,6 +735,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Page Include="Views\FirstRunDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\NetworkInterfaceAddIPAddressDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -304,6 +304,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All settings can be changed later in the settings.
+        /// </summary>
+        public static string AllSettingsCanBeChangedLaterInTheSettings {
+            get {
+                return ResourceManager.GetString("AllSettingsCanBeChangedLaterInTheSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Always show icon in tray.
         /// </summary>
         public static string AlwaysShowIconInTray {
@@ -714,6 +723,15 @@ namespace NETworkManager.Resources.Localization {
         public static string CheckForUpdatesAtStartup {
             get {
                 return ResourceManager.GetString("CheckForUpdatesAtStartup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check public IP address.
+        /// </summary>
+        public static string CheckPublicIPAddress {
+            get {
+                return ResourceManager.GetString("CheckPublicIPAddress", resourceCulture);
             }
         }
         
@@ -1996,6 +2014,17 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thanks for using NETworkManager!
+        ///
+        ///To provide additional features the application uses services on the Internet that are not operated by me. No data will be sent to me at any time..
+        /// </summary>
+        public static string FirstRunMessage {
+            get {
+                return ResourceManager.GetString("FirstRunMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to First usable IP address.
         /// </summary>
         public static string FirstUsableIPAddress {
@@ -2113,6 +2142,28 @@ namespace NETworkManager.Resources.Localization {
         public static string HelpMessage_BackgroundJob {
             get {
                 return ResourceManager.GetString("HelpMessage_BackgroundJob", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When starting the program, it checks in the background whether a new program version is available on Github.
+        ///
+        ///URL: https://api.github.com/.
+        /// </summary>
+        public static string HelpMessage_CheckForUpdatesAtStartup {
+            get {
+                return ResourceManager.GetString("HelpMessage_CheckForUpdatesAtStartup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The public IP address is determined via ipify.org.
+        ///
+        ///URL: https://api.ipify.org/.
+        /// </summary>
+        public static string HelpMessage_CheckPublicIPAddress {
+            get {
+                return ResourceManager.GetString("HelpMessage_CheckPublicIPAddress", resourceCulture);
             }
         }
         
@@ -3442,6 +3493,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Priv {
             get {
                 return ResourceManager.GetString("Priv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy.
+        /// </summary>
+        public static string Privacy {
+            get {
+                return ResourceManager.GetString("Privacy", resourceCulture);
             }
         }
         
@@ -5639,6 +5699,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Website {
             get {
                 return ResourceManager.GetString("Website", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome.
+        /// </summary>
+        public static string Welcome {
+            get {
+                return ResourceManager.GetString("Welcome", resourceCulture);
             }
         }
         

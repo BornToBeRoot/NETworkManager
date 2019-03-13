@@ -24,7 +24,7 @@ namespace NETworkManager
         public static string ApplicationFileExtensionFilter => "Application (*.exe)|*.exe";
 
         // Settings
-        public static ApplicationViewManager.Name General_DefaultApplicationViewName => ApplicationViewManager.Name.NetworkInterface;
+        public static ApplicationViewManager.Name General_DefaultApplicationViewName => ApplicationViewManager.Name.Dashboard;
         public static int General_BackgroundJobInterval => 15;
         public static int General_HistoryListEntries => 5;
         public static double Appearance_Opacity => 0.85;

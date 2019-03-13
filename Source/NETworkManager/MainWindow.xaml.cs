@@ -20,6 +20,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using NETworkManager.Models.Update;
 using NETworkManager.Models.Documentation;
+using NETworkManager.ViewModels;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 
 namespace NETworkManager
@@ -117,8 +118,19 @@ namespace NETworkManager
             }
         }
 
-        public ICollectionView Applications { get; private set; }
+        private ICollectionView _applications;
+        public ICollectionView Applications
+        {
+            get => _applications;
+            set
+            {
+                if(value == _applications)
+                    return;
 
+                _applications = value;
+                OnPropertyChanged();
+            }
+        }
 
         private ApplicationViewInfo _selectedApplication;
         public ApplicationViewInfo SelectedApplication
@@ -270,10 +282,7 @@ namespace NETworkManager
 
             // Load Profiles
             ProfileManager.Load();
-
-            // Load application list, filter, sort
-            LoadApplicationList();
-
+            
             // Load settings
             ExpandApplicationView = SettingsManager.Current.ExpandApplicationView;
 
@@ -284,12 +293,12 @@ namespace NETworkManager
 
             _isLoading = false;
         }
-
-        // Hide window after it shows up... not nice, but otherwise the hotkeys do not work
+        
         protected override async void OnContentRendered(EventArgs e)
         {
             base.OnContentRendered(e);
 
+            // Show settings reset note...
             if (ConfigurationManager.Current.ShowSettingsResetNoteOnStartup)
             {
                 var settings = AppearanceManager.MetroDialog;
@@ -302,11 +311,48 @@ namespace NETworkManager
                 ConfigurationManager.Current.FixAirspace = false;
             }
 
-            // Hide to tray...
+            if (SettingsManager.Current.FirstRun)
+            {
+                // Show first run dialog...
+                var customDialog = new CustomDialog
+                {
+                    Title = NETworkManager.Resources.Localization.Strings.Welcome
+                };
+
+                var arpTableAddEntryViewModel = new FirstRunViewModel(async instance =>
+                {
+                    await this.HideMetroDialogAsync(customDialog);
+
+                    SettingsManager.Current.FirstRun = false;
+                    SettingsManager.Current.Update_CheckForUpdatesAtStartup = instance.CheckForUpdatesAtStartup;
+                    SettingsManager.Current.Dashboard_CheckPublicIPAddress = instance.CheckPublicIPAddress;
+                    
+                    AfterContentRendered();
+                });
+
+                customDialog.Content = new FirstRunDialog
+                {
+                    DataContext = arpTableAddEntryViewModel
+                };
+
+                await this.ShowMetroDialogAsync(customDialog).ConfigureAwait(true);
+            }
+            else
+            {
+                AfterContentRendered();
+            }
+        }
+
+        private void AfterContentRendered()
+        {
+            // Load application list, filter, sort, etc.
+            LoadApplicationList();
+
+            // Hide to tray after the window shows up... not nice, but otherwise the hotkeys do not work
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
                 HideWindowToTray();
 
-            // Search for updates...
+            // Search for updates... 
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
                 CheckForUpdates();
         }
