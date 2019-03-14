@@ -1,18 +1,12 @@
 ﻿namespace NETworkManager.Models.Documentation
 {
-    public class LibraryInfo
+    public class LibraryInfo : BaseInfo
     {
-        public string Library { get; set; }
-        public string LibraryUrl { get; set; }
-        public string Description { get; set; }
         public string License { get; set; }
         public string LicenseUrl { get; set; }
 
-        public LibraryInfo(string library, string libraryUrl, string description, string license, string licenseUrl)
+        public LibraryInfo(string name, string websiteUrl, string description, string license, string licenseUrl) : base(name, websiteUrl, description)
         {
-            Library = library;
-            LibraryUrl = libraryUrl;
-            Description = description;
             License = license;
             LicenseUrl = licenseUrl;
         }

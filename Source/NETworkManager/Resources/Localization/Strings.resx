@@ -2051,4 +2051,7 @@ URL: https://api.ipify.org/</value>
   <data name="Welcome" xml:space="preserve">
     <value>Welcome</value>
   </data>
+  <data name="ExternalServices" xml:space="preserve">
+    <value>External services</value>
+  </data>
 </root>

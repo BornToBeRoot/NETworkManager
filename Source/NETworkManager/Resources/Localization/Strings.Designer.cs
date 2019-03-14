@@ -1960,6 +1960,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to External services.
+        /// </summary>
+        public static string ExternalServices {
+            get {
+                return ResourceManager.GetString("ExternalServices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Field cannot be empty!.
         /// </summary>
         public static string FieldCannotBeEmpty {

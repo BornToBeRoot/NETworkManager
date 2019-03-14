@@ -120,8 +120,8 @@
     <Reference Include="Octokit, Version=0.32.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Octokit.0.32.0\lib\net45\Octokit.dll</HintPath>
     </Reference>
-    <Reference Include="SharpSnmpLib, Version=11.0.0.0, Culture=neutral, PublicKeyToken=4c00852d3788e005, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lextm.SharpSnmpLib.11.0.0\lib\net452\SharpSnmpLib.dll</HintPath>
+    <Reference Include="SharpSnmpLib, Version=11.1.0.0, Culture=neutral, PublicKeyToken=4c00852d3788e005, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lextm.SharpSnmpLib.11.1.0\lib\net452\SharpSnmpLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -130,8 +130,8 @@
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Management" />
-    <Reference Include="System.Net.IPNetwork, Version=2.2.0.78, Culture=neutral, PublicKeyToken=717343cc2c25edcf, processorArchitecture=MSIL">
-      <HintPath>..\packages\IPNetwork2.2.2.0.78\lib\net46\System.Net.IPNetwork.dll</HintPath>
+    <Reference Include="System.Net.IPNetwork, Version=2.2.0.94, Culture=neutral, PublicKeyToken=717343cc2c25edcf, processorArchitecture=MSIL">
+      <HintPath>..\packages\IPNetwork2.2.2.0.94\lib\net46\System.Net.IPNetwork.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Forms" />
@@ -259,9 +259,12 @@
     <Compile Include="Converters\NullableDateTimeToStringConverter.cs" />
     <Compile Include="Converters\ValidateSubnetCalculatorSupernettingConverter.cs" />
     <Compile Include="Converters\ValidateSubnetCalculatorSubnettingConverter.cs" />
+    <Compile Include="Models\Documentation\BaseInfo.cs" />
     <Compile Include="Models\Documentation\DocumentationIdentifier.cs" />
     <Compile Include="Models\Documentation\CommunityManager.cs" />
+    <Compile Include="Models\Documentation\ExternalServicesInfo.cs" />
     <Compile Include="Models\Documentation\ResourceInfo.cs" />
+    <Compile Include="Models\Documentation\ExternalServicesManager.cs" />
     <Compile Include="Models\Documentation\ResourceManager.cs" />
     <Compile Include="Models\Export\ExportManager.cs" />
     <Compile Include="Models\Network\BandwidthInfo.cs" />
