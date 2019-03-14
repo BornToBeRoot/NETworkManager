@@ -1029,6 +1029,9 @@ namespace NETworkManager
         {
             switch (SelectedApplication.Name)
             {
+                case ApplicationViewManager.Name.Dashboard:
+                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationDashboard);
+                    break;
                 case ApplicationViewManager.Name.NetworkInterface:
                     DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationNetworkInterface);
                     break;

@@ -484,15 +484,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gitter.
-        /// </summary>
-        public static string Gitter {
-            get {
-                return ResourceManager.GetString("Gitter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ••••••••••••.
         /// </summary>
         public static string HiddenPassword {

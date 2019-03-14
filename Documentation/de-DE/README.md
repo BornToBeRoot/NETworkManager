@@ -1,6 +1,7 @@
 # Dokumentation
 
 ## Anwendung
+- [Dashboard](Application/Dashboard.md)
 - [Netzwerkinterface](Application/NetworkInterface.md)
 - [IP-Scanner](Application/IPScanner.md)
 - [Port-Scanner](Application/PortScanner.md)

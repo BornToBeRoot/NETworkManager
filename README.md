@@ -12,14 +12,14 @@
      <a href="https://github.com/BornToBeroot/NETworkManager/network" target="_blank">       
       <img alt="GitHub forks" src="https://img.shields.io/github/forks/BornToBeroot/NETworkManager.svg?style=flat-square" />
     </a>  
-  </p>
-  <p>
-    <a href="https://gitter.im/BornToBeRoot-NETworkManager/Lobby">
-      <img src="https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square">
-    </a>
+  </p> 
+   <p> 
+    <a href="https://transifex.com/BornToBeRoot/NETworkManager/">
+      <img alt="Transifex" src="https://img.shields.io/badge/Transifex-translate-green.svg?style=flat-square" />
+    </a>   
     <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/master">
-      <img alt="AppVeyor Master" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/master.svg?style=flat-square&&label=master" />
-    </a>    
+      <img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/master.svg?style=flat-square&&label=master" />
+    </a>   
   </p>
   </p>
   <a href="https://twitter.com/intent/tweet?text=NETworkManager%20-%20A%20powerful%20tool%20for%20managing%20networks%20and%20troubleshoot network problems!&url=https%3A%2F%2Fgithub.com%2FBornToBeRoot%2FNETworkManager&hashtags=networkmanager,ipscanner,portscanner,ssh,tightvnc,remotedesktop,snmp,dns,traceroute" target="_blank">
@@ -45,7 +45,8 @@
 
 <h2>Features</h2>
 
-- Network Interface - Information, Configure
+- Dashboard 
+- Network Interface - Information, Bandwidth, Configure
 - IP-Scanner
 - Port-Scanner
 - Ping
@@ -65,6 +66,10 @@
 - Listeners
 - ARP Table
 
+If you miss a feature, don't hesitate to create a [feature request](https://github.com/BornToBeRoot/NETworkManager/issues/new).
+
+You can also send me a [pull requests](https://github.com/BornToBeRoot/NETworkManager/pulls), when you have implemented the feature or fixed a bug.
+
 <h2>Languages</h2>
 
 - English
@@ -72,24 +77,39 @@
 - Russian
 - Spanish
 
+Help translate on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager).
+
+<h2>Documentation</h2>
+
+You can find it [here](https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation)
+
+Help to improve the documentation is welcome :)
+
 <h2>System requirements</h2>
 
 - Windows 7/Server 2008 R2 or later
 - .NET-Framework 4.6
 - RDP 8.1 ([How to install RDP 8.1 on Windows 7/Server 2008 R2?](Documentation/en-US/HowTo/Install_RDP_8dot1_on_Windows6dot1.md))
 
-<h2>Found an issue or have a feature request?</h2>
+<h2>Found a bug?</h2>
 
-Check the [Issues](https://github.com/BornToBeRoot/NETworkManager/issues) if the issue/feature request has already been reported. If not, submit a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new) and provide as many informations as you can.
+Check the [Issues](https://github.com/BornToBeRoot/NETworkManager/issues) if the bug has already been reported. If not, submit a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new) and provide as many informations as you can.
 
-<h2>Want to help?</h2>
+<h2>Some awesome tools i use</h2>
 
-- Add features ([Issues](https://github.com/BornToBeRoot/NETworkManager/issues?q=is%3Aopen+is%3Aissue+label%3AFeature-Request), [Roadmap](https://github.com/BornToBeRoot/NETworkManager/wiki/Roadmap))
-- Fix bugs ([Issues](https://github.com/BornToBeRoot/NETworkManager/issues))
-- Add languages / improve the translation ([Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager))
-- Improve the [documentation](https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation)
+- [Visual Studio](https://visualstudio.microsoft.com)
+- [ReSharper](https://www.jetbrains.com/resharper/)
+- [AppVeyor](https://www.appveyor.com/)
+- [Transifex](https://www.transifex.com/)
+- [Chocolatey](https://chocolatey.org)
 
-Fork the repository, do your changes and send me a pull request!
+<h2>Libaries / External services / Resources</h2>
+
+<h3>Libaries</h3>
+
+<h3>External services</h3>
+
+<h3>Resources</h3>
 
 <h2>License</h2>
 

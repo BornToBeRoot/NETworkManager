@@ -5379,6 +5379,39 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Star/Fork the Project on Github.
+        ///
+        ///URL: https://transifex.com/BornToBeRoot/NETworkManager/.
+        /// </summary>
+        public static string ToolTip_GitHubProjectUrl {
+            get {
+                return ResourceManager.GetString("ToolTip_GitHubProjectUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Help translate the tool on Transifex.
+        ///
+        ///URL: https://transifex.com/BornToBeRoot/NETworkManager/.
+        /// </summary>
+        public static string ToolTip_TransifexProjectUrl {
+            get {
+                return ResourceManager.GetString("ToolTip_TransifexProjectUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact via Twitter.
+        ///
+        ///URL: https://twitter.com/BornToBeRoot_DE.
+        /// </summary>
+        public static string ToolTip_TwitterContact {
+            get {
+                return ResourceManager.GetString("ToolTip_TwitterContact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total bytes received.
         /// </summary>
         public static string TotalBytesReceived {

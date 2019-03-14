@@ -2054,4 +2054,19 @@ URL: https://api.ipify.org/</value>
   <data name="ExternalServices" xml:space="preserve">
     <value>External services</value>
   </data>
+  <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
+    <value>Star/Fork the Project on Github.
+
+URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
+  </data>
+  <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
+    <value>Help translate the tool on Transifex.
+
+URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
+  </data>
+  <data name="ToolTip_TwitterContact" xml:space="preserve">
+    <value>Contact via Twitter.
+
+URL: https://twitter.com/BornToBeRoot_DE</value>
+  </data>
 </root>
