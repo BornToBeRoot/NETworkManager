@@ -207,7 +207,7 @@ namespace NETworkManager.ViewModels
             ((args.DragablzItem.Content as DragablzTabItem)?.View as PuTTYControl)?.CloseTab();
         }
 
-        public ICommand RestartSessionCommand => new RelayCommand(RestartSessionAction);
+        public ICommand RestartPuTTYSessionCommand => new RelayCommand(RestartSessionAction);
 
         private void RestartSessionAction(object view)
         {
