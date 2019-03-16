@@ -357,6 +357,7 @@
     <Compile Include="ViewModels\TightVNCSettingsViewModel.cs" />
     <Compile Include="ViewModels\TightVNCHostViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
+    <Compile Include="ViewModels\DashboardSettingsViewModel.cs" />
     <Compile Include="ViewModels\WhoisSettingsViewModel.cs" />
     <Compile Include="ViewModels\WhoisHostViewModel.cs" />
     <Compile Include="ViewModels\WhoisViewModel.cs" />
@@ -445,6 +446,9 @@
     </Compile>
     <Compile Include="Views\DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DashboardSettingsView.xaml.cs">
+      <DependentUpon>DashboardSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WhoisSettingsView.xaml.cs">
       <DependentUpon>WhoisSettingsView.xaml</DependentUpon>
@@ -783,6 +787,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\DashboardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DashboardSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

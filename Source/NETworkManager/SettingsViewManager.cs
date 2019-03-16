@@ -20,6 +20,7 @@ namespace NETworkManager
             new SettingsViewInfo(Name.Settings, new PackIconMaterialLight { Kind = PackIconMaterialLightKind.Cog }, Group.General),
 
             // Applications
+            new SettingsViewInfo(Name.Dashboard, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Dashboard), Group.Applications),
             new SettingsViewInfo(Name.IPScanner, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.IPScanner), Group.Applications),
             new SettingsViewInfo(Name.PortScanner,ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PortScanner), Group.Applications),
             new SettingsViewInfo(Name.Ping, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Ping), Group.Applications),
@@ -57,6 +58,8 @@ namespace NETworkManager
                     return Resources.Localization.Strings.ImportExport;
                 case Name.Settings:
                     return Resources.Localization.Strings.Settings;
+                case Name.Dashboard:
+                    return Resources.Localization.Strings.Dashboard;
                 case Name.IPScanner:
                     return Resources.Localization.Strings.IPScanner;
                 case Name.PortScanner:
@@ -112,6 +115,7 @@ namespace NETworkManager
             Update,
             ImportExport,
             Settings,
+            Dashboard,
             IPScanner,
             PortScanner,
             Ping,
