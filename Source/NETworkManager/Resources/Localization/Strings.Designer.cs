@@ -1492,15 +1492,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Documentation.
-        /// </summary>
-        public static string Documentation {
-            get {
-                return ResourceManager.GetString("Documentation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to How to install RDP 8.1 on Windows 7/Server 2008 R2.
         /// </summary>
         public static string DocumentationTitle_00001 {
@@ -2066,15 +2057,6 @@ namespace NETworkManager.Resources.Localization {
         public static string FolderDoesNotExist {
             get {
                 return ResourceManager.GetString("FolderDoesNotExist", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fork me on Github!.
-        /// </summary>
-        public static string ForkMeOnGitHub {
-            get {
-                return ResourceManager.GetString("ForkMeOnGitHub", resourceCulture);
             }
         }
         
@@ -3189,6 +3171,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open documentation.
+        /// </summary>
+        public static string OpenDocumentation {
+            get {
+                return ResourceManager.GetString("OpenDocumentation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open license.
         /// </summary>
         public static string OpenLicense {
@@ -3270,7 +3261,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dashboard.
+        ///   Looks up a localized string similar to Overwrite.
         /// </summary>
         public static string Overwrite {
             get {
@@ -4835,6 +4826,15 @@ namespace NETworkManager.Resources.Localization {
         public static string SSHPort {
             get {
                 return ResourceManager.GetString("SSHPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Star/Fork the Project on Github.
+        /// </summary>
+        public static string StarForkTheProjectOnGitHub {
+            get {
+                return ResourceManager.GetString("StarForkTheProjectOnGitHub", resourceCulture);
             }
         }
         

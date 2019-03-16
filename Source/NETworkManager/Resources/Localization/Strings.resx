@@ -834,8 +834,8 @@
   <data name="DNSServer" xml:space="preserve">
     <value>DNS server</value>
   </data>
-  <data name="Documentation" xml:space="preserve">
-    <value>Documentation</value>
+  <data name="OpenDocumentation" xml:space="preserve">
+    <value>Open documentation</value>
   </data>
   <data name="Domain" xml:space="preserve">
     <value>Domain</value>
@@ -882,8 +882,8 @@
   <data name="FixedScreenSize" xml:space="preserve">
     <value>Fixed screen size:</value>
   </data>
-  <data name="ForkMeOnGitHub" xml:space="preserve">
-    <value>Fork me on Github!</value>
+  <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
+    <value>Star/Fork the Project on Github</value>
   </data>
   <data name="Found" xml:space="preserve">
     <value>Found</value>
@@ -1390,7 +1390,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Open settings</value>
   </data>
   <data name="Overwrite" xml:space="preserve">
-    <value>Dashboard</value>
+    <value>Overwrite</value>
   </data>
   <data name="Paste" xml:space="preserve">
     <value>Paste</value>
