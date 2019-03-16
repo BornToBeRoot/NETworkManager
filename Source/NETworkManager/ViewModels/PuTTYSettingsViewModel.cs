@@ -186,7 +186,7 @@ namespace NETworkManager.ViewModels
         }
 
         private string _serialLine;
-        public string DefaultSerialLine
+        public string SerialLine
         {
             get => _serialLine;
             set
@@ -310,7 +310,7 @@ namespace NETworkManager.ViewModels
             Username = SettingsManager.Current.PuTTY_Username;
             Profile = SettingsManager.Current.PuTTY_Profile;
             AdditionalCommandLine = SettingsManager.Current.PuTTY_AdditionalCommandLine;
-            DefaultSerialLine = SettingsManager.Current.PuTTY_SerialLine;
+            SerialLine = SettingsManager.Current.PuTTY_SerialLine;
             SSHPort = SettingsManager.Current.PuTTY_SSHPort;
             TelnetPort = SettingsManager.Current.PuTTY_TelnetPort;
             BaudRate = SettingsManager.Current.PuTTY_BaudRate;
