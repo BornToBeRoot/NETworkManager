@@ -225,7 +225,7 @@ namespace NETworkManager.Models.Settings
                     reorderApplications = true;
                 }
 
-                // Features added in 1.9.0.0
+                // Features added in 1.9.1.0
                 if (settingsVersion < new Version("1.9.1.0"))
                 {
                     Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.Dashboard));
