@@ -2069,4 +2069,16 @@ URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
 
 URL: https://twitter.com/BornToBeRoot_DE</value>
   </data>
+  <data name="Connection" xml:space="preserve">
+    <value>Connection</value>
+  </data>
+  <data name="Computer" xml:space="preserve">
+    <value>Computer</value>
+  </data>
+  <data name="GatewayRouter" xml:space="preserve">
+    <value>Gateway / Router</value>
+  </data>
+  <data name="Internet" xml:space="preserve">
+    <value>Internet</value>
+  </data>
 </root>

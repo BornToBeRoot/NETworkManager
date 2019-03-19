@@ -826,6 +826,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Computer.
+        /// </summary>
+        public static string Computer {
+            get {
+                return ResourceManager.GetString("Computer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configure.
         /// </summary>
         public static string Configure {
@@ -930,6 +939,15 @@ namespace NETworkManager.Resources.Localization {
         public static string ConnectingDots {
             get {
                 return ResourceManager.GetString("ConnectingDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection.
+        /// </summary>
+        public static string Connection {
+            get {
+                return ResourceManager.GetString("Connection", resourceCulture);
             }
         }
         
@@ -2079,6 +2097,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gateway / Router.
+        /// </summary>
+        public static string GatewayRouter {
+            get {
+                return ResourceManager.GetString("GatewayRouter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to General.
         /// </summary>
         public static string General {
@@ -2401,6 +2428,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Interface {
             get {
                 return ResourceManager.GetString("Interface", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internet.
+        /// </summary>
+        public static string Internet {
+            get {
+                return ResourceManager.GetString("Internet", resourceCulture);
             }
         }
         

@@ -9,6 +9,7 @@ using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Utilities;
+using NETworkManager.Utilities.Enum;
 
 // ReSharper disable InconsistentNaming
 
@@ -40,6 +41,10 @@ namespace NETworkManager
         public static double Profile_WidthCollapsed => 40;
         public static double Profile_DefaultWidthExpanded => 250;
         public static double Profile_MaxWidthExpanded => 350;
+
+        // Application: Dashboard
+        public static string Dashboard_PublicIPAddressAPI => "https://api.ipify.org";
+        public static string Dashboard_PublicIPAddress => "1.1.1.1";
 
         // Application: IP Scanner
         public static int IPScanner_Threads => 256;
@@ -161,14 +166,14 @@ namespace NETworkManager
 
         // Application: Connections
         public static ExportManager.ExportFileType Connections_ExportFileType => ExportManager.ExportFileType.CSV;
-        public static AutoRefreshTimeInfo Connections_AutoRefreshTime => AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second);
+        public static AutoRefreshTimeInfo Connections_AutoRefreshTime => AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
 
         // Application: Listeners
         public static ExportManager.ExportFileType Listeners_ExportFileType => ExportManager.ExportFileType.CSV;
-        public static AutoRefreshTimeInfo Listeners_AutoRefreshTime => AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second);
+        public static AutoRefreshTimeInfo Listeners_AutoRefreshTime => AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
 
         // Application: ARP Table
         public static ExportManager.ExportFileType ARPTable_ExportFileType => ExportManager.ExportFileType.CSV;
-        public static AutoRefreshTimeInfo ARPTable_AutoRefreshTime => AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == AutoRefreshTime.TimeUnit.Second);
+        public static AutoRefreshTimeInfo ARPTable_AutoRefreshTime => AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
     }
 }

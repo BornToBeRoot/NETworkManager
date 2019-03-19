@@ -477,9 +477,9 @@ namespace NETworkManager.ViewModels
                 // Try to resolve the hostname
                 if (ipAddress == null)
                 {
-                    var ipHostEntrys = await Dns.GetHostEntryAsync(Host);
+                    var ipHostEntries = await Dns.GetHostEntryAsync(Host);
 
-                    foreach (var ipAddr in ipHostEntrys.AddressList)
+                    foreach (var ipAddr in ipHostEntries.AddressList)
                     {
                         switch (ipAddr.AddressFamily)
                         {
@@ -495,7 +495,7 @@ namespace NETworkManager.ViewModels
                     // Fallback --> If we could not resolve our prefered ip protocol
                     if (ipAddress == null)
                     {
-                        foreach (var ip in ipHostEntrys.AddressList)
+                        foreach (var ip in ipHostEntries.AddressList)
                         {
                             ipAddress = ip;
                             break;

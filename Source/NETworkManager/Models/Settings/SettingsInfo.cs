@@ -372,6 +372,52 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region Dashboard
+        private bool _dashboard_OverrideGatewayIPAddress = true;
+        public bool Dashboard_OverrideGatewayIPAddress
+        {
+            get => _dashboard_OverrideGatewayIPAddress;
+            set
+            {
+                if (value == _dashboard_OverrideGatewayIPAddress)
+                    return;
+
+                _dashboard_OverrideGatewayIPAddress = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+
+        private string _dashboard_GatewayIPAddress;
+        public string Dashboard_GatewayIPAddress
+        {
+            get => _dashboard_GatewayIPAddress;
+            set
+            {
+                if (value == _dashboard_GatewayIPAddress)
+                    return;
+
+                _dashboard_GatewayIPAddress = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _dashboard_PublicIPAddress = GlobalStaticConfiguration.Dashboard_PublicIPAddress;
+        public string Dashboard_PublicIPAddress
+        {
+            get => _dashboard_PublicIPAddress;
+            set
+            {
+                if (value == _dashboard_PublicIPAddress)
+                    return;
+
+                _dashboard_PublicIPAddress = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         private bool _dashboard_CheckPublicIPAddress = true;
         public bool Dashboard_CheckPublicIPAddress
         {
@@ -386,6 +432,22 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private string _dashboard_PublicIPAddressAPI = GlobalStaticConfiguration.Dashboard_PublicIPAddressAPI;
+        public string Dashboard_PublicIPAddressAPI
+        {
+            get => _dashboard_PublicIPAddressAPI;
+            set
+            {
+                if (value == _dashboard_PublicIPAddressAPI)
+                    return;
+
+                _dashboard_PublicIPAddressAPI = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         #endregion
 
         #region Network Interface       

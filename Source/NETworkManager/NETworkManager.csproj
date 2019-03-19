@@ -240,6 +240,7 @@
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ConnectionStateToRectangleStyleConverter.cs" />
     <Compile Include="Converters\BandwidthBytesToSpeedConverter.cs" />
     <Compile Include="Converters\DNSServerInfoToString.cs" />
     <Compile Include="Converters\ApplicationNameToIconConverter.cs" />
@@ -305,6 +306,8 @@
     <Compile Include="Utilities\ArrayHelper.cs" />
     <Compile Include="Utilities\AutoRefreshTime.cs" />
     <Compile Include="Utilities\AutoRefreshTimeInfo.cs" />
+    <Compile Include="Utilities\Enum\ConnectionState.cs" />
+    <Compile Include="Utilities\Enum\TimeUnit.cs" />
     <Compile Include="Utilities\EventSystemRedirectApplicationArgs.cs" />
     <Compile Include="Utilities\EventSystem.cs" />
     <Compile Include="Utilities\FileSizeConverter.cs" />

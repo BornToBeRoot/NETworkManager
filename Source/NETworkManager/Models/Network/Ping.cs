@@ -73,7 +73,7 @@ namespace NETworkManager.Models.Network
                 var pingTotal = 0;
                 var errorCount = 0;
 
-                var options = new System.Net.NetworkInformation.PingOptions
+                var options = new PingOptions
                 {
                     Ttl = TTL,
                     DontFragment = DontFragment

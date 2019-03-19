@@ -3,21 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"          
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"   
-             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             xmlns:validators="clr-namespace:NETworkManager.Validators"
              xmlns:converters="clr-namespace:NETworkManager.Converters"
-             xmlns:wpfHelpers="clr-namespace:NETworkManager.WpfHelper"
              xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
-             xmlns:networkManager="clr-namespace:NETworkManager"
+             xmlns:mahAppsControls="http://metro.mahapps.com/winfx/xaml/controls"
              dialogs:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DashboardViewModel}">
     <UserControl.Resources>
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
+        <converters:ConnectionStateToRectangleStyleConverter x:Key="ConnectionStateToRectangleStyleConverter" />
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.Dashboard }">
@@ -41,7 +38,7 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="1" Grid.Row="0">
+                    <Grid Grid.Column="1" Grid.Row="0" MinWidth="80">
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -55,10 +52,15 @@
                         </Grid.Resources>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="10" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Rectangle Width="48" Height="48" VerticalAlignment="Top">
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Computer}" Style="{StaticResource MessageTextBlock}" />
+                        <Rectangle Grid.Column="0" Grid.Row="2" Width="48" Height="48">
                             <Rectangle.OpacityMask>
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Monitor}" />
                             </Rectangle.OpacityMask>
@@ -73,9 +75,21 @@
                                 </Style>
                             </Rectangle.Style>
                         </Rectangle>
-                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding InfoHostIPAddress}" />
+                        <mahAppsControls:ProgressRing Grid.Column="0" Grid.Row="2" IsActive="True" Width="16" Height="16" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{Binding IsConnectionCheckHostRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                        <Rectangle Grid.Column="0" Grid.Row="2" Width="16" Height="16" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{Binding HostConnectionState, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}" Visibility="{Binding IsConnectionCheckHostRunning, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding ConnectionHostIPAddress}" />
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding ConnectionHostHostname}" />
                     </Grid>
-                    <Line Grid.Column="3" Grid.Row="0" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform"></Line>
+                    <Grid Grid.Column="3" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Line Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" />
+                    </Grid>
                     <Grid Grid.Column="5" Grid.Row="0">
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
@@ -90,10 +104,13 @@
                         </Grid.Resources>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="10" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Rectangle Width="48" Height="48" VerticalAlignment="Top">
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.GatewayRouter}" Style="{StaticResource MessageTextBlock}" />
+                        <Rectangle Grid.Column="0" Grid.Row="2" Width="48" Height="48" VerticalAlignment="Top">
                             <Rectangle.OpacityMask>
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ServerNetwork}" />
                             </Rectangle.OpacityMask>
@@ -108,7 +125,7 @@
                                 </Style>
                             </Rectangle.Style>
                         </Rectangle>
-                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding InfoGatewayIPAddress}" />
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding ConnectionGatewayIPAddress}" />
                     </Grid>
                     <Line Grid.Column="7" Grid.Row="0" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform"></Line>
                     <Grid Grid.Column="9" Grid.Row="0">
@@ -125,10 +142,13 @@
                         </Grid.Resources>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="10" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Rectangle Grid.Column="0" Grid.Row="0" Width="48" Height="48" VerticalAlignment="Top">
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Internet}" Style="{StaticResource MessageTextBlock}" />
+                        <Rectangle Grid.Column="0" Grid.Row="2" Width="48" Height="48" VerticalAlignment="Top">
                             <Rectangle.OpacityMask>
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Entypo Kind=Network}" />
                             </Rectangle.OpacityMask>
@@ -143,7 +163,7 @@
                                 </Style>
                             </Rectangle.Style>
                         </Rectangle>
-                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding InfoPublicIPAddress}" />
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding ConnectionPublicIPAddress}" />
                     </Grid>
                 </Grid>
             </Grid>
