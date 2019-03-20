@@ -38,7 +38,7 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="1" Grid.Row="0" MinWidth="80">
+                    <Grid Grid.Column="1" Grid.Row="0">
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -53,6 +53,8 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="20" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="10" />
                             <RowDefinition Height="Auto" />
@@ -75,10 +77,10 @@
                                 </Style>
                             </Rectangle.Style>
                         </Rectangle>
-                        <mahAppsControls:ProgressRing Grid.Column="0" Grid.Row="2" IsActive="True" Width="16" Height="16" VerticalAlignment="Bottom" HorizontalAlignment="Right" Visibility="{Binding IsConnectionCheckHostRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                        <Rectangle Grid.Column="0" Grid.Row="2" Width="16" Height="16" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{Binding HostConnectionState, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}" Visibility="{Binding IsConnectionCheckHostRunning, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding ConnectionHostIPAddress}" />
-                        <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding ConnectionHostHostname}" />
+                        <mahAppsControls:ProgressRing Grid.Column="0" Grid.Row="4" IsActive="True" Width="24" Height="24" Visibility="{Binding IsConnectionCheckHostRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                        <Rectangle Grid.Column="0" Grid.Row="4" Width="24" Height="24" Style="{Binding HostConnectionState, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}" Visibility="{Binding IsConnectionCheckHostRunning, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding ConnectionHostIPAddress}" />
+                        <TextBlock Grid.Column="0" Grid.Row="8" Text="{Binding ConnectionHostHostname}" />
                     </Grid>
                     <Grid Grid.Column="3" Grid.Row="0">
                         <Grid.ColumnDefinitions>

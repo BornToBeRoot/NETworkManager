@@ -419,7 +419,6 @@ namespace NETworkManager.ViewModels
                 return;
             }
 
-
             // 2) Detect the local ip address
             var hostIPAddressDetected = NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPAddress));
 
